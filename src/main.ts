@@ -2,13 +2,16 @@ import express, { Application, Request, Response } from "express";
 
 // สร้าง function
 
+// Hello Add
 const add = (x: number, y: number) => x + y;
 
+// Hello At
 const helloAt = (args: { name: string; location: string }) => ({
   text: `Hello ${args.name} at ${args.location}`,
   createdAt: new Date(),
 });
 
+// Hello Sum
 const helloSum = (args: {
   name: string;
   number: { x: number; y: number; z: number };
@@ -19,6 +22,7 @@ const helloSum = (args: {
   createdAt: new Date(),
 });
 
+// Hello Multiply
 interface IHelloMultiply {
   name: string;
   number: { x: number; y: number; z: number };
@@ -30,6 +34,37 @@ const helloMultiply = (args: IHelloMultiply) => ({
   }`,
   createdAt: new Date(),
 });
+
+// Hello Reduce
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+
+const helloReduce = (args: IHelloReduce) => {
+  const result = args.numbers.reduce((acc, r) => acc + r, 0);
+  return {
+    text: `Hello ${args.name} reduce ${result}`,
+    createdAt: new Date(),
+  };
+};
+
+// Hello Order
+interface IHelloOrder {
+  name: string;
+  orders: {
+    product: string,
+    price: number
+  }[];
+}
+
+const helloOrder = (args: IHelloOrder) => {
+  const result = args.orders.reduce((acc, r) => acc + r.price, 0);
+  return {
+    text: `Hello ${args.name} order ${result}`,
+    createdAt: new Date(),
+  };
+};
 
 // Express Server
 const app: Application = express();
@@ -66,6 +101,21 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
     name: body?.name,
     number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
   });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloReduce", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloReduce({
+    name: body?.name,
+    numbers: body?.numbers,
+  });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloOrder", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloOrder(body);
   res.status(200).json(result);
 });
 
