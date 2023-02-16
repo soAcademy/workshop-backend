@@ -1,5 +1,4 @@
 import { Client } from "pg";
-import * as sqlString from "sqlstring";
 
 // const db = new Client({
 //   user: "postgres",
@@ -18,7 +17,5 @@ const db = new Client({
 });
 
 db.connect();
-
-export const escape = (str: string) => sqlString.escape(str);
 
 export const query = (query: string) => db.query(query);
