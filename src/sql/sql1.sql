@@ -1,39 +1,49 @@
 create table public.categories (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	"name" varchar
+	id SERIAL NOT NULL,
+	"name" TEXT,
+
+  CONSTRAINT "categories_pk" PRIMARY KEY (id)
 );
 
 create table public.teachers (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	id SERIAL NOT NULL,
 	"name" varchar,
-	age int4
+	age INT,
+
+  CONSTRAINT "teachers_pk" PRIMARY KEY (id)
 );
 
 create table public.courses (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	"name" varchar,
-	price numeric,
-	"start_date" date NOT NULL,
-	end_date date NOT NULL,
-	student_max int4 NOT NULL,
-	categories_id int4 NOT NULL,
-	teachers_id int4 NOT NULL,
+	id SERIAL NOT NULL,
+	"name" TEXT,
+	price FLOAT,
+	"start_date" DATE NOT NULL,
+	end_date DATE NOT NULL,
+	student_max INT NOT NULL,
+	categories_id INT NOT NULL,
+	teachers_id INT NOT NULL,
+
+  CONSTRAINT "courses_pk" PRIMARY KEY (id),
 	FOREIGN KEY (categories_id) REFERENCES public.categories(id),
 	FOREIGN KEY (teachers_id) REFERENCES public.teachers(id)
 );
 
 create table public.members (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	first_name varchar,
-	last_name varchar,
-    tel varchar
+	id SERIAL NOT NULL,
+	first_name TEXT,
+	last_name TEXT,
+  tel TEXT,
+
+  CONSTRAINT "members_pk" PRIMARY KEY (id)
 );
 
 create table public.orders (
-	id int4 NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    price numeric,
-    courses_id int4 NOT NULL,
-    members_id int4 NOT NULL,
-    FOREIGN KEY (courses_id) REFERENCES public.courses(id),
-    FOREIGN KEY (members_id) REFERENCES public.members(id)
+	id SERIAL NOT NULL,
+  price FLOAT,
+  courses_id INT NOT NULL,
+  members_id INT NOT NULL,
+
+  CONSTRAINT "orders_pk" PRIMARY KEY (id),
+  FOREIGN KEY (courses_id) REFERENCES public.courses(id),
+  FOREIGN KEY (members_id) REFERENCES public.members(id)
 );
