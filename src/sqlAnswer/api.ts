@@ -30,5 +30,11 @@ export const getCoursesWithJoin = () => {
 export const createTeacher = (args: { name: string; age: number }) => {
   const sql = `INSERT INTO public.teachers (name, age)
   VALUES ('${args.name}', ${args.age})`;
-  return query(sql).then((res) => res.rows);
+  return query(sql).then((res) => res);
+};
+
+export const updateTeacher = (args: { id: number; name: string; age: number }) => {
+  const sql = `UPDATE public.teachers SET name = '${args.name}',
+  age = ${args.age} WHERE id = ${args.id}`;
+  return query(sql).then((res) => {console.log(res); return res});
 };

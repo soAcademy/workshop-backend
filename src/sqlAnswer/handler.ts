@@ -6,6 +6,7 @@ import {
   getTeachers,
   getTeachersByAge,
   getTeachersByName,
+  updateTeacher,
 } from "./api";
 
 export const getTeachersHandler = (req: Request, res: Response) => {
@@ -42,6 +43,16 @@ export const getCoursesWithJoinHandler = (req: Request, res: Response) => {
 
 export const createTeacherHandler = (req: Request, res: Response) => {
   return createTeacher({
+    name: String(req?.body?.name),
+    age: Number(req?.body?.age),
+  })
+    .then((response) => res.status(200).send(response))
+    .catch((error) => res.status(500).send(error));
+};
+
+export const updateTeacherHandler = (req: Request, res: Response) => {
+  return updateTeacher({
+    id: Number(req?.body?.id),
     name: String(req?.body?.name),
     age: Number(req?.body?.age),
   })

@@ -5,6 +5,7 @@ import {
   getTeachersByAgeHandler,
   getTeachersByNameHandler,
   getTeachersHandler,
+  updateTeacherHandler,
 } from "./sqlAnswer";
 
 export const AppRoutes = [
@@ -37,5 +38,10 @@ export const AppRoutes = [
     path: "/sql/createTeacher",
     method: "post",
     action: createTeacherHandler,
+  },
+  {
+    path: "/sql/updateTeacher",
+    method: "post",
+    action: updateTeacherHandler,
   },
 ];
