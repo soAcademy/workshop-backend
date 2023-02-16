@@ -110,6 +110,7 @@ docker-compose up -d
 
 ติดตั้ง library pg สำหรับต่อ postgres
 ```bash
-yarn add pg
+yarn add pg sqlstring
+yarn add --dev @types/pg @types/sqlstring
 ```
 

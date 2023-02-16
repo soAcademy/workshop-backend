@@ -1,4 +1,4 @@
-import { getTeachersHandler } from "./sqlAnswer";
+import { getTeachersHandler } from "./handler";
 
 export const AppRoutes = [
   {
