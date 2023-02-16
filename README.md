@@ -92,3 +92,7 @@ Status Code: 2xx แปลว่าสำเร็จ
 Status Code: 3xx server redirect, server connect ไม่ได้
 Status Code: 4xx หาข้อมูลไม่เจอ, bad request
 Status Code: 5xx แปลว่า Error
+
+## Nested Url
+เราสามารถทำ API Endpoint ที่ path nested ได้เช่น
+`https://localhost:3000/user/register`

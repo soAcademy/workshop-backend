@@ -3,7 +3,7 @@ import axios from "axios";
 
 const app: Application = express();
 
-// ทดลองส่งค่า parameters ให้ API ผ่าน GET และ POST method
+// กำหนดค่า Status Code สำหรับกรณี Success และ Error
 
 // ต้องเพิ่มบรรทัดนี้เพื่อให้ POST method รับข้อมูลแบบ json ได้
 app.use(express.json());
