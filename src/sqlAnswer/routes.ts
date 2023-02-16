@@ -1,9 +1,11 @@
 import {
+  createTeacherHandler,
   getCoursesHandler,
   getCoursesWithJoinHandler,
   getTeachersByAgeHandler,
   getTeachersByNameHandler,
   getTeachersHandler,
+  updateTeacherHandler,
 } from "./handler";
 
 export const AppRoutes = [
@@ -31,5 +33,15 @@ export const AppRoutes = [
     path: "/sql/getCoursesWithJoin",
     method: "get",
     action: getCoursesWithJoinHandler,
+  },
+  {
+    path: "/sql/createTeacher",
+    method: "post",
+    action: createTeacherHandler,
+  },
+  {
+    path: "/sql/updateTeacher",
+    method: "post",
+    action: updateTeacherHandler,
   },
 ];
