@@ -97,7 +97,9 @@ Status Code: 5xx แปลว่า Error
 เราสามารถทำ API Endpoint ที่ path nested ได้เช่น
 `https://localhost:3000/user/register`
 
-# 3. ต่อ Postgres Database ด้วย pg
+# 3. สร้าง table บน Postgres Database
+
+# 4. ต่อ Postgres Database ด้วย pg
 
 รัน postgres database ด้วย docker
 เพิ่ม `postgres-data` ใน `.gitignore`
