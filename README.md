@@ -96,3 +96,18 @@ Status Code: 5xx แปลว่า Error
 ## Nested Url
 เราสามารถทำ API Endpoint ที่ path nested ได้เช่น
 `https://localhost:3000/user/register`
+
+# 3. ต่อ Postgres Database ด้วย pg
+
+รัน postgres database ด้วย docker
+เพิ่ม `postgres-data` ใน `.gitignore`
+
+```bash
+docker-compose up -d
+```
+
+ติดตั้ง library pg สำหรับต่อ postgres
+```bash
+yarn add pg
+```
+
