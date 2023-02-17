@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   createTeacher,
+  deleteTeacher,
   getCourses,
   getCoursesWithJoin,
   getTeachers,
@@ -55,6 +56,14 @@ export const updateTeacherHandler = (req: Request, res: Response) => {
     id: Number(req?.body?.id),
     name: String(req?.body?.name),
     age: Number(req?.body?.age),
+  })
+    .then((response) => res.status(200).send(response))
+    .catch((error) => res.status(500).send(error));
+};
+
+export const deleteTeacherHandler = (req: Request, res: Response) => {
+  return deleteTeacher({
+    id: Number(req?.body?.id),
   })
     .then((response) => res.status(200).send(response))
     .catch((error) => res.status(500).send(error));

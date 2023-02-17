@@ -38,3 +38,8 @@ export const updateTeacher = (args: { id: number; name: string; age: number }) =
   age = ${args.age} WHERE id = ${args.id}`;
   return query(sql).then((res) => {console.log(res); return res});
 };
+
+export const deleteTeacher = (args: { id: number; }) => {
+  const sql = `DELETE FROM public.teachers WHERE id = ${args.id}`;
+  return query(sql).then((res) => {console.log(res); return res});
+};
