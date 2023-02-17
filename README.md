@@ -114,3 +114,40 @@ yarn add pg
 yarn add --dev @types/pg
 ```
 
+# 5. ต่อ Database ด้วย Prisma (Database)
+
+ข้อดีของ prisma คือช่วยให้เราจัดการ database ได้โดยไม่ต้อง เขียน SQL ตรงๆ ช่วยให้จัดการโครงสร้าง database ที่ซับซ้อนได้ง่าย
+
+สร้าง schema ใน postgres ใหม่ชื่อว่า `todolist`
+
+ติดตั้ง prisma
+```bash
+yarn add --dev prisma
+yarn add @yarnpkg/pnpify
+npx prisma init --datasource-provider postgresql
+```
+
+เพิ่มตัวแปรใน `.env`
+```.env
+DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todolist"
+```
+
+เขียน Schema ของ App TodoList ใน Folder `/prisma`
+
+เพิ่ม คำสั่งดังต่อไปนี้ใน scripts ของ package.json
+```json
+  "scripts": {
+    ...
+    "prisma:merge": "cat prisma/schema/**.prisma > prisma/schema.prisma",
+    "prisma:format": "npx prisma format",
+    "prisma:migrate": "npx prisma migrate dev --name init --schema prisma/schema.prisma",
+    "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma"
+  }
+```
+
+รันคำสั่งดังต่อไปนี้
+`yarn prisma:merge` เพื่อรวมไฟล์โครงสร้าง prisma หลายๆ ไฟล์เข้าด้วยกัน
+`yarn prisma:format` เพื่อ format โค้ด prisma ให้สวยงาม และเช็คว่าเขียนโครงสร้างถูกต้องไหม
+`yarn prisma:migrate` เพื่อนำโครงสร้างใหม่นี้แก้ไขใน postgres database ขั้นตอนนี้ต้องระมันระวังเป็นพิเศษ ถ้ามีการลบโครงสร้างเดิมแล้ว migrate ข้อมูลเดิมใน database อาจหายหมดได้
+เมื่อมีการ migrate จะมีไฟล์ .sql ในโฟลเดอร์ `/migrations` ไว้เก็บประวัติการเปลี่ยนแปลงโครงสร้างของ database ซึ่งไฟล์ในโฟลเดอร์นี้ห้ามลบเด็ดขาด ไม่งั้นถ้ามีการเพิ่ม field แล้ว migrate ใหม่ ข้อมูลใน database จะหายหมด
+`yarn prisma:generate` เพื่อสร้าง typescript interface สำหรับการเรียกใช้งานในโค้ดของเรา

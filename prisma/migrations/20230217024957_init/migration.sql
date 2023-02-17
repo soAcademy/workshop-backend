@@ -1,0 +1,10 @@
+-- CreateTable
+CREATE TABLE "TodoList" (
+    "id" SERIAL NOT NULL,
+    "task" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "TodoList_pkey" PRIMARY KEY ("id")
+);
