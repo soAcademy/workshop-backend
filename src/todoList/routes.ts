@@ -1,4 +1,4 @@
-import { createTaskHandler, getTasksHandler, updateTaskHandler } from "./todoList";
+import { createTaskHandler, getTasksHandler, updateTaskHandler } from "./todoList.handler";
 
 export const AppRoutes = [
   {

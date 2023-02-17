@@ -151,3 +151,5 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todo
 `yarn prisma:migrate` เพื่อนำโครงสร้างใหม่นี้แก้ไขใน postgres database ขั้นตอนนี้ต้องระมันระวังเป็นพิเศษ ถ้ามีการลบโครงสร้างเดิมแล้ว migrate ข้อมูลเดิมใน database อาจหายหมดได้
 เมื่อมีการ migrate จะมีไฟล์ .sql ในโฟลเดอร์ `/migrations` ไว้เก็บประวัติการเปลี่ยนแปลงโครงสร้างของ database ซึ่งไฟล์ในโฟลเดอร์นี้ห้ามลบเด็ดขาด ไม่งั้นถ้ามีการเพิ่ม field แล้ว migrate ใหม่ ข้อมูลใน database จะหายหมด
 `yarn prisma:generate` เพื่อสร้าง typescript interface สำหรับการเรียกใช้งานในโค้ดของเรา
+
+สร้าง API สำหรับเชื่อมต่อ TodoList
