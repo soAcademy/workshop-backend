@@ -1,0 +1,18 @@
+{
+  "name": "workshop-backend",
+  "version": "1.0.0",
+  "repository": "git@github.com:soAcademy/workshop-backend.git",
+  "author": "Your name <teak.yuktanand@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.14.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  }
+}
