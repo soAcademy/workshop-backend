@@ -14,12 +14,12 @@ app.get("/get/nested2/:id", (req: Request, res: Response) => {
   res.status(200).send(`INput params:${inputParams?.id}`);
 });
 
-app.get("/get/nested3/:id/:title/:id2/:title2", (req: Request, res: Response) => {
+app.get("/get/nested3/:id/:title", (req: Request, res: Response) => {
   const inputParams = req?.params;
   console.log(inputParams);
   res
     .status(200)
-    .send(`Input params:${inputParams?.id} + ${inputParams?.title} param2 ${inputParams?.id2} + ${inputParams?.title2}`);
+    .send(`Input params:${inputParams?.id} + ${inputParams?.title}`);
 });
 
 app.listen(5500, () => {
