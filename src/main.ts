@@ -25,7 +25,7 @@ app.get("/get3", (req: Request, res: Response) => {
     location: 'Bangkok',
     age: 41
   }
-  res.send(profile)
+  res.send(`API3:${JSON.stringify(profile)}`)
 })
 
 app.get("/get4", (req: Request, res: Response) => {
