@@ -1,4 +1,5 @@
-import "./simpleApis/main1";
+// import "./simpleApis/main1";
+import "./simpleApis/main2";
 
 // import express, { Application, Request, Response } from "express";
 
