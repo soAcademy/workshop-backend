@@ -4,40 +4,20 @@ const app: Application = express();
 
 app.use(express.json());
 
-app.get("/get-query", (req: Request, res: Response) => {
+app.get("/get-status-code", (req: Request, res: Response) => {
   const query = req?.query;
   console.log(query);
-  res.send(query);
+  query.name === "Bin"
+    ? res.status(200).send(query)
+    : res.status(500).send("ERROR: name not found");
 });
 
-app.post("/post-query", (req: Request, res: Response) => {
+app.post("/post-status-code", (req: Request, res: Response) => {
   const body = req?.body;
   console.log(body);
-  res.send(body);
-});
-
-app.get("/get-sum", (req: Request, res: Response) => {
-  const query = req?.query;
-  console.log(query);
-  const number1 = Number(query?.number1);
-  const number2 = Number(query?.number2);
-  const sum = number1 + number2;
-
-  // res.send(sum);
-  // res.send(String(sum));
-  res.send(`${sum}`);
-});
-
-app.post("/post-sum", (req: Request, res: Response) => {
-  const body = req?.body;
-  console.log(body);
-  const number1 = Number(body?.number1);
-  const number2 = Number(body?.number2);
-  const sum = number1 + number2;
-
-  // res.send(sum);
-  // res.send(String(sum));
-  res.send(`${sum}`);
+  body.name === "Bin"
+    ? res.status(200).send(body)
+    : res.status(500).send("ERROR: name not found");
 });
 
 app.listen(8000, () => {
