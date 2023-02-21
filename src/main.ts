@@ -19,7 +19,7 @@ app.get("/getsum", (req: Request, res: Response) => {
   const query = req?.query;
   const x = Number(query?.x);
   const y = Number(query?.y);
-  x && y ? res.send(String(x + y)) : res.send("no x, y data found");
+  x && y ? res.send(String(x + y)) : res.send("ERROR: x, y not found");
 });
 
 app.post("/postsum", (req:Request, res:Response) => {
@@ -27,7 +27,7 @@ app.post("/postsum", (req:Request, res:Response) => {
   const x = Number(body?.x)
   const y = Number(body?.y)
   const sum = x + y
-  x && y ? res.send(`${sum} `) : res.send("no x, y data found")
+  x && y ? res.send(`${sum}`) : res.send("ERROR: x, y not found")
 })
 
 app.listen(5555, () => {
