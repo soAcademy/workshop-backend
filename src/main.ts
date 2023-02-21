@@ -1,11 +1,17 @@
-import express, { Application, Request, Response } from "express";
+import "./simpleApis/main1";
 
-const app: Application = express();
+// import express, { Application, Request, Response } from "express";
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello Express");
-});
+// const app: Application = express();
 
-app.listen(3000, () => {
-  console.log("listening on port 3000");
-});
+// app.get("/hello", (req: Request, res: Response) => {
+//   res.send("Hello Express");
+// });
+
+// app.get("/hello2", (req: Request, res: Response) => {
+//   res.send("Hello Express2");
+// });
+
+// app.listen(3000, () => {
+//   console.log("listening on port 3000");
+// });
