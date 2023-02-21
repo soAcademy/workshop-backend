@@ -2,3 +2,5 @@ node_modules
 postgres-data
 .gitignore
 node_modules
+yarn-error.log
+.env
