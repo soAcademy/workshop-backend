@@ -4,6 +4,10 @@
   "repository": "git@github.com:soAcademy/workshop-backend.git",
   "author": "Your name <teak.yuktanand@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register src/main.ts",
+    "start": "ts-node -r tsconfig-paths/register src/main"
+  },
   "dependencies": {
     "express": "^4.18.2",
     "ts-node": "^10.9.1",
