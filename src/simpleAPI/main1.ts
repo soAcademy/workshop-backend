@@ -6,18 +6,18 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello Teak");
 });
 
-app.post("/post1", (req: Request, res: Response) => {
+app.get("/get1", (req: Request, res: Response) => {
   const number1 = 15;
   res.send(`API1: ${number1}`);   //${} is needed as numbers need to be converted to string
 });
 
-app.post("/post2", (req: Request, res: Response) => {
+app.get("/get2", (req: Request, res: Response) => {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const sum = numbers.reduce((acc, r) => acc + r, 0);
   res.send(`API2: ${sum}`); //use res.send() for string
 });
 
-app.post("/post4", (req: Request, res: Response) => {
+app.get("/get3", (req: Request, res: Response) => {
   const profile = {
     name: "Teak",
     location: "Bangkok",
@@ -28,7 +28,7 @@ app.post("/post4", (req: Request, res: Response) => {
   // if use res.send() for objects might get content type problems
 });
 
-app.post("/post4", (req: Request, res: Response) => {
+app.get("/get4", (req: Request, res: Response) => {
   const products = [
     {
       name: "collagen",
@@ -42,7 +42,7 @@ app.post("/post4", (req: Request, res: Response) => {
   res.send(products);
 });
 
-app.post("/post5", (req: Request, res: Response) => {
+app.get("/get5", (req: Request, res: Response) => {
   const products =
   [
     {
