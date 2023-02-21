@@ -33,6 +33,18 @@ app.get("/get/nested4", (req: Request, res: Response) => {
     b1: 11,
     b2: 22,
   };
+  res.status(200).json({ obj1, obj2 });
+});
+
+app.get("/get/nested5", (req: Request, res: Response) => {
+  const obj1 = {
+    a1: 1,
+    a2: 2,
+  };
+  const obj2 = {
+    b1: 11,
+    b2: 22,
+  };
   res.status(200).json([obj1, obj2]);
 });
 
