@@ -1,0 +1,30 @@
+model Menu {
+  id         Int         @id @default(autoincrement())
+  name       String
+  image      String
+  price      Float
+  category   String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
+  orderItems OrderItem[]
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  status    String      @default("WAITING")
+  tableId   Int
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  menu      Menu     @relation(fields: [menuId], references: [id])
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
+  menuId    Int
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

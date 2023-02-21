@@ -1,19 +1,11 @@
-import express, { Application } from "express";
-import { AppRoutes } from "./routes";
+import express, { Application, Request, Response } from "express";
 
-// Express Server
 const app: Application = express();
 
-app.use(express.json());
-
-AppRoutes.forEach((route) => {
-  app[route.method as keyof Application](
-    route.path,
-    (request: express.Request, response: express.Response) =>
-      route.action(request, response),
-  );
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello Bin!");
 });
 
-app.listen(3000, () => {
-  console.log("Server start on port 3000!");
+app.listen(3100, () => {
+  console.log("Server start on port 3100!");
 });

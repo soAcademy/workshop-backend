@@ -6,6 +6,6 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello Bin!");
 });
 
-app.listen(3000, () => {
-  console.log("Server start on port 3000!");
+app.listen(3100, () => {
+  console.log("Server start on port 3100!");
 });
