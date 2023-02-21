@@ -1,14 +1,15 @@
 import express, { Application, Request, Response } from "express";
 
-
 const app: Application = express();
 
+// ทดลองสร้าง API ผ่าน GET method
+
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello Boom!");
+  res.send("Hello Bin!");
 });
 
 app.get("/get1", (req: Request, res: Response) => {
-  const number1 = 66;
+  const number1 = 15;
   res.send(`API1: ${number1}`);
 });
 
@@ -18,22 +19,13 @@ app.get("/get2", (req: Request, res: Response) => {
   res.send(`API2: ${sum}`);
 });
 
-// app.get("/get3", (req: Request, res: Response) => {
-//   const profile = {
-//     name: 'Ball',
-//     location: 'Suratthani',
-//     age: 26
-//   };
-//   res.send(profile);
-// });
-
 app.get("/get3", (req: Request, res: Response) => {
   const profile = {
-    name: "Ball",
-    location: "Suratthani",
-    age: 26
+    name: 'Bin',
+    location: 'Bangkok',
+    age: 30
   };
-  res.json(profile);
+  res.send(profile);
 });
 
 app.get("/get4", (req: Request, res: Response) => {
@@ -64,6 +56,6 @@ app.get("/get5", (req: Request, res: Response) => {
   res.json(products);
 });
 
-app.listen(3100, () => {
-  console.log("Server start on port 3100!");
+app.listen(3000, () => {
+  console.log("Server start on port 3000!");
 });
