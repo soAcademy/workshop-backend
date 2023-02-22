@@ -56,7 +56,11 @@ const helloOrder = (args: IHelloOrder) => {
   return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
 };
 
-const mayBeNumber = (data: any) => typeof data === "number";
+const isNumber = (data: any) => typeof data === "number";
+
+const isString = (data: any) => typeof data === "string";
+
+const isObject = (data: any) => typeof data === "object";
 
 const app: Application = express();
 
@@ -64,7 +68,7 @@ app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  if (mayBeNumber(body?.x) && mayBeNumber(body?.y)) {
+  if (isNumber(body?.x) && isNumber(body?.y)) {
     const result = add(body?.x, body?.y);
     res.status(200).send(`Result: ${result}`);
   } else {
@@ -74,26 +78,50 @@ app.post("/function/add", (req: Request, res: Response) => {
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloAt({ name: body?.name, location: body?.location });
-  res.status(200).json(result);
+  if (isString(body?.name) && isString(body?.location)) {
+    const result = helloAt({ name: body?.name, location: body?.location });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+  }
 });
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloSum({
-    name: body?.name,
-    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isObject(body?.number) &&
+    isNumber(body?.number.x) &&
+    isNumber(body?.number.y) &&
+    isNumber(body?.number.z)
+  ) {
+    const result = helloSum({
+      name: body?.name,
+      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+  }
 });
 
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloMultiply({
-    name: body?.name,
-    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isObject(body?.number) &&
+    isNumber(body?.number.x) &&
+    isNumber(body?.number.y) &&
+    isNumber(body?.number.z)
+  ) {
+    const result = helloMultiply({
+      name: body?.name,
+      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+  }
 });
 
 app.post("/function/helloReduce", (req: Request, res: Response) => {
