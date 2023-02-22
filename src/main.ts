@@ -1,6 +1,4 @@
 import express, { Application, Request, Response } from "express";
-import axios from "axios";
-import { isJsxClosingFragment } from "typescript";
 
 const add = (x: number, y: number) => {
   return x + y;
@@ -227,3 +225,22 @@ console.log(
     ],
   })
 );
+
+// Force Type mostly used when a function return type any but we've already known the output's type
+
+const f14_1 = (x: IF14Args): number => x.a3.num1.reduce((acc, e) => acc + e, 0);
+const f14_2 = (x: IF14Args) =>
+  x.a3.num1.reduce((acc, e) => acc + e, 0) as number;
+const f14_3 = (x: IF14Args): { a1: number; a2: string } => ({
+  a1: 3,
+  a2: "earth",
+});
+const f14_4 = (x: IF14Args) =>
+  ({ a1: 3, a2: "earth" } as { a1: number; a2: string });
+
+interface IF14Result {
+  a1: number;
+  a2: string;
+}
+const f14_5 = (x: IF14Args): IF14Result => ({ a1: 3, a2: "earth" });
+const f14_6 = (x: IF14Args) => ({ a1: 3, a2: "earth" } as IF14Result);
