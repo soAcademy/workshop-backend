@@ -30,6 +30,16 @@ const helloMultiply = (args: IHelloMultiply) => ({
   createdAt: new Date(),
 });
 
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+
+const helloReduce = (args: IHelloReduce) => {
+  const result = args.numbers.reduce((acc, n) => acc + n, 0);
+  return { text: `Hello ${args.name} reduce ${result}`, createdAt: new Date() };
+};
+
 const app: Application = express();
 
 app.use(express.json());
@@ -60,6 +70,15 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const result = helloMultiply({
     name: body?.name,
     number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+  });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloReduce", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloReduce({
+    name: body?.name,
+    numbers: body?.numbers,
   });
   res.status(200).json(result);
 });
