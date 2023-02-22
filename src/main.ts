@@ -153,8 +153,7 @@ app.post("/function/helloOrder", (req: Request, res: Response) => {
   if (
     isString(body?.name) &&
     isArray(body?.orders) &&
-    isString(body?.orders[0].product) &&
-    isNumber(body?.orders[0].price)
+    body?.orders.every((r: any) => isString(r.product) && isNumber(r.price))
   ) {
     const result = helloOrder({
       name: body?.name,
