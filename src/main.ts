@@ -27,3 +27,7 @@ app.post("/function/helloAt", (req: Request, res: Response)=>{
   });
   res.status(200).send(result);
 });
+
+app.listen(3200, () =>{
+  console.log("Server start on port 3200!");
+});
