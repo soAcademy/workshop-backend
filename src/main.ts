@@ -60,8 +60,11 @@ const helloOrder = (args: IHelloOrder) => {
   };
 };
 
-const maybeNumber = (data: any) => typeof data === "number";
-// console.log(maybeNumber(1));
+const isNumber = (data: any) => typeof data === "number";
+const isString = (data: any) => typeof data === "string";
+const isBoolean = (data: any) => typeof data === "boolean";
+const isObject = (data: any) => typeof data === "object";
+const isArray = (data: any) => Array.isArray(data);
 
 // Express server
 const app: Application = express();
@@ -69,7 +72,7 @@ app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  if (maybeNumber(body.x) && maybeNumber(body.y)) {
+  if (isNumber(body.x) && isNumber(body.y)) {
     const result = add(body?.x, body?.y);
     res.status(200).send(`Result: ${result}`);
   } else {
@@ -80,47 +83,87 @@ app.post("/function/add", (req: Request, res: Response) => {
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloAt({
-    name: body?.name,
-    location: body?.location,
-  });
-  res.status(200).json(result);
+  if (isString(body?.name) && isString(body?.location)) {
+    const result = helloAt({
+      name: body?.name,
+      location: body?.location,
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloSum({
-    name: body?.name,
-    number: { x: body?.number.a, y: body?.number.b, z: body?.number.c },
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isNumber(body?.number.a) &&
+    isNumber(body?.number.b) &&
+    isNumber(body?.number.c)
+  ) {
+    const result = helloSum({
+      name: body?.name,
+      number: { x: body?.number.a, y: body?.number.b, z: body?.number.c },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.post("/function/helloMultipy", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloMultipy({
-    name: body?.name,
-    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-  });
-  res.status(200).json(result);
+
+  if (
+    isString(body?.name) &&
+    isNumber(body?.number.a) &&
+    isNumber(body?.number.b) &&
+    isNumber(body?.number.c)
+  ) {
+    const result = helloMultipy({
+      name: body?.name,
+      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloReduce({
-    name: body?.name,
-    number: body?.number,
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isArray(body?.number) &&
+    isNumber(body?.number[0])
+  ) {
+    const result = helloReduce({
+      name: body?.name,
+      number: body?.number,
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.post("/function/helloOrder", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloOrder({
-    name: body?.name,
-    orders: body?.orders,
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isArray(body?.orders) &&
+    isString(body?.orders[0].product) &&
+    isNumber(body?.orders[0].price)
+  ) {
+    const result = helloOrder({
+      name: body?.name,
+      orders: body?.orders,
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.listen(3100, () => {
