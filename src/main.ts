@@ -136,7 +136,7 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
   if (
     isString(body?.name) &&
     isArray(body?.number) &&
-    isNumber(body?.number[0])
+    body?.number.every((r: any) => isNumber(r))
   ) {
     const result = helloReduce({
       name: body?.name,
