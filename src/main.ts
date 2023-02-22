@@ -56,14 +56,20 @@ const helloOrder = (args: IHelloOrder) => {
   return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
 };
 
+const mayBeNumber = (data: any) => typeof data === "number";
+
 const app: Application = express();
 
 app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = add(body?.x, body?.y);
-  res.status(200).send(`Result: ${result}`);
+  if (mayBeNumber(body?.x) && mayBeNumber(body?.y)) {
+    const result = add(body?.x, body?.y);
+    res.status(200).send(`Result: ${result}`);
+  } else {
+    res.status(500).send("ERROR: invalid request (codec)");
+  }
 });
 
 app.post("/function/helloAt", (req: Request, res: Response) => {

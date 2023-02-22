@@ -48,6 +48,14 @@ interface IHelloOrder {
   }[];
 }
 
+// interface IHelloOrder {
+//   name: string;
+//   orders: Array<{
+//     product: string;
+//     price: number;
+//   }>;
+// }
+
 const helloOrder = (args: IHelloOrder) => {
   const result = args.orders.reduce(
     (accPrice, order) => accPrice + order.price,
