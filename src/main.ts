@@ -60,13 +60,22 @@ const helloOrder = (args: IHelloOrder) => {
   };
 };
 
+const maybeNumber = (data: any) => typeof data === "number";
+// console.log(maybeNumber(1));
+
+// Express server
 const app: Application = express();
 app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = add(body?.x, body?.y);
-  res.status(200).send(`Result: ${result}`);
+  if (maybeNumber(body.x) && maybeNumber(body.y)) {
+    const result = add(body?.x, body?.y);
+    res.status(200).send(`Result: ${result}`);
+  } else {
+    // res.status(500).send("Error wrong input type");
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
