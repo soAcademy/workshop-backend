@@ -1,6 +1,5 @@
 // import axios from "axios";
 import express, { Application, Request, Response } from "express";
-import * as t from "io-ts";
 
 const add = (x: number, y: number) => x + y;
 
@@ -23,15 +22,6 @@ interface IHelloMultiply {
   name: string;
   number: { x: number; y: number; z: number };
 }
-
-const HelloMultiplyCodec = t.type({
-  name: t.string,
-  number: t.type({
-    x: t.number,
-    y: t.number,
-    z: t.number,
-  }),
-});
 
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name} multiply ${
@@ -119,14 +109,12 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
 
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const body = req?.body;
-  console.log(HelloMultiplyCodec.decode(body));
   if (
-    // isString(body?.name) &&
-    // isObject(body?.number) &&
-    // isNumber(body?.number.x) &&
-    // isNumber(body?.number.y) &&
-    // isNumber(body?.number.z)
-    HelloMultiplyCodec.decode(body)._tag === "Right"
+    isString(body?.name) &&
+    isObject(body?.number) &&
+    isNumber(body?.number.x) &&
+    isNumber(body?.number.y) &&
+    isNumber(body?.number.z)
   ) {
     const result = helloMultiply({
       name: body?.name,
@@ -134,7 +122,7 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
     });
     res.status(200).json(result);
   } else {
-    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
   }
 });
 
