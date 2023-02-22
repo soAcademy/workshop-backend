@@ -1,22 +1,113 @@
-const f1 = (x: number, y: number) => Math.min(x, y);
-const f2 = (x: string, y: string) => x + y;
-const f3 = (x: boolean, y: number) => (x ? y : -y);
-const f4 = (x: Date) => new Date(x).toLocaleString();
-const f5 = (x: number[]) => x.reduce((acc, r) => acc + r, 0);
-const f6 = (x: string[]) => x.join("###")
-const f7 = (x: {a1: number; a2: number}) => x.a1 + x.a2
-const f8 = (x: {a1: number; a2: number[]}) => x.a1 + x.a2.reduce((acc, r) => acc + r, 0)
-const f9 = (x: {a1: string; a2: number}[]) => x[0].a2 + x[1].a2
+import express, { Application, Request, Response } from "express";
+import axios from "axios";
+const add = (x: number, y: number) => x + y;
 
-console.log(f1(1, 5));
-console.log(f2("hello", "Teak"));
-console.log(f3(false, 5));
-console.log(f4(new Date()));
-console.log(f5([1, 2, 3, 4, 5]))
-console.log(f6(["hello", "Teak", "world"]))
-console.log(f7({a1: 10, a2: 20}))
-console.log(f8({a1: 10, a2: [20, 30, 40]}))
-console.log(f9([
-  {a1: "Teak", a2: 10},
-  {a1: "world", a2: 20},
-]))
+const helloAt = (args: { name: string; location: string }) => ({
+  text: `Hello ${args.name} at ${args.location}`,
+  createdAt: new Date(),
+});
+
+const helloSum = (args: {
+  name: string;
+  number: { x: number; y: number; z: number };
+}) => ({
+  text: `Hello ${args.name} sum ${
+    args.number.x + args.number.y + args.number.z
+  }`,
+  createdAt: new Date(),
+});
+
+interface IHelloMultiply {
+  name: string;
+  number: { x: number; y: number; z: number };
+}
+
+const helloMultiply = (args: IHelloMultiply) => ({
+  text: `Hello ${args.name} multiply ${
+    args.number.x * args.number.y * args.number.z
+  }`,
+  createdAt: new Date(),
+});
+
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+
+const helloReduce = (args: IHelloReduce) => {
+  const result = args.numbers.reduce((acc, r) => acc + r, 0);
+  return {
+    text: `Hello ${args.name} reduce ${result}`,
+    createdAt: new Date(),
+  };
+};
+
+interface IHelloOrder {
+  name: string;
+  orders:Array<{
+    product: string;
+    price: number;
+  }>;
+}
+
+const helloOrder = (args: IHelloOrder) => {
+  const result = args.orders.reduce((acc, r) => acc + r.price, 0);
+  return {
+    text: `Hello ${args.name} order ${result}`,
+    createdAt: new Date(),
+  };
+};
+
+const app: Application = express();
+
+app.use(express.json());
+
+app.post("/function/add", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = add(body?.x, body?.y);
+  res.status(200).send(`Result: ${result}`);
+});
+
+app.post("/function/helloAt", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloAt({ name: body?.name, location: body?.location });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloSum", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloSum({
+    name: body?.name,
+    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+  });
+  console.log(result);
+  res.status(200).json(result);
+});
+
+app.post("/function/helloMultiply", (req: Request, res: Response) => {
+  const body = req.body;
+  const result = helloMultiply({
+    name: body?.name,
+    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+  });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloReduce", (req: Request, res: Response) => {
+  const body = req.body;
+  const result = helloReduce({
+    name: body?.name,
+    numbers: body?.numbers,
+  });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloOrder", (req: Request, res: Response) => {
+  const body = req.body;
+  const result = helloOrder(body) // ส่งbodyได้เลยหากมั่นใจว่าเป็น type ตรง
+  res.status(200).json(result);
+})
+
+app.listen(3000, () => {
+  console.log("Server start on port 3000!");
+});
