@@ -107,8 +107,8 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
       numbers: { x: body?.numbers.x, y: body?.numbers.y, z: body?.numbers.z },
     });
     res.status(200).json(result);
-  } catch {
-    res.status(500).send("ERROR");
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
@@ -116,13 +116,18 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
   try {
     const body = req?.body;
     const numbers = Object.values(body?.numbers).map((e) => Number(e));
-    const result = helloReduce({
-      name: body?.name,
-      numbers: numbers,
-    });
-    res.status(200).json(result);
-  } catch {
-    res.status(500).send("ERROR");
+    const index = numbers.findIndex((number) => Number.isNaN(number));
+    if (index === -1) {
+      const result = helloReduce({
+        name: body?.name,
+        numbers: numbers,
+      });
+      res.status(200).json(result);
+    } else {
+      res.status(500).send("TYPE ERROR");
+    }
+  } catch (e) {
+    res.status(500).send("TYPE ERROR");
   }
 });
 
@@ -133,9 +138,11 @@ app.post("/function/helloOrders", (req: Request, res: Response) => {
       name: body?.name,
       orders: body?.orders,
     });
-    res.status(200).json(result);
-  } catch {
-    res.status(500).send("ERROR");
+    typeof result.total === "number"
+      ? res.status(200).json(result)
+      : res.status(500).send("TYPE ERROR");
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
