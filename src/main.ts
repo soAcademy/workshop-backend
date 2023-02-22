@@ -1,10 +1,10 @@
-import "./simpleApis/main0";
+// import "./simpleApis/main0";
 // import "./simpleApis/main1";
 // import "./simpleApis/main2";
 // import "./simpleApis/main3";
 // import "./simpleApis/main4";
 // import "./simpleApis/main5";
-// import "./simpleApis/main6";
+import "./simpleApis/main6";
 
 // import express, { Application, Request, Response } from "express";
 
