@@ -2,7 +2,11 @@
 import express, { Application, Request, Response } from "express";
 import * as t from "io-ts";
 
+const AddCodec = t.type({ x: t.number, y: t.number });
+
 const add = (x: number, y: number) => x + y;
+
+const HelloAtCodec = t.type({ name: t.string, location: t.string });
 
 const helloAt = (args: { name: string; location: string }) => ({
   text: `Hello ${args.name} at ${args.location}`,
@@ -19,10 +23,10 @@ const helloSum = (args: {
   createdAt: new Date(),
 });
 
-interface IHelloMultiply {
-  name: string;
-  number: { x: number; y: number; z: number };
-}
+// interface IHelloMultiply {
+//   name: string;
+//   number: { x: number; y: number; z: number };
+// }
 
 const HelloMultiplyCodec = t.type({
   name: t.string,
@@ -32,6 +36,9 @@ const HelloMultiplyCodec = t.type({
     z: t.number,
   }),
 });
+
+interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
+// type IHelloMultiply = t.TypeOf<typeof HelloMultiplyCodec>;
 
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name} multiply ${
@@ -80,21 +87,23 @@ app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  if (isNumber(body?.x) && isNumber(body?.y)) {
+  // if (isNumber(body?.x) && isNumber(body?.y)) {
+  if (AddCodec.decode(body)._tag === "Right") {
     const result = add(body?.x, body?.y);
     res.status(200).send(`Result: ${result}`);
   } else {
-    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
   }
 });
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
-  if (isString(body?.name) && isString(body?.location)) {
+  // if (isString(body?.name) && isString(body?.location)) {
+  if (HelloAtCodec.decode(body)._tag === "Right") {
     const result = helloAt({ name: body?.name, location: body?.location });
     res.status(200).json(result);
   } else {
-    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
   }
 });
 
@@ -119,7 +128,7 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
 
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const body = req?.body;
-  console.log(HelloMultiplyCodec.decode(body));
+  // console.log(HelloMultiplyCodec.decode(body));
   if (
     // isString(body?.name) &&
     // isObject(body?.number) &&
