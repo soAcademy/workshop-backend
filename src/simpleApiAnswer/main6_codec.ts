@@ -30,6 +30,16 @@ import * as t from "io-ts";
 //   number: { x: number; y: number; z: number };
 // }
 
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+
+const HelloReduceCodec = t.type({
+  name: t.string,
+  numbers: t.array(t.number),
+})
+
 const HelloMultiplyCodec = t.type({
   name: t.string,
   location: t.string,
