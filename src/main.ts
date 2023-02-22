@@ -126,15 +126,20 @@ app.post("/function/helloSum", (req:Request, res:Response)=> {
 
 app.post("/function/helloMultiply", (req:Request,res:Response)=>{
   const body = req.body;
+  if(maybeString(body.name) && maybeNumber(body.number)) {
   const result = helloMultiply({
     name:body.name,
     number: {x:body.number.x,y:body.number.y,z:body.number.z}
   });
   res.status(200).json(result)
+} else {
+  res.status(500).json({error:"Server Error invalid codec"})
+}
 })
 
 app.post("/function/helloReduce", (req:Request, res:Response)=>{
   const body = req.body;
+  if(maybeString(body.name) && maybeArray(body.number)) {
   const result = helloReduce({
     name: body.name,
     number: body.number
@@ -142,12 +147,19 @@ app.post("/function/helloReduce", (req:Request, res:Response)=>{
     //remind > the number must be in [] like we create the schema type
   })
   res.status(200).json(result)
+} else {
+  res.status(500).json({error:"Server Error invalid codec"})
+}
 })
 
 app.post("/function/helloOrder", (req:Request,res:Response)=>{
   const body = req.body;
+  if(maybeString(body.name) && maybeArray(body.orders)) {
   const result = helloOrder(body)
   res.status(200).json(result)
+  } else {
+    res.status(500).json({error:"Server Error invalid codec"})
+  }
 })
 
 
