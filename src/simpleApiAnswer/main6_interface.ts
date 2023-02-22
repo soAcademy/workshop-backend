@@ -3,58 +3,6 @@ import axios from "axios";
 
 const app: Application = express();
 
-// สร้าง Nested Path
-
-// ต้องเพิ่มบรรทัดนี้เพื่อให้ POST method รับข้อมูลแบบ json ได้
-app.use(express.json());
-
-app.get("/get/nested1", (req: Request, res: Response) => {
-  res.status(200).send("Nested1");
-});
-
-app.get("/get/nested2/:id", (req: Request, res: Response) => {
-  const params = req?.params;
-  console.log(params);
-  res.status(200).send(`id: ${params?.id}`);
-});
-
-app.get("/get/nested3/:id/:title", (req: Request, res: Response) => {
-  const params = req?.params;
-  console.log(params);
-  // res.status(200).send(`id: ${params?.id}, title: ${params?.title}`)
-  const obj1 = {
-    a1: 1,
-    a2: 2,
-  };
-  const obj2 = {
-    b1: 11,
-    b2: 22,
-  };
-  console.log(typeof new Date());
-  res.status(200).json([obj1, obj2]);
-});
-
-app.listen(3000, () => {
-  console.log("Server start on port 3000!");
-});
-
-// validateType if / else (runtime type checking)
-// (a: number, b: number) (runtime, external world)
-// io-ts
-// [APPPPPP
-//  f1(a1: number, b1: number) -> (string, number)
-//  f2(a2: string, b2: string) -> (number, number)
-//  f3(a3: number, b3: number) -> (number)
-// ] -> ()
-
-// Runtime typechecking
-// try {
-//   runTimeTypeChecking(req.body);
-//   process(req.body)
-// } catch (e) {
-//   send(e)
-// }
-
 const f1 = (x: number, y: number) => Math.min(x, y);
 const f2 = (x: string, y: string) => x + y;
 const f3 = (x: boolean, y: number) => (x ? y : -y);
