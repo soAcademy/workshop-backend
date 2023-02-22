@@ -50,6 +50,26 @@ app.post("/post/helloSum", (req: Request, res: Response) => {
   res.status(200).json(result);
 });
 
+interface IHelloMultiply {
+  name: string;
+  number: { x: number; y: number; z: number };
+}
+const helloMultiply = (args: IHelloMultiply) => ({
+  text: `Hello ${args.name} multiply ${
+    args.number.x * args.number.y * args.number.z
+  }}`,
+  createdAt: new Date(),
+});
+
+app.post("/post/helloMultiply", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloMultiply({
+    name: body?.name,
+    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+  });
+  res.status(200).json(result);
+});
+
 app.listen(5000, () => {
   console.log("Sever start on port 5000");
 });
