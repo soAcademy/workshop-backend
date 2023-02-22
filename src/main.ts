@@ -139,27 +139,32 @@ app.post("/function/helloMultiply", (req:Request,res:Response)=>{
 
 app.post("/function/helloReduce", (req:Request, res:Response)=>{
   const body = req.body;
-  if(maybeString(body.name) && maybeArray(body.number)) {
-  const result = helloReduce({
-    name: body.name,
-    number: body.number
+  maybeString(body.name) &&
+  maybeArray(body.number) &&
+  body.number.every(maybeNumber)
+  ? res.status(200).json(helloReduce(body))
+  : res.status(500).json({message: "Server Error invalid codec"})
+})
+  
     //when fire API we can add number as mush as we want to and then the function reduce will sum it 
     //remind > the number must be in [] like we create the schema type
-  })
-  res.status(200).json(result)
-} else {
-  res.status(500).json({error:"Server Error invalid codec"})
-}
-})
+  
 
 app.post("/function/helloOrder", (req:Request,res:Response)=>{
   const body = req.body;
-  if(maybeString(body.name) && maybeArray(body.orders)) {
-  const result = helloOrder(body)
-  res.status(200).json(result)
-  } else {
-    res.status(500).json({error:"Server Error invalid codec"})
-  }
+  maybeString(body.name) &&
+  maybeArray(body.orders) &&
+  body.orders.price.every(maybeNumber) &&
+  body.orders.product.every(maybeString)
+  ? res.status(200).json(helloOrder(body))
+  : res.status(500).json({message: "Server Error invalid codec"})
+
+  // if(maybeString(body.name) && maybeArray(body.orders)) {
+  // const result = helloOrder(body)
+  // res.status(200).json(result)
+  // } else {
+  //   res.status(500).json({error:"Server Error invalid codec"})
+  // }
 })
 
 
