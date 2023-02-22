@@ -72,3 +72,26 @@ interface IF14Args extends IF13Args {
 const f14 = (args: IF14Args) => args.a3.num1.reduce((acc, n) => acc + n, 0);
 
 console.log(f14({ a1: 10, a2: "Bin", a3: { num1: [1, 2, 3] }, a4: true }));
+
+const f14_1 = (args: IF14Args): number =>
+  args.a3.num1.reduce((acc, n) => acc + n, 0);
+
+const f14_2 = (args: IF14Args) =>
+  args.a3.num1.reduce((acc, n) => acc + n, 0) as number;
+
+const f14_3 = (args: IF14Args): { a1: number; a2: string } => ({
+  a1: 3,
+  a2: "Bin",
+});
+
+const f14_4 = (args: IF14Args) =>
+  ({
+    a1: 3,
+    a2: "Bin",
+  } as { a1: number; a2: string });
+
+const f14_6 = (args: IF14Args) =>
+  ({
+    a1: 3,
+    a2: "Bin",
+  } as IF14Args);
