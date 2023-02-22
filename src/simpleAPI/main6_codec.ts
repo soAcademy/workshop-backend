@@ -151,15 +151,15 @@ app.post("/function/helloReduce", (req:Request, res:Response)=>{
     //remind > the number must be in [] like we create the schema type
   
 
-app.post("/function/helloOrder", (req:Request,res:Response)=>{
-  const body = req.body;
-  maybeString(body.name) &&
-  maybeArray(body.orders) &&
-  body.orders[1].every(maybeNumber) &&
-  body.orders[0].every(maybeString)
-
-  ? res.status(200).json(helloOrder(body))
-  : res.status(500).json({message: "Server Error invalid codec"})
+    app.post("/function/helloOrder", (req:Request,res:Response)=>{
+      const body = req.body;
+        maybeString(body.name) &&
+        maybeArray(body.orders) &&
+        body.orders.every((item:any) => maybeNumber(item.price)) && 
+        body.orders.every((item:any)=> maybeString(item.product))
+      
+        ? res.status(200).json(helloOrder(body))
+        : res.status(500).json({message: "Server Error invalid codec"})
 
   // if(maybeString(body.name) && maybeArray(body.orders)) {
   // const result = helloOrder(body)
