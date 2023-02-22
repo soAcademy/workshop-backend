@@ -97,6 +97,15 @@ Status Code: 5xx แปลว่า Error
 เราสามารถทำ API Endpoint ที่ path nested ได้เช่น
 `https://localhost:3000/user/register`
 
+## Interface
+
+## Validate Codec
+- Simple validate function
+- io-ts
+```
+yarn add io-ts fp-ts
+```
+
 # 3. สร้าง table บน Postgres Database
 
 # 4. ต่อ Postgres Database ด้วย pg
