@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from "express";
-import * as t from "io-ts";
 
 // สร้าง function
 
@@ -20,21 +19,10 @@ const helloSum = (args: {
   createdAt: new Date(),
 });
 
-// interface IHelloMultiply {
-//   name: string;
-//   number: { x: number; y: number; z: number };
-// }
-
-const HelloMultiplyCodec = t.type({
-  name: t.string,
-  number: t.type({
-    x: t.number,
-    y: t.number,
-    z: t.number,
-  }),
-});
-
-interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
+interface IHelloMultiply {
+  name: string;
+  number: { x: number; y: number; z: number };
+}
 
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name} multiply ${
@@ -43,17 +31,10 @@ const helloMultiply = (args: IHelloMultiply) => ({
   createdAt: new Date(),
 });
 
-// interface IHelloReduce {
-//   name: string;
-//   numbers: number[];
-// }
-
-const HelloReduceCodec = t.type({
-  name: t.string,
-  numbers: t.array(t.number),
-});
-
-interface IHelloReduce extends t.TypeOf<typeof HelloReduceCodec> {}
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
 
 const helloReduce = (args: IHelloReduce) => {
   const result = args.numbers.reduce((acc, r) => acc + r, 0);
@@ -63,25 +44,13 @@ const helloReduce = (args: IHelloReduce) => {
   };
 };
 
-// interface IHelloOrder {
-//   name: string;
-//   orders: {
-//     product: string;
-//     price: number;
-//   }[];
-// }
-
-const HelloOrderCodec = t.type({
-  name: t.string,
-  orders: t.array(
-    t.type({
-      product: t.string,
-      price: t.number,
-    })
-  ),
-});
-
-interface IHelloOrder extends t.TypeOf<typeof HelloOrderCodec> {}
+interface IHelloOrder {
+  name: string;
+  orders: {
+    product: string;
+    price: number;
+  }[];
+}
 
 const helloOrder = (args: IHelloOrder) => {
   const result = args.orders.reduce((acc, r) => acc + r.price, 0);
@@ -93,7 +62,7 @@ const helloOrder = (args: IHelloOrder) => {
 
 const isNumber = (data: any) => typeof data === "number";
 const isString = (data: any) => typeof data === "string";
-// const isArray = (data: any) => Array.isArray(data);
+const isArray = (data: any) => Array.isArray(data);
 // const isObject = (data: any) => Object.values(data); // ยังไม่มั่นใจ
 // const isBoolean = (data: any) => typeof data === "boolean"; // ยังไม่ได้ใช้
 
@@ -177,9 +146,12 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
 
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const body = req?.body;
-  console.log(HelloMultiplyCodec.decode(body));
-
-  if (HelloMultiplyCodec.decode(body)._tag === "Right") {
+  if (
+    isString(body?.name) &&
+    isNumber(body?.number.x) &&
+    isNumber(body?.number.y) &&
+    isNumber(body?.number.z)
+  ) {
     const result = helloMultiply({
       name: body?.name,
       number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
@@ -206,13 +178,15 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
 
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   const body = req?.body;
-  console.log(HelloReduceCodec.decode(body));
-
   // const result = helloReduce({
   //   name: body?.name,
   //   numbers: body?.numbers,
   // });
-  if (HelloReduceCodec.decode(body)._tag === "Right") {
+  if (
+    isString(body?.name) &&
+    isArray(body?.numbers) &&
+    body?.numbers.every(isNumber)
+  ) {
     const result = helloReduce(body);
     res.status(200).json(result);
   } else {
@@ -243,10 +217,7 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
 
 app.post("/function/helloOrder", (req: Request, res: Response) => {
   const body = req?.body;
-  console.log(JSON.stringify(HelloOrderCodec.decode(body)));
-  console.log(HelloOrderCodec.decode(body));
-
-  if (HelloOrderCodec.decode(body)._tag === "Right") {
+  if (isString(body?.name) && isArray(body?.orders)) {
     const result = helloOrder(body);
     res.status(200).json(result);
   } else {
