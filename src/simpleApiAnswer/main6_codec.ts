@@ -80,7 +80,7 @@ const isString = (data: any) => typeof data === "string";
 
 const isNumber = (data: any) => typeof data === "number";
 
-const isoolean = (data: any) => typeof data === "boolean";
+const isBoolean = (data: any) => typeof data === "boolean";
 
 const isArray = (data: any) => Array.isArray(data);
 
@@ -155,3 +155,6 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 app.listen(3000, () => {
   console.log("Server start on port 3000!");
 });
+
+// isArray(data) && !data.map((r) => isNumber(r.x) && isString(r.y)).some((r) => r === false)
+// isArray(data) && data.every((r) => isNumber(r.x) && isString(r.y))
