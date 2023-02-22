@@ -137,3 +137,27 @@ console.log(
 interface IF15Args {
   data: IF14Args[];
 }
+
+interface IF14Result {
+  a1: number;
+  a2: string;
+}
+
+
+const f14_1 = (args: IF14Args): number =>
+  args.a3.num1.reduce((acc, r) => acc + r, 0);
+const f14_2 = (args: IF14Args) =>
+  args.a3.num1.reduce((acc, r) => acc + r, 0) as number;
+const f14_3 = (args: IF14Args): { a1: number; a2: string } => ({
+  a1: 3,
+  a2: "Bin",
+});
+const f14_4 = (args: IF14Args) =>
+  ({ a1: 3, a2: "Bin" } as { a1: number; a2: string });
+
+const f14_5 = (args: IF14Args): IF14Result =>
+({ a1: 3, a2: "Bin" });
+
+
+const f14_6 = (args: IF14Args) =>
+({ a1: 3, a2: "Bin" }) as IF14Result;
