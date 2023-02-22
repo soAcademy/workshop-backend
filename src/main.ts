@@ -24,10 +24,10 @@ import * as t from "io-ts";
 // });
 
 // Hello Multiply
-interface IHelloMultiply {
-  name: string;
-  number: { x: number; y: number; z: number };
-}
+// interface IHelloMultiply {
+//   name: string;
+//   number: { x: number; y: number; z: number };
+// }
 
 const HelloMultiplyCodec = t.type({
   name: t.string,
@@ -36,7 +36,14 @@ const HelloMultiplyCodec = t.type({
     y: t.number,
     z: t.number,
   }),
+  // numbers: t.array(t.number),
+  // objects: t.array(t.type({
+  //   x: t.number,
+  //   y: t.string
+  // }))
 });
+
+interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
 
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name} multiply ${
