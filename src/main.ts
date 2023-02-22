@@ -63,6 +63,7 @@ const helloOrder = (args: IHelloOrder) => {
 const isNumber = (data: any) => typeof data === "number";
 const isString = (data: any) => typeof data === "string";
 const isArray = (data: any) => Array.isArray(data);
+const isObject = (data: any) => Object.values(data);
 // const isBoolean = (data: any) => typeof data === "boolean"; // ยังไม่ได้ใช้
 
 // Express Server
@@ -115,6 +116,7 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
   if (
     isString(body.name) &&
+    isObject(body.number) &&
     isNumber(body.number.x) &&
     isNumber(body.number.y) &&
     isNumber(body.number.z)
@@ -181,7 +183,11 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
   //   name: body?.name,
   //   numbers: body?.numbers,
   // });
-  if (isString(body.name) && isArray(body.numbers)) {
+  if (
+    isString(body.name) &&
+    isArray(body.numbers) &&
+    isNumber(body.numbers[0])
+  ) {
     const result = helloReduce(body);
     res.status(200).json(result);
   } else {
@@ -322,7 +328,7 @@ app.listen(3000, () => {
 //   a4: boolean;
 // }
 
-// const f14 = (x: IF14Args) => 
+// const f14 = (x: IF14Args) =>
 //   x.a4 ? x.a3.num1.reduce((acc, r) => acc + r, 0) : false;
 
 // console.log(
