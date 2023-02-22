@@ -60,6 +60,11 @@ const helloOrder = (args: IHelloOrder) => {
   };
 };
 
+const isNumber = (data: any) => typeof data === "number";
+const isString = (data: any) => typeof data === "string";
+const isArray = (data: any) => Array.isArray(data);
+// const isBoolean = (data: any) => typeof data === "boolean"; // ยังไม่ได้ใช้
+
 // Express Server
 
 const app: Application = express();
@@ -68,8 +73,12 @@ app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = add(body?.x, body?.y);
-  res.status(200).send(`Result: ${result}`);
+  if (isNumber(body.x) && isNumber(body.y)) {
+    const result = add(body?.x, body?.y);
+    res.status(200).send(`Result: ${result}`);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" }); // ควรจะส่งเป็น json ให้ from เหมือนกัน
+  }
 });
 // body
 // {
@@ -81,11 +90,15 @@ app.post("/function/add", (req: Request, res: Response) => {
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloAt({
-    name: body?.name,
-    location: body?.location,
-  });
-  res.status(200).json(result);
+  if (isString(body.name) && isString(body.location)) {
+    const result = helloAt({
+      name: body?.name,
+      location: body?.location,
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 // body
 // {
@@ -100,11 +113,20 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloSum({
-    name: body?.name,
-    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-  });
-  res.status(200).json(result);
+  if (
+    isString(body.name) &&
+    isNumber(body.number.x) &&
+    isNumber(body.number.y) &&
+    isNumber(body.number.z)
+  ) {
+    const result = helloSum({
+      name: body?.name,
+      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 // body
 // {
@@ -123,11 +145,20 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
 
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloMultiply({
-    name: body?.name,
-    number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-  });
-  res.status(200).json(result);
+  if (
+    isString(body.name) &&
+    isNumber(body.number.x) &&
+    isNumber(body.number.y) &&
+    isNumber(body.number.z)
+  ) {
+    const result = helloMultiply({
+      name: body?.name,
+      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 // body
 // {
@@ -146,11 +177,16 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
 
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloReduce({
-    name: body?.name,
-    numbers: body?.numbers,
-  });
-  res.status(200).json(result);
+  // const result = helloReduce({
+  //   name: body?.name,
+  //   numbers: body?.numbers,
+  // });
+  if (isString(body.name) && isArray(body.numbers)) {
+    const result = helloReduce(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 // body
 // {
@@ -176,8 +212,12 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
 
 app.post("/function/helloOrder", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloOrder(body);
-  res.status(200).json(result);
+  if (isString(body.name) && isArray(body.orders)) {
+    const result = helloOrder(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Error invalid codec" });
+  }
 });
 // body
 // {
@@ -257,7 +297,7 @@ app.listen(3000, () => {
 
 // console.log(f11({ a1: "First ", a2: 1 }));
 
-// // f12
+// f12
 // interface IF12Args {
 //   num1: number[];
 // }
@@ -266,7 +306,7 @@ app.listen(3000, () => {
 
 // console.log(f12({ num1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }));
 
-// // f13
+// f13
 // interface IF13Args {
 //   a1: number;
 //   a2: string;
@@ -277,12 +317,12 @@ app.listen(3000, () => {
 
 // console.log(f13({ a1: 10, a2: "First!", a3: { num1: [5, 6, 8, 97, 1] } }));
 
-// // f14
+// f14
 // interface IF14Args extends IF13Args {
 //   a4: boolean;
 // }
 
-// const f14 = (x: IF14Args) =>
+// const f14 = (x: IF14Args) => 
 //   x.a4 ? x.a3.num1.reduce((acc, r) => acc + r, 0) : false;
 
 // console.log(
