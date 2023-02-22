@@ -4,13 +4,13 @@ import * as t from "io-ts";
 // สร้าง function
 
 // Hello Add
-const add = (x: number, y: number) => x + y;
+// const add = (x: number, y: number) => x + y;
 
-// Hello At
-const helloAt = (args: { name: string; location: string }) => ({
-  text: `Hello ${args.name} at ${args.location}`,
-  createdAt: new Date(),
-});
+// // Hello At
+// const helloAt = (args: { name: string; location: string }) => ({
+//   text: `Hello ${args.name} at ${args.location}`,
+//   createdAt: new Date(),
+// });
 
 // // Hello Sum
 // const helloSum = (args: {
@@ -23,27 +23,37 @@ const helloAt = (args: { name: string; location: string }) => ({
 //   createdAt: new Date(),
 // });
 
-// // Hello Multiply
+// Hello Multiply
 // interface IHelloMultiply {
 //   name: string;
+//   location: string;
 //   number: { x: number; y: number; z: number };
 // }
 
-// export const HelloMultiplyCodec = t.type({
-//   name: t.string,
-//   number: t.type({
-//     x: t.number,
-//     y: t.number,
-//     z: t.number,
-//   }),
-// });
+const HelloMultiplyCodec = t.type({
+  name: t.string,
+  location: t.string,
+  number: t.type({
+    x: t.number,
+    y: t.number,
+    z: t.number,
+  }),
+  // numbers: t.array(t.number),
+  // objects: t.array(t.type({
+  //   x: t.number,
+  //   y: t.string
+  // }))
+});
 
-// const helloMultiply = (args: IHelloMultiply) => ({
-//   text: `Hello ${args.name} multiply ${
-//     args.number.x * args.number.y * args.number.z
-//   }`,
-//   createdAt: new Date(),
-// });
+interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
+type IHelloMultiply2 = t.TypeOf<typeof HelloMultiplyCodec>
+
+const helloMultiply = (args: IHelloMultiply) => ({
+  text: `Hello ${args.name} multiply ${
+    args.number.x * args.number.y * args.number.z
+  }`,
+  createdAt: new Date(),
+});
 
 // // Hello Reduce
 // interface IHelloReduce {
@@ -76,41 +86,41 @@ const helloAt = (args: { name: string; location: string }) => ({
 //   };
 // };
 
-const isString = (data: any) => typeof data === "string";
+// const isString = (data: any) => typeof data === "string";
 
-const isNumber = (data: any) => typeof data === "number";
+// const isNumber = (data: any) => typeof data === "number";
 
-const isBoolean = (data: any) => typeof data === "boolean";
+// const isoolean = (data: any) => typeof data === "boolean";
 
-const isArray = (data: any) => Array.isArray(data);
+// const isArray = (data: any) => Array.isArray(data);
 
 // Express Server
 const app: Application = express();
 
 app.use(express.json());
 
-app.post("/function/add", (req: Request, res: Response) => {
-  const body = req?.body;
-  if (isNumber(body.x) && isNumber(body.y)) {
-    const result = add(body?.x, body?.y);
-    res.status(200).send(`Result: ${result}`);
-  } else {
-    res.status(500).json({ error: "Error invalid codec" });
-  }
-});
+// app.post("/function/add", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   if (isNumber(body.x) && isNumber(body.y)) {
+//     const result = add(body?.x, body?.y);
+//     res.status(200).send(`Result: ${result}`);
+//   } else {
+//     res.status(500).json({ error: "Error invalid codec" });
+//   }
+// });
 
-app.post("/function/helloAt", (req: Request, res: Response) => {
-  const body = req?.body;
-  if (isString(body?.name) && isString(body?.location)) {
-    const result = helloAt({
-      name: body?.name,
-      location: body?.location,
-    });
-    res.status(200).json(result);
-  } else {
-    res.status(500).json({ error: "Error invalid codec" });
-  }
-});
+// app.post("/function/helloAt", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   if (isString(body?.name) && isString(body?.location)) {
+//     const result = helloAt({
+//       name: body?.name,
+//       location: body?.location,
+//     });
+//     res.status(200).json(result);
+//   } else {
+//     res.status(500).json({ error: "Error invalid codec" });
+//   }
+// });
 
 // app.post("/function/helloSum", (req: Request, res: Response) => {
 //   const body = req?.body;
@@ -121,21 +131,18 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 //   res.status(200).json(result);
 // });
 
-// app.post("/function/helloMultiply", (req: Request, res: Response) => {
-//   const body = req?.body;
-//   console.log(body);
-//   console.log(HelloMultiplyCodec.decode(body));
+app.post("/function/helloMultiply", (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log(body);
+  console.log(HelloMultiplyCodec.decode(body));
 
-//   if (HelloMultiplyCodec.decode(body)._tag === "Right") {
-//     const result = helloMultiply({
-//       name: body?.name,
-//       number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-//     });
-//     res.status(200).json(result);
-//   } else {
-//     res.status(500).json({ error: "Failed to validate codec" });
-//   }
-// });
+  if (HelloMultiplyCodec.decode(body)._tag === "Right") {
+    const result = helloMultiply(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "Failed to validate codec" });
+  }
+});
 
 // app.post("/function/helloReduce", (req: Request, res: Response) => {
 //   const body = req?.body;
@@ -155,6 +162,3 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 app.listen(3000, () => {
   console.log("Server start on port 3000!");
 });
-
-// isArray(data) && !data.map((r) => isNumber(r.x) && isString(r.y)).some((r) => r === false)
-// isArray(data) && data.every((r) => isNumber(r.x) && isString(r.y))

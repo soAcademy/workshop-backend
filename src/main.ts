@@ -26,11 +26,13 @@ import * as t from "io-ts";
 // Hello Multiply
 // interface IHelloMultiply {
 //   name: string;
+//   location: string;
 //   number: { x: number; y: number; z: number };
 // }
 
 const HelloMultiplyCodec = t.type({
   name: t.string,
+  location: t.string,
   number: t.type({
     x: t.number,
     y: t.number,
@@ -44,6 +46,7 @@ const HelloMultiplyCodec = t.type({
 });
 
 interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
+type IHelloMultiply2 = t.TypeOf<typeof HelloMultiplyCodec>
 
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name} multiply ${
