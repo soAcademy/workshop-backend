@@ -1,35 +1,35 @@
 import express, { Application, Request, Response } from "express";
 const app: Application = express();
 
-// res.send สำหรับ return เป็น string ใส่เป็นตัวแปรเลยไม่ได้ ต้องครอบด้วย ``
+// res.send สำหรับ return เป็น string
 // res.json get5 ออกมาเป็น json เลย
 // JSON.stringify() The value to convert to a JSON string.
 // JSON.parse() แปลง string เป็น json
 
-app.get("/", (req: Request, res: Response) => {
+app.post("/", (req: Request, res: Response) => {
   res.send("Hello Poom!");
 });
 
-app.get("/hello1", (req: Request, res: Response) => {
+app.post("/hello1", (req: Request, res: Response) => {
   res.send("Hello Poom1!");
 });
 
-app.get("/hello2", (req: Request, res: Response) => {
+app.post("/hello2", (req: Request, res: Response) => {
   res.send("Hello Poom2!");
 });
 
-app.get("/get1", (req: Request, res: Response) => {
+app.post("/get1", (req: Request, res: Response) => {
   const number1 = 15;
   res.send(`API1: ${number1}`);
 });
 
-app.get("/get2", (req: Request, res: Response) => {
+app.post("/get2", (req: Request, res: Response) => {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const sum = numbers.reduce((acc, r) => acc + r, 0);
   res.send(`API2: ${sum}`);
 });
 
-app.get("/get3", (req: Request, res: Response) => {
+app.post("/get3", (req: Request, res: Response) => {
   const profile = {
     name: "Bin",
     location: "Bangkok",
@@ -38,7 +38,7 @@ app.get("/get3", (req: Request, res: Response) => {
   res.send(profile);
 });
 
-app.get("/get4", (req: Request, res: Response) => {
+app.post("/get4", (req: Request, res: Response) => {
   const products = [
     {
       name: "Collagen",
@@ -52,7 +52,7 @@ app.get("/get4", (req: Request, res: Response) => {
   res.send(products);
 });
 
-app.get("/get5", (req: Request, res: Response) => {
+app.post("/get5", (req: Request, res: Response) => {
   const products = [
     {
       name: "Collagen",
