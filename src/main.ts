@@ -1,16 +1,22 @@
 import express, { Application, Request, Response } from "express";
+import * as t from "io-ts";
 
+const AddCodec = t.record(t.unknown,t.number)
 const add = (x: number, y: number) => x + y;
+const HelloAtCodec = t.type({ name: t.string, location: t.string });
 const helloAt = (args: { name: string; location: string }) => {
   return {
     text: `Hello ${args.name} at ${args.location}`,
     createdAt: new Date(),
   };
 };
-const helloSum = (args: {
-  name: string;
-  numbers: { x: number; y: number; z: number };
-}) => {
+
+const HelloSumCodec = t.type({
+  name: t.string,
+  numbers: t.type({ x: t.number, y: t.number, z: t.number }),
+});
+interface IHelloSum extends t.TypeOf<typeof HelloSumCodec> {}
+const helloSum = (args: IHelloSum) => {
   const numbers = args.numbers;
   return {
     text: `Hello ${args.name}`,
@@ -18,10 +24,15 @@ const helloSum = (args: {
   };
 };
 
-interface IHelloMultiply {
-  name: string;
-  numbers: { x: number; y: number; z: number };
-}
+const HelloMultiplyCodec = t.type({
+  name: t.string,
+  numbers: t.type({
+    x: t.number,
+    y: t.number,
+    z: t.number,
+  }),
+});
+interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
 const helloMultiply = (args: IHelloMultiply) => {
   const numbers = args.numbers;
   return {
@@ -30,32 +41,30 @@ const helloMultiply = (args: IHelloMultiply) => {
   };
 };
 
-interface IHelloReduce {
-  name: string;
-  numbers: number[];
-}
+const HelloReduceCodec = t.type({
+  name: t.string,
+  numbers: t.record(t.unknown, t.number),
+});
+interface IHelloReduce extends t.TypeOf<typeof HelloReduceCodec> {}
 const helloReduce = (args: IHelloReduce) => {
   const numbers = Object.values(args.numbers).map((e) => Number(e));
-  if (numbers.findIndex((number) => Number.isNaN(number)) === -1) {
-    const result = numbers.reduce((acc, e) => acc + e, 0);
-    return {
-      text: `Hello ${args.name}`,
-      result: result,
-    };
-  } else {
-    const error = new Error("TYPE ERROR !! (numbers)");
-    throw error.message;
-  }
+  const result = numbers.reduce((acc, e) => acc + e, 0);
+  return {
+    text: `Hello ${args.name}`,
+    result: result,
+  };
 };
-interface IHelloOrder {
-  name: string;
-  orders: { product: string; price: number }[];
-}
+const HelloOrdersCodec = t.type({
+  name: t.string,
+  orders: t.array(
+    t.type({
+      product: t.string,
+      price: t.number,
+    })
+  ),
+});
+interface IHelloOrder extends t.TypeOf<typeof HelloOrdersCodec> {}
 const helloOrders = (args: IHelloOrder) => {
-  // if (
-  //   args.orders.findIndex((order) => order.product === undefined) === -1 &&
-  //   args.orders.findIndex((order) => typeof order.product !== "string") === -1
-  // ) {
   const orders = args.orders.map((e) => e.product);
   const total = args.orders.reduce((acc, e) => acc + e.price, 0);
 
@@ -65,10 +74,6 @@ const helloOrders = (args: IHelloOrder) => {
     total: total,
     createdAt: new Date(),
   };
-  // } else {
-  //   const error = new Error("TYPE ERROR");
-  //   throw error.message;
-  // }
 };
 
 const app: Application = express();
@@ -77,90 +82,59 @@ app.use(express.json());
 
 app.post("/function/add", (req: Request, res: Response) => {
   const body = req?.body;
+  if (AddCodec.decode(body)._tag === 'Right') {
   const result = add(body.x, body.y);
-  typeof result === "number"
-    ? res.status(200).json(result)
-    : res.status(500).send("TYPE ERROR");
+    res.status(200).json(result)
+  } else {
+    res.status(500).send('Failed to validate codec')
+  }
 });
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloAt(body);
-  res.status(200).json(result);
+  if (HelloAtCodec.decode(body)._tag === "Right") {
+    const result = helloAt(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
 });
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  if (typeof body.name === "string") {
-    if (body.numbers) {
-      const result = helloSum(body);
-      typeof result.result === "number"
-        ? res.status(200).json(result)
-        : res.status(500).send("TYPE ERROR");
-    } else {
-      res.status(500).send("NUMBERS NOT FOUND");
-    }
+  if (HelloSumCodec.decode(body)._tag === "Right") {
+    const result = helloSum(body);
+    res.status(200).json(result);
   } else {
-    res.status(500).send("NAME NOT FOUND");
+    res.status(500).send("Failed to validate codec");
   }
 });
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
-  try {
-    const body = req?.body;
-    if (typeof body.name === "string") {
-      if (body.numbers) {
-        const result = helloMultiply(body);
-        !Number.isNaN(result.result)
-          ? res.status(200).json(result)
-          : res.status(500).send("TYPE ERROR");
-      } else {
-        res.status(500).send("NUMBERS NOT FOUND");
-      }
-    } else {
-      res.status(500).send("NAME NOT FOUND");
-    }
-  } catch (err) {
-    res.status(500).send(err);
+  const body = req?.body;
+  if (HelloMultiplyCodec.decode(body)._tag === "Right") {
+    const result = helloMultiply(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).send("Failed to validate codec");
   }
 });
 app.post("/function/helloReduce", (req: Request, res: Response) => {
-  try {
-    const body = req.body;
-    if (typeof body.name === "string") {
-      if (body.numbers) {
-        const result = helloReduce(body);
-        res.status(200).json(result);
-      } else {
-        res.status(500).send("number not found");
-      }
-    } else {
-      res.status(500).send("NAME NOT FOUND");
-    }
-  } catch (e) {
-    res.status(500).send(e);
+  const body = req.body;
+  if (HelloReduceCodec.decode(body)._tag === "Right") {
+    const result = helloReduce(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).send("Failed to validate codec");
   }
 });
 
 app.post("/function/helloOrders", (req: Request, res: Response) => {
-  try {
-    const body = req?.body;
-    if (typeof body.name === "string") {
-      if (body.orders && body.orders.length > 0) {
-        const result = helloOrders(body);
-        result.total &&
-        typeof result.total === "number" &&
-        result.orders.findIndex((order: any) => typeof order !== "string") ===
-          -1
-          ? res.status(200).json(result)
-          : res.status(500).send("TYPE ERROR");
-      } else {
-        res.status(500).send("ORDERS NOT FOUND");
-      }
-    } else {
-      res.status(500).send("NAME NOT FOUND");
-    }
-  } catch (err) {
-    res.status(500).send(err);
+  const body = req?.body;
+  if (HelloOrdersCodec.decode(body)._tag === "Right") {
+    const result = helloOrders(body);
+    res.status(200).json(result);
+  } else {
+    res.status(500).send("Failed to validate codec");
   }
 });
 
