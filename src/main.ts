@@ -52,15 +52,23 @@ interface IHelloOrder {
   orders: { product: string; price: number }[];
 }
 const helloOrders = (args: IHelloOrder) => {
-  const orders = args.orders.map((e) => e.product);
-  const total = args.orders.reduce((acc, e) => acc + e.price, 0);
+  if (
+    args.orders.findIndex((order) => order.product === undefined) === -1 &&
+    args.orders.findIndex((order) => typeof order.product !== "string") === -1
+  ) {
+    const orders = args.orders.map((e) => e.product);
+    const total = args.orders.reduce((acc, e) => acc + e.price, 0);
 
-  return {
-    text: `Hello ${args.name}`,
-    orders: orders,
-    total: total,
-    createdAt: new Date(),
-  };
+    return {
+      text: `Hello ${args.name}`,
+      orders: orders,
+      total: total,
+      createdAt: new Date(),
+    };
+  } else {
+    const error = new Error("TYPE ERROR");
+    throw error.message;
+  }
 };
 
 const app: Application = express();
@@ -83,7 +91,7 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  if (body.name) {
+  if (typeof body.name === "string") {
     if (body.numbers) {
       const result = helloSum(body);
       typeof result.result === "number"
@@ -99,7 +107,7 @@ app.post("/function/helloSum", (req: Request, res: Response) => {
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   try {
     const body = req?.body;
-    if (body.name) {
+    if (typeof body.name === "string") {
       if (body.numbers) {
         const result = helloMultiply(body);
         !Number.isNaN(result.result)
@@ -118,7 +126,7 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   try {
     const body = req.body;
-    if (body.name) {
+    if (typeof body.name === "string") {
       if (body.numbers) {
         const result = helloReduce(body);
         res.status(200).json(result);
@@ -136,7 +144,7 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
 app.post("/function/helloOrders", (req: Request, res: Response) => {
   try {
     const body = req?.body;
-    if (body.name) {
+    if (typeof body.name === "string") {
       if (body.orders && body.orders.length > 0) {
         const result = helloOrders(body);
         typeof result.total === "number"
