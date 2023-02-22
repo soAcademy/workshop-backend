@@ -55,6 +55,13 @@ const HelloMultiplyCodec = t.type({
   // }))
 });
 
+console.log(HelloReduceCodec.decode(
+  {
+    name: "Bin",
+    numbers: [1, 2, 3]
+  }
+))
+
 interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
 type IHelloMultiply2 = t.TypeOf<typeof HelloMultiplyCodec>
 

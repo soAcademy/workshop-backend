@@ -30,6 +30,16 @@ import * as t from "io-ts";
 //   number: { x: number; y: number; z: number };
 // }
 
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+
+const HelloReduceCodec = t.type({
+  name: t.string,
+  numbers: t.array(t.number),
+})
+
 const HelloMultiplyCodec = t.type({
   name: t.string,
   location: t.string,
@@ -44,6 +54,13 @@ const HelloMultiplyCodec = t.type({
   //   y: t.string
   // }))
 });
+
+console.log(HelloReduceCodec.decode(
+  {
+    name: "Bin",
+    numbers: [1, 2, 3]
+  }
+))
 
 interface IHelloMultiply extends t.TypeOf<typeof HelloMultiplyCodec> {}
 type IHelloMultiply2 = t.TypeOf<typeof HelloMultiplyCodec>
