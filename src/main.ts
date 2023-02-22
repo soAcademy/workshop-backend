@@ -1,55 +1,27 @@
-import express, { Application, Request, Response, application } from "express";
-import axios from "axios";
+import express, { Application, Request, Response } from "express";
 
 const app: Application = express();
 
-// สร้าง Nested Path
-// Purpose of Nested = ความสวยงานของ Endpoint จะไม่มี ?
-
-// ต้องเพิ่มบรรทัดนี้เพื่อให้ POST method รับข้อมูลแบบ json ได้
-app.use(express.json());
-
-app.get("/get/nested1", (req: Request, res: Response) => {
-  res.status(200).send("Nested1");
+app.listen(3000, () => {
+  console.log("Server start on port 3000!");
 });
 
-app.get("/get/nested2/:id", (req: Request, res: Response) => {
-  const params = req?.params;
-  console.log(params);
-  res.status(200).send(`id: ${params.id}`);
-});
+const f1 = (x: number, y: number) => Math.min(x, y);
+const f2 = (x: string, y: string) => x + y
+const f3 = (x: boolean, y: number) => (x ? y : -y)
+const f4 = (x: Date) => new Date(x).toLocaleDateString()
+const f5 = (x: number[]) => x.reduce((acc, r) => acc + r, 0)
+const f6 = (x: string[]) => x.join("###")
+const f7 = (x: {a1: number; a2: number}) => x.a1 + x.a2;
+const f8 = (x:{a1: number; a2: number[]}) => x.a1 + x.a2.reduce((acc, r) => acc + r,0)
+const f9 = (x: {a1: string; a2: number}[]) => x[0].a2 + x[1].a2
 
-app.get("/get/nested3/:id/:title", (req: Request, res: Response) => {
-  const params = req?.params;
-  console.log(params);
-  res.status(200).send(`id: ${params?.id}, title: ${params?.title}`);
-});
-
-app.get("/get/nested4", (req: Request, res: Response) => {
-  const obj1 = {
-    a1: 1,
-    a2: 2,
-  };
-  const obj2 = {
-    b1: 11,
-    b2: 22,
-  };
-  res.status(200).json({ obj1, obj2 });
-});
-
-app.get("/get/nested5", (req: Request, res: Response) => {
-  const obj1 = {
-    a1: 1,
-    a2: 2,
-  };
-  const obj2 = {
-    b1: 11,
-    b2: 22,
-  };
-  res.status(200).json([ obj1, obj2 ]);
-});
-
-
-app.listen(3500, () => {
-  console.log("Server start on port 3500!");
-});
+console.log(f1(1,5))
+console.log(f2("hello", "Kor"))
+console.log(f3(true, 5))
+console.log(f4(new Date()))
+console.log(f5([1,2,3,4,5]))
+console.log(f6(["hello", "bin", "world"]))
+console.log(f7({a1: 10, a2: 20}))
+console.log(f8({a1:10, a2: [20,30,40]}))
+console.log(f9([{a1: "bin", a2: 10}, {a1:"world", a2: 20}]))
