@@ -62,6 +62,8 @@ const isString = (data: any) => typeof data === "string";
 
 const isObject = (data: any) => typeof data === "object";
 
+const isArray = (data: any) => Array.isArray(data);
+
 const app: Application = express();
 
 app.use(express.json());
@@ -126,11 +128,19 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
 
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloReduce({
-    name: body?.name,
-    numbers: body?.numbers,
-  });
-  res.status(200).json(result);
+  if (
+    isString(body?.name) &&
+    isArray(body?.numbers) &&
+    body?.numbers.every(isNumber)
+  ) {
+    const result = helloReduce({
+      name: body?.name,
+      numbers: body?.numbers,
+    });
+    res.status(200).json(result);
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
+  }
 });
 
 app.post("/function/helloOrder", (req: Request, res: Response) => {
