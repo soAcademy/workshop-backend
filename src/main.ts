@@ -40,6 +40,22 @@ const helloReduce = (args: IHelloReduce) => {
   return { text: `Hello ${args.name} reduce ${result}`, createdAt: new Date() };
 };
 
+interface IHelloOrder {
+  name: string;
+  orders: {
+    product: string;
+    price: number;
+  }[];
+}
+
+const helloOrder = (args: IHelloOrder) => {
+  const result = args.orders.reduce(
+    (accPrice, order) => accPrice + order.price,
+    0
+  );
+  return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
+};
+
 const app: Application = express();
 
 app.use(express.json());
@@ -80,6 +96,12 @@ app.post("/function/helloReduce", (req: Request, res: Response) => {
     name: body?.name,
     numbers: body?.numbers,
   });
+  res.status(200).json(result);
+});
+
+app.post("/function/helloOrder", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloOrder(body);
   res.status(200).json(result);
 });
 
