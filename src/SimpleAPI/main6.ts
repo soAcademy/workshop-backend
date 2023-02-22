@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import axios from "axios";
+import { request } from "http";
 
 const app: Application = express();
 app.use(express.json());
@@ -50,6 +51,7 @@ app.post("/post/helloSum", (req: Request, res: Response) => {
   res.status(200).json(result);
 });
 
+//ส่ง interface เข้าไปใน function
 interface IHelloMultiply {
   name: string;
   number: { x: number; y: number; z: number };
@@ -67,6 +69,47 @@ app.post("/post/helloMultiply", (req: Request, res: Response) => {
     name: body?.name,
     number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
   });
+  res.status(200).json(result);
+});
+
+interface IHelloReduce {
+  numbers: number[];
+  name: string;
+}
+
+const helloReduce = (args: IHelloReduce) => ({
+  text: `Hello ${args.name}! sum${args.numbers.reduce((acc, r) => acc + r, 0)}`,
+  createdAt: new Date(),
+});
+
+app.post("/post/helloReduce", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloReduce({
+    name: body?.name,
+    numbers: body?.numbers,
+  });
+  res.status(200).json(result);
+});
+
+interface IHelloOrder {
+  name: string;
+  orders: {
+    product: string;
+    price: number;
+  }[];
+}
+
+const helloOrder = (args: IHelloOrder) => {
+  const result = args.orders.reduce((acc, r) => acc + r.price, 0);
+  return {
+    text: `Hello ${args.name} order ${result}`,
+    createdAt: new Date(),
+  };
+};
+
+app.post("/post/helloOrder", (req: Request, res: Response) => {
+  const body = req?.body;
+  const result = helloOrder(body);
   res.status(200).json(result);
 });
 
