@@ -76,6 +76,11 @@ const helloOrder = (args:IHelloOrder) => {
 // 2. อย่าลืม เปิด listen port ก่อนยิงจ้า
 
 
+const maybeNumber = (data: any) => typeof data === "number";
+const maybeString = (data: any) => typeof data === "string";
+const maybeBoolean = (data: any) => typeof data === "boolean";
+const maybeArray = (data: any) => Array.isArray(data);
+
 
 // ###################################################################
 //                          Express Server
@@ -84,27 +89,39 @@ const helloOrder = (args:IHelloOrder) => {
 
 app.post("/function/add", (req:Request,res:Response)=>{
   const body = req?.body;
+  if(maybeNumber(body.x) && maybeNumber(body.y)) {
   const result = add(body?.x,body?.y);
-  res.status(200).send(`Result: ${result}`);
+  res.status(200).send(`Result: ${result}`)
   //.send = เพราะเป็น string
+  } else {
+    res.status(500).json({error: "Server Error invalid codec"});
+  }
 })
 
 app.post("/function/helloAt", (req: Request, res: Response) => {
   const body = req?.body;
+  if(maybeString(body.name) && maybeString(body.location)) {
   const result = helloAt({
     name: body?.name,
     location: body?.location,
   });
   res.status(200).json(result);
-});
+}else{
+  res.status(500).json({error:"Server Error invalid codec"})
+}
+})
 
 app.post("/function/helloSum", (req:Request, res:Response)=> {
   const body = req.body;
+  if(maybeString(body.name) && maybeNumber(body.number)) {
  const result = helloSum({
   name: body?.name,
   number: {x:body.number.x, y:body.number.y, z:body.number.z}
  });
- res.status(200).json(result);
+ res.status(200).json(result)
+} else {
+  res.status(500).json({error:"Server Error invalid codec"})
+}
 })
 
 app.post("/function/helloMultiply", (req:Request,res:Response)=>{
