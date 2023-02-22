@@ -68,7 +68,7 @@ app.post("/function/add", (req: Request, res: Response) => {
     const result = add(body?.x, body?.y);
     res.status(200).send(`Result: ${result}`);
   } else {
-    res.status(500).send("ERROR: invalid request (codec)");
+    res.status(500).json({ error: "ERROR: invalid request (manual codec)" });
   }
 });
 
