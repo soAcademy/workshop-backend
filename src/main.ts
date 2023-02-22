@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import axios from "axios";
+import { isJsxClosingFragment } from "typescript";
 
 const add = (x: number, y: number) => {
   return x + y;
@@ -174,4 +175,55 @@ console.log(
     { a1: "Hello", a2: 25 },
     { a1: "earth", a2: 3 },
   ])
+);
+
+// Interface
+interface IF10Args {
+  a1: string;
+  a2: number;
+}
+const f10 = (x: IF10Args[]) => x[0].a2 + x[1].a2;
+console.log(
+  f10([
+    { a1: "Earth", a2: 25 },
+    { a1: "Earth", a2: 30 },
+  ])
+);
+interface IF11Args {
+  a1: number | string;
+  a2: number | string;
+}
+const f11 = (x: IF11Args) => `${x.a1} ${x.a2}`;
+console.log(f11({ a1: "Hello", a2: 15 }));
+interface IF12Args {
+  num1: number[];
+}
+const f12 = (x: IF12Args) => x.num1.reduce((acc, e) => acc + e, 0);
+console.log(f12({ num1: [12, 3, 3, 4] }));
+interface IF13Args {
+  a1: number;
+  a2: string;
+  a3: IF12Args;
+}
+const f13 = (x: IF13Args) => x.a3.num1.reduce((acc, e) => acc + e, 0);
+console.log(f13({ a1: 14, a2: "Hello", a3: { num1: [12, 2, 3, 4] } }));
+interface IF14Args extends IF13Args {
+  a4: boolean;
+}
+const f14 = (x: IF14Args) => x.a4 && x.a3.num1.reduce((acc, e) => acc + e, 0);
+console.log(f14({ a1: 14, a2: "Hello", a3: { num1: [1, 2, 3, 4] }, a4: true }));
+
+interface IF15Args {
+  data: IF14Args[];
+}
+const f15 = (x: IF15Args) =>
+  x.data[0].a3.num1.reduce((acc, e) => acc + e, 0) +
+  x.data[1].a3.num1.reduce((acc, e) => acc + e, 0);
+console.log(
+  f15({
+    data: [
+      { a1: 14, a2: "Hello", a3: { num1: [1, 2, 3, 4] }, a4: true },
+      { a1: 14, a2: "Hello", a3: { num1: [1, 2, 3, 4] }, a4: true },
+    ],
+  })
 );
