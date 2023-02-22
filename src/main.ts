@@ -17,38 +17,50 @@ const helloSum = (args: {
     result: numbers.x + numbers.y + numbers.z,
   };
 };
-const helloMultiply = (args: {
+
+interface IHelloMultiply {
   name: string;
   numbers: { x: number; y: number; z: number };
-}) => {
+}
+const helloMultiply = (args: IHelloMultiply) => {
   const numbers = args.numbers;
   return {
     text: `Hello ${args.name}`,
     result: numbers.x * numbers.y * numbers.z,
   };
 };
-const helloReduce = (args: { name: string; numbers: number[] }) => {
-  try {
-    if (args.numbers.length > 0 || args.name !== undefined) {
-      const numbers = Object.values(args.numbers).map((e) => Number(e));
-      if (numbers.findIndex((number) => Number.isNaN(number)) === -1) {
-        const result = numbers.reduce((acc, e) => acc + e, 0);
-        return {
-          text: `Hello ${args.name}`,
-          result: result,
-        };
-      } else {
-        const error = new Error("TYPE ERROR (number)");
-        return error.message;
-      }
-    } else {
-      const error = new Error("Name not found");
-      return error.message;
-    }
-  } catch {
-    const error = new Error("Numbers not found");
-    return error.message;
+
+interface IHelloReduce {
+  name: string;
+  numbers: number[];
+}
+const helloReduce = (args: IHelloReduce) => {
+  const numbers = Object.values(args.numbers).map((e) => Number(e));
+  if (numbers.findIndex((number) => Number.isNaN(number)) === -1) {
+    const result = numbers.reduce((acc, e) => acc + e, 0);
+    return {
+      text: `Hello ${args.name}`,
+      result: result,
+    };
+  } else {
+    const error = new Error("TYPE ERROR !! (numbers)");
+    throw error.message;
   }
+};
+interface IHelloOrder {
+  name: string;
+  orders: { product: string; price: number }[];
+}
+const helloOrders = (args: IHelloOrder) => {
+  const orders = args.orders.map((e) => e.product);
+  const total = args.orders.reduce((acc, e) => acc + e.price, 0);
+
+  return {
+    text: `Hello ${args.name}`,
+    orders: orders,
+    total: total,
+    createdAt: new Date(),
+  };
 };
 
 const app: Application = express();
@@ -71,18 +83,34 @@ app.post("/function/helloAt", (req: Request, res: Response) => {
 
 app.post("/function/helloSum", (req: Request, res: Response) => {
   const body = req?.body;
-  const result = helloSum(body);
-  typeof result.result === "number"
-    ? res.status(200).json(result)
-    : res.status(500).send("TYPE ERROR");
+  if (body.name) {
+    if (body.numbers) {
+      const result = helloSum(body);
+      typeof result.result === "number"
+        ? res.status(200).json(result)
+        : res.status(500).send("TYPE ERROR");
+    } else {
+      res.status(500).send("NUMBERS NOT FOUND");
+    }
+  } else {
+    res.status(500).send("NAME NOT FOUND");
+  }
 });
 app.post("/function/helloMultiply", (req: Request, res: Response) => {
   try {
     const body = req?.body;
-    const result = helloMultiply(body);
-    !Number.isNaN(result.result)
-      ? res.status(200).json(result)
-      : res.status(500).send("TYPE ERROR");
+    if (body.name) {
+      if (body.numbers) {
+        const result = helloMultiply(body);
+        !Number.isNaN(result.result)
+          ? res.status(200).json(result)
+          : res.status(500).send("TYPE ERROR");
+      } else {
+        res.status(500).send("NUMBERS NOT FOUND");
+      }
+    } else {
+      res.status(500).send("NAME NOT FOUND");
+    }
   } catch (err) {
     res.status(500).send(err);
   }
@@ -90,10 +118,38 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
 app.post("/function/helloReduce", (req: Request, res: Response) => {
   try {
     const body = req.body;
-    const result = helloReduce(body);
-    res.status(200).json(result);
+    if (body.name) {
+      if (body.numbers) {
+        const result = helloReduce(body);
+        res.status(200).json(result);
+      } else {
+        res.status(500).send("number not found");
+      }
+    } else {
+      res.status(500).send("NAME NOT FOUND");
+    }
   } catch (e) {
     res.status(500).send(e);
+  }
+});
+
+app.post("/function/helloOrders", (req: Request, res: Response) => {
+  try {
+    const body = req?.body;
+    if (body.name) {
+      if (body.orders && body.orders.length > 0) {
+        const result = helloOrders(body);
+        typeof result.total === "number"
+          ? res.status(200).json(result)
+          : res.status(500).send("TYPE ERROR");
+      } else {
+        res.status(500).send("orders not found");
+      }
+    } else {
+      res.status(500).send("NAME NOT FOUND");
+    }
+  } catch (err) {
+    res.status(500).send(err);
   }
 });
 
