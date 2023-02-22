@@ -27,6 +27,29 @@ const helloMultiply = (args: {
     result: numbers.x * numbers.y * numbers.z,
   };
 };
+const helloReduce = (args: { name: string; numbers: number[] }) => {
+  try {
+    if (args.numbers.length > 0 || args.name !== undefined) {
+      const numbers = Object.values(args.numbers).map((e) => Number(e));
+      if (numbers.findIndex((number) => Number.isNaN(number)) === -1) {
+        const result = numbers.reduce((acc, e) => acc + e, 0);
+        return {
+          text: `Hello ${args.name}`,
+          result: result,
+        };
+      } else {
+        const error = new Error("TYPE ERROR (number)");
+        return error.message;
+      }
+    } else {
+      const error = new Error("Name not found");
+      return error.message;
+    }
+  } catch {
+    const error = new Error("Numbers not found");
+    return error.message;
+  }
+};
 
 const app: Application = express();
 
@@ -57,11 +80,20 @@ app.post("/function/helloMultiply", (req: Request, res: Response) => {
   try {
     const body = req?.body;
     const result = helloMultiply(body);
-    !(Number.isNaN(result.result))
+    !Number.isNaN(result.result)
       ? res.status(200).json(result)
       : res.status(500).send("TYPE ERROR");
   } catch (err) {
     res.status(500).send(err);
+  }
+});
+app.post("/function/helloReduce", (req: Request, res: Response) => {
+  try {
+    const body = req.body;
+    const result = helloReduce(body);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
