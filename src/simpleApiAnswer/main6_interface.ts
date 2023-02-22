@@ -106,3 +106,28 @@ const f14_4 = (args: IF14Args) =>
 const f14_5 = (args: IF14Args): IF14Result => ({ a1: 3, a2: "Bin" });
 
 const f14_6 = (args: IF14Args) => ({ a1: 3, a2: "Bin" } as IF14Result);
+
+const f15 = (args: IF15Args) => args.data;
+
+console.log(
+  f15({
+    data: [
+      {
+        a1: 10,
+        a2: "Bin",
+        a3: {
+          num1: [1, 2, 3],
+        },
+        a4: true,
+      },
+      {
+        a1: 100,
+        a2: "Bin2",
+        a3: {
+          num1: [1, 2, 3, 4],
+        },
+        a4: false,
+      },
+    ],
+  })
+);
