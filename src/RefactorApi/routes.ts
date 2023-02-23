@@ -1,4 +1,4 @@
-import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrdersHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./RefactorApi/handler";
+import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrdersHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./handler";
 
 export const AppRoutes = [
   {
