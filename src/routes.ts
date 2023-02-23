@@ -3,6 +3,8 @@ import {
   functionHelloAtHandler,
   functionHelloSumHandler,
   functionHelloMultiplyHandler,
+  functionHelloReduceHandler,
+  functionHelloOrderHandler,
 } from "./refactorApi";
 
 export const AppRoutes = [
@@ -25,5 +27,15 @@ export const AppRoutes = [
     path: "/function/helloMultiply",
     method: "post",
     action: functionHelloMultiplyHandler,
+  },
+  {
+    path: "/function/helloReduce",
+    method: "post",
+    action: functionHelloReduceHandler,
+  },
+  {
+    path: "/function/helloOrder",
+    method: "post",
+    action: functionHelloOrderHandler,
   },
 ];

@@ -1,4 +1,8 @@
-import { IHelloMultiply } from "./mathFunctions.interfaces";
+import {
+  IHelloMultiply,
+  IHelloOrder,
+  IHelloReduce,
+} from "./mathFunctions.interfaces";
 
 export const add = (x: number, y: number) => x + y;
 
@@ -23,3 +27,16 @@ export const helloMultiply = (args: IHelloMultiply) => ({
   }`,
   createdAt: new Date(),
 });
+
+export const helloReduce = (args: IHelloReduce) => {
+  const result = args.numbers.reduce((acc, n) => acc + n, 0);
+  return { text: `Hello ${args.name} reduce ${result}`, createdAt: new Date() };
+};
+
+export const helloOrder = (args: IHelloOrder) => {
+  const result = args.orders.reduce(
+    (accPrice, order) => accPrice + order.price,
+    0
+  );
+  return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
+};

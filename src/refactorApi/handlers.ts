@@ -5,8 +5,17 @@ import {
   HelloAtCodec,
   HelloSumCodec,
   HelloMultiplyCodec,
+  HelloReduceCodec,
+  HelloOrderCodec,
 } from "./mathFunctions.interfaces";
-import { add, helloAt, helloMultiply, helloSum } from "./mathFunctions";
+import {
+  add,
+  helloAt,
+  helloSum,
+  helloMultiply,
+  helloReduce,
+  helloOrder,
+} from "./mathFunctions";
 
 export const functionAddHandler = (req: Request, res: Response) => {
   {
@@ -57,6 +66,33 @@ export const functionHelloMultiplyHandler = (req: Request, res: Response) => {
         name: body?.name,
         number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
       });
+      res.status(200).json(result);
+    } else {
+      res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+    }
+  }
+};
+
+export const functionHelloReduceHandler = (req: Request, res: Response) => {
+  {
+    const body = req?.body;
+    if (HelloReduceCodec.decode(body)._tag === "Right") {
+      const result = helloReduce({
+        name: body?.name,
+        numbers: body?.numbers,
+      });
+      res.status(200).json(result);
+    } else {
+      res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+    }
+  }
+};
+
+export const functionHelloOrderHandler = (req: Request, res: Response) => {
+  {
+    const body = req?.body;
+    if (HelloOrderCodec.decode(body)._tag === "Right") {
+      const result = helloOrder(body);
       res.status(200).json(result);
     } else {
       res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });

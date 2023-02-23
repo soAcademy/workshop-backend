@@ -1,6 +1,6 @@
 // import axios from "axios";
 import express, { Application, Request, Response } from "express";
-import * as t from "io-ts";
+// import * as t from "io-ts";
 import { AppRoutes } from "./routes";
 
 // const AddCodec = t.type({ x: t.number, y: t.number });
@@ -57,46 +57,46 @@ import { AppRoutes } from "./routes";
 //   createdAt: new Date(),
 // });
 
-interface IHelloReduce {
-  name: string;
-  numbers: number[];
-}
+// interface IHelloReduce {
+//   name: string;
+//   numbers: number[];
+// }
 
-const HelloReduceCodec = t.type({
-  name: t.string,
-  numbers: t.array(t.number),
-});
+// const HelloReduceCodec = t.type({
+//   name: t.string,
+//   numbers: t.array(t.number),
+// });
 
-const helloReduce = (args: IHelloReduce) => {
-  const result = args.numbers.reduce((acc, n) => acc + n, 0);
-  return { text: `Hello ${args.name} reduce ${result}`, createdAt: new Date() };
-};
+// const helloReduce = (args: IHelloReduce) => {
+//   const result = args.numbers.reduce((acc, n) => acc + n, 0);
+//   return { text: `Hello ${args.name} reduce ${result}`, createdAt: new Date() };
+// };
 
-interface IHelloOrder {
-  name: string;
-  orders: {
-    product: string;
-    price: number;
-  }[];
-}
+// interface IHelloOrder {
+//   name: string;
+//   orders: {
+//     product: string;
+//     price: number;
+//   }[];
+// }
 
-const HelloOrderCodec = t.type({
-  name: t.string,
-  orders: t.array(
-    t.type({
-      product: t.string,
-      price: t.number,
-    })
-  ),
-});
+// const HelloOrderCodec = t.type({
+//   name: t.string,
+//   orders: t.array(
+//     t.type({
+//       product: t.string,
+//       price: t.number,
+//     })
+//   ),
+// });
 
-const helloOrder = (args: IHelloOrder) => {
-  const result = args.orders.reduce(
-    (accPrice, order) => accPrice + order.price,
-    0
-  );
-  return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
-};
+// const helloOrder = (args: IHelloOrder) => {
+//   const result = args.orders.reduce(
+//     (accPrice, order) => accPrice + order.price,
+//     0
+//   );
+//   return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
+// };
 
 // const isNumber = (data: any) => typeof data === "number";
 
@@ -173,40 +173,40 @@ app.use(express.json());
 //   }
 // });
 
-app.post("/function/helloReduce", (req: Request, res: Response) => {
-  const body = req?.body;
-  if (
-    // isString(body?.name) &&
-    // isArray(body?.numbers) &&
-    // body?.numbers.every(isNumber)
-    HelloReduceCodec.decode(body)._tag === "Right"
-  ) {
-    const result = helloReduce({
-      name: body?.name,
-      numbers: body?.numbers,
-    });
-    res.status(200).json(result);
-  } else {
-    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
-  }
-});
+// app.post("/function/helloReduce", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   if (
+//     // isString(body?.name) &&
+//     // isArray(body?.numbers) &&
+//     // body?.numbers.every(isNumber)
+//     HelloReduceCodec.decode(body)._tag === "Right"
+//   ) {
+//     const result = helloReduce({
+//       name: body?.name,
+//       numbers: body?.numbers,
+//     });
+//     res.status(200).json(result);
+//   } else {
+//     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+//   }
+// });
 
-app.post("/function/helloOrder", (req: Request, res: Response) => {
-  const body = req?.body;
-  if (
-    // isString(body?.name) &&
-    // isArray(body?.orders) &&
-    // body?.orders.every(isObject) &&
-    // body?.orders.every((order: any) => isString(order.product)) &&
-    // body?.orders.every((order: any) => isNumber(order.price))
-    HelloOrderCodec.decode(body)._tag === "Right"
-  ) {
-    const result = helloOrder(body);
-    res.status(200).json(result);
-  } else {
-    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
-  }
-});
+// app.post("/function/helloOrder", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   if (
+//     // isString(body?.name) &&
+//     // isArray(body?.orders) &&
+//     // body?.orders.every(isObject) &&
+//     // body?.orders.every((order: any) => isString(order.product)) &&
+//     // body?.orders.every((order: any) => isNumber(order.price))
+//     HelloOrderCodec.decode(body)._tag === "Right"
+//   ) {
+//     const result = helloOrder(body);
+//     res.status(200).json(result);
+//   } else {
+//     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+//   }
+// });
 
 app.listen(8000, () => {
   console.log("Server start on port 8000!");
