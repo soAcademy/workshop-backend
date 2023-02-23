@@ -1,5 +1,4 @@
-import express, { Application, Request, Response } from "express";
-// import * as t from "io-ts";
+import { Request, Response } from "express";
 import {
   AddCodec,
   HelloAtCodec,
@@ -20,7 +19,6 @@ import {
 export const functionAddHandler = (req: Request, res: Response) => {
   {
     const body = req?.body;
-    // if (isNumber(body?.x) && isNumber(body?.y)) {
     if (AddCodec.decode(body)._tag === "Right") {
       const result = add(body?.x, body?.y);
       res.status(200).send(`Result: ${result}`);
@@ -33,7 +31,6 @@ export const functionAddHandler = (req: Request, res: Response) => {
 export const functionHelloAtHandler = (req: Request, res: Response) => {
   {
     const body = req?.body;
-    // if (isString(body?.name) && isString(body?.location)) {
     if (HelloAtCodec.decode(body)._tag === "Right") {
       const result = helloAt({ name: body?.name, location: body?.location });
       res.status(200).json(result);
