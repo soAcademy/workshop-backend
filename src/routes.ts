@@ -1,19 +1,14 @@
-import { createTaskHandler, getTasksHandler, updateTaskHandler } from "./todoList";
+import { functionAddHandler, functionHelloMultiplyHandler } from "./refactorApi";
 
 export const AppRoutes = [
   {
-    path: "/todolist/createTask",
+    path: "/function/add",
     method: "post",
-    action: createTaskHandler,
+    action: functionAddHandler,
   },
   {
-    path: "/todolist/getTasks",
+    path: "/function/helloMultiply",
     method: "post",
-    action: getTasksHandler,
-  },
-  {
-    path: "/todolist/updateTask",
-    method: "post",
-    action: updateTaskHandler,
+    action: functionHelloMultiplyHandler,
   },
 ];

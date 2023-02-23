@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./routes";
 
 // Express Server
@@ -9,7 +9,7 @@ app.use(express.json());
 AppRoutes.forEach((route) => {
   app[route.method as keyof Application](
     route.path,
-    (request: express.Request, response: express.Response) =>
+    (request: Request, response: Response) =>
       route.action(request, response),
   );
 });

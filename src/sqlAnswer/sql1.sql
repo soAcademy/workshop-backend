@@ -1,27 +1,27 @@
-create table public.categories (
-	id SERIAL NOT NULL,
+create table public."categories" (
+	"id" SERIAL NOT NULL,
 	"name" TEXT,
 
   CONSTRAINT "categories_pk" PRIMARY KEY (id)
 );
 
 create table public.teachers (
-	id SERIAL NOT NULL,
-	"name" varchar,
-	age INT,
+	"id" SERIAL NOT NULL,
+	"name" TEXT,
+	"age" INT,
 
   CONSTRAINT "teachers_pk" PRIMARY KEY (id)
 );
 
-create table public.courses (
-	id SERIAL NOT NULL,
+create table public.st (
+	"id" SERIAL NOT NULL,
 	"name" TEXT,
-	price FLOAT,
+	"price" FLOAT,
 	"start_date" DATE NOT NULL,
-	end_date DATE NOT NULL,
-	student_max INT NOT NULL,
-	categories_id INT NOT NULL,
-	teachers_id INT NOT NULL,
+	"end_date" DATE NOT NULL,
+	"student_max" INT NOT NULL,
+	"categories_id" INT NOT NULL,
+	"teachers_id" INT NOT NULL,
 
   CONSTRAINT "courses_pk" PRIMARY KEY (id),
 	FOREIGN KEY (categories_id) REFERENCES public.categories(id),
