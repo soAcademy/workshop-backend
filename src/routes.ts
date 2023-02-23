@@ -6,7 +6,11 @@ import {
   functionHelloReduceHandler,
   functionHelloOrderHandler,
 } from "./refactorApi";
-import { getTeachersHandler } from "./sql";
+import {
+  getTeachersByAgeHandler,
+  getTeachersByNameHandler,
+  getTeachersHandler,
+} from "./sql";
 
 export const AppRoutes = [
   {
@@ -43,5 +47,15 @@ export const AppRoutes = [
     path: "/sql/getTeachers",
     method: "get",
     action: getTeachersHandler,
+  },
+  {
+    path: "/sql/getTeachersByAge",
+    method: "get",
+    action: getTeachersByAgeHandler,
+  },
+  {
+    path: "/sql/getTeachersByName",
+    method: "get",
+    action: getTeachersByNameHandler,
   },
 ];
