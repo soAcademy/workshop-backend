@@ -6,6 +6,12 @@ import {
   functionHelloReduceHandler,
   functionHelloSumHandler,
 } from "./refactorApi";
+import {
+  getCoursesHandler,
+  getTeachersByAgeHandler,
+  getTeachersByNameHandler,
+  getTeachersHandler,
+} from "./sql";
 
 export const AppRoutes = [
   {
@@ -37,5 +43,25 @@ export const AppRoutes = [
     path: "/function/helloOrder",
     method: "post",
     action: functionHelloOrderHandler,
+  },
+  {
+    path: "/getTeachers",
+    method: "post",
+    action: getTeachersHandler,
+  },
+  {
+    path: "/getTeachersByAge",
+    method: "post",
+    action: getTeachersByAgeHandler,
+  },
+  {
+    path: "/getTeachersByName",
+    method: "post",
+    action: getTeachersByNameHandler,
+  },
+  {
+    path: "/getCourse",
+    method: "post",
+    action: getCoursesHandler,
   },
 ];
