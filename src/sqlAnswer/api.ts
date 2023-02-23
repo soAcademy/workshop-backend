@@ -1,55 +1,59 @@
 import { db } from "./db";
 
-export const getTeachers = () => {
+export const getTeachers = async () => {
   const sql = "SELECT * FROM public.teachers";
-  return db.query(sql).then((res) => res.rows);
+  const res = await db.query(sql);
+  return res.rows;
 };
 
-export const getTeachersByAge = (args: { age: number }) => {
+export const getTeachersByAge = async (args: { age: number }) => {
   const sql = `SELECT * FROM public.teachers WHERE age = ${args.age}`;
-  return db.query(sql).then((res) => res.rows);
+  const res = await db.query(sql);
+  return res.rows;
 };
 
-export const getTeachersByName = (args: { name: string }) => {
+export const getTeachersByName = async (args: { name: string }) => {
   const sql = `SELECT * FROM public.teachers WHERE name LIKE '%${args.name}%'`;
-  return db.query(sql).then((res) => res.rows);
+  const res = await db.query(sql);
+  return res.rows;
 };
 
-export const getCourses = () => {
+export const getCourses = async () => {
   const sql = `SELECT * FROM public.courses`;
-  return db.query(sql).then((res) => res.rows);
+  const res = await db.query(sql);
+  return res.rows;
 };
 
-export const getCoursesWithJoin = () => {
+export const getCoursesWithJoin = async () => {
   const sql = `SELECT c.*, t.id AS teacher_id, t.name AS teacher_name, t.age AS teacher_age
   FROM public.courses c
   INNER JOIN public.teachers t ON c.teachers_id = t.id;`;
-  return db.query(sql).then((res) => res.rows);
+  const res = await db.query(sql);
+  return res.rows;
 };
 
-export const createTeacher = (args: { name: string; age: number }) => {
+export const createTeacher = async (args: { name: string; age: number }) => {
   const sql = `INSERT INTO public.teachers (name, age)
   VALUES ('${args.name}', ${args.age})`;
-  return query(sql).then((res) => res);
+  const res = await db.query(sql);
+  return res;
 };
 
-export const updateTeacher = (args: {
+export const updateTeacher = async (args: {
   id: number;
   name: string;
   age: number;
 }) => {
   const sql = `UPDATE public.teachers SET name = '${args.name}',
   age = ${args.age} WHERE id = ${args.id}`;
-  return query(sql).then((res) => {
-    console.log(res);
-    return res;
-  });
+  const res = await db.query(sql);
+  console.log(res);
+  return res;
 };
 
-export const deleteTeacher = (args: { id: number }) => {
+export const deleteTeacher = async (args: { id: number }) => {
   const sql = `DELETE FROM public.teachers WHERE id = ${args.id}`;
-  return query(sql).then((res) => {
-    console.log(res);
-    return res;
-  });
+  const res = await db.query(sql);
+  console.log(res);
+  return res;
 };

@@ -1,4 +1,5 @@
 import { functionAddHandler, functionHelloMultiplyHandler } from "./refactorApi";
+import { getTeachersHandler } from "./sqlAnswer";
 
 export const AppRoutes = [
   {
@@ -11,4 +12,9 @@ export const AppRoutes = [
     method: "post",
     action: functionHelloMultiplyHandler,
   },
+  {
+    path: "/getTeachers",
+    method: "post",
+    action: getTeachersHandler
+  }
 ];
