@@ -6,6 +6,7 @@ import {
   functionHelloReduceHandler,
   functionHelloOrderHandler,
 } from "./refactorApi";
+import { getTeachersHandler } from "./sql";
 
 export const AppRoutes = [
   {
@@ -37,5 +38,10 @@ export const AppRoutes = [
     path: "/function/helloOrder",
     method: "post",
     action: functionHelloOrderHandler,
+  },
+  {
+    path: "/sql/getTeachers",
+    method: "get",
+    action: getTeachersHandler,
   },
 ];
