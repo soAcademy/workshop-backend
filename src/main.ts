@@ -7,31 +7,31 @@ import { AppRoutes } from "./routes";
 
 // const add = (x: number, y: number) => x + y;
 
-const HelloAtCodec = t.type({ name: t.string, location: t.string });
+// const HelloAtCodec = t.type({ name: t.string, location: t.string });
 
-const helloAt = (args: { name: string; location: string }) => ({
-  text: `Hello ${args.name} at ${args.location}`,
-  createdAt: new Date(),
-});
+// const helloAt = (args: { name: string; location: string }) => ({
+//   text: `Hello ${args.name} at ${args.location}`,
+//   createdAt: new Date(),
+// });
 
-const HelloSumCodec = t.type({
-  name: t.string,
-  number: t.type({
-    x: t.number,
-    y: t.number,
-    z: t.number,
-  }),
-});
+// const HelloSumCodec = t.type({
+//   name: t.string,
+//   number: t.type({
+//     x: t.number,
+//     y: t.number,
+//     z: t.number,
+//   }),
+// });
 
-const helloSum = (args: {
-  name: string;
-  number: { x: number; y: number; z: number };
-}) => ({
-  text: `Hello ${args.name} sum ${
-    args.number.x + args.number.y + args.number.z
-  }`,
-  createdAt: new Date(),
-});
+// const helloSum = (args: {
+//   name: string;
+//   number: { x: number; y: number; z: number };
+// }) => ({
+//   text: `Hello ${args.name} sum ${
+//     args.number.x + args.number.y + args.number.z
+//   }`,
+//   createdAt: new Date(),
+// });
 
 // interface IHelloMultiply {
 //   name: string;
@@ -98,13 +98,13 @@ const helloOrder = (args: IHelloOrder) => {
   return { text: `Hello ${args.name} order ${result}`, createdAt: new Date() };
 };
 
-const isNumber = (data: any) => typeof data === "number";
+// const isNumber = (data: any) => typeof data === "number";
 
-const isString = (data: any) => typeof data === "string";
+// const isString = (data: any) => typeof data === "string";
 
-const isObject = (data: any) => typeof data === "object";
+// const isObject = (data: any) => typeof data === "object";
 
-const isArray = (data: any) => Array.isArray(data);
+// const isArray = (data: any) => Array.isArray(data);
 
 const app: Application = express();
 
@@ -121,36 +121,36 @@ app.use(express.json());
 //   }
 // });
 
-app.post("/function/helloAt", (req: Request, res: Response) => {
-  const body = req?.body;
-  // if (isString(body?.name) && isString(body?.location)) {
-  if (HelloAtCodec.decode(body)._tag === "Right") {
-    const result = helloAt({ name: body?.name, location: body?.location });
-    res.status(200).json(result);
-  } else {
-    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
-  }
-});
+// app.post("/function/helloAt", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   // if (isString(body?.name) && isString(body?.location)) {
+//   if (HelloAtCodec.decode(body)._tag === "Right") {
+//     const result = helloAt({ name: body?.name, location: body?.location });
+//     res.status(200).json(result);
+//   } else {
+//     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+//   }
+// });
 
-app.post("/function/helloSum", (req: Request, res: Response) => {
-  const body = req?.body;
-  if (
-    // isString(body?.name) &&
-    // isObject(body?.number) &&
-    // isNumber(body?.number.x) &&
-    // isNumber(body?.number.y) &&
-    // isNumber(body?.number.z)
-    HelloSumCodec.decode(body)._tag === "Right"
-  ) {
-    const result = helloSum({
-      name: body?.name,
-      number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
-    });
-    res.status(200).json(result);
-  } else {
-    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
-  }
-});
+// app.post("/function/helloSum", (req: Request, res: Response) => {
+//   const body = req?.body;
+//   if (
+//     // isString(body?.name) &&
+//     // isObject(body?.number) &&
+//     // isNumber(body?.number.x) &&
+//     // isNumber(body?.number.y) &&
+//     // isNumber(body?.number.z)
+//     HelloSumCodec.decode(body)._tag === "Right"
+//   ) {
+//     const result = helloSum({
+//       name: body?.name,
+//       number: { x: body?.number.x, y: body?.number.y, z: body?.number.z },
+//     });
+//     res.status(200).json(result);
+//   } else {
+//     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+//   }
+// });
 
 // app.post("/function/helloMultiply", (req: Request, res: Response) => {
 //   const body = req?.body;
