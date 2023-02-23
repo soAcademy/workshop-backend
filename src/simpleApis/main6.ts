@@ -151,6 +151,7 @@ const helloOrder = (args: IHelloOrder) => {
 };
 app.post("/function/helloOrder", (req: Request, res: Response) => {
   const body = req?.body;
+  // console.log(JSON.stringify(HelloOrderCodec.decode(body)));
   HelloOrderCodec.decode(body)._tag === "Right"
     ? res.status(200).json(helloOrder(body))
     : res.status(500).json({ message: `ERROR: data mismatch!` });

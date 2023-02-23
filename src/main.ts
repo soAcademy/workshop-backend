@@ -4,11 +4,13 @@
 // import "./simpleApis/main3";
 // import "./simpleApis/main4";
 // import "./simpleApis/main5";
-import "./simpleApis/main6";
+// import "./simpleApis/main6";
 
-// import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
+import { AppRoutes } from "./routes";
 
-// const app: Application = express();
+const app: Application = express();
+app.use(express.json());
 
 // app.get("/hello", (req: Request, res: Response) => {
 //   res.send("Hello Express");
@@ -18,6 +20,13 @@ import "./simpleApis/main6";
 //   res.send("Hello Express2");
 // });
 
-// app.listen(3000, () => {
-//   console.log("listening on port 3000");
-// });
+AppRoutes.forEach((route) => {
+  app[route.method as keyof Application](
+    route.path,
+    (req: Request, res: Response) => route.action(req, res)
+  );
+});
+
+app.listen(3000, () => {
+  console.log("listening on port 3000");
+});
