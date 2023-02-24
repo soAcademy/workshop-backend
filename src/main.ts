@@ -7,7 +7,7 @@
 // import "./simpleApis/main6";
 
 import express, { Application, Request, Response } from "express";
-import { AppRoutes } from "./routes";
+import { AppRoutes } from "../routes";
 
 const app: Application = express();
 app.use(express.json());
