@@ -7,6 +7,17 @@ import {
   functionHelloSumHandler,
 } from "./refactorApi";
 
+import {
+  getTeachersHandler,
+  getTeachersByAgeHandler,
+  getTeachersByNameHandler,
+  getCoursesHandler,
+  getCoursesWithJoinHandler,
+  createTeacherHandler,
+  updateTeacherHandler,
+  deleteTeacherHandler,
+} from "./sql";
+
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -37,5 +48,45 @@ export const AppRoutes = [
     path: "/function/helloOrder",
     method: "post",
     action: functionHelloOrderHandler,
+  },
+  {
+    path: "/function/getTeachers",
+    method: "post",
+    action: getTeachersHandler,
+  },
+  {
+    path: "/function/getTeachersByAge",
+    method: "post",
+    action: getTeachersByAgeHandler,
+  },
+  {
+    path: "/function/getTeachersByName",
+    method: "post",
+    action: getTeachersByNameHandler,
+  },
+  {
+    path: "/function/getCourses",
+    method: "post",
+    action: getCoursesHandler,
+  },
+  {
+    path: "/function/getCoursesWithJoin",
+    method: "post",
+    action: getCoursesWithJoinHandler,
+  },
+  {
+    path: "/function/createTeacher",
+    method: "post",
+    action: createTeacherHandler,
+  },
+  {
+    path: "/function/updateTeacher",
+    method: "post",
+    action: updateTeacherHandler,
+  },
+  {
+    path: "/function/deleteTeacher",
+    method: "post",
+    action: deleteTeacherHandler,
   },
 ];
