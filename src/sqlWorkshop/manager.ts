@@ -7,7 +7,7 @@ import {
   IGetTeacherByAge,
   IGetTeachersByName,
   IUpdateTeacher,
-} from "./API_Interface";
+} from "./index";
 
 //manager คือส่วนที่ใช้สื่อสารกับ database
 //async วางอยู่หน้า function
