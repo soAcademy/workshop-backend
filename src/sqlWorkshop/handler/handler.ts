@@ -4,11 +4,11 @@ import {
   deleteTeacher,
   getCourses,
   getCoursesWithJoin,
-  getTeachers,
   getTeachersByAge,
   getTeachersByName,
   updateTeacher,
-} from "./index";
+} from "../service/index";
+import { getTeachers, talkSecret } from "../service/service"; //connect service
 
 //handler คือส่วนที่ใช้สื่อสารกับหน้าบ้าน หรือ controller
 
@@ -88,6 +88,19 @@ export const deleteTeacherHandler = async (req: Request, res: Response) => {
   try {
     const response = await deleteTeacher({ id: req.body.id });
     return res.status(200).send(response);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+};
+
+//###################################################################
+//                          จุดเรียกใช้ service API
+//###################################################################
+
+export const setSecretFromOtherServer = async (req: Request, res: Response) => {
+  try {
+    const response = await talkSecret();
+    return res.status(200).json(response.data);
   } catch (err) {
     return res.status(500).send(err);
   }

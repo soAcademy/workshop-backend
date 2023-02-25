@@ -1,5 +1,5 @@
 import { query } from "express";
-import { db } from "./index";
+import { db } from "../dbConnecter";
 import { parseArgs } from "util";
 import {
   ICreateTeacher,
@@ -7,7 +7,7 @@ import {
   IGetTeacherByAge,
   IGetTeachersByName,
   IUpdateTeacher,
-} from "./index";
+} from "../API_Interface";
 
 //manager คือส่วนที่ใช้สื่อสารกับ database
 //async วางอยู่หน้า function

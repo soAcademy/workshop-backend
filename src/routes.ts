@@ -12,8 +12,9 @@ import {
   getTeachersByAgeHandler,
   getTeachersByNameHandler,
   getTeachersHandler,
+  setSecretFromOtherServer,
   updateTeacherHandler,
-} from "./sqlWorkshop";
+} from "./sqlWorkshop/handler/index";
 
 export const AppRoutes = [
   {
@@ -90,5 +91,10 @@ export const AppRoutes = [
     path: "/deleteTeacherHandler",
     method: "post",
     action: deleteTeacherHandler,
+  },
+  {
+    path: "/setSecretFromOtherServe",
+    method: "get",
+    action: setSecretFromOtherServer,
   },
 ];
