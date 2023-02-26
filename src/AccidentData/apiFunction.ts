@@ -17,16 +17,19 @@ export const getAccidentData = (args: {
       : args.vehicleQuery !== "ทั้งหมด"
       ? `SELECT * FROM dashboard.accident WHERE vehicle = '${args.vehicleQuery}'`
       : `SELECT * FROM dashboard.accident `;
-  console.log(sql);
+
   return db.query(sql).then((res) => res.rows);
 };
 
 export const getUniqueVehicles = () => {
   const sql = `SELECT distinct vehicle from dashboard.accident`;
+
   return db.query(sql).then((res) => res.rows.map((e) => e.vehicle));
 };
+
 export const getUniqueYears = () => {
   const sql = `SELECT distinct "deadyearBudha" from dashboard.accident`;
+
   return db
     .query(sql)
     .then((res) => res.rows.map((e) => e.deadyearBudha).sort((a, b) => a - b));

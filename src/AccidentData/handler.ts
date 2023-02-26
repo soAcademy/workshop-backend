@@ -5,10 +5,12 @@ import {
 } from "./apiFunction";
 import { Request, Response, response } from "express";
 import * as t from "io-ts";
+
 const getAccidentDataCodec = t.type({
   yearQuery: t.array(t.number),
   vehicleQuery: t.string,
 });
+
 export const getAccidentDataHandler = (req: Request, res: Response) => {
   const body = req?.body;
   if (getAccidentDataCodec.decode(body)._tag === "Right") {
