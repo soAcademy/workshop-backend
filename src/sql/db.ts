@@ -8,5 +8,4 @@ export const db = new Client({
   port: 5432,
 });
 
-db.connect();
-// export const query = (query: string) => db.query(query);
+db.connect().then(()=>console.log('Connected'));

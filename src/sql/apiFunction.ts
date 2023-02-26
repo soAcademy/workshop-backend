@@ -17,7 +17,8 @@ export const getTeachersByName = (args: { name: string }) => {
 
 export const getCourses = () => {
   const sql = "SELECT * FROM public.courses";
-  return db.query(sql).then((res) => res.rows);
+  return db.query(sql).then((res) => {
+    return res.rows});
 };
 
 export const getCoursesWithJoin = () => {
