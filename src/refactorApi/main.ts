@@ -16,9 +16,3 @@ AppRoutes.map((route) => {
 app.listen(3700, () => {
   console.log("Server start on port 3700");
 });
-
-// value
-// function (Laziness)
-// Either (<Error, value>)
-// Task (Asynchronous, proms)
-// Task Either (Task + Either)

@@ -20,5 +20,5 @@ app.listen(3700, () => {
 // value
 // function (Laziness)
 // Either (<Error, value>)
-// Task (Asynchronous, proms)
+// Task (Asynchronus, proms)
 // Task Either (Task + Either)
