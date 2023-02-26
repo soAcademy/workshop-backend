@@ -36,6 +36,8 @@ const HelloMultiplyCodec = t.type({
   }),
 });
 
+// interface IHelloMultiply extends t.type<typeof HelloMultiplyCodec> {}
+
 const helloMultiply = (args: IHelloMultiply) => ({
   text: `Hello ${args.name}multiply ${
     args.number.x * args.number.y * args.number.z
