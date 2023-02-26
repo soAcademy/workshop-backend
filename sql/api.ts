@@ -58,3 +58,4 @@ export const getCouresWithJoin = async()=>{
   const res = await db.query(sql);
   return res.rows;
 };
+

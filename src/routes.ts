@@ -1,5 +1,4 @@
-import { getTeachersByAge } from "../sql/create_tables.sql/api";
-import { createTeacherHandler, deleteTeacherHandler, getCouresHandler, getCouresWithJoinHandler, getTeacherByNameHandle, getTeachersByAgeHandler, getTeachersHandler, updateTeacherHandler } from "../sql/create_tables.sql/handler";
+import { createTeacherHandler, deleteTeacherHandler, getCouresHandler, getCouresWithJoinHandler, getTeacherByNameHandle, getTeachersByAgeHandler, getTeachersHandler, updateTeacherHandler } from "../sql/handler";
 import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrderHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./refactorApi";
 
 export const AppRoutes = [
@@ -73,4 +72,5 @@ export const AppRoutes = [
     method:"post",
     action:getCouresWithJoinHandler,
   },
+
 ];
