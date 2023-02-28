@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./RefactorApi/routes";
 import { SQLRoutes } from "./sql/routes";
 import { AccidentRoutes } from "./AccidentData";
+import { TodolistRoutes } from "./todolist/todolist.routes";
 const app: Application = express();
 
 app.use(express.json());
@@ -28,6 +29,13 @@ SQLRoutes.map((route) => {
 });
 
 AccidentRoutes.map((route) => {
+  app[route.method as keyof Application](
+    route.path,
+    (req: Request, res: Response) => route.action(req, res)
+  );
+});
+
+TodolistRoutes.map((route) => {
   app[route.method as keyof Application](
     route.path,
     (req: Request, res: Response) => route.action(req, res)
