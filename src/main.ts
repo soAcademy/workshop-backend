@@ -9,10 +9,11 @@
 import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./routes";
 import { AppRoutes as TodoListRoutes } from "./todoList/routes"; //todoList
+import cors from "cors";
 
 const app: Application = express();
 app.use(express.json());
-
+app.use(cors());
 // app.get("/hello", (req: Request, res: Response) => {
 //   res.send("Hello Express");
 // });
