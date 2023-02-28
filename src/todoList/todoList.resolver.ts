@@ -10,6 +10,57 @@ export const createTask = (args: ICreateTask) =>
     },
   });
 
+// createMany
+// updateMany
+// findUnique(id)
+// prisma.todoList.findUnique({
+//   where: {
+//     id: args.id,
+//   }
+// })
+
+// prisma.todoList.findUniqueOrThrow({
+//   where: {
+//     id: args.id,
+//   }
+// })
+// delete
+
+// prisma.todoList.createMany({
+//   data: [
+//     {task: "Task1"},
+//     {task: "Task2"},
+//     {task: "Task3"},
+//   ]
+// })
+
+// prisma.todoList.updateMany({
+//   where: {
+//     status: "DELETE"
+//   }, 
+//   data: {
+//     task: "------"
+//   }
+// })
+
+// prisma.todoList.delete({
+//   where: {
+//     id: 10
+//   }
+// })
+
+// prisma.todoList.deleteMany({
+//   where: {
+//     status: 'DONE'
+//   }
+// })
+
+// interface IUpdateMany {
+//   status: string;
+//   task: string;
+// }
+
+
 export const getTasks = () =>
   prisma.todoList.findMany({
     where: {
@@ -20,6 +71,11 @@ export const getTasks = () =>
     orderBy: {
       id: "desc",
     },
+    select: {
+      id: true,
+      task: true,
+      status: true,
+    }
   });
 
 export const updateTaskStatus = (args: IUpdateTaskStatus) =>
@@ -29,5 +85,8 @@ export const updateTaskStatus = (args: IUpdateTaskStatus) =>
     },
     data: {
       status: args.status,
+      task: args.task,
     },
   });
+
+

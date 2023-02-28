@@ -5,4 +5,5 @@ export interface ICreateTask {
 export interface IUpdateTaskStatus {
   id: number;
   status: string;
+  task?: string;
 }
