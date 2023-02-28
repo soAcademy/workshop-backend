@@ -27,5 +27,25 @@ export interface ICreateManyTask extends t.TypeOf<typeof CreateManyTaskCodec> {}
 //   id: number;
 // }
 
-export const FindUniqueTaskCodec = t.type({ id:t.number})
+export const FindUniqueTaskCodec = t.type({ id: t.number });
 export interface IFindUniqueTask extends t.TypeOf<typeof FindUniqueTaskCodec> {}
+
+// export interface IUpdateManyTaskStatus{
+//   task: string,
+//   status: string,
+// }
+
+export const UpdateManyTaskStatusCodec = t.type({
+  task: t.string,
+  status: t.string,
+});
+export interface IUpdateManyTaskStatus
+  extends t.TypeOf<typeof UpdateManyTaskStatusCodec> {}
+
+export interface IDeleteManyTasks {
+  status: string;
+}
+
+export const DeleteManyTaskCodec = t.type({ status: t.string });
+export interface IDeleteManyTasks
+  extends t.TypeOf<typeof DeleteManyTaskCodec> {}

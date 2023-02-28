@@ -2,16 +2,20 @@ import { Request, Response } from "express";
 import {
   CreateManyTaskCodec,
   CreateTaskCodec,
+  DeleteManyTaskCodec,
   DeleteTaskCodec,
   FindUniqueTaskCodec,
+  UpdateManyTaskStatusCodec,
   UpdateTaskStatusCodec,
 } from "./todoList.interface";
 import {
   createManyTask,
   createTask,
+  deleteManyTasks,
   deleteTask,
   findUnique,
   getTask,
+  updateManyTasks,
   updateTaskStatus,
 } from "./todoList.resolve";
 export const createTaskHandler = async (req: Request, res: Response) => {
@@ -62,10 +66,31 @@ export const createManyTaskHandler = async (req: Request, res: Response) => {
     : res.status(500).send("Error to validate");
 };
 
-export const findUniqueHandler = async (req: Request, res: Response) =>{
+export const findUniqueHandler = async (req: Request, res: Response) => {
   const body = req?.body;
-  console.log("body",body);
-  FindUniqueTaskCodec.decode(body)._tag ==="Right"
-  ? await findUnique(body).then((response) => res.status(200).json(response))
-  : res.status(500).send("Error to validate");
-}
+  console.log("body", body);
+  FindUniqueTaskCodec.decode(body)._tag === "Right"
+    ? await findUnique(body).then((response) => res.status(200).json(response))
+    : res.status(500).send("Error to validate");
+};
+
+export const updateManyTasksHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log("body", body);
+  console.log(UpdateManyTaskStatusCodec.decode(body));
+  UpdateManyTaskStatusCodec.decode(body)._tag === "Right"
+    ? await updateManyTasks(body).then((response) =>
+        res.status(200).json(response)
+      )
+    : res.status(500).send("Error to validate");
+};
+
+export const deleteManyTasksHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log("body", body);
+  DeleteManyTaskCodec.decode(body)._tag === "Right"
+    ? await deleteManyTasks(body).then((response) =>
+        res.status(200).json(response)
+      )
+    : res.status(500).send("Error to validate");
+};

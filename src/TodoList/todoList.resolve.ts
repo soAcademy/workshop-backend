@@ -2,8 +2,10 @@ import { PrismaClient } from "../../prisma/client";
 import {
   ICreateManyTask,
   ICreateTask,
+  IDeleteManyTasks,
   IDeleteTask,
   IFindUniqueTask,
+  IUpdateManyTaskStatus,
   IUpdateTaskStatus,
 } from "./todoList.interface";
 
@@ -48,6 +50,29 @@ export const findUnique = (args: IFindUniqueTask) => {
   const result = prisma.todolist.findUnique({
     where: {
       id: args.id,
+    },
+  });
+  return result;
+};
+
+export const updateManyTasks = (args: IUpdateManyTaskStatus) => {
+  console.log(args);
+  const result = prisma.todolist.updateMany({
+    where: {
+      task: args.task,
+    },
+    data: {
+      status: args.status,
+    },
+  });
+  return result;
+};
+
+export const deleteManyTasks = (args: IDeleteManyTasks) => {
+  console.log(args);
+  const result = prisma.todolist.deleteMany({
+    where: {
+      status: args.status,
     },
   });
   return result;
