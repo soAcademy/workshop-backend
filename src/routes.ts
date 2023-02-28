@@ -15,6 +15,10 @@ import {
   setSecretFromOtherServer,
   updateTeacherHandler,
 } from "./sqlWorkshop/handler/index";
+import {
+  getTasksHandler,
+  updateTaskHandler,
+} from "./todoList/todoList.handler";
 
 export const AppRoutes = [
   {
@@ -92,9 +96,26 @@ export const AppRoutes = [
     method: "post",
     action: deleteTeacherHandler,
   },
+  //------ secret message from boeing --------
   {
     path: "/setSecretFromOtherServer",
     method: "get",
     action: setSecretFromOtherServer,
+  },
+  //------ secret message from boeing --------
+  {
+    path: "/todolist/createTask",
+    method: "post",
+    action: createTeacherHandler,
+  },
+  {
+    path: "/todolist/getTasks",
+    method: "post",
+    action: getTasksHandler,
+  },
+  {
+    path: "/todoList/updateTask",
+    method: "post",
+    action: updateTaskHandler,
   },
 ];

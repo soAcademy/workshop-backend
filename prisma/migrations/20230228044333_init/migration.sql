@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "TodoList" ADD COLUMN     "level" INTEGER NOT NULL DEFAULT 0;
