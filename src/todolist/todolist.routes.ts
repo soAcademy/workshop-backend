@@ -1,5 +1,8 @@
 import {
+  createManyTasksHandler,
   createTaskHandler,
+  deleteDoneTasksHandler,
+  deleteTaskHandler,
   getTasksHandler,
   updateTaskHandler,
 } from "./todolist.handler";
@@ -12,6 +15,11 @@ export const TodolistRoutes = [
   },
   {
     method: "post",
+    path: "/createManyTasks",
+    action: createManyTasksHandler,
+  },
+  {
+    method: "post",
     path: "/getTasks",
     action: getTasksHandler,
   },
@@ -19,5 +27,15 @@ export const TodolistRoutes = [
     method: "post",
     path: "/updateTask",
     action: updateTaskHandler,
+  },
+  {
+    method: "post",
+    path: "/deleteTask",
+    action: deleteTaskHandler,
+  },
+  {
+    method: "post",
+    path: "/deleteDoneTasks",
+    action: deleteDoneTasksHandler,
   },
 ];
