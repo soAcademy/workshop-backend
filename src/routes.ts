@@ -18,8 +18,13 @@ import {
   deleteTeacherHandler,
 } from "./sql";
 import {
+  createManyTasksHandler,
   createTaskHandler,
+  deleteManyTasksHandler,
+  deleteTasksHandler,
   getTasksHandler,
+  getUniqueTaskHandler,
+  updateManyTasksHandler,
   updateTaskStatusHandler,
 } from "./todoList";
 
@@ -108,5 +113,30 @@ export const AppRoutes = [
     path: "/function/getTasks",
     method: "post",
     action: getTasksHandler,
+  },
+  {
+    path: "/function/getUniqueTask",
+    method: "post",
+    action: getUniqueTaskHandler,
+  },
+  {
+    path: "/function/createManyTasks",
+    method: "post",
+    action: createManyTasksHandler,
+  },
+  {
+    path: "/function/updateManyTasks",
+    method: "post",
+    action: updateManyTasksHandler,
+  },
+  {
+    path: "/function/deleteTasks",
+    method: "post",
+    action: deleteTasksHandler,
+  },
+  {
+    path: "/function/deleteManyTasks",
+    method: "post",
+    action: deleteManyTasksHandler,
   },
 ];

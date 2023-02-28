@@ -1,5 +1,12 @@
+import { parseArgs } from "util";
 import { PrismaClient } from "../../prisma/client";
-import { ICreateTask, IUpdateTaskStatus } from "./todoList.interface";
+import {
+  ICreateManyTasks,
+  ICreateTask,
+  IDeleteTasks,
+  IGetUniqueTask,
+  IUpdateTaskStatus,
+} from "./todoList.interface";
 
 export const prisma = new PrismaClient();
 
@@ -20,6 +27,11 @@ export const getTasks = () =>
     orderBy: {
       id: "desc",
     },
+    select: {
+      id: true,
+      task: true,
+      status: true,
+    },
   });
 
 export const updateTaskStatus = (args: IUpdateTaskStatus) =>
@@ -29,5 +41,41 @@ export const updateTaskStatus = (args: IUpdateTaskStatus) =>
     },
     data: {
       status: args.status,
+    },
+  });
+
+export const getUniqueTask = (args: IGetUniqueTask) =>
+  prisma.todoList.findUnique({
+    where: {
+      id: args.id,
+    },
+  });
+
+export const createManyTasks = (args: ICreateManyTasks) =>
+  prisma.todoList.createMany({
+    data: [{ task: args.task1 }, { task: args.task2 }, { task: args.task3 }],
+  });
+
+export const updateManyTasks = () =>
+  prisma.todoList.updateMany({
+    where: {
+      status: "PENDING",
+    },
+    data: {
+      task: "-----",
+    },
+  });
+
+export const deleteTasks = (args: IDeleteTasks) =>
+  prisma.todoList.delete({
+    where: {
+      id: args.id,
+    },
+  });
+
+export const deleteManyTasks = () =>
+  prisma.todoList.deleteMany({
+    where: {
+      status: "DONE",
     },
   });
