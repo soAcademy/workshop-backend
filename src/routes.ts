@@ -1,5 +1,6 @@
 import {
   createTaskHandler,
+  createTasksHandler,
   getTasksHandler,
   updateTaskStatusHandler,
 } from "./todoList/todoList.handlers";
@@ -22,6 +23,11 @@ export const AppRoutes = [
     path: "/todolist/createTask",
     method: "post",
     action: createTaskHandler,
+  },
+  {
+    path: "/todolist/createTasks",
+    method: "post",
+    action: createTasksHandler,
   },
   {
     path: "/todolist/getTasks",

@@ -10,6 +10,11 @@ export const createTask = (args: ICreateTask) =>
     },
   });
 
+export const createTasks = (args: [ICreateTask]) =>
+  prisma.todoList.createMany({
+    data: args,
+  });
+
 export const getTasks = () =>
   prisma.todoList.findMany({
     where: {
