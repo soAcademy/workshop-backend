@@ -1,0 +1,8 @@
+model TodoList {
+  id        Int      @id @default(autoincrement())
+  task      String
+  note      String? //optional => can be left empty
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

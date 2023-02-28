@@ -14,6 +14,7 @@ import {
   updateTeacherHandler,
   deleteTeacherHandler,
 } from "./sql";
+import { createManyTasksHandler, createTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -74,5 +75,30 @@ export const AppRoutes = [
     path: "/deleteTeacher",
     method: "post",
     action: deleteTeacherHandler,
+  },
+  {
+    path: "/todoList/createTask",
+    method: "post",
+    action: createTaskHandler,
+  },
+  {
+    path: "/todoList/getTasks",
+    method: "post",
+    action: getTasksHandler,
+  },
+  {
+    path: "/todoList/updateTask",
+    method: "post",
+    action: updateTaskHandler,
+  },
+  {
+    path: "/todoList/createManyTasks",
+    method: "post",
+    action: createManyTasksHandler,
+  },
+  {
+    path: "/todoList/updateManyTasks",
+    method: "post",
+    action: updateManyTasksHandler,
   },
 ];

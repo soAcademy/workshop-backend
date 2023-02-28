@@ -1,6 +1,7 @@
 import { db } from "./db";
 import { ICreateTeacher, IUpdateTeacher } from "./interface";
 // shoot Api to get required info from dBeaver
+//can use Prisma instead of this
 export const getTeachers = () => {
   const sql = "SELECT * FROM public.teachers";
   return db.query(sql).then((res) => res.rows);
