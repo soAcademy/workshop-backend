@@ -7,7 +7,7 @@ import {
   getTeachersByNameHandler,
   getTeachersHandler,
   updateTeacherHandler,
-} from "./sql";
+} from "../sql";
 import {
   functionAddHandler,
   functionHelloAtHandler,
@@ -15,7 +15,7 @@ import {
   functionHelloOrderHandler,
   functionHelloReduceHandler,
   functionHelloSumHandler,
-} from "./src/refactorApi";
+} from "./refactorApi";
 
 export const AppRoutes = [
   {

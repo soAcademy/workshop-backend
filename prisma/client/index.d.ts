@@ -18,6 +18,7 @@ export type TodoList = {
   id: number
   task: string
   status: string
+  note: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -809,6 +810,7 @@ export namespace Prisma {
     id: number | null
     task: string | null
     status: string | null
+    note: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -817,6 +819,7 @@ export namespace Prisma {
     id: number | null
     task: string | null
     status: string | null
+    note: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -825,6 +828,7 @@ export namespace Prisma {
     id: number
     task: number
     status: number
+    note: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -843,6 +847,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    note?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -851,6 +856,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    note?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -859,6 +865,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    note?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -955,6 +962,7 @@ export namespace Prisma {
     id: number
     task: string
     status: string
+    note: string | null
     createdAt: Date
     updatedAt: Date
     _count: TodoListCountAggregateOutputType | null
@@ -982,6 +990,7 @@ export namespace Prisma {
     id?: boolean
     task?: boolean
     status?: boolean
+    note?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1727,6 +1736,7 @@ export namespace Prisma {
     id: 'id',
     task: 'task',
     status: 'status',
+    note: 'note',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -1756,6 +1766,7 @@ export namespace Prisma {
     id?: IntFilter | number
     task?: StringFilter | string
     status?: StringFilter | string
+    note?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -1764,6 +1775,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1776,6 +1788,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TodoListCountOrderByAggregateInput
@@ -1792,6 +1805,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     task?: StringWithAggregatesFilter | string
     status?: StringWithAggregatesFilter | string
+    note?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -1799,6 +1813,7 @@ export namespace Prisma {
   export type TodoListCreateInput = {
     task: string
     status?: string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -1807,6 +1822,7 @@ export namespace Prisma {
     id?: number
     task: string
     status?: string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -1814,6 +1830,7 @@ export namespace Prisma {
   export type TodoListUpdateInput = {
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -1822,6 +1839,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -1830,6 +1848,7 @@ export namespace Prisma {
     id?: number
     task: string
     status?: string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -1837,6 +1856,7 @@ export namespace Prisma {
   export type TodoListUpdateManyMutationInput = {
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -1845,6 +1865,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -1875,6 +1896,21 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
+  export type StringNullableFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableFilter | string | null
+  }
+
   export type DateTimeFilter = {
     equals?: Date | string
     in?: Enumerable<Date> | Enumerable<string>
@@ -1890,6 +1926,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1902,6 +1939,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1910,6 +1948,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -1952,6 +1991,24 @@ export namespace Prisma {
     _max?: NestedStringFilter
   }
 
+  export type StringNullableWithAggregatesFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedStringNullableFilter
+    _max?: NestedStringNullableFilter
+  }
+
   export type DateTimeWithAggregatesFilter = {
     equals?: Date | string
     in?: Enumerable<Date> | Enumerable<string>
@@ -1968,6 +2025,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -2005,6 +2066,20 @@ export namespace Prisma {
     startsWith?: string
     endsWith?: string
     not?: NestedStringFilter | string
+  }
+
+  export type NestedStringNullableFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    not?: NestedStringNullableFilter | string | null
   }
 
   export type NestedDateTimeFilter = {
@@ -2060,6 +2135,34 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedStringFilter
     _max?: NestedStringFilter
+  }
+
+  export type NestedStringNullableWithAggregatesFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    not?: NestedStringNullableWithAggregatesFilter | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedStringNullableFilter
+    _max?: NestedStringNullableFilter
+  }
+
+  export type NestedIntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter = {

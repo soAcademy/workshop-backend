@@ -7,7 +7,8 @@
 // import "./simpleApis/main6";
 
 import express, { Application, Request, Response } from "express";
-import { AppRoutes } from "../routes";
+import { AppRoutes } from "./routes";
+import { AppRoutes as TodoListRoutes } from "./todoList/routes"; //todoList
 
 const app: Application = express();
 app.use(express.json());
@@ -21,6 +22,13 @@ app.use(express.json());
 // });
 
 AppRoutes.forEach((route) => {
+  app[route.method as keyof Application](
+    route.path,
+    (req: Request, res: Response) => route.action(req, res)
+  );
+});
+
+TodoListRoutes.forEach((route) => {
   app[route.method as keyof Application](
     route.path,
     (req: Request, res: Response) => route.action(req, res)
