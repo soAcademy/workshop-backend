@@ -1,11 +1,12 @@
 import { PrismaClient } from "../../prisma/client";
+import { ICreateTask } from "./todoList.interfaces";
 
 export const prisma = new PrismaClient();
 
-export const createTask = (task: string) => {
+export const createTask = (args: ICreateTask) => {
   prisma.todoList.create({
     data: {
-      task: task,
+      task: args.task,
     },
   });
 };
