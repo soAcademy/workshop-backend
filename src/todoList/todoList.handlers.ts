@@ -9,9 +9,9 @@ export const createTaskHandler = async (req: Request, res: Response) => {
       task: args.task,
     });
     res.status(200).json(result);
-  } catch (err) {
+  } catch (e) {
     res.status(500).json({
-      error: String(err),
+      error: String(e),
     });
   }
 };

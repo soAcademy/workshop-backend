@@ -1,3 +1,4 @@
+import { createTaskHandler } from "./todoList/todoList.handlers";
 import {
   functionAddHandler,
   functionHelloAtHandler,
@@ -13,6 +14,11 @@ import {
 } from "./sql";
 
 export const AppRoutes = [
+  {
+    path: "/todolist/createTask",
+    method: "post",
+    action: createTaskHandler,
+  },
   {
     path: "/function/add",
     method: "post",
