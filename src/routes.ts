@@ -93,7 +93,7 @@ export const AppRoutes = [
     action: deleteTeacherHandler,
   },
   {
-    path: "/setSecretFromOtherServe",
+    path: "/setSecretFromOtherServer",
     method: "get",
     action: setSecretFromOtherServer,
   },
