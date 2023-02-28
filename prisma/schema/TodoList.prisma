@@ -1,0 +1,9 @@
+model TodoList {
+  id       Int      @id @default(autoincrement())
+  task     String
+  status   String   @default("Pending")
+  note     String?
+//จะมีค่าหรือไม่ก็ได้ ไม่จำเป็นต้องส่งไปsave
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+}
