@@ -17,6 +17,7 @@ import {
   updateTeacherHandler,
   deleteTeacherHandler,
 } from "./sql";
+import { createTaskHandler } from "./todoList";
 
 export const AppRoutes = [
   {
@@ -88,5 +89,10 @@ export const AppRoutes = [
     path: "/function/deleteTeacher",
     method: "post",
     action: deleteTeacherHandler,
+  },
+  {
+    path: "/function/createTask",
+    method: "post",
+    action: createTaskHandler,
   },
 ];
