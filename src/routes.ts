@@ -1,4 +1,5 @@
 import { createTeacherHandler, deleteTeacherHandler, getCouresHandler, getCouresWithJoinHandler, getTeacherByNameHandle, getTeachersByAgeHandler, getTeachersHandler, updateTeacherHandler } from "../sql/handler";
+import {  getTeacherByNameHandler2, getTeacherHandler2, upDateTeacherHandler2 } from "../sql_test/handler";
 import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrderHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./refactorApi";
 
 export const AppRoutes = [
@@ -72,5 +73,21 @@ export const AppRoutes = [
     method:"post",
     action:getCouresWithJoinHandler,
   },
+  {
+    path:"/getTeacher2",
+    method:"post",
+    action:getTeacherHandler2,
+  },
+  {
+    path:"/getTeacherByName2",
+    method:"post",
+    action:getTeacherByNameHandler2,
+  },
+  {
+    path:"/updateTeacher2",
+    method:"post",
+    action:upDateTeacherHandler2,
+  },
+  
 
 ];
