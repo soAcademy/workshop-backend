@@ -149,7 +149,7 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todo
     ...
     "prisma:merge": "cat prisma/schema/**.prisma > prisma/schema.prisma",
     "prisma:format": "npx prisma format",
-    "prisma:migrate": "npx prisma migrate dev --name init --schema prisma/schema.prisma",
+    "prisma:migrate": "yarn pnpify migrate dev --name init --schema prisma/schema.prisma",
     "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma"
   }
 ```
