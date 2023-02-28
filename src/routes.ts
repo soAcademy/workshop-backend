@@ -1,6 +1,6 @@
 import { createTeacherHandler, deleteTeacherHandler, getCouresHandler, getCouresWithJoinHandler, getTeacherByNameHandle, getTeachersByAgeHandler, getTeachersHandler, updateTeacherHandler } from "../sql/handler";
 import {  getTeacherByNameHandler2, getTeacherHandler2, upDateTeacherHandler2 } from "../sql_test/handler";
-import { createManyTaskHandler, createTaskHandler, deleteTaskHandler, getTaskHandler, updateTaskStatusHandler } from "./TodoList/todolistHandler";
+import { createManyTaskHandler, createTaskHandler, deleteTaskHandler, findUniqueHandler, getTaskHandler, updateTaskStatusHandler } from "./TodoList/todolistHandler";
 import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrderHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./refactorApi";
 
 export const AppRoutes = [
@@ -113,6 +113,11 @@ export const AppRoutes = [
     path:"/todolist/createMany",
     method:"post",
     action:createManyTaskHandler,
+  },
+  {
+    path:"/todolist/findUnique",
+    method:"post",
+    action:findUniqueHandler,
   },
 
 

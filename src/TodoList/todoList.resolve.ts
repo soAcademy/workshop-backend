@@ -3,6 +3,7 @@ import {
   ICreateManyTask,
   ICreateTask,
   IDeleteTask,
+  IFindUniqueTask,
   IUpdateTaskStatus,
 } from "./todoList.interface";
 
@@ -42,3 +43,12 @@ export const createManyTask = (args: ICreateManyTask) => {
   return result;
 };
 
+export const findUnique = (args: IFindUniqueTask) => {
+  console.log("args", args);
+  const result = prisma.todolist.findUnique({
+    where: {
+      id: args.id,
+    },
+  });
+  return result;
+};

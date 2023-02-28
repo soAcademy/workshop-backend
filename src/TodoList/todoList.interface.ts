@@ -22,3 +22,10 @@ export const CreateManyTaskCodec = t.type({
 });
 
 export interface ICreateManyTask extends t.TypeOf<typeof CreateManyTaskCodec> {}
+
+// export interface IFindUnique {
+//   id: number;
+// }
+
+export const FindUniqueTaskCodec = t.type({ id:t.number})
+export interface IFindUniqueTask extends t.TypeOf<typeof FindUniqueTaskCodec> {}
