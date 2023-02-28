@@ -1,13 +1,41 @@
-import {
-  functionAddHandler,
-  functionHelloMultiplyHandler,
-} from "./refactorApi";
+// import {
+//   functionAddHandler,
+//   functionHelloMultiplyHandler, getTeachersHandler
+
+// } from "./refactorApi";
+
+// export const AppRoutes = [
+//   { 
+//     path: "/function/add", 
+//     method: "post", 
+//     action: functionAddHandler 
+//   },
+//   {
+//     path: "/function/",
+//     method: "post",
+//     action: functionHelloMultiplyHandler,
+//   },
+//   {
+    
+//   },
+// ];
+
+import {getTeachersHandler, getTeachersByAgeHandler, getTeachersByNameHandler} from "./sql";
 
 export const AppRoutes = [
-  { path: "/function/add", method: "post", action: functionAddHandler },
+  { 
+    path: "/getTeachers", 
+    method: "post", 
+    action: getTeachersHandler
+  },
   {
-    path: "/function/",
+    path: "/getTeachersByAge",
     method: "post",
-    action: functionHelloMultiplyHandler,
+    action: getTeachersByAgeHandler
+  },
+  {
+path: "/getTeachersByName",
+method: "post",
+action: getTeachersByNameHandler
   },
 ];
