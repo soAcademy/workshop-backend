@@ -1,4 +1,13 @@
-import { getTeachersHandler, getTeachersByAgeHandler, getTeachersByNameHandler, getCoursesHandler, getCoursesWithJoinHandler, createTeacherHandler, updateTeacherHandler, deleteTeacherHandler } from "./sql"
+import {
+  getTeachersHandler,
+  getTeachersByAgeHandler,
+  getTeachersByNameHandler,
+  getCoursesHandler,
+  getCoursesWithJoinHandler,
+  createTeacherHandler,
+  updateTeacherHandler,
+  deleteTeacherHandler,
+} from "./sql";
 import {
   functionAddHandler,
   functionHelloAtHandler,
@@ -6,7 +15,17 @@ import {
   functionHelloOrderHandler,
   functionHelloReduceHandler,
   functionHelloSumHandler,
-} from "./refactorApi"
+} from "./refactorApi";
+import {
+  createManyTasksHandler,
+  createTaskHandler,
+  deleteManyTaskHandler,
+  deleteTaskHandler,
+  findUniqueTaskHandler,
+  getTasksHandler,
+  updateManyTaskStatusesHandler,
+  updateTaskStatusHandler,
+} from "./todoList";
 
 export const AppRoutes = [
   {
@@ -78,5 +97,45 @@ export const AppRoutes = [
     path: "/deleteTeacher",
     method: "post",
     action: deleteTeacherHandler,
-  }
+  },
+  {
+    path: "/createTask",
+    method: "post",
+    action: createTaskHandler,
+  },
+  {
+    path: "/getTask",
+    method: "post",
+    action: getTasksHandler,
+  },
+  {
+    path: "/updateTaskStatus",
+    method: "post",
+    action: updateTaskStatusHandler,
+  },
+  {
+    path: "/createManyTasks",
+    method: "post",
+    action: createManyTasksHandler,
+  },
+  {
+    path: "/updateManyTaskStatuses",
+    method: "post",
+    action: updateManyTaskStatusesHandler,
+  },
+  {
+    path: "/findUniqueTask",
+    method: "post",
+    action: findUniqueTaskHandler,
+  },
+  {
+    path: "/deleteTask",
+    method: "post",
+    action: deleteTaskHandler,
+  },
+  {
+    path: "/deleteManyTask",
+    method: "post",
+    action: deleteManyTaskHandler,
+  },
 ];
