@@ -43,6 +43,20 @@ export const createTask = (args: ICreateTask) =>
 //   }
 // })
 
+// prisma.todoList.updateMany({
+//   where: {
+//     status: args.status1
+//   }, 
+//   data: {
+//     status: args.status2
+//   }
+// })
+
+// {
+//   status1: "DONE",
+//   status2: "DELETE
+// }
+
 // prisma.todoList.delete({
 //   where: {
 //     id: 10
