@@ -16,8 +16,14 @@ import {
   updateTeacherHandler,
 } from "./sqlWorkshop/handler/index";
 import {
+  createTaskOneHandler,
+  createTasksHandler,
+  deleteTaskHandler,
+  findUniqueHandler,
+  getTaskUniqueOrThrowHandler,
   getTasksHandler,
   updateTaskHandler,
+  updateTaskOneHandler,
 } from "./todoList/todoList.handler";
 
 export const AppRoutes = [
@@ -106,7 +112,17 @@ export const AppRoutes = [
   {
     path: "/todolist/createTask",
     method: "post",
-    action: createTeacherHandler,
+    action: createTasksHandler,
+  },
+  {
+    path: "/todolist/createTaskOne",
+    method: "post",
+    action: createTaskOneHandler,
+  },
+  {
+    path: "/todolist/createTask",
+    method: "post",
+    action: createTasksHandler,
   },
   {
     path: "/todolist/getTasks",
@@ -117,5 +133,25 @@ export const AppRoutes = [
     path: "/todoList/updateTask",
     method: "post",
     action: updateTaskHandler,
+  },
+  {
+    path: "/todoList/updateTaskOne",
+    method: "post",
+    action: updateTaskOneHandler,
+  },
+  {
+    path: "/todoList/deleteTask",
+    method: "post",
+    action: deleteTaskHandler,
+  },
+  {
+    path: "/todoList/getTaskUnique",
+    method: "post",
+    action: findUniqueHandler,
+  },
+  {
+    path: "/todoList/getTaskUniqueOrThrowHandler",
+    method: "post",
+    action: getTaskUniqueOrThrowHandler,
   },
 ];
