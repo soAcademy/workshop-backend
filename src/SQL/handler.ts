@@ -4,6 +4,7 @@ import {
   deleteTeacher,
   getCourses,
   getCoursesWithJoin,
+  getLotteryDate,
   getTeachers,
   getTeachersByAge,
   getTeachersByName,
@@ -22,20 +23,7 @@ export const getTeachersHandler = (req: Request, res: Response) => {
     .catch((error) => res.status(500).send(error));
 };
 
-// todo QA?? ถ้าส่งแบบ query parameters จะ refactor code ยังไง?
-// export const getTeachersByAgeHandler = (req: Request, res: Response) => {
-//   console.log(req?.query);
-//   return getTeachersByAge({ age: Number(req?.query?.age) })
-//     .then((response) => res.status(200).send(response))
-//     .catch((error) => res.status(500).send(error));
-// };
-//----------------------------------------------------------------
-// export const getTeachersByNameHandler = (req: Request, res: Response) => {
-//   console.log(req?.query);
-//   return getTeachersByName({ name: String(req?.query?.name) })
-//     .then((response) => res.status(200).send(response))
-//     .catch((error) => res.status(500).send(error));
-// };
+
 
 export const getTeachersByAgeHandler = (req: Request, res: Response) => {
   const body = req?.body;
@@ -120,4 +108,11 @@ export const deleteTeacherHandler = (req: Request, res: Response) => {
   } else {
     res.status(500).json({ error: "invalid" });
   }
+};
+
+// Lottery WorkShop
+export const getLotteryDateHandler = (req: Request, res: Response) => {
+  return getLotteryDate()
+    .then((response) => res.status(200).send(response))
+    .catch((error) => res.status(500).send(error));
 };

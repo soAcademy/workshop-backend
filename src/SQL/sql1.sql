@@ -27,3 +27,13 @@ create table public.courses (
 	FOREIGN KEY (categories_id) REFERENCES public.categories(id),
 	FOREIGN KEY (teachers_id) REFERENCES public.teachers(id)
 );
+
+
+
+-- Lotery WorkShop
+create table public."loterydate" (
+	"date" DATE NOT NULL,
+	"title" TEXT,
+
+  CONSTRAINT "loterydate_pk" PRIMARY KEY (date)
+);

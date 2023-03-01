@@ -50,3 +50,8 @@ export const deleteTeacher = (args: { id: number }) => {
     return res;
   });
 };
+
+export const getLotteryDate = () => {
+  const sql = "SELECT * FROM public.loterydate order by date desc";
+  return db.query(sql).then((res) => res.rows);
+};

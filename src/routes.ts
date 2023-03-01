@@ -3,6 +3,7 @@ import {
   deleteTeacherHandler,
   getCoursesHandler,
   getCoursesWithJoinHandler,
+  getLotteryDateHandler,
   getTeachersByAgeHandler,
   getTeachersByNameHandler,
   getTeachersHandler,
@@ -16,6 +17,14 @@ import {
   functionHelloReduceHandler,
   functionHelloSumHandler,
 } from "./refactorApi";
+import {
+  createTaskHandler,
+  createTasksHandler,
+  deleteTasksHandler,
+  getTasksHandler,
+  getUniqueTasksHandler,
+  updateTaskHandler,
+} from "./todoList/todoList.handler";
 
 export const AppRoutes = [
   {
@@ -88,5 +97,42 @@ export const AppRoutes = [
     path: "/deleteTeacher",
     method: "post",
     action: deleteTeacherHandler,
+  },
+  // Lottery WorkShop
+  {
+    path: "/lotteryDates",
+    method: "post",
+    action: getLotteryDateHandler,
+  },
+  // prisma : todoList WorkShop
+  {
+    path: "/todolist/createTask",
+    method: "post",
+    action: createTaskHandler,
+  },
+  {
+    path: "/todolist/createTasks",
+    method: "post",
+    action: createTasksHandler,
+  },
+  {
+    path: "/todolist/getTasks",
+    method: "post",
+    action: getTasksHandler,
+  },
+  {
+    path: "/todolist/getUniqueTasks",
+    method: "post",
+    action: getUniqueTasksHandler,
+  },
+  {
+    path: "/todolist/updateTask",
+    method: "post",
+    action: updateTaskHandler,
+  },
+  {
+    path: "/todolist/deleteTask",
+    method: "post",
+    action: deleteTasksHandler,
   },
 ];
