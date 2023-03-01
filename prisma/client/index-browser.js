@@ -96,6 +96,16 @@ exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.MenuScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  image: 'image',
+  price: 'price',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -124,6 +134,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
+  Menu: 'Menu',
   TodoList: 'TodoList'
 });
 

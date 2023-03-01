@@ -1,8 +1,35 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../prisma/client"
+  previewFeatures = ["multiSchema"]
+  binaryTargets   = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["binkitchen", "todolist"]
+}
+
 model Category {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  Menu      Menu[]
+
+  @@schema("binkitchen")
+}
+
+model Menu {
+  id         Int       @id @default(autoincrement())
+  name       String
+  image      String
+  price      String
+  categoryId Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  category   Category? @relation(fields: [categoryId], references: [id])
 
   @@schema("binkitchen")
 }
@@ -15,17 +42,4 @@ model TodoList {
   updatedAt DateTime @default(now())
 
   @@schema("todolist")
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  schemas  = ["todolist", "binkitchen"]
-}
-
-generator client {
-  provider        = "prisma-client-js"
-  binaryTargets   = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
-  output          = "../prisma/client"
-  previewFeatures = ["multiSchema"]
 }

@@ -3,6 +3,20 @@ model Category {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  Menu      Menu[]
+
+  @@schema("binkitchen")
+}
+
+model Menu {
+  id         Int       @id @default(autoincrement())
+  name       String
+  image      String
+  price      String
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
 
   @@schema("binkitchen")
 }

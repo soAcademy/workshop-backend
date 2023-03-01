@@ -22,6 +22,20 @@ export type Category = {
 }
 
 /**
+ * Model Menu
+ * 
+ */
+export type Menu = {
+  id: number
+  name: string
+  image: string
+  price: string
+  categoryId: number | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model TodoList
  * 
  */
@@ -160,6 +174,16 @@ export class PrismaClient<
     * ```
     */
   get category(): Prisma.CategoryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.menu`: Exposes CRUD operations for the **Menu** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Menus
+    * const menus = await prisma.menu.findMany()
+    * ```
+    */
+  get menu(): Prisma.MenuDelegate<GlobalReject>;
 
   /**
    * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
@@ -640,6 +664,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Category: 'Category',
+    Menu: 'Menu',
     TodoList: 'TodoList'
   };
 
@@ -799,6 +824,48 @@ export namespace Prisma {
   /**
    * Count Types
    */
+
+
+  /**
+   * Count Type CategoryCountOutputType
+   */
+
+
+  export type CategoryCountOutputType = {
+    Menu: number
+  }
+
+  export type CategoryCountOutputTypeSelect = {
+    Menu?: boolean
+  }
+
+  export type CategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | CategoryCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? CategoryCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (CategoryCountOutputTypeArgs)
+    ? CategoryCountOutputType 
+    : S extends { select: any } & (CategoryCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof CategoryCountOutputType ? CategoryCountOutputType[P] : never
+  } 
+      : CategoryCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the CategoryCountOutputType
+     */
+    select?: CategoryCountOutputTypeSelect | null
+  }
 
 
 
@@ -998,19 +1065,31 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    Menu?: boolean | Category$MenuArgs
+    _count?: boolean | CategoryCountOutputTypeArgs
   }
 
+
+  export type CategoryInclude = {
+    Menu?: boolean | Category$MenuArgs
+    _count?: boolean | CategoryCountOutputTypeArgs
+  }
 
   export type CategoryGetPayload<S extends boolean | null | undefined | CategoryArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
     S extends true ? Category :
     S extends undefined ? never :
     S extends { include: any } & (CategoryArgs | CategoryFindManyArgs)
-    ? Category 
+    ? Category  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'Menu' ? Array < MenuGetPayload<S['include'][P]>>  :
+        P extends '_count' ? CategoryCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
     : S extends { select: any } & (CategoryArgs | CategoryFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof Category ? Category[P] : never
+        P extends 'Menu' ? Array < MenuGetPayload<S['select'][P]>>  :
+        P extends '_count' ? CategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Category ? Category[P] : never
   } 
       : Category
 
@@ -1382,6 +1461,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
+    Menu<T extends Category$MenuArgs= {}>(args?: Subset<T, Category$MenuArgs>): Prisma.PrismaPromise<Array<MenuGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1419,6 +1499,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * Filter, which Category to fetch.
      */
     where: CategoryWhereUniqueInput
@@ -1445,6 +1529,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * Filter, which Category to fetch.
      */
     where: CategoryWhereUniqueInput
@@ -1459,6 +1547,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
     /**
      * Filter, which Category to fetch.
      */
@@ -1516,6 +1608,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * Filter, which Category to fetch.
      */
     where?: CategoryWhereInput
@@ -1561,6 +1657,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * Filter, which Categories to fetch.
      */
     where?: CategoryWhereInput
@@ -1601,6 +1701,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * The data needed to create a Category.
      */
     data: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
@@ -1627,6 +1731,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
     /**
      * The data needed to update a Category.
      */
@@ -1662,6 +1770,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * The filter to search for the Category to update in case it exists.
      */
     where: CategoryWhereUniqueInput
@@ -1685,6 +1797,10 @@ export namespace Prisma {
      */
     select?: CategorySelect | null
     /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+    /**
      * Filter which Category to delete.
      */
     where: CategoryWhereUniqueInput
@@ -1703,6 +1819,27 @@ export namespace Prisma {
 
 
   /**
+   * Category.Menu
+   */
+  export type Category$MenuArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    where?: MenuWhereInput
+    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    cursor?: MenuWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MenuScalarFieldEnum>
+  }
+
+
+  /**
    * Category without action
    */
   export type CategoryArgs = {
@@ -1710,6 +1847,995 @@ export namespace Prisma {
      * Select specific fields to fetch from the Category
      */
     select?: CategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CategoryInclude | null
+  }
+
+
+
+  /**
+   * Model Menu
+   */
+
+
+  export type AggregateMenu = {
+    _count: MenuCountAggregateOutputType | null
+    _avg: MenuAvgAggregateOutputType | null
+    _sum: MenuSumAggregateOutputType | null
+    _min: MenuMinAggregateOutputType | null
+    _max: MenuMaxAggregateOutputType | null
+  }
+
+  export type MenuAvgAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+  }
+
+  export type MenuSumAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+  }
+
+  export type MenuMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    image: string | null
+    price: string | null
+    categoryId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MenuMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    image: string | null
+    price: string | null
+    categoryId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MenuCountAggregateOutputType = {
+    id: number
+    name: number
+    image: number
+    price: number
+    categoryId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MenuAvgAggregateInputType = {
+    id?: true
+    categoryId?: true
+  }
+
+  export type MenuSumAggregateInputType = {
+    id?: true
+    categoryId?: true
+  }
+
+  export type MenuMinAggregateInputType = {
+    id?: true
+    name?: true
+    image?: true
+    price?: true
+    categoryId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MenuMaxAggregateInputType = {
+    id?: true
+    name?: true
+    image?: true
+    price?: true
+    categoryId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MenuCountAggregateInputType = {
+    id?: true
+    name?: true
+    image?: true
+    price?: true
+    categoryId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MenuAggregateArgs = {
+    /**
+     * Filter which Menu to aggregate.
+     */
+    where?: MenuWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Menus to fetch.
+     */
+    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MenuWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Menus from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Menus.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Menus
+    **/
+    _count?: true | MenuCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MenuAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MenuSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MenuMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MenuMaxAggregateInputType
+  }
+
+  export type GetMenuAggregateType<T extends MenuAggregateArgs> = {
+        [P in keyof T & keyof AggregateMenu]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMenu[P]>
+      : GetScalarType<T[P], AggregateMenu[P]>
+  }
+
+
+
+
+  export type MenuGroupByArgs = {
+    where?: MenuWhereInput
+    orderBy?: Enumerable<MenuOrderByWithAggregationInput>
+    by: MenuScalarFieldEnum[]
+    having?: MenuScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MenuCountAggregateInputType | true
+    _avg?: MenuAvgAggregateInputType
+    _sum?: MenuSumAggregateInputType
+    _min?: MenuMinAggregateInputType
+    _max?: MenuMaxAggregateInputType
+  }
+
+
+  export type MenuGroupByOutputType = {
+    id: number
+    name: string
+    image: string
+    price: string
+    categoryId: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MenuCountAggregateOutputType | null
+    _avg: MenuAvgAggregateOutputType | null
+    _sum: MenuSumAggregateOutputType | null
+    _min: MenuMinAggregateOutputType | null
+    _max: MenuMaxAggregateOutputType | null
+  }
+
+  type GetMenuGroupByPayload<T extends MenuGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MenuGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MenuGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MenuGroupByOutputType[P]>
+            : GetScalarType<T[P], MenuGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MenuSelect = {
+    id?: boolean
+    name?: boolean
+    image?: boolean
+    price?: boolean
+    categoryId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | CategoryArgs
+  }
+
+
+  export type MenuInclude = {
+    category?: boolean | CategoryArgs
+  }
+
+  export type MenuGetPayload<S extends boolean | null | undefined | MenuArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Menu :
+    S extends undefined ? never :
+    S extends { include: any } & (MenuArgs | MenuFindManyArgs)
+    ? Menu  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'category' ? CategoryGetPayload<S['include'][P]> | null :  never
+  } 
+    : S extends { select: any } & (MenuArgs | MenuFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'category' ? CategoryGetPayload<S['select'][P]> | null :  P extends keyof Menu ? Menu[P] : never
+  } 
+      : Menu
+
+
+  type MenuCountArgs = 
+    Omit<MenuFindManyArgs, 'select' | 'include'> & {
+      select?: MenuCountAggregateInputType | true
+    }
+
+  export interface MenuDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Menu that matches the filter.
+     * @param {MenuFindUniqueArgs} args - Arguments to find a Menu
+     * @example
+     * // Get one Menu
+     * const menu = await prisma.menu.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MenuFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MenuFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Menu'> extends True ? Prisma__MenuClient<MenuGetPayload<T>> : Prisma__MenuClient<MenuGetPayload<T> | null, null>
+
+    /**
+     * Find one Menu that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MenuFindUniqueOrThrowArgs} args - Arguments to find a Menu
+     * @example
+     * // Get one Menu
+     * const menu = await prisma.menu.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MenuFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MenuFindUniqueOrThrowArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Find the first Menu that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuFindFirstArgs} args - Arguments to find a Menu
+     * @example
+     * // Get one Menu
+     * const menu = await prisma.menu.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MenuFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MenuFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Menu'> extends True ? Prisma__MenuClient<MenuGetPayload<T>> : Prisma__MenuClient<MenuGetPayload<T> | null, null>
+
+    /**
+     * Find the first Menu that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuFindFirstOrThrowArgs} args - Arguments to find a Menu
+     * @example
+     * // Get one Menu
+     * const menu = await prisma.menu.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MenuFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MenuFindFirstOrThrowArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Find zero or more Menus that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Menus
+     * const menus = await prisma.menu.findMany()
+     * 
+     * // Get first 10 Menus
+     * const menus = await prisma.menu.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const menuWithIdOnly = await prisma.menu.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MenuFindManyArgs>(
+      args?: SelectSubset<T, MenuFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MenuGetPayload<T>>>
+
+    /**
+     * Create a Menu.
+     * @param {MenuCreateArgs} args - Arguments to create a Menu.
+     * @example
+     * // Create one Menu
+     * const Menu = await prisma.menu.create({
+     *   data: {
+     *     // ... data to create a Menu
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MenuCreateArgs>(
+      args: SelectSubset<T, MenuCreateArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Create many Menus.
+     *     @param {MenuCreateManyArgs} args - Arguments to create many Menus.
+     *     @example
+     *     // Create many Menus
+     *     const menu = await prisma.menu.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MenuCreateManyArgs>(
+      args?: SelectSubset<T, MenuCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Menu.
+     * @param {MenuDeleteArgs} args - Arguments to delete one Menu.
+     * @example
+     * // Delete one Menu
+     * const Menu = await prisma.menu.delete({
+     *   where: {
+     *     // ... filter to delete one Menu
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MenuDeleteArgs>(
+      args: SelectSubset<T, MenuDeleteArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Update one Menu.
+     * @param {MenuUpdateArgs} args - Arguments to update one Menu.
+     * @example
+     * // Update one Menu
+     * const menu = await prisma.menu.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MenuUpdateArgs>(
+      args: SelectSubset<T, MenuUpdateArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Delete zero or more Menus.
+     * @param {MenuDeleteManyArgs} args - Arguments to filter Menus to delete.
+     * @example
+     * // Delete a few Menus
+     * const { count } = await prisma.menu.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MenuDeleteManyArgs>(
+      args?: SelectSubset<T, MenuDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Menus.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Menus
+     * const menu = await prisma.menu.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MenuUpdateManyArgs>(
+      args: SelectSubset<T, MenuUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Menu.
+     * @param {MenuUpsertArgs} args - Arguments to update or create a Menu.
+     * @example
+     * // Update or create a Menu
+     * const menu = await prisma.menu.upsert({
+     *   create: {
+     *     // ... data to create a Menu
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Menu we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MenuUpsertArgs>(
+      args: SelectSubset<T, MenuUpsertArgs>
+    ): Prisma__MenuClient<MenuGetPayload<T>>
+
+    /**
+     * Count the number of Menus.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuCountArgs} args - Arguments to filter Menus to count.
+     * @example
+     * // Count the number of Menus
+     * const count = await prisma.menu.count({
+     *   where: {
+     *     // ... the filter for the Menus we want to count
+     *   }
+     * })
+    **/
+    count<T extends MenuCountArgs>(
+      args?: Subset<T, MenuCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MenuCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Menu.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MenuAggregateArgs>(args: Subset<T, MenuAggregateArgs>): Prisma.PrismaPromise<GetMenuAggregateType<T>>
+
+    /**
+     * Group by Menu.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MenuGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MenuGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MenuGroupByArgs['orderBy'] }
+        : { orderBy?: MenuGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MenuGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMenuGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Menu.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MenuClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    category<T extends CategoryArgs= {}>(args?: Subset<T, CategoryArgs>): Prisma__CategoryClient<CategoryGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Menu base type for findUnique actions
+   */
+  export type MenuFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter, which Menu to fetch.
+     */
+    where: MenuWhereUniqueInput
+  }
+
+  /**
+   * Menu findUnique
+   */
+  export interface MenuFindUniqueArgs extends MenuFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Menu findUniqueOrThrow
+   */
+  export type MenuFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter, which Menu to fetch.
+     */
+    where: MenuWhereUniqueInput
+  }
+
+
+  /**
+   * Menu base type for findFirst actions
+   */
+  export type MenuFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter, which Menu to fetch.
+     */
+    where?: MenuWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Menus to fetch.
+     */
+    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Menus.
+     */
+    cursor?: MenuWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Menus from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Menus.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Menus.
+     */
+    distinct?: Enumerable<MenuScalarFieldEnum>
+  }
+
+  /**
+   * Menu findFirst
+   */
+  export interface MenuFindFirstArgs extends MenuFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Menu findFirstOrThrow
+   */
+  export type MenuFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter, which Menu to fetch.
+     */
+    where?: MenuWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Menus to fetch.
+     */
+    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Menus.
+     */
+    cursor?: MenuWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Menus from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Menus.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Menus.
+     */
+    distinct?: Enumerable<MenuScalarFieldEnum>
+  }
+
+
+  /**
+   * Menu findMany
+   */
+  export type MenuFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter, which Menus to fetch.
+     */
+    where?: MenuWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Menus to fetch.
+     */
+    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Menus.
+     */
+    cursor?: MenuWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Menus from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Menus.
+     */
+    skip?: number
+    distinct?: Enumerable<MenuScalarFieldEnum>
+  }
+
+
+  /**
+   * Menu create
+   */
+  export type MenuCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * The data needed to create a Menu.
+     */
+    data: XOR<MenuCreateInput, MenuUncheckedCreateInput>
+  }
+
+
+  /**
+   * Menu createMany
+   */
+  export type MenuCreateManyArgs = {
+    /**
+     * The data used to create many Menus.
+     */
+    data: Enumerable<MenuCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Menu update
+   */
+  export type MenuUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * The data needed to update a Menu.
+     */
+    data: XOR<MenuUpdateInput, MenuUncheckedUpdateInput>
+    /**
+     * Choose, which Menu to update.
+     */
+    where: MenuWhereUniqueInput
+  }
+
+
+  /**
+   * Menu updateMany
+   */
+  export type MenuUpdateManyArgs = {
+    /**
+     * The data used to update Menus.
+     */
+    data: XOR<MenuUpdateManyMutationInput, MenuUncheckedUpdateManyInput>
+    /**
+     * Filter which Menus to update
+     */
+    where?: MenuWhereInput
+  }
+
+
+  /**
+   * Menu upsert
+   */
+  export type MenuUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * The filter to search for the Menu to update in case it exists.
+     */
+    where: MenuWhereUniqueInput
+    /**
+     * In case the Menu found by the `where` argument doesn't exist, create a new Menu with this data.
+     */
+    create: XOR<MenuCreateInput, MenuUncheckedCreateInput>
+    /**
+     * In case the Menu was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MenuUpdateInput, MenuUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Menu delete
+   */
+  export type MenuDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
+    /**
+     * Filter which Menu to delete.
+     */
+    where: MenuWhereUniqueInput
+  }
+
+
+  /**
+   * Menu deleteMany
+   */
+  export type MenuDeleteManyArgs = {
+    /**
+     * Filter which Menus to delete
+     */
+    where?: MenuWhereInput
+  }
+
+
+  /**
+   * Menu without action
+   */
+  export type MenuArgs = {
+    /**
+     * Select specific fields to fetch from the Menu
+     */
+    select?: MenuSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MenuInclude | null
   }
 
 
@@ -2647,6 +3773,19 @@ export namespace Prisma {
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+  export const MenuScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    image: 'image',
+    price: 'price',
+    categoryId: 'categoryId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MenuScalarFieldEnum = (typeof MenuScalarFieldEnum)[keyof typeof MenuScalarFieldEnum]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -2697,6 +3836,7 @@ export namespace Prisma {
     name?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
+    Menu?: MenuListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
@@ -2704,6 +3844,7 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    Menu?: MenuOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = {
@@ -2728,6 +3869,63 @@ export namespace Prisma {
     NOT?: Enumerable<CategoryScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MenuWhereInput = {
+    AND?: Enumerable<MenuWhereInput>
+    OR?: Enumerable<MenuWhereInput>
+    NOT?: Enumerable<MenuWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    image?: StringFilter | string
+    price?: StringFilter | string
+    categoryId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    category?: XOR<CategoryRelationFilter, CategoryWhereInput> | null
+  }
+
+  export type MenuOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+    price?: SortOrder
+    categoryId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    category?: CategoryOrderByWithRelationInput
+  }
+
+  export type MenuWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MenuOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+    price?: SortOrder
+    categoryId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MenuCountOrderByAggregateInput
+    _avg?: MenuAvgOrderByAggregateInput
+    _max?: MenuMaxOrderByAggregateInput
+    _min?: MenuMinOrderByAggregateInput
+    _sum?: MenuSumOrderByAggregateInput
+  }
+
+  export type MenuScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MenuScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MenuScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MenuScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    image?: StringWithAggregatesFilter | string
+    price?: StringWithAggregatesFilter | string
+    categoryId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -2783,6 +3981,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    Menu?: MenuCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -2790,12 +3989,14 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    Menu?: MenuUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Menu?: MenuUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -2803,6 +4004,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Menu?: MenuUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -2821,6 +4023,72 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuCreateInput = {
+    name: string
+    image: string
+    price: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: CategoryCreateNestedOneWithoutMenuInput
+  }
+
+  export type MenuUncheckedCreateInput = {
+    id?: number
+    name: string
+    image: string
+    price: string
+    categoryId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneWithoutMenuNestedInput
+  }
+
+  export type MenuUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuCreateManyInput = {
+    id?: number
+    name: string
+    image: string
+    price: string
+    categoryId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2915,6 +4183,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter | Date | string
   }
 
+  export type MenuListRelationFilter = {
+    every?: MenuWhereInput
+    some?: MenuWhereInput
+    none?: MenuWhereInput
+  }
+
+  export type MenuOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -2992,6 +4270,78 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
+  export type IntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
+  export type CategoryRelationFilter = {
+    is?: CategoryWhereInput | null
+    isNot?: CategoryWhereInput | null
+  }
+
+  export type MenuCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+    price?: SortOrder
+    categoryId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuAvgOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+  }
+
+  export type MenuMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+    price?: SortOrder
+    categoryId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    image?: SortOrder
+    price?: SortOrder
+    categoryId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MenuSumOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
+  }
+
   export type TodoListCountOrderByAggregateInput = {
     id?: SortOrder
     task?: SortOrder
@@ -3024,6 +4374,20 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type MenuCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
+    createMany?: MenuCreateManyCategoryInputEnvelope
+    connect?: Enumerable<MenuWhereUniqueInput>
+  }
+
+  export type MenuUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
+    createMany?: MenuCreateManyCategoryInputEnvelope
+    connect?: Enumerable<MenuWhereUniqueInput>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -3032,8 +4396,60 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type MenuUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<MenuUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: MenuCreateManyCategoryInputEnvelope
+    set?: Enumerable<MenuWhereUniqueInput>
+    disconnect?: Enumerable<MenuWhereUniqueInput>
+    delete?: Enumerable<MenuWhereUniqueInput>
+    connect?: Enumerable<MenuWhereUniqueInput>
+    update?: Enumerable<MenuUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<MenuUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<MenuScalarWhereInput>
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type MenuUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<MenuUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: MenuCreateManyCategoryInputEnvelope
+    set?: Enumerable<MenuWhereUniqueInput>
+    disconnect?: Enumerable<MenuWhereUniqueInput>
+    delete?: Enumerable<MenuWhereUniqueInput>
+    connect?: Enumerable<MenuWhereUniqueInput>
+    update?: Enumerable<MenuUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<MenuUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<MenuScalarWhereInput>
+  }
+
+  export type CategoryCreateNestedOneWithoutMenuInput = {
+    create?: XOR<CategoryCreateWithoutMenuInput, CategoryUncheckedCreateWithoutMenuInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutMenuInput
+    connect?: CategoryWhereUniqueInput
+  }
+
+  export type CategoryUpdateOneWithoutMenuNestedInput = {
+    create?: XOR<CategoryCreateWithoutMenuInput, CategoryUncheckedCreateWithoutMenuInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutMenuInput
+    upsert?: CategoryUpsertWithoutMenuInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<CategoryUpdateWithoutMenuInput, CategoryUncheckedUpdateWithoutMenuInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -3132,6 +4548,171 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedDateTimeFilter
     _max?: NestedDateTimeFilter
+  }
+
+  export type NestedIntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
+  }
+
+  export type NestedFloatNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedFloatNullableFilter | number | null
+  }
+
+  export type MenuCreateWithoutCategoryInput = {
+    name: string
+    image: string
+    price: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    name: string
+    image: string
+    price: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuCreateOrConnectWithoutCategoryInput = {
+    where: MenuWhereUniqueInput
+    create: XOR<MenuCreateWithoutCategoryInput, MenuUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type MenuCreateManyCategoryInputEnvelope = {
+    data: Enumerable<MenuCreateManyCategoryInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MenuUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: MenuWhereUniqueInput
+    update: XOR<MenuUpdateWithoutCategoryInput, MenuUncheckedUpdateWithoutCategoryInput>
+    create: XOR<MenuCreateWithoutCategoryInput, MenuUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type MenuUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: MenuWhereUniqueInput
+    data: XOR<MenuUpdateWithoutCategoryInput, MenuUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type MenuUpdateManyWithWhereWithoutCategoryInput = {
+    where: MenuScalarWhereInput
+    data: XOR<MenuUpdateManyMutationInput, MenuUncheckedUpdateManyWithoutMenuInput>
+  }
+
+  export type MenuScalarWhereInput = {
+    AND?: Enumerable<MenuScalarWhereInput>
+    OR?: Enumerable<MenuScalarWhereInput>
+    NOT?: Enumerable<MenuScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    image?: StringFilter | string
+    price?: StringFilter | string
+    categoryId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type CategoryCreateWithoutMenuInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CategoryUncheckedCreateWithoutMenuInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CategoryCreateOrConnectWithoutMenuInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutMenuInput, CategoryUncheckedCreateWithoutMenuInput>
+  }
+
+  export type CategoryUpsertWithoutMenuInput = {
+    update: XOR<CategoryUpdateWithoutMenuInput, CategoryUncheckedUpdateWithoutMenuInput>
+    create: XOR<CategoryCreateWithoutMenuInput, CategoryUncheckedCreateWithoutMenuInput>
+  }
+
+  export type CategoryUpdateWithoutMenuInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategoryUncheckedUpdateWithoutMenuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuCreateManyCategoryInput = {
+    id?: number
+    name: string
+    image: string
+    price: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MenuUpdateWithoutCategoryInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MenuUncheckedUpdateManyWithoutMenuInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    price?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
