@@ -6,6 +6,7 @@ import {
   DeleteTaskCodec,
   FindUniqueTaskCodec,
   UpdateManyTaskStatusCodec,
+  UpdateNoteCodec,
   UpdateTaskStatusCodec,
 } from "./todoList.interface";
 import {
@@ -16,6 +17,7 @@ import {
   findUnique,
   getTask,
   updateManyTasks,
+  updateNote,
   updateTaskStatus,
 } from "./todoList.resolve";
 export const createTaskHandler = async (req: Request, res: Response) => {
@@ -92,5 +94,13 @@ export const deleteManyTasksHandler = async (req: Request, res: Response) => {
     ? await deleteManyTasks(body).then((response) =>
         res.status(200).json(response)
       )
+    : res.status(500).send("Error to validate");
+};
+
+export const updateNoteHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  // console.log("body", body);
+  UpdateNoteCodec.decode(body)._tag === "Right"
+    ? await updateNote(body).then((response) => res.status(200).json(response))
     : res.status(500).send("Error to validate");
 };
