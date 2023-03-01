@@ -24,7 +24,7 @@ export const getTeachersByNameHandler = (req: Request, res: Response) => {
     .catch((error) => res.status(500).send(error));
 };
 
-อันนี้ไม่ต้องการ input เพราะมันจะดึงข้อมูลออกมาทั้งหมดให้เรา
+// อันนี้ไม่ต้องการ input เพราะมันจะดึงข้อมูลออกมาทั้งหมดให้เรา
 export const getCoursesHandler = (req: Request, res: Response) => {
   return getCourses()
     .then((response) => res.status(200).send(response))

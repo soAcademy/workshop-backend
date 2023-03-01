@@ -2,6 +2,7 @@ model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
   status    String   @default("PENDING")
+  notes     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }

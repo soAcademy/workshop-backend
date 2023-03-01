@@ -1,41 +1,20 @@
-// import {
-//   functionAddHandler,
-//   functionHelloMultiplyHandler, getTeachersHandler
-
-// } from "./refactorApi";
-
-// export const AppRoutes = [
-//   { 
-//     path: "/function/add", 
-//     method: "post", 
-//     action: functionAddHandler 
-//   },
-//   {
-//     path: "/function/",
-//     method: "post",
-//     action: functionHelloMultiplyHandler,
-//   },
-//   {
-    
-//   },
-// ];
-
-import {getTeachersHandler, getTeachersByAgeHandler, getTeachersByNameHandler} from "./sql";
+// เข้ามาจัดการตัวสุดท้าย ตรง import ไม่ต้องไปจับเลยเพราะมันจะเติมให้เองโดยอัตโนมัติ
+import { createCategoryHandler, createMenuHandler, getCategoriesHandler } from './binKitchen';
 
 export const AppRoutes = [
   { 
-    path: "/getTeachers", 
+    path: "/bitKitchen/createCategory", 
     method: "post", 
-    action: getTeachersHandler
+    action: createCategoryHandler
   },
-  {
-    path: "/getTeachersByAge",
-    method: "post",
-    action: getTeachersByAgeHandler
+  { 
+    path: "/bitKitchen/getCategories", 
+    method: "post", 
+    action: getCategoriesHandler
   },
-  {
-path: "/getTeachersByName",
-method: "post",
-action: getTeachersByNameHandler
+  { 
+    path: "/binKitchen/createMenu", 
+    method: "post", 
+    action: createMenuHandler
   },
 ];
