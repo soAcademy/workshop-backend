@@ -65,8 +65,6 @@ export interface IUpdateMenu {
   categoryId?: number;
 }
 
-// export const UpdateMenuCodec extends
-
 export const updateMenu = (args: IUpdateMenu) =>
   prisma.menu.update({
     where: {

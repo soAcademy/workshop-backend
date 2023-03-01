@@ -4,6 +4,7 @@ import {
   getCategoriesHandler,
   getMenusHandler,
   updateCategoryHandler,
+  updateMenuHandler,
   // updateMenuHandler,
 } from "./binKitchen.handler";
 
@@ -33,9 +34,9 @@ export const AppRoutes = [
     method: "post",
     action: getMenusHandler,
   },
-  // {
-  //   path: "/binKitchen/updateMenu",
-  //   method: "post",
-  //   action: updateMenuHandler,
-  // },
+  {
+    path: "/binKitchen/updateMenu",
+    method: "post",
+    action: updateMenuHandler,
+  },
 ];

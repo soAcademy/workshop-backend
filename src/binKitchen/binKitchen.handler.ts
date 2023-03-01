@@ -64,15 +64,16 @@ export const getMenusHandler = async (req: Request, res: Response) => {
   }
 };
 
-// export const updateMenuHandler = async (req: Request, res: Response) => {
-//   const body = req?.body;
-//   console.log(body);
+export const updateMenuHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log(body);
 
-//   try {
-//     UpdateMenuCodec.decode(body)._tag === "Right"
-//       ? res.status(200).json(await updateMenu(body))
-//       : res.status(500).json({ error: "Invalid type Input" });
-//   } catch (e) {
-//     res.status(500).json({ error: String(e) });
-//   }
-// };
+  try {
+    // UpdateMenuCodec.decode(body)._tag === "Right"
+    // ? res.status(200).json(await updateMenu(body))
+    res.status(200).json(await updateMenu(body));
+    // : res.status(500).json({ error: "Invalid type Input" });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
