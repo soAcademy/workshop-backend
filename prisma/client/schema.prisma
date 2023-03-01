@@ -1,3 +1,44 @@
+model BinKitchenCategory {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  BinKitchenMenu BinKitchenMenu[]
+}
+
+model BinKitchenMenu {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  image               String
+  price               Float
+  category            BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName        String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now())
+  BinKitchenOrderItem BinKitchenOrderItem[]
+}
+
+model BinKitchenOrder {
+  id                  Int                   @id @default(autoincrement())
+  status              String                @default("PENDING")
+  tableId             Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now())
+  BinKitchenOrderItem BinKitchenOrderItem[]
+}
+
+model BinKitchenOrderItem {
+  id         Int              @id @default(autoincrement())
+  menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @default(now())
+}
+
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String

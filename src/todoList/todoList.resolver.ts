@@ -51,9 +51,17 @@ export const getUniqueTask = (args: IGetUniqueTask) =>
     },
   });
 
+// export const createManyTasks = (args: ICreateManyTasks) =>
+//   prisma.todoList.createMany({
+//     data: [{ task: args.task1 }, { task: args.task2 }, { task: args.task3 }],
+//   });
+
 export const createManyTasks = (args: ICreateManyTasks) =>
   prisma.todoList.createMany({
-    data: [{ task: args.task1 }, { task: args.task2 }, { task: args.task3 }],
+    // data: args.data.map((r) => ({
+    //   task : r.task;
+    // })),
+    data: args.data,
   });
 
 export const updateManyTasks = () =>
