@@ -69,6 +69,7 @@ export type TodoList = {
   id: number
   task: string
   status: string
+  bgColor: string
   createdAt: Date
   updatedAt: Date
 }
@@ -5031,6 +5032,7 @@ export namespace Prisma {
     id: number | null
     task: string | null
     status: string | null
+    bgColor: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5039,6 +5041,7 @@ export namespace Prisma {
     id: number | null
     task: string | null
     status: string | null
+    bgColor: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5047,6 +5050,7 @@ export namespace Prisma {
     id: number
     task: number
     status: number
+    bgColor: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5065,6 +5069,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    bgColor?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5073,6 +5078,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    bgColor?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5081,6 +5087,7 @@ export namespace Prisma {
     id?: true
     task?: true
     status?: true
+    bgColor?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5177,6 +5184,7 @@ export namespace Prisma {
     id: number
     task: string
     status: string
+    bgColor: string
     createdAt: Date
     updatedAt: Date
     _count: TodoListCountAggregateOutputType | null
@@ -5204,6 +5212,7 @@ export namespace Prisma {
     id?: boolean
     task?: boolean
     status?: boolean
+    bgColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -5996,6 +6005,7 @@ export namespace Prisma {
     id: 'id',
     task: 'task',
     status: 'status',
+    bgColor: 'bgColor',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6237,6 +6247,7 @@ export namespace Prisma {
     id?: IntFilter | number
     task?: StringFilter | string
     status?: StringFilter | string
+    bgColor?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -6245,6 +6256,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    bgColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6257,6 +6269,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    bgColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TodoListCountOrderByAggregateInput
@@ -6273,6 +6286,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     task?: StringWithAggregatesFilter | string
     status?: StringWithAggregatesFilter | string
+    bgColor?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -6522,6 +6536,7 @@ export namespace Prisma {
   export type TodoListCreateInput = {
     task: string
     status?: string
+    bgColor?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6530,6 +6545,7 @@ export namespace Prisma {
     id?: number
     task: string
     status?: string
+    bgColor?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6537,6 +6553,7 @@ export namespace Prisma {
   export type TodoListUpdateInput = {
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    bgColor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6545,6 +6562,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    bgColor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6553,6 +6571,7 @@ export namespace Prisma {
     id?: number
     task: string
     status?: string
+    bgColor?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6560,6 +6579,7 @@ export namespace Prisma {
   export type TodoListUpdateManyMutationInput = {
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    bgColor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6568,6 +6588,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    bgColor?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6901,6 +6922,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    bgColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6913,6 +6935,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    bgColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6921,6 +6944,7 @@ export namespace Prisma {
     id?: SortOrder
     task?: SortOrder
     status?: SortOrder
+    bgColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

@@ -138,6 +138,7 @@ exports.Prisma.TodoListScalarFieldEnum = makeEnum({
   id: 'id',
   task: 'task',
   status: 'status',
+  bgColor: 'bgColor',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
