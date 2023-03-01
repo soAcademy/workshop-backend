@@ -1,18 +1,31 @@
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@schema("binkitchen")
+}
+
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  @@schema("todolist")
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["todolist", "binkitchen"]
 }
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
-  output        = "../prisma/client"
+  provider        = "prisma-client-js"
+  binaryTargets   = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
+  output          = "../prisma/client"
+  previewFeatures = ["multiSchema"]
 }

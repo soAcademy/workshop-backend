@@ -1,9 +1,8 @@
-model TodoList {
+model Category {
   id        Int      @id @default(autoincrement())
-  task      String
-  status    String   @default("PENDING")
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  @@schema("todolist")
+  @@schema("binkitchen")
 }
