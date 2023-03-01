@@ -1,3 +1,4 @@
+import { createCategoryHandler } from "./binKitchen/binKitchen.handlers";
 import {
   createTaskHandler,
   createTasksHandler,
@@ -19,6 +20,11 @@ import {
 } from "./sql";
 
 export const AppRoutes = [
+  {
+    path: "/binKitchen/createCategory",
+    method: "post",
+    action: createCategoryHandler,
+  },
   {
     path: "/todolist/createTask",
     method: "post",

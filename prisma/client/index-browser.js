@@ -106,6 +106,24 @@ exports.Prisma.MenuScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.OrderItemScalarFieldEnum = makeEnum({
+  id: 'id',
+  menuId: 'menuId',
+  orderId: 'orderId',
+  quantity: 'quantity',
+  totalPrice: 'totalPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.OrderScalarFieldEnum = makeEnum({
+  id: 'id',
+  status: 'status',
+  tableId: 'tableId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -135,6 +153,8 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
   Menu: 'Menu',
+  Order: 'Order',
+  OrderItem: 'OrderItem',
   TodoList: 'TodoList'
 });
 

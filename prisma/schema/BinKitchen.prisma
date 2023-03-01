@@ -9,24 +9,40 @@ model Category {
 }
 
 model Menu {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   name       String
   image      String
-  price      String
-  category   Category? @relation(fields: [categoryId], references: [id])
+  price      Float
+  category   Category?   @relation(fields: [categoryId], references: [id])
   categoryId Int?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @default(now())
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(now())
 
   @@schema("binkitchen")
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  status    String   @default("PENDING")
+  id        Int         @id @default(autoincrement())
+  status    String      @default("PENDING")
   tableId   Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+
+  @@schema("binkitchen")
+}
+
+model OrderItem {
+  id         Int      @id @default(autoincrement())
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      Order?   @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 
   @@schema("binkitchen")
 }
