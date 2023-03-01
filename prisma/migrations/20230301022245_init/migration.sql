@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "TodoListItem" (
+    "id" SERIAL NOT NULL,
+    "item" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "TodoListItem_pkey" PRIMARY KEY ("id")
+);

@@ -1,8 +1,87 @@
+// model Menu {
+//   id         Int         @id @default(autoincrement())
+//   name       String
+//   image      String
+//   price      Float
+//   category   String
+//   createdAt  DateTime    @default(now())
+//   updatedAt  DateTime    @default(now())
+//   orderItems OrderItem[]
+// }
+
+// model Order {
+//   id        Int         @id @default(autoincrement())
+//   status    String      @default("WAITING")
+//   tableId   Int
+//   items     OrderItem[]
+//   createdAt DateTime    @default(now())
+//   updatedAt DateTime    @default(now())
+// }
+
+// model OrderItem {
+//   id        Int      @id @default(autoincrement())
+//   menu      Menu     @relation(fields: [menuId], references: [id])
+//   order     Order?   @relation(fields: [orderId], references: [id])
+//   orderId   Int?
+//   menuId    Int
+//   quantity  Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
+
+// ครัวคุณบิน
+// category: มีต้ม ผัด แกง ทอด แนะนำ
+// menu: แกงส้ม, ผัดชะอม, ต้มจืด
+// menu: แกงส้ม [แกง], ผัดชะอม [ผัด], ต้มจืด [ต้ม], แกงเขียวหวาน [แกง]
+// order 1: ระบุหมายเลขโต๊ะ 13, แกงส้ม 1 รายการ, ผัดชะอม 2 รายการ (PENDING)
+// order 2: ระบุหมายเลขโต๊ะ 13, แกงส้ม 2 รายการ, แกงเขียวหวาน 1 รายการ
+// กรณีทำเสร็จ: order 1 จะเปลี่ยนจาก PENDING -> DONE
+
+model BinKitchenCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  menus     BinKitchenMenu[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+}
+
+model BinKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  image        String
+  price        Float
+  category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now())
+  OrderItem    BinKitchenOrderItem[]
+}
+
+model BinKitchenOrder {
+  id        Int                   @id @default(autoincrement())
+  status    String                @default("PENDING")
+  tableId   Int
+  items     BinKitchenOrderItem[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @default(now())
+}
+
+model BinKitchenOrderItem {
+  id         Int              @id @default(autoincrement())
+  menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @default(now())
+}
+
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
   status    String   @default("PENDING")
-  note      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
