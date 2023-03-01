@@ -37,7 +37,7 @@ export const createTask = (args: ICreateTask) =>
 // prisma.todoList.updateMany({
 //   where: {
 //     status: "DELETE"
-//   }, 
+//   },
 //   data: {
 //     task: "------"
 //   }
@@ -46,7 +46,7 @@ export const createTask = (args: ICreateTask) =>
 // prisma.todoList.updateMany({
 //   where: {
 //     status: args.status1
-//   }, 
+//   },
 //   data: {
 //     status: args.status2
 //   }
@@ -74,7 +74,6 @@ export const createTask = (args: ICreateTask) =>
 //   task: string;
 // }
 
-
 export const getTasks = () =>
   prisma.todoList.findMany({
     where: {
@@ -89,7 +88,7 @@ export const getTasks = () =>
       id: true,
       task: true,
       status: true,
-    }
+    },
   });
 
 export const updateTaskStatus = (args: IUpdateTaskStatus) =>
@@ -103,4 +102,62 @@ export const updateTaskStatus = (args: IUpdateTaskStatus) =>
     },
   });
 
+const categoryData = [
+  {
+    name: "แกง",
+    menus: [
+      {
+        name: "แกงส้ม",
+        price: 100,
+      },
+      {
+        name: "แกงเขียวหวาน",
+        price: 120,
+      },
+    ],
+  },
+  {
+    name: "ต้ม",
+    menus: [
+      {
+        name: "ต้มข่าไก่",
+        price: 100,
+      },
+      {
+        name: "ต้มจืดหมู",
+        price: 120,
+      },
+    ],
+  },
+  {
+    name: "ผัด",
+    menus: [
+      {
+        name: "ผัดชะอม",
+        price: 100,
+      },
+      {
+        name: "ผัดหมูสับ",
+        price: 120,
+      },
+    ],
+  },
+];
 
+const menusData = [
+  {
+    name: "แกงส้ม",
+    price: 100,
+    category: "แกง"
+  },
+  {
+    name: "แกงเขียวหวาน",
+    price: 100,
+    category: "แกง"
+  },
+  {
+    name: "ผัดชะอม",
+    price: 100,
+    category: "ผัด"
+  }
+]

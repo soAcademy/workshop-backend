@@ -96,3 +96,27 @@ generator client {
   binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
   output        = "../prisma/client"
 }
+
+
+// category
+[
+  {
+    name: "แกง",
+    menus: [
+      {
+        name: "แกงส้ม",
+        price: 100
+      },
+      {
+        name: "แกงเขียวหวาน",
+        price: 120
+      }
+    ]
+  },
+  {
+    name: "ต้ม"
+  },
+  {
+    name: "ผัด"
+  }
+]
