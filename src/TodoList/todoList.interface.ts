@@ -50,9 +50,5 @@ export const DeleteManyTaskCodec = t.type({ status: t.string });
 export interface IDeleteManyTasks
   extends t.TypeOf<typeof DeleteManyTaskCodec> {}
 
-// export interface UpdateNote{
-//   status: string,
-//   notes: string,
-// }
 export const UpdateNoteCodec = t.type({ status: t.string, notes: t.string });
 export interface IUpdateNote extends t.TypeOf<typeof UpdateNoteCodec> {}
