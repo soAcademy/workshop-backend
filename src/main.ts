@@ -8,7 +8,8 @@
 
 import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./routes";
-import { AppRoutes as TodoListRoutes } from "./todoList/routes"; //todoList
+// import { AppRoutes as TodoListRoutes } from "./todoList/routes"; //todoList
+import { AppRoutes as binKitchenRoutes } from "./binKitchen/routes"; //binKitchen
 import cors from "cors";
 
 const app: Application = express();
@@ -29,7 +30,14 @@ AppRoutes.forEach((route) => {
   );
 });
 
-TodoListRoutes.forEach((route) => {
+// TodoListRoutes.forEach((route) => {
+//   app[route.method as keyof Application](
+//     route.path,
+//     (req: Request, res: Response) => route.action(req, res)
+//   );
+// });
+
+binKitchenRoutes.forEach((route) => {
   app[route.method as keyof Application](
     route.path,
     (req: Request, res: Response) => route.action(req, res)

@@ -89,6 +89,41 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.CategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MenuScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  image: 'image',
+  price: 'price',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.OrderItemScalarFieldEnum = makeEnum({
+  id: 'id',
+  menuId: 'menuId',
+  orderId: 'orderId',
+  quantity: 'quantity',
+  totalPrice: 'totalPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.OrderScalarFieldEnum = makeEnum({
+  id: 'id',
+  status: 'status',
+  tableId: 'tableId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -97,15 +132,6 @@ exports.Prisma.QueryMode = makeEnum({
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
-});
-
-exports.Prisma.TodoListScalarFieldEnum = makeEnum({
-  id: 'id',
-  task: 'task',
-  status: 'status',
-  note: 'note',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
@@ -117,7 +143,10 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 
 exports.Prisma.ModelName = makeEnum({
-  TodoList: 'TodoList'
+  Category: 'Category',
+  Menu: 'Menu',
+  Order: 'Order',
+  OrderItem: 'OrderItem'
 });
 
 /**

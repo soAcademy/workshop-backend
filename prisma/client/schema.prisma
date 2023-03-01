@@ -1,12 +1,52 @@
-model TodoList {
+model Category {
   id        Int      @id @default(autoincrement())
-  task      String
-  status    String   @default("PENDING")
-  note      String?
+  name      String   @unique
+  menus     Menu[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
+model Menu {
+  id         Int         @id @default(autoincrement())
+  name       String
+  image      String
+  price      Float
+  category   Category    @relation(fields: [categoryId], references: [id])
+  OrderItem  OrderItem[]
+  categoryId Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  status    String      @default("PENDING")
+  tableId   Int
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model OrderItem {
+  id         Int      @id @default(autoincrement())
+  menu       Menu     @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      Order    @relation(fields: [orderId], references: [id])
+  orderId    Int
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// model TodoList {
+//   id        Int      @id @default(autoincrement())
+//   task      String
+//   status    String   @default("PENDING")
+//   note      String?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now())
+// }
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
