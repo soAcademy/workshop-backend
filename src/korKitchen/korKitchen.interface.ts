@@ -4,6 +4,11 @@ export const createCategoryCodec = t.type({ name: t.string });
 
 export interface ICreateCategory extends t.TypeOf<typeof createCategoryCodec> {}
 
+// export interface ICreateCategory {
+//   id?: number;
+//   name: string;
+// }
+
 export const getCategoriesCodec = t.type({ name: t.string });
 
 export interface IGetCategories extends t.TypeOf<typeof getCategoriesCodec> {}
@@ -24,3 +29,21 @@ export interface IUpdateCategory extends t.TypeOf<typeof updateCategoryCodec> {}
 export const getMenusCodec = t.type({ name: t.string });
 
 export interface IGetMenus extends t.TypeOf<typeof getMenusCodec> {}
+
+export const updateMenuCodec = t.type({ id: t.number, price: t.number });
+
+export interface IUpdateMenu extends t.TypeOf<typeof updateMenuCodec> {}
+
+export const createOrderCodec = t.type({
+  tableId: t.number,
+  quantity: t.number,
+  totalPrice: t.number,
+  // items: t.type({create:t.array(t.type({ quantity: t.number, totalPrice: t.number}))})
+  // items: t.array(
+  //   t.type({ menu: t.number, quantity: t.number, totalPrice: t.number })
+  // ),
+});
+
+// export interface ICreateOrder extends t.TypeOf<typeof createOrderCodec> {}
+
+export interface ICreateOrder {tableId: number, quantity: number, totalPrice: number}

@@ -119,7 +119,7 @@ exports.Prisma.KorKitchenOrderItemScalarFieldEnum = makeEnum({
 exports.Prisma.KorKitchenOrderScalarFieldEnum = makeEnum({
   id: 'id',
   status: 'status',
-  tableID: 'tableID',
+  tableId: 'tableId',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });

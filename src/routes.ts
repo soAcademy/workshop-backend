@@ -26,7 +26,15 @@ import {
   updateManyTaskStatusesHandler,
   updateTaskStatusHandler,
 } from "./todoList";
-import { createCategoryHandler, createMenuHandler, getCategoriesHandler, getMenusHandler, updateCategoryHandler } from "./korKitchen/korKitchen.handler";
+import {
+  createCategoryHandler,
+  createMenuHandler,
+  createOrderHandler,
+  getCategoriesHandler,
+  getMenusHandler,
+  updateCategoryHandler,
+  updateMenuHandler,
+} from "./korKitchen/korKitchen.handler";
 
 export const AppRoutes = [
   {
@@ -160,8 +168,18 @@ export const AppRoutes = [
     action: updateCategoryHandler,
   },
   {
-    path: "/getMenu",
+    path: "/getMenus",
     method: "post",
     action: getMenusHandler,
-  }
+  },
+  {
+    path: "/updateMenu",
+    method: "post",
+    action: updateMenuHandler,
+  },
+  {
+    path: "/createOrder",
+    method: "post",
+    action: createOrderHandler,
+  },
 ];

@@ -42,7 +42,7 @@ export type KorKitchenMenu = {
 export type KorKitchenOrder = {
   id: number
   status: string
-  tableID: number
+  tableId: number
   createAt: Date
   updateAt: Date
 }
@@ -3042,18 +3042,18 @@ export namespace Prisma {
 
   export type KorKitchenOrderAvgAggregateOutputType = {
     id: number | null
-    tableID: number | null
+    tableId: number | null
   }
 
   export type KorKitchenOrderSumAggregateOutputType = {
     id: number | null
-    tableID: number | null
+    tableId: number | null
   }
 
   export type KorKitchenOrderMinAggregateOutputType = {
     id: number | null
     status: string | null
-    tableID: number | null
+    tableId: number | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -3061,7 +3061,7 @@ export namespace Prisma {
   export type KorKitchenOrderMaxAggregateOutputType = {
     id: number | null
     status: string | null
-    tableID: number | null
+    tableId: number | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -3069,7 +3069,7 @@ export namespace Prisma {
   export type KorKitchenOrderCountAggregateOutputType = {
     id: number
     status: number
-    tableID: number
+    tableId: number
     createAt: number
     updateAt: number
     _all: number
@@ -3078,18 +3078,18 @@ export namespace Prisma {
 
   export type KorKitchenOrderAvgAggregateInputType = {
     id?: true
-    tableID?: true
+    tableId?: true
   }
 
   export type KorKitchenOrderSumAggregateInputType = {
     id?: true
-    tableID?: true
+    tableId?: true
   }
 
   export type KorKitchenOrderMinAggregateInputType = {
     id?: true
     status?: true
-    tableID?: true
+    tableId?: true
     createAt?: true
     updateAt?: true
   }
@@ -3097,7 +3097,7 @@ export namespace Prisma {
   export type KorKitchenOrderMaxAggregateInputType = {
     id?: true
     status?: true
-    tableID?: true
+    tableId?: true
     createAt?: true
     updateAt?: true
   }
@@ -3105,7 +3105,7 @@ export namespace Prisma {
   export type KorKitchenOrderCountAggregateInputType = {
     id?: true
     status?: true
-    tableID?: true
+    tableId?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -3201,7 +3201,7 @@ export namespace Prisma {
   export type KorKitchenOrderGroupByOutputType = {
     id: number
     status: string
-    tableID: number
+    tableId: number
     createAt: Date
     updateAt: Date
     _count: KorKitchenOrderCountAggregateOutputType | null
@@ -3228,7 +3228,7 @@ export namespace Prisma {
   export type KorKitchenOrderSelect = {
     id?: boolean
     status?: boolean
-    tableID?: boolean
+    tableId?: boolean
     items?: boolean | KorKitchenOrder$itemsArgs
     createAt?: boolean
     updateAt?: boolean
@@ -6894,7 +6894,7 @@ export namespace Prisma {
   export const KorKitchenOrderScalarFieldEnum: {
     id: 'id',
     status: 'status',
-    tableID: 'tableID',
+    tableId: 'tableId',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -7065,7 +7065,7 @@ export namespace Prisma {
     NOT?: Enumerable<KorKitchenOrderWhereInput>
     id?: IntFilter | number
     status?: StringFilter | string
-    tableID?: IntFilter | number
+    tableId?: IntFilter | number
     items?: KorKitchenOrderItemListRelationFilter
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
@@ -7074,7 +7074,7 @@ export namespace Prisma {
   export type KorKitchenOrderOrderByWithRelationInput = {
     id?: SortOrder
     status?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
     items?: KorKitchenOrderItemOrderByRelationAggregateInput
     createAt?: SortOrder
     updateAt?: SortOrder
@@ -7087,7 +7087,7 @@ export namespace Prisma {
   export type KorKitchenOrderOrderByWithAggregationInput = {
     id?: SortOrder
     status?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: KorKitchenOrderCountOrderByAggregateInput
@@ -7103,7 +7103,7 @@ export namespace Prisma {
     NOT?: Enumerable<KorKitchenOrderScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     status?: StringWithAggregatesFilter | string
-    tableID?: IntWithAggregatesFilter | number
+    tableId?: IntWithAggregatesFilter | number
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -7379,7 +7379,7 @@ export namespace Prisma {
 
   export type KorKitchenOrderCreateInput = {
     status?: string
-    tableID: number
+    tableId: number
     items?: KorKitchenOrderItemCreateNestedManyWithoutOrderInput
     createAt?: Date | string
     updateAt?: Date | string
@@ -7388,7 +7388,7 @@ export namespace Prisma {
   export type KorKitchenOrderUncheckedCreateInput = {
     id?: number
     status?: string
-    tableID: number
+    tableId: number
     items?: KorKitchenOrderItemUncheckedCreateNestedManyWithoutOrderInput
     createAt?: Date | string
     updateAt?: Date | string
@@ -7396,7 +7396,7 @@ export namespace Prisma {
 
   export type KorKitchenOrderUpdateInput = {
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     items?: KorKitchenOrderItemUpdateManyWithoutOrderNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7405,7 +7405,7 @@ export namespace Prisma {
   export type KorKitchenOrderUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     items?: KorKitchenOrderItemUncheckedUpdateManyWithoutOrderNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7414,14 +7414,14 @@ export namespace Prisma {
   export type KorKitchenOrderCreateManyInput = {
     id?: number
     status?: string
-    tableID: number
+    tableId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
 
   export type KorKitchenOrderUpdateManyMutationInput = {
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7429,7 +7429,7 @@ export namespace Prisma {
   export type KorKitchenOrderUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7840,20 +7840,20 @@ export namespace Prisma {
   export type KorKitchenOrderCountOrderByAggregateInput = {
     id?: SortOrder
     status?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
   export type KorKitchenOrderAvgOrderByAggregateInput = {
     id?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
   }
 
   export type KorKitchenOrderMaxOrderByAggregateInput = {
     id?: SortOrder
     status?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -7861,14 +7861,14 @@ export namespace Prisma {
   export type KorKitchenOrderMinOrderByAggregateInput = {
     id?: SortOrder
     status?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
   export type KorKitchenOrderSumOrderByAggregateInput = {
     id?: SortOrder
-    tableID?: SortOrder
+    tableId?: SortOrder
   }
 
   export type KorKitchenMenuRelationFilter = {
@@ -8621,7 +8621,7 @@ export namespace Prisma {
 
   export type KorKitchenOrderCreateWithoutItemsInput = {
     status?: string
-    tableID: number
+    tableId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -8629,7 +8629,7 @@ export namespace Prisma {
   export type KorKitchenOrderUncheckedCreateWithoutItemsInput = {
     id?: number
     status?: string
-    tableID: number
+    tableId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -8670,7 +8670,7 @@ export namespace Prisma {
 
   export type KorKitchenOrderUpdateWithoutItemsInput = {
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8678,7 +8678,7 @@ export namespace Prisma {
   export type KorKitchenOrderUncheckedUpdateWithoutItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
-    tableID?: IntFieldUpdateOperationsInput | number
+    tableId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

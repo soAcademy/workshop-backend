@@ -21,7 +21,7 @@ model KorKitchenMenu {
 model KorKitchenOrder {
   id       Int                   @id @default(autoincrement())
   status   String                @default("PENDING")
-  tableID  Int
+  tableId  Int
   items    KorKitchenOrderItem[]
   createAt DateTime              @default(now())
   updateAt DateTime              @updatedAt
