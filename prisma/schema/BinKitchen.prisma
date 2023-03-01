@@ -13,10 +13,20 @@ model Menu {
   name       String
   image      String
   price      String
-  categoryId Int?
   category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @default(now())
+
+  @@schema("binkitchen")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  status    String   @default("PENDING")
+  tableId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   @@schema("binkitchen")
 }
