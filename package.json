@@ -7,7 +7,11 @@
     "prisma:merge": "cat prisma/schema/**.prisma > prisma/schema.prisma",
     "prisma:format": "yarn prisma format --schema prisma/schema.prisma",
     "prisma:migrate": "yarn prisma migrate dev --name init --schema prisma/schema.prisma",
-    "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma"
+    "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma",
+    "prisma:merge:food": "cat prisma/foodschema/**.prisma > prisma/foodschema.prisma",
+    "prisma:format:food": "yarn prisma format --schema prisma/foodschema.prisma",
+    "prisma:migrate:food": "yarn prisma migrate dev --name init --schema prisma/foodschema.prisma",
+    "prisma:generate:food": "yarn pnpify prisma generate --schema=prisma/foodschema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
