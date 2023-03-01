@@ -1,4 +1,7 @@
-import { createCategoryHandler } from "./binKitchen/binKitchen.handlers";
+import {
+  createCategoryHandler,
+  getCategoriesHandler,
+} from "./binKitchen/binKitchen.handlers";
 import {
   createTaskHandler,
   createTasksHandler,
@@ -24,6 +27,11 @@ export const AppRoutes = [
     path: "/binKitchen/createCategory",
     method: "post",
     action: createCategoryHandler,
+  },
+  {
+    path: "/binKitchen/getCategories",
+    method: "post",
+    action: getCategoriesHandler,
   },
   {
     path: "/todolist/createTask",

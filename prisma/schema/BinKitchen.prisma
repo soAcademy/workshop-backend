@@ -2,7 +2,7 @@ model Category {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   Menu      Menu[]
 
   @@schema("binkitchen")
@@ -17,7 +17,7 @@ model Menu {
   categoryId Int?
   orderItems OrderItem[]
   createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@schema("binkitchen")
 }
@@ -28,7 +28,7 @@ model Order {
   tableId   Int
   items     OrderItem[]
   createdAt DateTime    @default(now())
-  updatedAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   @@schema("binkitchen")
 }
@@ -42,7 +42,7 @@ model OrderItem {
   quantity   Int
   totalPrice Float
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@schema("binkitchen")
 }
