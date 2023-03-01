@@ -120,11 +120,6 @@ export const AppRoutes = [
     action: createTaskOneHandler,
   },
   {
-    path: "/todolist/createTask",
-    method: "post",
-    action: createTasksHandler,
-  },
-  {
     path: "/todolist/getTasks",
     method: "post",
     action: getTasksHandler,

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import {
-  createTask,
+  createTasks,
   createTaskOne,
   deleteTask,
   getTaskUnique,
@@ -32,7 +32,8 @@ import {
 
 export const createTasksHandler = async (req: Request, res: Response) => {
   try {
-    const result = await createTask(req.body);
+    console.log("req", req.body);
+    const result = await createTasks(req.body);
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({

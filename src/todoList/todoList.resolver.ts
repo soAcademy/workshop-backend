@@ -7,9 +7,9 @@ import {
 
 export const prisma = new PrismaClient();
 
-export const createTask = (args: ICreateTask) =>
+export const createTasks = (args: ICreateTask) =>
   prisma.todoList.createMany({
-    data: [{ task: "Task1" }, { task: "Task2" }],
+    data: args.data,
   });
 
 export const createTaskOne = (args: { task: string }) =>

@@ -1,7 +1,11 @@
 import * as t from "io-ts";
 
 export const createTaskCodec = t.type({
-  task: t.string,
+  data: t.array(
+    t.type({
+      task: t.string,
+    })
+  ),
 });
 
 export interface ICreateTask extends t.TypeOf<typeof createTaskCodec> {}
