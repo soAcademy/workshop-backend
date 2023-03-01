@@ -1,9 +1,9 @@
 import { PrismaClient } from "../../prisma/client";
-import { IUpdateTaskStatus, IcreateTask } from "./todoList.interface";
+import { ICreateManyTasks, IUpdateTaskStatus, ICreateTask } from "./todoList.interface";
 
 export const prisma = new PrismaClient();
 
-export const createTask = (args: IcreateTask) =>
+export const createTask = (args: ICreateTask) =>
   prisma.todoList.create({
     data: {
       task: args.task,
@@ -32,13 +32,38 @@ export const updateTaskStatus = (args: IUpdateTaskStatus) =>
     },
   });
 
-export const createManyTasks = () =>
-  prisma.todoList.createMany({
-    data: [
-      { task: "SQL", status: "Under progress" },
-      { task: "CSS", status: "Completed" },
-    ],
-  });
+// export const createManyTasks = () =>
+//   prisma.todoList.createMany({
+//     data: [
+//       { task: "SQL", status: "Under progress" },
+//       { task: "CSS", status: "Completed" },
+//     ],
+//   });
+
+// [
+//   {
+//     task: "Task1",
+//     status: "PENDING"
+//   },
+//   {
+//     task: "Task2",
+//     status: "PENDING"
+//   }
+// ]
+
+export const createManyTasks = (args: ICreateManyTasks) =>
+prisma.todoList.createMany({
+  data: args.data,
+//   data: [{
+//     task: args[0].task,
+//     status: args[0].status,
+//   },
+//   {
+//     task: args[1].task,
+//     status: args[1].status,
+//   }
+// ],
+});
 
 export const updateManyTaskStatuses = () =>
   prisma.todoList.updateMany({

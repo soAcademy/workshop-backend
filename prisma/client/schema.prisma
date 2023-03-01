@@ -1,3 +1,45 @@
+model KorKitchenCategory {
+  id               Int              @id @default(autoincrement())
+  name             String           @unique
+  menu             KorKitchenMenu[]
+  createAt         DateTime         @default(now())
+  updateAt         DateTime         @default(now())
+  korKitchenMenuId Int
+}
+
+model KorKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  image        String
+  price        Float
+  category     KorKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String?
+  orderItems   KorKitchenOrderItem[]
+  createAt     DateTime              @default(now())
+  updateAt     DateTime              @default(now())
+}
+
+model KorKitchenOrder {
+  id       Int                   @id @default(autoincrement())
+  status   String                @default("PENDING")
+  tableID  Int
+  items    KorKitchenOrderItem[]
+  createAt DateTime              @default(now())
+  updateAt DateTime              @default(now())
+}
+
+model KorKitchenOrderItem {
+  id         Int              @id @default(autoincrement())
+  menu       KorKitchenMenu   @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      KorKitchenOrder? @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  creatAt    DateTime         @default(now())
+  updatedAt  DateTime         @default(now())
+}
+
 model TodoList {
   id       Int      @id @default(autoincrement())
   task     String
@@ -6,6 +48,12 @@ model TodoList {
   //จะมีค่าหรือไม่ก็ได้ ไม่จำเป็นต้องส่งไปsave
   createAt DateTime @default(now())
   updateAt DateTime @default(now())
+}
+
+model TestModel {
+  id        Int    @id @default(autoincrement())
+  firstname String
+  Surname   String
 }
 
 datasource db {
