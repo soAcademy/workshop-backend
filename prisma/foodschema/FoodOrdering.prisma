@@ -1,39 +1,39 @@
 model category {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   menu      menu[]
 }
 
-model orderItem {
-  id        Int      @id
+model orderItems {
+  id        Int      @id @default(autoincrement())
   menuId    Int
   menu_id   menu     @relation(fields: [menuId], references: [id])
   quantity  Int
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  orders    orders[]
+  updatedAt DateTime @updatedAt
+  order_id  orders   @relation(fields: [orderId], references: [id])
+  orderId   Int
 }
 
 model orders {
-  order_id  Int        @id @default(autoincrement())
-  table_id  Int
-  status    String     @default("WAITING")
-  Item      orderItem? @relation(fields: [itemId], references: [id])
-  itemId    Int?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
+  id          Int          @id @default(autoincrement())
+  table_id    Int
+  status      String       @default("WAITING")
+  order_items orderItems[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model menu {
-  id         Int         @id @default(autoincrement())
-  category   category?   @relation(fields: [categoryId], references: [id])
-  categoryId Int?
-  name       String
-  image      String
-  price      Int
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @default(now())
-  items      orderItem[]
+  id         Int          @id @default(autoincrement())
+  category   category     @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  name       String?       @unique
+  image      String?
+  price      Int?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  items      orderItems[]
 }
