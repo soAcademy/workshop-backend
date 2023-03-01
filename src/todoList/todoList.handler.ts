@@ -9,7 +9,7 @@ import {
   updateManyTaskStatuses,
   updateTaskStatus,
 } from "./todoList.resolver";
-import { createManyTasksCodec, createTaskCodec, updateTaskStatusCodec } from "./todoList.interface";
+import { createManyTasksCodec, createTaskCodec, updateManyTaskStatusesCodec, updateTaskStatusCodec } from "./todoList.interface";
 
 export const createTaskHandler = async (req: Request, res: Response) => {
   const body = req?.body;
@@ -34,7 +34,7 @@ export const getTasksHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const updateTaskStatusHandler = async (req: Request, res: Response) => {
+export const updateTaskStatusHandler = (req: Request, res: Response) => {
   const body = req?.body;
   if (updateTaskStatusCodec.decode(body)._tag === "Right") {
     return updateTaskStatus(body)
@@ -56,7 +56,7 @@ export const updateTaskStatusHandler = async (req: Request, res: Response) => {
 //   }
 // };
 
-export const createManyTasksHandler = async (req: Request, res: Response) => {
+export const createManyTasksHandler = (req: Request, res: Response) => {
   const body = req?.body;
   if (createManyTasksCodec.decode(body)._tag === "Right") {
     return createManyTasks(body)
@@ -67,19 +67,33 @@ export const createManyTasksHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const updateManyTaskStatusesHandler = async (
+// export const updateManyTaskStatusesHandler = async (
+//   req: Request,
+//   res: Response
+// ) => {
+//   const body = req?.body;
+//   console.log(body);
+//   try {
+//     const result = await updateManyTaskStatuses();
+//     res.status(200).json(result);
+//   } catch (e) {
+//     res.status(500).json({
+//       error: String(e),
+//     });
+//   }
+// };
+
+export const updateManyTaskStatusesHandler = (
   req: Request,
   res: Response
 ) => {
   const body = req?.body;
-  console.log(body);
-  try {
-    const result = await updateManyTaskStatuses();
-    res.status(200).json(result);
-  } catch (e) {
-    res.status(500).json({
-      error: String(e),
-    });
+  if (updateManyTaskStatusesCodec.decode(body)._tag === "Right") {
+    return updateManyTaskStatuses(body)
+      .then((response) => res.status(200).send(response))
+      .catch((error) => res.status(500).send(error));
+  } else {
+    res.status(500).send("Failed to validate codec");
   }
 };
 

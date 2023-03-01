@@ -1,5 +1,5 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateManyTasks, IUpdateTaskStatus, ICreateTask } from "./todoList.interface";
+import { ICreateManyTasks, IUpdateTaskStatus, ICreateTask, IUpdateManyTaskStatuses } from "./todoList.interface";
 
 export const prisma = new PrismaClient();
 
@@ -65,13 +65,13 @@ prisma.todoList.createMany({
 // ],
 });
 
-export const updateManyTaskStatuses = () =>
+export const updateManyTaskStatuses = (args: IUpdateManyTaskStatuses) =>
   prisma.todoList.updateMany({
     where: {
-      status: "Completed",
+      status: args.status1,
     },
     data: {
-      task: "React",
+      task: args.status2,
     },
   });
 

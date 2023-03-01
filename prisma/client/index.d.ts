@@ -19,7 +19,6 @@ export type KorKitchenCategory = {
   name: string
   createAt: Date
   updateAt: Date
-  korKitchenMenuId: number
 }
 
 /**
@@ -1045,12 +1044,10 @@ export namespace Prisma {
 
   export type KorKitchenCategoryAvgAggregateOutputType = {
     id: number | null
-    korKitchenMenuId: number | null
   }
 
   export type KorKitchenCategorySumAggregateOutputType = {
     id: number | null
-    korKitchenMenuId: number | null
   }
 
   export type KorKitchenCategoryMinAggregateOutputType = {
@@ -1058,7 +1055,6 @@ export namespace Prisma {
     name: string | null
     createAt: Date | null
     updateAt: Date | null
-    korKitchenMenuId: number | null
   }
 
   export type KorKitchenCategoryMaxAggregateOutputType = {
@@ -1066,7 +1062,6 @@ export namespace Prisma {
     name: string | null
     createAt: Date | null
     updateAt: Date | null
-    korKitchenMenuId: number | null
   }
 
   export type KorKitchenCategoryCountAggregateOutputType = {
@@ -1074,19 +1069,16 @@ export namespace Prisma {
     name: number
     createAt: number
     updateAt: number
-    korKitchenMenuId: number
     _all: number
   }
 
 
   export type KorKitchenCategoryAvgAggregateInputType = {
     id?: true
-    korKitchenMenuId?: true
   }
 
   export type KorKitchenCategorySumAggregateInputType = {
     id?: true
-    korKitchenMenuId?: true
   }
 
   export type KorKitchenCategoryMinAggregateInputType = {
@@ -1094,7 +1086,6 @@ export namespace Prisma {
     name?: true
     createAt?: true
     updateAt?: true
-    korKitchenMenuId?: true
   }
 
   export type KorKitchenCategoryMaxAggregateInputType = {
@@ -1102,7 +1093,6 @@ export namespace Prisma {
     name?: true
     createAt?: true
     updateAt?: true
-    korKitchenMenuId?: true
   }
 
   export type KorKitchenCategoryCountAggregateInputType = {
@@ -1110,7 +1100,6 @@ export namespace Prisma {
     name?: true
     createAt?: true
     updateAt?: true
-    korKitchenMenuId?: true
     _all?: true
   }
 
@@ -1206,7 +1195,6 @@ export namespace Prisma {
     name: string
     createAt: Date
     updateAt: Date
-    korKitchenMenuId: number
     _count: KorKitchenCategoryCountAggregateOutputType | null
     _avg: KorKitchenCategoryAvgAggregateOutputType | null
     _sum: KorKitchenCategorySumAggregateOutputType | null
@@ -1234,7 +1222,6 @@ export namespace Prisma {
     menu?: boolean | KorKitchenCategory$menuArgs
     createAt?: boolean
     updateAt?: boolean
-    korKitchenMenuId?: boolean
     _count?: boolean | KorKitchenCategoryCountOutputTypeArgs
   }
 
@@ -6872,8 +6859,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     createAt: 'createAt',
-    updateAt: 'updateAt',
-    korKitchenMenuId: 'korKitchenMenuId'
+    updateAt: 'updateAt'
   };
 
   export type KorKitchenCategoryScalarFieldEnum = (typeof KorKitchenCategoryScalarFieldEnum)[keyof typeof KorKitchenCategoryScalarFieldEnum]
@@ -6977,7 +6963,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuListRelationFilter
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    korKitchenMenuId?: IntFilter | number
   }
 
   export type KorKitchenCategoryOrderByWithRelationInput = {
@@ -6986,7 +6971,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuOrderByRelationAggregateInput
     createAt?: SortOrder
     updateAt?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type KorKitchenCategoryWhereUniqueInput = {
@@ -6999,7 +6983,6 @@ export namespace Prisma {
     name?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    korKitchenMenuId?: SortOrder
     _count?: KorKitchenCategoryCountOrderByAggregateInput
     _avg?: KorKitchenCategoryAvgOrderByAggregateInput
     _max?: KorKitchenCategoryMaxOrderByAggregateInput
@@ -7015,7 +6998,6 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter | string
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
-    korKitchenMenuId?: IntWithAggregatesFilter | number
   }
 
   export type KorKitchenMenuWhereInput = {
@@ -7280,7 +7262,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuCreateNestedManyWithoutCategoryInput
     createAt?: Date | string
     updateAt?: Date | string
-    korKitchenMenuId: number
   }
 
   export type KorKitchenCategoryUncheckedCreateInput = {
@@ -7289,7 +7270,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuUncheckedCreateNestedManyWithoutCategoryInput
     createAt?: Date | string
     updateAt?: Date | string
-    korKitchenMenuId: number
   }
 
   export type KorKitchenCategoryUpdateInput = {
@@ -7297,7 +7277,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuUpdateManyWithoutCategoryNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenCategoryUncheckedUpdateInput = {
@@ -7306,7 +7285,6 @@ export namespace Prisma {
     menu?: KorKitchenMenuUncheckedUpdateManyWithoutCategoryNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenCategoryCreateManyInput = {
@@ -7314,14 +7292,12 @@ export namespace Prisma {
     name: string
     createAt?: Date | string
     updateAt?: Date | string
-    korKitchenMenuId: number
   }
 
   export type KorKitchenCategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenCategoryUncheckedUpdateManyInput = {
@@ -7329,7 +7305,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenMenuCreateInput = {
@@ -7675,12 +7650,10 @@ export namespace Prisma {
     name?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type KorKitchenCategoryAvgOrderByAggregateInput = {
     id?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type KorKitchenCategoryMaxOrderByAggregateInput = {
@@ -7688,7 +7661,6 @@ export namespace Prisma {
     name?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type KorKitchenCategoryMinOrderByAggregateInput = {
@@ -7696,12 +7668,10 @@ export namespace Prisma {
     name?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type KorKitchenCategorySumOrderByAggregateInput = {
     id?: SortOrder
-    korKitchenMenuId?: SortOrder
   }
 
   export type IntWithAggregatesFilter = {
@@ -8494,7 +8464,6 @@ export namespace Prisma {
     name: string
     createAt?: Date | string
     updateAt?: Date | string
-    korKitchenMenuId: number
   }
 
   export type KorKitchenCategoryUncheckedCreateWithoutMenuInput = {
@@ -8502,7 +8471,6 @@ export namespace Prisma {
     name: string
     createAt?: Date | string
     updateAt?: Date | string
-    korKitchenMenuId: number
   }
 
   export type KorKitchenCategoryCreateOrConnectWithoutMenuInput = {
@@ -8546,7 +8514,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenCategoryUncheckedUpdateWithoutMenuInput = {
@@ -8554,7 +8521,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    korKitchenMenuId?: IntFieldUpdateOperationsInput | number
   }
 
   export type KorKitchenOrderItemUpsertWithWhereUniqueWithoutMenuInput = {

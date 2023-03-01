@@ -93,8 +93,7 @@ exports.Prisma.KorKitchenCategoryScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
   createAt: 'createAt',
-  updateAt: 'updateAt',
-  korKitchenMenuId: 'korKitchenMenuId'
+  updateAt: 'updateAt'
 });
 
 exports.Prisma.KorKitchenMenuScalarFieldEnum = makeEnum({
