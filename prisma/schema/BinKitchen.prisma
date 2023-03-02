@@ -45,18 +45,22 @@ model BinKitchenCategory {
   updatedAt DateTime         @default(now())
 }
 
+//----------------------------------------------------------------
+
 model BinKitchenMenu {
   id           Int                   @id @default(autoincrement())
   name         String
   image        String
   price        Float
   category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
-  //                                         ระบุว่า categoryName มี foreign key คือ name
+  //                        ระบุว่า categoryName มี foreign key คือ name ใน BinKitchenCategory
   categoryName String?
-  orderItems   BinKitchenOrderItem[] //*
+  orderItems   BinKitchenOrderItem[]
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @default(now())
 }
+
+//----------------------------------------------------------------
 
 model BinKitchenOrder {
   id        Int                   @id @default(autoincrement())
@@ -66,6 +70,8 @@ model BinKitchenOrder {
   createdAt DateTime              @default(now())
   updatedAt DateTime              @default(now())
 }
+
+//----------------------------------------------------------------
 
 model BinKitchenOrderItem {
   id         Int              @id @default(autoincrement())
@@ -78,3 +84,5 @@ model BinKitchenOrderItem {
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @default(now())
 }
+
+//----------------------------------------------------------------
