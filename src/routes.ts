@@ -36,6 +36,7 @@ import {
   getOrdersByTableIdHandler,
   getOrdersHandler,
   updateCategoryHandler,
+  updateMenuHandler,
 } from "./binKitchen";
 
 export const AppRoutes = [
@@ -177,6 +178,11 @@ export const AppRoutes = [
     path: "/binKitchen/getMenus",
     method: "post",
     action: getMenusHandler,
+  },
+  {
+    path: "/binKitchen/updateMenu",
+    method: "post",
+    action: updateMenuHandler,
   },
   {
     path: "/binKitchen/createOrder",

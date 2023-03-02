@@ -11,6 +11,7 @@ import {
   updateCategory,
   updateOrder,
   getOrderById,
+  updateMenu,
 } from "./binKitchen.resolver";
 
 export const createCategoryHandler = async (req: Request, res: Response) => {
@@ -88,6 +89,18 @@ export const getMenusHandler = async (req: Request, res: Response) => {
   }
 };
 
+export const updateMenuHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  try {
+    const result = await updateMenu(body);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
 export const createOrderHandler = async (req: Request, res: Response) => {
   const args = req?.body;
   try {
@@ -128,10 +141,7 @@ export const getOrdersByTableIdHandler = async (
   }
 };
 
-export const getOrderByIdHandler = async (
-  req: Request,
-  res: Response
-) => {
+export const getOrderByIdHandler = async (req: Request, res: Response) => {
   try {
     const result = await getOrderById({ id: req?.body.id });
     res.status(200).json(result);

@@ -49,7 +49,7 @@ export const createMenu = (args: {
     },
   });
 
-// todo CRUD 4.2 Create Many Menu
+// CRUD 4.2 Create Many Menu
 export const createManyMenu = (
   args: {
     name: string;
@@ -71,13 +71,20 @@ export const createManyMenu = (
 export const getMenus = () => prisma.binKitchenMenu.findMany();
 
 // CRUD 6. Update Menu
-export const updateMenu = (args: { id: number; price: number }) =>
+export const updateMenu = (args: {
+  id: number;
+  name?: string;
+  image?: string;
+  price?: number;
+}) =>
   prisma.binKitchenMenu.update({
     where: {
       id: args.id,
     },
     data: {
-      price: args.price,
+      name: args.name ?? undefined,
+      image: args.image ?? undefined,
+      price: args.price ?? undefined,
     },
   });
 // CRUD 7. Create Order
