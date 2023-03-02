@@ -31,3 +31,20 @@ export const createMenu = (args: ICreateMenu) => {
     },
   });
 };
+
+export const getMenus = () => {
+  return prisma.menu.findMany({
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      price: true,
+      category: {
+        select: {
+          name: true,
+        },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
+};
