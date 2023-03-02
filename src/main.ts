@@ -19,7 +19,8 @@ app.use(express.json());
 
 AppRoutes.map((route) => {
   app[route.method as keyof Application](
-    route.path,cors(corsOptions),
+    route.path,
+    // cors(corsOptions),
     (request: Request, response: Response) => route.action(request, response)
   );
 });

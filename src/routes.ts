@@ -25,6 +25,18 @@ import {
   getUniqueTasksHandler,
   updateTaskHandler,
 } from "./todoList/todoList.handler";
+import {
+  createCategoryHandler,
+  createManyCategoryHandler,
+  createMenuHandler,
+  createOrderHandler,
+  getCategoryHandler,
+  getMenusHandler,
+  getOrderByIdHandler,
+  getOrdersByTableIdHandler,
+  getOrdersHandler,
+  updateCategoryHandler,
+} from "./binKitchen";
 
 export const AppRoutes = [
   {
@@ -134,5 +146,56 @@ export const AppRoutes = [
     path: "/todolist/deleteTask",
     method: "post",
     action: deleteTasksHandler,
+  },
+  //todo: create route for bin kitchen project
+  {
+    path: "/binKitchen/createCategory",
+    method: "post",
+    action: createCategoryHandler,
+  },
+  {
+    path: "/binKitchen/createManyCategory",
+    method: "post",
+    action: createManyCategoryHandler,
+  },
+  {
+    path: "/binKitchen/getCategory",
+    method: "post",
+    action: getCategoryHandler,
+  },
+  {
+    path: "/binKitchen/updateCategory",
+    method: "post",
+    action: updateCategoryHandler,
+  },
+  {
+    path: "/binKitchen/createMenu",
+    method: "post",
+    action: createMenuHandler,
+  },
+  {
+    path: "/binKitchen/getMenus",
+    method: "post",
+    action: getMenusHandler,
+  },
+  {
+    path: "/binKitchen/createOrder",
+    method: "post",
+    action: createOrderHandler,
+  },
+  {
+    path: "/binKitchen/getOrders",
+    method: "post",
+    action: getOrdersHandler,
+  },
+  {
+    path: "/binKitchen/getOrdersByTableId",
+    method: "post",
+    action: getOrdersByTableIdHandler,
+  },
+  {
+    path: "/binKitchen/getOrderById",
+    method: "post",
+    action: getOrderByIdHandler,
   },
 ];
