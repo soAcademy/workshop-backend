@@ -1,7 +1,6 @@
-import { connect } from "http2";
 import { PrismaClient } from "../../prisma/client";
 import * as t from "io-ts";
-import { includes } from "fp-ts/lib/string";
+import { optional } from "io-ts-extra";
 
 // CRUD
 // 1. Create Category
@@ -74,24 +73,33 @@ export const createMenu = (args: ICreateMenu) =>
 // 5. Get Menus
 export const getMenus = () => prisma.menu.findMany();
 
-export const UpdateMenu = t.intersection([
-  t.type({
-    id: t.number,
-  }),
-  t.partial({
-    name: t.union([t.string, t.undefined]),
-  }),
-  t.partial({
-    image: t.union([t.string, t.undefined]),
-  }),
-  t.partial({
-    price: t.union([t.number, t.undefined]),
-  }),
-  t.partial({
-    categoryId: t.union([t.number, t.undefined]),
-  }),
-]);
-export interface IUpdateMenu extends t.TypeOf<typeof UpdateMenu> {}
+// export const UpdateMenu = t.intersection([
+//   t.type({
+//     id: t.number,
+//   }),
+//   t.partial({
+//     name: t.union([t.string, t.undefined]),
+//   }),
+//   t.partial({
+//     image: t.union([t.string, t.undefined]),
+//   }),
+//   t.partial({
+//     price: t.union([t.number, t.undefined]),
+//   }),
+//   t.partial({
+//     categoryId: t.union([t.number, t.undefined]),
+//   }),
+// ]);
+
+export const UpdateMenuCodec = t.type({
+  id: t.number,
+  name: optional(t.string),
+  image: optional(t.string),
+  price: optional(t.number),
+  categoryId: optional(t.number),
+});
+
+export interface IUpdateMenu extends t.TypeOf<typeof UpdateMenuCodec> {}
 // 6. Update Menu
 export const updateMenu = (args: IUpdateMenu) =>
   prisma.menu.update({
@@ -99,10 +107,10 @@ export const updateMenu = (args: IUpdateMenu) =>
       id: args.id,
     },
     data: {
-      name: args.name,
-      image: args.image,
-      price: args.price,
-      categoryId: args.categoryId,
+      name: args?.name ?? undefined,
+      image: args?.image ?? undefined,
+      price: args?.price ?? undefined,
+      categoryId: args?.categoryId ?? undefined,
     },
   });
 

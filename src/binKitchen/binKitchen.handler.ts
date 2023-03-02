@@ -5,7 +5,7 @@ import {
   CreateMenuCodec,
   CreateOrderCodec,
   UpdateCategoryCodec,
-  UpdateMenu,
+  UpdateMenuCodec,
   createCategory,
   createMenu,
   createOrder,
@@ -77,7 +77,7 @@ export const updateMenuHandler = async (req: Request, res: Response) => {
   const body = req?.body;
   console.log(body);
   try {
-    UpdateMenu.decode(body)._tag === "Right"
+    UpdateMenuCodec.decode(body)._tag === "Right"
       ? res.status(200).json(await updateMenu(body))
       : res.status(500).json({ error: "Invalid type Input" });
   } catch (e) {
