@@ -16,6 +16,8 @@ import {
   getOrders,
   updateCategory,
   updateMenu,
+  updateOrder,
+  updateOrderCodec,
 } from "./binKitchen.resolve";
 
 export const createCategoryHandler = async (req: Request, res: Response) => {
@@ -109,6 +111,18 @@ export const getOrderHandler = async (req: Request, res: Response) => {
   try {
     getOrderCodec.decode(body)._tag === "Right"
       ? res.status(200).json(await getOrder(body))
+      : res.status(500).json({ error: "Invalid type Input" });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const updateOrderHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log(body);
+  try {
+    updateOrderCodec.decode(body)._tag === "Right"
+      ? res.status(200).json(await updateOrder(body))
       : res.status(500).json({ error: "Invalid type Input" });
   } catch (e) {
     res.status(500).json({ error: String(e) });

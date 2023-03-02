@@ -154,3 +154,16 @@ export const getOrder = (args: IGetOrder) =>
       items: { include: { menu: true } },
     },
   });
+
+export const updateOrderCodec = t.type({ id: t.number, status: t.string });
+export interface IUpdateOrder extends t.TypeOf<typeof updateOrderCodec> {}
+// 10. Update order
+export const updateOrder = (args: IUpdateOrder) =>
+  prisma.order.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      status: args.status,
+    },
+  });
