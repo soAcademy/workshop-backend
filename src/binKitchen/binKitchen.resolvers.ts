@@ -1,5 +1,9 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateCategory, ICreateMenu } from "./binKitchen.interfaces";
+import {
+  ICreateCategory,
+  ICreateMenu,
+  ICreateOrder,
+} from "./binKitchen.interfaces";
 
 export const prisma = new PrismaClient();
 
@@ -46,5 +50,37 @@ export const getMenus = () => {
       },
     },
     orderBy: { name: "asc" },
+  });
+};
+
+export const createOrder = (args: ICreateOrder) => {
+  return prisma.order.create({
+    data: {
+      // status: "PENDING",
+      tableId: args.tableId,
+      items: {
+        // create: [
+        //   {
+        //     menu: {
+        //       connect: {
+        //         id: 2,
+        //       },
+        //     },
+        //     quantity: 2,
+        //     totalPrice: 300,
+        //   },
+        //   {
+        //     menu: {
+        //       connect: {
+        //         id: 3,
+        //       },
+        //     },
+        //     quantity: 1,
+        //     totalPrice: 130,
+        //   },
+        // ],
+        create: args.items,
+      },
+    },
   });
 };

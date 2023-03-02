@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
 
-import { CreateCategoryCodec, CreateMenuCodec } from "./binKitchen.interfaces";
+import {
+  CreateCategoryCodec,
+  CreateMenuCodec,
+  CreateOrderCodec,
+} from "./binKitchen.interfaces";
 import {
   createCategory,
-  createMenu,
   getCategories,
+  createMenu,
   getMenus,
+  createOrder,
 } from "./binKitchen.resolvers";
 
 export const createCategoryHandler = async (req: Request, res: Response) => {
@@ -66,5 +71,25 @@ export const getMenusHandler = async (req: Request, res: Response) => {
     res.status(500).json({
       error: String(e),
     });
+  }
+};
+
+export const createOrderHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
+  if (CreateOrderCodec.decode(args)._tag === "Right") {
+    try {
+      const result = await createOrder({
+        // status: args.status,
+        tableId: args.tableId,
+        items: args.items,
+      });
+      res.status(200).json(result);
+    } catch (e) {
+      res.status(500).json({
+        error: String(e),
+      });
+    }
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
   }
 };
