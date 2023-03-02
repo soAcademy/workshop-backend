@@ -11,6 +11,7 @@ import {
   createMenu,
   getMenus,
   createOrder,
+  getOrders,
 } from "./binKitchen.resolvers";
 
 export const createCategoryHandler = async (req: Request, res: Response) => {
@@ -91,5 +92,16 @@ export const createOrderHandler = async (req: Request, res: Response) => {
     }
   } else {
     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+  }
+};
+
+export const getOrdersHandler = async (req: Request, res: Response) => {
+  try {
+    const result = await getOrders();
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
   }
 };

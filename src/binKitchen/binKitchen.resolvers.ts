@@ -59,27 +59,31 @@ export const createOrder = (args: ICreateOrder) => {
       // status: "PENDING",
       tableId: args.tableId,
       items: {
-        // create: [
-        //   {
-        //     menu: {
-        //       connect: {
-        //         id: 2,
-        //       },
-        //     },
-        //     quantity: 2,
-        //     totalPrice: 300,
-        //   },
-        //   {
-        //     menu: {
-        //       connect: {
-        //         id: 3,
-        //       },
-        //     },
-        //     quantity: 1,
-        //     totalPrice: 130,
-        //   },
-        // ],
         create: args.items,
+      },
+    },
+  });
+};
+
+export const getOrders = () => {
+  return prisma.order.findMany({
+    select: {
+      id: true,
+      status: true,
+      tableId: true,
+      items: {
+        select: {
+          id: true,
+          menu: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+            },
+          },
+          quantity: true,
+          totalPrice: true,
+        },
       },
     },
   });
