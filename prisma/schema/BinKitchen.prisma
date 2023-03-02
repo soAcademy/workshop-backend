@@ -2,7 +2,7 @@ model BinKitchenCategory {
   id             Int              @id @default(autoincrement())
   name           String           @unique
   createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
   BinKitchenMenu BinKitchenMenu[]
 }
 
@@ -14,7 +14,7 @@ model BinKitchenMenu {
   category            BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
   categoryName        String?
   createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   BinKitchenOrderItem BinKitchenOrderItem[]
 }
 
@@ -23,7 +23,7 @@ model BinKitchenOrder {
   status              String                @default("PENDING")
   tableId             Int
   createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   BinKitchenOrderItem BinKitchenOrderItem[]
 }
 
@@ -36,5 +36,5 @@ model BinKitchenOrderItem {
   quantity   Int
   totalPrice Float
   createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 }

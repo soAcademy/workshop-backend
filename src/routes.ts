@@ -1,4 +1,16 @@
 import {
+  createCategoryHandler,
+  createMenuHandler,
+  createOrderHandler,
+  getCategoryHandler,
+  getMenuHandler,
+  getOrderHandler,
+  getOrdersHandler,
+  updateCategoryHandler,
+  updateMenuHandler,
+  updateOrderHandler,
+} from "./binKitchen";
+import {
   functionAddHandler,
   functionHelloAtHandler,
   functionHelloMultipyHandler,
@@ -138,5 +150,55 @@ export const AppRoutes = [
     path: "/function/deleteManyTasks",
     method: "post",
     action: deleteManyTasksHandler,
+  },
+  {
+    path: "/function/createCategory",
+    method: "post",
+    action: createCategoryHandler,
+  },
+  {
+    path: "/function/getCategory",
+    method: "post",
+    action: getCategoryHandler,
+  },
+  {
+    path: "/function/createMenu",
+    method: "post",
+    action: createMenuHandler,
+  },
+  {
+    path: "/function/updateCategory",
+    method: "post",
+    action: updateCategoryHandler,
+  },
+  {
+    path: "/function/getMenu",
+    method: "post",
+    action: getMenuHandler,
+  },
+  {
+    path: "/function/updateMenu",
+    method: "post",
+    action: updateMenuHandler,
+  },
+  {
+    path: "/function/createOrder",
+    method: "post",
+    action: createOrderHandler,
+  },
+  {
+    path: "/function/getOrders",
+    method: "post",
+    action: getOrdersHandler,
+  },
+  {
+    path: "/function/getOrder",
+    method: "post",
+    action: getOrderHandler,
+  },
+  {
+    path: "/function/updateOrder",
+    method: "post",
+    action: updateOrderHandler,
   },
 ];
