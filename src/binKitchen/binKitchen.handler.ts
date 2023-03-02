@@ -4,6 +4,7 @@ import {
   CreateMenuCodec,
   CreateOrderCodec,
   GetMenuByCategoryCodec,
+  GetOrderCodec,
   UpdateCategoryCodec,
   UpdateMenuCodec,
   UpdateOrderCodec,
@@ -148,7 +149,7 @@ export const createOrderHandler = async (req: Request, res: Response) => {
       const result = await createOrder(args);
       res.status(200).json(result);
     } else {
-      res.status(500).json({ error: String("Error invalid codec") });
+      res.status(404).json({ error: String("Error invalid codec") });
     }
   } catch (err) {
     res.status(500).json({ error: err });
@@ -156,9 +157,19 @@ export const createOrderHandler = async (req: Request, res: Response) => {
 };
 
 export const getOrderHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
+  console.log(args);
+  console.log(GetOrderCodec.decode(args));
+
   try {
-    const result = await getOrder();
-    res.status(200).json(result);
+    if (GetOrderCodec.decode(args)._tag === "Right") {
+      const result = await getOrder({
+        tableId: args.tableId,
+      });
+      res.status(200).json(result);
+    } else {
+      res.status(500).json({ error: String("Error invalid codec") });
+    }
   } catch (err) {
     res.status(500).json({ error: String(err) });
   }
@@ -182,12 +193,11 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
     if (UpdateOrderCodec.decode(args)._tag === "Right") {
       const result = await updateOrder({
         id: args.id,
-        status: args.status,
         updateStatus: args.updateStatus,
       });
       res.status(200).json(result);
     } else {
-      res.status(500).json({ error: String("Error invalid codec") });
+      res.status(404).json({ error: String("Error invalid codec") });
     }
   } catch (err) {
     res.status(500).json({ error: String(err) });

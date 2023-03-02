@@ -54,8 +54,13 @@ export interface ICreateOrder extends t.TypeOf<typeof CreateOrderCodec> {}
 
 export const UpdateOrderCodec = t.type({
   id: t.number,
-  status: t.string,
   updateStatus: t.string,
 });
 
 export interface IUpdateOrder extends t.TypeOf<typeof UpdateOrderCodec> {}
+
+export const GetOrderCodec = t.type({
+  tableId: t.number,
+});
+
+export interface IGetOrder extends t.TypeOf<typeof GetOrderCodec> {}

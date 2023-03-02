@@ -5,6 +5,7 @@ import {
   ICreateMenu,
   ICreateOrder,
   IGetMenuByCategory,
+  IGetOrder,
   IUpdateCategory,
   IUpdateMenu,
   IUpdateOrder,
@@ -96,22 +97,21 @@ export const createOrder = (args: ICreateOrder) =>
     },
   });
 
-export const getOrder = () =>
+export const getOrder = (args: IGetOrder) =>
   prisma.binKitchenOrder.findMany({
-    where: {},
-    include: { items: true },
+    where: { tableId: args.tableId },
+    include: { items: { include: { menu: true } } },
     orderBy: { id: "asc" },
   });
 
 export const getOrders = () =>
   prisma.binKitchenOrder.findMany({
-    where: {},
     include: { items: { include: { menu: true } } },
     orderBy: { id: "asc" },
   });
 
 export const updateOrder = (args: IUpdateOrder) =>
   prisma.binKitchenOrder.updateMany({
-    where: { id: args.id, status: args.status },
+    where: { id: args.id },
     data: { status: args.updateStatus },
   });
