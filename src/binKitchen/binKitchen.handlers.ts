@@ -13,6 +13,7 @@ import {
   createOrder,
   getOrders,
   getOrdersByTable,
+  updateOrderStatus,
 } from "./binKitchen.resolvers";
 
 export const createCategoryHandler = async (req: Request, res: Response) => {
@@ -111,6 +112,18 @@ export const getOrdersByTableHandler = async (req: Request, res: Response) => {
   const args = req?.body;
   try {
     const result = await getOrdersByTable(args.tableId);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const updateOrderStatusHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
+  try {
+    const result = await updateOrderStatus(args.orderId, args.status);
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({

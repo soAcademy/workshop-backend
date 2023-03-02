@@ -115,3 +115,14 @@ export const getOrdersByTable = (tableId: number) => {
     },
   });
 };
+
+export const updateOrderStatus = (orderId: number, status: string) => {
+  return prisma.order.update({
+    data: {
+      status: status,
+    },
+    where: {
+      id: orderId,
+    },
+  });
+};

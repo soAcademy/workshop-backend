@@ -6,6 +6,7 @@ import {
   createOrderHandler,
   getOrdersHandler,
   getOrdersByTableHandler,
+  updateOrderStatusHandler,
 } from "./binKitchen/binKitchen.handlers";
 import {
   createTaskHandler,
@@ -62,6 +63,11 @@ export const AppRoutes = [
     path: "/binKitchen/get-orders-by-table",
     method: "post",
     action: getOrdersByTableHandler,
+  },
+  {
+    path: "/binKitchen/update-order-status",
+    method: "post",
+    action: updateOrderStatusHandler,
   },
   {
     path: "/todolist/createTask",
