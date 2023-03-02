@@ -10,6 +10,7 @@ const corsOptions = {
 };
 
 app.use(express.json());
+app.use(cors(corsOptions));
 
 app.listen(8000, () => {
   console.log("Server start on port 8000!");
@@ -18,7 +19,7 @@ app.listen(8000, () => {
 AppRoutes.forEach((route) => {
   app[route.method as keyof Application](
     route.path,
-    cors(corsOptions),
+    // cors(corsOptions),
     (request: Request, response: Response) => route.action(request, response)
   );
 });
