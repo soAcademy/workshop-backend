@@ -1,10 +1,10 @@
 import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./routes";
-
+import cors from 'cors';
 // Express Server
 
 const app: Application = express();
-
+app.use(cors());
 app.use(express.json());
 
 AppRoutes.map((route) => {
@@ -15,6 +15,6 @@ AppRoutes.map((route) => {
   );
 });
 
-app.listen(3000, () => {
-  console.log("Server start on port 3000!");
+app.listen(3100, () => {
+  console.log("Server start on port 3100!");
 });

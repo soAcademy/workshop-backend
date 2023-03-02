@@ -1,0 +1,10 @@
+-- CreateTable
+CREATE TABLE "BinKichenOrder" (
+    "id" SERIAL NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'PENDING',
+    "tableID" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "BinKichenOrder_pkey" PRIMARY KEY ("id")
+);

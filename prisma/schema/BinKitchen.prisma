@@ -1,0 +1,49 @@
+// ครัวคุณบิน
+// category: มีต้ม ผัด แกง ทอด แนะนำ
+// menu: แกงส้ม, ผัดชะอม, ต้มจืด
+// menu+category: แกงส้ม [แกง], ผัดชะอม [ผัด], ต้มจืด [ต้ม], แกงเขียวหวาน [แกง]
+// order 1: ระบุหมายเลขโต๊ะ 13, แกงส้ม 1 รายการ, ผัดชะอม 2 รายการ (PENDING)
+// order 2: ระบุหมายเลขโต๊ะ 13, แกงส้ม 2 รายการ, แกงเขียวหวาน 1 รายการ
+// กรณีทำเสร็จ: order 1 จะเปลี่ยนจาก PENDING -> DONE
+
+model BinKitchenCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  menus     BinKitchenMenu[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model BinKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String                
+  image        String
+  price        Float
+  category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String?
+  orderItems   BinKitchenOrderItem[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+}
+
+model BinKitchenOrder {
+  id        Int                   @id @default(autoincrement())
+  status    String                @default("PENDING")
+  tableId   Int
+  items     BinKitchenOrderItem[]
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+}
+
+model BinKitchenOrderItem {
+  id         Int              @id @default(autoincrement())
+  menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+}
+
