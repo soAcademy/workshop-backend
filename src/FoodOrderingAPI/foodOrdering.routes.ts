@@ -2,8 +2,11 @@ import {
   addCategoryHandler,
   addMenuHandler,
   addOrderHandler,
+  createBillHandler,
+  getBillHandler,
   getCategoryHandler,
   getMenuHandler,
+  getOrdersForCheckOutHandler,
   getOrdersHandler,
   updateCategoryHandler,
   updateMenuHandler,
@@ -60,5 +63,20 @@ export const FoodOrderingRoutes = [
     method: "post",
     path: "/foodOrdering/getOrders",
     action: getOrdersHandler,
+  },
+  {
+    method: "post",
+    path: "/foodOrdering/getOrdersForCheckout",
+    action: getOrdersForCheckOutHandler,
+  },
+  {
+    method: "post",
+    path: "/foodOrdering/createBill",
+    action: createBillHandler,
+  },
+  {
+    method: "post",
+    path: "/foodOrdering/getBill",
+    action: getBillHandler,
   },
 ];

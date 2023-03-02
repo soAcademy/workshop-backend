@@ -3,8 +3,11 @@ import {
   IAddCategory,
   IAddMenu,
   IAddOrder,
+  ICreateBill,
+  IGetBill,
   IGetMenu,
   IGetOrders,
+  IGetOrdersForCheckout,
   IUpdateCategory,
   IUpdateMenu,
   IUpdateOrder,
@@ -74,13 +77,15 @@ export const updateMenu = (args: IUpdateMenu) => {
     where: { id: args.id },
     data: {
       name: args?.name,
-      category: {
-        connect: {
-          id: args?.categoryId,
-        },
-      },
       image: args?.image,
       price: args?.price,
+      ...(args.categoryId && {
+        category: {
+          connect: {
+            id: args?.categoryId,
+          },
+        },
+      }),
     },
   });
 };
@@ -89,24 +94,43 @@ export const addOrder = (args: IAddOrder) => {
   return prisma.orders.create({
     data: {
       table_id: args.table_id,
-      order_items: {
-        createMany: {
-          data: args.items.map((e) => ({
-            menuId: e.menuId,
+      total_price: args.total_price,
+      orderItems: {
+        create: args.items.map((e) => {
+          return {
+            menu: {
+              connect: {
+                id: e.menuId,
+              },
+            },
             quantity: e.quantity,
-          })),
-        },
+          };
+        }),
       },
     },
   });
 };
-
+export const getOrdersForCheckout = (args: IGetOrdersForCheckout) => {
+  return prisma.orders.findMany({
+    where: {
+      AND: [
+        { table_id: args.table_id },
+        {
+          status: {
+            notIn: ["PAID", "CANCEL"],
+          },
+        },
+      ],
+    },
+    orderBy: {
+      id: "asc",
+    },
+  });
+};
 export const getOrders = (args: IGetOrders) => {
   return args.table_id
     ? prisma.orders.findMany({
-        where: {
-          table_id: args.table_id,
-        },
+        where: { table_id: args.table_id },
         orderBy: {
           id: "asc",
         },
@@ -128,3 +152,62 @@ export const updateOrder = (args: IUpdateOrder) => {
     },
   });
 };
+
+export const createBill = async (args: ICreateBill) => {
+  const orders = await prisma.orders.findMany({
+    where: {
+      AND: [
+        { table_id: args.table_id },
+        {
+          status: {
+            not: "PAID",
+          },
+        },
+        { billId: null },
+      ],
+    },
+  });
+
+  await prisma.orders.updateMany({
+    where: {
+      AND: [
+        { table_id: args.table_id },
+        {
+          status: {
+            notIn: ["PAID", "CANCEL"],
+          },
+        },
+      ],
+    },
+    data: {
+      status: "PAID",
+    },
+  });
+
+  return prisma.bills.create({
+    data: {
+      id: args.bill_id,
+      bill_price: args.bill_price,
+      orders: {
+        connect: orders.map((order) => ({
+          id: order.id,
+        })),
+      },
+    },
+  });
+};
+
+export const getBill = (args: IGetBill) => {
+  return prisma.bills.findUniqueOrThrow({
+    where: {
+      id: args.bill_id,
+    },
+    include: {
+      orders: {
+        include: {
+          orderItems: true
+        }
+      }
+    }
+  })
+}

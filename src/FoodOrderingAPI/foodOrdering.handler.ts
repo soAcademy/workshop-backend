@@ -3,8 +3,11 @@ import {
   addCategoryCodec,
   addMenuCodec,
   addOrderCodec,
+  createBillCodec,
+  getBillCodec,
   getMenuCodec,
   getOrdersCodec,
+  getOrdersForCheckoutCodec,
   updateCategoryCodec,
   updateMenuCodec,
   updateOrderCodec,
@@ -19,6 +22,9 @@ import {
   addOrder,
   getOrders,
   updateOrder,
+  getOrdersForCheckout,
+  createBill,
+  getBill,
 } from "./foodOrdering.resolver";
 
 export const addCategoryHandler = (req: Request, res: Response) => {
@@ -125,6 +131,18 @@ export const getOrdersHandler = (req: Request, res: Response) => {
     res.status(500).send("Failed to validate codec");
   }
 };
+export const getOrdersForCheckOutHandler = (req: Request, res: Response) => {
+  const body = req?.body;
+  if (getOrdersForCheckoutCodec.decode(body)._tag === "Right") {
+    try {
+      getOrdersForCheckout(body)
+        .then((response) => res.status(200).json(response))
+        .catch((err) => res.status(500).send(err));
+    } catch {}
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
+};
 
 export const updateOrderHandler = (req: Request, res: Response) => {
   const body = req?.body;
@@ -138,3 +156,30 @@ export const updateOrderHandler = (req: Request, res: Response) => {
     res.status(500).send("Failed to validate codec");
   }
 };
+
+export const createBillHandler = (req: Request, res: Response) => {
+  const body = req?.body;
+  if (createBillCodec.decode(body)._tag === "Right") {
+    try {
+      createBill(body)
+        .then((response) => res.status(200).json(response))
+        .catch((err) => res.status(500).send(err));
+    } catch {}
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
+};
+
+export const getBillHandler = (req: Request, res: Response) => {
+  const body = req?.body;
+  if (getBillCodec.decode(body)._tag === "Right") {
+    try {
+      getBill(body)
+        .then((response) => res.status(200).json(response))
+        .catch((err) => res.status(500).send(err));
+    } catch {}
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
+};
+

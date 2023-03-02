@@ -89,6 +89,11 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.BillsScalarFieldEnum = makeEnum({
+  id: 'id',
+  bill_price: 'bill_price'
+});
+
 exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -117,10 +122,12 @@ exports.Prisma.OrderItemsScalarFieldEnum = makeEnum({
 
 exports.Prisma.OrdersScalarFieldEnum = makeEnum({
   id: 'id',
-  table_id: 'table_id',
   status: 'status',
+  total_price: 'total_price',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  billId: 'billId',
+  table_id: 'table_id'
 });
 
 exports.Prisma.QueryMode = makeEnum({
@@ -143,9 +150,10 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ModelName = makeEnum({
   category: 'category',
-  orderItems: 'orderItems',
+  menu: 'menu',
+  bills: 'bills',
   orders: 'orders',
-  menu: 'menu'
+  orderItems: 'orderItems'
 });
 
 /**

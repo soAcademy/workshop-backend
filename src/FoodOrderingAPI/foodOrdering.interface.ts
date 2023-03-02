@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import { optional, strict } from "io-ts-extra";
 
 export const addCategoryCodec = t.type({ name: t.string });
 export interface IAddCategory extends t.TypeOf<typeof addCategoryCodec> {}
@@ -25,22 +26,18 @@ export interface IGetMenu {
   categoryId?: number;
 }
 
-export const updateMenuCodec = t.intersection([
-  addMenuCodec,
-  t.type({ id: t.number }),
-  t.partial({ name: t.string }),
-]);
-// export interface IUpdateMenu extends t.TypeOf<typeof updateMenuCodec> {}
-export interface IUpdateMenu {
-  id: number;
-  name?: string;
-  image?: string;
-  price?: number;
-  categoryId?: number
-}
+export const updateMenuCodec = strict({
+  id: t.number,
+  name: optional(t.string),
+  image: optional(t.string),
+  price: optional(t.number),
+  categoryId: optional(t.number),
+});
+export interface IUpdateMenu extends t.TypeOf<typeof updateMenuCodec> {}
 
 export const addOrderCodec = t.type({
   table_id: t.number,
+  total_price: t.number,
   items: t.array(
     t.type({
       menuId: t.number,
@@ -60,8 +57,27 @@ export interface IGetOrders {
   table_id?: number;
 }
 
+export const getOrdersForCheckoutCodec = t.type({
+  table_id: t.number,
+});
+export interface IGetOrdersForCheckout {
+  table_id: number;
+}
+
 export const updateOrderCodec = t.type({
   order_id: t.number,
   status: t.string,
 });
 export interface IUpdateOrder extends t.TypeOf<typeof updateOrderCodec> {}
+
+export const createBillCodec = t.type({
+  bill_id: t.number,
+  table_id: t.number,
+  bill_price: t.number,
+});
+export interface ICreateBill extends t.TypeOf<typeof createBillCodec> {}
+
+export const getBillCodec = t.type({
+  bill_id: t.number,
+});
+export interface IGetBill extends t.TypeOf<typeof getBillCodec> {}
