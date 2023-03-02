@@ -88,3 +88,30 @@ export const getOrders = () => {
     },
   });
 };
+
+export const getOrdersByTable = (tableId: number) => {
+  return prisma.order.findMany({
+    select: {
+      id: true,
+      status: true,
+      // tableId: true,
+      items: {
+        select: {
+          id: true,
+          menu: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+            },
+          },
+          quantity: true,
+          totalPrice: true,
+        },
+      },
+    },
+    where: {
+      tableId: tableId,
+    },
+  });
+};
