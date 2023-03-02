@@ -25,17 +25,17 @@ import {
 
 export const AppRoutes = [
   {
-    path: "/binKitchen/createCategory",
+    path: "/binKitchen/create-category",
     method: "post",
     action: createCategoryHandler,
   },
   {
-    path: "/binKitchen/getCategories",
+    path: "/binKitchen/get-categories",
     method: "post",
     action: getCategoriesHandler,
   },
   {
-    path: "/binKitchen/createMenu",
+    path: "/binKitchen/create-menu",
     method: "post",
     action: createMenuHandler,
   },
