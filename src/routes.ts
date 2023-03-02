@@ -1,5 +1,6 @@
 import { createTeacherHandler, deleteTeacherHandler, getCouresHandler, getCouresWithJoinHandler, getTeacherByNameHandle, getTeachersByAgeHandler, getTeachersHandler, updateTeacherHandler } from "../sql/handler";
 import {  getTeacherByNameHandler2, getTeacherHandler2, upDateTeacherHandler2 } from "../sql_test/handler";
+import { createCategoryhandler, createMenuHandler, createOrderHandler, getCategoriesHandler, getMenuHandler, getOrderHandler, getOrdersHandler, updateCategoryHandler, updateOrderHandler } from "./DewKitchen/handler";
 import { createManyTaskHandler, createTaskHandler, deleteManyTasksHandler, deleteTaskHandler, findUniqueHandler, getTaskHandler, updateManyTasksHandler, updateNoteHandler, updateTaskStatusHandler } from "./TodoList/todolistHandler";
 import { functionAddHandler, functionHelloAtHandler, functionHelloMultiplyHandler, functionHelloOrderHandler, functionHelloReduceHandler, functionHelloSumHandler } from "./refactorApi";
 
@@ -134,9 +135,51 @@ export const AppRoutes = [
     method:"post",
     action:updateNoteHandler,
   },
-
-
-
+  {
+    path:"/dewKitchen/createCategory",
+    method:"post",
+    action:createCategoryhandler,
+  },
+  {
+    path:"/dewKitchen/getCategories",
+    method:"post",
+    action:getCategoriesHandler,
+  },
+  {
+    path:"/dewKitchen/updateCategory",
+    method:"post",
+    action:updateCategoryHandler,
+  },
+  {
+    path:"/dewKitchen/createMenu",
+    method:"post",
+    action:createMenuHandler,
+  },
+  {
+    path:"/dewKitchen/getMenu",
+    method:"post",
+    action:getMenuHandler,
+  },
+  {
+    path:"/dewKitchen/createOrder",
+    method:"post",
+    action:createOrderHandler,
+  },
+  {
+    path:"/dewKitchen/getOrders",
+    method:"post",
+    action:getOrdersHandler,
+  },
+  {
+    path:"/dewKitchen/getOrder",
+    method:"post",
+    action:getOrderHandler,
+  },
+  {
+    path:"/dewKitchen/updateOrder",
+    method:"post",
+    action:updateOrderHandler,
+  },
 
 
 ];

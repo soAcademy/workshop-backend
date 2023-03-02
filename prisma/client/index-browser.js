@@ -89,6 +89,41 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.DewKitchenCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.DewKitchenMenuScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  image: 'image',
+  price: 'price',
+  categoryName: 'categoryName',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.DewKitchenOrderScalarFieldEnum = makeEnum({
+  id: 'id',
+  status: 'status',
+  tableId: 'tableId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.DewOrderItemScalarFieldEnum = makeEnum({
+  id: 'id',
+  menuId: 'menuId',
+  orderId: 'orderId',
+  quantity: 'quantity',
+  totalPrice: 'totalPrice',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -117,6 +152,10 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 
 exports.Prisma.ModelName = makeEnum({
+  DewKitchenCategory: 'DewKitchenCategory',
+  DewKitchenMenu: 'DewKitchenMenu',
+  DewKitchenOrder: 'DewKitchenOrder',
+  DewOrderItem: 'DewOrderItem',
   Todolist: 'Todolist'
 });
 
