@@ -22,3 +22,7 @@ export interface ICreateManyTasks
 export const updateManyTaskStatusesCodec = t.type({status1: t.string, status2: t.string})
 
 export interface IUpdateManyTaskStatuses extends t.TypeOf<typeof updateManyTaskStatusesCodec>{}
+
+export const deleteTaskCodec = t.type({id: t.number})
+
+export interface IDelateTask extends t.TypeOf<typeof deleteTaskCodec>{}

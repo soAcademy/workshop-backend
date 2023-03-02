@@ -1,6 +1,27 @@
-import { Request, Response} from "express";
-import { createCategoryCodec, createMenuCodec, createOrderCodec, getCategoriesCodec, getMenusCodec, updateCategoryCodec, updateMenuCodec } from "./korKitchen.interface";
-import { createCategory, createMenu, createOrder, getCategories, getMenus, updateCategory, updateMenu } from "./korKitchen.resolver";
+import { Request, Response } from "express";
+import {
+  createCategoryCodec,
+  createMenuCodec,
+  createOrderCodec,
+  getCategoriesCodec,
+  getMenusCodec,
+  getOrderCodec,
+  updateCategoryCodec,
+  updateMenuCodec,
+  updateOrderCodec,
+} from "./korKitchen.interface";
+import {
+  createCategory,
+  createMenu,
+  createOrder,
+  getCategories,
+  getMenus,
+  getOrder,
+  getOrders,
+  updateCategory,
+  updateMenu,
+  updateOrder,
+} from "./korKitchen.resolver";
 
 export const createCategoryHandler = (req: Request, res: Response) => {
   const body = req?.body;
@@ -68,10 +89,49 @@ export const updateMenuHandler = (req: Request, res: Response) => {
   }
 };
 
-export const createOrderHandler = (req: Request, res: Response) => {
+export const createOrderHandler = async (req: Request, res: Response) => {
   const body = req?.body;
-  if (createOrderCodec.decode(body)._tag === "Right") {
-    return createOrder(body)
+  // if (createOrderCodec.decode(body)._tag === "Right") {
+  //   return createOrder(body)
+  console.log(body);
+  try {
+    // const response = await createOrder();
+    // return res.status(200).send("Test order");
+    return res.status(200).json(await createOrder(body));
+  } catch (error) {
+    return res.status(500).send("Error" + String(error));
+  }
+  // } else {
+  //   res.status(500).send("Failed to validate codec");
+  // }
+};
+
+export const getOrderHandler = (req: Request, res: Response) => {
+  const body = req.body;
+  if (getOrderCodec.decode(body)._tag === "Right") {
+    return getOrder(body)
+      .then((response) => res.status(200).send(response))
+      .catch((error) => res.status(500).send(error));
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
+};
+
+export const getOrdersHandler = async (req: Request, res: Response) => {
+  try {
+    const result = await getOrders();
+    res.status(200).send(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+export const updateOrderHandler = (req: Request, res: Response) => {
+  const body = req.body;
+  if (updateOrderCodec.decode(body)._tag === "Right") {
+    return updateOrder(body)
       .then((response) => res.status(200).send(response))
       .catch((error) => res.status(500).send(error));
   } else {

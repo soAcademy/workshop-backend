@@ -9,7 +9,14 @@ import {
   updateManyTaskStatuses,
   updateTaskStatus,
 } from "./todoList.resolver";
-import { createManyTasksCodec, createTaskCodec, updateManyTaskStatusesCodec, updateTaskStatusCodec } from "./todoList.interface";
+import {
+  createManyTasksCodec,
+  createTaskCodec,
+  deleteTaskCodec,
+  updateManyTaskStatusesCodec,
+  updateTaskStatusCodec,
+} from "./todoList.interface";
+import { readerTask } from "fp-ts";
 
 export const createTaskHandler = async (req: Request, res: Response) => {
   const body = req?.body;
@@ -83,10 +90,7 @@ export const createManyTasksHandler = (req: Request, res: Response) => {
 //   }
 // };
 
-export const updateManyTaskStatusesHandler = (
-  req: Request,
-  res: Response
-) => {
+export const updateManyTaskStatusesHandler = (req: Request, res: Response) => {
   const body = req?.body;
   if (updateManyTaskStatusesCodec.decode(body)._tag === "Right") {
     return updateManyTaskStatuses(body)
@@ -108,14 +112,14 @@ export const findUniqueTaskHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteTaskHandler = async (req: Request, res: Response) => {
-  try {
-    const result = await deleteTask();
-    res.status(200).json(result);
-  } catch (e) {
-    res.status(500).json({
-      error: String(e),
-    });
+export const deleteTaskHandler = (req: Request, res: Response) => {
+  const body = req?.body;
+  if (deleteTaskCodec.decode(body)._tag === "Right") {
+    return deleteTask(body)
+      .then((response) => res.status(200).send(response))
+      .catch((error) => res.status(500).send(error));
+  } else {
+    res.status(500).send("Failed to validate codec");
   }
 };
 

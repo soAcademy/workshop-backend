@@ -1,3 +1,4 @@
+import { includes } from "fp-ts/lib/string";
 import { PrismaClient } from "../../prisma/client";
 import {
   ICreateCategory,
@@ -5,8 +6,10 @@ import {
   ICreateOrder,
   IGetCategories,
   IGetMenus,
+  IGetOrder,
   IUpdateCategory,
   IUpdateMenu,
+  IUpdateOrder,
 } from "./korKitchen.interface";
 export const prisma = new PrismaClient();
 
@@ -66,33 +69,81 @@ export const updateMenu = (args: IUpdateMenu) =>
       id: args.id,
     },
     data: {
-      price: args.price,
+      price: args?.price ?? undefined,
+      name: args?.name ?? undefined,
+      image: args?.image ?? undefined,
     },
   });
-
-// export const createOrder = (args: ICreateOrder) =>
-//   prisma.korKitchenOrder.create({
-//     data: {
-//       tableId: args.tableId,
-//       items: {
-//         create:[
-//         {quantity: args.quantity},
-
-
-//         ]
-//       }
-//     },
-//   });
 
 export const createOrder = (args: ICreateOrder) =>
   prisma.korKitchenOrder.create({
     data: {
-      tableId: 2,
+      tableId: args.tableId,
       items: {
         create: [
-          { quantity: 3 },
-          { totalPrice: 5 },
+          {
+            menu: {
+              connect: {
+                id: args.menu,
+              },
+            },
+            quantity: args.quantity,
+            totalPrice: args.totalPrice,
+          },
         ],
       },
     },
   });
+
+// export const createOrder = () => {
+//   try {
+//     return prisma.korKitchenOrder.create({
+//       data: {
+//         tableId: 2,
+//         items: {
+//           create: [
+//             {
+//               menu: {
+//                 connect: {
+//                   id: 1,
+//                 },
+//               },
+//               quantity: 3,
+//               totalPrice: 5,
+//             },
+//           ],
+//         },
+//       },
+//     });
+//   } catch (e) {
+//     console.log(e);
+//     return e;
+//   }
+// };
+
+export const getOrder = (args: IGetOrder) =>
+  prisma.korKitchenOrder.findUnique({
+    where: {
+      id: args.id,
+    },
+    include: {
+      items: { include: { menu: true } },
+    },
+  });
+
+export const getOrders = () =>
+  prisma.korKitchenOrder.findMany({
+    include: {
+      items: { include: { menu: true } },
+    },
+  });
+
+  export const updateOrder = (args: IUpdateOrder) =>
+  prisma.korKitchenOrder.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      status: args.status,
+    }
+  })

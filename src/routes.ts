@@ -32,8 +32,11 @@ import {
   createOrderHandler,
   getCategoriesHandler,
   getMenusHandler,
+  getOrderHandler,
+  getOrdersHandler,
   updateCategoryHandler,
   updateMenuHandler,
+  updateOrderHandler,
 } from "./korKitchen/korKitchen.handler";
 
 export const AppRoutes = [
@@ -182,4 +185,19 @@ export const AppRoutes = [
     method: "post",
     action: createOrderHandler,
   },
+  {
+    path: "/getOrder",
+    method: "post",
+    action: getOrderHandler,
+  },
+  {
+    path: "/getOrders",
+    method: "post",
+    action: getOrdersHandler,
+  },
+  {
+    path: "/updateOrder",
+    method: "post",
+    action: updateOrderHandler,
+  }
 ];
