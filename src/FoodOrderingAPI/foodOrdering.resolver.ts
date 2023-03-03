@@ -69,6 +69,9 @@ export const getMenu = (args: IGetMenu) => {
         orderBy: {
           id: "asc",
         },
+        include: {
+          category: true
+        }
       });
 };
 
@@ -110,6 +113,7 @@ export const addOrder = (args: IAddOrder) => {
     },
   });
 };
+
 export const getOrdersForCheckout = (args: IGetOrdersForCheckout) => {
   return prisma.orders.findMany({
     where: {
@@ -125,8 +129,16 @@ export const getOrdersForCheckout = (args: IGetOrdersForCheckout) => {
     orderBy: {
       id: "asc",
     },
+    include: {
+      orderItems: {
+        include: {
+          menu: true,
+        },
+      },
+    },
   });
 };
+
 export const getOrders = (args: IGetOrders) => {
   return args.table_id
     ? prisma.orders.findMany({
@@ -134,10 +146,24 @@ export const getOrders = (args: IGetOrders) => {
         orderBy: {
           id: "asc",
         },
+        include: {
+          orderItems: {
+            include: {
+              menu: true,
+            },
+          },
+        },
       })
     : prisma.orders.findMany({
         orderBy: {
           id: "asc",
+        },
+        include: {
+          orderItems: {
+            include: {
+              menu: true,
+            },
+          },
         },
       });
 };
@@ -160,7 +186,7 @@ export const createBill = async (args: ICreateBill) => {
         { table_id: args.table_id },
         {
           status: {
-            not: "PAID",
+            in: ["WAITING","DONE","CANCELED"],
           },
         },
         { billId: null },
@@ -168,19 +194,36 @@ export const createBill = async (args: ICreateBill) => {
     },
   });
 
+  // UPDATE ORDERS WITH STATUS WAITING, DONE TO PAID
   await prisma.orders.updateMany({
     where: {
       AND: [
         { table_id: args.table_id },
         {
           status: {
-            notIn: ["PAID", "CANCEL"],
+            in: ["WAITING","DONE"],
           },
         },
       ],
     },
     data: {
       status: "PAID",
+    },
+  });
+  // UPDATE ORDERS WITH STATUS CANCEL TO BILLED_CANCELED
+  await prisma.orders.updateMany({
+    where: {
+      AND: [
+        { table_id: args.table_id },
+        {
+          status: {
+            equals: "CANCELED",
+          },
+        },
+      ],
+    },
+    data: {
+      status: "BILLED_CANCELED",
     },
   });
 
@@ -205,9 +248,13 @@ export const getBill = (args: IGetBill) => {
     include: {
       orders: {
         include: {
-          orderItems: true
-        }
-      }
-    }
-  })
-}
+          orderItems: true,
+        },
+      },
+    },
+  });
+};
+
+// export const uploadImg = (args: IUploadImg) => {
+  
+// }
