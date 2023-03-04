@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import multer from "multer";
 import path from "path";
-import { AppRoutes } from "./RefactorAPI/routes";
+import { AppRoutes } from "./RefactorApi/routes";
 import { SQLRoutes } from "./sql/routes";
 import { AccidentRoutes } from "./AccidentData";
 import { TodolistRoutes } from "./todolist/todolist.routes";
