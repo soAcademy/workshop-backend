@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 
-export const CreateTaskCodec = t.type({ task: t.string });
+export const CreateTaskCodec = t.type({ task: t.string, bgColor: t.string });
 
 export interface ICreateTask extends t.TypeOf<typeof CreateTaskCodec> {}
 

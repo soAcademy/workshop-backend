@@ -18,6 +18,7 @@ export const createTaskHandler = async (req: Request, res: Response) => {
     try {
       const result = await createTask({
         task: args.task,
+        bgColor: args.bgColor,
       });
       res.status(200).json(result);
     } catch (e) {
