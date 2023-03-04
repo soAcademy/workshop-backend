@@ -2,8 +2,8 @@
   "name": "workshop-backend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register src/main.ts",
-    "start": "ts-node -r tsconfig-paths/register src/main",
+    "dev": "ts-node-dev -r tsconfig-paths/register main.ts",
+    "start": "ts-node -r tsconfig-paths/register main",
     "prisma:merge": "cat prisma/schema/**.prisma > prisma/schema.prisma",
     "prisma:format": "yarn prisma format --schema prisma/schema.prisma",
     "prisma:migrate": "yarn prisma migrate dev --name init --schema prisma/schema.prisma",

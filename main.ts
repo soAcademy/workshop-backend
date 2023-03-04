@@ -1,11 +1,11 @@
 import express, { Application, Request, Response } from "express";
 import multer from "multer";
 import path from "path";
-import { AppRoutes } from "./RefactorApi/routes";
-import { SQLRoutes } from "./sql/routes";
-import { AccidentRoutes } from "./AccidentData";
-import { TodolistRoutes } from "./todolist/todolist.routes";
-import { FoodOrderingRoutes } from "./FoodOrderingAPI";
+import { AppRoutes } from "./src/RefactorApi/routes";
+import { SQLRoutes } from "./src/sql/routes";
+import { AccidentRoutes } from "./src/AccidentData";
+import { TodolistRoutes } from "./src/todolist/todolist.routes";
+import { FoodOrderingRoutes } from "./src/FoodOrderingAPI";
 
 const app: Application = express();
 // Set up storage for uploaded files
@@ -41,17 +41,17 @@ app.post("/uploadImg", upload.single("image"), (req, res) => {
 
   const fileName = req.file.filename;
 
-      // Construct the URL to send back to the client
-      const baseUrl = req.protocol + '://' + req.get('host');
-      const imageUrl = baseUrl + '/images/' + fileName;
+  // Construct the URL to send back to the client
+  const baseUrl = req.protocol + "://" + req.get("host");
+  const imageUrl = baseUrl + "/images/" + fileName;
   res.send(imageUrl);
 });
 
 // Set up a route to serve uploaded files
-app.use("/images", express.static("./uploads/img"));
+app.use("/images", express.static(__dirname + "/uploads/img"));
 
 app.get("/hello", (req: Request, res: Response) => {
-  res.send(__dirname);
+  res.send(__dirname + "");
 });
 
 AppRoutes.map((route) => {
