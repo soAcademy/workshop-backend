@@ -11,6 +11,7 @@ export const createTask = (args: ICreateTask) =>
   prisma.todoList.create({
     data: {
       task: args.task,
+      bgColor: args.bgColor,
     },
   });
 
