@@ -51,7 +51,7 @@ app.post("/uploadImg", upload.single("image"), (req, res) => {
 app.use("/images", express.static("./uploads/img"));
 
 app.get("/hello", (req: Request, res: Response) => {
-  res.send("Hello World 5555");
+  res.send(__dirname);
 });
 
 AppRoutes.map((route) => {
