@@ -11,7 +11,7 @@ const app: Application = express();
 // Set up storage for uploaded files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploads/img");
+    cb(null, __dirname + "/uploads/img");
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);

@@ -254,7 +254,3 @@ export const getBill = (args: IGetBill) => {
     },
   });
 };
-
-// export const uploadImg = (args: IUploadImg) => {
-  
-// }
