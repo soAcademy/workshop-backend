@@ -50,6 +50,10 @@ app.post("/uploadImg", upload.single("image"), (req, res) => {
 // Set up a route to serve uploaded files
 app.use("/images", express.static("./uploads/img"));
 
+app.get("/hello", (req: Request, res: Response) => {
+  res.send("Hello World 5555");
+});
+
 AppRoutes.map((route) => {
   app[route.method as keyof Application](
     route.path,
