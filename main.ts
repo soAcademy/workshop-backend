@@ -75,12 +75,12 @@ app.get("/hello", (req: Request, res: Response) => {
 //   );
 // });
 
-TodolistRoutes.map((route) => {
-  app[route.method as keyof Application](
-    route.path,
-    (req: Request, res: Response) => route.action(req, res)
-  );
-});
+// TodolistRoutes.map((route) => {
+//   app[route.method as keyof Application](
+//     route.path,
+//     (req: Request, res: Response) => route.action(req, res)
+//   );
+// });
 
 FoodOrderingRoutes.map((route) => {
   app[route.method as keyof Application](
