@@ -23,19 +23,19 @@ export const TodolistRoutes = [
     path: "/getTasks",
     action: getTasksHandler,
   },
-  {
-    method: "post",
-    path: "/updateTask",
-    action: updateTaskHandler,
-  },
-  {
-    method: "post",
-    path: "/deleteTask",
-    action: deleteTaskHandler,
-  },
-  {
-    method: "post",
-    path: "/deleteDoneTasks",
-    action: deleteDoneTasksHandler,
-  },
+  // {
+  //   method: "post",
+  //   path: "/updateTask",
+  //   action: updateTaskHandler,
+  // },
+  // {
+  //   method: "post",
+  //   path: "/deleteTask",
+  //   action: deleteTaskHandler,
+  // },
+  // {
+  //   method: "post",
+  //   path: "/deleteDoneTasks",
+  //   action: deleteDoneTasksHandler,
+  // },
 ];
