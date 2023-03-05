@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 // Set up multer middleware to handle file uploads
 const upload = multer({ storage });
 
-app.use(express.json());
+app.use(express.json()); 
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
