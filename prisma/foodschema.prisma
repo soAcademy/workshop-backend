@@ -1,0 +1,59 @@
+model category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  menu      menu[]
+}
+
+model menu {
+  id         Int          @id @default(autoincrement())
+  category   category     @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  name       String?      @unique
+  image      String?
+  price      Float?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  items      orderItems[]
+}
+
+model bills {
+  id         Float    @id
+  orders     orders[]
+  bill_price Float
+}
+
+model orders {
+  id          Int          @id @default(autoincrement())
+  status      String       @default("WAITING")
+  total_price Float
+  orderItems  orderItems[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  bills       bills?       @relation(fields: [billId], references: [id])
+  billId      Float?
+  table_id    Int
+}
+
+model orderItems {
+  id        Int      @id @default(autoincrement())
+  menuId    Int
+  menu      menu     @relation(fields: [menuId], references: [id])
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order_id  orders   @relation(fields: [orderId], references: [id])
+  orderId   Int
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("FOODORDERING_DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
+  output        = "../prisma/client-food"
+}
