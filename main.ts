@@ -1,18 +1,24 @@
 import express, { Application, Request, Response } from "express";
 import multer from "multer";
-import path from "path";
-import { AppRoutes } from "./src/RefactorApi/routes";
-import { SQLRoutes } from "./src/sql/routes";
-import { AccidentRoutes } from "./src/AccidentData";
-import { TodolistRoutes } from "./src/todolist/todolist.routes";
+// import { AppRoutes } from "./src/RefactorApi/routes";
+// import { SQLRoutes } from "./src/sql/routes";
+// import { AccidentRoutes } from "./src/AccidentData";
+// import { TodolistRoutes } from "./src/todolist/todolist.routes";
 import { FoodOrderingRoutes } from "./src/FoodOrderingAPI";
 import { createClient } from "@supabase/supabase-js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const supabaseUrl = "https://gvjwhkblnllffvshebtc.supabase.co";
-const supabaseAnonKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2andoa2JsbmxsZmZ2c2hlYnRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5OTg1OTUsImV4cCI6MTk5MzU3NDU5NX0.bEnVSTd1NFcv0UhId3SrS0XaYJZxMAkvjFCLO0ti_QU";
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANONKEY;
+console.log("supabaseurl", supabaseUrl);
+console.log("supabaseAnonKey", supabaseAnonKey);
 
+// const supabaseUrl = "https://gvjwhkblnllffvshebtc.supabase.co";
+// const supabaseAnonKey =
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2andoa2JsbmxsZmZ2c2hlYnRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5OTg1OTUsImV4cCI6MTk5MzU3NDU5NX0.bEnVSTd1NFcv0UhId3SrS0XaYJZxMAkvjFCLO0ti_QU";
+const supabase =
+  supabaseUrl && supabaseAnonKey && createClient(supabaseUrl, supabaseAnonKey);
 const app: Application = express();
 
 // Set up multer middleware to handle file uploads
@@ -43,19 +49,21 @@ app.post(
     const filePath = `${fileName}`;
     const fileBuffer = file.buffer;
 
-    const { data, error: uploadError } = await supabase.storage
-      .from("food-images")
-      .upload(filePath, fileBuffer);
+    if (supabase) {
+      const { data, error: uploadError } = await supabase.storage
+        .from("food-images")
+        .upload(filePath, fileBuffer);
 
-    if (uploadError) {
-      throw uploadError;
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const url = await supabase.storage
+        .from("food-images")
+        .getPublicUrl(data.path);
+      const imageUrl = url.data.publicUrl;
+      res.send(imageUrl);
     }
-    
-    const url = await supabase.storage
-      .from("food-images")
-      .getPublicUrl(data.path);
-    const imageUrl = url.data.publicUrl;
-    res.send(imageUrl);
   }
 );
 
