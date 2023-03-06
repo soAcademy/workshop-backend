@@ -56,7 +56,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://sprinttech-earth-kitchen.web.app/",
+      "https://sprinttech-earth-kitchen.web.app",
     ],
   })
 );
