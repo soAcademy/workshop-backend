@@ -6,24 +6,20 @@ import { SQLRoutes } from "./src/sql/routes";
 import { AccidentRoutes } from "./src/AccidentData";
 import { TodolistRoutes } from "./src/todolist/todolist.routes";
 import { FoodOrderingRoutes } from "./src/FoodOrderingAPI";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = "https://gvjwhkblnllffvshebtc.supabase.co";
+const supabaseAnonKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2andoa2JsbmxsZmZ2c2hlYnRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5OTg1OTUsImV4cCI6MTk5MzU3NDU5NX0.bEnVSTd1NFcv0UhId3SrS0XaYJZxMAkvjFCLO0ti_QU";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const app: Application = express();
-// Set up storage for uploaded files
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, __dirname + "/uploads/img");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = `${Date.now()}-${file.originalname.replace(ext, "")}`;
-    cb(null, name + ext);
-  },
-});
 
 // Set up multer middleware to handle file uploads
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-app.use(express.json()); 
+app.use(express.json());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -33,22 +29,35 @@ app.use((req, res, next) => {
 });
 
 // UPLOAD IMAGE END POINT
-// Set up a route to handle file uploads
-app.post("/uploadImg", upload.single("image"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send("No file uploaded.");
+app.post(
+  "/uploadImg",
+  upload.single("image"),
+  async (req: Request, res: Response) => {
+    if (!req.file) {
+      return res.status(400).send("No file uploaded.");
+    }
+    console.log("req?.files", req.file.buffer);
+    const file = req.file;
+    const fileExt = file?.originalname.split(".").pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+    const fileBuffer = file.buffer;
+
+    const { data, error: uploadError } = await supabase.storage
+      .from("food-images")
+      .upload(filePath, fileBuffer);
+
+    if (uploadError) {
+      throw uploadError;
+    }
+    
+    const url = await supabase.storage
+      .from("food-images")
+      .getPublicUrl(data.path);
+    const imageUrl = url.data.publicUrl;
+    res.send(imageUrl);
   }
-
-  const fileName = req.file.filename;
-
-  // Construct the URL to send back to the client
-  const baseUrl = req.protocol + "://" + req.get("host");
-  const imageUrl = baseUrl + "/images/" + fileName;
-  res.send(imageUrl);
-});
-
-// Set up a route to serve uploaded files
-app.use("/images", express.static(__dirname + "/uploads/img"));
+);
 
 app.get("/hello", (req: Request, res: Response) => {
   res.send(__dirname + "");
