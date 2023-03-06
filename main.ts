@@ -36,12 +36,11 @@ app.use((req, res, next) => {
     ],
     default: "http://localhost:3000",
   };
-  if (req.headers.origin) {
-    const origin = cors.origin.includes(req.headers.origin.toLowerCase())
+  
+    const origin = req.headers.origin && cors.origin.includes(req.headers.origin.toLowerCase())
       ? req.headers.origin
       : cors.default;
-    return origin;
-  }
+  
   console.log(origin);
   // if (origin && allowedOrigins.includes(origin)) {
   //   return res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
