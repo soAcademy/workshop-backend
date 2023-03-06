@@ -16,10 +16,8 @@ import {
 export const prisma = new PrismaClient();
 
 export const addCategory = (args: IAddCategory) => {
-  return prisma.category.upsert({
-    where: { name: args.name },
-    create: { name: args.name },
-    update: {},
+  return prisma.category.create({
+    data: { name: args.name },
   });
 };
 
@@ -70,8 +68,8 @@ export const getMenu = (args: IGetMenu) => {
           id: "asc",
         },
         include: {
-          category: true
-        }
+          category: true,
+        },
       });
 };
 
@@ -186,7 +184,7 @@ export const createBill = async (args: ICreateBill) => {
         { table_id: args.table_id },
         {
           status: {
-            in: ["WAITING","DONE","CANCELED"],
+            in: ["WAITING", "DONE", "CANCELED"],
           },
         },
         { billId: null },
@@ -201,7 +199,7 @@ export const createBill = async (args: ICreateBill) => {
         { table_id: args.table_id },
         {
           status: {
-            in: ["WAITING","DONE"],
+            in: ["WAITING", "DONE"],
           },
         },
       ],
