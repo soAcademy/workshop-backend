@@ -11,12 +11,9 @@ dotenv.config();
 
 const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANONKEY;
-console.log("supabaseurl", supabaseUrl);
-console.log("supabaseAnonKey", supabaseAnonKey);
+// console.log("supabaseurl", supabaseUrl);
+// console.log("supabaseAnonKey", supabaseAnonKey);
 
-// const supabaseUrl = "https://gvjwhkblnllffvshebtc.supabase.co";
-// const supabaseAnonKey =
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2andoa2JsbmxsZmZ2c2hlYnRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzc5OTg1OTUsImV4cCI6MTk5MzU3NDU5NX0.bEnVSTd1NFcv0UhId3SrS0XaYJZxMAkvjFCLO0ti_QU";
 const supabase =
   supabaseUrl && supabaseAnonKey && createClient(supabaseUrl, supabaseAnonKey);
 const app: Application = express();
@@ -28,7 +25,10 @@ const upload = multer({ storage });
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "http://localhost:3000, https://sprinttech-earth-kitchen.web.app/"
+  );
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
