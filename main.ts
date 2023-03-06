@@ -7,6 +7,8 @@ import multer from "multer";
 import { FoodOrderingRoutes } from "./src/FoodOrderingAPI";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
+import cors from "cors";
+
 dotenv.config();
 
 const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
@@ -24,32 +26,40 @@ const upload = multer({ storage });
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  // let allowedOrigins = [
-  //   "http://localhost:3000",
-  //   "https://sprinttech-earth-kitchen.web.app/",
-  // ];
-  const cors = {
+// app.use((req, res, next) => {
+//   // let allowedOrigins = [
+//   //   "http://localhost:3000",
+//   //   "https://sprinttech-earth-kitchen.web.app/",
+//   // ];
+//   const cors = {
+//     origin: [
+//       "http://localhost:3000",
+//       "https://sprinttech-earth-kitchen.web.app/",
+//     ],
+//     default: "http://localhost:3000",
+//   };
+
+//     const origin = req.headers.origin && cors.origin.includes(req.headers.origin.toLowerCase())
+//       ? req.headers.origin
+//       : cors.default;
+
+//   console.log(origin);
+//   // if (origin && allowedOrigins.includes(origin)) {
+//   //   return res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+//   // }
+//   res.setHeader("Access-Control-Allow-Origin", origin)
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
+app.use(
+  cors({
     origin: [
       "http://localhost:3000",
       "https://sprinttech-earth-kitchen.web.app/",
     ],
-    default: "http://localhost:3000",
-  };
-  
-    const origin = req.headers.origin && cors.origin.includes(req.headers.origin.toLowerCase())
-      ? req.headers.origin
-      : cors.default;
-  
-  console.log(origin);
-  // if (origin && allowedOrigins.includes(origin)) {
-  //   return res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
-  // }
-  res.setHeader("Access-Control-Allow-Origin", origin)
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+  })
+);
 
 // UPLOAD IMAGE END POINT
 app.post(
