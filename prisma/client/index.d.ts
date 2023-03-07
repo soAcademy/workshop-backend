@@ -209,6 +209,188 @@ export type TwitterDM = {
   updatedAt: Date
 }
 
+/**
+ * Model FacebookUser
+ * 
+ */
+export type FacebookUser = {
+  id: number
+  profileImage: string
+  coverImage: string
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookGroup
+ * 
+ */
+export type FacebookGroup = {
+  id: number
+  GroupImage: string
+  coverImage: string
+  name: string
+  createrUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookPostDestination
+ * 
+ */
+export type FacebookPostDestination = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookPostType
+ * 
+ */
+export type FacebookPostType = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookLocation
+ * 
+ */
+export type FacebookLocation = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookHashtag
+ * 
+ */
+export type FacebookHashtag = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookPost
+ * 
+ */
+export type FacebookPost = {
+  id: number
+  message: string
+  postTypeId: number
+  posterUserId: number
+  locationId: number
+  destinationId: number
+  destinationRelateId: number
+  isShared: boolean
+  shareFromPostId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookComment
+ * 
+ */
+export type FacebookComment = {
+  id: number
+  message: string
+  commentByUserId: number
+  postId: number
+  isReplied: boolean
+  replyFromCommentId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookLikeType
+ * 
+ */
+export type FacebookLikeType = {
+  id: number
+  emoji: string
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookLikePost
+ * 
+ */
+export type FacebookLikePost = {
+  id: number
+  postId: number
+  posterUserId: number
+  likeTypeId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookLikeComment
+ * 
+ */
+export type FacebookLikeComment = {
+  id: number
+  commentId: number
+  posterUserId: number
+  likeTypeId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookFriendRequest
+ * 
+ */
+export type FacebookFriendRequest = {
+  id: number
+  requestFromUserId: number
+  requestToUserId: number
+  isAccepted: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookUserRelation
+ * 
+ */
+export type FacebookUserRelation = {
+  id: number
+  relationFromUserId: number
+  relationToUserId: number
+  isAccepted: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FacebookMessenger
+ * 
+ */
+export type FacebookMessenger = {
+  id: number
+  message: string
+  messageFromUserId: number
+  messageToUserId: number
+  isRead: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -486,6 +668,146 @@ export class PrismaClient<
     * ```
     */
   get twitterDM(): Prisma.TwitterDMDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookUser`: Exposes CRUD operations for the **FacebookUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookUsers
+    * const facebookUsers = await prisma.facebookUser.findMany()
+    * ```
+    */
+  get facebookUser(): Prisma.FacebookUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookGroup`: Exposes CRUD operations for the **FacebookGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookGroups
+    * const facebookGroups = await prisma.facebookGroup.findMany()
+    * ```
+    */
+  get facebookGroup(): Prisma.FacebookGroupDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookPostDestination`: Exposes CRUD operations for the **FacebookPostDestination** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookPostDestinations
+    * const facebookPostDestinations = await prisma.facebookPostDestination.findMany()
+    * ```
+    */
+  get facebookPostDestination(): Prisma.FacebookPostDestinationDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookPostType`: Exposes CRUD operations for the **FacebookPostType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookPostTypes
+    * const facebookPostTypes = await prisma.facebookPostType.findMany()
+    * ```
+    */
+  get facebookPostType(): Prisma.FacebookPostTypeDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookLocation`: Exposes CRUD operations for the **FacebookLocation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookLocations
+    * const facebookLocations = await prisma.facebookLocation.findMany()
+    * ```
+    */
+  get facebookLocation(): Prisma.FacebookLocationDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookHashtag`: Exposes CRUD operations for the **FacebookHashtag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookHashtags
+    * const facebookHashtags = await prisma.facebookHashtag.findMany()
+    * ```
+    */
+  get facebookHashtag(): Prisma.FacebookHashtagDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookPost`: Exposes CRUD operations for the **FacebookPost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookPosts
+    * const facebookPosts = await prisma.facebookPost.findMany()
+    * ```
+    */
+  get facebookPost(): Prisma.FacebookPostDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookComment`: Exposes CRUD operations for the **FacebookComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookComments
+    * const facebookComments = await prisma.facebookComment.findMany()
+    * ```
+    */
+  get facebookComment(): Prisma.FacebookCommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookLikeType`: Exposes CRUD operations for the **FacebookLikeType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookLikeTypes
+    * const facebookLikeTypes = await prisma.facebookLikeType.findMany()
+    * ```
+    */
+  get facebookLikeType(): Prisma.FacebookLikeTypeDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookLikePost`: Exposes CRUD operations for the **FacebookLikePost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookLikePosts
+    * const facebookLikePosts = await prisma.facebookLikePost.findMany()
+    * ```
+    */
+  get facebookLikePost(): Prisma.FacebookLikePostDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookLikeComment`: Exposes CRUD operations for the **FacebookLikeComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookLikeComments
+    * const facebookLikeComments = await prisma.facebookLikeComment.findMany()
+    * ```
+    */
+  get facebookLikeComment(): Prisma.FacebookLikeCommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookFriendRequest`: Exposes CRUD operations for the **FacebookFriendRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookFriendRequests
+    * const facebookFriendRequests = await prisma.facebookFriendRequest.findMany()
+    * ```
+    */
+  get facebookFriendRequest(): Prisma.FacebookFriendRequestDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookUserRelation`: Exposes CRUD operations for the **FacebookUserRelation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookUserRelations
+    * const facebookUserRelations = await prisma.facebookUserRelation.findMany()
+    * ```
+    */
+  get facebookUserRelation(): Prisma.FacebookUserRelationDelegate<GlobalReject>;
+
+  /**
+   * `prisma.facebookMessenger`: Exposes CRUD operations for the **FacebookMessenger** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FacebookMessengers
+    * const facebookMessengers = await prisma.facebookMessenger.findMany()
+    * ```
+    */
+  get facebookMessenger(): Prisma.FacebookMessengerDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -970,7 +1292,21 @@ export namespace Prisma {
     TwitterPost: 'TwitterPost',
     TwitterHashTag: 'TwitterHashTag',
     TwitterReply: 'TwitterReply',
-    TwitterDM: 'TwitterDM'
+    TwitterDM: 'TwitterDM',
+    FacebookUser: 'FacebookUser',
+    FacebookGroup: 'FacebookGroup',
+    FacebookPostDestination: 'FacebookPostDestination',
+    FacebookPostType: 'FacebookPostType',
+    FacebookLocation: 'FacebookLocation',
+    FacebookHashtag: 'FacebookHashtag',
+    FacebookPost: 'FacebookPost',
+    FacebookComment: 'FacebookComment',
+    FacebookLikeType: 'FacebookLikeType',
+    FacebookLikePost: 'FacebookLikePost',
+    FacebookLikeComment: 'FacebookLikeComment',
+    FacebookFriendRequest: 'FacebookFriendRequest',
+    FacebookUserRelation: 'FacebookUserRelation',
+    FacebookMessenger: 'FacebookMessenger'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1442,21 +1778,21 @@ export namespace Prisma {
 
 
   export type TwitterUserCountOutputType = {
-    follwer: number
-    following: number
-    TwitterPost: number
-    TwitterReply: number
-    directFrom: number
-    directTo: number
+    follwers: number
+    followings: number
+    twitterPosts: number
+    twitterReplies: number
+    directFroms: number
+    directToes: number
   }
 
   export type TwitterUserCountOutputTypeSelect = {
-    follwer?: boolean
-    following?: boolean
-    TwitterPost?: boolean
-    TwitterReply?: boolean
-    directFrom?: boolean
-    directTo?: boolean
+    follwers?: boolean
+    followings?: boolean
+    twitterPosts?: boolean
+    twitterReplies?: boolean
+    directFroms?: boolean
+    directToes?: boolean
   }
 
   export type TwitterUserCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterUserCountOutputTypeArgs> =
@@ -1495,12 +1831,12 @@ export namespace Prisma {
 
 
   export type TwitterPostCountOutputType = {
-    TwitterReply: number
+    twitterReplies: number
     hashTags: number
   }
 
   export type TwitterPostCountOutputTypeSelect = {
-    TwitterReply?: boolean
+    twitterReplies?: boolean
     hashTags?: boolean
   }
 
@@ -1573,6 +1909,380 @@ export namespace Prisma {
      * Select specific fields to fetch from the TwitterHashTagCountOutputType
      */
     select?: TwitterHashTagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookUserCountOutputType
+   */
+
+
+  export type FacebookUserCountOutputType = {
+    posts: number
+    groupcreater: number
+    groupMember: number
+    comments: number
+    likePosts: number
+    likeComments: number
+    friendRequestFroms: number
+    friendRequestToes: number
+    friendRelationFroms: number
+    friendRelationToes: number
+    messengeFroms: number
+    messengeToes: number
+  }
+
+  export type FacebookUserCountOutputTypeSelect = {
+    posts?: boolean
+    groupcreater?: boolean
+    groupMember?: boolean
+    comments?: boolean
+    likePosts?: boolean
+    likeComments?: boolean
+    friendRequestFroms?: boolean
+    friendRequestToes?: boolean
+    friendRelationFroms?: boolean
+    friendRelationToes?: boolean
+    messengeFroms?: boolean
+    messengeToes?: boolean
+  }
+
+  export type FacebookUserCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookUserCountOutputTypeArgs)
+    ? FacebookUserCountOutputType 
+    : S extends { select: any } & (FacebookUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookUserCountOutputType ? FacebookUserCountOutputType[P] : never
+  } 
+      : FacebookUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookUserCountOutputType without action
+   */
+  export type FacebookUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserCountOutputType
+     */
+    select?: FacebookUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookGroupCountOutputType
+   */
+
+
+  export type FacebookGroupCountOutputType = {
+    memberUser: number
+  }
+
+  export type FacebookGroupCountOutputTypeSelect = {
+    memberUser?: boolean
+  }
+
+  export type FacebookGroupCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookGroupCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookGroupCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookGroupCountOutputTypeArgs)
+    ? FacebookGroupCountOutputType 
+    : S extends { select: any } & (FacebookGroupCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookGroupCountOutputType ? FacebookGroupCountOutputType[P] : never
+  } 
+      : FacebookGroupCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookGroupCountOutputType without action
+   */
+  export type FacebookGroupCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroupCountOutputType
+     */
+    select?: FacebookGroupCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookPostDestinationCountOutputType
+   */
+
+
+  export type FacebookPostDestinationCountOutputType = {
+    posts: number
+  }
+
+  export type FacebookPostDestinationCountOutputTypeSelect = {
+    posts?: boolean
+  }
+
+  export type FacebookPostDestinationCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookPostDestinationCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPostDestinationCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostDestinationCountOutputTypeArgs)
+    ? FacebookPostDestinationCountOutputType 
+    : S extends { select: any } & (FacebookPostDestinationCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookPostDestinationCountOutputType ? FacebookPostDestinationCountOutputType[P] : never
+  } 
+      : FacebookPostDestinationCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPostDestinationCountOutputType without action
+   */
+  export type FacebookPostDestinationCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestinationCountOutputType
+     */
+    select?: FacebookPostDestinationCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookPostTypeCountOutputType
+   */
+
+
+  export type FacebookPostTypeCountOutputType = {
+    posts: number
+  }
+
+  export type FacebookPostTypeCountOutputTypeSelect = {
+    posts?: boolean
+  }
+
+  export type FacebookPostTypeCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookPostTypeCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPostTypeCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostTypeCountOutputTypeArgs)
+    ? FacebookPostTypeCountOutputType 
+    : S extends { select: any } & (FacebookPostTypeCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookPostTypeCountOutputType ? FacebookPostTypeCountOutputType[P] : never
+  } 
+      : FacebookPostTypeCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPostTypeCountOutputType without action
+   */
+  export type FacebookPostTypeCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostTypeCountOutputType
+     */
+    select?: FacebookPostTypeCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookLocationCountOutputType
+   */
+
+
+  export type FacebookLocationCountOutputType = {
+    posts: number
+  }
+
+  export type FacebookLocationCountOutputTypeSelect = {
+    posts?: boolean
+  }
+
+  export type FacebookLocationCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookLocationCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLocationCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLocationCountOutputTypeArgs)
+    ? FacebookLocationCountOutputType 
+    : S extends { select: any } & (FacebookLocationCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookLocationCountOutputType ? FacebookLocationCountOutputType[P] : never
+  } 
+      : FacebookLocationCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLocationCountOutputType without action
+   */
+  export type FacebookLocationCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocationCountOutputType
+     */
+    select?: FacebookLocationCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookHashtagCountOutputType
+   */
+
+
+  export type FacebookHashtagCountOutputType = {
+    posts: number
+  }
+
+  export type FacebookHashtagCountOutputTypeSelect = {
+    posts?: boolean
+  }
+
+  export type FacebookHashtagCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookHashtagCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookHashtagCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookHashtagCountOutputTypeArgs)
+    ? FacebookHashtagCountOutputType 
+    : S extends { select: any } & (FacebookHashtagCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookHashtagCountOutputType ? FacebookHashtagCountOutputType[P] : never
+  } 
+      : FacebookHashtagCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookHashtagCountOutputType without action
+   */
+  export type FacebookHashtagCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtagCountOutputType
+     */
+    select?: FacebookHashtagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookPostCountOutputType
+   */
+
+
+  export type FacebookPostCountOutputType = {
+    hashtags: number
+    comments: number
+    likePosts: number
+    likeComments: number
+  }
+
+  export type FacebookPostCountOutputTypeSelect = {
+    hashtags?: boolean
+    comments?: boolean
+    likePosts?: boolean
+    likeComments?: boolean
+  }
+
+  export type FacebookPostCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookPostCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPostCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostCountOutputTypeArgs)
+    ? FacebookPostCountOutputType 
+    : S extends { select: any } & (FacebookPostCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookPostCountOutputType ? FacebookPostCountOutputType[P] : never
+  } 
+      : FacebookPostCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPostCountOutputType without action
+   */
+  export type FacebookPostCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostCountOutputType
+     */
+    select?: FacebookPostCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FacebookLikeTypeCountOutputType
+   */
+
+
+  export type FacebookLikeTypeCountOutputType = {
+    likePosts: number
+    likeComments: number
+  }
+
+  export type FacebookLikeTypeCountOutputTypeSelect = {
+    likePosts?: boolean
+    likeComments?: boolean
+  }
+
+  export type FacebookLikeTypeCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookLikeTypeCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLikeTypeCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLikeTypeCountOutputTypeArgs)
+    ? FacebookLikeTypeCountOutputType 
+    : S extends { select: any } & (FacebookLikeTypeCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FacebookLikeTypeCountOutputType ? FacebookLikeTypeCountOutputType[P] : never
+  } 
+      : FacebookLikeTypeCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLikeTypeCountOutputType without action
+   */
+  export type FacebookLikeTypeCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeTypeCountOutputType
+     */
+    select?: FacebookLikeTypeCountOutputTypeSelect | null
   }
 
 
@@ -11753,23 +12463,23 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    follwer?: boolean | TwitterUser$follwerArgs
-    following?: boolean | TwitterUser$followingArgs
-    TwitterPost?: boolean | TwitterUser$TwitterPostArgs
-    TwitterReply?: boolean | TwitterUser$TwitterReplyArgs
-    directFrom?: boolean | TwitterUser$directFromArgs
-    directTo?: boolean | TwitterUser$directToArgs
+    follwers?: boolean | TwitterUser$follwersArgs
+    followings?: boolean | TwitterUser$followingsArgs
+    twitterPosts?: boolean | TwitterUser$twitterPostsArgs
+    twitterReplies?: boolean | TwitterUser$twitterRepliesArgs
+    directFroms?: boolean | TwitterUser$directFromsArgs
+    directToes?: boolean | TwitterUser$directToesArgs
     _count?: boolean | TwitterUserCountOutputTypeArgs
   }
 
 
   export type TwitterUserInclude = {
-    follwer?: boolean | TwitterUser$follwerArgs
-    following?: boolean | TwitterUser$followingArgs
-    TwitterPost?: boolean | TwitterUser$TwitterPostArgs
-    TwitterReply?: boolean | TwitterUser$TwitterReplyArgs
-    directFrom?: boolean | TwitterUser$directFromArgs
-    directTo?: boolean | TwitterUser$directToArgs
+    follwers?: boolean | TwitterUser$follwersArgs
+    followings?: boolean | TwitterUser$followingsArgs
+    twitterPosts?: boolean | TwitterUser$twitterPostsArgs
+    twitterReplies?: boolean | TwitterUser$twitterRepliesArgs
+    directFroms?: boolean | TwitterUser$directFromsArgs
+    directToes?: boolean | TwitterUser$directToesArgs
     _count?: boolean | TwitterUserCountOutputTypeArgs
   }
 
@@ -11780,23 +12490,23 @@ export namespace Prisma {
     S extends { include: any } & (TwitterUserArgs | TwitterUserFindManyArgs)
     ? TwitterUser  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'follwer' ? Array < TwitterUserRelationGetPayload<S['include'][P]>>  :
-        P extends 'following' ? Array < TwitterUserRelationGetPayload<S['include'][P]>>  :
-        P extends 'TwitterPost' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends 'TwitterReply' ? Array < TwitterReplyGetPayload<S['include'][P]>>  :
-        P extends 'directFrom' ? Array < TwitterDMGetPayload<S['include'][P]>>  :
-        P extends 'directTo' ? Array < TwitterDMGetPayload<S['include'][P]>>  :
+        P extends 'follwers' ? Array < TwitterUserRelationGetPayload<S['include'][P]>>  :
+        P extends 'followings' ? Array < TwitterUserRelationGetPayload<S['include'][P]>>  :
+        P extends 'twitterPosts' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
+        P extends 'twitterReplies' ? Array < TwitterReplyGetPayload<S['include'][P]>>  :
+        P extends 'directFroms' ? Array < TwitterDMGetPayload<S['include'][P]>>  :
+        P extends 'directToes' ? Array < TwitterDMGetPayload<S['include'][P]>>  :
         P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TwitterUserArgs | TwitterUserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'follwer' ? Array < TwitterUserRelationGetPayload<S['select'][P]>>  :
-        P extends 'following' ? Array < TwitterUserRelationGetPayload<S['select'][P]>>  :
-        P extends 'TwitterPost' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends 'TwitterReply' ? Array < TwitterReplyGetPayload<S['select'][P]>>  :
-        P extends 'directFrom' ? Array < TwitterDMGetPayload<S['select'][P]>>  :
-        P extends 'directTo' ? Array < TwitterDMGetPayload<S['select'][P]>>  :
+        P extends 'follwers' ? Array < TwitterUserRelationGetPayload<S['select'][P]>>  :
+        P extends 'followings' ? Array < TwitterUserRelationGetPayload<S['select'][P]>>  :
+        P extends 'twitterPosts' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
+        P extends 'twitterReplies' ? Array < TwitterReplyGetPayload<S['select'][P]>>  :
+        P extends 'directFroms' ? Array < TwitterDMGetPayload<S['select'][P]>>  :
+        P extends 'directToes' ? Array < TwitterDMGetPayload<S['select'][P]>>  :
         P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterUser ? TwitterUser[P] : never
   } 
       : TwitterUser
@@ -12169,17 +12879,17 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    follwer<T extends TwitterUser$follwerArgs= {}>(args?: Subset<T, TwitterUser$follwerArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationGetPayload<T>>| Null>;
+    follwers<T extends TwitterUser$follwersArgs= {}>(args?: Subset<T, TwitterUser$follwersArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationGetPayload<T>>| Null>;
 
-    following<T extends TwitterUser$followingArgs= {}>(args?: Subset<T, TwitterUser$followingArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationGetPayload<T>>| Null>;
+    followings<T extends TwitterUser$followingsArgs= {}>(args?: Subset<T, TwitterUser$followingsArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationGetPayload<T>>| Null>;
 
-    TwitterPost<T extends TwitterUser$TwitterPostArgs= {}>(args?: Subset<T, TwitterUser$TwitterPostArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
+    twitterPosts<T extends TwitterUser$twitterPostsArgs= {}>(args?: Subset<T, TwitterUser$twitterPostsArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
 
-    TwitterReply<T extends TwitterUser$TwitterReplyArgs= {}>(args?: Subset<T, TwitterUser$TwitterReplyArgs>): Prisma.PrismaPromise<Array<TwitterReplyGetPayload<T>>| Null>;
+    twitterReplies<T extends TwitterUser$twitterRepliesArgs= {}>(args?: Subset<T, TwitterUser$twitterRepliesArgs>): Prisma.PrismaPromise<Array<TwitterReplyGetPayload<T>>| Null>;
 
-    directFrom<T extends TwitterUser$directFromArgs= {}>(args?: Subset<T, TwitterUser$directFromArgs>): Prisma.PrismaPromise<Array<TwitterDMGetPayload<T>>| Null>;
+    directFroms<T extends TwitterUser$directFromsArgs= {}>(args?: Subset<T, TwitterUser$directFromsArgs>): Prisma.PrismaPromise<Array<TwitterDMGetPayload<T>>| Null>;
 
-    directTo<T extends TwitterUser$directToArgs= {}>(args?: Subset<T, TwitterUser$directToArgs>): Prisma.PrismaPromise<Array<TwitterDMGetPayload<T>>| Null>;
+    directToes<T extends TwitterUser$directToesArgs= {}>(args?: Subset<T, TwitterUser$directToesArgs>): Prisma.PrismaPromise<Array<TwitterDMGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -12537,9 +13247,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.follwer
+   * TwitterUser.follwers
    */
-  export type TwitterUser$follwerArgs = {
+  export type TwitterUser$follwersArgs = {
     /**
      * Select specific fields to fetch from the TwitterUserRelation
      */
@@ -12558,9 +13268,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.following
+   * TwitterUser.followings
    */
-  export type TwitterUser$followingArgs = {
+  export type TwitterUser$followingsArgs = {
     /**
      * Select specific fields to fetch from the TwitterUserRelation
      */
@@ -12579,9 +13289,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.TwitterPost
+   * TwitterUser.twitterPosts
    */
-  export type TwitterUser$TwitterPostArgs = {
+  export type TwitterUser$twitterPostsArgs = {
     /**
      * Select specific fields to fetch from the TwitterPost
      */
@@ -12600,9 +13310,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.TwitterReply
+   * TwitterUser.twitterReplies
    */
-  export type TwitterUser$TwitterReplyArgs = {
+  export type TwitterUser$twitterRepliesArgs = {
     /**
      * Select specific fields to fetch from the TwitterReply
      */
@@ -12621,9 +13331,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.directFrom
+   * TwitterUser.directFroms
    */
-  export type TwitterUser$directFromArgs = {
+  export type TwitterUser$directFromsArgs = {
     /**
      * Select specific fields to fetch from the TwitterDM
      */
@@ -12642,9 +13352,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterUser.directTo
+   * TwitterUser.directToes
    */
-  export type TwitterUser$directToArgs = {
+  export type TwitterUser$directToesArgs = {
     /**
      * Select specific fields to fetch from the TwitterDM
      */
@@ -13862,7 +14572,7 @@ export namespace Prisma {
     postByUserId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    TwitterReply?: boolean | TwitterPost$TwitterReplyArgs
+    twitterReplies?: boolean | TwitterPost$twitterRepliesArgs
     hashTags?: boolean | TwitterPost$hashTagsArgs
     _count?: boolean | TwitterPostCountOutputTypeArgs
   }
@@ -13870,7 +14580,7 @@ export namespace Prisma {
 
   export type TwitterPostInclude = {
     user?: boolean | TwitterUserArgs
-    TwitterReply?: boolean | TwitterPost$TwitterReplyArgs
+    twitterReplies?: boolean | TwitterPost$twitterRepliesArgs
     hashTags?: boolean | TwitterPost$hashTagsArgs
     _count?: boolean | TwitterPostCountOutputTypeArgs
   }
@@ -13883,7 +14593,7 @@ export namespace Prisma {
     ? TwitterPost  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'user' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'TwitterReply' ? Array < TwitterReplyGetPayload<S['include'][P]>>  :
+        P extends 'twitterReplies' ? Array < TwitterReplyGetPayload<S['include'][P]>>  :
         P extends 'hashTags' ? Array < TwitterHashTagGetPayload<S['include'][P]>>  :
         P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -13891,7 +14601,7 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'user' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'TwitterReply' ? Array < TwitterReplyGetPayload<S['select'][P]>>  :
+        P extends 'twitterReplies' ? Array < TwitterReplyGetPayload<S['select'][P]>>  :
         P extends 'hashTags' ? Array < TwitterHashTagGetPayload<S['select'][P]>>  :
         P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterPost ? TwitterPost[P] : never
   } 
@@ -14267,7 +14977,7 @@ export namespace Prisma {
 
     user<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
 
-    TwitterReply<T extends TwitterPost$TwitterReplyArgs= {}>(args?: Subset<T, TwitterPost$TwitterReplyArgs>): Prisma.PrismaPromise<Array<TwitterReplyGetPayload<T>>| Null>;
+    twitterReplies<T extends TwitterPost$twitterRepliesArgs= {}>(args?: Subset<T, TwitterPost$twitterRepliesArgs>): Prisma.PrismaPromise<Array<TwitterReplyGetPayload<T>>| Null>;
 
     hashTags<T extends TwitterPost$hashTagsArgs= {}>(args?: Subset<T, TwitterPost$hashTagsArgs>): Prisma.PrismaPromise<Array<TwitterHashTagGetPayload<T>>| Null>;
 
@@ -14627,9 +15337,9 @@ export namespace Prisma {
 
 
   /**
-   * TwitterPost.TwitterReply
+   * TwitterPost.twitterReplies
    */
-  export type TwitterPost$TwitterReplyArgs = {
+  export type TwitterPost$twitterRepliesArgs = {
     /**
      * Select specific fields to fetch from the TwitterReply
      */
@@ -17641,6 +18351,14399 @@ export namespace Prisma {
 
 
   /**
+   * Model FacebookUser
+   */
+
+
+  export type AggregateFacebookUser = {
+    _count: FacebookUserCountAggregateOutputType | null
+    _avg: FacebookUserAvgAggregateOutputType | null
+    _sum: FacebookUserSumAggregateOutputType | null
+    _min: FacebookUserMinAggregateOutputType | null
+    _max: FacebookUserMaxAggregateOutputType | null
+  }
+
+  export type FacebookUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookUserMinAggregateOutputType = {
+    id: number | null
+    profileImage: string | null
+    coverImage: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookUserMaxAggregateOutputType = {
+    id: number | null
+    profileImage: string | null
+    coverImage: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookUserCountAggregateOutputType = {
+    id: number
+    profileImage: number
+    coverImage: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookUserMinAggregateInputType = {
+    id?: true
+    profileImage?: true
+    coverImage?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookUserMaxAggregateInputType = {
+    id?: true
+    profileImage?: true
+    coverImage?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookUserCountAggregateInputType = {
+    id?: true
+    profileImage?: true
+    coverImage?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookUserAggregateArgs = {
+    /**
+     * Filter which FacebookUser to aggregate.
+     */
+    where?: FacebookUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUsers to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookUsers
+    **/
+    _count?: true | FacebookUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookUserMaxAggregateInputType
+  }
+
+  export type GetFacebookUserAggregateType<T extends FacebookUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookUser[P]>
+      : GetScalarType<T[P], AggregateFacebookUser[P]>
+  }
+
+
+
+
+  export type FacebookUserGroupByArgs = {
+    where?: FacebookUserWhereInput
+    orderBy?: Enumerable<FacebookUserOrderByWithAggregationInput>
+    by: FacebookUserScalarFieldEnum[]
+    having?: FacebookUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookUserCountAggregateInputType | true
+    _avg?: FacebookUserAvgAggregateInputType
+    _sum?: FacebookUserSumAggregateInputType
+    _min?: FacebookUserMinAggregateInputType
+    _max?: FacebookUserMaxAggregateInputType
+  }
+
+
+  export type FacebookUserGroupByOutputType = {
+    id: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookUserCountAggregateOutputType | null
+    _avg: FacebookUserAvgAggregateOutputType | null
+    _sum: FacebookUserSumAggregateOutputType | null
+    _min: FacebookUserMinAggregateOutputType | null
+    _max: FacebookUserMaxAggregateOutputType | null
+  }
+
+  type GetFacebookUserGroupByPayload<T extends FacebookUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookUserGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookUserSelect = {
+    id?: boolean
+    profileImage?: boolean
+    coverImage?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | FacebookUser$postsArgs
+    groupcreater?: boolean | FacebookUser$groupcreaterArgs
+    groupMember?: boolean | FacebookUser$groupMemberArgs
+    comments?: boolean | FacebookUser$commentsArgs
+    likePosts?: boolean | FacebookUser$likePostsArgs
+    likeComments?: boolean | FacebookUser$likeCommentsArgs
+    friendRequestFroms?: boolean | FacebookUser$friendRequestFromsArgs
+    friendRequestToes?: boolean | FacebookUser$friendRequestToesArgs
+    friendRelationFroms?: boolean | FacebookUser$friendRelationFromsArgs
+    friendRelationToes?: boolean | FacebookUser$friendRelationToesArgs
+    messengeFroms?: boolean | FacebookUser$messengeFromsArgs
+    messengeToes?: boolean | FacebookUser$messengeToesArgs
+    _count?: boolean | FacebookUserCountOutputTypeArgs
+  }
+
+
+  export type FacebookUserInclude = {
+    posts?: boolean | FacebookUser$postsArgs
+    groupcreater?: boolean | FacebookUser$groupcreaterArgs
+    groupMember?: boolean | FacebookUser$groupMemberArgs
+    comments?: boolean | FacebookUser$commentsArgs
+    likePosts?: boolean | FacebookUser$likePostsArgs
+    likeComments?: boolean | FacebookUser$likeCommentsArgs
+    friendRequestFroms?: boolean | FacebookUser$friendRequestFromsArgs
+    friendRequestToes?: boolean | FacebookUser$friendRequestToesArgs
+    friendRelationFroms?: boolean | FacebookUser$friendRelationFromsArgs
+    friendRelationToes?: boolean | FacebookUser$friendRelationToesArgs
+    messengeFroms?: boolean | FacebookUser$messengeFromsArgs
+    messengeToes?: boolean | FacebookUser$messengeToesArgs
+    _count?: boolean | FacebookUserCountOutputTypeArgs
+  }
+
+  export type FacebookUserGetPayload<S extends boolean | null | undefined | FacebookUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookUser :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookUserArgs | FacebookUserFindManyArgs)
+    ? FacebookUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['include'][P]>>  :
+        P extends 'groupcreater' ? Array < FacebookGroupGetPayload<S['include'][P]>>  :
+        P extends 'groupMember' ? Array < FacebookGroupGetPayload<S['include'][P]>>  :
+        P extends 'comments' ? Array < FacebookCommentGetPayload<S['include'][P]>>  :
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['include'][P]>>  :
+        P extends 'friendRequestFroms' ? Array < FacebookFriendRequestGetPayload<S['include'][P]>>  :
+        P extends 'friendRequestToes' ? Array < FacebookFriendRequestGetPayload<S['include'][P]>>  :
+        P extends 'friendRelationFroms' ? Array < FacebookUserRelationGetPayload<S['include'][P]>>  :
+        P extends 'friendRelationToes' ? Array < FacebookUserRelationGetPayload<S['include'][P]>>  :
+        P extends 'messengeFroms' ? Array < FacebookMessengerGetPayload<S['include'][P]>>  :
+        P extends 'messengeToes' ? Array < FacebookMessengerGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookUserArgs | FacebookUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['select'][P]>>  :
+        P extends 'groupcreater' ? Array < FacebookGroupGetPayload<S['select'][P]>>  :
+        P extends 'groupMember' ? Array < FacebookGroupGetPayload<S['select'][P]>>  :
+        P extends 'comments' ? Array < FacebookCommentGetPayload<S['select'][P]>>  :
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['select'][P]>>  :
+        P extends 'friendRequestFroms' ? Array < FacebookFriendRequestGetPayload<S['select'][P]>>  :
+        P extends 'friendRequestToes' ? Array < FacebookFriendRequestGetPayload<S['select'][P]>>  :
+        P extends 'friendRelationFroms' ? Array < FacebookUserRelationGetPayload<S['select'][P]>>  :
+        P extends 'friendRelationToes' ? Array < FacebookUserRelationGetPayload<S['select'][P]>>  :
+        P extends 'messengeFroms' ? Array < FacebookMessengerGetPayload<S['select'][P]>>  :
+        P extends 'messengeToes' ? Array < FacebookMessengerGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookUser ? FacebookUser[P] : never
+  } 
+      : FacebookUser
+
+
+  type FacebookUserCountArgs = 
+    Omit<FacebookUserFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookUserCountAggregateInputType | true
+    }
+
+  export interface FacebookUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookUser that matches the filter.
+     * @param {FacebookUserFindUniqueArgs} args - Arguments to find a FacebookUser
+     * @example
+     * // Get one FacebookUser
+     * const facebookUser = await prisma.facebookUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookUser'> extends True ? Prisma__FacebookUserClient<FacebookUserGetPayload<T>> : Prisma__FacebookUserClient<FacebookUserGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookUserFindUniqueOrThrowArgs} args - Arguments to find a FacebookUser
+     * @example
+     * // Get one FacebookUser
+     * const facebookUser = await prisma.facebookUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookUserFindUniqueOrThrowArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Find the first FacebookUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserFindFirstArgs} args - Arguments to find a FacebookUser
+     * @example
+     * // Get one FacebookUser
+     * const facebookUser = await prisma.facebookUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookUser'> extends True ? Prisma__FacebookUserClient<FacebookUserGetPayload<T>> : Prisma__FacebookUserClient<FacebookUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserFindFirstOrThrowArgs} args - Arguments to find a FacebookUser
+     * @example
+     * // Get one FacebookUser
+     * const facebookUser = await prisma.facebookUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookUserFindFirstOrThrowArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookUsers
+     * const facebookUsers = await prisma.facebookUser.findMany()
+     * 
+     * // Get first 10 FacebookUsers
+     * const facebookUsers = await prisma.facebookUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookUserWithIdOnly = await prisma.facebookUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookUserFindManyArgs>(
+      args?: SelectSubset<T, FacebookUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookUserGetPayload<T>>>
+
+    /**
+     * Create a FacebookUser.
+     * @param {FacebookUserCreateArgs} args - Arguments to create a FacebookUser.
+     * @example
+     * // Create one FacebookUser
+     * const FacebookUser = await prisma.facebookUser.create({
+     *   data: {
+     *     // ... data to create a FacebookUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookUserCreateArgs>(
+      args: SelectSubset<T, FacebookUserCreateArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Create many FacebookUsers.
+     *     @param {FacebookUserCreateManyArgs} args - Arguments to create many FacebookUsers.
+     *     @example
+     *     // Create many FacebookUsers
+     *     const facebookUser = await prisma.facebookUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookUserCreateManyArgs>(
+      args?: SelectSubset<T, FacebookUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookUser.
+     * @param {FacebookUserDeleteArgs} args - Arguments to delete one FacebookUser.
+     * @example
+     * // Delete one FacebookUser
+     * const FacebookUser = await prisma.facebookUser.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookUserDeleteArgs>(
+      args: SelectSubset<T, FacebookUserDeleteArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Update one FacebookUser.
+     * @param {FacebookUserUpdateArgs} args - Arguments to update one FacebookUser.
+     * @example
+     * // Update one FacebookUser
+     * const facebookUser = await prisma.facebookUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookUserUpdateArgs>(
+      args: SelectSubset<T, FacebookUserUpdateArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookUsers.
+     * @param {FacebookUserDeleteManyArgs} args - Arguments to filter FacebookUsers to delete.
+     * @example
+     * // Delete a few FacebookUsers
+     * const { count } = await prisma.facebookUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookUserDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookUsers
+     * const facebookUser = await prisma.facebookUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookUserUpdateManyArgs>(
+      args: SelectSubset<T, FacebookUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookUser.
+     * @param {FacebookUserUpsertArgs} args - Arguments to update or create a FacebookUser.
+     * @example
+     * // Update or create a FacebookUser
+     * const facebookUser = await prisma.facebookUser.upsert({
+     *   create: {
+     *     // ... data to create a FacebookUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookUserUpsertArgs>(
+      args: SelectSubset<T, FacebookUserUpsertArgs>
+    ): Prisma__FacebookUserClient<FacebookUserGetPayload<T>>
+
+    /**
+     * Count the number of FacebookUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserCountArgs} args - Arguments to filter FacebookUsers to count.
+     * @example
+     * // Count the number of FacebookUsers
+     * const count = await prisma.facebookUser.count({
+     *   where: {
+     *     // ... the filter for the FacebookUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookUserCountArgs>(
+      args?: Subset<T, FacebookUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookUserAggregateArgs>(args: Subset<T, FacebookUserAggregateArgs>): Prisma.PrismaPromise<GetFacebookUserAggregateType<T>>
+
+    /**
+     * Group by FacebookUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookUserGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends FacebookUser$postsArgs= {}>(args?: Subset<T, FacebookUser$postsArgs>): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>| Null>;
+
+    groupcreater<T extends FacebookUser$groupcreaterArgs= {}>(args?: Subset<T, FacebookUser$groupcreaterArgs>): Prisma.PrismaPromise<Array<FacebookGroupGetPayload<T>>| Null>;
+
+    groupMember<T extends FacebookUser$groupMemberArgs= {}>(args?: Subset<T, FacebookUser$groupMemberArgs>): Prisma.PrismaPromise<Array<FacebookGroupGetPayload<T>>| Null>;
+
+    comments<T extends FacebookUser$commentsArgs= {}>(args?: Subset<T, FacebookUser$commentsArgs>): Prisma.PrismaPromise<Array<FacebookCommentGetPayload<T>>| Null>;
+
+    likePosts<T extends FacebookUser$likePostsArgs= {}>(args?: Subset<T, FacebookUser$likePostsArgs>): Prisma.PrismaPromise<Array<FacebookLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends FacebookUser$likeCommentsArgs= {}>(args?: Subset<T, FacebookUser$likeCommentsArgs>): Prisma.PrismaPromise<Array<FacebookLikeCommentGetPayload<T>>| Null>;
+
+    friendRequestFroms<T extends FacebookUser$friendRequestFromsArgs= {}>(args?: Subset<T, FacebookUser$friendRequestFromsArgs>): Prisma.PrismaPromise<Array<FacebookFriendRequestGetPayload<T>>| Null>;
+
+    friendRequestToes<T extends FacebookUser$friendRequestToesArgs= {}>(args?: Subset<T, FacebookUser$friendRequestToesArgs>): Prisma.PrismaPromise<Array<FacebookFriendRequestGetPayload<T>>| Null>;
+
+    friendRelationFroms<T extends FacebookUser$friendRelationFromsArgs= {}>(args?: Subset<T, FacebookUser$friendRelationFromsArgs>): Prisma.PrismaPromise<Array<FacebookUserRelationGetPayload<T>>| Null>;
+
+    friendRelationToes<T extends FacebookUser$friendRelationToesArgs= {}>(args?: Subset<T, FacebookUser$friendRelationToesArgs>): Prisma.PrismaPromise<Array<FacebookUserRelationGetPayload<T>>| Null>;
+
+    messengeFroms<T extends FacebookUser$messengeFromsArgs= {}>(args?: Subset<T, FacebookUser$messengeFromsArgs>): Prisma.PrismaPromise<Array<FacebookMessengerGetPayload<T>>| Null>;
+
+    messengeToes<T extends FacebookUser$messengeToesArgs= {}>(args?: Subset<T, FacebookUser$messengeToesArgs>): Prisma.PrismaPromise<Array<FacebookMessengerGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookUser base type for findUnique actions
+   */
+  export type FacebookUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter, which FacebookUser to fetch.
+     */
+    where: FacebookUserWhereUniqueInput
+  }
+
+  /**
+   * FacebookUser findUnique
+   */
+  export interface FacebookUserFindUniqueArgs extends FacebookUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookUser findUniqueOrThrow
+   */
+  export type FacebookUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter, which FacebookUser to fetch.
+     */
+    where: FacebookUserWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUser base type for findFirst actions
+   */
+  export type FacebookUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter, which FacebookUser to fetch.
+     */
+    where?: FacebookUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUsers to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookUsers.
+     */
+    cursor?: FacebookUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookUsers.
+     */
+    distinct?: Enumerable<FacebookUserScalarFieldEnum>
+  }
+
+  /**
+   * FacebookUser findFirst
+   */
+  export interface FacebookUserFindFirstArgs extends FacebookUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookUser findFirstOrThrow
+   */
+  export type FacebookUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter, which FacebookUser to fetch.
+     */
+    where?: FacebookUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUsers to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookUsers.
+     */
+    cursor?: FacebookUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookUsers.
+     */
+    distinct?: Enumerable<FacebookUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser findMany
+   */
+  export type FacebookUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter, which FacebookUsers to fetch.
+     */
+    where?: FacebookUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUsers to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookUsers.
+     */
+    cursor?: FacebookUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser create
+   */
+  export type FacebookUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * The data needed to create a FacebookUser.
+     */
+    data: XOR<FacebookUserCreateInput, FacebookUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookUser createMany
+   */
+  export type FacebookUserCreateManyArgs = {
+    /**
+     * The data used to create many FacebookUsers.
+     */
+    data: Enumerable<FacebookUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookUser update
+   */
+  export type FacebookUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * The data needed to update a FacebookUser.
+     */
+    data: XOR<FacebookUserUpdateInput, FacebookUserUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookUser to update.
+     */
+    where: FacebookUserWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUser updateMany
+   */
+  export type FacebookUserUpdateManyArgs = {
+    /**
+     * The data used to update FacebookUsers.
+     */
+    data: XOR<FacebookUserUpdateManyMutationInput, FacebookUserUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookUsers to update
+     */
+    where?: FacebookUserWhereInput
+  }
+
+
+  /**
+   * FacebookUser upsert
+   */
+  export type FacebookUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * The filter to search for the FacebookUser to update in case it exists.
+     */
+    where: FacebookUserWhereUniqueInput
+    /**
+     * In case the FacebookUser found by the `where` argument doesn't exist, create a new FacebookUser with this data.
+     */
+    create: XOR<FacebookUserCreateInput, FacebookUserUncheckedCreateInput>
+    /**
+     * In case the FacebookUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookUserUpdateInput, FacebookUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookUser delete
+   */
+  export type FacebookUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    /**
+     * Filter which FacebookUser to delete.
+     */
+    where: FacebookUserWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUser deleteMany
+   */
+  export type FacebookUserDeleteManyArgs = {
+    /**
+     * Filter which FacebookUsers to delete
+     */
+    where?: FacebookUserWhereInput
+  }
+
+
+  /**
+   * FacebookUser.posts
+   */
+  export type FacebookUser$postsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    cursor?: FacebookPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.groupcreater
+   */
+  export type FacebookUser$groupcreaterArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    where?: FacebookGroupWhereInput
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    cursor?: FacebookGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.groupMember
+   */
+  export type FacebookUser$groupMemberArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    where?: FacebookGroupWhereInput
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    cursor?: FacebookGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.comments
+   */
+  export type FacebookUser$commentsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    where?: FacebookCommentWhereInput
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    cursor?: FacebookCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.likePosts
+   */
+  export type FacebookUser$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    where?: FacebookLikePostWhereInput
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    cursor?: FacebookLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.likeComments
+   */
+  export type FacebookUser$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    where?: FacebookLikeCommentWhereInput
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.friendRequestFroms
+   */
+  export type FacebookUser$friendRequestFromsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    where?: FacebookFriendRequestWhereInput
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookFriendRequestScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.friendRequestToes
+   */
+  export type FacebookUser$friendRequestToesArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    where?: FacebookFriendRequestWhereInput
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookFriendRequestScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.friendRelationFroms
+   */
+  export type FacebookUser$friendRelationFromsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    where?: FacebookUserRelationWhereInput
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    cursor?: FacebookUserRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookUserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.friendRelationToes
+   */
+  export type FacebookUser$friendRelationToesArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    where?: FacebookUserRelationWhereInput
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    cursor?: FacebookUserRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookUserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.messengeFroms
+   */
+  export type FacebookUser$messengeFromsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    where?: FacebookMessengerWhereInput
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    cursor?: FacebookMessengerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookMessengerScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser.messengeToes
+   */
+  export type FacebookUser$messengeToesArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    where?: FacebookMessengerWhereInput
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    cursor?: FacebookMessengerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookMessengerScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUser without action
+   */
+  export type FacebookUserArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookGroup
+   */
+
+
+  export type AggregateFacebookGroup = {
+    _count: FacebookGroupCountAggregateOutputType | null
+    _avg: FacebookGroupAvgAggregateOutputType | null
+    _sum: FacebookGroupSumAggregateOutputType | null
+    _min: FacebookGroupMinAggregateOutputType | null
+    _max: FacebookGroupMaxAggregateOutputType | null
+  }
+
+  export type FacebookGroupAvgAggregateOutputType = {
+    id: number | null
+    createrUserId: number | null
+  }
+
+  export type FacebookGroupSumAggregateOutputType = {
+    id: number | null
+    createrUserId: number | null
+  }
+
+  export type FacebookGroupMinAggregateOutputType = {
+    id: number | null
+    GroupImage: string | null
+    coverImage: string | null
+    name: string | null
+    createrUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookGroupMaxAggregateOutputType = {
+    id: number | null
+    GroupImage: string | null
+    coverImage: string | null
+    name: string | null
+    createrUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookGroupCountAggregateOutputType = {
+    id: number
+    GroupImage: number
+    coverImage: number
+    name: number
+    createrUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookGroupAvgAggregateInputType = {
+    id?: true
+    createrUserId?: true
+  }
+
+  export type FacebookGroupSumAggregateInputType = {
+    id?: true
+    createrUserId?: true
+  }
+
+  export type FacebookGroupMinAggregateInputType = {
+    id?: true
+    GroupImage?: true
+    coverImage?: true
+    name?: true
+    createrUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookGroupMaxAggregateInputType = {
+    id?: true
+    GroupImage?: true
+    coverImage?: true
+    name?: true
+    createrUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookGroupCountAggregateInputType = {
+    id?: true
+    GroupImage?: true
+    coverImage?: true
+    name?: true
+    createrUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookGroupAggregateArgs = {
+    /**
+     * Filter which FacebookGroup to aggregate.
+     */
+    where?: FacebookGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookGroups to fetch.
+     */
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookGroups
+    **/
+    _count?: true | FacebookGroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookGroupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookGroupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookGroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookGroupMaxAggregateInputType
+  }
+
+  export type GetFacebookGroupAggregateType<T extends FacebookGroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookGroup[P]>
+      : GetScalarType<T[P], AggregateFacebookGroup[P]>
+  }
+
+
+
+
+  export type FacebookGroupGroupByArgs = {
+    where?: FacebookGroupWhereInput
+    orderBy?: Enumerable<FacebookGroupOrderByWithAggregationInput>
+    by: FacebookGroupScalarFieldEnum[]
+    having?: FacebookGroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookGroupCountAggregateInputType | true
+    _avg?: FacebookGroupAvgAggregateInputType
+    _sum?: FacebookGroupSumAggregateInputType
+    _min?: FacebookGroupMinAggregateInputType
+    _max?: FacebookGroupMaxAggregateInputType
+  }
+
+
+  export type FacebookGroupGroupByOutputType = {
+    id: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookGroupCountAggregateOutputType | null
+    _avg: FacebookGroupAvgAggregateOutputType | null
+    _sum: FacebookGroupSumAggregateOutputType | null
+    _min: FacebookGroupMinAggregateOutputType | null
+    _max: FacebookGroupMaxAggregateOutputType | null
+  }
+
+  type GetFacebookGroupGroupByPayload<T extends FacebookGroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookGroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookGroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookGroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookGroupSelect = {
+    id?: boolean
+    GroupImage?: boolean
+    coverImage?: boolean
+    name?: boolean
+    createrUser?: boolean | FacebookUserArgs
+    createrUserId?: boolean
+    memberUser?: boolean | FacebookGroup$memberUserArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | FacebookGroupCountOutputTypeArgs
+  }
+
+
+  export type FacebookGroupInclude = {
+    createrUser?: boolean | FacebookUserArgs
+    memberUser?: boolean | FacebookGroup$memberUserArgs
+    _count?: boolean | FacebookGroupCountOutputTypeArgs
+  }
+
+  export type FacebookGroupGetPayload<S extends boolean | null | undefined | FacebookGroupArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookGroup :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookGroupArgs | FacebookGroupFindManyArgs)
+    ? FacebookGroup  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'createrUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'memberUser' ? Array < FacebookUserGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookGroupCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookGroupArgs | FacebookGroupFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'createrUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'memberUser' ? Array < FacebookUserGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookGroupCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookGroup ? FacebookGroup[P] : never
+  } 
+      : FacebookGroup
+
+
+  type FacebookGroupCountArgs = 
+    Omit<FacebookGroupFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookGroupCountAggregateInputType | true
+    }
+
+  export interface FacebookGroupDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookGroup that matches the filter.
+     * @param {FacebookGroupFindUniqueArgs} args - Arguments to find a FacebookGroup
+     * @example
+     * // Get one FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookGroupFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookGroupFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookGroup'> extends True ? Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>> : Prisma__FacebookGroupClient<FacebookGroupGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookGroup that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookGroupFindUniqueOrThrowArgs} args - Arguments to find a FacebookGroup
+     * @example
+     * // Get one FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookGroupFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookGroupFindUniqueOrThrowArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Find the first FacebookGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupFindFirstArgs} args - Arguments to find a FacebookGroup
+     * @example
+     * // Get one FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookGroupFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookGroupFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookGroup'> extends True ? Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>> : Prisma__FacebookGroupClient<FacebookGroupGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookGroup that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupFindFirstOrThrowArgs} args - Arguments to find a FacebookGroup
+     * @example
+     * // Get one FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookGroupFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookGroupFindFirstOrThrowArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookGroups
+     * const facebookGroups = await prisma.facebookGroup.findMany()
+     * 
+     * // Get first 10 FacebookGroups
+     * const facebookGroups = await prisma.facebookGroup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookGroupWithIdOnly = await prisma.facebookGroup.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookGroupFindManyArgs>(
+      args?: SelectSubset<T, FacebookGroupFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookGroupGetPayload<T>>>
+
+    /**
+     * Create a FacebookGroup.
+     * @param {FacebookGroupCreateArgs} args - Arguments to create a FacebookGroup.
+     * @example
+     * // Create one FacebookGroup
+     * const FacebookGroup = await prisma.facebookGroup.create({
+     *   data: {
+     *     // ... data to create a FacebookGroup
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookGroupCreateArgs>(
+      args: SelectSubset<T, FacebookGroupCreateArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Create many FacebookGroups.
+     *     @param {FacebookGroupCreateManyArgs} args - Arguments to create many FacebookGroups.
+     *     @example
+     *     // Create many FacebookGroups
+     *     const facebookGroup = await prisma.facebookGroup.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookGroupCreateManyArgs>(
+      args?: SelectSubset<T, FacebookGroupCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookGroup.
+     * @param {FacebookGroupDeleteArgs} args - Arguments to delete one FacebookGroup.
+     * @example
+     * // Delete one FacebookGroup
+     * const FacebookGroup = await prisma.facebookGroup.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookGroup
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookGroupDeleteArgs>(
+      args: SelectSubset<T, FacebookGroupDeleteArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Update one FacebookGroup.
+     * @param {FacebookGroupUpdateArgs} args - Arguments to update one FacebookGroup.
+     * @example
+     * // Update one FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookGroupUpdateArgs>(
+      args: SelectSubset<T, FacebookGroupUpdateArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookGroups.
+     * @param {FacebookGroupDeleteManyArgs} args - Arguments to filter FacebookGroups to delete.
+     * @example
+     * // Delete a few FacebookGroups
+     * const { count } = await prisma.facebookGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookGroupDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookGroupDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookGroups
+     * const facebookGroup = await prisma.facebookGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookGroupUpdateManyArgs>(
+      args: SelectSubset<T, FacebookGroupUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookGroup.
+     * @param {FacebookGroupUpsertArgs} args - Arguments to update or create a FacebookGroup.
+     * @example
+     * // Update or create a FacebookGroup
+     * const facebookGroup = await prisma.facebookGroup.upsert({
+     *   create: {
+     *     // ... data to create a FacebookGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookGroup we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookGroupUpsertArgs>(
+      args: SelectSubset<T, FacebookGroupUpsertArgs>
+    ): Prisma__FacebookGroupClient<FacebookGroupGetPayload<T>>
+
+    /**
+     * Count the number of FacebookGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupCountArgs} args - Arguments to filter FacebookGroups to count.
+     * @example
+     * // Count the number of FacebookGroups
+     * const count = await prisma.facebookGroup.count({
+     *   where: {
+     *     // ... the filter for the FacebookGroups we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookGroupCountArgs>(
+      args?: Subset<T, FacebookGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookGroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookGroupAggregateArgs>(args: Subset<T, FacebookGroupAggregateArgs>): Prisma.PrismaPromise<GetFacebookGroupAggregateType<T>>
+
+    /**
+     * Group by FacebookGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookGroupGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookGroupClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    createrUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    memberUser<T extends FacebookGroup$memberUserArgs= {}>(args?: Subset<T, FacebookGroup$memberUserArgs>): Prisma.PrismaPromise<Array<FacebookUserGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookGroup base type for findUnique actions
+   */
+  export type FacebookGroupFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter, which FacebookGroup to fetch.
+     */
+    where: FacebookGroupWhereUniqueInput
+  }
+
+  /**
+   * FacebookGroup findUnique
+   */
+  export interface FacebookGroupFindUniqueArgs extends FacebookGroupFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookGroup findUniqueOrThrow
+   */
+  export type FacebookGroupFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter, which FacebookGroup to fetch.
+     */
+    where: FacebookGroupWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookGroup base type for findFirst actions
+   */
+  export type FacebookGroupFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter, which FacebookGroup to fetch.
+     */
+    where?: FacebookGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookGroups to fetch.
+     */
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookGroups.
+     */
+    cursor?: FacebookGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookGroups.
+     */
+    distinct?: Enumerable<FacebookGroupScalarFieldEnum>
+  }
+
+  /**
+   * FacebookGroup findFirst
+   */
+  export interface FacebookGroupFindFirstArgs extends FacebookGroupFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookGroup findFirstOrThrow
+   */
+  export type FacebookGroupFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter, which FacebookGroup to fetch.
+     */
+    where?: FacebookGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookGroups to fetch.
+     */
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookGroups.
+     */
+    cursor?: FacebookGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookGroups.
+     */
+    distinct?: Enumerable<FacebookGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookGroup findMany
+   */
+  export type FacebookGroupFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter, which FacebookGroups to fetch.
+     */
+    where?: FacebookGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookGroups to fetch.
+     */
+    orderBy?: Enumerable<FacebookGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookGroups.
+     */
+    cursor?: FacebookGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookGroups.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookGroup create
+   */
+  export type FacebookGroupCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * The data needed to create a FacebookGroup.
+     */
+    data: XOR<FacebookGroupCreateInput, FacebookGroupUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookGroup createMany
+   */
+  export type FacebookGroupCreateManyArgs = {
+    /**
+     * The data used to create many FacebookGroups.
+     */
+    data: Enumerable<FacebookGroupCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookGroup update
+   */
+  export type FacebookGroupUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * The data needed to update a FacebookGroup.
+     */
+    data: XOR<FacebookGroupUpdateInput, FacebookGroupUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookGroup to update.
+     */
+    where: FacebookGroupWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookGroup updateMany
+   */
+  export type FacebookGroupUpdateManyArgs = {
+    /**
+     * The data used to update FacebookGroups.
+     */
+    data: XOR<FacebookGroupUpdateManyMutationInput, FacebookGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookGroups to update
+     */
+    where?: FacebookGroupWhereInput
+  }
+
+
+  /**
+   * FacebookGroup upsert
+   */
+  export type FacebookGroupUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * The filter to search for the FacebookGroup to update in case it exists.
+     */
+    where: FacebookGroupWhereUniqueInput
+    /**
+     * In case the FacebookGroup found by the `where` argument doesn't exist, create a new FacebookGroup with this data.
+     */
+    create: XOR<FacebookGroupCreateInput, FacebookGroupUncheckedCreateInput>
+    /**
+     * In case the FacebookGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookGroupUpdateInput, FacebookGroupUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookGroup delete
+   */
+  export type FacebookGroupDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+    /**
+     * Filter which FacebookGroup to delete.
+     */
+    where: FacebookGroupWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookGroup deleteMany
+   */
+  export type FacebookGroupDeleteManyArgs = {
+    /**
+     * Filter which FacebookGroups to delete
+     */
+    where?: FacebookGroupWhereInput
+  }
+
+
+  /**
+   * FacebookGroup.memberUser
+   */
+  export type FacebookGroup$memberUserArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUser
+     */
+    select?: FacebookUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserInclude | null
+    where?: FacebookUserWhereInput
+    orderBy?: Enumerable<FacebookUserOrderByWithRelationInput>
+    cursor?: FacebookUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookGroup without action
+   */
+  export type FacebookGroupArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookGroup
+     */
+    select?: FacebookGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookGroupInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookPostDestination
+   */
+
+
+  export type AggregateFacebookPostDestination = {
+    _count: FacebookPostDestinationCountAggregateOutputType | null
+    _avg: FacebookPostDestinationAvgAggregateOutputType | null
+    _sum: FacebookPostDestinationSumAggregateOutputType | null
+    _min: FacebookPostDestinationMinAggregateOutputType | null
+    _max: FacebookPostDestinationMaxAggregateOutputType | null
+  }
+
+  export type FacebookPostDestinationAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookPostDestinationSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookPostDestinationMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostDestinationMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostDestinationCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookPostDestinationAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookPostDestinationSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookPostDestinationMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostDestinationMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostDestinationCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookPostDestinationAggregateArgs = {
+    /**
+     * Filter which FacebookPostDestination to aggregate.
+     */
+    where?: FacebookPostDestinationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostDestinations to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostDestinationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookPostDestinationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostDestinations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostDestinations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookPostDestinations
+    **/
+    _count?: true | FacebookPostDestinationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookPostDestinationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookPostDestinationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookPostDestinationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookPostDestinationMaxAggregateInputType
+  }
+
+  export type GetFacebookPostDestinationAggregateType<T extends FacebookPostDestinationAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookPostDestination]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookPostDestination[P]>
+      : GetScalarType<T[P], AggregateFacebookPostDestination[P]>
+  }
+
+
+
+
+  export type FacebookPostDestinationGroupByArgs = {
+    where?: FacebookPostDestinationWhereInput
+    orderBy?: Enumerable<FacebookPostDestinationOrderByWithAggregationInput>
+    by: FacebookPostDestinationScalarFieldEnum[]
+    having?: FacebookPostDestinationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookPostDestinationCountAggregateInputType | true
+    _avg?: FacebookPostDestinationAvgAggregateInputType
+    _sum?: FacebookPostDestinationSumAggregateInputType
+    _min?: FacebookPostDestinationMinAggregateInputType
+    _max?: FacebookPostDestinationMaxAggregateInputType
+  }
+
+
+  export type FacebookPostDestinationGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookPostDestinationCountAggregateOutputType | null
+    _avg: FacebookPostDestinationAvgAggregateOutputType | null
+    _sum: FacebookPostDestinationSumAggregateOutputType | null
+    _min: FacebookPostDestinationMinAggregateOutputType | null
+    _max: FacebookPostDestinationMaxAggregateOutputType | null
+  }
+
+  type GetFacebookPostDestinationGroupByPayload<T extends FacebookPostDestinationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookPostDestinationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookPostDestinationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookPostDestinationGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookPostDestinationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookPostDestinationSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | FacebookPostDestination$postsArgs
+    _count?: boolean | FacebookPostDestinationCountOutputTypeArgs
+  }
+
+
+  export type FacebookPostDestinationInclude = {
+    posts?: boolean | FacebookPostDestination$postsArgs
+    _count?: boolean | FacebookPostDestinationCountOutputTypeArgs
+  }
+
+  export type FacebookPostDestinationGetPayload<S extends boolean | null | undefined | FacebookPostDestinationArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPostDestination :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostDestinationArgs | FacebookPostDestinationFindManyArgs)
+    ? FacebookPostDestination  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookPostDestinationCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookPostDestinationArgs | FacebookPostDestinationFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookPostDestinationCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookPostDestination ? FacebookPostDestination[P] : never
+  } 
+      : FacebookPostDestination
+
+
+  type FacebookPostDestinationCountArgs = 
+    Omit<FacebookPostDestinationFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookPostDestinationCountAggregateInputType | true
+    }
+
+  export interface FacebookPostDestinationDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookPostDestination that matches the filter.
+     * @param {FacebookPostDestinationFindUniqueArgs} args - Arguments to find a FacebookPostDestination
+     * @example
+     * // Get one FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookPostDestinationFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookPostDestinationFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookPostDestination'> extends True ? Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>> : Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookPostDestination that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookPostDestinationFindUniqueOrThrowArgs} args - Arguments to find a FacebookPostDestination
+     * @example
+     * // Get one FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookPostDestinationFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostDestinationFindUniqueOrThrowArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Find the first FacebookPostDestination that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationFindFirstArgs} args - Arguments to find a FacebookPostDestination
+     * @example
+     * // Get one FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookPostDestinationFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookPostDestinationFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookPostDestination'> extends True ? Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>> : Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookPostDestination that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationFindFirstOrThrowArgs} args - Arguments to find a FacebookPostDestination
+     * @example
+     * // Get one FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookPostDestinationFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostDestinationFindFirstOrThrowArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookPostDestinations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookPostDestinations
+     * const facebookPostDestinations = await prisma.facebookPostDestination.findMany()
+     * 
+     * // Get first 10 FacebookPostDestinations
+     * const facebookPostDestinations = await prisma.facebookPostDestination.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookPostDestinationWithIdOnly = await prisma.facebookPostDestination.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookPostDestinationFindManyArgs>(
+      args?: SelectSubset<T, FacebookPostDestinationFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookPostDestinationGetPayload<T>>>
+
+    /**
+     * Create a FacebookPostDestination.
+     * @param {FacebookPostDestinationCreateArgs} args - Arguments to create a FacebookPostDestination.
+     * @example
+     * // Create one FacebookPostDestination
+     * const FacebookPostDestination = await prisma.facebookPostDestination.create({
+     *   data: {
+     *     // ... data to create a FacebookPostDestination
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookPostDestinationCreateArgs>(
+      args: SelectSubset<T, FacebookPostDestinationCreateArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Create many FacebookPostDestinations.
+     *     @param {FacebookPostDestinationCreateManyArgs} args - Arguments to create many FacebookPostDestinations.
+     *     @example
+     *     // Create many FacebookPostDestinations
+     *     const facebookPostDestination = await prisma.facebookPostDestination.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookPostDestinationCreateManyArgs>(
+      args?: SelectSubset<T, FacebookPostDestinationCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookPostDestination.
+     * @param {FacebookPostDestinationDeleteArgs} args - Arguments to delete one FacebookPostDestination.
+     * @example
+     * // Delete one FacebookPostDestination
+     * const FacebookPostDestination = await prisma.facebookPostDestination.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookPostDestination
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookPostDestinationDeleteArgs>(
+      args: SelectSubset<T, FacebookPostDestinationDeleteArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Update one FacebookPostDestination.
+     * @param {FacebookPostDestinationUpdateArgs} args - Arguments to update one FacebookPostDestination.
+     * @example
+     * // Update one FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookPostDestinationUpdateArgs>(
+      args: SelectSubset<T, FacebookPostDestinationUpdateArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookPostDestinations.
+     * @param {FacebookPostDestinationDeleteManyArgs} args - Arguments to filter FacebookPostDestinations to delete.
+     * @example
+     * // Delete a few FacebookPostDestinations
+     * const { count } = await prisma.facebookPostDestination.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookPostDestinationDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookPostDestinationDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookPostDestinations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookPostDestinations
+     * const facebookPostDestination = await prisma.facebookPostDestination.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookPostDestinationUpdateManyArgs>(
+      args: SelectSubset<T, FacebookPostDestinationUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookPostDestination.
+     * @param {FacebookPostDestinationUpsertArgs} args - Arguments to update or create a FacebookPostDestination.
+     * @example
+     * // Update or create a FacebookPostDestination
+     * const facebookPostDestination = await prisma.facebookPostDestination.upsert({
+     *   create: {
+     *     // ... data to create a FacebookPostDestination
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookPostDestination we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookPostDestinationUpsertArgs>(
+      args: SelectSubset<T, FacebookPostDestinationUpsertArgs>
+    ): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T>>
+
+    /**
+     * Count the number of FacebookPostDestinations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationCountArgs} args - Arguments to filter FacebookPostDestinations to count.
+     * @example
+     * // Count the number of FacebookPostDestinations
+     * const count = await prisma.facebookPostDestination.count({
+     *   where: {
+     *     // ... the filter for the FacebookPostDestinations we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookPostDestinationCountArgs>(
+      args?: Subset<T, FacebookPostDestinationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookPostDestinationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookPostDestination.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookPostDestinationAggregateArgs>(args: Subset<T, FacebookPostDestinationAggregateArgs>): Prisma.PrismaPromise<GetFacebookPostDestinationAggregateType<T>>
+
+    /**
+     * Group by FacebookPostDestination.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostDestinationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookPostDestinationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookPostDestinationGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookPostDestinationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookPostDestinationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookPostDestinationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookPostDestination.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookPostDestinationClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends FacebookPostDestination$postsArgs= {}>(args?: Subset<T, FacebookPostDestination$postsArgs>): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPostDestination base type for findUnique actions
+   */
+  export type FacebookPostDestinationFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter, which FacebookPostDestination to fetch.
+     */
+    where: FacebookPostDestinationWhereUniqueInput
+  }
+
+  /**
+   * FacebookPostDestination findUnique
+   */
+  export interface FacebookPostDestinationFindUniqueArgs extends FacebookPostDestinationFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPostDestination findUniqueOrThrow
+   */
+  export type FacebookPostDestinationFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter, which FacebookPostDestination to fetch.
+     */
+    where: FacebookPostDestinationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostDestination base type for findFirst actions
+   */
+  export type FacebookPostDestinationFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter, which FacebookPostDestination to fetch.
+     */
+    where?: FacebookPostDestinationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostDestinations to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostDestinationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPostDestinations.
+     */
+    cursor?: FacebookPostDestinationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostDestinations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostDestinations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPostDestinations.
+     */
+    distinct?: Enumerable<FacebookPostDestinationScalarFieldEnum>
+  }
+
+  /**
+   * FacebookPostDestination findFirst
+   */
+  export interface FacebookPostDestinationFindFirstArgs extends FacebookPostDestinationFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPostDestination findFirstOrThrow
+   */
+  export type FacebookPostDestinationFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter, which FacebookPostDestination to fetch.
+     */
+    where?: FacebookPostDestinationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostDestinations to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostDestinationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPostDestinations.
+     */
+    cursor?: FacebookPostDestinationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostDestinations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostDestinations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPostDestinations.
+     */
+    distinct?: Enumerable<FacebookPostDestinationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostDestination findMany
+   */
+  export type FacebookPostDestinationFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter, which FacebookPostDestinations to fetch.
+     */
+    where?: FacebookPostDestinationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostDestinations to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostDestinationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookPostDestinations.
+     */
+    cursor?: FacebookPostDestinationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostDestinations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostDestinations.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookPostDestinationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostDestination create
+   */
+  export type FacebookPostDestinationCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * The data needed to create a FacebookPostDestination.
+     */
+    data: XOR<FacebookPostDestinationCreateInput, FacebookPostDestinationUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookPostDestination createMany
+   */
+  export type FacebookPostDestinationCreateManyArgs = {
+    /**
+     * The data used to create many FacebookPostDestinations.
+     */
+    data: Enumerable<FacebookPostDestinationCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookPostDestination update
+   */
+  export type FacebookPostDestinationUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * The data needed to update a FacebookPostDestination.
+     */
+    data: XOR<FacebookPostDestinationUpdateInput, FacebookPostDestinationUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookPostDestination to update.
+     */
+    where: FacebookPostDestinationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostDestination updateMany
+   */
+  export type FacebookPostDestinationUpdateManyArgs = {
+    /**
+     * The data used to update FacebookPostDestinations.
+     */
+    data: XOR<FacebookPostDestinationUpdateManyMutationInput, FacebookPostDestinationUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookPostDestinations to update
+     */
+    where?: FacebookPostDestinationWhereInput
+  }
+
+
+  /**
+   * FacebookPostDestination upsert
+   */
+  export type FacebookPostDestinationUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * The filter to search for the FacebookPostDestination to update in case it exists.
+     */
+    where: FacebookPostDestinationWhereUniqueInput
+    /**
+     * In case the FacebookPostDestination found by the `where` argument doesn't exist, create a new FacebookPostDestination with this data.
+     */
+    create: XOR<FacebookPostDestinationCreateInput, FacebookPostDestinationUncheckedCreateInput>
+    /**
+     * In case the FacebookPostDestination was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookPostDestinationUpdateInput, FacebookPostDestinationUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookPostDestination delete
+   */
+  export type FacebookPostDestinationDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+    /**
+     * Filter which FacebookPostDestination to delete.
+     */
+    where: FacebookPostDestinationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostDestination deleteMany
+   */
+  export type FacebookPostDestinationDeleteManyArgs = {
+    /**
+     * Filter which FacebookPostDestinations to delete
+     */
+    where?: FacebookPostDestinationWhereInput
+  }
+
+
+  /**
+   * FacebookPostDestination.posts
+   */
+  export type FacebookPostDestination$postsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    cursor?: FacebookPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostDestination without action
+   */
+  export type FacebookPostDestinationArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostDestination
+     */
+    select?: FacebookPostDestinationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostDestinationInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookPostType
+   */
+
+
+  export type AggregateFacebookPostType = {
+    _count: FacebookPostTypeCountAggregateOutputType | null
+    _avg: FacebookPostTypeAvgAggregateOutputType | null
+    _sum: FacebookPostTypeSumAggregateOutputType | null
+    _min: FacebookPostTypeMinAggregateOutputType | null
+    _max: FacebookPostTypeMaxAggregateOutputType | null
+  }
+
+  export type FacebookPostTypeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookPostTypeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookPostTypeMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostTypeMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostTypeCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookPostTypeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookPostTypeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookPostTypeMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostTypeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostTypeCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookPostTypeAggregateArgs = {
+    /**
+     * Filter which FacebookPostType to aggregate.
+     */
+    where?: FacebookPostTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookPostTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookPostTypes
+    **/
+    _count?: true | FacebookPostTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookPostTypeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookPostTypeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookPostTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookPostTypeMaxAggregateInputType
+  }
+
+  export type GetFacebookPostTypeAggregateType<T extends FacebookPostTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookPostType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookPostType[P]>
+      : GetScalarType<T[P], AggregateFacebookPostType[P]>
+  }
+
+
+
+
+  export type FacebookPostTypeGroupByArgs = {
+    where?: FacebookPostTypeWhereInput
+    orderBy?: Enumerable<FacebookPostTypeOrderByWithAggregationInput>
+    by: FacebookPostTypeScalarFieldEnum[]
+    having?: FacebookPostTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookPostTypeCountAggregateInputType | true
+    _avg?: FacebookPostTypeAvgAggregateInputType
+    _sum?: FacebookPostTypeSumAggregateInputType
+    _min?: FacebookPostTypeMinAggregateInputType
+    _max?: FacebookPostTypeMaxAggregateInputType
+  }
+
+
+  export type FacebookPostTypeGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookPostTypeCountAggregateOutputType | null
+    _avg: FacebookPostTypeAvgAggregateOutputType | null
+    _sum: FacebookPostTypeSumAggregateOutputType | null
+    _min: FacebookPostTypeMinAggregateOutputType | null
+    _max: FacebookPostTypeMaxAggregateOutputType | null
+  }
+
+  type GetFacebookPostTypeGroupByPayload<T extends FacebookPostTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookPostTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookPostTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookPostTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookPostTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookPostTypeSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | FacebookPostType$postsArgs
+    _count?: boolean | FacebookPostTypeCountOutputTypeArgs
+  }
+
+
+  export type FacebookPostTypeInclude = {
+    posts?: boolean | FacebookPostType$postsArgs
+    _count?: boolean | FacebookPostTypeCountOutputTypeArgs
+  }
+
+  export type FacebookPostTypeGetPayload<S extends boolean | null | undefined | FacebookPostTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPostType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostTypeArgs | FacebookPostTypeFindManyArgs)
+    ? FacebookPostType  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookPostTypeCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookPostTypeArgs | FacebookPostTypeFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookPostTypeCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookPostType ? FacebookPostType[P] : never
+  } 
+      : FacebookPostType
+
+
+  type FacebookPostTypeCountArgs = 
+    Omit<FacebookPostTypeFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookPostTypeCountAggregateInputType | true
+    }
+
+  export interface FacebookPostTypeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookPostType that matches the filter.
+     * @param {FacebookPostTypeFindUniqueArgs} args - Arguments to find a FacebookPostType
+     * @example
+     * // Get one FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookPostTypeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookPostTypeFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookPostType'> extends True ? Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>> : Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookPostType that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookPostTypeFindUniqueOrThrowArgs} args - Arguments to find a FacebookPostType
+     * @example
+     * // Get one FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookPostTypeFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostTypeFindUniqueOrThrowArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Find the first FacebookPostType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeFindFirstArgs} args - Arguments to find a FacebookPostType
+     * @example
+     * // Get one FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookPostTypeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookPostTypeFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookPostType'> extends True ? Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>> : Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookPostType that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeFindFirstOrThrowArgs} args - Arguments to find a FacebookPostType
+     * @example
+     * // Get one FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookPostTypeFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostTypeFindFirstOrThrowArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookPostTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookPostTypes
+     * const facebookPostTypes = await prisma.facebookPostType.findMany()
+     * 
+     * // Get first 10 FacebookPostTypes
+     * const facebookPostTypes = await prisma.facebookPostType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookPostTypeWithIdOnly = await prisma.facebookPostType.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookPostTypeFindManyArgs>(
+      args?: SelectSubset<T, FacebookPostTypeFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookPostTypeGetPayload<T>>>
+
+    /**
+     * Create a FacebookPostType.
+     * @param {FacebookPostTypeCreateArgs} args - Arguments to create a FacebookPostType.
+     * @example
+     * // Create one FacebookPostType
+     * const FacebookPostType = await prisma.facebookPostType.create({
+     *   data: {
+     *     // ... data to create a FacebookPostType
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookPostTypeCreateArgs>(
+      args: SelectSubset<T, FacebookPostTypeCreateArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Create many FacebookPostTypes.
+     *     @param {FacebookPostTypeCreateManyArgs} args - Arguments to create many FacebookPostTypes.
+     *     @example
+     *     // Create many FacebookPostTypes
+     *     const facebookPostType = await prisma.facebookPostType.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookPostTypeCreateManyArgs>(
+      args?: SelectSubset<T, FacebookPostTypeCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookPostType.
+     * @param {FacebookPostTypeDeleteArgs} args - Arguments to delete one FacebookPostType.
+     * @example
+     * // Delete one FacebookPostType
+     * const FacebookPostType = await prisma.facebookPostType.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookPostType
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookPostTypeDeleteArgs>(
+      args: SelectSubset<T, FacebookPostTypeDeleteArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Update one FacebookPostType.
+     * @param {FacebookPostTypeUpdateArgs} args - Arguments to update one FacebookPostType.
+     * @example
+     * // Update one FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookPostTypeUpdateArgs>(
+      args: SelectSubset<T, FacebookPostTypeUpdateArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookPostTypes.
+     * @param {FacebookPostTypeDeleteManyArgs} args - Arguments to filter FacebookPostTypes to delete.
+     * @example
+     * // Delete a few FacebookPostTypes
+     * const { count } = await prisma.facebookPostType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookPostTypeDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookPostTypeDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookPostTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookPostTypes
+     * const facebookPostType = await prisma.facebookPostType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookPostTypeUpdateManyArgs>(
+      args: SelectSubset<T, FacebookPostTypeUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookPostType.
+     * @param {FacebookPostTypeUpsertArgs} args - Arguments to update or create a FacebookPostType.
+     * @example
+     * // Update or create a FacebookPostType
+     * const facebookPostType = await prisma.facebookPostType.upsert({
+     *   create: {
+     *     // ... data to create a FacebookPostType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookPostType we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookPostTypeUpsertArgs>(
+      args: SelectSubset<T, FacebookPostTypeUpsertArgs>
+    ): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T>>
+
+    /**
+     * Count the number of FacebookPostTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeCountArgs} args - Arguments to filter FacebookPostTypes to count.
+     * @example
+     * // Count the number of FacebookPostTypes
+     * const count = await prisma.facebookPostType.count({
+     *   where: {
+     *     // ... the filter for the FacebookPostTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookPostTypeCountArgs>(
+      args?: Subset<T, FacebookPostTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookPostTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookPostType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookPostTypeAggregateArgs>(args: Subset<T, FacebookPostTypeAggregateArgs>): Prisma.PrismaPromise<GetFacebookPostTypeAggregateType<T>>
+
+    /**
+     * Group by FacebookPostType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookPostTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookPostTypeGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookPostTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookPostTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookPostTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookPostType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookPostTypeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends FacebookPostType$postsArgs= {}>(args?: Subset<T, FacebookPostType$postsArgs>): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPostType base type for findUnique actions
+   */
+  export type FacebookPostTypeFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter, which FacebookPostType to fetch.
+     */
+    where: FacebookPostTypeWhereUniqueInput
+  }
+
+  /**
+   * FacebookPostType findUnique
+   */
+  export interface FacebookPostTypeFindUniqueArgs extends FacebookPostTypeFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPostType findUniqueOrThrow
+   */
+  export type FacebookPostTypeFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter, which FacebookPostType to fetch.
+     */
+    where: FacebookPostTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostType base type for findFirst actions
+   */
+  export type FacebookPostTypeFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter, which FacebookPostType to fetch.
+     */
+    where?: FacebookPostTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPostTypes.
+     */
+    cursor?: FacebookPostTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPostTypes.
+     */
+    distinct?: Enumerable<FacebookPostTypeScalarFieldEnum>
+  }
+
+  /**
+   * FacebookPostType findFirst
+   */
+  export interface FacebookPostTypeFindFirstArgs extends FacebookPostTypeFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPostType findFirstOrThrow
+   */
+  export type FacebookPostTypeFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter, which FacebookPostType to fetch.
+     */
+    where?: FacebookPostTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPostTypes.
+     */
+    cursor?: FacebookPostTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPostTypes.
+     */
+    distinct?: Enumerable<FacebookPostTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostType findMany
+   */
+  export type FacebookPostTypeFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter, which FacebookPostTypes to fetch.
+     */
+    where?: FacebookPostTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPostTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookPostTypes.
+     */
+    cursor?: FacebookPostTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPostTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPostTypes.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookPostTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostType create
+   */
+  export type FacebookPostTypeCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * The data needed to create a FacebookPostType.
+     */
+    data: XOR<FacebookPostTypeCreateInput, FacebookPostTypeUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookPostType createMany
+   */
+  export type FacebookPostTypeCreateManyArgs = {
+    /**
+     * The data used to create many FacebookPostTypes.
+     */
+    data: Enumerable<FacebookPostTypeCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookPostType update
+   */
+  export type FacebookPostTypeUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * The data needed to update a FacebookPostType.
+     */
+    data: XOR<FacebookPostTypeUpdateInput, FacebookPostTypeUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookPostType to update.
+     */
+    where: FacebookPostTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostType updateMany
+   */
+  export type FacebookPostTypeUpdateManyArgs = {
+    /**
+     * The data used to update FacebookPostTypes.
+     */
+    data: XOR<FacebookPostTypeUpdateManyMutationInput, FacebookPostTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookPostTypes to update
+     */
+    where?: FacebookPostTypeWhereInput
+  }
+
+
+  /**
+   * FacebookPostType upsert
+   */
+  export type FacebookPostTypeUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * The filter to search for the FacebookPostType to update in case it exists.
+     */
+    where: FacebookPostTypeWhereUniqueInput
+    /**
+     * In case the FacebookPostType found by the `where` argument doesn't exist, create a new FacebookPostType with this data.
+     */
+    create: XOR<FacebookPostTypeCreateInput, FacebookPostTypeUncheckedCreateInput>
+    /**
+     * In case the FacebookPostType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookPostTypeUpdateInput, FacebookPostTypeUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookPostType delete
+   */
+  export type FacebookPostTypeDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+    /**
+     * Filter which FacebookPostType to delete.
+     */
+    where: FacebookPostTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPostType deleteMany
+   */
+  export type FacebookPostTypeDeleteManyArgs = {
+    /**
+     * Filter which FacebookPostTypes to delete
+     */
+    where?: FacebookPostTypeWhereInput
+  }
+
+
+  /**
+   * FacebookPostType.posts
+   */
+  export type FacebookPostType$postsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    cursor?: FacebookPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPostType without action
+   */
+  export type FacebookPostTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPostType
+     */
+    select?: FacebookPostTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostTypeInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookLocation
+   */
+
+
+  export type AggregateFacebookLocation = {
+    _count: FacebookLocationCountAggregateOutputType | null
+    _avg: FacebookLocationAvgAggregateOutputType | null
+    _sum: FacebookLocationSumAggregateOutputType | null
+    _min: FacebookLocationMinAggregateOutputType | null
+    _max: FacebookLocationMaxAggregateOutputType | null
+  }
+
+  export type FacebookLocationAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookLocationSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookLocationMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLocationMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLocationCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookLocationAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookLocationSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookLocationMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLocationMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLocationCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookLocationAggregateArgs = {
+    /**
+     * Filter which FacebookLocation to aggregate.
+     */
+    where?: FacebookLocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLocations to fetch.
+     */
+    orderBy?: Enumerable<FacebookLocationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookLocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLocations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLocations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookLocations
+    **/
+    _count?: true | FacebookLocationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookLocationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookLocationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookLocationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookLocationMaxAggregateInputType
+  }
+
+  export type GetFacebookLocationAggregateType<T extends FacebookLocationAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookLocation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookLocation[P]>
+      : GetScalarType<T[P], AggregateFacebookLocation[P]>
+  }
+
+
+
+
+  export type FacebookLocationGroupByArgs = {
+    where?: FacebookLocationWhereInput
+    orderBy?: Enumerable<FacebookLocationOrderByWithAggregationInput>
+    by: FacebookLocationScalarFieldEnum[]
+    having?: FacebookLocationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookLocationCountAggregateInputType | true
+    _avg?: FacebookLocationAvgAggregateInputType
+    _sum?: FacebookLocationSumAggregateInputType
+    _min?: FacebookLocationMinAggregateInputType
+    _max?: FacebookLocationMaxAggregateInputType
+  }
+
+
+  export type FacebookLocationGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookLocationCountAggregateOutputType | null
+    _avg: FacebookLocationAvgAggregateOutputType | null
+    _sum: FacebookLocationSumAggregateOutputType | null
+    _min: FacebookLocationMinAggregateOutputType | null
+    _max: FacebookLocationMaxAggregateOutputType | null
+  }
+
+  type GetFacebookLocationGroupByPayload<T extends FacebookLocationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookLocationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookLocationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookLocationGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookLocationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookLocationSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | FacebookLocation$postsArgs
+    _count?: boolean | FacebookLocationCountOutputTypeArgs
+  }
+
+
+  export type FacebookLocationInclude = {
+    posts?: boolean | FacebookLocation$postsArgs
+    _count?: boolean | FacebookLocationCountOutputTypeArgs
+  }
+
+  export type FacebookLocationGetPayload<S extends boolean | null | undefined | FacebookLocationArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLocation :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLocationArgs | FacebookLocationFindManyArgs)
+    ? FacebookLocation  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookLocationCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookLocationArgs | FacebookLocationFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookLocationCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookLocation ? FacebookLocation[P] : never
+  } 
+      : FacebookLocation
+
+
+  type FacebookLocationCountArgs = 
+    Omit<FacebookLocationFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookLocationCountAggregateInputType | true
+    }
+
+  export interface FacebookLocationDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookLocation that matches the filter.
+     * @param {FacebookLocationFindUniqueArgs} args - Arguments to find a FacebookLocation
+     * @example
+     * // Get one FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookLocationFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookLocationFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookLocation'> extends True ? Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>> : Prisma__FacebookLocationClient<FacebookLocationGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookLocation that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookLocationFindUniqueOrThrowArgs} args - Arguments to find a FacebookLocation
+     * @example
+     * // Get one FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookLocationFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLocationFindUniqueOrThrowArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Find the first FacebookLocation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationFindFirstArgs} args - Arguments to find a FacebookLocation
+     * @example
+     * // Get one FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookLocationFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookLocationFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookLocation'> extends True ? Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>> : Prisma__FacebookLocationClient<FacebookLocationGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookLocation that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationFindFirstOrThrowArgs} args - Arguments to find a FacebookLocation
+     * @example
+     * // Get one FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookLocationFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLocationFindFirstOrThrowArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookLocations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookLocations
+     * const facebookLocations = await prisma.facebookLocation.findMany()
+     * 
+     * // Get first 10 FacebookLocations
+     * const facebookLocations = await prisma.facebookLocation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookLocationWithIdOnly = await prisma.facebookLocation.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookLocationFindManyArgs>(
+      args?: SelectSubset<T, FacebookLocationFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookLocationGetPayload<T>>>
+
+    /**
+     * Create a FacebookLocation.
+     * @param {FacebookLocationCreateArgs} args - Arguments to create a FacebookLocation.
+     * @example
+     * // Create one FacebookLocation
+     * const FacebookLocation = await prisma.facebookLocation.create({
+     *   data: {
+     *     // ... data to create a FacebookLocation
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookLocationCreateArgs>(
+      args: SelectSubset<T, FacebookLocationCreateArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Create many FacebookLocations.
+     *     @param {FacebookLocationCreateManyArgs} args - Arguments to create many FacebookLocations.
+     *     @example
+     *     // Create many FacebookLocations
+     *     const facebookLocation = await prisma.facebookLocation.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookLocationCreateManyArgs>(
+      args?: SelectSubset<T, FacebookLocationCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookLocation.
+     * @param {FacebookLocationDeleteArgs} args - Arguments to delete one FacebookLocation.
+     * @example
+     * // Delete one FacebookLocation
+     * const FacebookLocation = await prisma.facebookLocation.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookLocation
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookLocationDeleteArgs>(
+      args: SelectSubset<T, FacebookLocationDeleteArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Update one FacebookLocation.
+     * @param {FacebookLocationUpdateArgs} args - Arguments to update one FacebookLocation.
+     * @example
+     * // Update one FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookLocationUpdateArgs>(
+      args: SelectSubset<T, FacebookLocationUpdateArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookLocations.
+     * @param {FacebookLocationDeleteManyArgs} args - Arguments to filter FacebookLocations to delete.
+     * @example
+     * // Delete a few FacebookLocations
+     * const { count } = await prisma.facebookLocation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookLocationDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookLocationDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookLocations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookLocations
+     * const facebookLocation = await prisma.facebookLocation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookLocationUpdateManyArgs>(
+      args: SelectSubset<T, FacebookLocationUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookLocation.
+     * @param {FacebookLocationUpsertArgs} args - Arguments to update or create a FacebookLocation.
+     * @example
+     * // Update or create a FacebookLocation
+     * const facebookLocation = await prisma.facebookLocation.upsert({
+     *   create: {
+     *     // ... data to create a FacebookLocation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookLocation we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookLocationUpsertArgs>(
+      args: SelectSubset<T, FacebookLocationUpsertArgs>
+    ): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T>>
+
+    /**
+     * Count the number of FacebookLocations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationCountArgs} args - Arguments to filter FacebookLocations to count.
+     * @example
+     * // Count the number of FacebookLocations
+     * const count = await prisma.facebookLocation.count({
+     *   where: {
+     *     // ... the filter for the FacebookLocations we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookLocationCountArgs>(
+      args?: Subset<T, FacebookLocationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookLocationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookLocation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookLocationAggregateArgs>(args: Subset<T, FacebookLocationAggregateArgs>): Prisma.PrismaPromise<GetFacebookLocationAggregateType<T>>
+
+    /**
+     * Group by FacebookLocation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLocationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookLocationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookLocationGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookLocationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookLocationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookLocationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookLocation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookLocationClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends FacebookLocation$postsArgs= {}>(args?: Subset<T, FacebookLocation$postsArgs>): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLocation base type for findUnique actions
+   */
+  export type FacebookLocationFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter, which FacebookLocation to fetch.
+     */
+    where: FacebookLocationWhereUniqueInput
+  }
+
+  /**
+   * FacebookLocation findUnique
+   */
+  export interface FacebookLocationFindUniqueArgs extends FacebookLocationFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLocation findUniqueOrThrow
+   */
+  export type FacebookLocationFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter, which FacebookLocation to fetch.
+     */
+    where: FacebookLocationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLocation base type for findFirst actions
+   */
+  export type FacebookLocationFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter, which FacebookLocation to fetch.
+     */
+    where?: FacebookLocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLocations to fetch.
+     */
+    orderBy?: Enumerable<FacebookLocationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLocations.
+     */
+    cursor?: FacebookLocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLocations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLocations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLocations.
+     */
+    distinct?: Enumerable<FacebookLocationScalarFieldEnum>
+  }
+
+  /**
+   * FacebookLocation findFirst
+   */
+  export interface FacebookLocationFindFirstArgs extends FacebookLocationFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLocation findFirstOrThrow
+   */
+  export type FacebookLocationFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter, which FacebookLocation to fetch.
+     */
+    where?: FacebookLocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLocations to fetch.
+     */
+    orderBy?: Enumerable<FacebookLocationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLocations.
+     */
+    cursor?: FacebookLocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLocations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLocations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLocations.
+     */
+    distinct?: Enumerable<FacebookLocationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLocation findMany
+   */
+  export type FacebookLocationFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter, which FacebookLocations to fetch.
+     */
+    where?: FacebookLocationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLocations to fetch.
+     */
+    orderBy?: Enumerable<FacebookLocationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookLocations.
+     */
+    cursor?: FacebookLocationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLocations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLocations.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookLocationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLocation create
+   */
+  export type FacebookLocationCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * The data needed to create a FacebookLocation.
+     */
+    data: XOR<FacebookLocationCreateInput, FacebookLocationUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookLocation createMany
+   */
+  export type FacebookLocationCreateManyArgs = {
+    /**
+     * The data used to create many FacebookLocations.
+     */
+    data: Enumerable<FacebookLocationCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookLocation update
+   */
+  export type FacebookLocationUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * The data needed to update a FacebookLocation.
+     */
+    data: XOR<FacebookLocationUpdateInput, FacebookLocationUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookLocation to update.
+     */
+    where: FacebookLocationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLocation updateMany
+   */
+  export type FacebookLocationUpdateManyArgs = {
+    /**
+     * The data used to update FacebookLocations.
+     */
+    data: XOR<FacebookLocationUpdateManyMutationInput, FacebookLocationUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookLocations to update
+     */
+    where?: FacebookLocationWhereInput
+  }
+
+
+  /**
+   * FacebookLocation upsert
+   */
+  export type FacebookLocationUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * The filter to search for the FacebookLocation to update in case it exists.
+     */
+    where: FacebookLocationWhereUniqueInput
+    /**
+     * In case the FacebookLocation found by the `where` argument doesn't exist, create a new FacebookLocation with this data.
+     */
+    create: XOR<FacebookLocationCreateInput, FacebookLocationUncheckedCreateInput>
+    /**
+     * In case the FacebookLocation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookLocationUpdateInput, FacebookLocationUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookLocation delete
+   */
+  export type FacebookLocationDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+    /**
+     * Filter which FacebookLocation to delete.
+     */
+    where: FacebookLocationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLocation deleteMany
+   */
+  export type FacebookLocationDeleteManyArgs = {
+    /**
+     * Filter which FacebookLocations to delete
+     */
+    where?: FacebookLocationWhereInput
+  }
+
+
+  /**
+   * FacebookLocation.posts
+   */
+  export type FacebookLocation$postsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    cursor?: FacebookPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLocation without action
+   */
+  export type FacebookLocationArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLocation
+     */
+    select?: FacebookLocationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLocationInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookHashtag
+   */
+
+
+  export type AggregateFacebookHashtag = {
+    _count: FacebookHashtagCountAggregateOutputType | null
+    _avg: FacebookHashtagAvgAggregateOutputType | null
+    _sum: FacebookHashtagSumAggregateOutputType | null
+    _min: FacebookHashtagMinAggregateOutputType | null
+    _max: FacebookHashtagMaxAggregateOutputType | null
+  }
+
+  export type FacebookHashtagAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookHashtagSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookHashtagMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookHashtagMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookHashtagCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookHashtagAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookHashtagSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookHashtagMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookHashtagMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookHashtagCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookHashtagAggregateArgs = {
+    /**
+     * Filter which FacebookHashtag to aggregate.
+     */
+    where?: FacebookHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookHashtags to fetch.
+     */
+    orderBy?: Enumerable<FacebookHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookHashtags
+    **/
+    _count?: true | FacebookHashtagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookHashtagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookHashtagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookHashtagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookHashtagMaxAggregateInputType
+  }
+
+  export type GetFacebookHashtagAggregateType<T extends FacebookHashtagAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookHashtag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookHashtag[P]>
+      : GetScalarType<T[P], AggregateFacebookHashtag[P]>
+  }
+
+
+
+
+  export type FacebookHashtagGroupByArgs = {
+    where?: FacebookHashtagWhereInput
+    orderBy?: Enumerable<FacebookHashtagOrderByWithAggregationInput>
+    by: FacebookHashtagScalarFieldEnum[]
+    having?: FacebookHashtagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookHashtagCountAggregateInputType | true
+    _avg?: FacebookHashtagAvgAggregateInputType
+    _sum?: FacebookHashtagSumAggregateInputType
+    _min?: FacebookHashtagMinAggregateInputType
+    _max?: FacebookHashtagMaxAggregateInputType
+  }
+
+
+  export type FacebookHashtagGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookHashtagCountAggregateOutputType | null
+    _avg: FacebookHashtagAvgAggregateOutputType | null
+    _sum: FacebookHashtagSumAggregateOutputType | null
+    _min: FacebookHashtagMinAggregateOutputType | null
+    _max: FacebookHashtagMaxAggregateOutputType | null
+  }
+
+  type GetFacebookHashtagGroupByPayload<T extends FacebookHashtagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookHashtagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookHashtagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookHashtagGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookHashtagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookHashtagSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | FacebookHashtag$postsArgs
+    _count?: boolean | FacebookHashtagCountOutputTypeArgs
+  }
+
+
+  export type FacebookHashtagInclude = {
+    posts?: boolean | FacebookHashtag$postsArgs
+    _count?: boolean | FacebookHashtagCountOutputTypeArgs
+  }
+
+  export type FacebookHashtagGetPayload<S extends boolean | null | undefined | FacebookHashtagArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookHashtag :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookHashtagArgs | FacebookHashtagFindManyArgs)
+    ? FacebookHashtag  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookHashtagCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookHashtagArgs | FacebookHashtagFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < FacebookPostGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookHashtagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookHashtag ? FacebookHashtag[P] : never
+  } 
+      : FacebookHashtag
+
+
+  type FacebookHashtagCountArgs = 
+    Omit<FacebookHashtagFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookHashtagCountAggregateInputType | true
+    }
+
+  export interface FacebookHashtagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookHashtag that matches the filter.
+     * @param {FacebookHashtagFindUniqueArgs} args - Arguments to find a FacebookHashtag
+     * @example
+     * // Get one FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookHashtagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookHashtagFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookHashtag'> extends True ? Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>> : Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookHashtag that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookHashtagFindUniqueOrThrowArgs} args - Arguments to find a FacebookHashtag
+     * @example
+     * // Get one FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookHashtagFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookHashtagFindUniqueOrThrowArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Find the first FacebookHashtag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagFindFirstArgs} args - Arguments to find a FacebookHashtag
+     * @example
+     * // Get one FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookHashtagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookHashtagFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookHashtag'> extends True ? Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>> : Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookHashtag that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagFindFirstOrThrowArgs} args - Arguments to find a FacebookHashtag
+     * @example
+     * // Get one FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookHashtagFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookHashtagFindFirstOrThrowArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookHashtags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookHashtags
+     * const facebookHashtags = await prisma.facebookHashtag.findMany()
+     * 
+     * // Get first 10 FacebookHashtags
+     * const facebookHashtags = await prisma.facebookHashtag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookHashtagWithIdOnly = await prisma.facebookHashtag.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookHashtagFindManyArgs>(
+      args?: SelectSubset<T, FacebookHashtagFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookHashtagGetPayload<T>>>
+
+    /**
+     * Create a FacebookHashtag.
+     * @param {FacebookHashtagCreateArgs} args - Arguments to create a FacebookHashtag.
+     * @example
+     * // Create one FacebookHashtag
+     * const FacebookHashtag = await prisma.facebookHashtag.create({
+     *   data: {
+     *     // ... data to create a FacebookHashtag
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookHashtagCreateArgs>(
+      args: SelectSubset<T, FacebookHashtagCreateArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Create many FacebookHashtags.
+     *     @param {FacebookHashtagCreateManyArgs} args - Arguments to create many FacebookHashtags.
+     *     @example
+     *     // Create many FacebookHashtags
+     *     const facebookHashtag = await prisma.facebookHashtag.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookHashtagCreateManyArgs>(
+      args?: SelectSubset<T, FacebookHashtagCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookHashtag.
+     * @param {FacebookHashtagDeleteArgs} args - Arguments to delete one FacebookHashtag.
+     * @example
+     * // Delete one FacebookHashtag
+     * const FacebookHashtag = await prisma.facebookHashtag.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookHashtag
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookHashtagDeleteArgs>(
+      args: SelectSubset<T, FacebookHashtagDeleteArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Update one FacebookHashtag.
+     * @param {FacebookHashtagUpdateArgs} args - Arguments to update one FacebookHashtag.
+     * @example
+     * // Update one FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookHashtagUpdateArgs>(
+      args: SelectSubset<T, FacebookHashtagUpdateArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookHashtags.
+     * @param {FacebookHashtagDeleteManyArgs} args - Arguments to filter FacebookHashtags to delete.
+     * @example
+     * // Delete a few FacebookHashtags
+     * const { count } = await prisma.facebookHashtag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookHashtagDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookHashtagDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookHashtags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookHashtags
+     * const facebookHashtag = await prisma.facebookHashtag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookHashtagUpdateManyArgs>(
+      args: SelectSubset<T, FacebookHashtagUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookHashtag.
+     * @param {FacebookHashtagUpsertArgs} args - Arguments to update or create a FacebookHashtag.
+     * @example
+     * // Update or create a FacebookHashtag
+     * const facebookHashtag = await prisma.facebookHashtag.upsert({
+     *   create: {
+     *     // ... data to create a FacebookHashtag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookHashtag we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookHashtagUpsertArgs>(
+      args: SelectSubset<T, FacebookHashtagUpsertArgs>
+    ): Prisma__FacebookHashtagClient<FacebookHashtagGetPayload<T>>
+
+    /**
+     * Count the number of FacebookHashtags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagCountArgs} args - Arguments to filter FacebookHashtags to count.
+     * @example
+     * // Count the number of FacebookHashtags
+     * const count = await prisma.facebookHashtag.count({
+     *   where: {
+     *     // ... the filter for the FacebookHashtags we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookHashtagCountArgs>(
+      args?: Subset<T, FacebookHashtagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookHashtagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookHashtag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookHashtagAggregateArgs>(args: Subset<T, FacebookHashtagAggregateArgs>): Prisma.PrismaPromise<GetFacebookHashtagAggregateType<T>>
+
+    /**
+     * Group by FacebookHashtag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookHashtagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookHashtagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookHashtagGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookHashtagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookHashtagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookHashtagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookHashtag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookHashtagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends FacebookHashtag$postsArgs= {}>(args?: Subset<T, FacebookHashtag$postsArgs>): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookHashtag base type for findUnique actions
+   */
+  export type FacebookHashtagFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter, which FacebookHashtag to fetch.
+     */
+    where: FacebookHashtagWhereUniqueInput
+  }
+
+  /**
+   * FacebookHashtag findUnique
+   */
+  export interface FacebookHashtagFindUniqueArgs extends FacebookHashtagFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookHashtag findUniqueOrThrow
+   */
+  export type FacebookHashtagFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter, which FacebookHashtag to fetch.
+     */
+    where: FacebookHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookHashtag base type for findFirst actions
+   */
+  export type FacebookHashtagFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter, which FacebookHashtag to fetch.
+     */
+    where?: FacebookHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookHashtags to fetch.
+     */
+    orderBy?: Enumerable<FacebookHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookHashtags.
+     */
+    cursor?: FacebookHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookHashtags.
+     */
+    distinct?: Enumerable<FacebookHashtagScalarFieldEnum>
+  }
+
+  /**
+   * FacebookHashtag findFirst
+   */
+  export interface FacebookHashtagFindFirstArgs extends FacebookHashtagFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookHashtag findFirstOrThrow
+   */
+  export type FacebookHashtagFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter, which FacebookHashtag to fetch.
+     */
+    where?: FacebookHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookHashtags to fetch.
+     */
+    orderBy?: Enumerable<FacebookHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookHashtags.
+     */
+    cursor?: FacebookHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookHashtags.
+     */
+    distinct?: Enumerable<FacebookHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookHashtag findMany
+   */
+  export type FacebookHashtagFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter, which FacebookHashtags to fetch.
+     */
+    where?: FacebookHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookHashtags to fetch.
+     */
+    orderBy?: Enumerable<FacebookHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookHashtags.
+     */
+    cursor?: FacebookHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookHashtags.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookHashtag create
+   */
+  export type FacebookHashtagCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * The data needed to create a FacebookHashtag.
+     */
+    data: XOR<FacebookHashtagCreateInput, FacebookHashtagUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookHashtag createMany
+   */
+  export type FacebookHashtagCreateManyArgs = {
+    /**
+     * The data used to create many FacebookHashtags.
+     */
+    data: Enumerable<FacebookHashtagCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookHashtag update
+   */
+  export type FacebookHashtagUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * The data needed to update a FacebookHashtag.
+     */
+    data: XOR<FacebookHashtagUpdateInput, FacebookHashtagUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookHashtag to update.
+     */
+    where: FacebookHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookHashtag updateMany
+   */
+  export type FacebookHashtagUpdateManyArgs = {
+    /**
+     * The data used to update FacebookHashtags.
+     */
+    data: XOR<FacebookHashtagUpdateManyMutationInput, FacebookHashtagUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookHashtags to update
+     */
+    where?: FacebookHashtagWhereInput
+  }
+
+
+  /**
+   * FacebookHashtag upsert
+   */
+  export type FacebookHashtagUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * The filter to search for the FacebookHashtag to update in case it exists.
+     */
+    where: FacebookHashtagWhereUniqueInput
+    /**
+     * In case the FacebookHashtag found by the `where` argument doesn't exist, create a new FacebookHashtag with this data.
+     */
+    create: XOR<FacebookHashtagCreateInput, FacebookHashtagUncheckedCreateInput>
+    /**
+     * In case the FacebookHashtag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookHashtagUpdateInput, FacebookHashtagUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookHashtag delete
+   */
+  export type FacebookHashtagDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    /**
+     * Filter which FacebookHashtag to delete.
+     */
+    where: FacebookHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookHashtag deleteMany
+   */
+  export type FacebookHashtagDeleteManyArgs = {
+    /**
+     * Filter which FacebookHashtags to delete
+     */
+    where?: FacebookHashtagWhereInput
+  }
+
+
+  /**
+   * FacebookHashtag.posts
+   */
+  export type FacebookHashtag$postsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    cursor?: FacebookPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookHashtag without action
+   */
+  export type FacebookHashtagArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookPost
+   */
+
+
+  export type AggregateFacebookPost = {
+    _count: FacebookPostCountAggregateOutputType | null
+    _avg: FacebookPostAvgAggregateOutputType | null
+    _sum: FacebookPostSumAggregateOutputType | null
+    _min: FacebookPostMinAggregateOutputType | null
+    _max: FacebookPostMaxAggregateOutputType | null
+  }
+
+  export type FacebookPostAvgAggregateOutputType = {
+    id: number | null
+    postTypeId: number | null
+    posterUserId: number | null
+    locationId: number | null
+    destinationId: number | null
+    destinationRelateId: number | null
+    shareFromPostId: number | null
+  }
+
+  export type FacebookPostSumAggregateOutputType = {
+    id: number | null
+    postTypeId: number | null
+    posterUserId: number | null
+    locationId: number | null
+    destinationId: number | null
+    destinationRelateId: number | null
+    shareFromPostId: number | null
+  }
+
+  export type FacebookPostMinAggregateOutputType = {
+    id: number | null
+    message: string | null
+    postTypeId: number | null
+    posterUserId: number | null
+    locationId: number | null
+    destinationId: number | null
+    destinationRelateId: number | null
+    isShared: boolean | null
+    shareFromPostId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostMaxAggregateOutputType = {
+    id: number | null
+    message: string | null
+    postTypeId: number | null
+    posterUserId: number | null
+    locationId: number | null
+    destinationId: number | null
+    destinationRelateId: number | null
+    isShared: boolean | null
+    shareFromPostId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookPostCountAggregateOutputType = {
+    id: number
+    message: number
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: number
+    shareFromPostId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookPostAvgAggregateInputType = {
+    id?: true
+    postTypeId?: true
+    posterUserId?: true
+    locationId?: true
+    destinationId?: true
+    destinationRelateId?: true
+    shareFromPostId?: true
+  }
+
+  export type FacebookPostSumAggregateInputType = {
+    id?: true
+    postTypeId?: true
+    posterUserId?: true
+    locationId?: true
+    destinationId?: true
+    destinationRelateId?: true
+    shareFromPostId?: true
+  }
+
+  export type FacebookPostMinAggregateInputType = {
+    id?: true
+    message?: true
+    postTypeId?: true
+    posterUserId?: true
+    locationId?: true
+    destinationId?: true
+    destinationRelateId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostMaxAggregateInputType = {
+    id?: true
+    message?: true
+    postTypeId?: true
+    posterUserId?: true
+    locationId?: true
+    destinationId?: true
+    destinationRelateId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookPostCountAggregateInputType = {
+    id?: true
+    message?: true
+    postTypeId?: true
+    posterUserId?: true
+    locationId?: true
+    destinationId?: true
+    destinationRelateId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookPostAggregateArgs = {
+    /**
+     * Filter which FacebookPost to aggregate.
+     */
+    where?: FacebookPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookPosts
+    **/
+    _count?: true | FacebookPostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookPostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookPostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookPostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookPostMaxAggregateInputType
+  }
+
+  export type GetFacebookPostAggregateType<T extends FacebookPostAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookPost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookPost[P]>
+      : GetScalarType<T[P], AggregateFacebookPost[P]>
+  }
+
+
+
+
+  export type FacebookPostGroupByArgs = {
+    where?: FacebookPostWhereInput
+    orderBy?: Enumerable<FacebookPostOrderByWithAggregationInput>
+    by: FacebookPostScalarFieldEnum[]
+    having?: FacebookPostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookPostCountAggregateInputType | true
+    _avg?: FacebookPostAvgAggregateInputType
+    _sum?: FacebookPostSumAggregateInputType
+    _min?: FacebookPostMinAggregateInputType
+    _max?: FacebookPostMaxAggregateInputType
+  }
+
+
+  export type FacebookPostGroupByOutputType = {
+    id: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookPostCountAggregateOutputType | null
+    _avg: FacebookPostAvgAggregateOutputType | null
+    _sum: FacebookPostSumAggregateOutputType | null
+    _min: FacebookPostMinAggregateOutputType | null
+    _max: FacebookPostMaxAggregateOutputType | null
+  }
+
+  type GetFacebookPostGroupByPayload<T extends FacebookPostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookPostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookPostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookPostGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookPostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookPostSelect = {
+    id?: boolean
+    message?: boolean
+    postType?: boolean | FacebookPostTypeArgs
+    postTypeId?: boolean
+    posterUser?: boolean | FacebookUserArgs
+    posterUserId?: boolean
+    location?: boolean | FacebookLocationArgs
+    locationId?: boolean
+    destination?: boolean | FacebookPostDestinationArgs
+    destinationId?: boolean
+    destinationRelateId?: boolean
+    isShared?: boolean
+    shareFromPostId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    hashtags?: boolean | FacebookPost$hashtagsArgs
+    comments?: boolean | FacebookPost$commentsArgs
+    likePosts?: boolean | FacebookPost$likePostsArgs
+    likeComments?: boolean | FacebookPost$likeCommentsArgs
+    _count?: boolean | FacebookPostCountOutputTypeArgs
+  }
+
+
+  export type FacebookPostInclude = {
+    postType?: boolean | FacebookPostTypeArgs
+    posterUser?: boolean | FacebookUserArgs
+    location?: boolean | FacebookLocationArgs
+    destination?: boolean | FacebookPostDestinationArgs
+    hashtags?: boolean | FacebookPost$hashtagsArgs
+    comments?: boolean | FacebookPost$commentsArgs
+    likePosts?: boolean | FacebookPost$likePostsArgs
+    likeComments?: boolean | FacebookPost$likeCommentsArgs
+    _count?: boolean | FacebookPostCountOutputTypeArgs
+  }
+
+  export type FacebookPostGetPayload<S extends boolean | null | undefined | FacebookPostArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookPost :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookPostArgs | FacebookPostFindManyArgs)
+    ? FacebookPost  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'postType' ? FacebookPostTypeGetPayload<S['include'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'location' ? FacebookLocationGetPayload<S['include'][P]> :
+        P extends 'destination' ? FacebookPostDestinationGetPayload<S['include'][P]> :
+        P extends 'hashtags' ? Array < FacebookHashtagGetPayload<S['include'][P]>>  :
+        P extends 'comments' ? Array < FacebookCommentGetPayload<S['include'][P]>>  :
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookPostCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookPostArgs | FacebookPostFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'postType' ? FacebookPostTypeGetPayload<S['select'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'location' ? FacebookLocationGetPayload<S['select'][P]> :
+        P extends 'destination' ? FacebookPostDestinationGetPayload<S['select'][P]> :
+        P extends 'hashtags' ? Array < FacebookHashtagGetPayload<S['select'][P]>>  :
+        P extends 'comments' ? Array < FacebookCommentGetPayload<S['select'][P]>>  :
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookPostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookPost ? FacebookPost[P] : never
+  } 
+      : FacebookPost
+
+
+  type FacebookPostCountArgs = 
+    Omit<FacebookPostFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookPostCountAggregateInputType | true
+    }
+
+  export interface FacebookPostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookPost that matches the filter.
+     * @param {FacebookPostFindUniqueArgs} args - Arguments to find a FacebookPost
+     * @example
+     * // Get one FacebookPost
+     * const facebookPost = await prisma.facebookPost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookPostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookPostFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookPost'> extends True ? Prisma__FacebookPostClient<FacebookPostGetPayload<T>> : Prisma__FacebookPostClient<FacebookPostGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookPost that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookPostFindUniqueOrThrowArgs} args - Arguments to find a FacebookPost
+     * @example
+     * // Get one FacebookPost
+     * const facebookPost = await prisma.facebookPost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookPostFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostFindUniqueOrThrowArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Find the first FacebookPost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostFindFirstArgs} args - Arguments to find a FacebookPost
+     * @example
+     * // Get one FacebookPost
+     * const facebookPost = await prisma.facebookPost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookPostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookPostFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookPost'> extends True ? Prisma__FacebookPostClient<FacebookPostGetPayload<T>> : Prisma__FacebookPostClient<FacebookPostGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookPost that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostFindFirstOrThrowArgs} args - Arguments to find a FacebookPost
+     * @example
+     * // Get one FacebookPost
+     * const facebookPost = await prisma.facebookPost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookPostFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookPostFindFirstOrThrowArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookPosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookPosts
+     * const facebookPosts = await prisma.facebookPost.findMany()
+     * 
+     * // Get first 10 FacebookPosts
+     * const facebookPosts = await prisma.facebookPost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookPostWithIdOnly = await prisma.facebookPost.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookPostFindManyArgs>(
+      args?: SelectSubset<T, FacebookPostFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookPostGetPayload<T>>>
+
+    /**
+     * Create a FacebookPost.
+     * @param {FacebookPostCreateArgs} args - Arguments to create a FacebookPost.
+     * @example
+     * // Create one FacebookPost
+     * const FacebookPost = await prisma.facebookPost.create({
+     *   data: {
+     *     // ... data to create a FacebookPost
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookPostCreateArgs>(
+      args: SelectSubset<T, FacebookPostCreateArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Create many FacebookPosts.
+     *     @param {FacebookPostCreateManyArgs} args - Arguments to create many FacebookPosts.
+     *     @example
+     *     // Create many FacebookPosts
+     *     const facebookPost = await prisma.facebookPost.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookPostCreateManyArgs>(
+      args?: SelectSubset<T, FacebookPostCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookPost.
+     * @param {FacebookPostDeleteArgs} args - Arguments to delete one FacebookPost.
+     * @example
+     * // Delete one FacebookPost
+     * const FacebookPost = await prisma.facebookPost.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookPost
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookPostDeleteArgs>(
+      args: SelectSubset<T, FacebookPostDeleteArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Update one FacebookPost.
+     * @param {FacebookPostUpdateArgs} args - Arguments to update one FacebookPost.
+     * @example
+     * // Update one FacebookPost
+     * const facebookPost = await prisma.facebookPost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookPostUpdateArgs>(
+      args: SelectSubset<T, FacebookPostUpdateArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookPosts.
+     * @param {FacebookPostDeleteManyArgs} args - Arguments to filter FacebookPosts to delete.
+     * @example
+     * // Delete a few FacebookPosts
+     * const { count } = await prisma.facebookPost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookPostDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookPostDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookPosts
+     * const facebookPost = await prisma.facebookPost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookPostUpdateManyArgs>(
+      args: SelectSubset<T, FacebookPostUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookPost.
+     * @param {FacebookPostUpsertArgs} args - Arguments to update or create a FacebookPost.
+     * @example
+     * // Update or create a FacebookPost
+     * const facebookPost = await prisma.facebookPost.upsert({
+     *   create: {
+     *     // ... data to create a FacebookPost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookPost we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookPostUpsertArgs>(
+      args: SelectSubset<T, FacebookPostUpsertArgs>
+    ): Prisma__FacebookPostClient<FacebookPostGetPayload<T>>
+
+    /**
+     * Count the number of FacebookPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostCountArgs} args - Arguments to filter FacebookPosts to count.
+     * @example
+     * // Count the number of FacebookPosts
+     * const count = await prisma.facebookPost.count({
+     *   where: {
+     *     // ... the filter for the FacebookPosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookPostCountArgs>(
+      args?: Subset<T, FacebookPostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookPostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookPostAggregateArgs>(args: Subset<T, FacebookPostAggregateArgs>): Prisma.PrismaPromise<GetFacebookPostAggregateType<T>>
+
+    /**
+     * Group by FacebookPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookPostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookPostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookPostGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookPostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookPost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookPostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    postType<T extends FacebookPostTypeArgs= {}>(args?: Subset<T, FacebookPostTypeArgs>): Prisma__FacebookPostTypeClient<FacebookPostTypeGetPayload<T> | Null>;
+
+    posterUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    location<T extends FacebookLocationArgs= {}>(args?: Subset<T, FacebookLocationArgs>): Prisma__FacebookLocationClient<FacebookLocationGetPayload<T> | Null>;
+
+    destination<T extends FacebookPostDestinationArgs= {}>(args?: Subset<T, FacebookPostDestinationArgs>): Prisma__FacebookPostDestinationClient<FacebookPostDestinationGetPayload<T> | Null>;
+
+    hashtags<T extends FacebookPost$hashtagsArgs= {}>(args?: Subset<T, FacebookPost$hashtagsArgs>): Prisma.PrismaPromise<Array<FacebookHashtagGetPayload<T>>| Null>;
+
+    comments<T extends FacebookPost$commentsArgs= {}>(args?: Subset<T, FacebookPost$commentsArgs>): Prisma.PrismaPromise<Array<FacebookCommentGetPayload<T>>| Null>;
+
+    likePosts<T extends FacebookPost$likePostsArgs= {}>(args?: Subset<T, FacebookPost$likePostsArgs>): Prisma.PrismaPromise<Array<FacebookLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends FacebookPost$likeCommentsArgs= {}>(args?: Subset<T, FacebookPost$likeCommentsArgs>): Prisma.PrismaPromise<Array<FacebookLikeCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookPost base type for findUnique actions
+   */
+  export type FacebookPostFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter, which FacebookPost to fetch.
+     */
+    where: FacebookPostWhereUniqueInput
+  }
+
+  /**
+   * FacebookPost findUnique
+   */
+  export interface FacebookPostFindUniqueArgs extends FacebookPostFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPost findUniqueOrThrow
+   */
+  export type FacebookPostFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter, which FacebookPost to fetch.
+     */
+    where: FacebookPostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPost base type for findFirst actions
+   */
+  export type FacebookPostFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter, which FacebookPost to fetch.
+     */
+    where?: FacebookPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPosts.
+     */
+    cursor?: FacebookPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPosts.
+     */
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+  /**
+   * FacebookPost findFirst
+   */
+  export interface FacebookPostFindFirstArgs extends FacebookPostFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookPost findFirstOrThrow
+   */
+  export type FacebookPostFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter, which FacebookPost to fetch.
+     */
+    where?: FacebookPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookPosts.
+     */
+    cursor?: FacebookPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookPosts.
+     */
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost findMany
+   */
+  export type FacebookPostFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter, which FacebookPosts to fetch.
+     */
+    where?: FacebookPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookPosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookPosts.
+     */
+    cursor?: FacebookPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookPosts.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost create
+   */
+  export type FacebookPostCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * The data needed to create a FacebookPost.
+     */
+    data: XOR<FacebookPostCreateInput, FacebookPostUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookPost createMany
+   */
+  export type FacebookPostCreateManyArgs = {
+    /**
+     * The data used to create many FacebookPosts.
+     */
+    data: Enumerable<FacebookPostCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookPost update
+   */
+  export type FacebookPostUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * The data needed to update a FacebookPost.
+     */
+    data: XOR<FacebookPostUpdateInput, FacebookPostUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookPost to update.
+     */
+    where: FacebookPostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPost updateMany
+   */
+  export type FacebookPostUpdateManyArgs = {
+    /**
+     * The data used to update FacebookPosts.
+     */
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookPosts to update
+     */
+    where?: FacebookPostWhereInput
+  }
+
+
+  /**
+   * FacebookPost upsert
+   */
+  export type FacebookPostUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * The filter to search for the FacebookPost to update in case it exists.
+     */
+    where: FacebookPostWhereUniqueInput
+    /**
+     * In case the FacebookPost found by the `where` argument doesn't exist, create a new FacebookPost with this data.
+     */
+    create: XOR<FacebookPostCreateInput, FacebookPostUncheckedCreateInput>
+    /**
+     * In case the FacebookPost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookPostUpdateInput, FacebookPostUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookPost delete
+   */
+  export type FacebookPostDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+    /**
+     * Filter which FacebookPost to delete.
+     */
+    where: FacebookPostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookPost deleteMany
+   */
+  export type FacebookPostDeleteManyArgs = {
+    /**
+     * Filter which FacebookPosts to delete
+     */
+    where?: FacebookPostWhereInput
+  }
+
+
+  /**
+   * FacebookPost.hashtags
+   */
+  export type FacebookPost$hashtagsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookHashtag
+     */
+    select?: FacebookHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookHashtagInclude | null
+    where?: FacebookHashtagWhereInput
+    orderBy?: Enumerable<FacebookHashtagOrderByWithRelationInput>
+    cursor?: FacebookHashtagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost.comments
+   */
+  export type FacebookPost$commentsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    where?: FacebookCommentWhereInput
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    cursor?: FacebookCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost.likePosts
+   */
+  export type FacebookPost$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    where?: FacebookLikePostWhereInput
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    cursor?: FacebookLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost.likeComments
+   */
+  export type FacebookPost$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    where?: FacebookLikeCommentWhereInput
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookPost without action
+   */
+  export type FacebookPostArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookPost
+     */
+    select?: FacebookPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookPostInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookComment
+   */
+
+
+  export type AggregateFacebookComment = {
+    _count: FacebookCommentCountAggregateOutputType | null
+    _avg: FacebookCommentAvgAggregateOutputType | null
+    _sum: FacebookCommentSumAggregateOutputType | null
+    _min: FacebookCommentMinAggregateOutputType | null
+    _max: FacebookCommentMaxAggregateOutputType | null
+  }
+
+  export type FacebookCommentAvgAggregateOutputType = {
+    id: number | null
+    commentByUserId: number | null
+    postId: number | null
+    replyFromCommentId: number | null
+  }
+
+  export type FacebookCommentSumAggregateOutputType = {
+    id: number | null
+    commentByUserId: number | null
+    postId: number | null
+    replyFromCommentId: number | null
+  }
+
+  export type FacebookCommentMinAggregateOutputType = {
+    id: number | null
+    message: string | null
+    commentByUserId: number | null
+    postId: number | null
+    isReplied: boolean | null
+    replyFromCommentId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookCommentMaxAggregateOutputType = {
+    id: number | null
+    message: string | null
+    commentByUserId: number | null
+    postId: number | null
+    isReplied: boolean | null
+    replyFromCommentId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookCommentCountAggregateOutputType = {
+    id: number
+    message: number
+    commentByUserId: number
+    postId: number
+    isReplied: number
+    replyFromCommentId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookCommentAvgAggregateInputType = {
+    id?: true
+    commentByUserId?: true
+    postId?: true
+    replyFromCommentId?: true
+  }
+
+  export type FacebookCommentSumAggregateInputType = {
+    id?: true
+    commentByUserId?: true
+    postId?: true
+    replyFromCommentId?: true
+  }
+
+  export type FacebookCommentMinAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    isReplied?: true
+    replyFromCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookCommentMaxAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    isReplied?: true
+    replyFromCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookCommentCountAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    isReplied?: true
+    replyFromCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookCommentAggregateArgs = {
+    /**
+     * Filter which FacebookComment to aggregate.
+     */
+    where?: FacebookCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookComments
+    **/
+    _count?: true | FacebookCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookCommentMaxAggregateInputType
+  }
+
+  export type GetFacebookCommentAggregateType<T extends FacebookCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookComment[P]>
+      : GetScalarType<T[P], AggregateFacebookComment[P]>
+  }
+
+
+
+
+  export type FacebookCommentGroupByArgs = {
+    where?: FacebookCommentWhereInput
+    orderBy?: Enumerable<FacebookCommentOrderByWithAggregationInput>
+    by: FacebookCommentScalarFieldEnum[]
+    having?: FacebookCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookCommentCountAggregateInputType | true
+    _avg?: FacebookCommentAvgAggregateInputType
+    _sum?: FacebookCommentSumAggregateInputType
+    _min?: FacebookCommentMinAggregateInputType
+    _max?: FacebookCommentMaxAggregateInputType
+  }
+
+
+  export type FacebookCommentGroupByOutputType = {
+    id: number
+    message: string
+    commentByUserId: number
+    postId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookCommentCountAggregateOutputType | null
+    _avg: FacebookCommentAvgAggregateOutputType | null
+    _sum: FacebookCommentSumAggregateOutputType | null
+    _min: FacebookCommentMinAggregateOutputType | null
+    _max: FacebookCommentMaxAggregateOutputType | null
+  }
+
+  type GetFacebookCommentGroupByPayload<T extends FacebookCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookCommentSelect = {
+    id?: boolean
+    message?: boolean
+    commentByUser?: boolean | FacebookUserArgs
+    commentByUserId?: boolean
+    post?: boolean | FacebookPostArgs
+    postId?: boolean
+    isReplied?: boolean
+    replyFromCommentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookCommentInclude = {
+    commentByUser?: boolean | FacebookUserArgs
+    post?: boolean | FacebookPostArgs
+  }
+
+  export type FacebookCommentGetPayload<S extends boolean | null | undefined | FacebookCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookComment :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookCommentArgs | FacebookCommentFindManyArgs)
+    ? FacebookComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'commentByUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'post' ? FacebookPostGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookCommentArgs | FacebookCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'commentByUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'post' ? FacebookPostGetPayload<S['select'][P]> :  P extends keyof FacebookComment ? FacebookComment[P] : never
+  } 
+      : FacebookComment
+
+
+  type FacebookCommentCountArgs = 
+    Omit<FacebookCommentFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookCommentCountAggregateInputType | true
+    }
+
+  export interface FacebookCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookComment that matches the filter.
+     * @param {FacebookCommentFindUniqueArgs} args - Arguments to find a FacebookComment
+     * @example
+     * // Get one FacebookComment
+     * const facebookComment = await prisma.facebookComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookComment'> extends True ? Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>> : Prisma__FacebookCommentClient<FacebookCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookCommentFindUniqueOrThrowArgs} args - Arguments to find a FacebookComment
+     * @example
+     * // Get one FacebookComment
+     * const facebookComment = await prisma.facebookComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookCommentFindUniqueOrThrowArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Find the first FacebookComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentFindFirstArgs} args - Arguments to find a FacebookComment
+     * @example
+     * // Get one FacebookComment
+     * const facebookComment = await prisma.facebookComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookComment'> extends True ? Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>> : Prisma__FacebookCommentClient<FacebookCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentFindFirstOrThrowArgs} args - Arguments to find a FacebookComment
+     * @example
+     * // Get one FacebookComment
+     * const facebookComment = await prisma.facebookComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookCommentFindFirstOrThrowArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookComments
+     * const facebookComments = await prisma.facebookComment.findMany()
+     * 
+     * // Get first 10 FacebookComments
+     * const facebookComments = await prisma.facebookComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookCommentWithIdOnly = await prisma.facebookComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookCommentFindManyArgs>(
+      args?: SelectSubset<T, FacebookCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookCommentGetPayload<T>>>
+
+    /**
+     * Create a FacebookComment.
+     * @param {FacebookCommentCreateArgs} args - Arguments to create a FacebookComment.
+     * @example
+     * // Create one FacebookComment
+     * const FacebookComment = await prisma.facebookComment.create({
+     *   data: {
+     *     // ... data to create a FacebookComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookCommentCreateArgs>(
+      args: SelectSubset<T, FacebookCommentCreateArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Create many FacebookComments.
+     *     @param {FacebookCommentCreateManyArgs} args - Arguments to create many FacebookComments.
+     *     @example
+     *     // Create many FacebookComments
+     *     const facebookComment = await prisma.facebookComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookCommentCreateManyArgs>(
+      args?: SelectSubset<T, FacebookCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookComment.
+     * @param {FacebookCommentDeleteArgs} args - Arguments to delete one FacebookComment.
+     * @example
+     * // Delete one FacebookComment
+     * const FacebookComment = await prisma.facebookComment.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookCommentDeleteArgs>(
+      args: SelectSubset<T, FacebookCommentDeleteArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Update one FacebookComment.
+     * @param {FacebookCommentUpdateArgs} args - Arguments to update one FacebookComment.
+     * @example
+     * // Update one FacebookComment
+     * const facebookComment = await prisma.facebookComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookCommentUpdateArgs>(
+      args: SelectSubset<T, FacebookCommentUpdateArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookComments.
+     * @param {FacebookCommentDeleteManyArgs} args - Arguments to filter FacebookComments to delete.
+     * @example
+     * // Delete a few FacebookComments
+     * const { count } = await prisma.facebookComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookCommentDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookComments
+     * const facebookComment = await prisma.facebookComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookCommentUpdateManyArgs>(
+      args: SelectSubset<T, FacebookCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookComment.
+     * @param {FacebookCommentUpsertArgs} args - Arguments to update or create a FacebookComment.
+     * @example
+     * // Update or create a FacebookComment
+     * const facebookComment = await prisma.facebookComment.upsert({
+     *   create: {
+     *     // ... data to create a FacebookComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookCommentUpsertArgs>(
+      args: SelectSubset<T, FacebookCommentUpsertArgs>
+    ): Prisma__FacebookCommentClient<FacebookCommentGetPayload<T>>
+
+    /**
+     * Count the number of FacebookComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentCountArgs} args - Arguments to filter FacebookComments to count.
+     * @example
+     * // Count the number of FacebookComments
+     * const count = await prisma.facebookComment.count({
+     *   where: {
+     *     // ... the filter for the FacebookComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookCommentCountArgs>(
+      args?: Subset<T, FacebookCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookCommentAggregateArgs>(args: Subset<T, FacebookCommentAggregateArgs>): Prisma.PrismaPromise<GetFacebookCommentAggregateType<T>>
+
+    /**
+     * Group by FacebookComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookCommentGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    commentByUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    post<T extends FacebookPostArgs= {}>(args?: Subset<T, FacebookPostArgs>): Prisma__FacebookPostClient<FacebookPostGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookComment base type for findUnique actions
+   */
+  export type FacebookCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter, which FacebookComment to fetch.
+     */
+    where: FacebookCommentWhereUniqueInput
+  }
+
+  /**
+   * FacebookComment findUnique
+   */
+  export interface FacebookCommentFindUniqueArgs extends FacebookCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookComment findUniqueOrThrow
+   */
+  export type FacebookCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter, which FacebookComment to fetch.
+     */
+    where: FacebookCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookComment base type for findFirst actions
+   */
+  export type FacebookCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter, which FacebookComment to fetch.
+     */
+    where?: FacebookCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookComments.
+     */
+    cursor?: FacebookCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookComments.
+     */
+    distinct?: Enumerable<FacebookCommentScalarFieldEnum>
+  }
+
+  /**
+   * FacebookComment findFirst
+   */
+  export interface FacebookCommentFindFirstArgs extends FacebookCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookComment findFirstOrThrow
+   */
+  export type FacebookCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter, which FacebookComment to fetch.
+     */
+    where?: FacebookCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookComments.
+     */
+    cursor?: FacebookCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookComments.
+     */
+    distinct?: Enumerable<FacebookCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookComment findMany
+   */
+  export type FacebookCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter, which FacebookComments to fetch.
+     */
+    where?: FacebookCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookComments.
+     */
+    cursor?: FacebookCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookComments.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookComment create
+   */
+  export type FacebookCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * The data needed to create a FacebookComment.
+     */
+    data: XOR<FacebookCommentCreateInput, FacebookCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookComment createMany
+   */
+  export type FacebookCommentCreateManyArgs = {
+    /**
+     * The data used to create many FacebookComments.
+     */
+    data: Enumerable<FacebookCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookComment update
+   */
+  export type FacebookCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * The data needed to update a FacebookComment.
+     */
+    data: XOR<FacebookCommentUpdateInput, FacebookCommentUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookComment to update.
+     */
+    where: FacebookCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookComment updateMany
+   */
+  export type FacebookCommentUpdateManyArgs = {
+    /**
+     * The data used to update FacebookComments.
+     */
+    data: XOR<FacebookCommentUpdateManyMutationInput, FacebookCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookComments to update
+     */
+    where?: FacebookCommentWhereInput
+  }
+
+
+  /**
+   * FacebookComment upsert
+   */
+  export type FacebookCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * The filter to search for the FacebookComment to update in case it exists.
+     */
+    where: FacebookCommentWhereUniqueInput
+    /**
+     * In case the FacebookComment found by the `where` argument doesn't exist, create a new FacebookComment with this data.
+     */
+    create: XOR<FacebookCommentCreateInput, FacebookCommentUncheckedCreateInput>
+    /**
+     * In case the FacebookComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookCommentUpdateInput, FacebookCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookComment delete
+   */
+  export type FacebookCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+    /**
+     * Filter which FacebookComment to delete.
+     */
+    where: FacebookCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookComment deleteMany
+   */
+  export type FacebookCommentDeleteManyArgs = {
+    /**
+     * Filter which FacebookComments to delete
+     */
+    where?: FacebookCommentWhereInput
+  }
+
+
+  /**
+   * FacebookComment without action
+   */
+  export type FacebookCommentArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookComment
+     */
+    select?: FacebookCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookCommentInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookLikeType
+   */
+
+
+  export type AggregateFacebookLikeType = {
+    _count: FacebookLikeTypeCountAggregateOutputType | null
+    _avg: FacebookLikeTypeAvgAggregateOutputType | null
+    _sum: FacebookLikeTypeSumAggregateOutputType | null
+    _min: FacebookLikeTypeMinAggregateOutputType | null
+    _max: FacebookLikeTypeMaxAggregateOutputType | null
+  }
+
+  export type FacebookLikeTypeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookLikeTypeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FacebookLikeTypeMinAggregateOutputType = {
+    id: number | null
+    emoji: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikeTypeMaxAggregateOutputType = {
+    id: number | null
+    emoji: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikeTypeCountAggregateOutputType = {
+    id: number
+    emoji: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookLikeTypeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookLikeTypeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FacebookLikeTypeMinAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikeTypeMaxAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikeTypeCountAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookLikeTypeAggregateArgs = {
+    /**
+     * Filter which FacebookLikeType to aggregate.
+     */
+    where?: FacebookLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookLikeTypes
+    **/
+    _count?: true | FacebookLikeTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookLikeTypeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookLikeTypeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookLikeTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookLikeTypeMaxAggregateInputType
+  }
+
+  export type GetFacebookLikeTypeAggregateType<T extends FacebookLikeTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookLikeType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookLikeType[P]>
+      : GetScalarType<T[P], AggregateFacebookLikeType[P]>
+  }
+
+
+
+
+  export type FacebookLikeTypeGroupByArgs = {
+    where?: FacebookLikeTypeWhereInput
+    orderBy?: Enumerable<FacebookLikeTypeOrderByWithAggregationInput>
+    by: FacebookLikeTypeScalarFieldEnum[]
+    having?: FacebookLikeTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookLikeTypeCountAggregateInputType | true
+    _avg?: FacebookLikeTypeAvgAggregateInputType
+    _sum?: FacebookLikeTypeSumAggregateInputType
+    _min?: FacebookLikeTypeMinAggregateInputType
+    _max?: FacebookLikeTypeMaxAggregateInputType
+  }
+
+
+  export type FacebookLikeTypeGroupByOutputType = {
+    id: number
+    emoji: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookLikeTypeCountAggregateOutputType | null
+    _avg: FacebookLikeTypeAvgAggregateOutputType | null
+    _sum: FacebookLikeTypeSumAggregateOutputType | null
+    _min: FacebookLikeTypeMinAggregateOutputType | null
+    _max: FacebookLikeTypeMaxAggregateOutputType | null
+  }
+
+  type GetFacebookLikeTypeGroupByPayload<T extends FacebookLikeTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookLikeTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookLikeTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookLikeTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookLikeTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookLikeTypeSelect = {
+    id?: boolean
+    emoji?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likePosts?: boolean | FacebookLikeType$likePostsArgs
+    likeComments?: boolean | FacebookLikeType$likeCommentsArgs
+    _count?: boolean | FacebookLikeTypeCountOutputTypeArgs
+  }
+
+
+  export type FacebookLikeTypeInclude = {
+    likePosts?: boolean | FacebookLikeType$likePostsArgs
+    likeComments?: boolean | FacebookLikeType$likeCommentsArgs
+    _count?: boolean | FacebookLikeTypeCountOutputTypeArgs
+  }
+
+  export type FacebookLikeTypeGetPayload<S extends boolean | null | undefined | FacebookLikeTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLikeType :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLikeTypeArgs | FacebookLikeTypeFindManyArgs)
+    ? FacebookLikeType  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FacebookLikeTypeCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookLikeTypeArgs | FacebookLikeTypeFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'likePosts' ? Array < FacebookLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < FacebookLikeCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FacebookLikeTypeCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookLikeType ? FacebookLikeType[P] : never
+  } 
+      : FacebookLikeType
+
+
+  type FacebookLikeTypeCountArgs = 
+    Omit<FacebookLikeTypeFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookLikeTypeCountAggregateInputType | true
+    }
+
+  export interface FacebookLikeTypeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookLikeType that matches the filter.
+     * @param {FacebookLikeTypeFindUniqueArgs} args - Arguments to find a FacebookLikeType
+     * @example
+     * // Get one FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookLikeTypeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookLikeTypeFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookLikeType'> extends True ? Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>> : Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookLikeType that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookLikeTypeFindUniqueOrThrowArgs} args - Arguments to find a FacebookLikeType
+     * @example
+     * // Get one FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookLikeTypeFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikeTypeFindUniqueOrThrowArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Find the first FacebookLikeType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeFindFirstArgs} args - Arguments to find a FacebookLikeType
+     * @example
+     * // Get one FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookLikeTypeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookLikeTypeFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookLikeType'> extends True ? Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>> : Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookLikeType that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeFindFirstOrThrowArgs} args - Arguments to find a FacebookLikeType
+     * @example
+     * // Get one FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookLikeTypeFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikeTypeFindFirstOrThrowArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookLikeTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookLikeTypes
+     * const facebookLikeTypes = await prisma.facebookLikeType.findMany()
+     * 
+     * // Get first 10 FacebookLikeTypes
+     * const facebookLikeTypes = await prisma.facebookLikeType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookLikeTypeWithIdOnly = await prisma.facebookLikeType.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookLikeTypeFindManyArgs>(
+      args?: SelectSubset<T, FacebookLikeTypeFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookLikeTypeGetPayload<T>>>
+
+    /**
+     * Create a FacebookLikeType.
+     * @param {FacebookLikeTypeCreateArgs} args - Arguments to create a FacebookLikeType.
+     * @example
+     * // Create one FacebookLikeType
+     * const FacebookLikeType = await prisma.facebookLikeType.create({
+     *   data: {
+     *     // ... data to create a FacebookLikeType
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookLikeTypeCreateArgs>(
+      args: SelectSubset<T, FacebookLikeTypeCreateArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Create many FacebookLikeTypes.
+     *     @param {FacebookLikeTypeCreateManyArgs} args - Arguments to create many FacebookLikeTypes.
+     *     @example
+     *     // Create many FacebookLikeTypes
+     *     const facebookLikeType = await prisma.facebookLikeType.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookLikeTypeCreateManyArgs>(
+      args?: SelectSubset<T, FacebookLikeTypeCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookLikeType.
+     * @param {FacebookLikeTypeDeleteArgs} args - Arguments to delete one FacebookLikeType.
+     * @example
+     * // Delete one FacebookLikeType
+     * const FacebookLikeType = await prisma.facebookLikeType.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookLikeType
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookLikeTypeDeleteArgs>(
+      args: SelectSubset<T, FacebookLikeTypeDeleteArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Update one FacebookLikeType.
+     * @param {FacebookLikeTypeUpdateArgs} args - Arguments to update one FacebookLikeType.
+     * @example
+     * // Update one FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookLikeTypeUpdateArgs>(
+      args: SelectSubset<T, FacebookLikeTypeUpdateArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookLikeTypes.
+     * @param {FacebookLikeTypeDeleteManyArgs} args - Arguments to filter FacebookLikeTypes to delete.
+     * @example
+     * // Delete a few FacebookLikeTypes
+     * const { count } = await prisma.facebookLikeType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookLikeTypeDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookLikeTypeDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookLikeTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookLikeTypes
+     * const facebookLikeType = await prisma.facebookLikeType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookLikeTypeUpdateManyArgs>(
+      args: SelectSubset<T, FacebookLikeTypeUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookLikeType.
+     * @param {FacebookLikeTypeUpsertArgs} args - Arguments to update or create a FacebookLikeType.
+     * @example
+     * // Update or create a FacebookLikeType
+     * const facebookLikeType = await prisma.facebookLikeType.upsert({
+     *   create: {
+     *     // ... data to create a FacebookLikeType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookLikeType we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookLikeTypeUpsertArgs>(
+      args: SelectSubset<T, FacebookLikeTypeUpsertArgs>
+    ): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T>>
+
+    /**
+     * Count the number of FacebookLikeTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeCountArgs} args - Arguments to filter FacebookLikeTypes to count.
+     * @example
+     * // Count the number of FacebookLikeTypes
+     * const count = await prisma.facebookLikeType.count({
+     *   where: {
+     *     // ... the filter for the FacebookLikeTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookLikeTypeCountArgs>(
+      args?: Subset<T, FacebookLikeTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookLikeTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookLikeType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookLikeTypeAggregateArgs>(args: Subset<T, FacebookLikeTypeAggregateArgs>): Prisma.PrismaPromise<GetFacebookLikeTypeAggregateType<T>>
+
+    /**
+     * Group by FacebookLikeType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookLikeTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookLikeTypeGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookLikeTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookLikeTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookLikeTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookLikeType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookLikeTypeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    likePosts<T extends FacebookLikeType$likePostsArgs= {}>(args?: Subset<T, FacebookLikeType$likePostsArgs>): Prisma.PrismaPromise<Array<FacebookLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends FacebookLikeType$likeCommentsArgs= {}>(args?: Subset<T, FacebookLikeType$likeCommentsArgs>): Prisma.PrismaPromise<Array<FacebookLikeCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLikeType base type for findUnique actions
+   */
+  export type FacebookLikeTypeFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter, which FacebookLikeType to fetch.
+     */
+    where: FacebookLikeTypeWhereUniqueInput
+  }
+
+  /**
+   * FacebookLikeType findUnique
+   */
+  export interface FacebookLikeTypeFindUniqueArgs extends FacebookLikeTypeFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikeType findUniqueOrThrow
+   */
+  export type FacebookLikeTypeFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter, which FacebookLikeType to fetch.
+     */
+    where: FacebookLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeType base type for findFirst actions
+   */
+  export type FacebookLikeTypeFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter, which FacebookLikeType to fetch.
+     */
+    where?: FacebookLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikeTypes.
+     */
+    cursor?: FacebookLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikeTypes.
+     */
+    distinct?: Enumerable<FacebookLikeTypeScalarFieldEnum>
+  }
+
+  /**
+   * FacebookLikeType findFirst
+   */
+  export interface FacebookLikeTypeFindFirstArgs extends FacebookLikeTypeFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikeType findFirstOrThrow
+   */
+  export type FacebookLikeTypeFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter, which FacebookLikeType to fetch.
+     */
+    where?: FacebookLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikeTypes.
+     */
+    cursor?: FacebookLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikeTypes.
+     */
+    distinct?: Enumerable<FacebookLikeTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeType findMany
+   */
+  export type FacebookLikeTypeFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter, which FacebookLikeTypes to fetch.
+     */
+    where?: FacebookLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookLikeTypes.
+     */
+    cursor?: FacebookLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeTypes.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookLikeTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeType create
+   */
+  export type FacebookLikeTypeCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * The data needed to create a FacebookLikeType.
+     */
+    data: XOR<FacebookLikeTypeCreateInput, FacebookLikeTypeUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookLikeType createMany
+   */
+  export type FacebookLikeTypeCreateManyArgs = {
+    /**
+     * The data used to create many FacebookLikeTypes.
+     */
+    data: Enumerable<FacebookLikeTypeCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookLikeType update
+   */
+  export type FacebookLikeTypeUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * The data needed to update a FacebookLikeType.
+     */
+    data: XOR<FacebookLikeTypeUpdateInput, FacebookLikeTypeUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookLikeType to update.
+     */
+    where: FacebookLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeType updateMany
+   */
+  export type FacebookLikeTypeUpdateManyArgs = {
+    /**
+     * The data used to update FacebookLikeTypes.
+     */
+    data: XOR<FacebookLikeTypeUpdateManyMutationInput, FacebookLikeTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookLikeTypes to update
+     */
+    where?: FacebookLikeTypeWhereInput
+  }
+
+
+  /**
+   * FacebookLikeType upsert
+   */
+  export type FacebookLikeTypeUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * The filter to search for the FacebookLikeType to update in case it exists.
+     */
+    where: FacebookLikeTypeWhereUniqueInput
+    /**
+     * In case the FacebookLikeType found by the `where` argument doesn't exist, create a new FacebookLikeType with this data.
+     */
+    create: XOR<FacebookLikeTypeCreateInput, FacebookLikeTypeUncheckedCreateInput>
+    /**
+     * In case the FacebookLikeType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookLikeTypeUpdateInput, FacebookLikeTypeUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookLikeType delete
+   */
+  export type FacebookLikeTypeDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+    /**
+     * Filter which FacebookLikeType to delete.
+     */
+    where: FacebookLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeType deleteMany
+   */
+  export type FacebookLikeTypeDeleteManyArgs = {
+    /**
+     * Filter which FacebookLikeTypes to delete
+     */
+    where?: FacebookLikeTypeWhereInput
+  }
+
+
+  /**
+   * FacebookLikeType.likePosts
+   */
+  export type FacebookLikeType$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    where?: FacebookLikePostWhereInput
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    cursor?: FacebookLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeType.likeComments
+   */
+  export type FacebookLikeType$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    where?: FacebookLikeCommentWhereInput
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeType without action
+   */
+  export type FacebookLikeTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeType
+     */
+    select?: FacebookLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeTypeInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookLikePost
+   */
+
+
+  export type AggregateFacebookLikePost = {
+    _count: FacebookLikePostCountAggregateOutputType | null
+    _avg: FacebookLikePostAvgAggregateOutputType | null
+    _sum: FacebookLikePostSumAggregateOutputType | null
+    _min: FacebookLikePostMinAggregateOutputType | null
+    _max: FacebookLikePostMaxAggregateOutputType | null
+  }
+
+  export type FacebookLikePostAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type FacebookLikePostSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type FacebookLikePostMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikePostMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikePostCountAggregateOutputType = {
+    id: number
+    postId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookLikePostAvgAggregateInputType = {
+    id?: true
+    postId?: true
+    posterUserId?: true
+    likeTypeId?: true
+  }
+
+  export type FacebookLikePostSumAggregateInputType = {
+    id?: true
+    postId?: true
+    posterUserId?: true
+    likeTypeId?: true
+  }
+
+  export type FacebookLikePostMinAggregateInputType = {
+    id?: true
+    postId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikePostMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikePostCountAggregateInputType = {
+    id?: true
+    postId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookLikePostAggregateArgs = {
+    /**
+     * Filter which FacebookLikePost to aggregate.
+     */
+    where?: FacebookLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikePosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookLikePosts
+    **/
+    _count?: true | FacebookLikePostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookLikePostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookLikePostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookLikePostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookLikePostMaxAggregateInputType
+  }
+
+  export type GetFacebookLikePostAggregateType<T extends FacebookLikePostAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookLikePost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookLikePost[P]>
+      : GetScalarType<T[P], AggregateFacebookLikePost[P]>
+  }
+
+
+
+
+  export type FacebookLikePostGroupByArgs = {
+    where?: FacebookLikePostWhereInput
+    orderBy?: Enumerable<FacebookLikePostOrderByWithAggregationInput>
+    by: FacebookLikePostScalarFieldEnum[]
+    having?: FacebookLikePostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookLikePostCountAggregateInputType | true
+    _avg?: FacebookLikePostAvgAggregateInputType
+    _sum?: FacebookLikePostSumAggregateInputType
+    _min?: FacebookLikePostMinAggregateInputType
+    _max?: FacebookLikePostMaxAggregateInputType
+  }
+
+
+  export type FacebookLikePostGroupByOutputType = {
+    id: number
+    postId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookLikePostCountAggregateOutputType | null
+    _avg: FacebookLikePostAvgAggregateOutputType | null
+    _sum: FacebookLikePostSumAggregateOutputType | null
+    _min: FacebookLikePostMinAggregateOutputType | null
+    _max: FacebookLikePostMaxAggregateOutputType | null
+  }
+
+  type GetFacebookLikePostGroupByPayload<T extends FacebookLikePostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookLikePostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookLikePostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookLikePostGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookLikePostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookLikePostSelect = {
+    id?: boolean
+    post?: boolean | FacebookPostArgs
+    postId?: boolean
+    posterUser?: boolean | FacebookUserArgs
+    posterUserId?: boolean
+    likeType?: boolean | FacebookLikeTypeArgs
+    likeTypeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookLikePostInclude = {
+    post?: boolean | FacebookPostArgs
+    posterUser?: boolean | FacebookUserArgs
+    likeType?: boolean | FacebookLikeTypeArgs
+  }
+
+  export type FacebookLikePostGetPayload<S extends boolean | null | undefined | FacebookLikePostArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLikePost :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLikePostArgs | FacebookLikePostFindManyArgs)
+    ? FacebookLikePost  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? FacebookPostGetPayload<S['include'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'likeType' ? FacebookLikeTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookLikePostArgs | FacebookLikePostFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? FacebookPostGetPayload<S['select'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'likeType' ? FacebookLikeTypeGetPayload<S['select'][P]> :  P extends keyof FacebookLikePost ? FacebookLikePost[P] : never
+  } 
+      : FacebookLikePost
+
+
+  type FacebookLikePostCountArgs = 
+    Omit<FacebookLikePostFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookLikePostCountAggregateInputType | true
+    }
+
+  export interface FacebookLikePostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookLikePost that matches the filter.
+     * @param {FacebookLikePostFindUniqueArgs} args - Arguments to find a FacebookLikePost
+     * @example
+     * // Get one FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookLikePostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookLikePostFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookLikePost'> extends True ? Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>> : Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookLikePost that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookLikePostFindUniqueOrThrowArgs} args - Arguments to find a FacebookLikePost
+     * @example
+     * // Get one FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookLikePostFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikePostFindUniqueOrThrowArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Find the first FacebookLikePost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostFindFirstArgs} args - Arguments to find a FacebookLikePost
+     * @example
+     * // Get one FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookLikePostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookLikePostFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookLikePost'> extends True ? Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>> : Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookLikePost that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostFindFirstOrThrowArgs} args - Arguments to find a FacebookLikePost
+     * @example
+     * // Get one FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookLikePostFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikePostFindFirstOrThrowArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookLikePosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookLikePosts
+     * const facebookLikePosts = await prisma.facebookLikePost.findMany()
+     * 
+     * // Get first 10 FacebookLikePosts
+     * const facebookLikePosts = await prisma.facebookLikePost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookLikePostWithIdOnly = await prisma.facebookLikePost.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookLikePostFindManyArgs>(
+      args?: SelectSubset<T, FacebookLikePostFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookLikePostGetPayload<T>>>
+
+    /**
+     * Create a FacebookLikePost.
+     * @param {FacebookLikePostCreateArgs} args - Arguments to create a FacebookLikePost.
+     * @example
+     * // Create one FacebookLikePost
+     * const FacebookLikePost = await prisma.facebookLikePost.create({
+     *   data: {
+     *     // ... data to create a FacebookLikePost
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookLikePostCreateArgs>(
+      args: SelectSubset<T, FacebookLikePostCreateArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Create many FacebookLikePosts.
+     *     @param {FacebookLikePostCreateManyArgs} args - Arguments to create many FacebookLikePosts.
+     *     @example
+     *     // Create many FacebookLikePosts
+     *     const facebookLikePost = await prisma.facebookLikePost.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookLikePostCreateManyArgs>(
+      args?: SelectSubset<T, FacebookLikePostCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookLikePost.
+     * @param {FacebookLikePostDeleteArgs} args - Arguments to delete one FacebookLikePost.
+     * @example
+     * // Delete one FacebookLikePost
+     * const FacebookLikePost = await prisma.facebookLikePost.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookLikePost
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookLikePostDeleteArgs>(
+      args: SelectSubset<T, FacebookLikePostDeleteArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Update one FacebookLikePost.
+     * @param {FacebookLikePostUpdateArgs} args - Arguments to update one FacebookLikePost.
+     * @example
+     * // Update one FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookLikePostUpdateArgs>(
+      args: SelectSubset<T, FacebookLikePostUpdateArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookLikePosts.
+     * @param {FacebookLikePostDeleteManyArgs} args - Arguments to filter FacebookLikePosts to delete.
+     * @example
+     * // Delete a few FacebookLikePosts
+     * const { count } = await prisma.facebookLikePost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookLikePostDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookLikePostDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookLikePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookLikePosts
+     * const facebookLikePost = await prisma.facebookLikePost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookLikePostUpdateManyArgs>(
+      args: SelectSubset<T, FacebookLikePostUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookLikePost.
+     * @param {FacebookLikePostUpsertArgs} args - Arguments to update or create a FacebookLikePost.
+     * @example
+     * // Update or create a FacebookLikePost
+     * const facebookLikePost = await prisma.facebookLikePost.upsert({
+     *   create: {
+     *     // ... data to create a FacebookLikePost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookLikePost we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookLikePostUpsertArgs>(
+      args: SelectSubset<T, FacebookLikePostUpsertArgs>
+    ): Prisma__FacebookLikePostClient<FacebookLikePostGetPayload<T>>
+
+    /**
+     * Count the number of FacebookLikePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostCountArgs} args - Arguments to filter FacebookLikePosts to count.
+     * @example
+     * // Count the number of FacebookLikePosts
+     * const count = await prisma.facebookLikePost.count({
+     *   where: {
+     *     // ... the filter for the FacebookLikePosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookLikePostCountArgs>(
+      args?: Subset<T, FacebookLikePostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookLikePostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookLikePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookLikePostAggregateArgs>(args: Subset<T, FacebookLikePostAggregateArgs>): Prisma.PrismaPromise<GetFacebookLikePostAggregateType<T>>
+
+    /**
+     * Group by FacebookLikePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikePostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookLikePostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookLikePostGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookLikePostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookLikePostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookLikePostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookLikePost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookLikePostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends FacebookPostArgs= {}>(args?: Subset<T, FacebookPostArgs>): Prisma__FacebookPostClient<FacebookPostGetPayload<T> | Null>;
+
+    posterUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    likeType<T extends FacebookLikeTypeArgs= {}>(args?: Subset<T, FacebookLikeTypeArgs>): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLikePost base type for findUnique actions
+   */
+  export type FacebookLikePostFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter, which FacebookLikePost to fetch.
+     */
+    where: FacebookLikePostWhereUniqueInput
+  }
+
+  /**
+   * FacebookLikePost findUnique
+   */
+  export interface FacebookLikePostFindUniqueArgs extends FacebookLikePostFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikePost findUniqueOrThrow
+   */
+  export type FacebookLikePostFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter, which FacebookLikePost to fetch.
+     */
+    where: FacebookLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikePost base type for findFirst actions
+   */
+  export type FacebookLikePostFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter, which FacebookLikePost to fetch.
+     */
+    where?: FacebookLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikePosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikePosts.
+     */
+    cursor?: FacebookLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikePosts.
+     */
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+  /**
+   * FacebookLikePost findFirst
+   */
+  export interface FacebookLikePostFindFirstArgs extends FacebookLikePostFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikePost findFirstOrThrow
+   */
+  export type FacebookLikePostFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter, which FacebookLikePost to fetch.
+     */
+    where?: FacebookLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikePosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikePosts.
+     */
+    cursor?: FacebookLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikePosts.
+     */
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikePost findMany
+   */
+  export type FacebookLikePostFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter, which FacebookLikePosts to fetch.
+     */
+    where?: FacebookLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikePosts to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookLikePosts.
+     */
+    cursor?: FacebookLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikePosts.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikePost create
+   */
+  export type FacebookLikePostCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * The data needed to create a FacebookLikePost.
+     */
+    data: XOR<FacebookLikePostCreateInput, FacebookLikePostUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookLikePost createMany
+   */
+  export type FacebookLikePostCreateManyArgs = {
+    /**
+     * The data used to create many FacebookLikePosts.
+     */
+    data: Enumerable<FacebookLikePostCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookLikePost update
+   */
+  export type FacebookLikePostUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * The data needed to update a FacebookLikePost.
+     */
+    data: XOR<FacebookLikePostUpdateInput, FacebookLikePostUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookLikePost to update.
+     */
+    where: FacebookLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikePost updateMany
+   */
+  export type FacebookLikePostUpdateManyArgs = {
+    /**
+     * The data used to update FacebookLikePosts.
+     */
+    data: XOR<FacebookLikePostUpdateManyMutationInput, FacebookLikePostUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookLikePosts to update
+     */
+    where?: FacebookLikePostWhereInput
+  }
+
+
+  /**
+   * FacebookLikePost upsert
+   */
+  export type FacebookLikePostUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * The filter to search for the FacebookLikePost to update in case it exists.
+     */
+    where: FacebookLikePostWhereUniqueInput
+    /**
+     * In case the FacebookLikePost found by the `where` argument doesn't exist, create a new FacebookLikePost with this data.
+     */
+    create: XOR<FacebookLikePostCreateInput, FacebookLikePostUncheckedCreateInput>
+    /**
+     * In case the FacebookLikePost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookLikePostUpdateInput, FacebookLikePostUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookLikePost delete
+   */
+  export type FacebookLikePostDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+    /**
+     * Filter which FacebookLikePost to delete.
+     */
+    where: FacebookLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikePost deleteMany
+   */
+  export type FacebookLikePostDeleteManyArgs = {
+    /**
+     * Filter which FacebookLikePosts to delete
+     */
+    where?: FacebookLikePostWhereInput
+  }
+
+
+  /**
+   * FacebookLikePost without action
+   */
+  export type FacebookLikePostArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikePost
+     */
+    select?: FacebookLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikePostInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookLikeComment
+   */
+
+
+  export type AggregateFacebookLikeComment = {
+    _count: FacebookLikeCommentCountAggregateOutputType | null
+    _avg: FacebookLikeCommentAvgAggregateOutputType | null
+    _sum: FacebookLikeCommentSumAggregateOutputType | null
+    _min: FacebookLikeCommentMinAggregateOutputType | null
+    _max: FacebookLikeCommentMaxAggregateOutputType | null
+  }
+
+  export type FacebookLikeCommentAvgAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type FacebookLikeCommentSumAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type FacebookLikeCommentMinAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikeCommentMaxAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    posterUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookLikeCommentCountAggregateOutputType = {
+    id: number
+    commentId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookLikeCommentAvgAggregateInputType = {
+    id?: true
+    commentId?: true
+    posterUserId?: true
+    likeTypeId?: true
+  }
+
+  export type FacebookLikeCommentSumAggregateInputType = {
+    id?: true
+    commentId?: true
+    posterUserId?: true
+    likeTypeId?: true
+  }
+
+  export type FacebookLikeCommentMinAggregateInputType = {
+    id?: true
+    commentId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikeCommentMaxAggregateInputType = {
+    id?: true
+    commentId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookLikeCommentCountAggregateInputType = {
+    id?: true
+    commentId?: true
+    posterUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookLikeCommentAggregateArgs = {
+    /**
+     * Filter which FacebookLikeComment to aggregate.
+     */
+    where?: FacebookLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookLikeComments
+    **/
+    _count?: true | FacebookLikeCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookLikeCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookLikeCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookLikeCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookLikeCommentMaxAggregateInputType
+  }
+
+  export type GetFacebookLikeCommentAggregateType<T extends FacebookLikeCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookLikeComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookLikeComment[P]>
+      : GetScalarType<T[P], AggregateFacebookLikeComment[P]>
+  }
+
+
+
+
+  export type FacebookLikeCommentGroupByArgs = {
+    where?: FacebookLikeCommentWhereInput
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithAggregationInput>
+    by: FacebookLikeCommentScalarFieldEnum[]
+    having?: FacebookLikeCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookLikeCommentCountAggregateInputType | true
+    _avg?: FacebookLikeCommentAvgAggregateInputType
+    _sum?: FacebookLikeCommentSumAggregateInputType
+    _min?: FacebookLikeCommentMinAggregateInputType
+    _max?: FacebookLikeCommentMaxAggregateInputType
+  }
+
+
+  export type FacebookLikeCommentGroupByOutputType = {
+    id: number
+    commentId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookLikeCommentCountAggregateOutputType | null
+    _avg: FacebookLikeCommentAvgAggregateOutputType | null
+    _sum: FacebookLikeCommentSumAggregateOutputType | null
+    _min: FacebookLikeCommentMinAggregateOutputType | null
+    _max: FacebookLikeCommentMaxAggregateOutputType | null
+  }
+
+  type GetFacebookLikeCommentGroupByPayload<T extends FacebookLikeCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookLikeCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookLikeCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookLikeCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookLikeCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookLikeCommentSelect = {
+    id?: boolean
+    comment?: boolean | FacebookPostArgs
+    commentId?: boolean
+    posterUser?: boolean | FacebookUserArgs
+    posterUserId?: boolean
+    likeType?: boolean | FacebookLikeTypeArgs
+    likeTypeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookLikeCommentInclude = {
+    comment?: boolean | FacebookPostArgs
+    posterUser?: boolean | FacebookUserArgs
+    likeType?: boolean | FacebookLikeTypeArgs
+  }
+
+  export type FacebookLikeCommentGetPayload<S extends boolean | null | undefined | FacebookLikeCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookLikeComment :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookLikeCommentArgs | FacebookLikeCommentFindManyArgs)
+    ? FacebookLikeComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'comment' ? FacebookPostGetPayload<S['include'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'likeType' ? FacebookLikeTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookLikeCommentArgs | FacebookLikeCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'comment' ? FacebookPostGetPayload<S['select'][P]> :
+        P extends 'posterUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'likeType' ? FacebookLikeTypeGetPayload<S['select'][P]> :  P extends keyof FacebookLikeComment ? FacebookLikeComment[P] : never
+  } 
+      : FacebookLikeComment
+
+
+  type FacebookLikeCommentCountArgs = 
+    Omit<FacebookLikeCommentFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookLikeCommentCountAggregateInputType | true
+    }
+
+  export interface FacebookLikeCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookLikeComment that matches the filter.
+     * @param {FacebookLikeCommentFindUniqueArgs} args - Arguments to find a FacebookLikeComment
+     * @example
+     * // Get one FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookLikeCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookLikeCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookLikeComment'> extends True ? Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>> : Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookLikeComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookLikeCommentFindUniqueOrThrowArgs} args - Arguments to find a FacebookLikeComment
+     * @example
+     * // Get one FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookLikeCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikeCommentFindUniqueOrThrowArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Find the first FacebookLikeComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentFindFirstArgs} args - Arguments to find a FacebookLikeComment
+     * @example
+     * // Get one FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookLikeCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookLikeCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookLikeComment'> extends True ? Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>> : Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookLikeComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentFindFirstOrThrowArgs} args - Arguments to find a FacebookLikeComment
+     * @example
+     * // Get one FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookLikeCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookLikeCommentFindFirstOrThrowArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookLikeComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookLikeComments
+     * const facebookLikeComments = await prisma.facebookLikeComment.findMany()
+     * 
+     * // Get first 10 FacebookLikeComments
+     * const facebookLikeComments = await prisma.facebookLikeComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookLikeCommentWithIdOnly = await prisma.facebookLikeComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookLikeCommentFindManyArgs>(
+      args?: SelectSubset<T, FacebookLikeCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookLikeCommentGetPayload<T>>>
+
+    /**
+     * Create a FacebookLikeComment.
+     * @param {FacebookLikeCommentCreateArgs} args - Arguments to create a FacebookLikeComment.
+     * @example
+     * // Create one FacebookLikeComment
+     * const FacebookLikeComment = await prisma.facebookLikeComment.create({
+     *   data: {
+     *     // ... data to create a FacebookLikeComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookLikeCommentCreateArgs>(
+      args: SelectSubset<T, FacebookLikeCommentCreateArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Create many FacebookLikeComments.
+     *     @param {FacebookLikeCommentCreateManyArgs} args - Arguments to create many FacebookLikeComments.
+     *     @example
+     *     // Create many FacebookLikeComments
+     *     const facebookLikeComment = await prisma.facebookLikeComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookLikeCommentCreateManyArgs>(
+      args?: SelectSubset<T, FacebookLikeCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookLikeComment.
+     * @param {FacebookLikeCommentDeleteArgs} args - Arguments to delete one FacebookLikeComment.
+     * @example
+     * // Delete one FacebookLikeComment
+     * const FacebookLikeComment = await prisma.facebookLikeComment.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookLikeComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookLikeCommentDeleteArgs>(
+      args: SelectSubset<T, FacebookLikeCommentDeleteArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Update one FacebookLikeComment.
+     * @param {FacebookLikeCommentUpdateArgs} args - Arguments to update one FacebookLikeComment.
+     * @example
+     * // Update one FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookLikeCommentUpdateArgs>(
+      args: SelectSubset<T, FacebookLikeCommentUpdateArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookLikeComments.
+     * @param {FacebookLikeCommentDeleteManyArgs} args - Arguments to filter FacebookLikeComments to delete.
+     * @example
+     * // Delete a few FacebookLikeComments
+     * const { count } = await prisma.facebookLikeComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookLikeCommentDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookLikeCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookLikeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookLikeComments
+     * const facebookLikeComment = await prisma.facebookLikeComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookLikeCommentUpdateManyArgs>(
+      args: SelectSubset<T, FacebookLikeCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookLikeComment.
+     * @param {FacebookLikeCommentUpsertArgs} args - Arguments to update or create a FacebookLikeComment.
+     * @example
+     * // Update or create a FacebookLikeComment
+     * const facebookLikeComment = await prisma.facebookLikeComment.upsert({
+     *   create: {
+     *     // ... data to create a FacebookLikeComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookLikeComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookLikeCommentUpsertArgs>(
+      args: SelectSubset<T, FacebookLikeCommentUpsertArgs>
+    ): Prisma__FacebookLikeCommentClient<FacebookLikeCommentGetPayload<T>>
+
+    /**
+     * Count the number of FacebookLikeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentCountArgs} args - Arguments to filter FacebookLikeComments to count.
+     * @example
+     * // Count the number of FacebookLikeComments
+     * const count = await prisma.facebookLikeComment.count({
+     *   where: {
+     *     // ... the filter for the FacebookLikeComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookLikeCommentCountArgs>(
+      args?: Subset<T, FacebookLikeCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookLikeCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookLikeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookLikeCommentAggregateArgs>(args: Subset<T, FacebookLikeCommentAggregateArgs>): Prisma.PrismaPromise<GetFacebookLikeCommentAggregateType<T>>
+
+    /**
+     * Group by FacebookLikeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookLikeCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookLikeCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookLikeCommentGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookLikeCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookLikeCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookLikeCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookLikeComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookLikeCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    comment<T extends FacebookPostArgs= {}>(args?: Subset<T, FacebookPostArgs>): Prisma__FacebookPostClient<FacebookPostGetPayload<T> | Null>;
+
+    posterUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    likeType<T extends FacebookLikeTypeArgs= {}>(args?: Subset<T, FacebookLikeTypeArgs>): Prisma__FacebookLikeTypeClient<FacebookLikeTypeGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookLikeComment base type for findUnique actions
+   */
+  export type FacebookLikeCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter, which FacebookLikeComment to fetch.
+     */
+    where: FacebookLikeCommentWhereUniqueInput
+  }
+
+  /**
+   * FacebookLikeComment findUnique
+   */
+  export interface FacebookLikeCommentFindUniqueArgs extends FacebookLikeCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikeComment findUniqueOrThrow
+   */
+  export type FacebookLikeCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter, which FacebookLikeComment to fetch.
+     */
+    where: FacebookLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeComment base type for findFirst actions
+   */
+  export type FacebookLikeCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter, which FacebookLikeComment to fetch.
+     */
+    where?: FacebookLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikeComments.
+     */
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikeComments.
+     */
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+  /**
+   * FacebookLikeComment findFirst
+   */
+  export interface FacebookLikeCommentFindFirstArgs extends FacebookLikeCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookLikeComment findFirstOrThrow
+   */
+  export type FacebookLikeCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter, which FacebookLikeComment to fetch.
+     */
+    where?: FacebookLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookLikeComments.
+     */
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookLikeComments.
+     */
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeComment findMany
+   */
+  export type FacebookLikeCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter, which FacebookLikeComments to fetch.
+     */
+    where?: FacebookLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookLikeComments to fetch.
+     */
+    orderBy?: Enumerable<FacebookLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookLikeComments.
+     */
+    cursor?: FacebookLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookLikeComments.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookLikeComment create
+   */
+  export type FacebookLikeCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * The data needed to create a FacebookLikeComment.
+     */
+    data: XOR<FacebookLikeCommentCreateInput, FacebookLikeCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookLikeComment createMany
+   */
+  export type FacebookLikeCommentCreateManyArgs = {
+    /**
+     * The data used to create many FacebookLikeComments.
+     */
+    data: Enumerable<FacebookLikeCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookLikeComment update
+   */
+  export type FacebookLikeCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * The data needed to update a FacebookLikeComment.
+     */
+    data: XOR<FacebookLikeCommentUpdateInput, FacebookLikeCommentUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookLikeComment to update.
+     */
+    where: FacebookLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeComment updateMany
+   */
+  export type FacebookLikeCommentUpdateManyArgs = {
+    /**
+     * The data used to update FacebookLikeComments.
+     */
+    data: XOR<FacebookLikeCommentUpdateManyMutationInput, FacebookLikeCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookLikeComments to update
+     */
+    where?: FacebookLikeCommentWhereInput
+  }
+
+
+  /**
+   * FacebookLikeComment upsert
+   */
+  export type FacebookLikeCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * The filter to search for the FacebookLikeComment to update in case it exists.
+     */
+    where: FacebookLikeCommentWhereUniqueInput
+    /**
+     * In case the FacebookLikeComment found by the `where` argument doesn't exist, create a new FacebookLikeComment with this data.
+     */
+    create: XOR<FacebookLikeCommentCreateInput, FacebookLikeCommentUncheckedCreateInput>
+    /**
+     * In case the FacebookLikeComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookLikeCommentUpdateInput, FacebookLikeCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookLikeComment delete
+   */
+  export type FacebookLikeCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+    /**
+     * Filter which FacebookLikeComment to delete.
+     */
+    where: FacebookLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookLikeComment deleteMany
+   */
+  export type FacebookLikeCommentDeleteManyArgs = {
+    /**
+     * Filter which FacebookLikeComments to delete
+     */
+    where?: FacebookLikeCommentWhereInput
+  }
+
+
+  /**
+   * FacebookLikeComment without action
+   */
+  export type FacebookLikeCommentArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookLikeComment
+     */
+    select?: FacebookLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookLikeCommentInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookFriendRequest
+   */
+
+
+  export type AggregateFacebookFriendRequest = {
+    _count: FacebookFriendRequestCountAggregateOutputType | null
+    _avg: FacebookFriendRequestAvgAggregateOutputType | null
+    _sum: FacebookFriendRequestSumAggregateOutputType | null
+    _min: FacebookFriendRequestMinAggregateOutputType | null
+    _max: FacebookFriendRequestMaxAggregateOutputType | null
+  }
+
+  export type FacebookFriendRequestAvgAggregateOutputType = {
+    id: number | null
+    requestFromUserId: number | null
+    requestToUserId: number | null
+  }
+
+  export type FacebookFriendRequestSumAggregateOutputType = {
+    id: number | null
+    requestFromUserId: number | null
+    requestToUserId: number | null
+  }
+
+  export type FacebookFriendRequestMinAggregateOutputType = {
+    id: number | null
+    requestFromUserId: number | null
+    requestToUserId: number | null
+    isAccepted: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookFriendRequestMaxAggregateOutputType = {
+    id: number | null
+    requestFromUserId: number | null
+    requestToUserId: number | null
+    isAccepted: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookFriendRequestCountAggregateOutputType = {
+    id: number
+    requestFromUserId: number
+    requestToUserId: number
+    isAccepted: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookFriendRequestAvgAggregateInputType = {
+    id?: true
+    requestFromUserId?: true
+    requestToUserId?: true
+  }
+
+  export type FacebookFriendRequestSumAggregateInputType = {
+    id?: true
+    requestFromUserId?: true
+    requestToUserId?: true
+  }
+
+  export type FacebookFriendRequestMinAggregateInputType = {
+    id?: true
+    requestFromUserId?: true
+    requestToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookFriendRequestMaxAggregateInputType = {
+    id?: true
+    requestFromUserId?: true
+    requestToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookFriendRequestCountAggregateInputType = {
+    id?: true
+    requestFromUserId?: true
+    requestToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookFriendRequestAggregateArgs = {
+    /**
+     * Filter which FacebookFriendRequest to aggregate.
+     */
+    where?: FacebookFriendRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookFriendRequests to fetch.
+     */
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookFriendRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookFriendRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookFriendRequests
+    **/
+    _count?: true | FacebookFriendRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookFriendRequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookFriendRequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookFriendRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookFriendRequestMaxAggregateInputType
+  }
+
+  export type GetFacebookFriendRequestAggregateType<T extends FacebookFriendRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookFriendRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookFriendRequest[P]>
+      : GetScalarType<T[P], AggregateFacebookFriendRequest[P]>
+  }
+
+
+
+
+  export type FacebookFriendRequestGroupByArgs = {
+    where?: FacebookFriendRequestWhereInput
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithAggregationInput>
+    by: FacebookFriendRequestScalarFieldEnum[]
+    having?: FacebookFriendRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookFriendRequestCountAggregateInputType | true
+    _avg?: FacebookFriendRequestAvgAggregateInputType
+    _sum?: FacebookFriendRequestSumAggregateInputType
+    _min?: FacebookFriendRequestMinAggregateInputType
+    _max?: FacebookFriendRequestMaxAggregateInputType
+  }
+
+
+  export type FacebookFriendRequestGroupByOutputType = {
+    id: number
+    requestFromUserId: number
+    requestToUserId: number
+    isAccepted: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookFriendRequestCountAggregateOutputType | null
+    _avg: FacebookFriendRequestAvgAggregateOutputType | null
+    _sum: FacebookFriendRequestSumAggregateOutputType | null
+    _min: FacebookFriendRequestMinAggregateOutputType | null
+    _max: FacebookFriendRequestMaxAggregateOutputType | null
+  }
+
+  type GetFacebookFriendRequestGroupByPayload<T extends FacebookFriendRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookFriendRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookFriendRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookFriendRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookFriendRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookFriendRequestSelect = {
+    id?: boolean
+    requestFromUser?: boolean | FacebookUserArgs
+    requestFromUserId?: boolean
+    requestToUser?: boolean | FacebookUserArgs
+    requestToUserId?: boolean
+    isAccepted?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookFriendRequestInclude = {
+    requestFromUser?: boolean | FacebookUserArgs
+    requestToUser?: boolean | FacebookUserArgs
+  }
+
+  export type FacebookFriendRequestGetPayload<S extends boolean | null | undefined | FacebookFriendRequestArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookFriendRequest :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookFriendRequestArgs | FacebookFriendRequestFindManyArgs)
+    ? FacebookFriendRequest  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'requestFromUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'requestToUser' ? FacebookUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookFriendRequestArgs | FacebookFriendRequestFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'requestFromUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'requestToUser' ? FacebookUserGetPayload<S['select'][P]> :  P extends keyof FacebookFriendRequest ? FacebookFriendRequest[P] : never
+  } 
+      : FacebookFriendRequest
+
+
+  type FacebookFriendRequestCountArgs = 
+    Omit<FacebookFriendRequestFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookFriendRequestCountAggregateInputType | true
+    }
+
+  export interface FacebookFriendRequestDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookFriendRequest that matches the filter.
+     * @param {FacebookFriendRequestFindUniqueArgs} args - Arguments to find a FacebookFriendRequest
+     * @example
+     * // Get one FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookFriendRequestFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookFriendRequestFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookFriendRequest'> extends True ? Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>> : Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookFriendRequest that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookFriendRequestFindUniqueOrThrowArgs} args - Arguments to find a FacebookFriendRequest
+     * @example
+     * // Get one FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookFriendRequestFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookFriendRequestFindUniqueOrThrowArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Find the first FacebookFriendRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestFindFirstArgs} args - Arguments to find a FacebookFriendRequest
+     * @example
+     * // Get one FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookFriendRequestFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookFriendRequestFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookFriendRequest'> extends True ? Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>> : Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookFriendRequest that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestFindFirstOrThrowArgs} args - Arguments to find a FacebookFriendRequest
+     * @example
+     * // Get one FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookFriendRequestFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookFriendRequestFindFirstOrThrowArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookFriendRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookFriendRequests
+     * const facebookFriendRequests = await prisma.facebookFriendRequest.findMany()
+     * 
+     * // Get first 10 FacebookFriendRequests
+     * const facebookFriendRequests = await prisma.facebookFriendRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookFriendRequestWithIdOnly = await prisma.facebookFriendRequest.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookFriendRequestFindManyArgs>(
+      args?: SelectSubset<T, FacebookFriendRequestFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookFriendRequestGetPayload<T>>>
+
+    /**
+     * Create a FacebookFriendRequest.
+     * @param {FacebookFriendRequestCreateArgs} args - Arguments to create a FacebookFriendRequest.
+     * @example
+     * // Create one FacebookFriendRequest
+     * const FacebookFriendRequest = await prisma.facebookFriendRequest.create({
+     *   data: {
+     *     // ... data to create a FacebookFriendRequest
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookFriendRequestCreateArgs>(
+      args: SelectSubset<T, FacebookFriendRequestCreateArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Create many FacebookFriendRequests.
+     *     @param {FacebookFriendRequestCreateManyArgs} args - Arguments to create many FacebookFriendRequests.
+     *     @example
+     *     // Create many FacebookFriendRequests
+     *     const facebookFriendRequest = await prisma.facebookFriendRequest.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookFriendRequestCreateManyArgs>(
+      args?: SelectSubset<T, FacebookFriendRequestCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookFriendRequest.
+     * @param {FacebookFriendRequestDeleteArgs} args - Arguments to delete one FacebookFriendRequest.
+     * @example
+     * // Delete one FacebookFriendRequest
+     * const FacebookFriendRequest = await prisma.facebookFriendRequest.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookFriendRequest
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookFriendRequestDeleteArgs>(
+      args: SelectSubset<T, FacebookFriendRequestDeleteArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Update one FacebookFriendRequest.
+     * @param {FacebookFriendRequestUpdateArgs} args - Arguments to update one FacebookFriendRequest.
+     * @example
+     * // Update one FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookFriendRequestUpdateArgs>(
+      args: SelectSubset<T, FacebookFriendRequestUpdateArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookFriendRequests.
+     * @param {FacebookFriendRequestDeleteManyArgs} args - Arguments to filter FacebookFriendRequests to delete.
+     * @example
+     * // Delete a few FacebookFriendRequests
+     * const { count } = await prisma.facebookFriendRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookFriendRequestDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookFriendRequestDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookFriendRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookFriendRequests
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookFriendRequestUpdateManyArgs>(
+      args: SelectSubset<T, FacebookFriendRequestUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookFriendRequest.
+     * @param {FacebookFriendRequestUpsertArgs} args - Arguments to update or create a FacebookFriendRequest.
+     * @example
+     * // Update or create a FacebookFriendRequest
+     * const facebookFriendRequest = await prisma.facebookFriendRequest.upsert({
+     *   create: {
+     *     // ... data to create a FacebookFriendRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookFriendRequest we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookFriendRequestUpsertArgs>(
+      args: SelectSubset<T, FacebookFriendRequestUpsertArgs>
+    ): Prisma__FacebookFriendRequestClient<FacebookFriendRequestGetPayload<T>>
+
+    /**
+     * Count the number of FacebookFriendRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestCountArgs} args - Arguments to filter FacebookFriendRequests to count.
+     * @example
+     * // Count the number of FacebookFriendRequests
+     * const count = await prisma.facebookFriendRequest.count({
+     *   where: {
+     *     // ... the filter for the FacebookFriendRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookFriendRequestCountArgs>(
+      args?: Subset<T, FacebookFriendRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookFriendRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookFriendRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookFriendRequestAggregateArgs>(args: Subset<T, FacebookFriendRequestAggregateArgs>): Prisma.PrismaPromise<GetFacebookFriendRequestAggregateType<T>>
+
+    /**
+     * Group by FacebookFriendRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookFriendRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookFriendRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookFriendRequestGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookFriendRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookFriendRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookFriendRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookFriendRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookFriendRequestClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    requestFromUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    requestToUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookFriendRequest base type for findUnique actions
+   */
+  export type FacebookFriendRequestFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter, which FacebookFriendRequest to fetch.
+     */
+    where: FacebookFriendRequestWhereUniqueInput
+  }
+
+  /**
+   * FacebookFriendRequest findUnique
+   */
+  export interface FacebookFriendRequestFindUniqueArgs extends FacebookFriendRequestFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookFriendRequest findUniqueOrThrow
+   */
+  export type FacebookFriendRequestFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter, which FacebookFriendRequest to fetch.
+     */
+    where: FacebookFriendRequestWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookFriendRequest base type for findFirst actions
+   */
+  export type FacebookFriendRequestFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter, which FacebookFriendRequest to fetch.
+     */
+    where?: FacebookFriendRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookFriendRequests to fetch.
+     */
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookFriendRequests.
+     */
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookFriendRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookFriendRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookFriendRequests.
+     */
+    distinct?: Enumerable<FacebookFriendRequestScalarFieldEnum>
+  }
+
+  /**
+   * FacebookFriendRequest findFirst
+   */
+  export interface FacebookFriendRequestFindFirstArgs extends FacebookFriendRequestFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookFriendRequest findFirstOrThrow
+   */
+  export type FacebookFriendRequestFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter, which FacebookFriendRequest to fetch.
+     */
+    where?: FacebookFriendRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookFriendRequests to fetch.
+     */
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookFriendRequests.
+     */
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookFriendRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookFriendRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookFriendRequests.
+     */
+    distinct?: Enumerable<FacebookFriendRequestScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookFriendRequest findMany
+   */
+  export type FacebookFriendRequestFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter, which FacebookFriendRequests to fetch.
+     */
+    where?: FacebookFriendRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookFriendRequests to fetch.
+     */
+    orderBy?: Enumerable<FacebookFriendRequestOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookFriendRequests.
+     */
+    cursor?: FacebookFriendRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookFriendRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookFriendRequests.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookFriendRequestScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookFriendRequest create
+   */
+  export type FacebookFriendRequestCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * The data needed to create a FacebookFriendRequest.
+     */
+    data: XOR<FacebookFriendRequestCreateInput, FacebookFriendRequestUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookFriendRequest createMany
+   */
+  export type FacebookFriendRequestCreateManyArgs = {
+    /**
+     * The data used to create many FacebookFriendRequests.
+     */
+    data: Enumerable<FacebookFriendRequestCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookFriendRequest update
+   */
+  export type FacebookFriendRequestUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * The data needed to update a FacebookFriendRequest.
+     */
+    data: XOR<FacebookFriendRequestUpdateInput, FacebookFriendRequestUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookFriendRequest to update.
+     */
+    where: FacebookFriendRequestWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookFriendRequest updateMany
+   */
+  export type FacebookFriendRequestUpdateManyArgs = {
+    /**
+     * The data used to update FacebookFriendRequests.
+     */
+    data: XOR<FacebookFriendRequestUpdateManyMutationInput, FacebookFriendRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookFriendRequests to update
+     */
+    where?: FacebookFriendRequestWhereInput
+  }
+
+
+  /**
+   * FacebookFriendRequest upsert
+   */
+  export type FacebookFriendRequestUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * The filter to search for the FacebookFriendRequest to update in case it exists.
+     */
+    where: FacebookFriendRequestWhereUniqueInput
+    /**
+     * In case the FacebookFriendRequest found by the `where` argument doesn't exist, create a new FacebookFriendRequest with this data.
+     */
+    create: XOR<FacebookFriendRequestCreateInput, FacebookFriendRequestUncheckedCreateInput>
+    /**
+     * In case the FacebookFriendRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookFriendRequestUpdateInput, FacebookFriendRequestUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookFriendRequest delete
+   */
+  export type FacebookFriendRequestDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+    /**
+     * Filter which FacebookFriendRequest to delete.
+     */
+    where: FacebookFriendRequestWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookFriendRequest deleteMany
+   */
+  export type FacebookFriendRequestDeleteManyArgs = {
+    /**
+     * Filter which FacebookFriendRequests to delete
+     */
+    where?: FacebookFriendRequestWhereInput
+  }
+
+
+  /**
+   * FacebookFriendRequest without action
+   */
+  export type FacebookFriendRequestArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookFriendRequest
+     */
+    select?: FacebookFriendRequestSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookFriendRequestInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookUserRelation
+   */
+
+
+  export type AggregateFacebookUserRelation = {
+    _count: FacebookUserRelationCountAggregateOutputType | null
+    _avg: FacebookUserRelationAvgAggregateOutputType | null
+    _sum: FacebookUserRelationSumAggregateOutputType | null
+    _min: FacebookUserRelationMinAggregateOutputType | null
+    _max: FacebookUserRelationMaxAggregateOutputType | null
+  }
+
+  export type FacebookUserRelationAvgAggregateOutputType = {
+    id: number | null
+    relationFromUserId: number | null
+    relationToUserId: number | null
+  }
+
+  export type FacebookUserRelationSumAggregateOutputType = {
+    id: number | null
+    relationFromUserId: number | null
+    relationToUserId: number | null
+  }
+
+  export type FacebookUserRelationMinAggregateOutputType = {
+    id: number | null
+    relationFromUserId: number | null
+    relationToUserId: number | null
+    isAccepted: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookUserRelationMaxAggregateOutputType = {
+    id: number | null
+    relationFromUserId: number | null
+    relationToUserId: number | null
+    isAccepted: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookUserRelationCountAggregateOutputType = {
+    id: number
+    relationFromUserId: number
+    relationToUserId: number
+    isAccepted: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookUserRelationAvgAggregateInputType = {
+    id?: true
+    relationFromUserId?: true
+    relationToUserId?: true
+  }
+
+  export type FacebookUserRelationSumAggregateInputType = {
+    id?: true
+    relationFromUserId?: true
+    relationToUserId?: true
+  }
+
+  export type FacebookUserRelationMinAggregateInputType = {
+    id?: true
+    relationFromUserId?: true
+    relationToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookUserRelationMaxAggregateInputType = {
+    id?: true
+    relationFromUserId?: true
+    relationToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookUserRelationCountAggregateInputType = {
+    id?: true
+    relationFromUserId?: true
+    relationToUserId?: true
+    isAccepted?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookUserRelationAggregateArgs = {
+    /**
+     * Filter which FacebookUserRelation to aggregate.
+     */
+    where?: FacebookUserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUserRelations to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookUserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookUserRelations
+    **/
+    _count?: true | FacebookUserRelationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookUserRelationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookUserRelationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookUserRelationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookUserRelationMaxAggregateInputType
+  }
+
+  export type GetFacebookUserRelationAggregateType<T extends FacebookUserRelationAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookUserRelation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookUserRelation[P]>
+      : GetScalarType<T[P], AggregateFacebookUserRelation[P]>
+  }
+
+
+
+
+  export type FacebookUserRelationGroupByArgs = {
+    where?: FacebookUserRelationWhereInput
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithAggregationInput>
+    by: FacebookUserRelationScalarFieldEnum[]
+    having?: FacebookUserRelationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookUserRelationCountAggregateInputType | true
+    _avg?: FacebookUserRelationAvgAggregateInputType
+    _sum?: FacebookUserRelationSumAggregateInputType
+    _min?: FacebookUserRelationMinAggregateInputType
+    _max?: FacebookUserRelationMaxAggregateInputType
+  }
+
+
+  export type FacebookUserRelationGroupByOutputType = {
+    id: number
+    relationFromUserId: number
+    relationToUserId: number
+    isAccepted: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookUserRelationCountAggregateOutputType | null
+    _avg: FacebookUserRelationAvgAggregateOutputType | null
+    _sum: FacebookUserRelationSumAggregateOutputType | null
+    _min: FacebookUserRelationMinAggregateOutputType | null
+    _max: FacebookUserRelationMaxAggregateOutputType | null
+  }
+
+  type GetFacebookUserRelationGroupByPayload<T extends FacebookUserRelationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookUserRelationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookUserRelationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookUserRelationGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookUserRelationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookUserRelationSelect = {
+    id?: boolean
+    relationFromUser?: boolean | FacebookUserArgs
+    relationFromUserId?: boolean
+    relationToUser?: boolean | FacebookUserArgs
+    relationToUserId?: boolean
+    isAccepted?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookUserRelationInclude = {
+    relationFromUser?: boolean | FacebookUserArgs
+    relationToUser?: boolean | FacebookUserArgs
+  }
+
+  export type FacebookUserRelationGetPayload<S extends boolean | null | undefined | FacebookUserRelationArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookUserRelation :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookUserRelationArgs | FacebookUserRelationFindManyArgs)
+    ? FacebookUserRelation  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'relationFromUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'relationToUser' ? FacebookUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookUserRelationArgs | FacebookUserRelationFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'relationFromUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'relationToUser' ? FacebookUserGetPayload<S['select'][P]> :  P extends keyof FacebookUserRelation ? FacebookUserRelation[P] : never
+  } 
+      : FacebookUserRelation
+
+
+  type FacebookUserRelationCountArgs = 
+    Omit<FacebookUserRelationFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookUserRelationCountAggregateInputType | true
+    }
+
+  export interface FacebookUserRelationDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookUserRelation that matches the filter.
+     * @param {FacebookUserRelationFindUniqueArgs} args - Arguments to find a FacebookUserRelation
+     * @example
+     * // Get one FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookUserRelationFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookUserRelationFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookUserRelation'> extends True ? Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>> : Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookUserRelation that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookUserRelationFindUniqueOrThrowArgs} args - Arguments to find a FacebookUserRelation
+     * @example
+     * // Get one FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookUserRelationFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookUserRelationFindUniqueOrThrowArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Find the first FacebookUserRelation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationFindFirstArgs} args - Arguments to find a FacebookUserRelation
+     * @example
+     * // Get one FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookUserRelationFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookUserRelationFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookUserRelation'> extends True ? Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>> : Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookUserRelation that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationFindFirstOrThrowArgs} args - Arguments to find a FacebookUserRelation
+     * @example
+     * // Get one FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookUserRelationFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookUserRelationFindFirstOrThrowArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookUserRelations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookUserRelations
+     * const facebookUserRelations = await prisma.facebookUserRelation.findMany()
+     * 
+     * // Get first 10 FacebookUserRelations
+     * const facebookUserRelations = await prisma.facebookUserRelation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookUserRelationWithIdOnly = await prisma.facebookUserRelation.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookUserRelationFindManyArgs>(
+      args?: SelectSubset<T, FacebookUserRelationFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookUserRelationGetPayload<T>>>
+
+    /**
+     * Create a FacebookUserRelation.
+     * @param {FacebookUserRelationCreateArgs} args - Arguments to create a FacebookUserRelation.
+     * @example
+     * // Create one FacebookUserRelation
+     * const FacebookUserRelation = await prisma.facebookUserRelation.create({
+     *   data: {
+     *     // ... data to create a FacebookUserRelation
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookUserRelationCreateArgs>(
+      args: SelectSubset<T, FacebookUserRelationCreateArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Create many FacebookUserRelations.
+     *     @param {FacebookUserRelationCreateManyArgs} args - Arguments to create many FacebookUserRelations.
+     *     @example
+     *     // Create many FacebookUserRelations
+     *     const facebookUserRelation = await prisma.facebookUserRelation.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookUserRelationCreateManyArgs>(
+      args?: SelectSubset<T, FacebookUserRelationCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookUserRelation.
+     * @param {FacebookUserRelationDeleteArgs} args - Arguments to delete one FacebookUserRelation.
+     * @example
+     * // Delete one FacebookUserRelation
+     * const FacebookUserRelation = await prisma.facebookUserRelation.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookUserRelation
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookUserRelationDeleteArgs>(
+      args: SelectSubset<T, FacebookUserRelationDeleteArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Update one FacebookUserRelation.
+     * @param {FacebookUserRelationUpdateArgs} args - Arguments to update one FacebookUserRelation.
+     * @example
+     * // Update one FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookUserRelationUpdateArgs>(
+      args: SelectSubset<T, FacebookUserRelationUpdateArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookUserRelations.
+     * @param {FacebookUserRelationDeleteManyArgs} args - Arguments to filter FacebookUserRelations to delete.
+     * @example
+     * // Delete a few FacebookUserRelations
+     * const { count } = await prisma.facebookUserRelation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookUserRelationDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookUserRelationDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookUserRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookUserRelations
+     * const facebookUserRelation = await prisma.facebookUserRelation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookUserRelationUpdateManyArgs>(
+      args: SelectSubset<T, FacebookUserRelationUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookUserRelation.
+     * @param {FacebookUserRelationUpsertArgs} args - Arguments to update or create a FacebookUserRelation.
+     * @example
+     * // Update or create a FacebookUserRelation
+     * const facebookUserRelation = await prisma.facebookUserRelation.upsert({
+     *   create: {
+     *     // ... data to create a FacebookUserRelation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookUserRelation we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookUserRelationUpsertArgs>(
+      args: SelectSubset<T, FacebookUserRelationUpsertArgs>
+    ): Prisma__FacebookUserRelationClient<FacebookUserRelationGetPayload<T>>
+
+    /**
+     * Count the number of FacebookUserRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationCountArgs} args - Arguments to filter FacebookUserRelations to count.
+     * @example
+     * // Count the number of FacebookUserRelations
+     * const count = await prisma.facebookUserRelation.count({
+     *   where: {
+     *     // ... the filter for the FacebookUserRelations we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookUserRelationCountArgs>(
+      args?: Subset<T, FacebookUserRelationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookUserRelationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookUserRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookUserRelationAggregateArgs>(args: Subset<T, FacebookUserRelationAggregateArgs>): Prisma.PrismaPromise<GetFacebookUserRelationAggregateType<T>>
+
+    /**
+     * Group by FacebookUserRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookUserRelationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookUserRelationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookUserRelationGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookUserRelationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookUserRelationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookUserRelationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookUserRelation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookUserRelationClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    relationFromUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    relationToUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookUserRelation base type for findUnique actions
+   */
+  export type FacebookUserRelationFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter, which FacebookUserRelation to fetch.
+     */
+    where: FacebookUserRelationWhereUniqueInput
+  }
+
+  /**
+   * FacebookUserRelation findUnique
+   */
+  export interface FacebookUserRelationFindUniqueArgs extends FacebookUserRelationFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookUserRelation findUniqueOrThrow
+   */
+  export type FacebookUserRelationFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter, which FacebookUserRelation to fetch.
+     */
+    where: FacebookUserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUserRelation base type for findFirst actions
+   */
+  export type FacebookUserRelationFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter, which FacebookUserRelation to fetch.
+     */
+    where?: FacebookUserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUserRelations to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookUserRelations.
+     */
+    cursor?: FacebookUserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookUserRelations.
+     */
+    distinct?: Enumerable<FacebookUserRelationScalarFieldEnum>
+  }
+
+  /**
+   * FacebookUserRelation findFirst
+   */
+  export interface FacebookUserRelationFindFirstArgs extends FacebookUserRelationFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookUserRelation findFirstOrThrow
+   */
+  export type FacebookUserRelationFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter, which FacebookUserRelation to fetch.
+     */
+    where?: FacebookUserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUserRelations to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookUserRelations.
+     */
+    cursor?: FacebookUserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookUserRelations.
+     */
+    distinct?: Enumerable<FacebookUserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUserRelation findMany
+   */
+  export type FacebookUserRelationFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter, which FacebookUserRelations to fetch.
+     */
+    where?: FacebookUserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookUserRelations to fetch.
+     */
+    orderBy?: Enumerable<FacebookUserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookUserRelations.
+     */
+    cursor?: FacebookUserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookUserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookUserRelations.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookUserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookUserRelation create
+   */
+  export type FacebookUserRelationCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * The data needed to create a FacebookUserRelation.
+     */
+    data: XOR<FacebookUserRelationCreateInput, FacebookUserRelationUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookUserRelation createMany
+   */
+  export type FacebookUserRelationCreateManyArgs = {
+    /**
+     * The data used to create many FacebookUserRelations.
+     */
+    data: Enumerable<FacebookUserRelationCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookUserRelation update
+   */
+  export type FacebookUserRelationUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * The data needed to update a FacebookUserRelation.
+     */
+    data: XOR<FacebookUserRelationUpdateInput, FacebookUserRelationUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookUserRelation to update.
+     */
+    where: FacebookUserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUserRelation updateMany
+   */
+  export type FacebookUserRelationUpdateManyArgs = {
+    /**
+     * The data used to update FacebookUserRelations.
+     */
+    data: XOR<FacebookUserRelationUpdateManyMutationInput, FacebookUserRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookUserRelations to update
+     */
+    where?: FacebookUserRelationWhereInput
+  }
+
+
+  /**
+   * FacebookUserRelation upsert
+   */
+  export type FacebookUserRelationUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * The filter to search for the FacebookUserRelation to update in case it exists.
+     */
+    where: FacebookUserRelationWhereUniqueInput
+    /**
+     * In case the FacebookUserRelation found by the `where` argument doesn't exist, create a new FacebookUserRelation with this data.
+     */
+    create: XOR<FacebookUserRelationCreateInput, FacebookUserRelationUncheckedCreateInput>
+    /**
+     * In case the FacebookUserRelation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookUserRelationUpdateInput, FacebookUserRelationUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookUserRelation delete
+   */
+  export type FacebookUserRelationDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+    /**
+     * Filter which FacebookUserRelation to delete.
+     */
+    where: FacebookUserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookUserRelation deleteMany
+   */
+  export type FacebookUserRelationDeleteManyArgs = {
+    /**
+     * Filter which FacebookUserRelations to delete
+     */
+    where?: FacebookUserRelationWhereInput
+  }
+
+
+  /**
+   * FacebookUserRelation without action
+   */
+  export type FacebookUserRelationArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookUserRelation
+     */
+    select?: FacebookUserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookUserRelationInclude | null
+  }
+
+
+
+  /**
+   * Model FacebookMessenger
+   */
+
+
+  export type AggregateFacebookMessenger = {
+    _count: FacebookMessengerCountAggregateOutputType | null
+    _avg: FacebookMessengerAvgAggregateOutputType | null
+    _sum: FacebookMessengerSumAggregateOutputType | null
+    _min: FacebookMessengerMinAggregateOutputType | null
+    _max: FacebookMessengerMaxAggregateOutputType | null
+  }
+
+  export type FacebookMessengerAvgAggregateOutputType = {
+    id: number | null
+    messageFromUserId: number | null
+    messageToUserId: number | null
+  }
+
+  export type FacebookMessengerSumAggregateOutputType = {
+    id: number | null
+    messageFromUserId: number | null
+    messageToUserId: number | null
+  }
+
+  export type FacebookMessengerMinAggregateOutputType = {
+    id: number | null
+    message: string | null
+    messageFromUserId: number | null
+    messageToUserId: number | null
+    isRead: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookMessengerMaxAggregateOutputType = {
+    id: number | null
+    message: string | null
+    messageFromUserId: number | null
+    messageToUserId: number | null
+    isRead: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FacebookMessengerCountAggregateOutputType = {
+    id: number
+    message: number
+    messageFromUserId: number
+    messageToUserId: number
+    isRead: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FacebookMessengerAvgAggregateInputType = {
+    id?: true
+    messageFromUserId?: true
+    messageToUserId?: true
+  }
+
+  export type FacebookMessengerSumAggregateInputType = {
+    id?: true
+    messageFromUserId?: true
+    messageToUserId?: true
+  }
+
+  export type FacebookMessengerMinAggregateInputType = {
+    id?: true
+    message?: true
+    messageFromUserId?: true
+    messageToUserId?: true
+    isRead?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookMessengerMaxAggregateInputType = {
+    id?: true
+    message?: true
+    messageFromUserId?: true
+    messageToUserId?: true
+    isRead?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FacebookMessengerCountAggregateInputType = {
+    id?: true
+    message?: true
+    messageFromUserId?: true
+    messageToUserId?: true
+    isRead?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FacebookMessengerAggregateArgs = {
+    /**
+     * Filter which FacebookMessenger to aggregate.
+     */
+    where?: FacebookMessengerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookMessengers to fetch.
+     */
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FacebookMessengerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookMessengers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookMessengers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FacebookMessengers
+    **/
+    _count?: true | FacebookMessengerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FacebookMessengerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FacebookMessengerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FacebookMessengerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FacebookMessengerMaxAggregateInputType
+  }
+
+  export type GetFacebookMessengerAggregateType<T extends FacebookMessengerAggregateArgs> = {
+        [P in keyof T & keyof AggregateFacebookMessenger]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFacebookMessenger[P]>
+      : GetScalarType<T[P], AggregateFacebookMessenger[P]>
+  }
+
+
+
+
+  export type FacebookMessengerGroupByArgs = {
+    where?: FacebookMessengerWhereInput
+    orderBy?: Enumerable<FacebookMessengerOrderByWithAggregationInput>
+    by: FacebookMessengerScalarFieldEnum[]
+    having?: FacebookMessengerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FacebookMessengerCountAggregateInputType | true
+    _avg?: FacebookMessengerAvgAggregateInputType
+    _sum?: FacebookMessengerSumAggregateInputType
+    _min?: FacebookMessengerMinAggregateInputType
+    _max?: FacebookMessengerMaxAggregateInputType
+  }
+
+
+  export type FacebookMessengerGroupByOutputType = {
+    id: number
+    message: string
+    messageFromUserId: number
+    messageToUserId: number
+    isRead: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FacebookMessengerCountAggregateOutputType | null
+    _avg: FacebookMessengerAvgAggregateOutputType | null
+    _sum: FacebookMessengerSumAggregateOutputType | null
+    _min: FacebookMessengerMinAggregateOutputType | null
+    _max: FacebookMessengerMaxAggregateOutputType | null
+  }
+
+  type GetFacebookMessengerGroupByPayload<T extends FacebookMessengerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FacebookMessengerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FacebookMessengerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FacebookMessengerGroupByOutputType[P]>
+            : GetScalarType<T[P], FacebookMessengerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FacebookMessengerSelect = {
+    id?: boolean
+    message?: boolean
+    messageFromUser?: boolean | FacebookUserArgs
+    messageFromUserId?: boolean
+    messageToUser?: boolean | FacebookUserArgs
+    messageToUserId?: boolean
+    isRead?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FacebookMessengerInclude = {
+    messageFromUser?: boolean | FacebookUserArgs
+    messageToUser?: boolean | FacebookUserArgs
+  }
+
+  export type FacebookMessengerGetPayload<S extends boolean | null | undefined | FacebookMessengerArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FacebookMessenger :
+    S extends undefined ? never :
+    S extends { include: any } & (FacebookMessengerArgs | FacebookMessengerFindManyArgs)
+    ? FacebookMessenger  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'messageFromUser' ? FacebookUserGetPayload<S['include'][P]> :
+        P extends 'messageToUser' ? FacebookUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FacebookMessengerArgs | FacebookMessengerFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'messageFromUser' ? FacebookUserGetPayload<S['select'][P]> :
+        P extends 'messageToUser' ? FacebookUserGetPayload<S['select'][P]> :  P extends keyof FacebookMessenger ? FacebookMessenger[P] : never
+  } 
+      : FacebookMessenger
+
+
+  type FacebookMessengerCountArgs = 
+    Omit<FacebookMessengerFindManyArgs, 'select' | 'include'> & {
+      select?: FacebookMessengerCountAggregateInputType | true
+    }
+
+  export interface FacebookMessengerDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FacebookMessenger that matches the filter.
+     * @param {FacebookMessengerFindUniqueArgs} args - Arguments to find a FacebookMessenger
+     * @example
+     * // Get one FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FacebookMessengerFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FacebookMessengerFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FacebookMessenger'> extends True ? Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>> : Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T> | null, null>
+
+    /**
+     * Find one FacebookMessenger that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FacebookMessengerFindUniqueOrThrowArgs} args - Arguments to find a FacebookMessenger
+     * @example
+     * // Get one FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FacebookMessengerFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FacebookMessengerFindUniqueOrThrowArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Find the first FacebookMessenger that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerFindFirstArgs} args - Arguments to find a FacebookMessenger
+     * @example
+     * // Get one FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FacebookMessengerFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FacebookMessengerFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FacebookMessenger'> extends True ? Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>> : Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T> | null, null>
+
+    /**
+     * Find the first FacebookMessenger that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerFindFirstOrThrowArgs} args - Arguments to find a FacebookMessenger
+     * @example
+     * // Get one FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FacebookMessengerFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FacebookMessengerFindFirstOrThrowArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Find zero or more FacebookMessengers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FacebookMessengers
+     * const facebookMessengers = await prisma.facebookMessenger.findMany()
+     * 
+     * // Get first 10 FacebookMessengers
+     * const facebookMessengers = await prisma.facebookMessenger.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const facebookMessengerWithIdOnly = await prisma.facebookMessenger.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FacebookMessengerFindManyArgs>(
+      args?: SelectSubset<T, FacebookMessengerFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FacebookMessengerGetPayload<T>>>
+
+    /**
+     * Create a FacebookMessenger.
+     * @param {FacebookMessengerCreateArgs} args - Arguments to create a FacebookMessenger.
+     * @example
+     * // Create one FacebookMessenger
+     * const FacebookMessenger = await prisma.facebookMessenger.create({
+     *   data: {
+     *     // ... data to create a FacebookMessenger
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FacebookMessengerCreateArgs>(
+      args: SelectSubset<T, FacebookMessengerCreateArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Create many FacebookMessengers.
+     *     @param {FacebookMessengerCreateManyArgs} args - Arguments to create many FacebookMessengers.
+     *     @example
+     *     // Create many FacebookMessengers
+     *     const facebookMessenger = await prisma.facebookMessenger.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FacebookMessengerCreateManyArgs>(
+      args?: SelectSubset<T, FacebookMessengerCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FacebookMessenger.
+     * @param {FacebookMessengerDeleteArgs} args - Arguments to delete one FacebookMessenger.
+     * @example
+     * // Delete one FacebookMessenger
+     * const FacebookMessenger = await prisma.facebookMessenger.delete({
+     *   where: {
+     *     // ... filter to delete one FacebookMessenger
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FacebookMessengerDeleteArgs>(
+      args: SelectSubset<T, FacebookMessengerDeleteArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Update one FacebookMessenger.
+     * @param {FacebookMessengerUpdateArgs} args - Arguments to update one FacebookMessenger.
+     * @example
+     * // Update one FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FacebookMessengerUpdateArgs>(
+      args: SelectSubset<T, FacebookMessengerUpdateArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Delete zero or more FacebookMessengers.
+     * @param {FacebookMessengerDeleteManyArgs} args - Arguments to filter FacebookMessengers to delete.
+     * @example
+     * // Delete a few FacebookMessengers
+     * const { count } = await prisma.facebookMessenger.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FacebookMessengerDeleteManyArgs>(
+      args?: SelectSubset<T, FacebookMessengerDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FacebookMessengers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FacebookMessengers
+     * const facebookMessenger = await prisma.facebookMessenger.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FacebookMessengerUpdateManyArgs>(
+      args: SelectSubset<T, FacebookMessengerUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FacebookMessenger.
+     * @param {FacebookMessengerUpsertArgs} args - Arguments to update or create a FacebookMessenger.
+     * @example
+     * // Update or create a FacebookMessenger
+     * const facebookMessenger = await prisma.facebookMessenger.upsert({
+     *   create: {
+     *     // ... data to create a FacebookMessenger
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FacebookMessenger we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FacebookMessengerUpsertArgs>(
+      args: SelectSubset<T, FacebookMessengerUpsertArgs>
+    ): Prisma__FacebookMessengerClient<FacebookMessengerGetPayload<T>>
+
+    /**
+     * Count the number of FacebookMessengers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerCountArgs} args - Arguments to filter FacebookMessengers to count.
+     * @example
+     * // Count the number of FacebookMessengers
+     * const count = await prisma.facebookMessenger.count({
+     *   where: {
+     *     // ... the filter for the FacebookMessengers we want to count
+     *   }
+     * })
+    **/
+    count<T extends FacebookMessengerCountArgs>(
+      args?: Subset<T, FacebookMessengerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FacebookMessengerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FacebookMessenger.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FacebookMessengerAggregateArgs>(args: Subset<T, FacebookMessengerAggregateArgs>): Prisma.PrismaPromise<GetFacebookMessengerAggregateType<T>>
+
+    /**
+     * Group by FacebookMessenger.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FacebookMessengerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FacebookMessengerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FacebookMessengerGroupByArgs['orderBy'] }
+        : { orderBy?: FacebookMessengerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FacebookMessengerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFacebookMessengerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FacebookMessenger.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FacebookMessengerClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    messageFromUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    messageToUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FacebookMessenger base type for findUnique actions
+   */
+  export type FacebookMessengerFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter, which FacebookMessenger to fetch.
+     */
+    where: FacebookMessengerWhereUniqueInput
+  }
+
+  /**
+   * FacebookMessenger findUnique
+   */
+  export interface FacebookMessengerFindUniqueArgs extends FacebookMessengerFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookMessenger findUniqueOrThrow
+   */
+  export type FacebookMessengerFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter, which FacebookMessenger to fetch.
+     */
+    where: FacebookMessengerWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookMessenger base type for findFirst actions
+   */
+  export type FacebookMessengerFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter, which FacebookMessenger to fetch.
+     */
+    where?: FacebookMessengerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookMessengers to fetch.
+     */
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookMessengers.
+     */
+    cursor?: FacebookMessengerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookMessengers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookMessengers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookMessengers.
+     */
+    distinct?: Enumerable<FacebookMessengerScalarFieldEnum>
+  }
+
+  /**
+   * FacebookMessenger findFirst
+   */
+  export interface FacebookMessengerFindFirstArgs extends FacebookMessengerFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FacebookMessenger findFirstOrThrow
+   */
+  export type FacebookMessengerFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter, which FacebookMessenger to fetch.
+     */
+    where?: FacebookMessengerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookMessengers to fetch.
+     */
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FacebookMessengers.
+     */
+    cursor?: FacebookMessengerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookMessengers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookMessengers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FacebookMessengers.
+     */
+    distinct?: Enumerable<FacebookMessengerScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookMessenger findMany
+   */
+  export type FacebookMessengerFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter, which FacebookMessengers to fetch.
+     */
+    where?: FacebookMessengerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FacebookMessengers to fetch.
+     */
+    orderBy?: Enumerable<FacebookMessengerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FacebookMessengers.
+     */
+    cursor?: FacebookMessengerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FacebookMessengers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FacebookMessengers.
+     */
+    skip?: number
+    distinct?: Enumerable<FacebookMessengerScalarFieldEnum>
+  }
+
+
+  /**
+   * FacebookMessenger create
+   */
+  export type FacebookMessengerCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * The data needed to create a FacebookMessenger.
+     */
+    data: XOR<FacebookMessengerCreateInput, FacebookMessengerUncheckedCreateInput>
+  }
+
+
+  /**
+   * FacebookMessenger createMany
+   */
+  export type FacebookMessengerCreateManyArgs = {
+    /**
+     * The data used to create many FacebookMessengers.
+     */
+    data: Enumerable<FacebookMessengerCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FacebookMessenger update
+   */
+  export type FacebookMessengerUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * The data needed to update a FacebookMessenger.
+     */
+    data: XOR<FacebookMessengerUpdateInput, FacebookMessengerUncheckedUpdateInput>
+    /**
+     * Choose, which FacebookMessenger to update.
+     */
+    where: FacebookMessengerWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookMessenger updateMany
+   */
+  export type FacebookMessengerUpdateManyArgs = {
+    /**
+     * The data used to update FacebookMessengers.
+     */
+    data: XOR<FacebookMessengerUpdateManyMutationInput, FacebookMessengerUncheckedUpdateManyInput>
+    /**
+     * Filter which FacebookMessengers to update
+     */
+    where?: FacebookMessengerWhereInput
+  }
+
+
+  /**
+   * FacebookMessenger upsert
+   */
+  export type FacebookMessengerUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * The filter to search for the FacebookMessenger to update in case it exists.
+     */
+    where: FacebookMessengerWhereUniqueInput
+    /**
+     * In case the FacebookMessenger found by the `where` argument doesn't exist, create a new FacebookMessenger with this data.
+     */
+    create: XOR<FacebookMessengerCreateInput, FacebookMessengerUncheckedCreateInput>
+    /**
+     * In case the FacebookMessenger was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FacebookMessengerUpdateInput, FacebookMessengerUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FacebookMessenger delete
+   */
+  export type FacebookMessengerDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+    /**
+     * Filter which FacebookMessenger to delete.
+     */
+    where: FacebookMessengerWhereUniqueInput
+  }
+
+
+  /**
+   * FacebookMessenger deleteMany
+   */
+  export type FacebookMessengerDeleteManyArgs = {
+    /**
+     * Filter which FacebookMessengers to delete
+     */
+    where?: FacebookMessengerWhereInput
+  }
+
+
+  /**
+   * FacebookMessenger without action
+   */
+  export type FacebookMessengerArgs = {
+    /**
+     * Select specific fields to fetch from the FacebookMessenger
+     */
+    select?: FacebookMessengerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FacebookMessengerInclude | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -17692,6 +32795,174 @@ export namespace Prisma {
   };
 
   export type BinKitchenOrderScalarFieldEnum = (typeof BinKitchenOrderScalarFieldEnum)[keyof typeof BinKitchenOrderScalarFieldEnum]
+
+
+  export const FacebookCommentScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    commentByUserId: 'commentByUserId',
+    postId: 'postId',
+    isReplied: 'isReplied',
+    replyFromCommentId: 'replyFromCommentId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookCommentScalarFieldEnum = (typeof FacebookCommentScalarFieldEnum)[keyof typeof FacebookCommentScalarFieldEnum]
+
+
+  export const FacebookFriendRequestScalarFieldEnum: {
+    id: 'id',
+    requestFromUserId: 'requestFromUserId',
+    requestToUserId: 'requestToUserId',
+    isAccepted: 'isAccepted',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookFriendRequestScalarFieldEnum = (typeof FacebookFriendRequestScalarFieldEnum)[keyof typeof FacebookFriendRequestScalarFieldEnum]
+
+
+  export const FacebookGroupScalarFieldEnum: {
+    id: 'id',
+    GroupImage: 'GroupImage',
+    coverImage: 'coverImage',
+    name: 'name',
+    createrUserId: 'createrUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookGroupScalarFieldEnum = (typeof FacebookGroupScalarFieldEnum)[keyof typeof FacebookGroupScalarFieldEnum]
+
+
+  export const FacebookHashtagScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookHashtagScalarFieldEnum = (typeof FacebookHashtagScalarFieldEnum)[keyof typeof FacebookHashtagScalarFieldEnum]
+
+
+  export const FacebookLikeCommentScalarFieldEnum: {
+    id: 'id',
+    commentId: 'commentId',
+    posterUserId: 'posterUserId',
+    likeTypeId: 'likeTypeId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookLikeCommentScalarFieldEnum = (typeof FacebookLikeCommentScalarFieldEnum)[keyof typeof FacebookLikeCommentScalarFieldEnum]
+
+
+  export const FacebookLikePostScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    posterUserId: 'posterUserId',
+    likeTypeId: 'likeTypeId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookLikePostScalarFieldEnum = (typeof FacebookLikePostScalarFieldEnum)[keyof typeof FacebookLikePostScalarFieldEnum]
+
+
+  export const FacebookLikeTypeScalarFieldEnum: {
+    id: 'id',
+    emoji: 'emoji',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookLikeTypeScalarFieldEnum = (typeof FacebookLikeTypeScalarFieldEnum)[keyof typeof FacebookLikeTypeScalarFieldEnum]
+
+
+  export const FacebookLocationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookLocationScalarFieldEnum = (typeof FacebookLocationScalarFieldEnum)[keyof typeof FacebookLocationScalarFieldEnum]
+
+
+  export const FacebookMessengerScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    messageFromUserId: 'messageFromUserId',
+    messageToUserId: 'messageToUserId',
+    isRead: 'isRead',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookMessengerScalarFieldEnum = (typeof FacebookMessengerScalarFieldEnum)[keyof typeof FacebookMessengerScalarFieldEnum]
+
+
+  export const FacebookPostDestinationScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookPostDestinationScalarFieldEnum = (typeof FacebookPostDestinationScalarFieldEnum)[keyof typeof FacebookPostDestinationScalarFieldEnum]
+
+
+  export const FacebookPostScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    postTypeId: 'postTypeId',
+    posterUserId: 'posterUserId',
+    locationId: 'locationId',
+    destinationId: 'destinationId',
+    destinationRelateId: 'destinationRelateId',
+    isShared: 'isShared',
+    shareFromPostId: 'shareFromPostId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookPostScalarFieldEnum = (typeof FacebookPostScalarFieldEnum)[keyof typeof FacebookPostScalarFieldEnum]
+
+
+  export const FacebookPostTypeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookPostTypeScalarFieldEnum = (typeof FacebookPostTypeScalarFieldEnum)[keyof typeof FacebookPostTypeScalarFieldEnum]
+
+
+  export const FacebookUserRelationScalarFieldEnum: {
+    id: 'id',
+    relationFromUserId: 'relationFromUserId',
+    relationToUserId: 'relationToUserId',
+    isAccepted: 'isAccepted',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookUserRelationScalarFieldEnum = (typeof FacebookUserRelationScalarFieldEnum)[keyof typeof FacebookUserRelationScalarFieldEnum]
+
+
+  export const FacebookUserScalarFieldEnum: {
+    id: 'id',
+    profileImage: 'profileImage',
+    coverImage: 'coverImage',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FacebookUserScalarFieldEnum = (typeof FacebookUserScalarFieldEnum)[keyof typeof FacebookUserScalarFieldEnum]
 
 
   export const QueryMode: {
@@ -18402,12 +33673,12 @@ export namespace Prisma {
     name?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    follwer?: TwitterUserRelationListRelationFilter
-    following?: TwitterUserRelationListRelationFilter
-    TwitterPost?: TwitterPostListRelationFilter
-    TwitterReply?: TwitterReplyListRelationFilter
-    directFrom?: TwitterDMListRelationFilter
-    directTo?: TwitterDMListRelationFilter
+    follwers?: TwitterUserRelationListRelationFilter
+    followings?: TwitterUserRelationListRelationFilter
+    twitterPosts?: TwitterPostListRelationFilter
+    twitterReplies?: TwitterReplyListRelationFilter
+    directFroms?: TwitterDMListRelationFilter
+    directToes?: TwitterDMListRelationFilter
   }
 
   export type TwitterUserOrderByWithRelationInput = {
@@ -18416,12 +33687,12 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    follwer?: TwitterUserRelationOrderByRelationAggregateInput
-    following?: TwitterUserRelationOrderByRelationAggregateInput
-    TwitterPost?: TwitterPostOrderByRelationAggregateInput
-    TwitterReply?: TwitterReplyOrderByRelationAggregateInput
-    directFrom?: TwitterDMOrderByRelationAggregateInput
-    directTo?: TwitterDMOrderByRelationAggregateInput
+    follwers?: TwitterUserRelationOrderByRelationAggregateInput
+    followings?: TwitterUserRelationOrderByRelationAggregateInput
+    twitterPosts?: TwitterPostOrderByRelationAggregateInput
+    twitterReplies?: TwitterReplyOrderByRelationAggregateInput
+    directFroms?: TwitterDMOrderByRelationAggregateInput
+    directToes?: TwitterDMOrderByRelationAggregateInput
   }
 
   export type TwitterUserWhereUniqueInput = {
@@ -18515,7 +33786,7 @@ export namespace Prisma {
     postByUserId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    TwitterReply?: TwitterReplyListRelationFilter
+    twitterReplies?: TwitterReplyListRelationFilter
     hashTags?: TwitterHashTagListRelationFilter
   }
 
@@ -18526,7 +33797,7 @@ export namespace Prisma {
     postByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    TwitterReply?: TwitterReplyOrderByRelationAggregateInput
+    twitterReplies?: TwitterReplyOrderByRelationAggregateInput
     hashTags?: TwitterHashTagOrderByRelationAggregateInput
   }
 
@@ -18709,6 +33980,806 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter | string
     directFromId?: IntWithAggregatesFilter | number
     directToId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookUserWhereInput = {
+    AND?: Enumerable<FacebookUserWhereInput>
+    OR?: Enumerable<FacebookUserWhereInput>
+    NOT?: Enumerable<FacebookUserWhereInput>
+    id?: IntFilter | number
+    profileImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: FacebookPostListRelationFilter
+    groupcreater?: FacebookGroupListRelationFilter
+    groupMember?: FacebookGroupListRelationFilter
+    comments?: FacebookCommentListRelationFilter
+    likePosts?: FacebookLikePostListRelationFilter
+    likeComments?: FacebookLikeCommentListRelationFilter
+    friendRequestFroms?: FacebookFriendRequestListRelationFilter
+    friendRequestToes?: FacebookFriendRequestListRelationFilter
+    friendRelationFroms?: FacebookUserRelationListRelationFilter
+    friendRelationToes?: FacebookUserRelationListRelationFilter
+    messengeFroms?: FacebookMessengerListRelationFilter
+    messengeToes?: FacebookMessengerListRelationFilter
+  }
+
+  export type FacebookUserOrderByWithRelationInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: FacebookPostOrderByRelationAggregateInput
+    groupcreater?: FacebookGroupOrderByRelationAggregateInput
+    groupMember?: FacebookGroupOrderByRelationAggregateInput
+    comments?: FacebookCommentOrderByRelationAggregateInput
+    likePosts?: FacebookLikePostOrderByRelationAggregateInput
+    likeComments?: FacebookLikeCommentOrderByRelationAggregateInput
+    friendRequestFroms?: FacebookFriendRequestOrderByRelationAggregateInput
+    friendRequestToes?: FacebookFriendRequestOrderByRelationAggregateInput
+    friendRelationFroms?: FacebookUserRelationOrderByRelationAggregateInput
+    friendRelationToes?: FacebookUserRelationOrderByRelationAggregateInput
+    messengeFroms?: FacebookMessengerOrderByRelationAggregateInput
+    messengeToes?: FacebookMessengerOrderByRelationAggregateInput
+  }
+
+  export type FacebookUserWhereUniqueInput = {
+    id?: number
+    name?: string
+  }
+
+  export type FacebookUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookUserCountOrderByAggregateInput
+    _avg?: FacebookUserAvgOrderByAggregateInput
+    _max?: FacebookUserMaxOrderByAggregateInput
+    _min?: FacebookUserMinOrderByAggregateInput
+    _sum?: FacebookUserSumOrderByAggregateInput
+  }
+
+  export type FacebookUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    profileImage?: StringWithAggregatesFilter | string
+    coverImage?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookGroupWhereInput = {
+    AND?: Enumerable<FacebookGroupWhereInput>
+    OR?: Enumerable<FacebookGroupWhereInput>
+    NOT?: Enumerable<FacebookGroupWhereInput>
+    id?: IntFilter | number
+    GroupImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    name?: StringFilter | string
+    createrUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    createrUserId?: IntFilter | number
+    memberUser?: FacebookUserListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookGroupOrderByWithRelationInput = {
+    id?: SortOrder
+    GroupImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createrUser?: FacebookUserOrderByWithRelationInput
+    createrUserId?: SortOrder
+    memberUser?: FacebookUserOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookGroupWhereUniqueInput = {
+    id?: number
+    name?: string
+  }
+
+  export type FacebookGroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    GroupImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createrUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookGroupCountOrderByAggregateInput
+    _avg?: FacebookGroupAvgOrderByAggregateInput
+    _max?: FacebookGroupMaxOrderByAggregateInput
+    _min?: FacebookGroupMinOrderByAggregateInput
+    _sum?: FacebookGroupSumOrderByAggregateInput
+  }
+
+  export type FacebookGroupScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookGroupScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookGroupScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookGroupScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    GroupImage?: StringWithAggregatesFilter | string
+    coverImage?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    createrUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookPostDestinationWhereInput = {
+    AND?: Enumerable<FacebookPostDestinationWhereInput>
+    OR?: Enumerable<FacebookPostDestinationWhereInput>
+    NOT?: Enumerable<FacebookPostDestinationWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: FacebookPostListRelationFilter
+  }
+
+  export type FacebookPostDestinationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: FacebookPostOrderByRelationAggregateInput
+  }
+
+  export type FacebookPostDestinationWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookPostDestinationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookPostDestinationCountOrderByAggregateInput
+    _avg?: FacebookPostDestinationAvgOrderByAggregateInput
+    _max?: FacebookPostDestinationMaxOrderByAggregateInput
+    _min?: FacebookPostDestinationMinOrderByAggregateInput
+    _sum?: FacebookPostDestinationSumOrderByAggregateInput
+  }
+
+  export type FacebookPostDestinationScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookPostDestinationScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookPostDestinationScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookPostDestinationScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookPostTypeWhereInput = {
+    AND?: Enumerable<FacebookPostTypeWhereInput>
+    OR?: Enumerable<FacebookPostTypeWhereInput>
+    NOT?: Enumerable<FacebookPostTypeWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: FacebookPostListRelationFilter
+  }
+
+  export type FacebookPostTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: FacebookPostOrderByRelationAggregateInput
+  }
+
+  export type FacebookPostTypeWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookPostTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookPostTypeCountOrderByAggregateInput
+    _avg?: FacebookPostTypeAvgOrderByAggregateInput
+    _max?: FacebookPostTypeMaxOrderByAggregateInput
+    _min?: FacebookPostTypeMinOrderByAggregateInput
+    _sum?: FacebookPostTypeSumOrderByAggregateInput
+  }
+
+  export type FacebookPostTypeScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookPostTypeScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookPostTypeScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookPostTypeScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookLocationWhereInput = {
+    AND?: Enumerable<FacebookLocationWhereInput>
+    OR?: Enumerable<FacebookLocationWhereInput>
+    NOT?: Enumerable<FacebookLocationWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: FacebookPostListRelationFilter
+  }
+
+  export type FacebookLocationOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: FacebookPostOrderByRelationAggregateInput
+  }
+
+  export type FacebookLocationWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookLocationOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookLocationCountOrderByAggregateInput
+    _avg?: FacebookLocationAvgOrderByAggregateInput
+    _max?: FacebookLocationMaxOrderByAggregateInput
+    _min?: FacebookLocationMinOrderByAggregateInput
+    _sum?: FacebookLocationSumOrderByAggregateInput
+  }
+
+  export type FacebookLocationScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookLocationScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookLocationScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookLocationScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookHashtagWhereInput = {
+    AND?: Enumerable<FacebookHashtagWhereInput>
+    OR?: Enumerable<FacebookHashtagWhereInput>
+    NOT?: Enumerable<FacebookHashtagWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: FacebookPostListRelationFilter
+  }
+
+  export type FacebookHashtagOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: FacebookPostOrderByRelationAggregateInput
+  }
+
+  export type FacebookHashtagWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookHashtagOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookHashtagCountOrderByAggregateInput
+    _avg?: FacebookHashtagAvgOrderByAggregateInput
+    _max?: FacebookHashtagMaxOrderByAggregateInput
+    _min?: FacebookHashtagMinOrderByAggregateInput
+    _sum?: FacebookHashtagSumOrderByAggregateInput
+  }
+
+  export type FacebookHashtagScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookHashtagScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookHashtagScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookHashtagScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookPostWhereInput = {
+    AND?: Enumerable<FacebookPostWhereInput>
+    OR?: Enumerable<FacebookPostWhereInput>
+    NOT?: Enumerable<FacebookPostWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    postType?: XOR<FacebookPostTypeRelationFilter, FacebookPostTypeWhereInput>
+    postTypeId?: IntFilter | number
+    posterUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    posterUserId?: IntFilter | number
+    location?: XOR<FacebookLocationRelationFilter, FacebookLocationWhereInput>
+    locationId?: IntFilter | number
+    destination?: XOR<FacebookPostDestinationRelationFilter, FacebookPostDestinationWhereInput>
+    destinationId?: IntFilter | number
+    destinationRelateId?: IntFilter | number
+    isShared?: BoolFilter | boolean
+    shareFromPostId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    hashtags?: FacebookHashtagListRelationFilter
+    comments?: FacebookCommentListRelationFilter
+    likePosts?: FacebookLikePostListRelationFilter
+    likeComments?: FacebookLikeCommentListRelationFilter
+  }
+
+  export type FacebookPostOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    postType?: FacebookPostTypeOrderByWithRelationInput
+    postTypeId?: SortOrder
+    posterUser?: FacebookUserOrderByWithRelationInput
+    posterUserId?: SortOrder
+    location?: FacebookLocationOrderByWithRelationInput
+    locationId?: SortOrder
+    destination?: FacebookPostDestinationOrderByWithRelationInput
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    hashtags?: FacebookHashtagOrderByRelationAggregateInput
+    comments?: FacebookCommentOrderByRelationAggregateInput
+    likePosts?: FacebookLikePostOrderByRelationAggregateInput
+    likeComments?: FacebookLikeCommentOrderByRelationAggregateInput
+  }
+
+  export type FacebookPostWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookPostOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookPostCountOrderByAggregateInput
+    _avg?: FacebookPostAvgOrderByAggregateInput
+    _max?: FacebookPostMaxOrderByAggregateInput
+    _min?: FacebookPostMinOrderByAggregateInput
+    _sum?: FacebookPostSumOrderByAggregateInput
+  }
+
+  export type FacebookPostScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookPostScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookPostScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookPostScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    message?: StringWithAggregatesFilter | string
+    postTypeId?: IntWithAggregatesFilter | number
+    posterUserId?: IntWithAggregatesFilter | number
+    locationId?: IntWithAggregatesFilter | number
+    destinationId?: IntWithAggregatesFilter | number
+    destinationRelateId?: IntWithAggregatesFilter | number
+    isShared?: BoolWithAggregatesFilter | boolean
+    shareFromPostId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookCommentWhereInput = {
+    AND?: Enumerable<FacebookCommentWhereInput>
+    OR?: Enumerable<FacebookCommentWhereInput>
+    NOT?: Enumerable<FacebookCommentWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    commentByUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    commentByUserId?: IntFilter | number
+    post?: XOR<FacebookPostRelationFilter, FacebookPostWhereInput>
+    postId?: IntFilter | number
+    isReplied?: BoolFilter | boolean
+    replyFromCommentId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUser?: FacebookUserOrderByWithRelationInput
+    commentByUserId?: SortOrder
+    post?: FacebookPostOrderByWithRelationInput
+    postId?: SortOrder
+    isReplied?: SortOrder
+    replyFromCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    isReplied?: SortOrder
+    replyFromCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookCommentCountOrderByAggregateInput
+    _avg?: FacebookCommentAvgOrderByAggregateInput
+    _max?: FacebookCommentMaxOrderByAggregateInput
+    _min?: FacebookCommentMinOrderByAggregateInput
+    _sum?: FacebookCommentSumOrderByAggregateInput
+  }
+
+  export type FacebookCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    message?: StringWithAggregatesFilter | string
+    commentByUserId?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    isReplied?: BoolWithAggregatesFilter | boolean
+    replyFromCommentId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookLikeTypeWhereInput = {
+    AND?: Enumerable<FacebookLikeTypeWhereInput>
+    OR?: Enumerable<FacebookLikeTypeWhereInput>
+    NOT?: Enumerable<FacebookLikeTypeWhereInput>
+    id?: IntFilter | number
+    emoji?: StringFilter | string
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    likePosts?: FacebookLikePostListRelationFilter
+    likeComments?: FacebookLikeCommentListRelationFilter
+  }
+
+  export type FacebookLikeTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likePosts?: FacebookLikePostOrderByRelationAggregateInput
+    likeComments?: FacebookLikeCommentOrderByRelationAggregateInput
+  }
+
+  export type FacebookLikeTypeWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookLikeTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookLikeTypeCountOrderByAggregateInput
+    _avg?: FacebookLikeTypeAvgOrderByAggregateInput
+    _max?: FacebookLikeTypeMaxOrderByAggregateInput
+    _min?: FacebookLikeTypeMinOrderByAggregateInput
+    _sum?: FacebookLikeTypeSumOrderByAggregateInput
+  }
+
+  export type FacebookLikeTypeScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookLikeTypeScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookLikeTypeScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookLikeTypeScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    emoji?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookLikePostWhereInput = {
+    AND?: Enumerable<FacebookLikePostWhereInput>
+    OR?: Enumerable<FacebookLikePostWhereInput>
+    NOT?: Enumerable<FacebookLikePostWhereInput>
+    id?: IntFilter | number
+    post?: XOR<FacebookPostRelationFilter, FacebookPostWhereInput>
+    postId?: IntFilter | number
+    posterUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    posterUserId?: IntFilter | number
+    likeType?: XOR<FacebookLikeTypeRelationFilter, FacebookLikeTypeWhereInput>
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookLikePostOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: FacebookPostOrderByWithRelationInput
+    postId?: SortOrder
+    posterUser?: FacebookUserOrderByWithRelationInput
+    posterUserId?: SortOrder
+    likeType?: FacebookLikeTypeOrderByWithRelationInput
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikePostWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookLikePostOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookLikePostCountOrderByAggregateInput
+    _avg?: FacebookLikePostAvgOrderByAggregateInput
+    _max?: FacebookLikePostMaxOrderByAggregateInput
+    _min?: FacebookLikePostMinOrderByAggregateInput
+    _sum?: FacebookLikePostSumOrderByAggregateInput
+  }
+
+  export type FacebookLikePostScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookLikePostScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookLikePostScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookLikePostScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    posterUserId?: IntWithAggregatesFilter | number
+    likeTypeId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookLikeCommentWhereInput = {
+    AND?: Enumerable<FacebookLikeCommentWhereInput>
+    OR?: Enumerable<FacebookLikeCommentWhereInput>
+    NOT?: Enumerable<FacebookLikeCommentWhereInput>
+    id?: IntFilter | number
+    comment?: XOR<FacebookPostRelationFilter, FacebookPostWhereInput>
+    commentId?: IntFilter | number
+    posterUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    posterUserId?: IntFilter | number
+    likeType?: XOR<FacebookLikeTypeRelationFilter, FacebookLikeTypeWhereInput>
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookLikeCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    comment?: FacebookPostOrderByWithRelationInput
+    commentId?: SortOrder
+    posterUser?: FacebookUserOrderByWithRelationInput
+    posterUserId?: SortOrder
+    likeType?: FacebookLikeTypeOrderByWithRelationInput
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookLikeCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookLikeCommentCountOrderByAggregateInput
+    _avg?: FacebookLikeCommentAvgOrderByAggregateInput
+    _max?: FacebookLikeCommentMaxOrderByAggregateInput
+    _min?: FacebookLikeCommentMinOrderByAggregateInput
+    _sum?: FacebookLikeCommentSumOrderByAggregateInput
+  }
+
+  export type FacebookLikeCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookLikeCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookLikeCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookLikeCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    commentId?: IntWithAggregatesFilter | number
+    posterUserId?: IntWithAggregatesFilter | number
+    likeTypeId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookFriendRequestWhereInput = {
+    AND?: Enumerable<FacebookFriendRequestWhereInput>
+    OR?: Enumerable<FacebookFriendRequestWhereInput>
+    NOT?: Enumerable<FacebookFriendRequestWhereInput>
+    id?: IntFilter | number
+    requestFromUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    requestFromUserId?: IntFilter | number
+    requestToUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    requestToUserId?: IntFilter | number
+    isAccepted?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookFriendRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    requestFromUser?: FacebookUserOrderByWithRelationInput
+    requestFromUserId?: SortOrder
+    requestToUser?: FacebookUserOrderByWithRelationInput
+    requestToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookFriendRequestWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookFriendRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookFriendRequestCountOrderByAggregateInput
+    _avg?: FacebookFriendRequestAvgOrderByAggregateInput
+    _max?: FacebookFriendRequestMaxOrderByAggregateInput
+    _min?: FacebookFriendRequestMinOrderByAggregateInput
+    _sum?: FacebookFriendRequestSumOrderByAggregateInput
+  }
+
+  export type FacebookFriendRequestScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookFriendRequestScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookFriendRequestScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookFriendRequestScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    requestFromUserId?: IntWithAggregatesFilter | number
+    requestToUserId?: IntWithAggregatesFilter | number
+    isAccepted?: BoolWithAggregatesFilter | boolean
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookUserRelationWhereInput = {
+    AND?: Enumerable<FacebookUserRelationWhereInput>
+    OR?: Enumerable<FacebookUserRelationWhereInput>
+    NOT?: Enumerable<FacebookUserRelationWhereInput>
+    id?: IntFilter | number
+    relationFromUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    relationFromUserId?: IntFilter | number
+    relationToUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    relationToUserId?: IntFilter | number
+    isAccepted?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookUserRelationOrderByWithRelationInput = {
+    id?: SortOrder
+    relationFromUser?: FacebookUserOrderByWithRelationInput
+    relationFromUserId?: SortOrder
+    relationToUser?: FacebookUserOrderByWithRelationInput
+    relationToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserRelationWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookUserRelationOrderByWithAggregationInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookUserRelationCountOrderByAggregateInput
+    _avg?: FacebookUserRelationAvgOrderByAggregateInput
+    _max?: FacebookUserRelationMaxOrderByAggregateInput
+    _min?: FacebookUserRelationMinOrderByAggregateInput
+    _sum?: FacebookUserRelationSumOrderByAggregateInput
+  }
+
+  export type FacebookUserRelationScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookUserRelationScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookUserRelationScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookUserRelationScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    relationFromUserId?: IntWithAggregatesFilter | number
+    relationToUserId?: IntWithAggregatesFilter | number
+    isAccepted?: BoolWithAggregatesFilter | boolean
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FacebookMessengerWhereInput = {
+    AND?: Enumerable<FacebookMessengerWhereInput>
+    OR?: Enumerable<FacebookMessengerWhereInput>
+    NOT?: Enumerable<FacebookMessengerWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    messageFromUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    messageFromUserId?: IntFilter | number
+    messageToUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
+    messageToUserId?: IntFilter | number
+    isRead?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookMessengerOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    messageFromUser?: FacebookUserOrderByWithRelationInput
+    messageFromUserId?: SortOrder
+    messageToUser?: FacebookUserOrderByWithRelationInput
+    messageToUserId?: SortOrder
+    isRead?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookMessengerWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FacebookMessengerOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+    isRead?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FacebookMessengerCountOrderByAggregateInput
+    _avg?: FacebookMessengerAvgOrderByAggregateInput
+    _max?: FacebookMessengerMaxOrderByAggregateInput
+    _min?: FacebookMessengerMinOrderByAggregateInput
+    _sum?: FacebookMessengerSumOrderByAggregateInput
+  }
+
+  export type FacebookMessengerScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FacebookMessengerScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FacebookMessengerScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FacebookMessengerScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    message?: StringWithAggregatesFilter | string
+    messageFromUserId?: IntWithAggregatesFilter | number
+    messageToUserId?: IntWithAggregatesFilter | number
+    isRead?: BoolWithAggregatesFilter | boolean
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -19317,12 +35388,12 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
   export type TwitterUserUncheckedCreateInput = {
@@ -19331,12 +35402,12 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
   export type TwitterUserUpdateInput = {
@@ -19344,12 +35415,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
   export type TwitterUserUncheckedUpdateInput = {
@@ -19358,12 +35429,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
   export type TwitterUserCreateManyInput = {
@@ -19390,8 +35461,8 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationCreateInput = {
-    follwer: TwitterUserCreateNestedOneWithoutFollwerInput
-    following: TwitterUserCreateNestedOneWithoutFollowingInput
+    follwer: TwitterUserCreateNestedOneWithoutFollwersInput
+    following: TwitterUserCreateNestedOneWithoutFollowingsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19405,8 +35476,8 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationUpdateInput = {
-    follwer?: TwitterUserUpdateOneRequiredWithoutFollwerNestedInput
-    following?: TwitterUserUpdateOneRequiredWithoutFollowingNestedInput
+    follwer?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
+    following?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19442,10 +35513,10 @@ export namespace Prisma {
 
   export type TwitterPostCreateInput = {
     message: string
-    user: TwitterUserCreateNestedOneWithoutTwitterPostInput
+    user: TwitterUserCreateNestedOneWithoutTwitterPostsInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutPostInput
     hashTags?: TwitterHashTagCreateNestedManyWithoutPostsInput
   }
 
@@ -19455,16 +35526,16 @@ export namespace Prisma {
     postByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
     hashTags?: TwitterHashTagUncheckedCreateNestedManyWithoutPostsInput
   }
 
   export type TwitterPostUpdateInput = {
     message?: StringFieldUpdateOperationsInput | string
-    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostNestedInput
+    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutPostNestedInput
     hashTags?: TwitterHashTagUpdateManyWithoutPostsNestedInput
   }
 
@@ -19474,7 +35545,7 @@ export namespace Prisma {
     postByUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
     hashTags?: TwitterHashTagUncheckedUpdateManyWithoutPostsNestedInput
   }
 
@@ -19552,8 +35623,8 @@ export namespace Prisma {
 
   export type TwitterReplyCreateInput = {
     message: string
-    post: TwitterPostCreateNestedOneWithoutTwitterReplyInput
-    user: TwitterUserCreateNestedOneWithoutTwitterReplyInput
+    post: TwitterPostCreateNestedOneWithoutTwitterRepliesInput
+    user: TwitterUserCreateNestedOneWithoutTwitterRepliesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19569,8 +35640,8 @@ export namespace Prisma {
 
   export type TwitterReplyUpdateInput = {
     message?: StringFieldUpdateOperationsInput | string
-    post?: TwitterPostUpdateOneRequiredWithoutTwitterReplyNestedInput
-    user?: TwitterUserUpdateOneRequiredWithoutTwitterReplyNestedInput
+    post?: TwitterPostUpdateOneRequiredWithoutTwitterRepliesNestedInput
+    user?: TwitterUserUpdateOneRequiredWithoutTwitterRepliesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19610,8 +35681,8 @@ export namespace Prisma {
 
   export type TwitterDMCreateInput = {
     message: string
-    directFrom: TwitterUserCreateNestedOneWithoutDirectFromInput
-    directTo: TwitterUserCreateNestedOneWithoutDirectToInput
+    directFrom: TwitterUserCreateNestedOneWithoutDirectFromsInput
+    directTo: TwitterUserCreateNestedOneWithoutDirectToesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -19627,8 +35698,8 @@ export namespace Prisma {
 
   export type TwitterDMUpdateInput = {
     message?: StringFieldUpdateOperationsInput | string
-    directFrom?: TwitterUserUpdateOneRequiredWithoutDirectFromNestedInput
-    directTo?: TwitterUserUpdateOneRequiredWithoutDirectToNestedInput
+    directFrom?: TwitterUserUpdateOneRequiredWithoutDirectFromsNestedInput
+    directTo?: TwitterUserUpdateOneRequiredWithoutDirectToesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19662,6 +35733,919 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     directFromId?: IntFieldUpdateOperationsInput | number
     directToId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserCreateInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUpdateInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserCreateManyInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserUpdateManyMutationInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupCreateInput = {
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUser: FacebookUserCreateNestedOneWithoutGroupcreaterInput
+    memberUser?: FacebookUserCreateNestedManyWithoutGroupMemberInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupUncheckedCreateInput = {
+    id?: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUserId: number
+    memberUser?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupUpdateInput = {
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUser?: FacebookUserUpdateOneRequiredWithoutGroupcreaterNestedInput
+    memberUser?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUserId?: IntFieldUpdateOperationsInput | number
+    memberUser?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupCreateManyInput = {
+    id?: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupUpdateManyMutationInput = {
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostDestinationCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutDestinationInput
+  }
+
+  export type FacebookPostDestinationUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutDestinationInput
+  }
+
+  export type FacebookPostDestinationUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type FacebookPostDestinationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutDestinationNestedInput
+  }
+
+  export type FacebookPostDestinationCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostDestinationUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostDestinationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostTypeCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPostTypeInput
+  }
+
+  export type FacebookPostTypeUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPostTypeInput
+  }
+
+  export type FacebookPostTypeUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPostTypeNestedInput
+  }
+
+  export type FacebookPostTypeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPostTypeNestedInput
+  }
+
+  export type FacebookPostTypeCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostTypeUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostTypeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLocationCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutLocationInput
+  }
+
+  export type FacebookLocationUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutLocationInput
+  }
+
+  export type FacebookLocationUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutLocationNestedInput
+  }
+
+  export type FacebookLocationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type FacebookLocationCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLocationUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLocationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookHashtagCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutHashtagsInput
+  }
+
+  export type FacebookHashtagUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutHashtagsInput
+  }
+
+  export type FacebookHashtagUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutHashtagsNestedInput
+  }
+
+  export type FacebookHashtagUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutHashtagsNestedInput
+  }
+
+  export type FacebookHashtagCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookHashtagUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookHashtagUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostCreateInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUpdateInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostCreateManyInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostUpdateManyMutationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentCreateInput = {
+    message: string
+    commentByUser: FacebookUserCreateNestedOneWithoutCommentsInput
+    post: FacebookPostCreateNestedOneWithoutCommentsInput
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentUncheckedCreateInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    postId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentUpdateInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
+    post?: FacebookPostUpdateOneRequiredWithoutCommentsNestedInput
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentCreateManyInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    postId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentUpdateManyMutationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeTypeCreateInput = {
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: FacebookLikePostCreateNestedManyWithoutLikeTypeInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeUncheckedCreateInput = {
+    id?: number
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutLikeTypeInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeUpdateInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: FacebookLikePostUpdateManyWithoutLikeTypeNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookLikeTypeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookLikeTypeCreateManyInput = {
+    id?: number
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeTypeUpdateManyMutationInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeTypeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostCreateInput = {
+    post: FacebookPostCreateNestedOneWithoutLikePostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutLikePostsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUncheckedCreateInput = {
+    id?: number
+    postId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUpdateInput = {
+    post?: FacebookPostUpdateOneRequiredWithoutLikePostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostCreateManyInput = {
+    id?: number
+    postId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentCreateInput = {
+    comment: FacebookPostCreateNestedOneWithoutLikeCommentsInput
+    posterUser: FacebookUserCreateNestedOneWithoutLikeCommentsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedCreateInput = {
+    id?: number
+    commentId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUpdateInput = {
+    comment?: FacebookPostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentCreateManyInput = {
+    id?: number
+    commentId: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestCreateInput = {
+    requestFromUser: FacebookUserCreateNestedOneWithoutFriendRequestFromsInput
+    requestToUser: FacebookUserCreateNestedOneWithoutFriendRequestToesInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedCreateInput = {
+    id?: number
+    requestFromUserId: number
+    requestToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestUpdateInput = {
+    requestFromUser?: FacebookUserUpdateOneRequiredWithoutFriendRequestFromsNestedInput
+    requestToUser?: FacebookUserUpdateOneRequiredWithoutFriendRequestToesNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestFromUserId?: IntFieldUpdateOperationsInput | number
+    requestToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestCreateManyInput = {
+    id?: number
+    requestFromUserId: number
+    requestToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestUpdateManyMutationInput = {
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestFromUserId?: IntFieldUpdateOperationsInput | number
+    requestToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationCreateInput = {
+    relationFromUser: FacebookUserCreateNestedOneWithoutFriendRelationFromsInput
+    relationToUser: FacebookUserCreateNestedOneWithoutFriendRelationToesInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationUncheckedCreateInput = {
+    id?: number
+    relationFromUserId: number
+    relationToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationUpdateInput = {
+    relationFromUser?: FacebookUserUpdateOneRequiredWithoutFriendRelationFromsNestedInput
+    relationToUser?: FacebookUserUpdateOneRequiredWithoutFriendRelationToesNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationFromUserId?: IntFieldUpdateOperationsInput | number
+    relationToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationCreateManyInput = {
+    id?: number
+    relationFromUserId: number
+    relationToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationUpdateManyMutationInput = {
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationFromUserId?: IntFieldUpdateOperationsInput | number
+    relationToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerCreateInput = {
+    message: string
+    messageFromUser: FacebookUserCreateNestedOneWithoutMessengeFromsInput
+    messageToUser: FacebookUserCreateNestedOneWithoutMessengeToesInput
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerUncheckedCreateInput = {
+    id?: number
+    message: string
+    messageFromUserId: number
+    messageToUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerUpdateInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUser?: FacebookUserUpdateOneRequiredWithoutMessengeFromsNestedInput
+    messageToUser?: FacebookUserUpdateOneRequiredWithoutMessengeToesNestedInput
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUserId?: IntFieldUpdateOperationsInput | number
+    messageToUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerCreateManyInput = {
+    id?: number
+    message: string
+    messageFromUserId: number
+    messageToUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerUpdateManyMutationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUserId?: IntFieldUpdateOperationsInput | number
+    messageToUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20566,6 +37550,683 @@ export namespace Prisma {
     directToId?: SortOrder
   }
 
+  export type FacebookPostListRelationFilter = {
+    every?: FacebookPostWhereInput
+    some?: FacebookPostWhereInput
+    none?: FacebookPostWhereInput
+  }
+
+  export type FacebookGroupListRelationFilter = {
+    every?: FacebookGroupWhereInput
+    some?: FacebookGroupWhereInput
+    none?: FacebookGroupWhereInput
+  }
+
+  export type FacebookCommentListRelationFilter = {
+    every?: FacebookCommentWhereInput
+    some?: FacebookCommentWhereInput
+    none?: FacebookCommentWhereInput
+  }
+
+  export type FacebookLikePostListRelationFilter = {
+    every?: FacebookLikePostWhereInput
+    some?: FacebookLikePostWhereInput
+    none?: FacebookLikePostWhereInput
+  }
+
+  export type FacebookLikeCommentListRelationFilter = {
+    every?: FacebookLikeCommentWhereInput
+    some?: FacebookLikeCommentWhereInput
+    none?: FacebookLikeCommentWhereInput
+  }
+
+  export type FacebookFriendRequestListRelationFilter = {
+    every?: FacebookFriendRequestWhereInput
+    some?: FacebookFriendRequestWhereInput
+    none?: FacebookFriendRequestWhereInput
+  }
+
+  export type FacebookUserRelationListRelationFilter = {
+    every?: FacebookUserRelationWhereInput
+    some?: FacebookUserRelationWhereInput
+    none?: FacebookUserRelationWhereInput
+  }
+
+  export type FacebookMessengerListRelationFilter = {
+    every?: FacebookMessengerWhereInput
+    some?: FacebookMessengerWhereInput
+    none?: FacebookMessengerWhereInput
+  }
+
+  export type FacebookPostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookGroupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookLikePostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookLikeCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookFriendRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookUserRelationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookMessengerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookUserRelationFilter = {
+    is?: FacebookUserWhereInput
+    isNot?: FacebookUserWhereInput
+  }
+
+  export type FacebookUserListRelationFilter = {
+    every?: FacebookUserWhereInput
+    some?: FacebookUserWhereInput
+    none?: FacebookUserWhereInput
+  }
+
+  export type FacebookUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookGroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    GroupImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createrUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookGroupAvgOrderByAggregateInput = {
+    id?: SortOrder
+    createrUserId?: SortOrder
+  }
+
+  export type FacebookGroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    GroupImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createrUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookGroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    GroupImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    createrUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookGroupSumOrderByAggregateInput = {
+    id?: SortOrder
+    createrUserId?: SortOrder
+  }
+
+  export type FacebookPostDestinationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostDestinationAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookPostDestinationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostDestinationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostDestinationSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookPostTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostTypeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookPostTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostTypeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookLocationCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLocationAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookLocationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLocationMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLocationSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookHashtagCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookHashtagAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookHashtagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookHashtagMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookHashtagSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookPostTypeRelationFilter = {
+    is?: FacebookPostTypeWhereInput
+    isNot?: FacebookPostTypeWhereInput
+  }
+
+  export type FacebookLocationRelationFilter = {
+    is?: FacebookLocationWhereInput
+    isNot?: FacebookLocationWhereInput
+  }
+
+  export type FacebookPostDestinationRelationFilter = {
+    is?: FacebookPostDestinationWhereInput
+    isNot?: FacebookPostDestinationWhereInput
+  }
+
+  export type BoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
+  export type FacebookHashtagListRelationFilter = {
+    every?: FacebookHashtagWhereInput
+    some?: FacebookHashtagWhereInput
+    none?: FacebookHashtagWhereInput
+  }
+
+  export type FacebookHashtagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FacebookPostCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    shareFromPostId?: SortOrder
+  }
+
+  export type FacebookPostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookPostSumOrderByAggregateInput = {
+    id?: SortOrder
+    postTypeId?: SortOrder
+    posterUserId?: SortOrder
+    locationId?: SortOrder
+    destinationId?: SortOrder
+    destinationRelateId?: SortOrder
+    shareFromPostId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter = {
+    equals?: boolean
+    not?: NestedBoolWithAggregatesFilter | boolean
+    _count?: NestedIntFilter
+    _min?: NestedBoolFilter
+    _max?: NestedBoolFilter
+  }
+
+  export type FacebookPostRelationFilter = {
+    is?: FacebookPostWhereInput
+    isNot?: FacebookPostWhereInput
+  }
+
+  export type FacebookCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    isReplied?: SortOrder
+    replyFromCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    replyFromCommentId?: SortOrder
+  }
+
+  export type FacebookCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    isReplied?: SortOrder
+    replyFromCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    isReplied?: SortOrder
+    replyFromCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    replyFromCommentId?: SortOrder
+  }
+
+  export type FacebookLikeTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeTypeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookLikeTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeTypeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FacebookLikeTypeRelationFilter = {
+    is?: FacebookLikeTypeWhereInput
+    isNot?: FacebookLikeTypeWhereInput
+  }
+
+  export type FacebookLikePostCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikePostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type FacebookLikePostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikePostMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikePostSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type FacebookLikeCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type FacebookLikeCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookLikeCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    posterUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type FacebookFriendRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookFriendRequestAvgOrderByAggregateInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+  }
+
+  export type FacebookFriendRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookFriendRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookFriendRequestSumOrderByAggregateInput = {
+    id?: SortOrder
+    requestFromUserId?: SortOrder
+    requestToUserId?: SortOrder
+  }
+
+  export type FacebookUserRelationCountOrderByAggregateInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserRelationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+  }
+
+  export type FacebookUserRelationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserRelationMinOrderByAggregateInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+    isAccepted?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookUserRelationSumOrderByAggregateInput = {
+    id?: SortOrder
+    relationFromUserId?: SortOrder
+    relationToUserId?: SortOrder
+  }
+
+  export type FacebookMessengerCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+    isRead?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookMessengerAvgOrderByAggregateInput = {
+    id?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+  }
+
+  export type FacebookMessengerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+    isRead?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookMessengerMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+    isRead?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FacebookMessengerSumOrderByAggregateInput = {
+    id?: SortOrder
+    messageFromUserId?: SortOrder
+    messageToUserId?: SortOrder
+  }
+
   export type BinKitchenMenuCreateNestedManyWithoutCategoryInput = {
     create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
     connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
@@ -21374,37 +39035,37 @@ export namespace Prisma {
     deleteMany?: Enumerable<TwitterDMScalarWhereInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutFollwerInput = {
-    create?: XOR<TwitterUserCreateWithoutFollwerInput, TwitterUserUncheckedCreateWithoutFollwerInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollwerInput
+  export type TwitterUserCreateNestedOneWithoutFollwersInput = {
+    create?: XOR<TwitterUserCreateWithoutFollwersInput, TwitterUserUncheckedCreateWithoutFollwersInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollwersInput
     connect?: TwitterUserWhereUniqueInput
   }
 
-  export type TwitterUserCreateNestedOneWithoutFollowingInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowingInput, TwitterUserUncheckedCreateWithoutFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingInput
+  export type TwitterUserCreateNestedOneWithoutFollowingsInput = {
+    create?: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingsInput
     connect?: TwitterUserWhereUniqueInput
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFollwerNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFollwerInput, TwitterUserUncheckedCreateWithoutFollwerInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollwerInput
-    upsert?: TwitterUserUpsertWithoutFollwerInput
+  export type TwitterUserUpdateOneRequiredWithoutFollwersNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutFollwersInput, TwitterUserUncheckedCreateWithoutFollwersInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollwersInput
+    upsert?: TwitterUserUpsertWithoutFollwersInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFollwerInput, TwitterUserUncheckedUpdateWithoutFollwerInput>
+    update?: XOR<TwitterUserUpdateWithoutFollwersInput, TwitterUserUncheckedUpdateWithoutFollwersInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFollowingNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowingInput, TwitterUserUncheckedCreateWithoutFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingInput
-    upsert?: TwitterUserUpsertWithoutFollowingInput
+  export type TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingsInput
+    upsert?: TwitterUserUpsertWithoutFollowingsInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFollowingInput, TwitterUserUncheckedUpdateWithoutFollowingInput>
+    update?: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutTwitterPostInput = {
-    create?: XOR<TwitterUserCreateWithoutTwitterPostInput, TwitterUserUncheckedCreateWithoutTwitterPostInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterPostInput
+  export type TwitterUserCreateNestedOneWithoutTwitterPostsInput = {
+    create?: XOR<TwitterUserCreateWithoutTwitterPostsInput, TwitterUserUncheckedCreateWithoutTwitterPostsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterPostsInput
     connect?: TwitterUserWhereUniqueInput
   }
 
@@ -21434,12 +39095,12 @@ export namespace Prisma {
     connect?: Enumerable<TwitterHashTagWhereUniqueInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutTwitterPostNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutTwitterPostInput, TwitterUserUncheckedCreateWithoutTwitterPostInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterPostInput
-    upsert?: TwitterUserUpsertWithoutTwitterPostInput
+  export type TwitterUserUpdateOneRequiredWithoutTwitterPostsNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutTwitterPostsInput, TwitterUserUncheckedCreateWithoutTwitterPostsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterPostsInput
+    upsert?: TwitterUserUpsertWithoutTwitterPostsInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutTwitterPostInput, TwitterUserUncheckedUpdateWithoutTwitterPostInput>
+    update?: XOR<TwitterUserUpdateWithoutTwitterPostsInput, TwitterUserUncheckedUpdateWithoutTwitterPostsInput>
   }
 
   export type TwitterReplyUpdateManyWithoutPostNestedInput = {
@@ -21534,60 +39195,1280 @@ export namespace Prisma {
     deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterPostCreateNestedOneWithoutTwitterReplyInput = {
-    create?: XOR<TwitterPostCreateWithoutTwitterReplyInput, TwitterPostUncheckedCreateWithoutTwitterReplyInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutTwitterReplyInput
+  export type TwitterPostCreateNestedOneWithoutTwitterRepliesInput = {
+    create?: XOR<TwitterPostCreateWithoutTwitterRepliesInput, TwitterPostUncheckedCreateWithoutTwitterRepliesInput>
+    connectOrCreate?: TwitterPostCreateOrConnectWithoutTwitterRepliesInput
     connect?: TwitterPostWhereUniqueInput
   }
 
-  export type TwitterUserCreateNestedOneWithoutTwitterReplyInput = {
-    create?: XOR<TwitterUserCreateWithoutTwitterReplyInput, TwitterUserUncheckedCreateWithoutTwitterReplyInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterReplyInput
+  export type TwitterUserCreateNestedOneWithoutTwitterRepliesInput = {
+    create?: XOR<TwitterUserCreateWithoutTwitterRepliesInput, TwitterUserUncheckedCreateWithoutTwitterRepliesInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterRepliesInput
     connect?: TwitterUserWhereUniqueInput
   }
 
-  export type TwitterPostUpdateOneRequiredWithoutTwitterReplyNestedInput = {
-    create?: XOR<TwitterPostCreateWithoutTwitterReplyInput, TwitterPostUncheckedCreateWithoutTwitterReplyInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutTwitterReplyInput
-    upsert?: TwitterPostUpsertWithoutTwitterReplyInput
+  export type TwitterPostUpdateOneRequiredWithoutTwitterRepliesNestedInput = {
+    create?: XOR<TwitterPostCreateWithoutTwitterRepliesInput, TwitterPostUncheckedCreateWithoutTwitterRepliesInput>
+    connectOrCreate?: TwitterPostCreateOrConnectWithoutTwitterRepliesInput
+    upsert?: TwitterPostUpsertWithoutTwitterRepliesInput
     connect?: TwitterPostWhereUniqueInput
-    update?: XOR<TwitterPostUpdateWithoutTwitterReplyInput, TwitterPostUncheckedUpdateWithoutTwitterReplyInput>
+    update?: XOR<TwitterPostUpdateWithoutTwitterRepliesInput, TwitterPostUncheckedUpdateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutTwitterReplyNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutTwitterReplyInput, TwitterUserUncheckedCreateWithoutTwitterReplyInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterReplyInput
-    upsert?: TwitterUserUpsertWithoutTwitterReplyInput
+  export type TwitterUserUpdateOneRequiredWithoutTwitterRepliesNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutTwitterRepliesInput, TwitterUserUncheckedCreateWithoutTwitterRepliesInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutTwitterRepliesInput
+    upsert?: TwitterUserUpsertWithoutTwitterRepliesInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutTwitterReplyInput, TwitterUserUncheckedUpdateWithoutTwitterReplyInput>
+    update?: XOR<TwitterUserUpdateWithoutTwitterRepliesInput, TwitterUserUncheckedUpdateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutDirectFromInput = {
-    create?: XOR<TwitterUserCreateWithoutDirectFromInput, TwitterUserUncheckedCreateWithoutDirectFromInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectFromInput
-    connect?: TwitterUserWhereUniqueInput
-  }
-
-  export type TwitterUserCreateNestedOneWithoutDirectToInput = {
-    create?: XOR<TwitterUserCreateWithoutDirectToInput, TwitterUserUncheckedCreateWithoutDirectToInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectToInput
+  export type TwitterUserCreateNestedOneWithoutDirectFromsInput = {
+    create?: XOR<TwitterUserCreateWithoutDirectFromsInput, TwitterUserUncheckedCreateWithoutDirectFromsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectFromsInput
     connect?: TwitterUserWhereUniqueInput
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutDirectFromNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutDirectFromInput, TwitterUserUncheckedCreateWithoutDirectFromInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectFromInput
-    upsert?: TwitterUserUpsertWithoutDirectFromInput
+  export type TwitterUserCreateNestedOneWithoutDirectToesInput = {
+    create?: XOR<TwitterUserCreateWithoutDirectToesInput, TwitterUserUncheckedCreateWithoutDirectToesInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectToesInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutDirectFromInput, TwitterUserUncheckedUpdateWithoutDirectFromInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutDirectToNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutDirectToInput, TwitterUserUncheckedCreateWithoutDirectToInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectToInput
-    upsert?: TwitterUserUpsertWithoutDirectToInput
+  export type TwitterUserUpdateOneRequiredWithoutDirectFromsNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutDirectFromsInput, TwitterUserUncheckedCreateWithoutDirectFromsInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectFromsInput
+    upsert?: TwitterUserUpsertWithoutDirectFromsInput
     connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutDirectToInput, TwitterUserUncheckedUpdateWithoutDirectToInput>
+    update?: XOR<TwitterUserUpdateWithoutDirectFromsInput, TwitterUserUncheckedUpdateWithoutDirectFromsInput>
+  }
+
+  export type TwitterUserUpdateOneRequiredWithoutDirectToesNestedInput = {
+    create?: XOR<TwitterUserCreateWithoutDirectToesInput, TwitterUserUncheckedCreateWithoutDirectToesInput>
+    connectOrCreate?: TwitterUserCreateOrConnectWithoutDirectToesInput
+    upsert?: TwitterUserUpsertWithoutDirectToesInput
+    connect?: TwitterUserWhereUniqueInput
+    update?: XOR<TwitterUserUpdateWithoutDirectToesInput, TwitterUserUncheckedUpdateWithoutDirectToesInput>
+  }
+
+  export type FacebookPostCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPosterUserInput>, Enumerable<FacebookPostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookPostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookGroupCreateNestedManyWithoutCreaterUserInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutCreaterUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutCreaterUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutCreaterUserInput>
+    createMany?: FacebookGroupCreateManyCreaterUserInputEnvelope
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+  }
+
+  export type FacebookGroupCreateNestedManyWithoutMemberUserInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+  }
+
+  export type FacebookCommentCreateNestedManyWithoutCommentByUserInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutCommentByUserInput>, Enumerable<FacebookCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutCommentByUserInput>
+    createMany?: FacebookCommentCreateManyCommentByUserInputEnvelope
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPosterUserInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookLikePostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutPosterUserInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookLikeCommentCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestFromUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestFromUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestFromUserInputEnvelope
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+  }
+
+  export type FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestToUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestToUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestToUserInputEnvelope
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+  }
+
+  export type FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationFromUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationFromUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationFromUserInputEnvelope
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+  }
+
+  export type FacebookUserRelationCreateNestedManyWithoutRelationToUserInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationToUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationToUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationToUserInputEnvelope
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+  }
+
+  export type FacebookMessengerCreateNestedManyWithoutMessageFromUserInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageFromUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageFromUserInput>
+    createMany?: FacebookMessengerCreateManyMessageFromUserInputEnvelope
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+  }
+
+  export type FacebookMessengerCreateNestedManyWithoutMessageToUserInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageToUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageToUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageToUserInput>
+    createMany?: FacebookMessengerCreateManyMessageToUserInputEnvelope
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+  }
+
+  export type FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPosterUserInput>, Enumerable<FacebookPostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookPostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutCreaterUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutCreaterUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutCreaterUserInput>
+    createMany?: FacebookGroupCreateManyCreaterUserInputEnvelope
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+  }
+
+  export type FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+  }
+
+  export type FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutCommentByUserInput>, Enumerable<FacebookCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutCommentByUserInput>
+    createMany?: FacebookCommentCreateManyCommentByUserInputEnvelope
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPosterUserInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookLikePostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutPosterUserInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutPosterUserInput>
+    createMany?: FacebookLikeCommentCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestFromUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestFromUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestFromUserInputEnvelope
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+  }
+
+  export type FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestToUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestToUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestToUserInputEnvelope
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+  }
+
+  export type FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationFromUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationFromUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationFromUserInputEnvelope
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+  }
+
+  export type FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationToUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationToUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationToUserInputEnvelope
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+  }
+
+  export type FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageFromUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageFromUserInput>
+    createMany?: FacebookMessengerCreateManyMessageFromUserInputEnvelope
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+  }
+
+  export type FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageToUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageToUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageToUserInput>
+    createMany?: FacebookMessengerCreateManyMessageToUserInputEnvelope
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+  }
+
+  export type FacebookPostUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPosterUserInput>, Enumerable<FacebookPostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookPostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookGroupUpdateManyWithoutCreaterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutCreaterUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutCreaterUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutCreaterUserInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutCreaterUserInput>
+    createMany?: FacebookGroupCreateManyCreaterUserInputEnvelope
+    set?: Enumerable<FacebookGroupWhereUniqueInput>
+    disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
+    delete?: Enumerable<FacebookGroupWhereUniqueInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutCreaterUserInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutCreaterUserInput>
+    deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
+  }
+
+  export type FacebookGroupUpdateManyWithoutMemberUserNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput>
+    set?: Enumerable<FacebookGroupWhereUniqueInput>
+    disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
+    delete?: Enumerable<FacebookGroupWhereUniqueInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUserInput>
+    deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
+  }
+
+  export type FacebookCommentUpdateManyWithoutCommentByUserNestedInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutCommentByUserInput>, Enumerable<FacebookCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutCommentByUserInput>
+    upsert?: Enumerable<FacebookCommentUpsertWithWhereUniqueWithoutCommentByUserInput>
+    createMany?: FacebookCommentCreateManyCommentByUserInputEnvelope
+    set?: Enumerable<FacebookCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+    update?: Enumerable<FacebookCommentUpdateWithWhereUniqueWithoutCommentByUserInput>
+    updateMany?: Enumerable<FacebookCommentUpdateManyWithWhereWithoutCommentByUserInput>
+    deleteMany?: Enumerable<FacebookCommentScalarWhereInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPosterUserInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookLikePostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutPosterUserInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookLikeCommentCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestFromUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestFromUserInput>
+    upsert?: Enumerable<FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestFromUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestFromUserInputEnvelope
+    set?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    disconnect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    delete?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    update?: Enumerable<FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestFromUserInput>
+    updateMany?: Enumerable<FacebookFriendRequestUpdateManyWithWhereWithoutRequestFromUserInput>
+    deleteMany?: Enumerable<FacebookFriendRequestScalarWhereInput>
+  }
+
+  export type FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestToUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestToUserInput>
+    upsert?: Enumerable<FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestToUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestToUserInputEnvelope
+    set?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    disconnect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    delete?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    update?: Enumerable<FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestToUserInput>
+    updateMany?: Enumerable<FacebookFriendRequestUpdateManyWithWhereWithoutRequestToUserInput>
+    deleteMany?: Enumerable<FacebookFriendRequestScalarWhereInput>
+  }
+
+  export type FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationFromUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationFromUserInput>
+    upsert?: Enumerable<FacebookUserRelationUpsertWithWhereUniqueWithoutRelationFromUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationFromUserInputEnvelope
+    set?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    delete?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    update?: Enumerable<FacebookUserRelationUpdateWithWhereUniqueWithoutRelationFromUserInput>
+    updateMany?: Enumerable<FacebookUserRelationUpdateManyWithWhereWithoutRelationFromUserInput>
+    deleteMany?: Enumerable<FacebookUserRelationScalarWhereInput>
+  }
+
+  export type FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationToUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationToUserInput>
+    upsert?: Enumerable<FacebookUserRelationUpsertWithWhereUniqueWithoutRelationToUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationToUserInputEnvelope
+    set?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    delete?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    update?: Enumerable<FacebookUserRelationUpdateWithWhereUniqueWithoutRelationToUserInput>
+    updateMany?: Enumerable<FacebookUserRelationUpdateManyWithWhereWithoutRelationToUserInput>
+    deleteMany?: Enumerable<FacebookUserRelationScalarWhereInput>
+  }
+
+  export type FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageFromUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageFromUserInput>
+    upsert?: Enumerable<FacebookMessengerUpsertWithWhereUniqueWithoutMessageFromUserInput>
+    createMany?: FacebookMessengerCreateManyMessageFromUserInputEnvelope
+    set?: Enumerable<FacebookMessengerWhereUniqueInput>
+    disconnect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    delete?: Enumerable<FacebookMessengerWhereUniqueInput>
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    update?: Enumerable<FacebookMessengerUpdateWithWhereUniqueWithoutMessageFromUserInput>
+    updateMany?: Enumerable<FacebookMessengerUpdateManyWithWhereWithoutMessageFromUserInput>
+    deleteMany?: Enumerable<FacebookMessengerScalarWhereInput>
+  }
+
+  export type FacebookMessengerUpdateManyWithoutMessageToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageToUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageToUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageToUserInput>
+    upsert?: Enumerable<FacebookMessengerUpsertWithWhereUniqueWithoutMessageToUserInput>
+    createMany?: FacebookMessengerCreateManyMessageToUserInputEnvelope
+    set?: Enumerable<FacebookMessengerWhereUniqueInput>
+    disconnect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    delete?: Enumerable<FacebookMessengerWhereUniqueInput>
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    update?: Enumerable<FacebookMessengerUpdateWithWhereUniqueWithoutMessageToUserInput>
+    updateMany?: Enumerable<FacebookMessengerUpdateManyWithWhereWithoutMessageToUserInput>
+    deleteMany?: Enumerable<FacebookMessengerScalarWhereInput>
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPosterUserInput>, Enumerable<FacebookPostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookPostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutCreaterUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutCreaterUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutCreaterUserInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutCreaterUserInput>
+    createMany?: FacebookGroupCreateManyCreaterUserInputEnvelope
+    set?: Enumerable<FacebookGroupWhereUniqueInput>
+    disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
+    delete?: Enumerable<FacebookGroupWhereUniqueInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutCreaterUserInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutCreaterUserInput>
+    deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
+  }
+
+  export type FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput>
+    set?: Enumerable<FacebookGroupWhereUniqueInput>
+    disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
+    delete?: Enumerable<FacebookGroupWhereUniqueInput>
+    connect?: Enumerable<FacebookGroupWhereUniqueInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUserInput>
+    deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
+  }
+
+  export type FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutCommentByUserInput>, Enumerable<FacebookCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutCommentByUserInput>
+    upsert?: Enumerable<FacebookCommentUpsertWithWhereUniqueWithoutCommentByUserInput>
+    createMany?: FacebookCommentCreateManyCommentByUserInputEnvelope
+    set?: Enumerable<FacebookCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+    update?: Enumerable<FacebookCommentUpdateWithWhereUniqueWithoutCommentByUserInput>
+    updateMany?: Enumerable<FacebookCommentUpdateManyWithWhereWithoutCommentByUserInput>
+    deleteMany?: Enumerable<FacebookCommentScalarWhereInput>
+  }
+
+  export type FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPosterUserInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookLikePostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutPosterUserInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: FacebookLikeCommentCreateManyPosterUserInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestFromUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestFromUserInput>
+    upsert?: Enumerable<FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestFromUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestFromUserInputEnvelope
+    set?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    disconnect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    delete?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    update?: Enumerable<FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestFromUserInput>
+    updateMany?: Enumerable<FacebookFriendRequestUpdateManyWithWhereWithoutRequestFromUserInput>
+    deleteMany?: Enumerable<FacebookFriendRequestScalarWhereInput>
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookFriendRequestCreateWithoutRequestToUserInput>, Enumerable<FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>>
+    connectOrCreate?: Enumerable<FacebookFriendRequestCreateOrConnectWithoutRequestToUserInput>
+    upsert?: Enumerable<FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestToUserInput>
+    createMany?: FacebookFriendRequestCreateManyRequestToUserInputEnvelope
+    set?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    disconnect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    delete?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    connect?: Enumerable<FacebookFriendRequestWhereUniqueInput>
+    update?: Enumerable<FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestToUserInput>
+    updateMany?: Enumerable<FacebookFriendRequestUpdateManyWithWhereWithoutRequestToUserInput>
+    deleteMany?: Enumerable<FacebookFriendRequestScalarWhereInput>
+  }
+
+  export type FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationFromUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationFromUserInput>
+    upsert?: Enumerable<FacebookUserRelationUpsertWithWhereUniqueWithoutRelationFromUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationFromUserInputEnvelope
+    set?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    delete?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    update?: Enumerable<FacebookUserRelationUpdateWithWhereUniqueWithoutRelationFromUserInput>
+    updateMany?: Enumerable<FacebookUserRelationUpdateManyWithWhereWithoutRelationFromUserInput>
+    deleteMany?: Enumerable<FacebookUserRelationScalarWhereInput>
+  }
+
+  export type FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookUserRelationCreateWithoutRelationToUserInput>, Enumerable<FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>>
+    connectOrCreate?: Enumerable<FacebookUserRelationCreateOrConnectWithoutRelationToUserInput>
+    upsert?: Enumerable<FacebookUserRelationUpsertWithWhereUniqueWithoutRelationToUserInput>
+    createMany?: FacebookUserRelationCreateManyRelationToUserInputEnvelope
+    set?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    delete?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    connect?: Enumerable<FacebookUserRelationWhereUniqueInput>
+    update?: Enumerable<FacebookUserRelationUpdateWithWhereUniqueWithoutRelationToUserInput>
+    updateMany?: Enumerable<FacebookUserRelationUpdateManyWithWhereWithoutRelationToUserInput>
+    deleteMany?: Enumerable<FacebookUserRelationScalarWhereInput>
+  }
+
+  export type FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageFromUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageFromUserInput>
+    upsert?: Enumerable<FacebookMessengerUpsertWithWhereUniqueWithoutMessageFromUserInput>
+    createMany?: FacebookMessengerCreateManyMessageFromUserInputEnvelope
+    set?: Enumerable<FacebookMessengerWhereUniqueInput>
+    disconnect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    delete?: Enumerable<FacebookMessengerWhereUniqueInput>
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    update?: Enumerable<FacebookMessengerUpdateWithWhereUniqueWithoutMessageFromUserInput>
+    updateMany?: Enumerable<FacebookMessengerUpdateManyWithWhereWithoutMessageFromUserInput>
+    deleteMany?: Enumerable<FacebookMessengerScalarWhereInput>
+  }
+
+  export type FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput = {
+    create?: XOR<Enumerable<FacebookMessengerCreateWithoutMessageToUserInput>, Enumerable<FacebookMessengerUncheckedCreateWithoutMessageToUserInput>>
+    connectOrCreate?: Enumerable<FacebookMessengerCreateOrConnectWithoutMessageToUserInput>
+    upsert?: Enumerable<FacebookMessengerUpsertWithWhereUniqueWithoutMessageToUserInput>
+    createMany?: FacebookMessengerCreateManyMessageToUserInputEnvelope
+    set?: Enumerable<FacebookMessengerWhereUniqueInput>
+    disconnect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    delete?: Enumerable<FacebookMessengerWhereUniqueInput>
+    connect?: Enumerable<FacebookMessengerWhereUniqueInput>
+    update?: Enumerable<FacebookMessengerUpdateWithWhereUniqueWithoutMessageToUserInput>
+    updateMany?: Enumerable<FacebookMessengerUpdateManyWithWhereWithoutMessageToUserInput>
+    deleteMany?: Enumerable<FacebookMessengerScalarWhereInput>
+  }
+
+  export type FacebookUserCreateNestedOneWithoutGroupcreaterInput = {
+    create?: XOR<FacebookUserCreateWithoutGroupcreaterInput, FacebookUserUncheckedCreateWithoutGroupcreaterInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutGroupcreaterInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedManyWithoutGroupMemberInput = {
+    create?: XOR<Enumerable<FacebookUserCreateWithoutGroupMemberInput>, Enumerable<FacebookUserUncheckedCreateWithoutGroupMemberInput>>
+    connectOrCreate?: Enumerable<FacebookUserCreateOrConnectWithoutGroupMemberInput>
+    connect?: Enumerable<FacebookUserWhereUniqueInput>
+  }
+
+  export type FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput = {
+    create?: XOR<Enumerable<FacebookUserCreateWithoutGroupMemberInput>, Enumerable<FacebookUserUncheckedCreateWithoutGroupMemberInput>>
+    connectOrCreate?: Enumerable<FacebookUserCreateOrConnectWithoutGroupMemberInput>
+    connect?: Enumerable<FacebookUserWhereUniqueInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutGroupcreaterNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutGroupcreaterInput, FacebookUserUncheckedCreateWithoutGroupcreaterInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutGroupcreaterInput
+    upsert?: FacebookUserUpsertWithoutGroupcreaterInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutGroupcreaterInput, FacebookUserUncheckedUpdateWithoutGroupcreaterInput>
+  }
+
+  export type FacebookUserUpdateManyWithoutGroupMemberNestedInput = {
+    create?: XOR<Enumerable<FacebookUserCreateWithoutGroupMemberInput>, Enumerable<FacebookUserUncheckedCreateWithoutGroupMemberInput>>
+    connectOrCreate?: Enumerable<FacebookUserCreateOrConnectWithoutGroupMemberInput>
+    upsert?: Enumerable<FacebookUserUpsertWithWhereUniqueWithoutGroupMemberInput>
+    set?: Enumerable<FacebookUserWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserWhereUniqueInput>
+    delete?: Enumerable<FacebookUserWhereUniqueInput>
+    connect?: Enumerable<FacebookUserWhereUniqueInput>
+    update?: Enumerable<FacebookUserUpdateWithWhereUniqueWithoutGroupMemberInput>
+    updateMany?: Enumerable<FacebookUserUpdateManyWithWhereWithoutGroupMemberInput>
+    deleteMany?: Enumerable<FacebookUserScalarWhereInput>
+  }
+
+  export type FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput = {
+    create?: XOR<Enumerable<FacebookUserCreateWithoutGroupMemberInput>, Enumerable<FacebookUserUncheckedCreateWithoutGroupMemberInput>>
+    connectOrCreate?: Enumerable<FacebookUserCreateOrConnectWithoutGroupMemberInput>
+    upsert?: Enumerable<FacebookUserUpsertWithWhereUniqueWithoutGroupMemberInput>
+    set?: Enumerable<FacebookUserWhereUniqueInput>
+    disconnect?: Enumerable<FacebookUserWhereUniqueInput>
+    delete?: Enumerable<FacebookUserWhereUniqueInput>
+    connect?: Enumerable<FacebookUserWhereUniqueInput>
+    update?: Enumerable<FacebookUserUpdateWithWhereUniqueWithoutGroupMemberInput>
+    updateMany?: Enumerable<FacebookUserUpdateManyWithWhereWithoutGroupMemberInput>
+    deleteMany?: Enumerable<FacebookUserScalarWhereInput>
+  }
+
+  export type FacebookPostCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutDestinationInput>, Enumerable<FacebookPostUncheckedCreateWithoutDestinationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutDestinationInput>
+    createMany?: FacebookPostCreateManyDestinationInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUncheckedCreateNestedManyWithoutDestinationInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutDestinationInput>, Enumerable<FacebookPostUncheckedCreateWithoutDestinationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutDestinationInput>
+    createMany?: FacebookPostCreateManyDestinationInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutDestinationInput>, Enumerable<FacebookPostUncheckedCreateWithoutDestinationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutDestinationInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutDestinationInput>
+    createMany?: FacebookPostCreateManyDestinationInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutDestinationInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutDestinationInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutDestinationNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutDestinationInput>, Enumerable<FacebookPostUncheckedCreateWithoutDestinationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutDestinationInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutDestinationInput>
+    createMany?: FacebookPostCreateManyDestinationInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutDestinationInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutDestinationInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostCreateNestedManyWithoutPostTypeInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPostTypeInput>, Enumerable<FacebookPostUncheckedCreateWithoutPostTypeInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPostTypeInput>
+    createMany?: FacebookPostCreateManyPostTypeInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUncheckedCreateNestedManyWithoutPostTypeInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPostTypeInput>, Enumerable<FacebookPostUncheckedCreateWithoutPostTypeInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPostTypeInput>
+    createMany?: FacebookPostCreateManyPostTypeInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUpdateManyWithoutPostTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPostTypeInput>, Enumerable<FacebookPostUncheckedCreateWithoutPostTypeInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPostTypeInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutPostTypeInput>
+    createMany?: FacebookPostCreateManyPostTypeInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutPostTypeInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutPostTypeInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutPostTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutPostTypeInput>, Enumerable<FacebookPostUncheckedCreateWithoutPostTypeInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPostTypeInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutPostTypeInput>
+    createMany?: FacebookPostCreateManyPostTypeInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutPostTypeInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutPostTypeInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostCreateNestedManyWithoutLocationInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutLocationInput>, Enumerable<FacebookPostUncheckedCreateWithoutLocationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutLocationInput>
+    createMany?: FacebookPostCreateManyLocationInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutLocationInput>, Enumerable<FacebookPostUncheckedCreateWithoutLocationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutLocationInput>
+    createMany?: FacebookPostCreateManyLocationInputEnvelope
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutLocationInput>, Enumerable<FacebookPostUncheckedCreateWithoutLocationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutLocationInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutLocationInput>
+    createMany?: FacebookPostCreateManyLocationInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutLocationInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutLocationInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutLocationNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutLocationInput>, Enumerable<FacebookPostUncheckedCreateWithoutLocationInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutLocationInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutLocationInput>
+    createMany?: FacebookPostCreateManyLocationInputEnvelope
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutLocationInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutLocationInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutHashtagsInput>, Enumerable<FacebookPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUncheckedCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutHashtagsInput>, Enumerable<FacebookPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+  }
+
+  export type FacebookPostUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutHashtagsInput>, Enumerable<FacebookPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<FacebookPostCreateWithoutHashtagsInput>, Enumerable<FacebookPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<FacebookPostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<FacebookPostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookPostWhereUniqueInput>
+    delete?: Enumerable<FacebookPostWhereUniqueInput>
+    connect?: Enumerable<FacebookPostWhereUniqueInput>
+    update?: Enumerable<FacebookPostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<FacebookPostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<FacebookPostScalarWhereInput>
+  }
+
+  export type FacebookPostTypeCreateNestedOneWithoutPostsInput = {
+    create?: XOR<FacebookPostTypeCreateWithoutPostsInput, FacebookPostTypeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookPostTypeCreateOrConnectWithoutPostsInput
+    connect?: FacebookPostTypeWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutPostsInput = {
+    create?: XOR<FacebookUserCreateWithoutPostsInput, FacebookUserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutPostsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookLocationCreateNestedOneWithoutPostsInput = {
+    create?: XOR<FacebookLocationCreateWithoutPostsInput, FacebookLocationUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookLocationCreateOrConnectWithoutPostsInput
+    connect?: FacebookLocationWhereUniqueInput
+  }
+
+  export type FacebookPostDestinationCreateNestedOneWithoutPostsInput = {
+    create?: XOR<FacebookPostDestinationCreateWithoutPostsInput, FacebookPostDestinationUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookPostDestinationCreateOrConnectWithoutPostsInput
+    connect?: FacebookPostDestinationWhereUniqueInput
+  }
+
+  export type FacebookHashtagCreateNestedManyWithoutPostsInput = {
+    create?: XOR<Enumerable<FacebookHashtagCreateWithoutPostsInput>, Enumerable<FacebookHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<FacebookHashtagCreateOrConnectWithoutPostsInput>
+    connect?: Enumerable<FacebookHashtagWhereUniqueInput>
+  }
+
+  export type FacebookCommentCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutPostInput>, Enumerable<FacebookCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutPostInput>
+    createMany?: FacebookCommentCreateManyPostInputEnvelope
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPostInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPostInput>
+    createMany?: FacebookLikePostCreateManyPostInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutCommentInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutCommentInput>
+    createMany?: FacebookLikeCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput = {
+    create?: XOR<Enumerable<FacebookHashtagCreateWithoutPostsInput>, Enumerable<FacebookHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<FacebookHashtagCreateOrConnectWithoutPostsInput>
+    connect?: Enumerable<FacebookHashtagWhereUniqueInput>
+  }
+
+  export type FacebookCommentUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutPostInput>, Enumerable<FacebookCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutPostInput>
+    createMany?: FacebookCommentCreateManyPostInputEnvelope
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPostInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPostInput>
+    createMany?: FacebookLikePostCreateManyPostInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutCommentInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutCommentInput>
+    createMany?: FacebookLikeCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<FacebookPostTypeCreateWithoutPostsInput, FacebookPostTypeUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookPostTypeCreateOrConnectWithoutPostsInput
+    upsert?: FacebookPostTypeUpsertWithoutPostsInput
+    connect?: FacebookPostTypeWhereUniqueInput
+    update?: XOR<FacebookPostTypeUpdateWithoutPostsInput, FacebookPostTypeUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutPostsInput, FacebookUserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutPostsInput
+    upsert?: FacebookUserUpsertWithoutPostsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutPostsInput, FacebookUserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type FacebookLocationUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<FacebookLocationCreateWithoutPostsInput, FacebookLocationUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookLocationCreateOrConnectWithoutPostsInput
+    upsert?: FacebookLocationUpsertWithoutPostsInput
+    connect?: FacebookLocationWhereUniqueInput
+    update?: XOR<FacebookLocationUpdateWithoutPostsInput, FacebookLocationUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<FacebookPostDestinationCreateWithoutPostsInput, FacebookPostDestinationUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: FacebookPostDestinationCreateOrConnectWithoutPostsInput
+    upsert?: FacebookPostDestinationUpsertWithoutPostsInput
+    connect?: FacebookPostDestinationWhereUniqueInput
+    update?: XOR<FacebookPostDestinationUpdateWithoutPostsInput, FacebookPostDestinationUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type FacebookHashtagUpdateManyWithoutPostsNestedInput = {
+    create?: XOR<Enumerable<FacebookHashtagCreateWithoutPostsInput>, Enumerable<FacebookHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<FacebookHashtagCreateOrConnectWithoutPostsInput>
+    upsert?: Enumerable<FacebookHashtagUpsertWithWhereUniqueWithoutPostsInput>
+    set?: Enumerable<FacebookHashtagWhereUniqueInput>
+    disconnect?: Enumerable<FacebookHashtagWhereUniqueInput>
+    delete?: Enumerable<FacebookHashtagWhereUniqueInput>
+    connect?: Enumerable<FacebookHashtagWhereUniqueInput>
+    update?: Enumerable<FacebookHashtagUpdateWithWhereUniqueWithoutPostsInput>
+    updateMany?: Enumerable<FacebookHashtagUpdateManyWithWhereWithoutPostsInput>
+    deleteMany?: Enumerable<FacebookHashtagScalarWhereInput>
+  }
+
+  export type FacebookCommentUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutPostInput>, Enumerable<FacebookCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<FacebookCommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: FacebookCommentCreateManyPostInputEnvelope
+    set?: Enumerable<FacebookCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+    update?: Enumerable<FacebookCommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<FacebookCommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<FacebookCommentScalarWhereInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPostInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: FacebookLikePostCreateManyPostInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutCommentInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: FacebookLikeCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput = {
+    create?: XOR<Enumerable<FacebookHashtagCreateWithoutPostsInput>, Enumerable<FacebookHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<FacebookHashtagCreateOrConnectWithoutPostsInput>
+    upsert?: Enumerable<FacebookHashtagUpsertWithWhereUniqueWithoutPostsInput>
+    set?: Enumerable<FacebookHashtagWhereUniqueInput>
+    disconnect?: Enumerable<FacebookHashtagWhereUniqueInput>
+    delete?: Enumerable<FacebookHashtagWhereUniqueInput>
+    connect?: Enumerable<FacebookHashtagWhereUniqueInput>
+    update?: Enumerable<FacebookHashtagUpdateWithWhereUniqueWithoutPostsInput>
+    updateMany?: Enumerable<FacebookHashtagUpdateManyWithWhereWithoutPostsInput>
+    deleteMany?: Enumerable<FacebookHashtagScalarWhereInput>
+  }
+
+  export type FacebookCommentUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<FacebookCommentCreateWithoutPostInput>, Enumerable<FacebookCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookCommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<FacebookCommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: FacebookCommentCreateManyPostInputEnvelope
+    set?: Enumerable<FacebookCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookCommentWhereUniqueInput>
+    update?: Enumerable<FacebookCommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<FacebookCommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<FacebookCommentScalarWhereInput>
+  }
+
+  export type FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutPostInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: FacebookLikePostCreateManyPostInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutCommentInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: FacebookLikeCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookUserCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<FacebookUserCreateWithoutCommentsInput, FacebookUserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutCommentsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookPostCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<FacebookPostCreateWithoutCommentsInput, FacebookPostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutCommentsInput
+    connect?: FacebookPostWhereUniqueInput
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutCommentsInput, FacebookUserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutCommentsInput
+    upsert?: FacebookUserUpsertWithoutCommentsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutCommentsInput, FacebookUserUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type FacebookPostUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<FacebookPostCreateWithoutCommentsInput, FacebookPostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutCommentsInput
+    upsert?: FacebookPostUpsertWithoutCommentsInput
+    connect?: FacebookPostWhereUniqueInput
+    update?: XOR<FacebookPostUpdateWithoutCommentsInput, FacebookPostUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type FacebookLikePostCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutLikeTypeInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutLikeTypeInput>
+    createMany?: FacebookLikePostCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutLikeTypeInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    createMany?: FacebookLikeCommentCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostUncheckedCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutLikeTypeInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutLikeTypeInput>
+    createMany?: FacebookLikePostCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+  }
+
+  export type FacebookLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutLikeTypeInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    createMany?: FacebookLikeCommentCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutLikeTypeInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: FacebookLikePostCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutLikeTypeInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: FacebookLikeCommentCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookLikePostCreateWithoutLikeTypeInput>, Enumerable<FacebookLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikePostCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<FacebookLikePostUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: FacebookLikePostCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<FacebookLikePostWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    delete?: Enumerable<FacebookLikePostWhereUniqueInput>
+    connect?: Enumerable<FacebookLikePostWhereUniqueInput>
+    update?: Enumerable<FacebookLikePostUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<FacebookLikePostUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<FacebookLikePostScalarWhereInput>
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<FacebookLikeCommentCreateWithoutLikeTypeInput>, Enumerable<FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<FacebookLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<FacebookLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: FacebookLikeCommentCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    delete?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    connect?: Enumerable<FacebookLikeCommentWhereUniqueInput>
+    update?: Enumerable<FacebookLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<FacebookLikeCommentUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<FacebookLikeCommentScalarWhereInput>
+  }
+
+  export type FacebookPostCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<FacebookPostCreateWithoutLikePostsInput, FacebookPostUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutLikePostsInput
+    connect?: FacebookPostWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<FacebookUserCreateWithoutLikePostsInput, FacebookUserUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutLikePostsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookLikeTypeCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<FacebookLikeTypeCreateWithoutLikePostsInput, FacebookLikeTypeUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookLikeTypeCreateOrConnectWithoutLikePostsInput
+    connect?: FacebookLikeTypeWhereUniqueInput
+  }
+
+  export type FacebookPostUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<FacebookPostCreateWithoutLikePostsInput, FacebookPostUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutLikePostsInput
+    upsert?: FacebookPostUpsertWithoutLikePostsInput
+    connect?: FacebookPostWhereUniqueInput
+    update?: XOR<FacebookPostUpdateWithoutLikePostsInput, FacebookPostUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutLikePostsInput, FacebookUserUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutLikePostsInput
+    upsert?: FacebookUserUpsertWithoutLikePostsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutLikePostsInput, FacebookUserUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type FacebookLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<FacebookLikeTypeCreateWithoutLikePostsInput, FacebookLikeTypeUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: FacebookLikeTypeCreateOrConnectWithoutLikePostsInput
+    upsert?: FacebookLikeTypeUpsertWithoutLikePostsInput
+    connect?: FacebookLikeTypeWhereUniqueInput
+    update?: XOR<FacebookLikeTypeUpdateWithoutLikePostsInput, FacebookLikeTypeUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type FacebookPostCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<FacebookPostCreateWithoutLikeCommentsInput, FacebookPostUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutLikeCommentsInput
+    connect?: FacebookPostWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<FacebookUserCreateWithoutLikeCommentsInput, FacebookUserUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutLikeCommentsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookLikeTypeCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<FacebookLikeTypeCreateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookLikeTypeCreateOrConnectWithoutLikeCommentsInput
+    connect?: FacebookLikeTypeWhereUniqueInput
+  }
+
+  export type FacebookPostUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<FacebookPostCreateWithoutLikeCommentsInput, FacebookPostUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookPostCreateOrConnectWithoutLikeCommentsInput
+    upsert?: FacebookPostUpsertWithoutLikeCommentsInput
+    connect?: FacebookPostWhereUniqueInput
+    update?: XOR<FacebookPostUpdateWithoutLikeCommentsInput, FacebookPostUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutLikeCommentsInput, FacebookUserUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutLikeCommentsInput
+    upsert?: FacebookUserUpsertWithoutLikeCommentsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutLikeCommentsInput, FacebookUserUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<FacebookLikeTypeCreateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: FacebookLikeTypeCreateOrConnectWithoutLikeCommentsInput
+    upsert?: FacebookLikeTypeUpsertWithoutLikeCommentsInput
+    connect?: FacebookLikeTypeWhereUniqueInput
+    update?: XOR<FacebookLikeTypeUpdateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookUserCreateNestedOneWithoutFriendRequestFromsInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRequestFromsInput, FacebookUserUncheckedCreateWithoutFriendRequestFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRequestFromsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutFriendRequestToesInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRequestToesInput, FacebookUserUncheckedCreateWithoutFriendRequestToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRequestToesInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutFriendRequestFromsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRequestFromsInput, FacebookUserUncheckedCreateWithoutFriendRequestFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRequestFromsInput
+    upsert?: FacebookUserUpsertWithoutFriendRequestFromsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutFriendRequestFromsInput, FacebookUserUncheckedUpdateWithoutFriendRequestFromsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutFriendRequestToesNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRequestToesInput, FacebookUserUncheckedCreateWithoutFriendRequestToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRequestToesInput
+    upsert?: FacebookUserUpsertWithoutFriendRequestToesInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutFriendRequestToesInput, FacebookUserUncheckedUpdateWithoutFriendRequestToesInput>
+  }
+
+  export type FacebookUserCreateNestedOneWithoutFriendRelationFromsInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRelationFromsInput, FacebookUserUncheckedCreateWithoutFriendRelationFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRelationFromsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutFriendRelationToesInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRelationToesInput, FacebookUserUncheckedCreateWithoutFriendRelationToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRelationToesInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutFriendRelationFromsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRelationFromsInput, FacebookUserUncheckedCreateWithoutFriendRelationFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRelationFromsInput
+    upsert?: FacebookUserUpsertWithoutFriendRelationFromsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutFriendRelationFromsInput, FacebookUserUncheckedUpdateWithoutFriendRelationFromsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutFriendRelationToesNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutFriendRelationToesInput, FacebookUserUncheckedCreateWithoutFriendRelationToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutFriendRelationToesInput
+    upsert?: FacebookUserUpsertWithoutFriendRelationToesInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutFriendRelationToesInput, FacebookUserUncheckedUpdateWithoutFriendRelationToesInput>
+  }
+
+  export type FacebookUserCreateNestedOneWithoutMessengeFromsInput = {
+    create?: XOR<FacebookUserCreateWithoutMessengeFromsInput, FacebookUserUncheckedCreateWithoutMessengeFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutMessengeFromsInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserCreateNestedOneWithoutMessengeToesInput = {
+    create?: XOR<FacebookUserCreateWithoutMessengeToesInput, FacebookUserUncheckedCreateWithoutMessengeToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutMessengeToesInput
+    connect?: FacebookUserWhereUniqueInput
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutMessengeFromsNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutMessengeFromsInput, FacebookUserUncheckedCreateWithoutMessengeFromsInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutMessengeFromsInput
+    upsert?: FacebookUserUpsertWithoutMessengeFromsInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutMessengeFromsInput, FacebookUserUncheckedUpdateWithoutMessengeFromsInput>
+  }
+
+  export type FacebookUserUpdateOneRequiredWithoutMessengeToesNestedInput = {
+    create?: XOR<FacebookUserCreateWithoutMessengeToesInput, FacebookUserUncheckedCreateWithoutMessengeToesInput>
+    connectOrCreate?: FacebookUserCreateOrConnectWithoutMessengeToesInput
+    upsert?: FacebookUserUpsertWithoutMessengeToesInput
+    connect?: FacebookUserWhereUniqueInput
+    update?: XOR<FacebookUserUpdateWithoutMessengeToesInput, FacebookUserUncheckedUpdateWithoutMessengeToesInput>
   }
 
   export type NestedIntFilter = {
@@ -21767,6 +40648,19 @@ export namespace Prisma {
     gt?: number
     gte?: number
     not?: NestedFloatNullableFilter | number | null
+  }
+
+  export type NestedBoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter = {
+    equals?: boolean
+    not?: NestedBoolWithAggregatesFilter | boolean
+    _count?: NestedIntFilter
+    _min?: NestedBoolFilter
+    _max?: NestedBoolFilter
   }
 
   export type BinKitchenMenuCreateWithoutCategoryInput = {
@@ -22610,7 +41504,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationCreateWithoutFollwerInput = {
-    following: TwitterUserCreateNestedOneWithoutFollowingInput
+    following: TwitterUserCreateNestedOneWithoutFollowingsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22633,7 +41527,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationCreateWithoutFollowingInput = {
-    follwer: TwitterUserCreateNestedOneWithoutFollwerInput
+    follwer: TwitterUserCreateNestedOneWithoutFollwersInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22659,7 +41553,7 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutPostInput
     hashTags?: TwitterHashTagCreateNestedManyWithoutPostsInput
   }
 
@@ -22668,7 +41562,7 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
     hashTags?: TwitterHashTagUncheckedCreateNestedManyWithoutPostsInput
   }
 
@@ -22684,7 +41578,7 @@ export namespace Prisma {
 
   export type TwitterReplyCreateWithoutUserInput = {
     message: string
-    post: TwitterPostCreateNestedOneWithoutTwitterReplyInput
+    post: TwitterPostCreateNestedOneWithoutTwitterRepliesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22709,7 +41603,7 @@ export namespace Prisma {
 
   export type TwitterDMCreateWithoutDirectFromInput = {
     message: string
-    directTo: TwitterUserCreateNestedOneWithoutDirectToInput
+    directTo: TwitterUserCreateNestedOneWithoutDirectToesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22734,7 +41628,7 @@ export namespace Prisma {
 
   export type TwitterDMCreateWithoutDirectToInput = {
     message: string
-    directFrom: TwitterUserCreateNestedOneWithoutDirectFromInput
+    directFrom: TwitterUserCreateNestedOneWithoutDirectFromsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22770,7 +41664,7 @@ export namespace Prisma {
 
   export type TwitterUserRelationUpdateManyWithWhereWithoutFollwerInput = {
     where: TwitterUserRelationScalarWhereInput
-    data: XOR<TwitterUserRelationUpdateManyMutationInput, TwitterUserRelationUncheckedUpdateManyWithoutFollwerInput>
+    data: XOR<TwitterUserRelationUpdateManyMutationInput, TwitterUserRelationUncheckedUpdateManyWithoutFollwersInput>
   }
 
   export type TwitterUserRelationScalarWhereInput = {
@@ -22797,7 +41691,7 @@ export namespace Prisma {
 
   export type TwitterUserRelationUpdateManyWithWhereWithoutFollowingInput = {
     where: TwitterUserRelationScalarWhereInput
-    data: XOR<TwitterUserRelationUpdateManyMutationInput, TwitterUserRelationUncheckedUpdateManyWithoutFollowingInput>
+    data: XOR<TwitterUserRelationUpdateManyMutationInput, TwitterUserRelationUncheckedUpdateManyWithoutFollowingsInput>
   }
 
   export type TwitterPostUpsertWithWhereUniqueWithoutUserInput = {
@@ -22813,7 +41707,7 @@ export namespace Prisma {
 
   export type TwitterPostUpdateManyWithWhereWithoutUserInput = {
     where: TwitterPostScalarWhereInput
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutTwitterPostInput>
+    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutTwitterPostsInput>
   }
 
   export type TwitterPostScalarWhereInput = {
@@ -22840,7 +41734,7 @@ export namespace Prisma {
 
   export type TwitterReplyUpdateManyWithWhereWithoutUserInput = {
     where: TwitterReplyScalarWhereInput
-    data: XOR<TwitterReplyUpdateManyMutationInput, TwitterReplyUncheckedUpdateManyWithoutTwitterReplyInput>
+    data: XOR<TwitterReplyUpdateManyMutationInput, TwitterReplyUncheckedUpdateManyWithoutTwitterRepliesInput>
   }
 
   export type TwitterReplyScalarWhereInput = {
@@ -22868,7 +41762,7 @@ export namespace Prisma {
 
   export type TwitterDMUpdateManyWithWhereWithoutDirectFromInput = {
     where: TwitterDMScalarWhereInput
-    data: XOR<TwitterDMUpdateManyMutationInput, TwitterDMUncheckedUpdateManyWithoutDirectFromInput>
+    data: XOR<TwitterDMUpdateManyMutationInput, TwitterDMUncheckedUpdateManyWithoutDirectFromsInput>
   }
 
   export type TwitterDMScalarWhereInput = {
@@ -22896,162 +41790,162 @@ export namespace Prisma {
 
   export type TwitterDMUpdateManyWithWhereWithoutDirectToInput = {
     where: TwitterDMScalarWhereInput
-    data: XOR<TwitterDMUpdateManyMutationInput, TwitterDMUncheckedUpdateManyWithoutDirectToInput>
+    data: XOR<TwitterDMUpdateManyMutationInput, TwitterDMUncheckedUpdateManyWithoutDirectToesInput>
   }
 
-  export type TwitterUserCreateWithoutFollwerInput = {
+  export type TwitterUserCreateWithoutFollwersInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutFollwerInput = {
+  export type TwitterUserUncheckedCreateWithoutFollwersInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutFollwerInput = {
+  export type TwitterUserCreateOrConnectWithoutFollwersInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFollwerInput, TwitterUserUncheckedCreateWithoutFollwerInput>
+    create: XOR<TwitterUserCreateWithoutFollwersInput, TwitterUserUncheckedCreateWithoutFollwersInput>
   }
 
-  export type TwitterUserCreateWithoutFollowingInput = {
+  export type TwitterUserCreateWithoutFollowingsInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutFollowingInput = {
+  export type TwitterUserUncheckedCreateWithoutFollowingsInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutFollowingInput = {
+  export type TwitterUserCreateOrConnectWithoutFollowingsInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFollowingInput, TwitterUserUncheckedCreateWithoutFollowingInput>
+    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
   }
 
-  export type TwitterUserUpsertWithoutFollwerInput = {
-    update: XOR<TwitterUserUpdateWithoutFollwerInput, TwitterUserUncheckedUpdateWithoutFollwerInput>
-    create: XOR<TwitterUserCreateWithoutFollwerInput, TwitterUserUncheckedCreateWithoutFollwerInput>
+  export type TwitterUserUpsertWithoutFollwersInput = {
+    update: XOR<TwitterUserUpdateWithoutFollwersInput, TwitterUserUncheckedUpdateWithoutFollwersInput>
+    create: XOR<TwitterUserCreateWithoutFollwersInput, TwitterUserUncheckedCreateWithoutFollwersInput>
   }
 
-  export type TwitterUserUpdateWithoutFollwerInput = {
+  export type TwitterUserUpdateWithoutFollwersInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutFollwerInput = {
+  export type TwitterUserUncheckedUpdateWithoutFollwersInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUpsertWithoutFollowingInput = {
-    update: XOR<TwitterUserUpdateWithoutFollowingInput, TwitterUserUncheckedUpdateWithoutFollowingInput>
-    create: XOR<TwitterUserCreateWithoutFollowingInput, TwitterUserUncheckedCreateWithoutFollowingInput>
+  export type TwitterUserUpsertWithoutFollowingsInput = {
+    update: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
+    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
   }
 
-  export type TwitterUserUpdateWithoutFollowingInput = {
+  export type TwitterUserUpdateWithoutFollowingsInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutFollowingInput = {
+  export type TwitterUserUncheckedUpdateWithoutFollowingsInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserCreateWithoutTwitterPostInput = {
+  export type TwitterUserCreateWithoutTwitterPostsInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutTwitterPostInput = {
+  export type TwitterUserUncheckedCreateWithoutTwitterPostsInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutTwitterPostInput = {
+  export type TwitterUserCreateOrConnectWithoutTwitterPostsInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutTwitterPostInput, TwitterUserUncheckedCreateWithoutTwitterPostInput>
+    create: XOR<TwitterUserCreateWithoutTwitterPostsInput, TwitterUserUncheckedCreateWithoutTwitterPostsInput>
   }
 
   export type TwitterReplyCreateWithoutPostInput = {
     message: string
-    user: TwitterUserCreateNestedOneWithoutTwitterReplyInput
+    user: TwitterUserCreateNestedOneWithoutTwitterRepliesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23092,34 +41986,34 @@ export namespace Prisma {
     create: XOR<TwitterHashTagCreateWithoutPostsInput, TwitterHashTagUncheckedCreateWithoutPostsInput>
   }
 
-  export type TwitterUserUpsertWithoutTwitterPostInput = {
-    update: XOR<TwitterUserUpdateWithoutTwitterPostInput, TwitterUserUncheckedUpdateWithoutTwitterPostInput>
-    create: XOR<TwitterUserCreateWithoutTwitterPostInput, TwitterUserUncheckedCreateWithoutTwitterPostInput>
+  export type TwitterUserUpsertWithoutTwitterPostsInput = {
+    update: XOR<TwitterUserUpdateWithoutTwitterPostsInput, TwitterUserUncheckedUpdateWithoutTwitterPostsInput>
+    create: XOR<TwitterUserCreateWithoutTwitterPostsInput, TwitterUserUncheckedCreateWithoutTwitterPostsInput>
   }
 
-  export type TwitterUserUpdateWithoutTwitterPostInput = {
+  export type TwitterUserUpdateWithoutTwitterPostsInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutTwitterPostInput = {
+  export type TwitterUserUncheckedUpdateWithoutTwitterPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
   export type TwitterReplyUpsertWithWhereUniqueWithoutPostInput = {
@@ -23135,7 +42029,7 @@ export namespace Prisma {
 
   export type TwitterReplyUpdateManyWithWhereWithoutPostInput = {
     where: TwitterReplyScalarWhereInput
-    data: XOR<TwitterReplyUpdateManyMutationInput, TwitterReplyUncheckedUpdateManyWithoutTwitterReplyInput>
+    data: XOR<TwitterReplyUpdateManyMutationInput, TwitterReplyUncheckedUpdateManyWithoutTwitterRepliesInput>
   }
 
   export type TwitterHashTagUpsertWithWhereUniqueWithoutPostsInput = {
@@ -23166,10 +42060,10 @@ export namespace Prisma {
 
   export type TwitterPostCreateWithoutHashTagsInput = {
     message: string
-    user: TwitterUserCreateNestedOneWithoutTwitterPostInput
+    user: TwitterUserCreateNestedOneWithoutTwitterPostsInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostUncheckedCreateWithoutHashTagsInput = {
@@ -23178,7 +42072,7 @@ export namespace Prisma {
     postByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostCreateOrConnectWithoutHashTagsInput = {
@@ -23202,15 +42096,15 @@ export namespace Prisma {
     data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutPostsInput>
   }
 
-  export type TwitterPostCreateWithoutTwitterReplyInput = {
+  export type TwitterPostCreateWithoutTwitterRepliesInput = {
     message: string
-    user: TwitterUserCreateNestedOneWithoutTwitterPostInput
+    user: TwitterUserCreateNestedOneWithoutTwitterPostsInput
     createdAt?: Date | string
     updatedAt?: Date | string
     hashTags?: TwitterHashTagCreateNestedManyWithoutPostsInput
   }
 
-  export type TwitterPostUncheckedCreateWithoutTwitterReplyInput = {
+  export type TwitterPostUncheckedCreateWithoutTwitterRepliesInput = {
     id?: number
     message: string
     postByUserId: number
@@ -23219,55 +42113,55 @@ export namespace Prisma {
     hashTags?: TwitterHashTagUncheckedCreateNestedManyWithoutPostsInput
   }
 
-  export type TwitterPostCreateOrConnectWithoutTwitterReplyInput = {
+  export type TwitterPostCreateOrConnectWithoutTwitterRepliesInput = {
     where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutTwitterReplyInput, TwitterPostUncheckedCreateWithoutTwitterReplyInput>
+    create: XOR<TwitterPostCreateWithoutTwitterRepliesInput, TwitterPostUncheckedCreateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterUserCreateWithoutTwitterReplyInput = {
+  export type TwitterUserCreateWithoutTwitterRepliesInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutTwitterReplyInput = {
+  export type TwitterUserUncheckedCreateWithoutTwitterRepliesInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutTwitterReplyInput = {
+  export type TwitterUserCreateOrConnectWithoutTwitterRepliesInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutTwitterReplyInput, TwitterUserUncheckedCreateWithoutTwitterReplyInput>
+    create: XOR<TwitterUserCreateWithoutTwitterRepliesInput, TwitterUserUncheckedCreateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterPostUpsertWithoutTwitterReplyInput = {
-    update: XOR<TwitterPostUpdateWithoutTwitterReplyInput, TwitterPostUncheckedUpdateWithoutTwitterReplyInput>
-    create: XOR<TwitterPostCreateWithoutTwitterReplyInput, TwitterPostUncheckedCreateWithoutTwitterReplyInput>
+  export type TwitterPostUpsertWithoutTwitterRepliesInput = {
+    update: XOR<TwitterPostUpdateWithoutTwitterRepliesInput, TwitterPostUncheckedUpdateWithoutTwitterRepliesInput>
+    create: XOR<TwitterPostCreateWithoutTwitterRepliesInput, TwitterPostUncheckedCreateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterPostUpdateWithoutTwitterReplyInput = {
+  export type TwitterPostUpdateWithoutTwitterRepliesInput = {
     message?: StringFieldUpdateOperationsInput | string
-    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostNestedInput
+    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     hashTags?: TwitterHashTagUpdateManyWithoutPostsNestedInput
   }
 
-  export type TwitterPostUncheckedUpdateWithoutTwitterReplyInput = {
+  export type TwitterPostUncheckedUpdateWithoutTwitterRepliesInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postByUserId?: IntFieldUpdateOperationsInput | number
@@ -23276,154 +42170,2728 @@ export namespace Prisma {
     hashTags?: TwitterHashTagUncheckedUpdateManyWithoutPostsNestedInput
   }
 
-  export type TwitterUserUpsertWithoutTwitterReplyInput = {
-    update: XOR<TwitterUserUpdateWithoutTwitterReplyInput, TwitterUserUncheckedUpdateWithoutTwitterReplyInput>
-    create: XOR<TwitterUserCreateWithoutTwitterReplyInput, TwitterUserUncheckedCreateWithoutTwitterReplyInput>
+  export type TwitterUserUpsertWithoutTwitterRepliesInput = {
+    update: XOR<TwitterUserUpdateWithoutTwitterRepliesInput, TwitterUserUncheckedUpdateWithoutTwitterRepliesInput>
+    create: XOR<TwitterUserCreateWithoutTwitterRepliesInput, TwitterUserUncheckedCreateWithoutTwitterRepliesInput>
   }
 
-  export type TwitterUserUpdateWithoutTwitterReplyInput = {
+  export type TwitterUserUpdateWithoutTwitterRepliesInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutTwitterReplyInput = {
+  export type TwitterUserUncheckedUpdateWithoutTwitterRepliesInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserCreateWithoutDirectFromInput = {
+  export type TwitterUserCreateWithoutDirectFromsInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directTo?: TwitterDMCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directToes?: TwitterDMCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutDirectFromInput = {
+  export type TwitterUserUncheckedCreateWithoutDirectFromsInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directTo?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directToes?: TwitterDMUncheckedCreateNestedManyWithoutDirectToInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutDirectFromInput = {
+  export type TwitterUserCreateOrConnectWithoutDirectFromsInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutDirectFromInput, TwitterUserUncheckedCreateWithoutDirectFromInput>
+    create: XOR<TwitterUserCreateWithoutDirectFromsInput, TwitterUserUncheckedCreateWithoutDirectFromsInput>
   }
 
-  export type TwitterUserCreateWithoutDirectToInput = {
+  export type TwitterUserCreateWithoutDirectToesInput = {
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMCreateNestedManyWithoutDirectFromInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
   }
 
-  export type TwitterUserUncheckedCreateWithoutDirectToInput = {
+  export type TwitterUserUncheckedCreateWithoutDirectToesInput = {
     id?: number
     image: string
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwer?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
-    following?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
-    TwitterPost?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    TwitterReply?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
-    directFrom?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
+    directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
   }
 
-  export type TwitterUserCreateOrConnectWithoutDirectToInput = {
+  export type TwitterUserCreateOrConnectWithoutDirectToesInput = {
     where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutDirectToInput, TwitterUserUncheckedCreateWithoutDirectToInput>
+    create: XOR<TwitterUserCreateWithoutDirectToesInput, TwitterUserUncheckedCreateWithoutDirectToesInput>
   }
 
-  export type TwitterUserUpsertWithoutDirectFromInput = {
-    update: XOR<TwitterUserUpdateWithoutDirectFromInput, TwitterUserUncheckedUpdateWithoutDirectFromInput>
-    create: XOR<TwitterUserCreateWithoutDirectFromInput, TwitterUserUncheckedCreateWithoutDirectFromInput>
+  export type TwitterUserUpsertWithoutDirectFromsInput = {
+    update: XOR<TwitterUserUpdateWithoutDirectFromsInput, TwitterUserUncheckedUpdateWithoutDirectFromsInput>
+    create: XOR<TwitterUserCreateWithoutDirectFromsInput, TwitterUserUncheckedCreateWithoutDirectFromsInput>
   }
 
-  export type TwitterUserUpdateWithoutDirectFromInput = {
+  export type TwitterUserUpdateWithoutDirectFromsInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directTo?: TwitterDMUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directToes?: TwitterDMUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutDirectFromInput = {
+  export type TwitterUserUncheckedUpdateWithoutDirectFromsInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directTo?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directToes?: TwitterDMUncheckedUpdateManyWithoutDirectToNestedInput
   }
 
-  export type TwitterUserUpsertWithoutDirectToInput = {
-    update: XOR<TwitterUserUpdateWithoutDirectToInput, TwitterUserUncheckedUpdateWithoutDirectToInput>
-    create: XOR<TwitterUserCreateWithoutDirectToInput, TwitterUserUncheckedCreateWithoutDirectToInput>
+  export type TwitterUserUpsertWithoutDirectToesInput = {
+    update: XOR<TwitterUserUpdateWithoutDirectToesInput, TwitterUserUncheckedUpdateWithoutDirectToesInput>
+    create: XOR<TwitterUserCreateWithoutDirectToesInput, TwitterUserUncheckedCreateWithoutDirectToesInput>
   }
 
-  export type TwitterUserUpdateWithoutDirectToInput = {
+  export type TwitterUserUpdateWithoutDirectToesInput = {
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUpdateManyWithoutDirectFromNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
   }
 
-  export type TwitterUserUncheckedUpdateWithoutDirectToInput = {
+  export type TwitterUserUncheckedUpdateWithoutDirectToesInput = {
     id?: IntFieldUpdateOperationsInput | number
     image?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwer?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
-    following?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
-    TwitterPost?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
-    directFrom?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
+    directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+  }
+
+  export type FacebookPostCreateWithoutPosterUserInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutPosterUserInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutPosterUserInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutPosterUserInput, FacebookPostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookPostCreateManyPosterUserInputEnvelope = {
+    data: Enumerable<FacebookPostCreateManyPosterUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookGroupCreateWithoutCreaterUserInput = {
+    GroupImage: string
+    coverImage: string
+    name: string
+    memberUser?: FacebookUserCreateNestedManyWithoutGroupMemberInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupUncheckedCreateWithoutCreaterUserInput = {
+    id?: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    memberUser?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupCreateOrConnectWithoutCreaterUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    create: XOR<FacebookGroupCreateWithoutCreaterUserInput, FacebookGroupUncheckedCreateWithoutCreaterUserInput>
+  }
+
+  export type FacebookGroupCreateManyCreaterUserInputEnvelope = {
+    data: Enumerable<FacebookGroupCreateManyCreaterUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookGroupCreateWithoutMemberUserInput = {
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUser: FacebookUserCreateNestedOneWithoutGroupcreaterInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupUncheckedCreateWithoutMemberUserInput = {
+    id?: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    createrUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupCreateOrConnectWithoutMemberUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    create: XOR<FacebookGroupCreateWithoutMemberUserInput, FacebookGroupUncheckedCreateWithoutMemberUserInput>
+  }
+
+  export type FacebookCommentCreateWithoutCommentByUserInput = {
+    message: string
+    post: FacebookPostCreateNestedOneWithoutCommentsInput
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentUncheckedCreateWithoutCommentByUserInput = {
+    id?: number
+    message: string
+    postId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentCreateOrConnectWithoutCommentByUserInput = {
+    where: FacebookCommentWhereUniqueInput
+    create: XOR<FacebookCommentCreateWithoutCommentByUserInput, FacebookCommentUncheckedCreateWithoutCommentByUserInput>
+  }
+
+  export type FacebookCommentCreateManyCommentByUserInputEnvelope = {
+    data: Enumerable<FacebookCommentCreateManyCommentByUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikePostCreateWithoutPosterUserInput = {
+    post: FacebookPostCreateNestedOneWithoutLikePostsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUncheckedCreateWithoutPosterUserInput = {
+    id?: number
+    postId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostCreateOrConnectWithoutPosterUserInput = {
+    where: FacebookLikePostWhereUniqueInput
+    create: XOR<FacebookLikePostCreateWithoutPosterUserInput, FacebookLikePostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikePostCreateManyPosterUserInputEnvelope = {
+    data: Enumerable<FacebookLikePostCreateManyPosterUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikeCommentCreateWithoutPosterUserInput = {
+    comment: FacebookPostCreateNestedOneWithoutLikeCommentsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedCreateWithoutPosterUserInput = {
+    id?: number
+    commentId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateOrConnectWithoutPosterUserInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    create: XOR<FacebookLikeCommentCreateWithoutPosterUserInput, FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikeCommentCreateManyPosterUserInputEnvelope = {
+    data: Enumerable<FacebookLikeCommentCreateManyPosterUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookFriendRequestCreateWithoutRequestFromUserInput = {
+    requestToUser: FacebookUserCreateNestedOneWithoutFriendRequestToesInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput = {
+    id?: number
+    requestToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestCreateOrConnectWithoutRequestFromUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    create: XOR<FacebookFriendRequestCreateWithoutRequestFromUserInput, FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>
+  }
+
+  export type FacebookFriendRequestCreateManyRequestFromUserInputEnvelope = {
+    data: Enumerable<FacebookFriendRequestCreateManyRequestFromUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookFriendRequestCreateWithoutRequestToUserInput = {
+    requestFromUser: FacebookUserCreateNestedOneWithoutFriendRequestFromsInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput = {
+    id?: number
+    requestFromUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestCreateOrConnectWithoutRequestToUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    create: XOR<FacebookFriendRequestCreateWithoutRequestToUserInput, FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>
+  }
+
+  export type FacebookFriendRequestCreateManyRequestToUserInputEnvelope = {
+    data: Enumerable<FacebookFriendRequestCreateManyRequestToUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookUserRelationCreateWithoutRelationFromUserInput = {
+    relationToUser: FacebookUserCreateNestedOneWithoutFriendRelationToesInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput = {
+    id?: number
+    relationToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationCreateOrConnectWithoutRelationFromUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    create: XOR<FacebookUserRelationCreateWithoutRelationFromUserInput, FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>
+  }
+
+  export type FacebookUserRelationCreateManyRelationFromUserInputEnvelope = {
+    data: Enumerable<FacebookUserRelationCreateManyRelationFromUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookUserRelationCreateWithoutRelationToUserInput = {
+    relationFromUser: FacebookUserCreateNestedOneWithoutFriendRelationFromsInput
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationUncheckedCreateWithoutRelationToUserInput = {
+    id?: number
+    relationFromUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationCreateOrConnectWithoutRelationToUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    create: XOR<FacebookUserRelationCreateWithoutRelationToUserInput, FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>
+  }
+
+  export type FacebookUserRelationCreateManyRelationToUserInputEnvelope = {
+    data: Enumerable<FacebookUserRelationCreateManyRelationToUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookMessengerCreateWithoutMessageFromUserInput = {
+    message: string
+    messageToUser: FacebookUserCreateNestedOneWithoutMessengeToesInput
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerUncheckedCreateWithoutMessageFromUserInput = {
+    id?: number
+    message: string
+    messageToUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerCreateOrConnectWithoutMessageFromUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    create: XOR<FacebookMessengerCreateWithoutMessageFromUserInput, FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>
+  }
+
+  export type FacebookMessengerCreateManyMessageFromUserInputEnvelope = {
+    data: Enumerable<FacebookMessengerCreateManyMessageFromUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookMessengerCreateWithoutMessageToUserInput = {
+    message: string
+    messageFromUser: FacebookUserCreateNestedOneWithoutMessengeFromsInput
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerUncheckedCreateWithoutMessageToUserInput = {
+    id?: number
+    message: string
+    messageFromUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerCreateOrConnectWithoutMessageToUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    create: XOR<FacebookMessengerCreateWithoutMessageToUserInput, FacebookMessengerUncheckedCreateWithoutMessageToUserInput>
+  }
+
+  export type FacebookMessengerCreateManyMessageToUserInputEnvelope = {
+    data: Enumerable<FacebookMessengerCreateManyMessageToUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookPostUpsertWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookPostWhereUniqueInput
+    update: XOR<FacebookPostUpdateWithoutPosterUserInput, FacebookPostUncheckedUpdateWithoutPosterUserInput>
+    create: XOR<FacebookPostCreateWithoutPosterUserInput, FacebookPostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookPostUpdateWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookPostWhereUniqueInput
+    data: XOR<FacebookPostUpdateWithoutPosterUserInput, FacebookPostUncheckedUpdateWithoutPosterUserInput>
+  }
+
+  export type FacebookPostUpdateManyWithWhereWithoutPosterUserInput = {
+    where: FacebookPostScalarWhereInput
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type FacebookPostScalarWhereInput = {
+    AND?: Enumerable<FacebookPostScalarWhereInput>
+    OR?: Enumerable<FacebookPostScalarWhereInput>
+    NOT?: Enumerable<FacebookPostScalarWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    postTypeId?: IntFilter | number
+    posterUserId?: IntFilter | number
+    locationId?: IntFilter | number
+    destinationId?: IntFilter | number
+    destinationRelateId?: IntFilter | number
+    isShared?: BoolFilter | boolean
+    shareFromPostId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookGroupUpsertWithWhereUniqueWithoutCreaterUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    update: XOR<FacebookGroupUpdateWithoutCreaterUserInput, FacebookGroupUncheckedUpdateWithoutCreaterUserInput>
+    create: XOR<FacebookGroupCreateWithoutCreaterUserInput, FacebookGroupUncheckedCreateWithoutCreaterUserInput>
+  }
+
+  export type FacebookGroupUpdateWithWhereUniqueWithoutCreaterUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    data: XOR<FacebookGroupUpdateWithoutCreaterUserInput, FacebookGroupUncheckedUpdateWithoutCreaterUserInput>
+  }
+
+  export type FacebookGroupUpdateManyWithWhereWithoutCreaterUserInput = {
+    where: FacebookGroupScalarWhereInput
+    data: XOR<FacebookGroupUpdateManyMutationInput, FacebookGroupUncheckedUpdateManyWithoutGroupcreaterInput>
+  }
+
+  export type FacebookGroupScalarWhereInput = {
+    AND?: Enumerable<FacebookGroupScalarWhereInput>
+    OR?: Enumerable<FacebookGroupScalarWhereInput>
+    NOT?: Enumerable<FacebookGroupScalarWhereInput>
+    id?: IntFilter | number
+    GroupImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    name?: StringFilter | string
+    createrUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    update: XOR<FacebookGroupUpdateWithoutMemberUserInput, FacebookGroupUncheckedUpdateWithoutMemberUserInput>
+    create: XOR<FacebookGroupCreateWithoutMemberUserInput, FacebookGroupUncheckedCreateWithoutMemberUserInput>
+  }
+
+  export type FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput = {
+    where: FacebookGroupWhereUniqueInput
+    data: XOR<FacebookGroupUpdateWithoutMemberUserInput, FacebookGroupUncheckedUpdateWithoutMemberUserInput>
+  }
+
+  export type FacebookGroupUpdateManyWithWhereWithoutMemberUserInput = {
+    where: FacebookGroupScalarWhereInput
+    data: XOR<FacebookGroupUpdateManyMutationInput, FacebookGroupUncheckedUpdateManyWithoutGroupMemberInput>
+  }
+
+  export type FacebookCommentUpsertWithWhereUniqueWithoutCommentByUserInput = {
+    where: FacebookCommentWhereUniqueInput
+    update: XOR<FacebookCommentUpdateWithoutCommentByUserInput, FacebookCommentUncheckedUpdateWithoutCommentByUserInput>
+    create: XOR<FacebookCommentCreateWithoutCommentByUserInput, FacebookCommentUncheckedCreateWithoutCommentByUserInput>
+  }
+
+  export type FacebookCommentUpdateWithWhereUniqueWithoutCommentByUserInput = {
+    where: FacebookCommentWhereUniqueInput
+    data: XOR<FacebookCommentUpdateWithoutCommentByUserInput, FacebookCommentUncheckedUpdateWithoutCommentByUserInput>
+  }
+
+  export type FacebookCommentUpdateManyWithWhereWithoutCommentByUserInput = {
+    where: FacebookCommentScalarWhereInput
+    data: XOR<FacebookCommentUpdateManyMutationInput, FacebookCommentUncheckedUpdateManyWithoutCommentsInput>
+  }
+
+  export type FacebookCommentScalarWhereInput = {
+    AND?: Enumerable<FacebookCommentScalarWhereInput>
+    OR?: Enumerable<FacebookCommentScalarWhereInput>
+    NOT?: Enumerable<FacebookCommentScalarWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    commentByUserId?: IntFilter | number
+    postId?: IntFilter | number
+    isReplied?: BoolFilter | boolean
+    replyFromCommentId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookLikePostUpsertWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookLikePostWhereUniqueInput
+    update: XOR<FacebookLikePostUpdateWithoutPosterUserInput, FacebookLikePostUncheckedUpdateWithoutPosterUserInput>
+    create: XOR<FacebookLikePostCreateWithoutPosterUserInput, FacebookLikePostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikePostUpdateWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookLikePostWhereUniqueInput
+    data: XOR<FacebookLikePostUpdateWithoutPosterUserInput, FacebookLikePostUncheckedUpdateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithWhereWithoutPosterUserInput = {
+    where: FacebookLikePostScalarWhereInput
+    data: XOR<FacebookLikePostUpdateManyMutationInput, FacebookLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type FacebookLikePostScalarWhereInput = {
+    AND?: Enumerable<FacebookLikePostScalarWhereInput>
+    OR?: Enumerable<FacebookLikePostScalarWhereInput>
+    NOT?: Enumerable<FacebookLikePostScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    posterUserId?: IntFilter | number
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookLikeCommentUpsertWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    update: XOR<FacebookLikeCommentUpdateWithoutPosterUserInput, FacebookLikeCommentUncheckedUpdateWithoutPosterUserInput>
+    create: XOR<FacebookLikeCommentCreateWithoutPosterUserInput, FacebookLikeCommentUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikeCommentUpdateWithWhereUniqueWithoutPosterUserInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    data: XOR<FacebookLikeCommentUpdateWithoutPosterUserInput, FacebookLikeCommentUncheckedUpdateWithoutPosterUserInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithWhereWithoutPosterUserInput = {
+    where: FacebookLikeCommentScalarWhereInput
+    data: XOR<FacebookLikeCommentUpdateManyMutationInput, FacebookLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type FacebookLikeCommentScalarWhereInput = {
+    AND?: Enumerable<FacebookLikeCommentScalarWhereInput>
+    OR?: Enumerable<FacebookLikeCommentScalarWhereInput>
+    NOT?: Enumerable<FacebookLikeCommentScalarWhereInput>
+    id?: IntFilter | number
+    commentId?: IntFilter | number
+    posterUserId?: IntFilter | number
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestFromUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    update: XOR<FacebookFriendRequestUpdateWithoutRequestFromUserInput, FacebookFriendRequestUncheckedUpdateWithoutRequestFromUserInput>
+    create: XOR<FacebookFriendRequestCreateWithoutRequestFromUserInput, FacebookFriendRequestUncheckedCreateWithoutRequestFromUserInput>
+  }
+
+  export type FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestFromUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    data: XOR<FacebookFriendRequestUpdateWithoutRequestFromUserInput, FacebookFriendRequestUncheckedUpdateWithoutRequestFromUserInput>
+  }
+
+  export type FacebookFriendRequestUpdateManyWithWhereWithoutRequestFromUserInput = {
+    where: FacebookFriendRequestScalarWhereInput
+    data: XOR<FacebookFriendRequestUpdateManyMutationInput, FacebookFriendRequestUncheckedUpdateManyWithoutFriendRequestFromsInput>
+  }
+
+  export type FacebookFriendRequestScalarWhereInput = {
+    AND?: Enumerable<FacebookFriendRequestScalarWhereInput>
+    OR?: Enumerable<FacebookFriendRequestScalarWhereInput>
+    NOT?: Enumerable<FacebookFriendRequestScalarWhereInput>
+    id?: IntFilter | number
+    requestFromUserId?: IntFilter | number
+    requestToUserId?: IntFilter | number
+    isAccepted?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookFriendRequestUpsertWithWhereUniqueWithoutRequestToUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    update: XOR<FacebookFriendRequestUpdateWithoutRequestToUserInput, FacebookFriendRequestUncheckedUpdateWithoutRequestToUserInput>
+    create: XOR<FacebookFriendRequestCreateWithoutRequestToUserInput, FacebookFriendRequestUncheckedCreateWithoutRequestToUserInput>
+  }
+
+  export type FacebookFriendRequestUpdateWithWhereUniqueWithoutRequestToUserInput = {
+    where: FacebookFriendRequestWhereUniqueInput
+    data: XOR<FacebookFriendRequestUpdateWithoutRequestToUserInput, FacebookFriendRequestUncheckedUpdateWithoutRequestToUserInput>
+  }
+
+  export type FacebookFriendRequestUpdateManyWithWhereWithoutRequestToUserInput = {
+    where: FacebookFriendRequestScalarWhereInput
+    data: XOR<FacebookFriendRequestUpdateManyMutationInput, FacebookFriendRequestUncheckedUpdateManyWithoutFriendRequestToesInput>
+  }
+
+  export type FacebookUserRelationUpsertWithWhereUniqueWithoutRelationFromUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    update: XOR<FacebookUserRelationUpdateWithoutRelationFromUserInput, FacebookUserRelationUncheckedUpdateWithoutRelationFromUserInput>
+    create: XOR<FacebookUserRelationCreateWithoutRelationFromUserInput, FacebookUserRelationUncheckedCreateWithoutRelationFromUserInput>
+  }
+
+  export type FacebookUserRelationUpdateWithWhereUniqueWithoutRelationFromUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    data: XOR<FacebookUserRelationUpdateWithoutRelationFromUserInput, FacebookUserRelationUncheckedUpdateWithoutRelationFromUserInput>
+  }
+
+  export type FacebookUserRelationUpdateManyWithWhereWithoutRelationFromUserInput = {
+    where: FacebookUserRelationScalarWhereInput
+    data: XOR<FacebookUserRelationUpdateManyMutationInput, FacebookUserRelationUncheckedUpdateManyWithoutFriendRelationFromsInput>
+  }
+
+  export type FacebookUserRelationScalarWhereInput = {
+    AND?: Enumerable<FacebookUserRelationScalarWhereInput>
+    OR?: Enumerable<FacebookUserRelationScalarWhereInput>
+    NOT?: Enumerable<FacebookUserRelationScalarWhereInput>
+    id?: IntFilter | number
+    relationFromUserId?: IntFilter | number
+    relationToUserId?: IntFilter | number
+    isAccepted?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookUserRelationUpsertWithWhereUniqueWithoutRelationToUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    update: XOR<FacebookUserRelationUpdateWithoutRelationToUserInput, FacebookUserRelationUncheckedUpdateWithoutRelationToUserInput>
+    create: XOR<FacebookUserRelationCreateWithoutRelationToUserInput, FacebookUserRelationUncheckedCreateWithoutRelationToUserInput>
+  }
+
+  export type FacebookUserRelationUpdateWithWhereUniqueWithoutRelationToUserInput = {
+    where: FacebookUserRelationWhereUniqueInput
+    data: XOR<FacebookUserRelationUpdateWithoutRelationToUserInput, FacebookUserRelationUncheckedUpdateWithoutRelationToUserInput>
+  }
+
+  export type FacebookUserRelationUpdateManyWithWhereWithoutRelationToUserInput = {
+    where: FacebookUserRelationScalarWhereInput
+    data: XOR<FacebookUserRelationUpdateManyMutationInput, FacebookUserRelationUncheckedUpdateManyWithoutFriendRelationToesInput>
+  }
+
+  export type FacebookMessengerUpsertWithWhereUniqueWithoutMessageFromUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    update: XOR<FacebookMessengerUpdateWithoutMessageFromUserInput, FacebookMessengerUncheckedUpdateWithoutMessageFromUserInput>
+    create: XOR<FacebookMessengerCreateWithoutMessageFromUserInput, FacebookMessengerUncheckedCreateWithoutMessageFromUserInput>
+  }
+
+  export type FacebookMessengerUpdateWithWhereUniqueWithoutMessageFromUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    data: XOR<FacebookMessengerUpdateWithoutMessageFromUserInput, FacebookMessengerUncheckedUpdateWithoutMessageFromUserInput>
+  }
+
+  export type FacebookMessengerUpdateManyWithWhereWithoutMessageFromUserInput = {
+    where: FacebookMessengerScalarWhereInput
+    data: XOR<FacebookMessengerUpdateManyMutationInput, FacebookMessengerUncheckedUpdateManyWithoutMessengeFromsInput>
+  }
+
+  export type FacebookMessengerScalarWhereInput = {
+    AND?: Enumerable<FacebookMessengerScalarWhereInput>
+    OR?: Enumerable<FacebookMessengerScalarWhereInput>
+    NOT?: Enumerable<FacebookMessengerScalarWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    messageFromUserId?: IntFilter | number
+    messageToUserId?: IntFilter | number
+    isRead?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookMessengerUpsertWithWhereUniqueWithoutMessageToUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    update: XOR<FacebookMessengerUpdateWithoutMessageToUserInput, FacebookMessengerUncheckedUpdateWithoutMessageToUserInput>
+    create: XOR<FacebookMessengerCreateWithoutMessageToUserInput, FacebookMessengerUncheckedCreateWithoutMessageToUserInput>
+  }
+
+  export type FacebookMessengerUpdateWithWhereUniqueWithoutMessageToUserInput = {
+    where: FacebookMessengerWhereUniqueInput
+    data: XOR<FacebookMessengerUpdateWithoutMessageToUserInput, FacebookMessengerUncheckedUpdateWithoutMessageToUserInput>
+  }
+
+  export type FacebookMessengerUpdateManyWithWhereWithoutMessageToUserInput = {
+    where: FacebookMessengerScalarWhereInput
+    data: XOR<FacebookMessengerUpdateManyMutationInput, FacebookMessengerUncheckedUpdateManyWithoutMessengeToesInput>
+  }
+
+  export type FacebookUserCreateWithoutGroupcreaterInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutGroupcreaterInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutGroupcreaterInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutGroupcreaterInput, FacebookUserUncheckedCreateWithoutGroupcreaterInput>
+  }
+
+  export type FacebookUserCreateWithoutGroupMemberInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutGroupMemberInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutGroupMemberInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutGroupMemberInput, FacebookUserUncheckedCreateWithoutGroupMemberInput>
+  }
+
+  export type FacebookUserUpsertWithoutGroupcreaterInput = {
+    update: XOR<FacebookUserUpdateWithoutGroupcreaterInput, FacebookUserUncheckedUpdateWithoutGroupcreaterInput>
+    create: XOR<FacebookUserCreateWithoutGroupcreaterInput, FacebookUserUncheckedCreateWithoutGroupcreaterInput>
+  }
+
+  export type FacebookUserUpdateWithoutGroupcreaterInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutGroupcreaterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUpsertWithWhereUniqueWithoutGroupMemberInput = {
+    where: FacebookUserWhereUniqueInput
+    update: XOR<FacebookUserUpdateWithoutGroupMemberInput, FacebookUserUncheckedUpdateWithoutGroupMemberInput>
+    create: XOR<FacebookUserCreateWithoutGroupMemberInput, FacebookUserUncheckedCreateWithoutGroupMemberInput>
+  }
+
+  export type FacebookUserUpdateWithWhereUniqueWithoutGroupMemberInput = {
+    where: FacebookUserWhereUniqueInput
+    data: XOR<FacebookUserUpdateWithoutGroupMemberInput, FacebookUserUncheckedUpdateWithoutGroupMemberInput>
+  }
+
+  export type FacebookUserUpdateManyWithWhereWithoutGroupMemberInput = {
+    where: FacebookUserScalarWhereInput
+    data: XOR<FacebookUserUpdateManyMutationInput, FacebookUserUncheckedUpdateManyWithoutMemberUserInput>
+  }
+
+  export type FacebookUserScalarWhereInput = {
+    AND?: Enumerable<FacebookUserScalarWhereInput>
+    OR?: Enumerable<FacebookUserScalarWhereInput>
+    NOT?: Enumerable<FacebookUserScalarWhereInput>
+    id?: IntFilter | number
+    profileImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookPostCreateWithoutDestinationInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutDestinationInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutDestinationInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutDestinationInput, FacebookPostUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type FacebookPostCreateManyDestinationInputEnvelope = {
+    data: Enumerable<FacebookPostCreateManyDestinationInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookPostUpsertWithWhereUniqueWithoutDestinationInput = {
+    where: FacebookPostWhereUniqueInput
+    update: XOR<FacebookPostUpdateWithoutDestinationInput, FacebookPostUncheckedUpdateWithoutDestinationInput>
+    create: XOR<FacebookPostCreateWithoutDestinationInput, FacebookPostUncheckedCreateWithoutDestinationInput>
+  }
+
+  export type FacebookPostUpdateWithWhereUniqueWithoutDestinationInput = {
+    where: FacebookPostWhereUniqueInput
+    data: XOR<FacebookPostUpdateWithoutDestinationInput, FacebookPostUncheckedUpdateWithoutDestinationInput>
+  }
+
+  export type FacebookPostUpdateManyWithWhereWithoutDestinationInput = {
+    where: FacebookPostScalarWhereInput
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type FacebookPostCreateWithoutPostTypeInput = {
+    message: string
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutPostTypeInput = {
+    id?: number
+    message: string
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutPostTypeInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutPostTypeInput, FacebookPostUncheckedCreateWithoutPostTypeInput>
+  }
+
+  export type FacebookPostCreateManyPostTypeInputEnvelope = {
+    data: Enumerable<FacebookPostCreateManyPostTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookPostUpsertWithWhereUniqueWithoutPostTypeInput = {
+    where: FacebookPostWhereUniqueInput
+    update: XOR<FacebookPostUpdateWithoutPostTypeInput, FacebookPostUncheckedUpdateWithoutPostTypeInput>
+    create: XOR<FacebookPostCreateWithoutPostTypeInput, FacebookPostUncheckedCreateWithoutPostTypeInput>
+  }
+
+  export type FacebookPostUpdateWithWhereUniqueWithoutPostTypeInput = {
+    where: FacebookPostWhereUniqueInput
+    data: XOR<FacebookPostUpdateWithoutPostTypeInput, FacebookPostUncheckedUpdateWithoutPostTypeInput>
+  }
+
+  export type FacebookPostUpdateManyWithWhereWithoutPostTypeInput = {
+    where: FacebookPostScalarWhereInput
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type FacebookPostCreateWithoutLocationInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutLocationInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutLocationInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutLocationInput, FacebookPostUncheckedCreateWithoutLocationInput>
+  }
+
+  export type FacebookPostCreateManyLocationInputEnvelope = {
+    data: Enumerable<FacebookPostCreateManyLocationInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookPostUpsertWithWhereUniqueWithoutLocationInput = {
+    where: FacebookPostWhereUniqueInput
+    update: XOR<FacebookPostUpdateWithoutLocationInput, FacebookPostUncheckedUpdateWithoutLocationInput>
+    create: XOR<FacebookPostCreateWithoutLocationInput, FacebookPostUncheckedCreateWithoutLocationInput>
+  }
+
+  export type FacebookPostUpdateWithWhereUniqueWithoutLocationInput = {
+    where: FacebookPostWhereUniqueInput
+    data: XOR<FacebookPostUpdateWithoutLocationInput, FacebookPostUncheckedUpdateWithoutLocationInput>
+  }
+
+  export type FacebookPostUpdateManyWithWhereWithoutLocationInput = {
+    where: FacebookPostScalarWhereInput
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type FacebookPostCreateWithoutHashtagsInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutHashtagsInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutHashtagsInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutHashtagsInput, FacebookPostUncheckedCreateWithoutHashtagsInput>
+  }
+
+  export type FacebookPostUpsertWithWhereUniqueWithoutHashtagsInput = {
+    where: FacebookPostWhereUniqueInput
+    update: XOR<FacebookPostUpdateWithoutHashtagsInput, FacebookPostUncheckedUpdateWithoutHashtagsInput>
+    create: XOR<FacebookPostCreateWithoutHashtagsInput, FacebookPostUncheckedCreateWithoutHashtagsInput>
+  }
+
+  export type FacebookPostUpdateWithWhereUniqueWithoutHashtagsInput = {
+    where: FacebookPostWhereUniqueInput
+    data: XOR<FacebookPostUpdateWithoutHashtagsInput, FacebookPostUncheckedUpdateWithoutHashtagsInput>
+  }
+
+  export type FacebookPostUpdateManyWithWhereWithoutHashtagsInput = {
+    where: FacebookPostScalarWhereInput
+    data: XOR<FacebookPostUpdateManyMutationInput, FacebookPostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type FacebookPostTypeCreateWithoutPostsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostTypeUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostTypeCreateOrConnectWithoutPostsInput = {
+    where: FacebookPostTypeWhereUniqueInput
+    create: XOR<FacebookPostTypeCreateWithoutPostsInput, FacebookPostTypeUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookUserCreateWithoutPostsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutPostsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutPostsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutPostsInput, FacebookUserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookLocationCreateWithoutPostsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLocationUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLocationCreateOrConnectWithoutPostsInput = {
+    where: FacebookLocationWhereUniqueInput
+    create: XOR<FacebookLocationCreateWithoutPostsInput, FacebookLocationUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookPostDestinationCreateWithoutPostsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostDestinationUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostDestinationCreateOrConnectWithoutPostsInput = {
+    where: FacebookPostDestinationWhereUniqueInput
+    create: XOR<FacebookPostDestinationCreateWithoutPostsInput, FacebookPostDestinationUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookHashtagCreateWithoutPostsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookHashtagUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookHashtagCreateOrConnectWithoutPostsInput = {
+    where: FacebookHashtagWhereUniqueInput
+    create: XOR<FacebookHashtagCreateWithoutPostsInput, FacebookHashtagUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookCommentCreateWithoutPostInput = {
+    message: string
+    commentByUser: FacebookUserCreateNestedOneWithoutCommentsInput
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentUncheckedCreateWithoutPostInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentCreateOrConnectWithoutPostInput = {
+    where: FacebookCommentWhereUniqueInput
+    create: XOR<FacebookCommentCreateWithoutPostInput, FacebookCommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type FacebookCommentCreateManyPostInputEnvelope = {
+    data: Enumerable<FacebookCommentCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikePostCreateWithoutPostInput = {
+    posterUser: FacebookUserCreateNestedOneWithoutLikePostsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUncheckedCreateWithoutPostInput = {
+    id?: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostCreateOrConnectWithoutPostInput = {
+    where: FacebookLikePostWhereUniqueInput
+    create: XOR<FacebookLikePostCreateWithoutPostInput, FacebookLikePostUncheckedCreateWithoutPostInput>
+  }
+
+  export type FacebookLikePostCreateManyPostInputEnvelope = {
+    data: Enumerable<FacebookLikePostCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikeCommentCreateWithoutCommentInput = {
+    posterUser: FacebookUserCreateNestedOneWithoutLikeCommentsInput
+    likeType: FacebookLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedCreateWithoutCommentInput = {
+    id?: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateOrConnectWithoutCommentInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    create: XOR<FacebookLikeCommentCreateWithoutCommentInput, FacebookLikeCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type FacebookLikeCommentCreateManyCommentInputEnvelope = {
+    data: Enumerable<FacebookLikeCommentCreateManyCommentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookPostTypeUpsertWithoutPostsInput = {
+    update: XOR<FacebookPostTypeUpdateWithoutPostsInput, FacebookPostTypeUncheckedUpdateWithoutPostsInput>
+    create: XOR<FacebookPostTypeCreateWithoutPostsInput, FacebookPostTypeUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookPostTypeUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostTypeUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserUpsertWithoutPostsInput = {
+    update: XOR<FacebookUserUpdateWithoutPostsInput, FacebookUserUncheckedUpdateWithoutPostsInput>
+    create: XOR<FacebookUserCreateWithoutPostsInput, FacebookUserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookUserUpdateWithoutPostsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookLocationUpsertWithoutPostsInput = {
+    update: XOR<FacebookLocationUpdateWithoutPostsInput, FacebookLocationUncheckedUpdateWithoutPostsInput>
+    create: XOR<FacebookLocationCreateWithoutPostsInput, FacebookLocationUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookLocationUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLocationUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostDestinationUpsertWithoutPostsInput = {
+    update: XOR<FacebookPostDestinationUpdateWithoutPostsInput, FacebookPostDestinationUncheckedUpdateWithoutPostsInput>
+    create: XOR<FacebookPostDestinationCreateWithoutPostsInput, FacebookPostDestinationUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookPostDestinationUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostDestinationUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookHashtagUpsertWithWhereUniqueWithoutPostsInput = {
+    where: FacebookHashtagWhereUniqueInput
+    update: XOR<FacebookHashtagUpdateWithoutPostsInput, FacebookHashtagUncheckedUpdateWithoutPostsInput>
+    create: XOR<FacebookHashtagCreateWithoutPostsInput, FacebookHashtagUncheckedCreateWithoutPostsInput>
+  }
+
+  export type FacebookHashtagUpdateWithWhereUniqueWithoutPostsInput = {
+    where: FacebookHashtagWhereUniqueInput
+    data: XOR<FacebookHashtagUpdateWithoutPostsInput, FacebookHashtagUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type FacebookHashtagUpdateManyWithWhereWithoutPostsInput = {
+    where: FacebookHashtagScalarWhereInput
+    data: XOR<FacebookHashtagUpdateManyMutationInput, FacebookHashtagUncheckedUpdateManyWithoutHashtagsInput>
+  }
+
+  export type FacebookHashtagScalarWhereInput = {
+    AND?: Enumerable<FacebookHashtagScalarWhereInput>
+    OR?: Enumerable<FacebookHashtagScalarWhereInput>
+    NOT?: Enumerable<FacebookHashtagScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FacebookCommentUpsertWithWhereUniqueWithoutPostInput = {
+    where: FacebookCommentWhereUniqueInput
+    update: XOR<FacebookCommentUpdateWithoutPostInput, FacebookCommentUncheckedUpdateWithoutPostInput>
+    create: XOR<FacebookCommentCreateWithoutPostInput, FacebookCommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type FacebookCommentUpdateWithWhereUniqueWithoutPostInput = {
+    where: FacebookCommentWhereUniqueInput
+    data: XOR<FacebookCommentUpdateWithoutPostInput, FacebookCommentUncheckedUpdateWithoutPostInput>
+  }
+
+  export type FacebookCommentUpdateManyWithWhereWithoutPostInput = {
+    where: FacebookCommentScalarWhereInput
+    data: XOR<FacebookCommentUpdateManyMutationInput, FacebookCommentUncheckedUpdateManyWithoutCommentsInput>
+  }
+
+  export type FacebookLikePostUpsertWithWhereUniqueWithoutPostInput = {
+    where: FacebookLikePostWhereUniqueInput
+    update: XOR<FacebookLikePostUpdateWithoutPostInput, FacebookLikePostUncheckedUpdateWithoutPostInput>
+    create: XOR<FacebookLikePostCreateWithoutPostInput, FacebookLikePostUncheckedCreateWithoutPostInput>
+  }
+
+  export type FacebookLikePostUpdateWithWhereUniqueWithoutPostInput = {
+    where: FacebookLikePostWhereUniqueInput
+    data: XOR<FacebookLikePostUpdateWithoutPostInput, FacebookLikePostUncheckedUpdateWithoutPostInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithWhereWithoutPostInput = {
+    where: FacebookLikePostScalarWhereInput
+    data: XOR<FacebookLikePostUpdateManyMutationInput, FacebookLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type FacebookLikeCommentUpsertWithWhereUniqueWithoutCommentInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    update: XOR<FacebookLikeCommentUpdateWithoutCommentInput, FacebookLikeCommentUncheckedUpdateWithoutCommentInput>
+    create: XOR<FacebookLikeCommentCreateWithoutCommentInput, FacebookLikeCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type FacebookLikeCommentUpdateWithWhereUniqueWithoutCommentInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    data: XOR<FacebookLikeCommentUpdateWithoutCommentInput, FacebookLikeCommentUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithWhereWithoutCommentInput = {
+    where: FacebookLikeCommentScalarWhereInput
+    data: XOR<FacebookLikeCommentUpdateManyMutationInput, FacebookLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type FacebookUserCreateWithoutCommentsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutCommentsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutCommentsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutCommentsInput, FacebookUserUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type FacebookPostCreateWithoutCommentsInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutCommentsInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutCommentsInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutCommentsInput, FacebookPostUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type FacebookUserUpsertWithoutCommentsInput = {
+    update: XOR<FacebookUserUpdateWithoutCommentsInput, FacebookUserUncheckedUpdateWithoutCommentsInput>
+    create: XOR<FacebookUserCreateWithoutCommentsInput, FacebookUserUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type FacebookUserUpdateWithoutCommentsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookPostUpsertWithoutCommentsInput = {
+    update: XOR<FacebookPostUpdateWithoutCommentsInput, FacebookPostUncheckedUpdateWithoutCommentsInput>
+    create: XOR<FacebookPostCreateWithoutCommentsInput, FacebookPostUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type FacebookPostUpdateWithoutCommentsInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookLikePostCreateWithoutLikeTypeInput = {
+    post: FacebookPostCreateNestedOneWithoutLikePostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUncheckedCreateWithoutLikeTypeInput = {
+    id?: number
+    postId: number
+    posterUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostCreateOrConnectWithoutLikeTypeInput = {
+    where: FacebookLikePostWhereUniqueInput
+    create: XOR<FacebookLikePostCreateWithoutLikeTypeInput, FacebookLikePostUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikePostCreateManyLikeTypeInputEnvelope = {
+    data: Enumerable<FacebookLikePostCreateManyLikeTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikeCommentCreateWithoutLikeTypeInput = {
+    comment: FacebookPostCreateNestedOneWithoutLikeCommentsInput
+    posterUser: FacebookUserCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput = {
+    id?: number
+    commentId: number
+    posterUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateOrConnectWithoutLikeTypeInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    create: XOR<FacebookLikeCommentCreateWithoutLikeTypeInput, FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikeCommentCreateManyLikeTypeInputEnvelope = {
+    data: Enumerable<FacebookLikeCommentCreateManyLikeTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FacebookLikePostUpsertWithWhereUniqueWithoutLikeTypeInput = {
+    where: FacebookLikePostWhereUniqueInput
+    update: XOR<FacebookLikePostUpdateWithoutLikeTypeInput, FacebookLikePostUncheckedUpdateWithoutLikeTypeInput>
+    create: XOR<FacebookLikePostCreateWithoutLikeTypeInput, FacebookLikePostUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikePostUpdateWithWhereUniqueWithoutLikeTypeInput = {
+    where: FacebookLikePostWhereUniqueInput
+    data: XOR<FacebookLikePostUpdateWithoutLikeTypeInput, FacebookLikePostUncheckedUpdateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikePostUpdateManyWithWhereWithoutLikeTypeInput = {
+    where: FacebookLikePostScalarWhereInput
+    data: XOR<FacebookLikePostUpdateManyMutationInput, FacebookLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type FacebookLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    update: XOR<FacebookLikeCommentUpdateWithoutLikeTypeInput, FacebookLikeCommentUncheckedUpdateWithoutLikeTypeInput>
+    create: XOR<FacebookLikeCommentCreateWithoutLikeTypeInput, FacebookLikeCommentUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput = {
+    where: FacebookLikeCommentWhereUniqueInput
+    data: XOR<FacebookLikeCommentUpdateWithoutLikeTypeInput, FacebookLikeCommentUncheckedUpdateWithoutLikeTypeInput>
+  }
+
+  export type FacebookLikeCommentUpdateManyWithWhereWithoutLikeTypeInput = {
+    where: FacebookLikeCommentScalarWhereInput
+    data: XOR<FacebookLikeCommentUpdateManyMutationInput, FacebookLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type FacebookPostCreateWithoutLikePostsInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutLikePostsInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutLikePostsInput, FacebookPostUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookUserCreateWithoutLikePostsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutLikePostsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutLikePostsInput, FacebookUserUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookLikeTypeCreateWithoutLikePostsInput = {
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeCreateOrConnectWithoutLikePostsInput = {
+    where: FacebookLikeTypeWhereUniqueInput
+    create: XOR<FacebookLikeTypeCreateWithoutLikePostsInput, FacebookLikeTypeUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookPostUpsertWithoutLikePostsInput = {
+    update: XOR<FacebookPostUpdateWithoutLikePostsInput, FacebookPostUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<FacebookPostCreateWithoutLikePostsInput, FacebookPostUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookPostUpdateWithoutLikePostsInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookUserUpsertWithoutLikePostsInput = {
+    update: XOR<FacebookUserUpdateWithoutLikePostsInput, FacebookUserUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<FacebookUserCreateWithoutLikePostsInput, FacebookUserUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookUserUpdateWithoutLikePostsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookLikeTypeUpsertWithoutLikePostsInput = {
+    update: XOR<FacebookLikeTypeUpdateWithoutLikePostsInput, FacebookLikeTypeUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<FacebookLikeTypeCreateWithoutLikePostsInput, FacebookLikeTypeUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type FacebookLikeTypeUpdateWithoutLikePostsInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likeComments?: FacebookLikeCommentUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookLikeTypeUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookPostCreateWithoutLikeCommentsInput = {
+    message: string
+    postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
+    posterUser: FacebookUserCreateNestedOneWithoutPostsInput
+    location: FacebookLocationCreateNestedOneWithoutPostsInput
+    destination: FacebookPostDestinationCreateNestedOneWithoutPostsInput
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPostInput
+  }
+
+  export type FacebookPostUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: FacebookHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FacebookPostCreateOrConnectWithoutLikeCommentsInput = {
+    where: FacebookPostWhereUniqueInput
+    create: XOR<FacebookPostCreateWithoutLikeCommentsInput, FacebookPostUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookUserCreateWithoutLikeCommentsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutLikeCommentsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutLikeCommentsInput, FacebookUserUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookLikeTypeCreateWithoutLikeCommentsInput = {
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: FacebookLikePostCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    emoji: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type FacebookLikeTypeCreateOrConnectWithoutLikeCommentsInput = {
+    where: FacebookLikeTypeWhereUniqueInput
+    create: XOR<FacebookLikeTypeCreateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookPostUpsertWithoutLikeCommentsInput = {
+    update: XOR<FacebookPostUpdateWithoutLikeCommentsInput, FacebookPostUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<FacebookPostCreateWithoutLikeCommentsInput, FacebookPostUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookPostUpdateWithoutLikeCommentsInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FacebookUserUpsertWithoutLikeCommentsInput = {
+    update: XOR<FacebookUserUpdateWithoutLikeCommentsInput, FacebookUserUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<FacebookUserCreateWithoutLikeCommentsInput, FacebookUserUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookUserUpdateWithoutLikeCommentsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookLikeTypeUpsertWithoutLikeCommentsInput = {
+    update: XOR<FacebookLikeTypeUpdateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<FacebookLikeTypeCreateWithoutLikeCommentsInput, FacebookLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type FacebookLikeTypeUpdateWithoutLikeCommentsInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: FacebookLikePostUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookLikeTypeUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type FacebookUserCreateWithoutFriendRequestFromsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutFriendRequestFromsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutFriendRequestFromsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutFriendRequestFromsInput, FacebookUserUncheckedCreateWithoutFriendRequestFromsInput>
+  }
+
+  export type FacebookUserCreateWithoutFriendRequestToesInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutFriendRequestToesInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutFriendRequestToesInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutFriendRequestToesInput, FacebookUserUncheckedCreateWithoutFriendRequestToesInput>
+  }
+
+  export type FacebookUserUpsertWithoutFriendRequestFromsInput = {
+    update: XOR<FacebookUserUpdateWithoutFriendRequestFromsInput, FacebookUserUncheckedUpdateWithoutFriendRequestFromsInput>
+    create: XOR<FacebookUserCreateWithoutFriendRequestFromsInput, FacebookUserUncheckedCreateWithoutFriendRequestFromsInput>
+  }
+
+  export type FacebookUserUpdateWithoutFriendRequestFromsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutFriendRequestFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUpsertWithoutFriendRequestToesInput = {
+    update: XOR<FacebookUserUpdateWithoutFriendRequestToesInput, FacebookUserUncheckedUpdateWithoutFriendRequestToesInput>
+    create: XOR<FacebookUserCreateWithoutFriendRequestToesInput, FacebookUserUncheckedCreateWithoutFriendRequestToesInput>
+  }
+
+  export type FacebookUserUpdateWithoutFriendRequestToesInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutFriendRequestToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserCreateWithoutFriendRelationFromsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutFriendRelationFromsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutFriendRelationFromsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutFriendRelationFromsInput, FacebookUserUncheckedCreateWithoutFriendRelationFromsInput>
+  }
+
+  export type FacebookUserCreateWithoutFriendRelationToesInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutFriendRelationToesInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutFriendRelationToesInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutFriendRelationToesInput, FacebookUserUncheckedCreateWithoutFriendRelationToesInput>
+  }
+
+  export type FacebookUserUpsertWithoutFriendRelationFromsInput = {
+    update: XOR<FacebookUserUpdateWithoutFriendRelationFromsInput, FacebookUserUncheckedUpdateWithoutFriendRelationFromsInput>
+    create: XOR<FacebookUserCreateWithoutFriendRelationFromsInput, FacebookUserUncheckedCreateWithoutFriendRelationFromsInput>
+  }
+
+  export type FacebookUserUpdateWithoutFriendRelationFromsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutFriendRelationFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUpsertWithoutFriendRelationToesInput = {
+    update: XOR<FacebookUserUpdateWithoutFriendRelationToesInput, FacebookUserUncheckedUpdateWithoutFriendRelationToesInput>
+    create: XOR<FacebookUserCreateWithoutFriendRelationToesInput, FacebookUserUncheckedCreateWithoutFriendRelationToesInput>
+  }
+
+  export type FacebookUserUpdateWithoutFriendRelationToesInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutFriendRelationToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserCreateWithoutMessengeFromsInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeToes?: FacebookMessengerCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutMessengeFromsInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeToes?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageToUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutMessengeFromsInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutMessengeFromsInput, FacebookUserUncheckedCreateWithoutMessengeFromsInput>
+  }
+
+  export type FacebookUserCreateWithoutMessengeToesInput = {
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerCreateNestedManyWithoutMessageFromUserInput
+  }
+
+  export type FacebookUserUncheckedCreateWithoutMessengeToesInput = {
+    id?: number
+    profileImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
+    groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
+    friendRequestToes?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestToUserInput
+    friendRelationFroms?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationFromUserInput
+    friendRelationToes?: FacebookUserRelationUncheckedCreateNestedManyWithoutRelationToUserInput
+    messengeFroms?: FacebookMessengerUncheckedCreateNestedManyWithoutMessageFromUserInput
+  }
+
+  export type FacebookUserCreateOrConnectWithoutMessengeToesInput = {
+    where: FacebookUserWhereUniqueInput
+    create: XOR<FacebookUserCreateWithoutMessengeToesInput, FacebookUserUncheckedCreateWithoutMessengeToesInput>
+  }
+
+  export type FacebookUserUpsertWithoutMessengeFromsInput = {
+    update: XOR<FacebookUserUpdateWithoutMessengeFromsInput, FacebookUserUncheckedUpdateWithoutMessengeFromsInput>
+    create: XOR<FacebookUserCreateWithoutMessengeFromsInput, FacebookUserUncheckedCreateWithoutMessengeFromsInput>
+  }
+
+  export type FacebookUserUpdateWithoutMessengeFromsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutMessengeFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUpsertWithoutMessengeToesInput = {
+    update: XOR<FacebookUserUpdateWithoutMessengeToesInput, FacebookUserUncheckedUpdateWithoutMessengeToesInput>
+    create: XOR<FacebookUserCreateWithoutMessengeToesInput, FacebookUserUncheckedCreateWithoutMessengeToesInput>
+  }
+
+  export type FacebookUserUpdateWithoutMessengeToesInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutMessengeToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
   }
 
   export type BinKitchenMenuCreateManyCategoryInput = {
@@ -23744,7 +45212,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationUpdateWithoutFollwerInput = {
-    following?: TwitterUserUpdateOneRequiredWithoutFollowingNestedInput
+    following?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23756,7 +45224,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationUncheckedUpdateManyWithoutFollwerInput = {
+  export type TwitterUserRelationUncheckedUpdateManyWithoutFollwersInput = {
     id?: IntFieldUpdateOperationsInput | number
     followingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23764,7 +45232,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationUpdateWithoutFollowingInput = {
-    follwer?: TwitterUserUpdateOneRequiredWithoutFollwerNestedInput
+    follwer?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23776,7 +45244,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationUncheckedUpdateManyWithoutFollowingInput = {
+  export type TwitterUserRelationUncheckedUpdateManyWithoutFollowingsInput = {
     id?: IntFieldUpdateOperationsInput | number
     followerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23787,7 +45255,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutPostNestedInput
     hashTags?: TwitterHashTagUpdateManyWithoutPostsNestedInput
   }
 
@@ -23796,11 +45264,11 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
     hashTags?: TwitterHashTagUncheckedUpdateManyWithoutPostsNestedInput
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutTwitterPostInput = {
+  export type TwitterPostUncheckedUpdateManyWithoutTwitterPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23809,7 +45277,7 @@ export namespace Prisma {
 
   export type TwitterReplyUpdateWithoutUserInput = {
     message?: StringFieldUpdateOperationsInput | string
-    post?: TwitterPostUpdateOneRequiredWithoutTwitterReplyNestedInput
+    post?: TwitterPostUpdateOneRequiredWithoutTwitterRepliesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23822,7 +45290,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterReplyUncheckedUpdateManyWithoutTwitterReplyInput = {
+  export type TwitterReplyUncheckedUpdateManyWithoutTwitterRepliesInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postId?: IntFieldUpdateOperationsInput | number
@@ -23832,7 +45300,7 @@ export namespace Prisma {
 
   export type TwitterDMUpdateWithoutDirectFromInput = {
     message?: StringFieldUpdateOperationsInput | string
-    directTo?: TwitterUserUpdateOneRequiredWithoutDirectToNestedInput
+    directTo?: TwitterUserUpdateOneRequiredWithoutDirectToesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23845,7 +45313,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterDMUncheckedUpdateManyWithoutDirectFromInput = {
+  export type TwitterDMUncheckedUpdateManyWithoutDirectFromsInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     directToId?: IntFieldUpdateOperationsInput | number
@@ -23855,7 +45323,7 @@ export namespace Prisma {
 
   export type TwitterDMUpdateWithoutDirectToInput = {
     message?: StringFieldUpdateOperationsInput | string
-    directFrom?: TwitterUserUpdateOneRequiredWithoutDirectFromNestedInput
+    directFrom?: TwitterUserUpdateOneRequiredWithoutDirectFromsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23868,7 +45336,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterDMUncheckedUpdateManyWithoutDirectToInput = {
+  export type TwitterDMUncheckedUpdateManyWithoutDirectToesInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     directFromId?: IntFieldUpdateOperationsInput | number
@@ -23886,7 +45354,7 @@ export namespace Prisma {
 
   export type TwitterReplyUpdateWithoutPostInput = {
     message?: StringFieldUpdateOperationsInput | string
-    user?: TwitterUserUpdateOneRequiredWithoutTwitterReplyNestedInput
+    user?: TwitterUserUpdateOneRequiredWithoutTwitterRepliesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23921,10 +45389,10 @@ export namespace Prisma {
 
   export type TwitterPostUpdateWithoutHashTagsInput = {
     message?: StringFieldUpdateOperationsInput | string
-    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostNestedInput
+    user?: TwitterUserUpdateOneRequiredWithoutTwitterPostsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostUncheckedUpdateWithoutHashTagsInput = {
@@ -23933,13 +45401,793 @@ export namespace Prisma {
     postByUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    TwitterReply?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
+    twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostUncheckedUpdateManyWithoutPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postByUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostCreateManyPosterUserInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookGroupCreateManyCreaterUserInput = {
+    id?: number
+    GroupImage: string
+    coverImage: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookCommentCreateManyCommentByUserInput = {
+    id?: number
+    message: string
+    postId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostCreateManyPosterUserInput = {
+    id?: number
+    postId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateManyPosterUserInput = {
+    id?: number
+    commentId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestCreateManyRequestFromUserInput = {
+    id?: number
+    requestToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookFriendRequestCreateManyRequestToUserInput = {
+    id?: number
+    requestFromUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationCreateManyRelationFromUserInput = {
+    id?: number
+    relationToUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookUserRelationCreateManyRelationToUserInput = {
+    id?: number
+    relationFromUserId: number
+    isAccepted: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerCreateManyMessageFromUserInput = {
+    id?: number
+    message: string
+    messageToUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookMessengerCreateManyMessageToUserInput = {
+    id?: number
+    message: string
+    messageFromUserId: number
+    isRead: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostUpdateWithoutPosterUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutPosterUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateManyWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUpdateWithoutCreaterUserInput = {
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    memberUser?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateWithoutCreaterUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    memberUser?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateManyWithoutGroupcreaterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUpdateWithoutMemberUserInput = {
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUser?: FacebookUserUpdateOneRequiredWithoutGroupcreaterNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateWithoutMemberUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookGroupUncheckedUpdateManyWithoutGroupMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    GroupImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createrUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUpdateWithoutCommentByUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    post?: FacebookPostUpdateOneRequiredWithoutCommentsNestedInput
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUncheckedUpdateWithoutCommentByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: IntFieldUpdateOperationsInput | number
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUncheckedUpdateManyWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: IntFieldUpdateOperationsInput | number
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUpdateWithoutPosterUserInput = {
+    post?: FacebookPostUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateWithoutPosterUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateManyWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUpdateWithoutPosterUserInput = {
+    comment?: FacebookPostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateWithoutPosterUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUpdateWithoutRequestFromUserInput = {
+    requestToUser?: FacebookUserUpdateOneRequiredWithoutFriendRequestToesNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateWithoutRequestFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateManyWithoutFriendRequestFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUpdateWithoutRequestToUserInput = {
+    requestFromUser?: FacebookUserUpdateOneRequiredWithoutFriendRequestFromsNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateWithoutRequestToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestFromUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookFriendRequestUncheckedUpdateManyWithoutFriendRequestToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    requestFromUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUpdateWithoutRelationFromUserInput = {
+    relationToUser?: FacebookUserUpdateOneRequiredWithoutFriendRelationToesNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateWithoutRelationFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateManyWithoutFriendRelationFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationToUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUpdateWithoutRelationToUserInput = {
+    relationFromUser?: FacebookUserUpdateOneRequiredWithoutFriendRelationFromsNestedInput
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateWithoutRelationToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationFromUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserRelationUncheckedUpdateManyWithoutFriendRelationToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    relationFromUserId?: IntFieldUpdateOperationsInput | number
+    isAccepted?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUpdateWithoutMessageFromUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    messageToUser?: FacebookUserUpdateOneRequiredWithoutMessengeToesNestedInput
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateWithoutMessageFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageToUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateManyWithoutMessengeFromsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageToUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUpdateWithoutMessageToUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUser?: FacebookUserUpdateOneRequiredWithoutMessengeFromsNestedInput
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateWithoutMessageToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookMessengerUncheckedUpdateManyWithoutMessengeToesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    messageFromUserId?: IntFieldUpdateOperationsInput | number
+    isRead?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookUserUpdateWithoutGroupMemberInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
+    comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateWithoutGroupMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
+    groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
+    friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
+    friendRequestToes?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestToUserNestedInput
+    friendRelationFroms?: FacebookUserRelationUncheckedUpdateManyWithoutRelationFromUserNestedInput
+    friendRelationToes?: FacebookUserRelationUncheckedUpdateManyWithoutRelationToUserNestedInput
+    messengeFroms?: FacebookMessengerUncheckedUpdateManyWithoutMessageFromUserNestedInput
+    messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
+  }
+
+  export type FacebookUserUncheckedUpdateManyWithoutMemberUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookPostCreateManyDestinationInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    locationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostUpdateWithoutDestinationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutDestinationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostCreateManyPostTypeInput = {
+    id?: number
+    message: string
+    posterUserId: number
+    locationId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostUpdateWithoutPostTypeInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutPostTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostCreateManyLocationInput = {
+    id?: number
+    message: string
+    postTypeId: number
+    posterUserId: number
+    destinationId: number
+    destinationRelateId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookPostUpdateWithoutLocationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutLocationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: FacebookHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUpdateWithoutHashtagsInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    postType?: FacebookPostTypeUpdateOneRequiredWithoutPostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutPostsNestedInput
+    location?: FacebookLocationUpdateOneRequiredWithoutPostsNestedInput
+    destination?: FacebookPostDestinationUpdateOneRequiredWithoutPostsNestedInput
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: FacebookCommentUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookPostUncheckedUpdateWithoutHashtagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postTypeId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    locationId?: IntFieldUpdateOperationsInput | number
+    destinationId?: IntFieldUpdateOperationsInput | number
+    destinationRelateId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: FacebookCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type FacebookCommentCreateManyPostInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    isReplied: boolean
+    replyFromCommentId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostCreateManyPostInput = {
+    id?: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateManyCommentInput = {
+    id?: number
+    posterUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookHashtagUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookHashtagUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookHashtagUncheckedUpdateManyWithoutHashtagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUpdateWithoutPostInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookCommentUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    isReplied?: BoolFieldUpdateOperationsInput | boolean
+    replyFromCommentId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUpdateWithoutPostInput = {
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUpdateWithoutCommentInput = {
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: FacebookLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostCreateManyLikeTypeInput = {
+    id?: number
+    postId: number
+    posterUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikeCommentCreateManyLikeTypeInput = {
+    id?: number
+    commentId: number
+    posterUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FacebookLikePostUpdateWithoutLikeTypeInput = {
+    post?: FacebookPostUpdateOneRequiredWithoutLikePostsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikePostUncheckedUpdateWithoutLikeTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUpdateWithoutLikeTypeInput = {
+    comment?: FacebookPostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    posterUser?: FacebookUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FacebookLikeCommentUncheckedUpdateWithoutLikeTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    posterUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

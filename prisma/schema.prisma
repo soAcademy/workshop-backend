@@ -113,17 +113,17 @@ model TriviaRoundQuiz {
 //   updatedAt  DateTime         @updatedAt
 // }
 model TwitterUser {
-  id           Int                   @id @default(autoincrement())
-  image        String                @unique
-  name         String                @unique
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
-  follwer      TwitterUserRelation[] @relation("FromId")
-  following    TwitterUserRelation[] @relation("ToId")
-  TwitterPost  TwitterPost[]
-  TwitterReply TwitterReply[]
-  directFrom   TwitterDM[]           @relation("DMFromId")
-  directTo     TwitterDM[]           @relation("DMToId")
+  id             Int                   @id @default(autoincrement())
+  image          String                @unique
+  name           String                @unique
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  follwers       TwitterUserRelation[] @relation("FromId")
+  followings     TwitterUserRelation[] @relation("ToId")
+  twitterPosts   TwitterPost[]
+  twitterReplies TwitterReply[]
+  directFroms    TwitterDM[]           @relation("DMFromId")
+  directToes     TwitterDM[]           @relation("DMToId")
 }
 
 model TwitterUserRelation {
@@ -137,14 +137,14 @@ model TwitterUserRelation {
 }
 
 model TwitterPost {
-  id           Int              @id @default(autoincrement())
-  message      String
-  user         TwitterUser      @relation(fields: [postByUserId], references: [id])
-  postByUserId Int
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  TwitterReply TwitterReply[]
-  hashTags     TwitterHashTag[]
+  id             Int              @id @default(autoincrement())
+  message        String
+  user           TwitterUser      @relation(fields: [postByUserId], references: [id])
+  postByUserId   Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  twitterReplies TwitterReply[]
+  hashTags       TwitterHashTag[]
   // TwitterPostTohashtag TwitterPostTohashtag[]
 }
 
@@ -185,6 +185,173 @@ model TwitterDM {
   directToId   Int
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+}
+model FacebookUser {
+  id                  Int                     @id @default(autoincrement())
+  profileImage        String
+  coverImage          String
+  name                String                  @unique
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  posts               FacebookPost[]
+  groupcreater        FacebookGroup[]         @relation("creater")
+  groupMember         FacebookGroup[]
+  comments            FacebookComment[]
+  likePosts           FacebookLikePost[]
+  likeComments        FacebookLikeComment[]
+  friendRequestFroms  FacebookFriendRequest[] @relation("requestFrom")
+  friendRequestToes   FacebookFriendRequest[] @relation("requestTo")
+  friendRelationFroms FacebookUserRelation[]  @relation("relationFrom")
+  friendRelationToes  FacebookUserRelation[]  @relation("relationTo")
+  messengeFroms       FacebookMessenger[]     @relation("messageFrom")
+  messengeToes        FacebookMessenger[]     @relation("messageTo")
+}
+
+model FacebookGroup {
+  id            Int            @id @default(autoincrement())
+  GroupImage    String
+  coverImage    String
+  name          String         @unique
+  createrUser   FacebookUser   @relation("creater", fields: [createrUserId], references: [id])
+  createrUserId Int
+  memberUser    FacebookUser[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model FacebookPostDestination {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  posts     FacebookPost[]
+}
+
+model FacebookPostType {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  posts     FacebookPost[]
+}
+
+model FacebookLocation {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  posts     FacebookPost[]
+}
+
+model FacebookHashtag {
+  id        Int            @id @default(autoincrement())
+  name      String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  posts     FacebookPost[]
+}
+
+model FacebookPost {
+  id                  Int                     @id @default(autoincrement())
+  message             String
+  postType            FacebookPostType        @relation(fields: [postTypeId], references: [id])
+  postTypeId          Int
+  posterUser          FacebookUser            @relation(fields: [posterUserId], references: [id])
+  posterUserId        Int
+  location            FacebookLocation        @relation(fields: [locationId], references: [id])
+  locationId          Int
+  destination         FacebookPostDestination @relation(fields: [destinationId], references: [id])
+  destinationId       Int
+  destinationRelateId Int
+  isShared            Boolean
+  shareFromPostId     Int
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  hashtags            FacebookHashtag[]
+  comments            FacebookComment[]
+  likePosts           FacebookLikePost[]
+  likeComments        FacebookLikeComment[]
+}
+
+model FacebookComment {
+  id                 Int          @id @default(autoincrement())
+  message            String
+  commentByUser      FacebookUser @relation(fields: [commentByUserId], references: [id])
+  commentByUserId    Int
+  post               FacebookPost @relation(fields: [postId], references: [id])
+  postId             Int
+  isReplied          Boolean
+  replyFromCommentId Int
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+model FacebookLikeType {
+  id           Int                   @id @default(autoincrement())
+  emoji        String
+  name         String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  likePosts    FacebookLikePost[]
+  likeComments FacebookLikeComment[]
+}
+
+model FacebookLikePost {
+  id           Int              @id @default(autoincrement())
+  post         FacebookPost     @relation(fields: [postId], references: [id])
+  postId       Int
+  posterUser   FacebookUser     @relation(fields: [posterUserId], references: [id])
+  posterUserId Int
+  likeType     FacebookLikeType @relation(fields: [likeTypeId], references: [id])
+  likeTypeId   Int
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model FacebookLikeComment {
+  id           Int              @id @default(autoincrement())
+  comment      FacebookPost     @relation(fields: [commentId], references: [id])
+  commentId    Int
+  posterUser   FacebookUser     @relation(fields: [posterUserId], references: [id])
+  posterUserId Int
+  likeType     FacebookLikeType @relation(fields: [likeTypeId], references: [id])
+  likeTypeId   Int
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model FacebookFriendRequest {
+  id                Int          @id @default(autoincrement())
+  requestFromUser   FacebookUser @relation("requestFrom", fields: [requestFromUserId], references: [id])
+  requestFromUserId Int
+  requestToUser     FacebookUser @relation("requestTo", fields: [requestToUserId], references: [id])
+  requestToUserId   Int
+  isAccepted        Boolean
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
+
+model FacebookUserRelation {
+  id                 Int          @id @default(autoincrement())
+  relationFromUser   FacebookUser @relation("relationFrom", fields: [relationFromUserId], references: [id])
+  relationFromUserId Int
+  relationToUser     FacebookUser @relation("relationTo", fields: [relationToUserId], references: [id])
+  relationToUserId   Int
+  isAccepted         Boolean
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+model FacebookMessenger {
+  id                Int          @id @default(autoincrement())
+  message           String
+  messageFromUser   FacebookUser @relation("messageFrom", fields: [messageFromUserId], references: [id])
+  messageFromUserId Int
+  messageToUser     FacebookUser @relation("messageTo", fields: [messageToUserId], references: [id])
+  messageToUserId   Int
+  isRead            Boolean
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
 }
 datasource db {
   provider = "postgresql"

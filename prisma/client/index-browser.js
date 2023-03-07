@@ -124,6 +124,132 @@ exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.FacebookCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  commentByUserId: 'commentByUserId',
+  postId: 'postId',
+  isReplied: 'isReplied',
+  replyFromCommentId: 'replyFromCommentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookFriendRequestScalarFieldEnum = makeEnum({
+  id: 'id',
+  requestFromUserId: 'requestFromUserId',
+  requestToUserId: 'requestToUserId',
+  isAccepted: 'isAccepted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookGroupScalarFieldEnum = makeEnum({
+  id: 'id',
+  GroupImage: 'GroupImage',
+  coverImage: 'coverImage',
+  name: 'name',
+  createrUserId: 'createrUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookLikeCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentId: 'commentId',
+  posterUserId: 'posterUserId',
+  likeTypeId: 'likeTypeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookLikePostScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  posterUserId: 'posterUserId',
+  likeTypeId: 'likeTypeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookLikeTypeScalarFieldEnum = makeEnum({
+  id: 'id',
+  emoji: 'emoji',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookLocationScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookMessengerScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  messageFromUserId: 'messageFromUserId',
+  messageToUserId: 'messageToUserId',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookPostDestinationScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookPostScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  postTypeId: 'postTypeId',
+  posterUserId: 'posterUserId',
+  locationId: 'locationId',
+  destinationId: 'destinationId',
+  destinationRelateId: 'destinationRelateId',
+  isShared: 'isShared',
+  shareFromPostId: 'shareFromPostId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookPostTypeScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookUserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  relationFromUserId: 'relationFromUserId',
+  relationToUserId: 'relationToUserId',
+  isAccepted: 'isAccepted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  profileImage: 'profileImage',
+  coverImage: 'coverImage',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -258,7 +384,21 @@ exports.Prisma.ModelName = makeEnum({
   TwitterPost: 'TwitterPost',
   TwitterHashTag: 'TwitterHashTag',
   TwitterReply: 'TwitterReply',
-  TwitterDM: 'TwitterDM'
+  TwitterDM: 'TwitterDM',
+  FacebookUser: 'FacebookUser',
+  FacebookGroup: 'FacebookGroup',
+  FacebookPostDestination: 'FacebookPostDestination',
+  FacebookPostType: 'FacebookPostType',
+  FacebookLocation: 'FacebookLocation',
+  FacebookHashtag: 'FacebookHashtag',
+  FacebookPost: 'FacebookPost',
+  FacebookComment: 'FacebookComment',
+  FacebookLikeType: 'FacebookLikeType',
+  FacebookLikePost: 'FacebookLikePost',
+  FacebookLikeComment: 'FacebookLikeComment',
+  FacebookFriendRequest: 'FacebookFriendRequest',
+  FacebookUserRelation: 'FacebookUserRelation',
+  FacebookMessenger: 'FacebookMessenger'
 });
 
 /**
