@@ -12,7 +12,11 @@
     "prisma:merge:food": "cat prisma/foodschema/**.prisma > prisma/foodschema.prisma",
     "prisma:format:food": "yarn prisma format --schema prisma/foodschema.prisma",
     "prisma:migrate:food": "yarn prisma migrate dev --name init --schema prisma/foodschema.prisma",
-    "prisma:generate:food": "yarn pnpify prisma generate --schema=prisma/foodschema.prisma"
+    "prisma:generate:food": "yarn pnpify prisma generate --schema=prisma/foodschema.prisma",
+    "prisma:merge:trivia": "cat prisma/trivia-schema/**.prisma > prisma/triviaschema.prisma",
+    "prisma:format:trivia": "yarn prisma format --schema prisma/triviaschema.prisma",
+    "prisma:migrate:trivia": "yarn prisma migrate dev --name init --schema prisma/triviaschema.prisma",
+    "prisma:generate:trivia": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",

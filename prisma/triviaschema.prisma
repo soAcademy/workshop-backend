@@ -1,0 +1,76 @@
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  bestScore Int
+  games     Game[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String
+  questions Question[]
+  games     Game[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Question {
+  id             Int       @id @default(autoincrement())
+  question       String
+  category       Category? @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  rounds         Round[]
+  choices        Choice[]  @relation("QuestionChoice")
+  answerChoice   Choice?   @relation("QuestionAnswer", fields: [answerChoiceId], references: [id])
+  answerChoiceId Int       @unique
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Choice {
+  id              Int        @id @default(autoincrement())
+  choice          String
+  rounds          Round[]
+  questionId      Int?
+  question        Question?  @relation("QuestionChoice", fields: [questionId], references: [id])
+  questionAnswers Question[] @relation("QuestionAnswer")
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Round {
+  id               Int       @id @default(autoincrement())
+  selectedChoice   Choice?   @relation(fields: [selectedChoiceId], references: [id])
+  selectedChoiceId Int
+  questions        Question? @relation(fields: [questionsId], references: [id])
+  questionsId      Int?
+  game             Game?     @relation(fields: [gameId], references: [id])
+  gameId           Int
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Game {
+  id         Int       @id @default(autoincrement())
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     Int
+  rounds     Round[]
+  score      Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("TRIVIA_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
+  output        = "../prisma/client-trivia"
+}
