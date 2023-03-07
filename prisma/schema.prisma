@@ -96,6 +96,92 @@ model Round {
   @@schema("binquiz")
 }
 
+model FacebookUser {
+  id                     Int                    @id @default(autoincrement())
+  name                   String
+  imageUrl               String
+  bio                    String
+  followingUserRelations FacebookUserRelation[] @relation("followingUser")
+  followedUserRelations  FacebookUserRelation[] @relation("followedUser")
+  posts                  Post[]
+  comments               Comment[]
+  messengerMessagesFrom  MessengerMessage[]     @relation("fromUser")
+  messengerMessagesTo    MessengerMessage[]     @relation("toUser")
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+
+  @@map("User")
+  @@schema("facebook")
+}
+
+// https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations
+
+model FacebookUserRelation {
+  id              Int          @id @default(autoincrement())
+  followingUser   FacebookUser @relation("followingUser", fields: [followingUserId], references: [id])
+  followingUserId Int
+  followedUser    FacebookUser @relation("followedUser", fields: [followedUserId], references: [id])
+  followedUserId  Int
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("UserRelation")
+  @@schema("facebook")
+}
+
+model Post {
+  id          Int               @id @default(autoincrement())
+  postText    String
+  postingUser FacebookUser      @relation(fields: [userId], references: [id])
+  userId      Int
+  comments    Comment[]
+  hashTags    FacebookHashTag[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@schema("facebook")
+}
+
+model Comment {
+  id               Int          @id @default(autoincrement())
+  commentText      String
+  commentingUser   FacebookUser @relation(fields: [userId], references: [id])
+  userId           Int
+  parentPost       Post         @relation(fields: [postId], references: [id])
+  postId           Int
+  replyToComment   Comment?     @relation("replyToComment", fields: [replyToCommentId], references: [id])
+  replyToCommentId Int?         @unique
+  repliedComment   Comment?     @relation("replyToComment")
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@schema("facebook")
+}
+
+model FacebookHashTag {
+  id          Int      @id @default(autoincrement())
+  hashTagText String
+  isInPosts   Post[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("HashTag")
+  @@schema("facebook")
+}
+
+model MessengerMessage {
+  id            Int          @id @default(autoincrement())
+  messengerText String
+  fromUser      FacebookUser @relation("fromUser", fields: [fromUserId], references: [id])
+  toUser        FacebookUser @relation("toUser", fields: [toUserId], references: [id])
+  fromUserId    Int
+  toUserId      Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@schema("facebook")
+}
+
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
@@ -155,7 +241,7 @@ model Tweet {
 model HashTag {
   id          Int      @id @default(autoincrement())
   hashTagText String
-  isIntweets  Tweet[]
+  isInTweets  Tweet[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -178,7 +264,7 @@ model DirectMessage {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["todolist", "binkitchen", "binquiz", "twitter"]
+  schemas  = ["todolist", "binkitchen", "binquiz", "twitter", "facebook"]
 }
 
 generator client {

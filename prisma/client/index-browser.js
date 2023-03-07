@@ -104,11 +104,45 @@ exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.CommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentText: 'commentText',
+  userId: 'userId',
+  postId: 'postId',
+  replyToCommentId: 'replyToCommentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.DirectMessageScalarFieldEnum = makeEnum({
   id: 'id',
   dmText: 'dmText',
   fromUserId: 'fromUserId',
   toUserId: 'toUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookHashTagScalarFieldEnum = makeEnum({
+  id: 'id',
+  hashTagText: 'hashTagText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookUserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  followingUserId: 'followingUserId',
+  followedUserId: 'followedUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FacebookUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  bio: 'bio',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -130,6 +164,15 @@ exports.Prisma.MenuScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.MessengerMessageScalarFieldEnum = makeEnum({
+  id: 'id',
+  messengerText: 'messengerText',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.OrderItemScalarFieldEnum = makeEnum({
   id: 'id',
   menuId: 'menuId',
@@ -144,6 +187,14 @@ exports.Prisma.OrderScalarFieldEnum = makeEnum({
   id: 'id',
   status: 'status',
   tableId: 'tableId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PostScalarFieldEnum = makeEnum({
+  id: 'id',
+  postText: 'postText',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -232,6 +283,12 @@ exports.Prisma.ModelName = makeEnum({
   Choice: 'Choice',
   Quiz: 'Quiz',
   Round: 'Round',
+  FacebookUser: 'FacebookUser',
+  FacebookUserRelation: 'FacebookUserRelation',
+  Post: 'Post',
+  Comment: 'Comment',
+  FacebookHashTag: 'FacebookHashTag',
+  MessengerMessage: 'MessengerMessage',
   TodoList: 'TodoList',
   User: 'User',
   UserRelation: 'UserRelation',

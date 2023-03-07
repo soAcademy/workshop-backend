@@ -46,7 +46,7 @@ model Tweet {
 model HashTag {
   id          Int      @id @default(autoincrement())
   hashTagText String
-  isIntweets  Tweet[]
+  isInTweets  Tweet[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
