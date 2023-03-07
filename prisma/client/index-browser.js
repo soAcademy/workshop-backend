@@ -139,6 +139,37 @@ exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
   updateAt: 'updateAt'
 });
 
+exports.Prisma.DirecMessageScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  fromUser: 'fromUser',
+  toUser: 'toUser',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.HashTagOnPostScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  hashTagId: 'hashTagId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.HashTagScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.PostScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -150,6 +181,15 @@ exports.Prisma.QuestionScalarFieldEnum = makeEnum({
   categoriesId: 'categoriesId',
   roundQuestionId: 'roundQuestionId',
   answerId: 'answerId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.ReplyScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  message: 'message',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });
@@ -191,6 +231,22 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromId: 'fromId',
+  toId: 'toId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.UserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImage: 'profileImage',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
@@ -202,6 +258,13 @@ exports.Prisma.ModelName = makeEnum({
   RoundQuestion: 'RoundQuestion',
   Round: 'Round',
   Choice: 'Choice',
+  User: 'User',
+  Post: 'Post',
+  DirecMessage: 'DirecMessage',
+  HashTag: 'HashTag',
+  HashTagOnPost: 'HashTagOnPost',
+  Reply: 'Reply',
+  UserRelation: 'UserRelation',
   TodoList: 'TodoList'
 });
 

@@ -1,0 +1,59 @@
+//ชื่อโมเดลปกติจะตั้งเป็น singular
+//แล้วชื่อตัวแปรค่อยเป็น plural
+//แล้วชื่อตัวแปรให้เป็น camelCase หมด
+//ใน 1 table มี relation ได้แบบเดียว
+
+model Category {
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  question Question[]
+  round    Round[]
+  createAt DateTime   @default(now())
+  updateAt DateTime   @updatedAt
+}
+
+model Question {
+  id              Int           @id @default(autoincrement())
+  name            String
+  categories      Category      @relation(fields: [categoriesId], references: [id])
+  categoriesId    Int
+  roundQuestion   RoundQuestion @relation(fields: [roundQuestionId], references: [id])
+  roundQuestionId Int
+  choices         Choice[]
+  answerId        Int
+  createAt        DateTime      @default(now())
+  updateAt        DateTime      @updatedAt
+}
+
+model RoundQuestion {
+  id            Int        @id @default(autoincrement())
+  question      Question[]
+  round         Round      @relation(fields: [roundId], references: [id])
+  roundId       Int
+  // choiceUser    Int
+  choice        Choice     @relation(fields: [choiceId], references: [id])
+  correctAnswer Boolean
+  createAt      DateTime   @default(now())
+  updateAt      DateTime   @updatedAt
+  choiceId      Int
+}
+
+model Round {
+  id            Int             @id @default(autoincrement())
+  category      Category        @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  score         Int
+  roundQuestion RoundQuestion[]
+}
+
+model Choice {
+  id            Int             @id @default(autoincrement())
+  choices       Int             @unique
+  question      Question        @relation(fields: [questionId], references: [id])
+  questionId    Int
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  roundQuestion RoundQuestion[]
+}
