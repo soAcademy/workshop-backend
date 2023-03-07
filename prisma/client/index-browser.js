@@ -153,6 +153,12 @@ exports.Prisma.QuizScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.RoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
@@ -183,6 +189,7 @@ exports.Prisma.ModelName = makeEnum({
   QuizCategory: 'QuizCategory',
   Choice: 'Choice',
   Quiz: 'Quiz',
+  Round: 'Round',
   TodoList: 'TodoList'
 });
 

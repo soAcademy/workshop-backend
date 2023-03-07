@@ -1,22 +1,23 @@
 model QuizCategory {
   id        Int      @id @default(autoincrement())
   name      String
+  quizzes   Quiz[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Quiz      Quiz[]
 
   @@map("Category")
   @@schema("binquiz")
 }
 
 model Choice {
-  id          Int      @id @default(autoincrement())
-  answerText  String
-  quiz        Quiz?    @relation(name: "choices", fields: [quizId], references: [id])
-  quizId      Int?
-  correctQuiz Quiz[]   @relation(name: "correctChoice")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  answerText     String
+  quiz           Quiz?    @relation(name: "choices", fields: [quizId], references: [id])
+  quizId         Int?
+  correctQuizzes Quiz[]   @relation(name: "correctChoice")
+  rounds         Round[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@schema("binquiz")
 }
@@ -29,8 +30,19 @@ model Quiz {
   choices         Choice[]     @relation(name: "choices")
   correctChoice   Choice       @relation(name: "correctChoice", fields: [correctChoiceId], references: [id])
   correctChoiceId Int
+  rounds          Round[]
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
+
+  @@schema("binquiz")
+}
+
+model Round {
+  id              Int      @id @default(autoincrement())
+  quizzes         Quiz[]
+  selectedChoices Choice[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@schema("binquiz")
 }
