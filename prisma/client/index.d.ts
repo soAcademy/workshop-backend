@@ -62,6 +62,144 @@ export type BinKitchenOrderItem = {
 }
 
 /**
+ * Model FBUser
+ * 
+ */
+export type FBUser = {
+  id: number
+  name: string
+  profileImage: string
+  coverImage: string
+  bio: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Friends
+ * 
+ */
+export type Friends = {
+  id: number
+  fromUserId: number
+  toUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model FBPost
+ * 
+ */
+export type FBPost = {
+  id: number
+  userId: number
+  postDetail: string
+  image: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = {
+  id: number
+  postId: number
+  commentDetail: string
+  userId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model SubComment
+ * 
+ */
+export type SubComment = {
+  id: number
+  commentId: number
+  subCommentDetail: string
+  userId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Like
+ * 
+ */
+export type Like = {
+  id: number
+  postId: number
+  userId: number
+  likeType: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Share
+ * 
+ */
+export type Share = {
+  id: number
+  postId: number
+  userId: number
+  shareStatus: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Group
+ * 
+ */
+export type Group = {
+  id: number
+  groupName: string
+  groupImage: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model GroupOnUser
+ * 
+ */
+export type GroupOnUser = {
+  id: number
+  userId: number
+  groupId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model PostinGroup
+ * 
+ */
+export type PostinGroup = {
+  id: number
+  groupId: number
+  postId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model PostinProfile
+ * 
+ */
+export type PostinProfile = {
+  id: number
+  postId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model TodoList
  * 
  */
@@ -389,6 +527,116 @@ export class PrismaClient<
     * ```
     */
   get binKitchenOrderItem(): Prisma.BinKitchenOrderItemDelegate<GlobalReject>;
+
+  /**
+   * `prisma.fBUser`: Exposes CRUD operations for the **FBUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FBUsers
+    * const fBUsers = await prisma.fBUser.findMany()
+    * ```
+    */
+  get fBUser(): Prisma.FBUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.friends`: Exposes CRUD operations for the **Friends** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Friends
+    * const friends = await prisma.friends.findMany()
+    * ```
+    */
+  get friends(): Prisma.FriendsDelegate<GlobalReject>;
+
+  /**
+   * `prisma.fBPost`: Exposes CRUD operations for the **FBPost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FBPosts
+    * const fBPosts = await prisma.fBPost.findMany()
+    * ```
+    */
+  get fBPost(): Prisma.FBPostDelegate<GlobalReject>;
+
+  /**
+   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comments
+    * const comments = await prisma.comment.findMany()
+    * ```
+    */
+  get comment(): Prisma.CommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.subComment`: Exposes CRUD operations for the **SubComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SubComments
+    * const subComments = await prisma.subComment.findMany()
+    * ```
+    */
+  get subComment(): Prisma.SubCommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.like`: Exposes CRUD operations for the **Like** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Likes
+    * const likes = await prisma.like.findMany()
+    * ```
+    */
+  get like(): Prisma.LikeDelegate<GlobalReject>;
+
+  /**
+   * `prisma.share`: Exposes CRUD operations for the **Share** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Shares
+    * const shares = await prisma.share.findMany()
+    * ```
+    */
+  get share(): Prisma.ShareDelegate<GlobalReject>;
+
+  /**
+   * `prisma.group`: Exposes CRUD operations for the **Group** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Groups
+    * const groups = await prisma.group.findMany()
+    * ```
+    */
+  get group(): Prisma.GroupDelegate<GlobalReject>;
+
+  /**
+   * `prisma.groupOnUser`: Exposes CRUD operations for the **GroupOnUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GroupOnUsers
+    * const groupOnUsers = await prisma.groupOnUser.findMany()
+    * ```
+    */
+  get groupOnUser(): Prisma.GroupOnUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.postinGroup`: Exposes CRUD operations for the **PostinGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PostinGroups
+    * const postinGroups = await prisma.postinGroup.findMany()
+    * ```
+    */
+  get postinGroup(): Prisma.PostinGroupDelegate<GlobalReject>;
+
+  /**
+   * `prisma.postinProfile`: Exposes CRUD operations for the **PostinProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PostinProfiles
+    * const postinProfiles = await prisma.postinProfile.findMany()
+    * ```
+    */
+  get postinProfile(): Prisma.PostinProfileDelegate<GlobalReject>;
 
   /**
    * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
@@ -1002,6 +1250,17 @@ export namespace Prisma {
     BinKitchenMenu: 'BinKitchenMenu',
     BinKitchenOrder: 'BinKitchenOrder',
     BinKitchenOrderItem: 'BinKitchenOrderItem',
+    FBUser: 'FBUser',
+    Friends: 'Friends',
+    FBPost: 'FBPost',
+    Comment: 'Comment',
+    SubComment: 'SubComment',
+    Like: 'Like',
+    Share: 'Share',
+    Group: 'Group',
+    GroupOnUser: 'GroupOnUser',
+    PostinGroup: 'PostinGroup',
+    PostinProfile: 'PostinProfile',
     TodoList: 'TodoList',
     TriviaCategory: 'TriviaCategory',
     TriviaQuiz: 'TriviaQuiz',
@@ -1301,6 +1560,202 @@ export namespace Prisma {
      * Select specific fields to fetch from the BinKitchenOrderCountOutputType
      */
     select?: BinKitchenOrderCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FBUserCountOutputType
+   */
+
+
+  export type FBUserCountOutputType = {
+    fromFriends: number
+    toFriends: number
+    Post: number
+    Comment: number
+    SubComment: number
+    GroupOnUser: number
+    Like: number
+    Share: number
+  }
+
+  export type FBUserCountOutputTypeSelect = {
+    fromFriends?: boolean
+    toFriends?: boolean
+    Post?: boolean
+    Comment?: boolean
+    SubComment?: boolean
+    GroupOnUser?: boolean
+    Like?: boolean
+    Share?: boolean
+  }
+
+  export type FBUserCountOutputTypeGetPayload<S extends boolean | null | undefined | FBUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FBUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FBUserCountOutputTypeArgs)
+    ? FBUserCountOutputType 
+    : S extends { select: any } & (FBUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FBUserCountOutputType ? FBUserCountOutputType[P] : never
+  } 
+      : FBUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FBUserCountOutputType without action
+   */
+  export type FBUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FBUserCountOutputType
+     */
+    select?: FBUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type FBPostCountOutputType
+   */
+
+
+  export type FBPostCountOutputType = {
+    Comment: number
+    PostinGroup: number
+    PostinProfile: number
+    Like: number
+    Share: number
+  }
+
+  export type FBPostCountOutputTypeSelect = {
+    Comment?: boolean
+    PostinGroup?: boolean
+    PostinProfile?: boolean
+    Like?: boolean
+    Share?: boolean
+  }
+
+  export type FBPostCountOutputTypeGetPayload<S extends boolean | null | undefined | FBPostCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FBPostCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (FBPostCountOutputTypeArgs)
+    ? FBPostCountOutputType 
+    : S extends { select: any } & (FBPostCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof FBPostCountOutputType ? FBPostCountOutputType[P] : never
+  } 
+      : FBPostCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FBPostCountOutputType without action
+   */
+  export type FBPostCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the FBPostCountOutputType
+     */
+    select?: FBPostCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type CommentCountOutputType
+   */
+
+
+  export type CommentCountOutputType = {
+    SubComment: number
+  }
+
+  export type CommentCountOutputTypeSelect = {
+    SubComment?: boolean
+  }
+
+  export type CommentCountOutputTypeGetPayload<S extends boolean | null | undefined | CommentCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? CommentCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (CommentCountOutputTypeArgs)
+    ? CommentCountOutputType 
+    : S extends { select: any } & (CommentCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof CommentCountOutputType ? CommentCountOutputType[P] : never
+  } 
+      : CommentCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the CommentCountOutputType
+     */
+    select?: CommentCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type GroupCountOutputType
+   */
+
+
+  export type GroupCountOutputType = {
+    GroupOnUser: number
+    PostinGroup: number
+  }
+
+  export type GroupCountOutputTypeSelect = {
+    GroupOnUser?: boolean
+    PostinGroup?: boolean
+  }
+
+  export type GroupCountOutputTypeGetPayload<S extends boolean | null | undefined | GroupCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? GroupCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (GroupCountOutputTypeArgs)
+    ? GroupCountOutputType 
+    : S extends { select: any } & (GroupCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof GroupCountOutputType ? GroupCountOutputType[P] : never
+  } 
+      : GroupCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * GroupCountOutputType without action
+   */
+  export type GroupCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the GroupCountOutputType
+     */
+    select?: GroupCountOutputTypeSelect | null
   }
 
 
@@ -5660,6 +6115,11211 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: BinKitchenOrderItemInclude | null
+  }
+
+
+
+  /**
+   * Model FBUser
+   */
+
+
+  export type AggregateFBUser = {
+    _count: FBUserCountAggregateOutputType | null
+    _avg: FBUserAvgAggregateOutputType | null
+    _sum: FBUserSumAggregateOutputType | null
+    _min: FBUserMinAggregateOutputType | null
+    _max: FBUserMaxAggregateOutputType | null
+  }
+
+  export type FBUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FBUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type FBUserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImage: string | null
+    coverImage: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FBUserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImage: string | null
+    coverImage: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FBUserCountAggregateOutputType = {
+    id: number
+    name: number
+    profileImage: number
+    coverImage: number
+    bio: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FBUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type FBUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type FBUserMinAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    coverImage?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FBUserMaxAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    coverImage?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FBUserCountAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    coverImage?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FBUserAggregateArgs = {
+    /**
+     * Filter which FBUser to aggregate.
+     */
+    where?: FBUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBUsers to fetch.
+     */
+    orderBy?: Enumerable<FBUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FBUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FBUsers
+    **/
+    _count?: true | FBUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FBUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FBUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FBUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FBUserMaxAggregateInputType
+  }
+
+  export type GetFBUserAggregateType<T extends FBUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateFBUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFBUser[P]>
+      : GetScalarType<T[P], AggregateFBUser[P]>
+  }
+
+
+
+
+  export type FBUserGroupByArgs = {
+    where?: FBUserWhereInput
+    orderBy?: Enumerable<FBUserOrderByWithAggregationInput>
+    by: FBUserScalarFieldEnum[]
+    having?: FBUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FBUserCountAggregateInputType | true
+    _avg?: FBUserAvgAggregateInputType
+    _sum?: FBUserSumAggregateInputType
+    _min?: FBUserMinAggregateInputType
+    _max?: FBUserMaxAggregateInputType
+  }
+
+
+  export type FBUserGroupByOutputType = {
+    id: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FBUserCountAggregateOutputType | null
+    _avg: FBUserAvgAggregateOutputType | null
+    _sum: FBUserSumAggregateOutputType | null
+    _min: FBUserMinAggregateOutputType | null
+    _max: FBUserMaxAggregateOutputType | null
+  }
+
+  type GetFBUserGroupByPayload<T extends FBUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FBUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FBUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FBUserGroupByOutputType[P]>
+            : GetScalarType<T[P], FBUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FBUserSelect = {
+    id?: boolean
+    name?: boolean
+    profileImage?: boolean
+    coverImage?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    fromFriends?: boolean | FBUser$fromFriendsArgs
+    toFriends?: boolean | FBUser$toFriendsArgs
+    Post?: boolean | FBUser$PostArgs
+    Comment?: boolean | FBUser$CommentArgs
+    SubComment?: boolean | FBUser$SubCommentArgs
+    GroupOnUser?: boolean | FBUser$GroupOnUserArgs
+    Like?: boolean | FBUser$LikeArgs
+    Share?: boolean | FBUser$ShareArgs
+    _count?: boolean | FBUserCountOutputTypeArgs
+  }
+
+
+  export type FBUserInclude = {
+    fromFriends?: boolean | FBUser$fromFriendsArgs
+    toFriends?: boolean | FBUser$toFriendsArgs
+    Post?: boolean | FBUser$PostArgs
+    Comment?: boolean | FBUser$CommentArgs
+    SubComment?: boolean | FBUser$SubCommentArgs
+    GroupOnUser?: boolean | FBUser$GroupOnUserArgs
+    Like?: boolean | FBUser$LikeArgs
+    Share?: boolean | FBUser$ShareArgs
+    _count?: boolean | FBUserCountOutputTypeArgs
+  }
+
+  export type FBUserGetPayload<S extends boolean | null | undefined | FBUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FBUser :
+    S extends undefined ? never :
+    S extends { include: any } & (FBUserArgs | FBUserFindManyArgs)
+    ? FBUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'fromFriends' ? Array < FriendsGetPayload<S['include'][P]>>  :
+        P extends 'toFriends' ? Array < FriendsGetPayload<S['include'][P]>>  :
+        P extends 'Post' ? Array < FBPostGetPayload<S['include'][P]>>  :
+        P extends 'Comment' ? Array < CommentGetPayload<S['include'][P]>>  :
+        P extends 'SubComment' ? Array < SubCommentGetPayload<S['include'][P]>>  :
+        P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['include'][P]>>  :
+        P extends 'Like' ? Array < LikeGetPayload<S['include'][P]>>  :
+        P extends 'Share' ? Array < ShareGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FBUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FBUserArgs | FBUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'fromFriends' ? Array < FriendsGetPayload<S['select'][P]>>  :
+        P extends 'toFriends' ? Array < FriendsGetPayload<S['select'][P]>>  :
+        P extends 'Post' ? Array < FBPostGetPayload<S['select'][P]>>  :
+        P extends 'Comment' ? Array < CommentGetPayload<S['select'][P]>>  :
+        P extends 'SubComment' ? Array < SubCommentGetPayload<S['select'][P]>>  :
+        P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['select'][P]>>  :
+        P extends 'Like' ? Array < LikeGetPayload<S['select'][P]>>  :
+        P extends 'Share' ? Array < ShareGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FBUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FBUser ? FBUser[P] : never
+  } 
+      : FBUser
+
+
+  type FBUserCountArgs = 
+    Omit<FBUserFindManyArgs, 'select' | 'include'> & {
+      select?: FBUserCountAggregateInputType | true
+    }
+
+  export interface FBUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FBUser that matches the filter.
+     * @param {FBUserFindUniqueArgs} args - Arguments to find a FBUser
+     * @example
+     * // Get one FBUser
+     * const fBUser = await prisma.fBUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FBUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FBUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FBUser'> extends True ? Prisma__FBUserClient<FBUserGetPayload<T>> : Prisma__FBUserClient<FBUserGetPayload<T> | null, null>
+
+    /**
+     * Find one FBUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FBUserFindUniqueOrThrowArgs} args - Arguments to find a FBUser
+     * @example
+     * // Get one FBUser
+     * const fBUser = await prisma.fBUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FBUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FBUserFindUniqueOrThrowArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Find the first FBUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserFindFirstArgs} args - Arguments to find a FBUser
+     * @example
+     * // Get one FBUser
+     * const fBUser = await prisma.fBUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FBUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FBUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FBUser'> extends True ? Prisma__FBUserClient<FBUserGetPayload<T>> : Prisma__FBUserClient<FBUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first FBUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserFindFirstOrThrowArgs} args - Arguments to find a FBUser
+     * @example
+     * // Get one FBUser
+     * const fBUser = await prisma.fBUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FBUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FBUserFindFirstOrThrowArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Find zero or more FBUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FBUsers
+     * const fBUsers = await prisma.fBUser.findMany()
+     * 
+     * // Get first 10 FBUsers
+     * const fBUsers = await prisma.fBUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fBUserWithIdOnly = await prisma.fBUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FBUserFindManyArgs>(
+      args?: SelectSubset<T, FBUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FBUserGetPayload<T>>>
+
+    /**
+     * Create a FBUser.
+     * @param {FBUserCreateArgs} args - Arguments to create a FBUser.
+     * @example
+     * // Create one FBUser
+     * const FBUser = await prisma.fBUser.create({
+     *   data: {
+     *     // ... data to create a FBUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FBUserCreateArgs>(
+      args: SelectSubset<T, FBUserCreateArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Create many FBUsers.
+     *     @param {FBUserCreateManyArgs} args - Arguments to create many FBUsers.
+     *     @example
+     *     // Create many FBUsers
+     *     const fBUser = await prisma.fBUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FBUserCreateManyArgs>(
+      args?: SelectSubset<T, FBUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FBUser.
+     * @param {FBUserDeleteArgs} args - Arguments to delete one FBUser.
+     * @example
+     * // Delete one FBUser
+     * const FBUser = await prisma.fBUser.delete({
+     *   where: {
+     *     // ... filter to delete one FBUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FBUserDeleteArgs>(
+      args: SelectSubset<T, FBUserDeleteArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Update one FBUser.
+     * @param {FBUserUpdateArgs} args - Arguments to update one FBUser.
+     * @example
+     * // Update one FBUser
+     * const fBUser = await prisma.fBUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FBUserUpdateArgs>(
+      args: SelectSubset<T, FBUserUpdateArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Delete zero or more FBUsers.
+     * @param {FBUserDeleteManyArgs} args - Arguments to filter FBUsers to delete.
+     * @example
+     * // Delete a few FBUsers
+     * const { count } = await prisma.fBUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FBUserDeleteManyArgs>(
+      args?: SelectSubset<T, FBUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FBUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FBUsers
+     * const fBUser = await prisma.fBUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FBUserUpdateManyArgs>(
+      args: SelectSubset<T, FBUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FBUser.
+     * @param {FBUserUpsertArgs} args - Arguments to update or create a FBUser.
+     * @example
+     * // Update or create a FBUser
+     * const fBUser = await prisma.fBUser.upsert({
+     *   create: {
+     *     // ... data to create a FBUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FBUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FBUserUpsertArgs>(
+      args: SelectSubset<T, FBUserUpsertArgs>
+    ): Prisma__FBUserClient<FBUserGetPayload<T>>
+
+    /**
+     * Count the number of FBUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserCountArgs} args - Arguments to filter FBUsers to count.
+     * @example
+     * // Count the number of FBUsers
+     * const count = await prisma.fBUser.count({
+     *   where: {
+     *     // ... the filter for the FBUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends FBUserCountArgs>(
+      args?: Subset<T, FBUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FBUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FBUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FBUserAggregateArgs>(args: Subset<T, FBUserAggregateArgs>): Prisma.PrismaPromise<GetFBUserAggregateType<T>>
+
+    /**
+     * Group by FBUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FBUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FBUserGroupByArgs['orderBy'] }
+        : { orderBy?: FBUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FBUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFBUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FBUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FBUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    fromFriends<T extends FBUser$fromFriendsArgs= {}>(args?: Subset<T, FBUser$fromFriendsArgs>): Prisma.PrismaPromise<Array<FriendsGetPayload<T>>| Null>;
+
+    toFriends<T extends FBUser$toFriendsArgs= {}>(args?: Subset<T, FBUser$toFriendsArgs>): Prisma.PrismaPromise<Array<FriendsGetPayload<T>>| Null>;
+
+    Post<T extends FBUser$PostArgs= {}>(args?: Subset<T, FBUser$PostArgs>): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>| Null>;
+
+    Comment<T extends FBUser$CommentArgs= {}>(args?: Subset<T, FBUser$CommentArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
+
+    SubComment<T extends FBUser$SubCommentArgs= {}>(args?: Subset<T, FBUser$SubCommentArgs>): Prisma.PrismaPromise<Array<SubCommentGetPayload<T>>| Null>;
+
+    GroupOnUser<T extends FBUser$GroupOnUserArgs= {}>(args?: Subset<T, FBUser$GroupOnUserArgs>): Prisma.PrismaPromise<Array<GroupOnUserGetPayload<T>>| Null>;
+
+    Like<T extends FBUser$LikeArgs= {}>(args?: Subset<T, FBUser$LikeArgs>): Prisma.PrismaPromise<Array<LikeGetPayload<T>>| Null>;
+
+    Share<T extends FBUser$ShareArgs= {}>(args?: Subset<T, FBUser$ShareArgs>): Prisma.PrismaPromise<Array<ShareGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FBUser base type for findUnique actions
+   */
+  export type FBUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter, which FBUser to fetch.
+     */
+    where: FBUserWhereUniqueInput
+  }
+
+  /**
+   * FBUser findUnique
+   */
+  export interface FBUserFindUniqueArgs extends FBUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FBUser findUniqueOrThrow
+   */
+  export type FBUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter, which FBUser to fetch.
+     */
+    where: FBUserWhereUniqueInput
+  }
+
+
+  /**
+   * FBUser base type for findFirst actions
+   */
+  export type FBUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter, which FBUser to fetch.
+     */
+    where?: FBUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBUsers to fetch.
+     */
+    orderBy?: Enumerable<FBUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FBUsers.
+     */
+    cursor?: FBUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FBUsers.
+     */
+    distinct?: Enumerable<FBUserScalarFieldEnum>
+  }
+
+  /**
+   * FBUser findFirst
+   */
+  export interface FBUserFindFirstArgs extends FBUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FBUser findFirstOrThrow
+   */
+  export type FBUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter, which FBUser to fetch.
+     */
+    where?: FBUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBUsers to fetch.
+     */
+    orderBy?: Enumerable<FBUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FBUsers.
+     */
+    cursor?: FBUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FBUsers.
+     */
+    distinct?: Enumerable<FBUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser findMany
+   */
+  export type FBUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter, which FBUsers to fetch.
+     */
+    where?: FBUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBUsers to fetch.
+     */
+    orderBy?: Enumerable<FBUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FBUsers.
+     */
+    cursor?: FBUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<FBUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser create
+   */
+  export type FBUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * The data needed to create a FBUser.
+     */
+    data: XOR<FBUserCreateInput, FBUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * FBUser createMany
+   */
+  export type FBUserCreateManyArgs = {
+    /**
+     * The data used to create many FBUsers.
+     */
+    data: Enumerable<FBUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FBUser update
+   */
+  export type FBUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * The data needed to update a FBUser.
+     */
+    data: XOR<FBUserUpdateInput, FBUserUncheckedUpdateInput>
+    /**
+     * Choose, which FBUser to update.
+     */
+    where: FBUserWhereUniqueInput
+  }
+
+
+  /**
+   * FBUser updateMany
+   */
+  export type FBUserUpdateManyArgs = {
+    /**
+     * The data used to update FBUsers.
+     */
+    data: XOR<FBUserUpdateManyMutationInput, FBUserUncheckedUpdateManyInput>
+    /**
+     * Filter which FBUsers to update
+     */
+    where?: FBUserWhereInput
+  }
+
+
+  /**
+   * FBUser upsert
+   */
+  export type FBUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * The filter to search for the FBUser to update in case it exists.
+     */
+    where: FBUserWhereUniqueInput
+    /**
+     * In case the FBUser found by the `where` argument doesn't exist, create a new FBUser with this data.
+     */
+    create: XOR<FBUserCreateInput, FBUserUncheckedCreateInput>
+    /**
+     * In case the FBUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FBUserUpdateInput, FBUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FBUser delete
+   */
+  export type FBUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+    /**
+     * Filter which FBUser to delete.
+     */
+    where: FBUserWhereUniqueInput
+  }
+
+
+  /**
+   * FBUser deleteMany
+   */
+  export type FBUserDeleteManyArgs = {
+    /**
+     * Filter which FBUsers to delete
+     */
+    where?: FBUserWhereInput
+  }
+
+
+  /**
+   * FBUser.fromFriends
+   */
+  export type FBUser$fromFriendsArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    where?: FriendsWhereInput
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    cursor?: FriendsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FriendsScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.toFriends
+   */
+  export type FBUser$toFriendsArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    where?: FriendsWhereInput
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    cursor?: FriendsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FriendsScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.Post
+   */
+  export type FBUser$PostArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    where?: FBPostWhereInput
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    cursor?: FBPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FBPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.Comment
+   */
+  export type FBUser$CommentArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    where?: CommentWhereInput
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<CommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.SubComment
+   */
+  export type FBUser$SubCommentArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    where?: SubCommentWhereInput
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    cursor?: SubCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<SubCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.GroupOnUser
+   */
+  export type FBUser$GroupOnUserArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    where?: GroupOnUserWhereInput
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    cursor?: GroupOnUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<GroupOnUserScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.Like
+   */
+  export type FBUser$LikeArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    where?: LikeWhereInput
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    cursor?: LikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<LikeScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.Share
+   */
+  export type FBUser$ShareArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    where?: ShareWhereInput
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    cursor?: ShareWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ShareScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser without action
+   */
+  export type FBUserArgs = {
+    /**
+     * Select specific fields to fetch from the FBUser
+     */
+    select?: FBUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBUserInclude | null
+  }
+
+
+
+  /**
+   * Model Friends
+   */
+
+
+  export type AggregateFriends = {
+    _count: FriendsCountAggregateOutputType | null
+    _avg: FriendsAvgAggregateOutputType | null
+    _sum: FriendsSumAggregateOutputType | null
+    _min: FriendsMinAggregateOutputType | null
+    _max: FriendsMaxAggregateOutputType | null
+  }
+
+  export type FriendsAvgAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+  }
+
+  export type FriendsSumAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+  }
+
+  export type FriendsMinAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FriendsMaxAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FriendsCountAggregateOutputType = {
+    id: number
+    fromUserId: number
+    toUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FriendsAvgAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+  }
+
+  export type FriendsSumAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+  }
+
+  export type FriendsMinAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FriendsMaxAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FriendsCountAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FriendsAggregateArgs = {
+    /**
+     * Filter which Friends to aggregate.
+     */
+    where?: FriendsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FriendsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Friends
+    **/
+    _count?: true | FriendsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FriendsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FriendsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FriendsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FriendsMaxAggregateInputType
+  }
+
+  export type GetFriendsAggregateType<T extends FriendsAggregateArgs> = {
+        [P in keyof T & keyof AggregateFriends]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFriends[P]>
+      : GetScalarType<T[P], AggregateFriends[P]>
+  }
+
+
+
+
+  export type FriendsGroupByArgs = {
+    where?: FriendsWhereInput
+    orderBy?: Enumerable<FriendsOrderByWithAggregationInput>
+    by: FriendsScalarFieldEnum[]
+    having?: FriendsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FriendsCountAggregateInputType | true
+    _avg?: FriendsAvgAggregateInputType
+    _sum?: FriendsSumAggregateInputType
+    _min?: FriendsMinAggregateInputType
+    _max?: FriendsMaxAggregateInputType
+  }
+
+
+  export type FriendsGroupByOutputType = {
+    id: number
+    fromUserId: number
+    toUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: FriendsCountAggregateOutputType | null
+    _avg: FriendsAvgAggregateOutputType | null
+    _sum: FriendsSumAggregateOutputType | null
+    _min: FriendsMinAggregateOutputType | null
+    _max: FriendsMaxAggregateOutputType | null
+  }
+
+  type GetFriendsGroupByPayload<T extends FriendsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FriendsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FriendsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FriendsGroupByOutputType[P]>
+            : GetScalarType<T[P], FriendsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FriendsSelect = {
+    id?: boolean
+    from?: boolean | FBUserArgs
+    fromUserId?: boolean
+    to?: boolean | FBUserArgs
+    toUserId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type FriendsInclude = {
+    from?: boolean | FBUserArgs
+    to?: boolean | FBUserArgs
+  }
+
+  export type FriendsGetPayload<S extends boolean | null | undefined | FriendsArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Friends :
+    S extends undefined ? never :
+    S extends { include: any } & (FriendsArgs | FriendsFindManyArgs)
+    ? Friends  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'from' ? FBUserGetPayload<S['include'][P]> :
+        P extends 'to' ? FBUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FriendsArgs | FriendsFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'from' ? FBUserGetPayload<S['select'][P]> :
+        P extends 'to' ? FBUserGetPayload<S['select'][P]> :  P extends keyof Friends ? Friends[P] : never
+  } 
+      : Friends
+
+
+  type FriendsCountArgs = 
+    Omit<FriendsFindManyArgs, 'select' | 'include'> & {
+      select?: FriendsCountAggregateInputType | true
+    }
+
+  export interface FriendsDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Friends that matches the filter.
+     * @param {FriendsFindUniqueArgs} args - Arguments to find a Friends
+     * @example
+     * // Get one Friends
+     * const friends = await prisma.friends.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FriendsFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FriendsFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Friends'> extends True ? Prisma__FriendsClient<FriendsGetPayload<T>> : Prisma__FriendsClient<FriendsGetPayload<T> | null, null>
+
+    /**
+     * Find one Friends that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FriendsFindUniqueOrThrowArgs} args - Arguments to find a Friends
+     * @example
+     * // Get one Friends
+     * const friends = await prisma.friends.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FriendsFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FriendsFindUniqueOrThrowArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Find the first Friends that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsFindFirstArgs} args - Arguments to find a Friends
+     * @example
+     * // Get one Friends
+     * const friends = await prisma.friends.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FriendsFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FriendsFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Friends'> extends True ? Prisma__FriendsClient<FriendsGetPayload<T>> : Prisma__FriendsClient<FriendsGetPayload<T> | null, null>
+
+    /**
+     * Find the first Friends that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsFindFirstOrThrowArgs} args - Arguments to find a Friends
+     * @example
+     * // Get one Friends
+     * const friends = await prisma.friends.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FriendsFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FriendsFindFirstOrThrowArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Find zero or more Friends that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Friends
+     * const friends = await prisma.friends.findMany()
+     * 
+     * // Get first 10 Friends
+     * const friends = await prisma.friends.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const friendsWithIdOnly = await prisma.friends.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FriendsFindManyArgs>(
+      args?: SelectSubset<T, FriendsFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FriendsGetPayload<T>>>
+
+    /**
+     * Create a Friends.
+     * @param {FriendsCreateArgs} args - Arguments to create a Friends.
+     * @example
+     * // Create one Friends
+     * const Friends = await prisma.friends.create({
+     *   data: {
+     *     // ... data to create a Friends
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FriendsCreateArgs>(
+      args: SelectSubset<T, FriendsCreateArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Create many Friends.
+     *     @param {FriendsCreateManyArgs} args - Arguments to create many Friends.
+     *     @example
+     *     // Create many Friends
+     *     const friends = await prisma.friends.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FriendsCreateManyArgs>(
+      args?: SelectSubset<T, FriendsCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Friends.
+     * @param {FriendsDeleteArgs} args - Arguments to delete one Friends.
+     * @example
+     * // Delete one Friends
+     * const Friends = await prisma.friends.delete({
+     *   where: {
+     *     // ... filter to delete one Friends
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FriendsDeleteArgs>(
+      args: SelectSubset<T, FriendsDeleteArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Update one Friends.
+     * @param {FriendsUpdateArgs} args - Arguments to update one Friends.
+     * @example
+     * // Update one Friends
+     * const friends = await prisma.friends.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FriendsUpdateArgs>(
+      args: SelectSubset<T, FriendsUpdateArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Delete zero or more Friends.
+     * @param {FriendsDeleteManyArgs} args - Arguments to filter Friends to delete.
+     * @example
+     * // Delete a few Friends
+     * const { count } = await prisma.friends.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FriendsDeleteManyArgs>(
+      args?: SelectSubset<T, FriendsDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Friends
+     * const friends = await prisma.friends.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FriendsUpdateManyArgs>(
+      args: SelectSubset<T, FriendsUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Friends.
+     * @param {FriendsUpsertArgs} args - Arguments to update or create a Friends.
+     * @example
+     * // Update or create a Friends
+     * const friends = await prisma.friends.upsert({
+     *   create: {
+     *     // ... data to create a Friends
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Friends we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FriendsUpsertArgs>(
+      args: SelectSubset<T, FriendsUpsertArgs>
+    ): Prisma__FriendsClient<FriendsGetPayload<T>>
+
+    /**
+     * Count the number of Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsCountArgs} args - Arguments to filter Friends to count.
+     * @example
+     * // Count the number of Friends
+     * const count = await prisma.friends.count({
+     *   where: {
+     *     // ... the filter for the Friends we want to count
+     *   }
+     * })
+    **/
+    count<T extends FriendsCountArgs>(
+      args?: Subset<T, FriendsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FriendsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FriendsAggregateArgs>(args: Subset<T, FriendsAggregateArgs>): Prisma.PrismaPromise<GetFriendsAggregateType<T>>
+
+    /**
+     * Group by Friends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FriendsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FriendsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FriendsGroupByArgs['orderBy'] }
+        : { orderBy?: FriendsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FriendsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFriendsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Friends.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FriendsClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    from<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    to<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Friends base type for findUnique actions
+   */
+  export type FriendsFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where: FriendsWhereUniqueInput
+  }
+
+  /**
+   * Friends findUnique
+   */
+  export interface FriendsFindUniqueArgs extends FriendsFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Friends findUniqueOrThrow
+   */
+  export type FriendsFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where: FriendsWhereUniqueInput
+  }
+
+
+  /**
+   * Friends base type for findFirst actions
+   */
+  export type FriendsFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where?: FriendsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Friends.
+     */
+    cursor?: FriendsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Friends.
+     */
+    distinct?: Enumerable<FriendsScalarFieldEnum>
+  }
+
+  /**
+   * Friends findFirst
+   */
+  export interface FriendsFindFirstArgs extends FriendsFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Friends findFirstOrThrow
+   */
+  export type FriendsFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where?: FriendsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Friends.
+     */
+    cursor?: FriendsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Friends.
+     */
+    distinct?: Enumerable<FriendsScalarFieldEnum>
+  }
+
+
+  /**
+   * Friends findMany
+   */
+  export type FriendsFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter, which Friends to fetch.
+     */
+    where?: FriendsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Friends to fetch.
+     */
+    orderBy?: Enumerable<FriendsOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Friends.
+     */
+    cursor?: FriendsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Friends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Friends.
+     */
+    skip?: number
+    distinct?: Enumerable<FriendsScalarFieldEnum>
+  }
+
+
+  /**
+   * Friends create
+   */
+  export type FriendsCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * The data needed to create a Friends.
+     */
+    data: XOR<FriendsCreateInput, FriendsUncheckedCreateInput>
+  }
+
+
+  /**
+   * Friends createMany
+   */
+  export type FriendsCreateManyArgs = {
+    /**
+     * The data used to create many Friends.
+     */
+    data: Enumerable<FriendsCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Friends update
+   */
+  export type FriendsUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * The data needed to update a Friends.
+     */
+    data: XOR<FriendsUpdateInput, FriendsUncheckedUpdateInput>
+    /**
+     * Choose, which Friends to update.
+     */
+    where: FriendsWhereUniqueInput
+  }
+
+
+  /**
+   * Friends updateMany
+   */
+  export type FriendsUpdateManyArgs = {
+    /**
+     * The data used to update Friends.
+     */
+    data: XOR<FriendsUpdateManyMutationInput, FriendsUncheckedUpdateManyInput>
+    /**
+     * Filter which Friends to update
+     */
+    where?: FriendsWhereInput
+  }
+
+
+  /**
+   * Friends upsert
+   */
+  export type FriendsUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * The filter to search for the Friends to update in case it exists.
+     */
+    where: FriendsWhereUniqueInput
+    /**
+     * In case the Friends found by the `where` argument doesn't exist, create a new Friends with this data.
+     */
+    create: XOR<FriendsCreateInput, FriendsUncheckedCreateInput>
+    /**
+     * In case the Friends was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FriendsUpdateInput, FriendsUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Friends delete
+   */
+  export type FriendsDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+    /**
+     * Filter which Friends to delete.
+     */
+    where: FriendsWhereUniqueInput
+  }
+
+
+  /**
+   * Friends deleteMany
+   */
+  export type FriendsDeleteManyArgs = {
+    /**
+     * Filter which Friends to delete
+     */
+    where?: FriendsWhereInput
+  }
+
+
+  /**
+   * Friends without action
+   */
+  export type FriendsArgs = {
+    /**
+     * Select specific fields to fetch from the Friends
+     */
+    select?: FriendsSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FriendsInclude | null
+  }
+
+
+
+  /**
+   * Model FBPost
+   */
+
+
+  export type AggregateFBPost = {
+    _count: FBPostCountAggregateOutputType | null
+    _avg: FBPostAvgAggregateOutputType | null
+    _sum: FBPostSumAggregateOutputType | null
+    _min: FBPostMinAggregateOutputType | null
+    _max: FBPostMaxAggregateOutputType | null
+  }
+
+  export type FBPostAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type FBPostSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type FBPostMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    postDetail: string | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FBPostMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    postDetail: string | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FBPostCountAggregateOutputType = {
+    id: number
+    userId: number
+    postDetail: number
+    image: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FBPostAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type FBPostSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type FBPostMinAggregateInputType = {
+    id?: true
+    userId?: true
+    postDetail?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FBPostMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    postDetail?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FBPostCountAggregateInputType = {
+    id?: true
+    userId?: true
+    postDetail?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FBPostAggregateArgs = {
+    /**
+     * Filter which FBPost to aggregate.
+     */
+    where?: FBPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBPosts to fetch.
+     */
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FBPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FBPosts
+    **/
+    _count?: true | FBPostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FBPostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FBPostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FBPostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FBPostMaxAggregateInputType
+  }
+
+  export type GetFBPostAggregateType<T extends FBPostAggregateArgs> = {
+        [P in keyof T & keyof AggregateFBPost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFBPost[P]>
+      : GetScalarType<T[P], AggregateFBPost[P]>
+  }
+
+
+
+
+  export type FBPostGroupByArgs = {
+    where?: FBPostWhereInput
+    orderBy?: Enumerable<FBPostOrderByWithAggregationInput>
+    by: FBPostScalarFieldEnum[]
+    having?: FBPostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FBPostCountAggregateInputType | true
+    _avg?: FBPostAvgAggregateInputType
+    _sum?: FBPostSumAggregateInputType
+    _min?: FBPostMinAggregateInputType
+    _max?: FBPostMaxAggregateInputType
+  }
+
+
+  export type FBPostGroupByOutputType = {
+    id: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FBPostCountAggregateOutputType | null
+    _avg: FBPostAvgAggregateOutputType | null
+    _sum: FBPostSumAggregateOutputType | null
+    _min: FBPostMinAggregateOutputType | null
+    _max: FBPostMaxAggregateOutputType | null
+  }
+
+  type GetFBPostGroupByPayload<T extends FBPostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<FBPostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FBPostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FBPostGroupByOutputType[P]>
+            : GetScalarType<T[P], FBPostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FBPostSelect = {
+    id?: boolean
+    user?: boolean | FBUserArgs
+    userId?: boolean
+    postDetail?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Comment?: boolean | FBPost$CommentArgs
+    PostinGroup?: boolean | FBPost$PostinGroupArgs
+    PostinProfile?: boolean | FBPost$PostinProfileArgs
+    Like?: boolean | FBPost$LikeArgs
+    Share?: boolean | FBPost$ShareArgs
+    _count?: boolean | FBPostCountOutputTypeArgs
+  }
+
+
+  export type FBPostInclude = {
+    user?: boolean | FBUserArgs
+    Comment?: boolean | FBPost$CommentArgs
+    PostinGroup?: boolean | FBPost$PostinGroupArgs
+    PostinProfile?: boolean | FBPost$PostinProfileArgs
+    Like?: boolean | FBPost$LikeArgs
+    Share?: boolean | FBPost$ShareArgs
+    _count?: boolean | FBPostCountOutputTypeArgs
+  }
+
+  export type FBPostGetPayload<S extends boolean | null | undefined | FBPostArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? FBPost :
+    S extends undefined ? never :
+    S extends { include: any } & (FBPostArgs | FBPostFindManyArgs)
+    ? FBPost  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? FBUserGetPayload<S['include'][P]> :
+        P extends 'Comment' ? Array < CommentGetPayload<S['include'][P]>>  :
+        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['include'][P]>>  :
+        P extends 'PostinProfile' ? Array < PostinProfileGetPayload<S['include'][P]>>  :
+        P extends 'Like' ? Array < LikeGetPayload<S['include'][P]>>  :
+        P extends 'Share' ? Array < ShareGetPayload<S['include'][P]>>  :
+        P extends '_count' ? FBPostCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (FBPostArgs | FBPostFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? FBUserGetPayload<S['select'][P]> :
+        P extends 'Comment' ? Array < CommentGetPayload<S['select'][P]>>  :
+        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['select'][P]>>  :
+        P extends 'PostinProfile' ? Array < PostinProfileGetPayload<S['select'][P]>>  :
+        P extends 'Like' ? Array < LikeGetPayload<S['select'][P]>>  :
+        P extends 'Share' ? Array < ShareGetPayload<S['select'][P]>>  :
+        P extends '_count' ? FBPostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FBPost ? FBPost[P] : never
+  } 
+      : FBPost
+
+
+  type FBPostCountArgs = 
+    Omit<FBPostFindManyArgs, 'select' | 'include'> & {
+      select?: FBPostCountAggregateInputType | true
+    }
+
+  export interface FBPostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one FBPost that matches the filter.
+     * @param {FBPostFindUniqueArgs} args - Arguments to find a FBPost
+     * @example
+     * // Get one FBPost
+     * const fBPost = await prisma.fBPost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends FBPostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, FBPostFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'FBPost'> extends True ? Prisma__FBPostClient<FBPostGetPayload<T>> : Prisma__FBPostClient<FBPostGetPayload<T> | null, null>
+
+    /**
+     * Find one FBPost that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {FBPostFindUniqueOrThrowArgs} args - Arguments to find a FBPost
+     * @example
+     * // Get one FBPost
+     * const fBPost = await prisma.fBPost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends FBPostFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, FBPostFindUniqueOrThrowArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Find the first FBPost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostFindFirstArgs} args - Arguments to find a FBPost
+     * @example
+     * // Get one FBPost
+     * const fBPost = await prisma.fBPost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends FBPostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, FBPostFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'FBPost'> extends True ? Prisma__FBPostClient<FBPostGetPayload<T>> : Prisma__FBPostClient<FBPostGetPayload<T> | null, null>
+
+    /**
+     * Find the first FBPost that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostFindFirstOrThrowArgs} args - Arguments to find a FBPost
+     * @example
+     * // Get one FBPost
+     * const fBPost = await prisma.fBPost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends FBPostFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, FBPostFindFirstOrThrowArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Find zero or more FBPosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FBPosts
+     * const fBPosts = await prisma.fBPost.findMany()
+     * 
+     * // Get first 10 FBPosts
+     * const fBPosts = await prisma.fBPost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fBPostWithIdOnly = await prisma.fBPost.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends FBPostFindManyArgs>(
+      args?: SelectSubset<T, FBPostFindManyArgs>
+    ): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>>
+
+    /**
+     * Create a FBPost.
+     * @param {FBPostCreateArgs} args - Arguments to create a FBPost.
+     * @example
+     * // Create one FBPost
+     * const FBPost = await prisma.fBPost.create({
+     *   data: {
+     *     // ... data to create a FBPost
+     *   }
+     * })
+     * 
+    **/
+    create<T extends FBPostCreateArgs>(
+      args: SelectSubset<T, FBPostCreateArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Create many FBPosts.
+     *     @param {FBPostCreateManyArgs} args - Arguments to create many FBPosts.
+     *     @example
+     *     // Create many FBPosts
+     *     const fBPost = await prisma.fBPost.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends FBPostCreateManyArgs>(
+      args?: SelectSubset<T, FBPostCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a FBPost.
+     * @param {FBPostDeleteArgs} args - Arguments to delete one FBPost.
+     * @example
+     * // Delete one FBPost
+     * const FBPost = await prisma.fBPost.delete({
+     *   where: {
+     *     // ... filter to delete one FBPost
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends FBPostDeleteArgs>(
+      args: SelectSubset<T, FBPostDeleteArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Update one FBPost.
+     * @param {FBPostUpdateArgs} args - Arguments to update one FBPost.
+     * @example
+     * // Update one FBPost
+     * const fBPost = await prisma.fBPost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends FBPostUpdateArgs>(
+      args: SelectSubset<T, FBPostUpdateArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Delete zero or more FBPosts.
+     * @param {FBPostDeleteManyArgs} args - Arguments to filter FBPosts to delete.
+     * @example
+     * // Delete a few FBPosts
+     * const { count } = await prisma.fBPost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends FBPostDeleteManyArgs>(
+      args?: SelectSubset<T, FBPostDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FBPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FBPosts
+     * const fBPost = await prisma.fBPost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends FBPostUpdateManyArgs>(
+      args: SelectSubset<T, FBPostUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FBPost.
+     * @param {FBPostUpsertArgs} args - Arguments to update or create a FBPost.
+     * @example
+     * // Update or create a FBPost
+     * const fBPost = await prisma.fBPost.upsert({
+     *   create: {
+     *     // ... data to create a FBPost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FBPost we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends FBPostUpsertArgs>(
+      args: SelectSubset<T, FBPostUpsertArgs>
+    ): Prisma__FBPostClient<FBPostGetPayload<T>>
+
+    /**
+     * Count the number of FBPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostCountArgs} args - Arguments to filter FBPosts to count.
+     * @example
+     * // Count the number of FBPosts
+     * const count = await prisma.fBPost.count({
+     *   where: {
+     *     // ... the filter for the FBPosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends FBPostCountArgs>(
+      args?: Subset<T, FBPostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FBPostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FBPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FBPostAggregateArgs>(args: Subset<T, FBPostAggregateArgs>): Prisma.PrismaPromise<GetFBPostAggregateType<T>>
+
+    /**
+     * Group by FBPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FBPostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FBPostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FBPostGroupByArgs['orderBy'] }
+        : { orderBy?: FBPostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FBPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFBPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FBPost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__FBPostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    Comment<T extends FBPost$CommentArgs= {}>(args?: Subset<T, FBPost$CommentArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
+
+    PostinGroup<T extends FBPost$PostinGroupArgs= {}>(args?: Subset<T, FBPost$PostinGroupArgs>): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>| Null>;
+
+    PostinProfile<T extends FBPost$PostinProfileArgs= {}>(args?: Subset<T, FBPost$PostinProfileArgs>): Prisma.PrismaPromise<Array<PostinProfileGetPayload<T>>| Null>;
+
+    Like<T extends FBPost$LikeArgs= {}>(args?: Subset<T, FBPost$LikeArgs>): Prisma.PrismaPromise<Array<LikeGetPayload<T>>| Null>;
+
+    Share<T extends FBPost$ShareArgs= {}>(args?: Subset<T, FBPost$ShareArgs>): Prisma.PrismaPromise<Array<ShareGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * FBPost base type for findUnique actions
+   */
+  export type FBPostFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter, which FBPost to fetch.
+     */
+    where: FBPostWhereUniqueInput
+  }
+
+  /**
+   * FBPost findUnique
+   */
+  export interface FBPostFindUniqueArgs extends FBPostFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FBPost findUniqueOrThrow
+   */
+  export type FBPostFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter, which FBPost to fetch.
+     */
+    where: FBPostWhereUniqueInput
+  }
+
+
+  /**
+   * FBPost base type for findFirst actions
+   */
+  export type FBPostFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter, which FBPost to fetch.
+     */
+    where?: FBPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBPosts to fetch.
+     */
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FBPosts.
+     */
+    cursor?: FBPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FBPosts.
+     */
+    distinct?: Enumerable<FBPostScalarFieldEnum>
+  }
+
+  /**
+   * FBPost findFirst
+   */
+  export interface FBPostFindFirstArgs extends FBPostFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * FBPost findFirstOrThrow
+   */
+  export type FBPostFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter, which FBPost to fetch.
+     */
+    where?: FBPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBPosts to fetch.
+     */
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FBPosts.
+     */
+    cursor?: FBPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FBPosts.
+     */
+    distinct?: Enumerable<FBPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost findMany
+   */
+  export type FBPostFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter, which FBPosts to fetch.
+     */
+    where?: FBPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FBPosts to fetch.
+     */
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FBPosts.
+     */
+    cursor?: FBPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FBPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FBPosts.
+     */
+    skip?: number
+    distinct?: Enumerable<FBPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost create
+   */
+  export type FBPostCreateArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * The data needed to create a FBPost.
+     */
+    data: XOR<FBPostCreateInput, FBPostUncheckedCreateInput>
+  }
+
+
+  /**
+   * FBPost createMany
+   */
+  export type FBPostCreateManyArgs = {
+    /**
+     * The data used to create many FBPosts.
+     */
+    data: Enumerable<FBPostCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * FBPost update
+   */
+  export type FBPostUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * The data needed to update a FBPost.
+     */
+    data: XOR<FBPostUpdateInput, FBPostUncheckedUpdateInput>
+    /**
+     * Choose, which FBPost to update.
+     */
+    where: FBPostWhereUniqueInput
+  }
+
+
+  /**
+   * FBPost updateMany
+   */
+  export type FBPostUpdateManyArgs = {
+    /**
+     * The data used to update FBPosts.
+     */
+    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyInput>
+    /**
+     * Filter which FBPosts to update
+     */
+    where?: FBPostWhereInput
+  }
+
+
+  /**
+   * FBPost upsert
+   */
+  export type FBPostUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * The filter to search for the FBPost to update in case it exists.
+     */
+    where: FBPostWhereUniqueInput
+    /**
+     * In case the FBPost found by the `where` argument doesn't exist, create a new FBPost with this data.
+     */
+    create: XOR<FBPostCreateInput, FBPostUncheckedCreateInput>
+    /**
+     * In case the FBPost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FBPostUpdateInput, FBPostUncheckedUpdateInput>
+  }
+
+
+  /**
+   * FBPost delete
+   */
+  export type FBPostDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    /**
+     * Filter which FBPost to delete.
+     */
+    where: FBPostWhereUniqueInput
+  }
+
+
+  /**
+   * FBPost deleteMany
+   */
+  export type FBPostDeleteManyArgs = {
+    /**
+     * Filter which FBPosts to delete
+     */
+    where?: FBPostWhereInput
+  }
+
+
+  /**
+   * FBPost.Comment
+   */
+  export type FBPost$CommentArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    where?: CommentWhereInput
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<CommentScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost.PostinGroup
+   */
+  export type FBPost$PostinGroupArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    where?: PostinGroupWhereInput
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    cursor?: PostinGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost.PostinProfile
+   */
+  export type FBPost$PostinProfileArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    where?: PostinProfileWhereInput
+    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
+    cursor?: PostinProfileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<PostinProfileScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost.Like
+   */
+  export type FBPost$LikeArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    where?: LikeWhereInput
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    cursor?: LikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<LikeScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost.Share
+   */
+  export type FBPost$ShareArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    where?: ShareWhereInput
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    cursor?: ShareWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ShareScalarFieldEnum>
+  }
+
+
+  /**
+   * FBPost without action
+   */
+  export type FBPostArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+  }
+
+
+
+  /**
+   * Model Comment
+   */
+
+
+  export type AggregateComment = {
+    _count: CommentCountAggregateOutputType | null
+    _avg: CommentAvgAggregateOutputType | null
+    _sum: CommentSumAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  export type CommentAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type CommentSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type CommentMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    commentDetail: string | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    commentDetail: string | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentCountAggregateOutputType = {
+    id: number
+    postId: number
+    commentDetail: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CommentAvgAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type CommentSumAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type CommentMinAggregateInputType = {
+    id?: true
+    postId?: true
+    commentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    commentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentCountAggregateInputType = {
+    id?: true
+    postId?: true
+    commentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CommentAggregateArgs = {
+    /**
+     * Filter which Comment to aggregate.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Comments
+    **/
+    _count?: true | CommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommentMaxAggregateInputType
+  }
+
+  export type GetCommentAggregateType<T extends CommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComment[P]>
+      : GetScalarType<T[P], AggregateComment[P]>
+  }
+
+
+
+
+  export type CommentGroupByArgs = {
+    where?: CommentWhereInput
+    orderBy?: Enumerable<CommentOrderByWithAggregationInput>
+    by: CommentScalarFieldEnum[]
+    having?: CommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommentCountAggregateInputType | true
+    _avg?: CommentAvgAggregateInputType
+    _sum?: CommentSumAggregateInputType
+    _min?: CommentMinAggregateInputType
+    _max?: CommentMaxAggregateInputType
+  }
+
+
+  export type CommentGroupByOutputType = {
+    id: number
+    postId: number
+    commentDetail: string
+    userId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: CommentCountAggregateOutputType | null
+    _avg: CommentAvgAggregateOutputType | null
+    _sum: CommentSumAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  type GetCommentGroupByPayload<T extends CommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<CommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommentGroupByOutputType[P]>
+            : GetScalarType<T[P], CommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommentSelect = {
+    id?: boolean
+    post?: boolean | FBPostArgs
+    postId?: boolean
+    commentDetail?: boolean
+    fromUserId?: boolean | FBUserArgs
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    SubComment?: boolean | Comment$SubCommentArgs
+    _count?: boolean | CommentCountOutputTypeArgs
+  }
+
+
+  export type CommentInclude = {
+    post?: boolean | FBPostArgs
+    fromUserId?: boolean | FBUserArgs
+    SubComment?: boolean | Comment$SubCommentArgs
+    _count?: boolean | CommentCountOutputTypeArgs
+  }
+
+  export type CommentGetPayload<S extends boolean | null | undefined | CommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Comment :
+    S extends undefined ? never :
+    S extends { include: any } & (CommentArgs | CommentFindManyArgs)
+    ? Comment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? FBPostGetPayload<S['include'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['include'][P]> :
+        P extends 'SubComment' ? Array < SubCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? CommentCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (CommentArgs | CommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? FBPostGetPayload<S['select'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['select'][P]> :
+        P extends 'SubComment' ? Array < SubCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? CommentCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Comment ? Comment[P] : never
+  } 
+      : Comment
+
+
+  type CommentCountArgs = 
+    Omit<CommentFindManyArgs, 'select' | 'include'> & {
+      select?: CommentCountAggregateInputType | true
+    }
+
+  export interface CommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Comment that matches the filter.
+     * @param {CommentFindUniqueArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends CommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, CommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Comment'> extends True ? Prisma__CommentClient<CommentGetPayload<T>> : Prisma__CommentClient<CommentGetPayload<T> | null, null>
+
+    /**
+     * Find one Comment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {CommentFindUniqueOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends CommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, CommentFindUniqueOrThrowArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Find the first Comment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends CommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, CommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Comment'> extends True ? Prisma__CommentClient<CommentGetPayload<T>> : Prisma__CommentClient<CommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first Comment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends CommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, CommentFindFirstOrThrowArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Find zero or more Comments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Comments
+     * const comments = await prisma.comment.findMany()
+     * 
+     * // Get first 10 Comments
+     * const comments = await prisma.comment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const commentWithIdOnly = await prisma.comment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends CommentFindManyArgs>(
+      args?: SelectSubset<T, CommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<CommentGetPayload<T>>>
+
+    /**
+     * Create a Comment.
+     * @param {CommentCreateArgs} args - Arguments to create a Comment.
+     * @example
+     * // Create one Comment
+     * const Comment = await prisma.comment.create({
+     *   data: {
+     *     // ... data to create a Comment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends CommentCreateArgs>(
+      args: SelectSubset<T, CommentCreateArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Create many Comments.
+     *     @param {CommentCreateManyArgs} args - Arguments to create many Comments.
+     *     @example
+     *     // Create many Comments
+     *     const comment = await prisma.comment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends CommentCreateManyArgs>(
+      args?: SelectSubset<T, CommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Comment.
+     * @param {CommentDeleteArgs} args - Arguments to delete one Comment.
+     * @example
+     * // Delete one Comment
+     * const Comment = await prisma.comment.delete({
+     *   where: {
+     *     // ... filter to delete one Comment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends CommentDeleteArgs>(
+      args: SelectSubset<T, CommentDeleteArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Update one Comment.
+     * @param {CommentUpdateArgs} args - Arguments to update one Comment.
+     * @example
+     * // Update one Comment
+     * const comment = await prisma.comment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends CommentUpdateArgs>(
+      args: SelectSubset<T, CommentUpdateArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Delete zero or more Comments.
+     * @param {CommentDeleteManyArgs} args - Arguments to filter Comments to delete.
+     * @example
+     * // Delete a few Comments
+     * const { count } = await prisma.comment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends CommentDeleteManyArgs>(
+      args?: SelectSubset<T, CommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Comments
+     * const comment = await prisma.comment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends CommentUpdateManyArgs>(
+      args: SelectSubset<T, CommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Comment.
+     * @param {CommentUpsertArgs} args - Arguments to update or create a Comment.
+     * @example
+     * // Update or create a Comment
+     * const comment = await prisma.comment.upsert({
+     *   create: {
+     *     // ... data to create a Comment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Comment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends CommentUpsertArgs>(
+      args: SelectSubset<T, CommentUpsertArgs>
+    ): Prisma__CommentClient<CommentGetPayload<T>>
+
+    /**
+     * Count the number of Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentCountArgs} args - Arguments to filter Comments to count.
+     * @example
+     * // Count the number of Comments
+     * const count = await prisma.comment.count({
+     *   where: {
+     *     // ... the filter for the Comments we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommentCountArgs>(
+      args?: Subset<T, CommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommentAggregateArgs>(args: Subset<T, CommentAggregateArgs>): Prisma.PrismaPromise<GetCommentAggregateType<T>>
+
+    /**
+     * Group by Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommentGroupByArgs['orderBy'] }
+        : { orderBy?: CommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Comment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__CommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
+
+    fromUserId<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    SubComment<T extends Comment$SubCommentArgs= {}>(args?: Subset<T, Comment$SubCommentArgs>): Prisma.PrismaPromise<Array<SubCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Comment base type for findUnique actions
+   */
+  export type CommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment findUnique
+   */
+  export interface CommentFindUniqueArgs extends CommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Comment findUniqueOrThrow
+   */
+  export type CommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+
+  /**
+   * Comment base type for findFirst actions
+   */
+  export type CommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: Enumerable<CommentScalarFieldEnum>
+  }
+
+  /**
+   * Comment findFirst
+   */
+  export interface CommentFindFirstArgs extends CommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Comment findFirstOrThrow
+   */
+  export type CommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: Enumerable<CommentScalarFieldEnum>
+  }
+
+
+  /**
+   * Comment findMany
+   */
+  export type CommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter, which Comments to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    distinct?: Enumerable<CommentScalarFieldEnum>
+  }
+
+
+  /**
+   * Comment create
+   */
+  export type CommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * The data needed to create a Comment.
+     */
+    data: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * Comment createMany
+   */
+  export type CommentCreateManyArgs = {
+    /**
+     * The data used to create many Comments.
+     */
+    data: Enumerable<CommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Comment update
+   */
+  export type CommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * The data needed to update a Comment.
+     */
+    data: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+    /**
+     * Choose, which Comment to update.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+
+  /**
+   * Comment updateMany
+   */
+  export type CommentUpdateManyArgs = {
+    /**
+     * The data used to update Comments.
+     */
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    /**
+     * Filter which Comments to update
+     */
+    where?: CommentWhereInput
+  }
+
+
+  /**
+   * Comment upsert
+   */
+  export type CommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * The filter to search for the Comment to update in case it exists.
+     */
+    where: CommentWhereUniqueInput
+    /**
+     * In case the Comment found by the `where` argument doesn't exist, create a new Comment with this data.
+     */
+    create: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+    /**
+     * In case the Comment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Comment delete
+   */
+  export type CommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    /**
+     * Filter which Comment to delete.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+
+  /**
+   * Comment deleteMany
+   */
+  export type CommentDeleteManyArgs = {
+    /**
+     * Filter which Comments to delete
+     */
+    where?: CommentWhereInput
+  }
+
+
+  /**
+   * Comment.SubComment
+   */
+  export type Comment$SubCommentArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    where?: SubCommentWhereInput
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    cursor?: SubCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<SubCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * Comment without action
+   */
+  export type CommentArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+  }
+
+
+
+  /**
+   * Model SubComment
+   */
+
+
+  export type AggregateSubComment = {
+    _count: SubCommentCountAggregateOutputType | null
+    _avg: SubCommentAvgAggregateOutputType | null
+    _sum: SubCommentSumAggregateOutputType | null
+    _min: SubCommentMinAggregateOutputType | null
+    _max: SubCommentMaxAggregateOutputType | null
+  }
+
+  export type SubCommentAvgAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    userId: number | null
+  }
+
+  export type SubCommentSumAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    userId: number | null
+  }
+
+  export type SubCommentMinAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    subCommentDetail: string | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubCommentMaxAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    subCommentDetail: string | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SubCommentCountAggregateOutputType = {
+    id: number
+    commentId: number
+    subCommentDetail: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SubCommentAvgAggregateInputType = {
+    id?: true
+    commentId?: true
+    userId?: true
+  }
+
+  export type SubCommentSumAggregateInputType = {
+    id?: true
+    commentId?: true
+    userId?: true
+  }
+
+  export type SubCommentMinAggregateInputType = {
+    id?: true
+    commentId?: true
+    subCommentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubCommentMaxAggregateInputType = {
+    id?: true
+    commentId?: true
+    subCommentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SubCommentCountAggregateInputType = {
+    id?: true
+    commentId?: true
+    subCommentDetail?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SubCommentAggregateArgs = {
+    /**
+     * Filter which SubComment to aggregate.
+     */
+    where?: SubCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubComments to fetch.
+     */
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SubCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SubComments
+    **/
+    _count?: true | SubCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SubCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SubCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SubCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SubCommentMaxAggregateInputType
+  }
+
+  export type GetSubCommentAggregateType<T extends SubCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateSubComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSubComment[P]>
+      : GetScalarType<T[P], AggregateSubComment[P]>
+  }
+
+
+
+
+  export type SubCommentGroupByArgs = {
+    where?: SubCommentWhereInput
+    orderBy?: Enumerable<SubCommentOrderByWithAggregationInput>
+    by: SubCommentScalarFieldEnum[]
+    having?: SubCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SubCommentCountAggregateInputType | true
+    _avg?: SubCommentAvgAggregateInputType
+    _sum?: SubCommentSumAggregateInputType
+    _min?: SubCommentMinAggregateInputType
+    _max?: SubCommentMaxAggregateInputType
+  }
+
+
+  export type SubCommentGroupByOutputType = {
+    id: number
+    commentId: number
+    subCommentDetail: string
+    userId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: SubCommentCountAggregateOutputType | null
+    _avg: SubCommentAvgAggregateOutputType | null
+    _sum: SubCommentSumAggregateOutputType | null
+    _min: SubCommentMinAggregateOutputType | null
+    _max: SubCommentMaxAggregateOutputType | null
+  }
+
+  type GetSubCommentGroupByPayload<T extends SubCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<SubCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SubCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SubCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], SubCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SubCommentSelect = {
+    id?: boolean
+    comment?: boolean | CommentArgs
+    commentId?: boolean
+    subCommentDetail?: boolean
+    fromUserId?: boolean | FBUserArgs
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type SubCommentInclude = {
+    comment?: boolean | CommentArgs
+    fromUserId?: boolean | FBUserArgs
+  }
+
+  export type SubCommentGetPayload<S extends boolean | null | undefined | SubCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? SubComment :
+    S extends undefined ? never :
+    S extends { include: any } & (SubCommentArgs | SubCommentFindManyArgs)
+    ? SubComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'comment' ? CommentGetPayload<S['include'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (SubCommentArgs | SubCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'comment' ? CommentGetPayload<S['select'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['select'][P]> :  P extends keyof SubComment ? SubComment[P] : never
+  } 
+      : SubComment
+
+
+  type SubCommentCountArgs = 
+    Omit<SubCommentFindManyArgs, 'select' | 'include'> & {
+      select?: SubCommentCountAggregateInputType | true
+    }
+
+  export interface SubCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one SubComment that matches the filter.
+     * @param {SubCommentFindUniqueArgs} args - Arguments to find a SubComment
+     * @example
+     * // Get one SubComment
+     * const subComment = await prisma.subComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends SubCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, SubCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'SubComment'> extends True ? Prisma__SubCommentClient<SubCommentGetPayload<T>> : Prisma__SubCommentClient<SubCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one SubComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {SubCommentFindUniqueOrThrowArgs} args - Arguments to find a SubComment
+     * @example
+     * // Get one SubComment
+     * const subComment = await prisma.subComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends SubCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, SubCommentFindUniqueOrThrowArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Find the first SubComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentFindFirstArgs} args - Arguments to find a SubComment
+     * @example
+     * // Get one SubComment
+     * const subComment = await prisma.subComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends SubCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, SubCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'SubComment'> extends True ? Prisma__SubCommentClient<SubCommentGetPayload<T>> : Prisma__SubCommentClient<SubCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first SubComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentFindFirstOrThrowArgs} args - Arguments to find a SubComment
+     * @example
+     * // Get one SubComment
+     * const subComment = await prisma.subComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends SubCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, SubCommentFindFirstOrThrowArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Find zero or more SubComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SubComments
+     * const subComments = await prisma.subComment.findMany()
+     * 
+     * // Get first 10 SubComments
+     * const subComments = await prisma.subComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const subCommentWithIdOnly = await prisma.subComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends SubCommentFindManyArgs>(
+      args?: SelectSubset<T, SubCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<SubCommentGetPayload<T>>>
+
+    /**
+     * Create a SubComment.
+     * @param {SubCommentCreateArgs} args - Arguments to create a SubComment.
+     * @example
+     * // Create one SubComment
+     * const SubComment = await prisma.subComment.create({
+     *   data: {
+     *     // ... data to create a SubComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends SubCommentCreateArgs>(
+      args: SelectSubset<T, SubCommentCreateArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Create many SubComments.
+     *     @param {SubCommentCreateManyArgs} args - Arguments to create many SubComments.
+     *     @example
+     *     // Create many SubComments
+     *     const subComment = await prisma.subComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends SubCommentCreateManyArgs>(
+      args?: SelectSubset<T, SubCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SubComment.
+     * @param {SubCommentDeleteArgs} args - Arguments to delete one SubComment.
+     * @example
+     * // Delete one SubComment
+     * const SubComment = await prisma.subComment.delete({
+     *   where: {
+     *     // ... filter to delete one SubComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends SubCommentDeleteArgs>(
+      args: SelectSubset<T, SubCommentDeleteArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Update one SubComment.
+     * @param {SubCommentUpdateArgs} args - Arguments to update one SubComment.
+     * @example
+     * // Update one SubComment
+     * const subComment = await prisma.subComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends SubCommentUpdateArgs>(
+      args: SelectSubset<T, SubCommentUpdateArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more SubComments.
+     * @param {SubCommentDeleteManyArgs} args - Arguments to filter SubComments to delete.
+     * @example
+     * // Delete a few SubComments
+     * const { count } = await prisma.subComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends SubCommentDeleteManyArgs>(
+      args?: SelectSubset<T, SubCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SubComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SubComments
+     * const subComment = await prisma.subComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends SubCommentUpdateManyArgs>(
+      args: SelectSubset<T, SubCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SubComment.
+     * @param {SubCommentUpsertArgs} args - Arguments to update or create a SubComment.
+     * @example
+     * // Update or create a SubComment
+     * const subComment = await prisma.subComment.upsert({
+     *   create: {
+     *     // ... data to create a SubComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SubComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends SubCommentUpsertArgs>(
+      args: SelectSubset<T, SubCommentUpsertArgs>
+    ): Prisma__SubCommentClient<SubCommentGetPayload<T>>
+
+    /**
+     * Count the number of SubComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentCountArgs} args - Arguments to filter SubComments to count.
+     * @example
+     * // Count the number of SubComments
+     * const count = await prisma.subComment.count({
+     *   where: {
+     *     // ... the filter for the SubComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends SubCommentCountArgs>(
+      args?: Subset<T, SubCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SubCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SubComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SubCommentAggregateArgs>(args: Subset<T, SubCommentAggregateArgs>): Prisma.PrismaPromise<GetSubCommentAggregateType<T>>
+
+    /**
+     * Group by SubComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SubCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SubCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SubCommentGroupByArgs['orderBy'] }
+        : { orderBy?: SubCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SubCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SubComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__SubCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    comment<T extends CommentArgs= {}>(args?: Subset<T, CommentArgs>): Prisma__CommentClient<CommentGetPayload<T> | Null>;
+
+    fromUserId<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * SubComment base type for findUnique actions
+   */
+  export type SubCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter, which SubComment to fetch.
+     */
+    where: SubCommentWhereUniqueInput
+  }
+
+  /**
+   * SubComment findUnique
+   */
+  export interface SubCommentFindUniqueArgs extends SubCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * SubComment findUniqueOrThrow
+   */
+  export type SubCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter, which SubComment to fetch.
+     */
+    where: SubCommentWhereUniqueInput
+  }
+
+
+  /**
+   * SubComment base type for findFirst actions
+   */
+  export type SubCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter, which SubComment to fetch.
+     */
+    where?: SubCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubComments to fetch.
+     */
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubComments.
+     */
+    cursor?: SubCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubComments.
+     */
+    distinct?: Enumerable<SubCommentScalarFieldEnum>
+  }
+
+  /**
+   * SubComment findFirst
+   */
+  export interface SubCommentFindFirstArgs extends SubCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * SubComment findFirstOrThrow
+   */
+  export type SubCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter, which SubComment to fetch.
+     */
+    where?: SubCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubComments to fetch.
+     */
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SubComments.
+     */
+    cursor?: SubCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SubComments.
+     */
+    distinct?: Enumerable<SubCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * SubComment findMany
+   */
+  export type SubCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter, which SubComments to fetch.
+     */
+    where?: SubCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SubComments to fetch.
+     */
+    orderBy?: Enumerable<SubCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SubComments.
+     */
+    cursor?: SubCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SubComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SubComments.
+     */
+    skip?: number
+    distinct?: Enumerable<SubCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * SubComment create
+   */
+  export type SubCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * The data needed to create a SubComment.
+     */
+    data: XOR<SubCommentCreateInput, SubCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * SubComment createMany
+   */
+  export type SubCommentCreateManyArgs = {
+    /**
+     * The data used to create many SubComments.
+     */
+    data: Enumerable<SubCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * SubComment update
+   */
+  export type SubCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * The data needed to update a SubComment.
+     */
+    data: XOR<SubCommentUpdateInput, SubCommentUncheckedUpdateInput>
+    /**
+     * Choose, which SubComment to update.
+     */
+    where: SubCommentWhereUniqueInput
+  }
+
+
+  /**
+   * SubComment updateMany
+   */
+  export type SubCommentUpdateManyArgs = {
+    /**
+     * The data used to update SubComments.
+     */
+    data: XOR<SubCommentUpdateManyMutationInput, SubCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which SubComments to update
+     */
+    where?: SubCommentWhereInput
+  }
+
+
+  /**
+   * SubComment upsert
+   */
+  export type SubCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * The filter to search for the SubComment to update in case it exists.
+     */
+    where: SubCommentWhereUniqueInput
+    /**
+     * In case the SubComment found by the `where` argument doesn't exist, create a new SubComment with this data.
+     */
+    create: XOR<SubCommentCreateInput, SubCommentUncheckedCreateInput>
+    /**
+     * In case the SubComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SubCommentUpdateInput, SubCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * SubComment delete
+   */
+  export type SubCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+    /**
+     * Filter which SubComment to delete.
+     */
+    where: SubCommentWhereUniqueInput
+  }
+
+
+  /**
+   * SubComment deleteMany
+   */
+  export type SubCommentDeleteManyArgs = {
+    /**
+     * Filter which SubComments to delete
+     */
+    where?: SubCommentWhereInput
+  }
+
+
+  /**
+   * SubComment without action
+   */
+  export type SubCommentArgs = {
+    /**
+     * Select specific fields to fetch from the SubComment
+     */
+    select?: SubCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: SubCommentInclude | null
+  }
+
+
+
+  /**
+   * Model Like
+   */
+
+
+  export type AggregateLike = {
+    _count: LikeCountAggregateOutputType | null
+    _avg: LikeAvgAggregateOutputType | null
+    _sum: LikeSumAggregateOutputType | null
+    _min: LikeMinAggregateOutputType | null
+    _max: LikeMaxAggregateOutputType | null
+  }
+
+  export type LikeAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type LikeSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type LikeMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+    likeType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LikeMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+    likeType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LikeCountAggregateOutputType = {
+    id: number
+    postId: number
+    userId: number
+    likeType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LikeAvgAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type LikeSumAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type LikeMinAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    likeType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LikeMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    likeType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LikeCountAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    likeType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LikeAggregateArgs = {
+    /**
+     * Filter which Like to aggregate.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Likes
+    **/
+    _count?: true | LikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LikeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LikeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LikeMaxAggregateInputType
+  }
+
+  export type GetLikeAggregateType<T extends LikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLike[P]>
+      : GetScalarType<T[P], AggregateLike[P]>
+  }
+
+
+
+
+  export type LikeGroupByArgs = {
+    where?: LikeWhereInput
+    orderBy?: Enumerable<LikeOrderByWithAggregationInput>
+    by: LikeScalarFieldEnum[]
+    having?: LikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LikeCountAggregateInputType | true
+    _avg?: LikeAvgAggregateInputType
+    _sum?: LikeSumAggregateInputType
+    _min?: LikeMinAggregateInputType
+    _max?: LikeMaxAggregateInputType
+  }
+
+
+  export type LikeGroupByOutputType = {
+    id: number
+    postId: number
+    userId: number
+    likeType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: LikeCountAggregateOutputType | null
+    _avg: LikeAvgAggregateOutputType | null
+    _sum: LikeSumAggregateOutputType | null
+    _min: LikeMinAggregateOutputType | null
+    _max: LikeMaxAggregateOutputType | null
+  }
+
+  type GetLikeGroupByPayload<T extends LikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<LikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LikeGroupByOutputType[P]>
+            : GetScalarType<T[P], LikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LikeSelect = {
+    id?: boolean
+    post?: boolean | FBPostArgs
+    postId?: boolean
+    fromUserId?: boolean | FBUserArgs
+    userId?: boolean
+    likeType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type LikeInclude = {
+    post?: boolean | FBPostArgs
+    fromUserId?: boolean | FBUserArgs
+  }
+
+  export type LikeGetPayload<S extends boolean | null | undefined | LikeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Like :
+    S extends undefined ? never :
+    S extends { include: any } & (LikeArgs | LikeFindManyArgs)
+    ? Like  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? FBPostGetPayload<S['include'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (LikeArgs | LikeFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? FBPostGetPayload<S['select'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['select'][P]> :  P extends keyof Like ? Like[P] : never
+  } 
+      : Like
+
+
+  type LikeCountArgs = 
+    Omit<LikeFindManyArgs, 'select' | 'include'> & {
+      select?: LikeCountAggregateInputType | true
+    }
+
+  export interface LikeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Like that matches the filter.
+     * @param {LikeFindUniqueArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends LikeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, LikeFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Like'> extends True ? Prisma__LikeClient<LikeGetPayload<T>> : Prisma__LikeClient<LikeGetPayload<T> | null, null>
+
+    /**
+     * Find one Like that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {LikeFindUniqueOrThrowArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends LikeFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, LikeFindUniqueOrThrowArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Find the first Like that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindFirstArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends LikeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, LikeFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Like'> extends True ? Prisma__LikeClient<LikeGetPayload<T>> : Prisma__LikeClient<LikeGetPayload<T> | null, null>
+
+    /**
+     * Find the first Like that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindFirstOrThrowArgs} args - Arguments to find a Like
+     * @example
+     * // Get one Like
+     * const like = await prisma.like.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends LikeFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, LikeFindFirstOrThrowArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Find zero or more Likes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Likes
+     * const likes = await prisma.like.findMany()
+     * 
+     * // Get first 10 Likes
+     * const likes = await prisma.like.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const likeWithIdOnly = await prisma.like.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends LikeFindManyArgs>(
+      args?: SelectSubset<T, LikeFindManyArgs>
+    ): Prisma.PrismaPromise<Array<LikeGetPayload<T>>>
+
+    /**
+     * Create a Like.
+     * @param {LikeCreateArgs} args - Arguments to create a Like.
+     * @example
+     * // Create one Like
+     * const Like = await prisma.like.create({
+     *   data: {
+     *     // ... data to create a Like
+     *   }
+     * })
+     * 
+    **/
+    create<T extends LikeCreateArgs>(
+      args: SelectSubset<T, LikeCreateArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Create many Likes.
+     *     @param {LikeCreateManyArgs} args - Arguments to create many Likes.
+     *     @example
+     *     // Create many Likes
+     *     const like = await prisma.like.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends LikeCreateManyArgs>(
+      args?: SelectSubset<T, LikeCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Like.
+     * @param {LikeDeleteArgs} args - Arguments to delete one Like.
+     * @example
+     * // Delete one Like
+     * const Like = await prisma.like.delete({
+     *   where: {
+     *     // ... filter to delete one Like
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends LikeDeleteArgs>(
+      args: SelectSubset<T, LikeDeleteArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Update one Like.
+     * @param {LikeUpdateArgs} args - Arguments to update one Like.
+     * @example
+     * // Update one Like
+     * const like = await prisma.like.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends LikeUpdateArgs>(
+      args: SelectSubset<T, LikeUpdateArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Delete zero or more Likes.
+     * @param {LikeDeleteManyArgs} args - Arguments to filter Likes to delete.
+     * @example
+     * // Delete a few Likes
+     * const { count } = await prisma.like.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends LikeDeleteManyArgs>(
+      args?: SelectSubset<T, LikeDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Likes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Likes
+     * const like = await prisma.like.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends LikeUpdateManyArgs>(
+      args: SelectSubset<T, LikeUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Like.
+     * @param {LikeUpsertArgs} args - Arguments to update or create a Like.
+     * @example
+     * // Update or create a Like
+     * const like = await prisma.like.upsert({
+     *   create: {
+     *     // ... data to create a Like
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Like we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends LikeUpsertArgs>(
+      args: SelectSubset<T, LikeUpsertArgs>
+    ): Prisma__LikeClient<LikeGetPayload<T>>
+
+    /**
+     * Count the number of Likes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeCountArgs} args - Arguments to filter Likes to count.
+     * @example
+     * // Count the number of Likes
+     * const count = await prisma.like.count({
+     *   where: {
+     *     // ... the filter for the Likes we want to count
+     *   }
+     * })
+    **/
+    count<T extends LikeCountArgs>(
+      args?: Subset<T, LikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Like.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LikeAggregateArgs>(args: Subset<T, LikeAggregateArgs>): Prisma.PrismaPromise<GetLikeAggregateType<T>>
+
+    /**
+     * Group by Like.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LikeGroupByArgs['orderBy'] }
+        : { orderBy?: LikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Like.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__LikeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
+
+    fromUserId<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Like base type for findUnique actions
+   */
+  export type LikeFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+  /**
+   * Like findUnique
+   */
+  export interface LikeFindUniqueArgs extends LikeFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Like findUniqueOrThrow
+   */
+  export type LikeFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+
+  /**
+   * Like base type for findFirst actions
+   */
+  export type LikeFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Likes.
+     */
+    distinct?: Enumerable<LikeScalarFieldEnum>
+  }
+
+  /**
+   * Like findFirst
+   */
+  export interface LikeFindFirstArgs extends LikeFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Like findFirstOrThrow
+   */
+  export type LikeFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter, which Like to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Likes.
+     */
+    distinct?: Enumerable<LikeScalarFieldEnum>
+  }
+
+
+  /**
+   * Like findMany
+   */
+  export type LikeFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter, which Likes to fetch.
+     */
+    where?: LikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Likes to fetch.
+     */
+    orderBy?: Enumerable<LikeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Likes.
+     */
+    cursor?: LikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Likes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Likes.
+     */
+    skip?: number
+    distinct?: Enumerable<LikeScalarFieldEnum>
+  }
+
+
+  /**
+   * Like create
+   */
+  export type LikeCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * The data needed to create a Like.
+     */
+    data: XOR<LikeCreateInput, LikeUncheckedCreateInput>
+  }
+
+
+  /**
+   * Like createMany
+   */
+  export type LikeCreateManyArgs = {
+    /**
+     * The data used to create many Likes.
+     */
+    data: Enumerable<LikeCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Like update
+   */
+  export type LikeUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * The data needed to update a Like.
+     */
+    data: XOR<LikeUpdateInput, LikeUncheckedUpdateInput>
+    /**
+     * Choose, which Like to update.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+
+  /**
+   * Like updateMany
+   */
+  export type LikeUpdateManyArgs = {
+    /**
+     * The data used to update Likes.
+     */
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyInput>
+    /**
+     * Filter which Likes to update
+     */
+    where?: LikeWhereInput
+  }
+
+
+  /**
+   * Like upsert
+   */
+  export type LikeUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * The filter to search for the Like to update in case it exists.
+     */
+    where: LikeWhereUniqueInput
+    /**
+     * In case the Like found by the `where` argument doesn't exist, create a new Like with this data.
+     */
+    create: XOR<LikeCreateInput, LikeUncheckedCreateInput>
+    /**
+     * In case the Like was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LikeUpdateInput, LikeUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Like delete
+   */
+  export type LikeDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+    /**
+     * Filter which Like to delete.
+     */
+    where: LikeWhereUniqueInput
+  }
+
+
+  /**
+   * Like deleteMany
+   */
+  export type LikeDeleteManyArgs = {
+    /**
+     * Filter which Likes to delete
+     */
+    where?: LikeWhereInput
+  }
+
+
+  /**
+   * Like without action
+   */
+  export type LikeArgs = {
+    /**
+     * Select specific fields to fetch from the Like
+     */
+    select?: LikeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LikeInclude | null
+  }
+
+
+
+  /**
+   * Model Share
+   */
+
+
+  export type AggregateShare = {
+    _count: ShareCountAggregateOutputType | null
+    _avg: ShareAvgAggregateOutputType | null
+    _sum: ShareSumAggregateOutputType | null
+    _min: ShareMinAggregateOutputType | null
+    _max: ShareMaxAggregateOutputType | null
+  }
+
+  export type ShareAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type ShareSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+  }
+
+  export type ShareMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+    shareStatus: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ShareMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    userId: number | null
+    shareStatus: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ShareCountAggregateOutputType = {
+    id: number
+    postId: number
+    userId: number
+    shareStatus: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ShareAvgAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type ShareSumAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+  }
+
+  export type ShareMinAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    shareStatus?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ShareMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    shareStatus?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ShareCountAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    shareStatus?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ShareAggregateArgs = {
+    /**
+     * Filter which Share to aggregate.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Shares
+    **/
+    _count?: true | ShareCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ShareAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ShareSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ShareMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ShareMaxAggregateInputType
+  }
+
+  export type GetShareAggregateType<T extends ShareAggregateArgs> = {
+        [P in keyof T & keyof AggregateShare]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateShare[P]>
+      : GetScalarType<T[P], AggregateShare[P]>
+  }
+
+
+
+
+  export type ShareGroupByArgs = {
+    where?: ShareWhereInput
+    orderBy?: Enumerable<ShareOrderByWithAggregationInput>
+    by: ShareScalarFieldEnum[]
+    having?: ShareScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ShareCountAggregateInputType | true
+    _avg?: ShareAvgAggregateInputType
+    _sum?: ShareSumAggregateInputType
+    _min?: ShareMinAggregateInputType
+    _max?: ShareMaxAggregateInputType
+  }
+
+
+  export type ShareGroupByOutputType = {
+    id: number
+    postId: number
+    userId: number
+    shareStatus: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ShareCountAggregateOutputType | null
+    _avg: ShareAvgAggregateOutputType | null
+    _sum: ShareSumAggregateOutputType | null
+    _min: ShareMinAggregateOutputType | null
+    _max: ShareMaxAggregateOutputType | null
+  }
+
+  type GetShareGroupByPayload<T extends ShareGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<ShareGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ShareGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ShareGroupByOutputType[P]>
+            : GetScalarType<T[P], ShareGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ShareSelect = {
+    id?: boolean
+    post?: boolean | FBPostArgs
+    postId?: boolean
+    fromUserId?: boolean | FBUserArgs
+    userId?: boolean
+    shareStatus?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type ShareInclude = {
+    post?: boolean | FBPostArgs
+    fromUserId?: boolean | FBUserArgs
+  }
+
+  export type ShareGetPayload<S extends boolean | null | undefined | ShareArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Share :
+    S extends undefined ? never :
+    S extends { include: any } & (ShareArgs | ShareFindManyArgs)
+    ? Share  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? FBPostGetPayload<S['include'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (ShareArgs | ShareFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? FBPostGetPayload<S['select'][P]> :
+        P extends 'fromUserId' ? FBUserGetPayload<S['select'][P]> :  P extends keyof Share ? Share[P] : never
+  } 
+      : Share
+
+
+  type ShareCountArgs = 
+    Omit<ShareFindManyArgs, 'select' | 'include'> & {
+      select?: ShareCountAggregateInputType | true
+    }
+
+  export interface ShareDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Share that matches the filter.
+     * @param {ShareFindUniqueArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ShareFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, ShareFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Share'> extends True ? Prisma__ShareClient<ShareGetPayload<T>> : Prisma__ShareClient<ShareGetPayload<T> | null, null>
+
+    /**
+     * Find one Share that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ShareFindUniqueOrThrowArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ShareFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ShareFindUniqueOrThrowArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Find the first Share that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindFirstArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ShareFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, ShareFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Share'> extends True ? Prisma__ShareClient<ShareGetPayload<T>> : Prisma__ShareClient<ShareGetPayload<T> | null, null>
+
+    /**
+     * Find the first Share that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindFirstOrThrowArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ShareFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ShareFindFirstOrThrowArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Find zero or more Shares that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Shares
+     * const shares = await prisma.share.findMany()
+     * 
+     * // Get first 10 Shares
+     * const shares = await prisma.share.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const shareWithIdOnly = await prisma.share.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ShareFindManyArgs>(
+      args?: SelectSubset<T, ShareFindManyArgs>
+    ): Prisma.PrismaPromise<Array<ShareGetPayload<T>>>
+
+    /**
+     * Create a Share.
+     * @param {ShareCreateArgs} args - Arguments to create a Share.
+     * @example
+     * // Create one Share
+     * const Share = await prisma.share.create({
+     *   data: {
+     *     // ... data to create a Share
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ShareCreateArgs>(
+      args: SelectSubset<T, ShareCreateArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Create many Shares.
+     *     @param {ShareCreateManyArgs} args - Arguments to create many Shares.
+     *     @example
+     *     // Create many Shares
+     *     const share = await prisma.share.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ShareCreateManyArgs>(
+      args?: SelectSubset<T, ShareCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Share.
+     * @param {ShareDeleteArgs} args - Arguments to delete one Share.
+     * @example
+     * // Delete one Share
+     * const Share = await prisma.share.delete({
+     *   where: {
+     *     // ... filter to delete one Share
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ShareDeleteArgs>(
+      args: SelectSubset<T, ShareDeleteArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Update one Share.
+     * @param {ShareUpdateArgs} args - Arguments to update one Share.
+     * @example
+     * // Update one Share
+     * const share = await prisma.share.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ShareUpdateArgs>(
+      args: SelectSubset<T, ShareUpdateArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Delete zero or more Shares.
+     * @param {ShareDeleteManyArgs} args - Arguments to filter Shares to delete.
+     * @example
+     * // Delete a few Shares
+     * const { count } = await prisma.share.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ShareDeleteManyArgs>(
+      args?: SelectSubset<T, ShareDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Shares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Shares
+     * const share = await prisma.share.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ShareUpdateManyArgs>(
+      args: SelectSubset<T, ShareUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Share.
+     * @param {ShareUpsertArgs} args - Arguments to update or create a Share.
+     * @example
+     * // Update or create a Share
+     * const share = await prisma.share.upsert({
+     *   create: {
+     *     // ... data to create a Share
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Share we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ShareUpsertArgs>(
+      args: SelectSubset<T, ShareUpsertArgs>
+    ): Prisma__ShareClient<ShareGetPayload<T>>
+
+    /**
+     * Count the number of Shares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareCountArgs} args - Arguments to filter Shares to count.
+     * @example
+     * // Count the number of Shares
+     * const count = await prisma.share.count({
+     *   where: {
+     *     // ... the filter for the Shares we want to count
+     *   }
+     * })
+    **/
+    count<T extends ShareCountArgs>(
+      args?: Subset<T, ShareCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ShareCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Share.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ShareAggregateArgs>(args: Subset<T, ShareAggregateArgs>): Prisma.PrismaPromise<GetShareAggregateType<T>>
+
+    /**
+     * Group by Share.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ShareGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ShareGroupByArgs['orderBy'] }
+        : { orderBy?: ShareGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ShareGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetShareGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Share.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__ShareClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
+
+    fromUserId<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Share base type for findUnique actions
+   */
+  export type ShareFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+  /**
+   * Share findUnique
+   */
+  export interface ShareFindUniqueArgs extends ShareFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Share findUniqueOrThrow
+   */
+  export type ShareFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+
+  /**
+   * Share base type for findFirst actions
+   */
+  export type ShareFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shares.
+     */
+    distinct?: Enumerable<ShareScalarFieldEnum>
+  }
+
+  /**
+   * Share findFirst
+   */
+  export interface ShareFindFirstArgs extends ShareFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Share findFirstOrThrow
+   */
+  export type ShareFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shares.
+     */
+    distinct?: Enumerable<ShareScalarFieldEnum>
+  }
+
+
+  /**
+   * Share findMany
+   */
+  export type ShareFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter, which Shares to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: Enumerable<ShareOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    distinct?: Enumerable<ShareScalarFieldEnum>
+  }
+
+
+  /**
+   * Share create
+   */
+  export type ShareCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * The data needed to create a Share.
+     */
+    data: XOR<ShareCreateInput, ShareUncheckedCreateInput>
+  }
+
+
+  /**
+   * Share createMany
+   */
+  export type ShareCreateManyArgs = {
+    /**
+     * The data used to create many Shares.
+     */
+    data: Enumerable<ShareCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Share update
+   */
+  export type ShareUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * The data needed to update a Share.
+     */
+    data: XOR<ShareUpdateInput, ShareUncheckedUpdateInput>
+    /**
+     * Choose, which Share to update.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+
+  /**
+   * Share updateMany
+   */
+  export type ShareUpdateManyArgs = {
+    /**
+     * The data used to update Shares.
+     */
+    data: XOR<ShareUpdateManyMutationInput, ShareUncheckedUpdateManyInput>
+    /**
+     * Filter which Shares to update
+     */
+    where?: ShareWhereInput
+  }
+
+
+  /**
+   * Share upsert
+   */
+  export type ShareUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * The filter to search for the Share to update in case it exists.
+     */
+    where: ShareWhereUniqueInput
+    /**
+     * In case the Share found by the `where` argument doesn't exist, create a new Share with this data.
+     */
+    create: XOR<ShareCreateInput, ShareUncheckedCreateInput>
+    /**
+     * In case the Share was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ShareUpdateInput, ShareUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Share delete
+   */
+  export type ShareDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+    /**
+     * Filter which Share to delete.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+
+  /**
+   * Share deleteMany
+   */
+  export type ShareDeleteManyArgs = {
+    /**
+     * Filter which Shares to delete
+     */
+    where?: ShareWhereInput
+  }
+
+
+  /**
+   * Share without action
+   */
+  export type ShareArgs = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ShareInclude | null
+  }
+
+
+
+  /**
+   * Model Group
+   */
+
+
+  export type AggregateGroup = {
+    _count: GroupCountAggregateOutputType | null
+    _avg: GroupAvgAggregateOutputType | null
+    _sum: GroupSumAggregateOutputType | null
+    _min: GroupMinAggregateOutputType | null
+    _max: GroupMaxAggregateOutputType | null
+  }
+
+  export type GroupAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type GroupSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type GroupMinAggregateOutputType = {
+    id: number | null
+    groupName: string | null
+    groupImage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupMaxAggregateOutputType = {
+    id: number | null
+    groupName: string | null
+    groupImage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupCountAggregateOutputType = {
+    id: number
+    groupName: number
+    groupImage: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GroupAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type GroupSumAggregateInputType = {
+    id?: true
+  }
+
+  export type GroupMinAggregateInputType = {
+    id?: true
+    groupName?: true
+    groupImage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupMaxAggregateInputType = {
+    id?: true
+    groupName?: true
+    groupImage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupCountAggregateInputType = {
+    id?: true
+    groupName?: true
+    groupImage?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GroupAggregateArgs = {
+    /**
+     * Filter which Group to aggregate.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: Enumerable<GroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Groups
+    **/
+    _count?: true | GroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupMaxAggregateInputType
+  }
+
+  export type GetGroupAggregateType<T extends GroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroup[P]>
+      : GetScalarType<T[P], AggregateGroup[P]>
+  }
+
+
+
+
+  export type GroupGroupByArgs = {
+    where?: GroupWhereInput
+    orderBy?: Enumerable<GroupOrderByWithAggregationInput>
+    by: GroupScalarFieldEnum[]
+    having?: GroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupCountAggregateInputType | true
+    _avg?: GroupAvgAggregateInputType
+    _sum?: GroupSumAggregateInputType
+    _min?: GroupMinAggregateInputType
+    _max?: GroupMaxAggregateInputType
+  }
+
+
+  export type GroupGroupByOutputType = {
+    id: number
+    groupName: string
+    groupImage: string
+    createdAt: Date
+    updatedAt: Date
+    _count: GroupCountAggregateOutputType | null
+    _avg: GroupAvgAggregateOutputType | null
+    _sum: GroupSumAggregateOutputType | null
+    _min: GroupMinAggregateOutputType | null
+    _max: GroupMaxAggregateOutputType | null
+  }
+
+  type GetGroupGroupByPayload<T extends GroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<GroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupSelect = {
+    id?: boolean
+    groupName?: boolean
+    groupImage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    GroupOnUser?: boolean | Group$GroupOnUserArgs
+    PostinGroup?: boolean | Group$PostinGroupArgs
+    _count?: boolean | GroupCountOutputTypeArgs
+  }
+
+
+  export type GroupInclude = {
+    GroupOnUser?: boolean | Group$GroupOnUserArgs
+    PostinGroup?: boolean | Group$PostinGroupArgs
+    _count?: boolean | GroupCountOutputTypeArgs
+  }
+
+  export type GroupGetPayload<S extends boolean | null | undefined | GroupArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Group :
+    S extends undefined ? never :
+    S extends { include: any } & (GroupArgs | GroupFindManyArgs)
+    ? Group  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['include'][P]>>  :
+        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['include'][P]>>  :
+        P extends '_count' ? GroupCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (GroupArgs | GroupFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['select'][P]>>  :
+        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['select'][P]>>  :
+        P extends '_count' ? GroupCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Group ? Group[P] : never
+  } 
+      : Group
+
+
+  type GroupCountArgs = 
+    Omit<GroupFindManyArgs, 'select' | 'include'> & {
+      select?: GroupCountAggregateInputType | true
+    }
+
+  export interface GroupDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Group that matches the filter.
+     * @param {GroupFindUniqueArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends GroupFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, GroupFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Group'> extends True ? Prisma__GroupClient<GroupGetPayload<T>> : Prisma__GroupClient<GroupGetPayload<T> | null, null>
+
+    /**
+     * Find one Group that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {GroupFindUniqueOrThrowArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends GroupFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, GroupFindUniqueOrThrowArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Find the first Group that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindFirstArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends GroupFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, GroupFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Group'> extends True ? Prisma__GroupClient<GroupGetPayload<T>> : Prisma__GroupClient<GroupGetPayload<T> | null, null>
+
+    /**
+     * Find the first Group that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindFirstOrThrowArgs} args - Arguments to find a Group
+     * @example
+     * // Get one Group
+     * const group = await prisma.group.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends GroupFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, GroupFindFirstOrThrowArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Find zero or more Groups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Groups
+     * const groups = await prisma.group.findMany()
+     * 
+     * // Get first 10 Groups
+     * const groups = await prisma.group.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupWithIdOnly = await prisma.group.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends GroupFindManyArgs>(
+      args?: SelectSubset<T, GroupFindManyArgs>
+    ): Prisma.PrismaPromise<Array<GroupGetPayload<T>>>
+
+    /**
+     * Create a Group.
+     * @param {GroupCreateArgs} args - Arguments to create a Group.
+     * @example
+     * // Create one Group
+     * const Group = await prisma.group.create({
+     *   data: {
+     *     // ... data to create a Group
+     *   }
+     * })
+     * 
+    **/
+    create<T extends GroupCreateArgs>(
+      args: SelectSubset<T, GroupCreateArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Create many Groups.
+     *     @param {GroupCreateManyArgs} args - Arguments to create many Groups.
+     *     @example
+     *     // Create many Groups
+     *     const group = await prisma.group.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends GroupCreateManyArgs>(
+      args?: SelectSubset<T, GroupCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Group.
+     * @param {GroupDeleteArgs} args - Arguments to delete one Group.
+     * @example
+     * // Delete one Group
+     * const Group = await prisma.group.delete({
+     *   where: {
+     *     // ... filter to delete one Group
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends GroupDeleteArgs>(
+      args: SelectSubset<T, GroupDeleteArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Update one Group.
+     * @param {GroupUpdateArgs} args - Arguments to update one Group.
+     * @example
+     * // Update one Group
+     * const group = await prisma.group.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends GroupUpdateArgs>(
+      args: SelectSubset<T, GroupUpdateArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Delete zero or more Groups.
+     * @param {GroupDeleteManyArgs} args - Arguments to filter Groups to delete.
+     * @example
+     * // Delete a few Groups
+     * const { count } = await prisma.group.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends GroupDeleteManyArgs>(
+      args?: SelectSubset<T, GroupDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Groups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Groups
+     * const group = await prisma.group.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends GroupUpdateManyArgs>(
+      args: SelectSubset<T, GroupUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Group.
+     * @param {GroupUpsertArgs} args - Arguments to update or create a Group.
+     * @example
+     * // Update or create a Group
+     * const group = await prisma.group.upsert({
+     *   create: {
+     *     // ... data to create a Group
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Group we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends GroupUpsertArgs>(
+      args: SelectSubset<T, GroupUpsertArgs>
+    ): Prisma__GroupClient<GroupGetPayload<T>>
+
+    /**
+     * Count the number of Groups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupCountArgs} args - Arguments to filter Groups to count.
+     * @example
+     * // Count the number of Groups
+     * const count = await prisma.group.count({
+     *   where: {
+     *     // ... the filter for the Groups we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupCountArgs>(
+      args?: Subset<T, GroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Group.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupAggregateArgs>(args: Subset<T, GroupAggregateArgs>): Prisma.PrismaPromise<GetGroupAggregateType<T>>
+
+    /**
+     * Group by Group.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupGroupByArgs['orderBy'] }
+        : { orderBy?: GroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Group.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__GroupClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    GroupOnUser<T extends Group$GroupOnUserArgs= {}>(args?: Subset<T, Group$GroupOnUserArgs>): Prisma.PrismaPromise<Array<GroupOnUserGetPayload<T>>| Null>;
+
+    PostinGroup<T extends Group$PostinGroupArgs= {}>(args?: Subset<T, Group$PostinGroupArgs>): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Group base type for findUnique actions
+   */
+  export type GroupFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+  /**
+   * Group findUnique
+   */
+  export interface GroupFindUniqueArgs extends GroupFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Group findUniqueOrThrow
+   */
+  export type GroupFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+
+  /**
+   * Group base type for findFirst actions
+   */
+  export type GroupFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: Enumerable<GroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Groups.
+     */
+    distinct?: Enumerable<GroupScalarFieldEnum>
+  }
+
+  /**
+   * Group findFirst
+   */
+  export interface GroupFindFirstArgs extends GroupFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Group findFirstOrThrow
+   */
+  export type GroupFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter, which Group to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: Enumerable<GroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Groups.
+     */
+    distinct?: Enumerable<GroupScalarFieldEnum>
+  }
+
+
+  /**
+   * Group findMany
+   */
+  export type GroupFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter, which Groups to fetch.
+     */
+    where?: GroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Groups to fetch.
+     */
+    orderBy?: Enumerable<GroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Groups.
+     */
+    cursor?: GroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Groups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Groups.
+     */
+    skip?: number
+    distinct?: Enumerable<GroupScalarFieldEnum>
+  }
+
+
+  /**
+   * Group create
+   */
+  export type GroupCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * The data needed to create a Group.
+     */
+    data: XOR<GroupCreateInput, GroupUncheckedCreateInput>
+  }
+
+
+  /**
+   * Group createMany
+   */
+  export type GroupCreateManyArgs = {
+    /**
+     * The data used to create many Groups.
+     */
+    data: Enumerable<GroupCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Group update
+   */
+  export type GroupUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * The data needed to update a Group.
+     */
+    data: XOR<GroupUpdateInput, GroupUncheckedUpdateInput>
+    /**
+     * Choose, which Group to update.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+
+  /**
+   * Group updateMany
+   */
+  export type GroupUpdateManyArgs = {
+    /**
+     * The data used to update Groups.
+     */
+    data: XOR<GroupUpdateManyMutationInput, GroupUncheckedUpdateManyInput>
+    /**
+     * Filter which Groups to update
+     */
+    where?: GroupWhereInput
+  }
+
+
+  /**
+   * Group upsert
+   */
+  export type GroupUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * The filter to search for the Group to update in case it exists.
+     */
+    where: GroupWhereUniqueInput
+    /**
+     * In case the Group found by the `where` argument doesn't exist, create a new Group with this data.
+     */
+    create: XOR<GroupCreateInput, GroupUncheckedCreateInput>
+    /**
+     * In case the Group was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupUpdateInput, GroupUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Group delete
+   */
+  export type GroupDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+    /**
+     * Filter which Group to delete.
+     */
+    where: GroupWhereUniqueInput
+  }
+
+
+  /**
+   * Group deleteMany
+   */
+  export type GroupDeleteManyArgs = {
+    /**
+     * Filter which Groups to delete
+     */
+    where?: GroupWhereInput
+  }
+
+
+  /**
+   * Group.GroupOnUser
+   */
+  export type Group$GroupOnUserArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    where?: GroupOnUserWhereInput
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    cursor?: GroupOnUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<GroupOnUserScalarFieldEnum>
+  }
+
+
+  /**
+   * Group.PostinGroup
+   */
+  export type Group$PostinGroupArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    where?: PostinGroupWhereInput
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    cursor?: PostinGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * Group without action
+   */
+  export type GroupArgs = {
+    /**
+     * Select specific fields to fetch from the Group
+     */
+    select?: GroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupInclude | null
+  }
+
+
+
+  /**
+   * Model GroupOnUser
+   */
+
+
+  export type AggregateGroupOnUser = {
+    _count: GroupOnUserCountAggregateOutputType | null
+    _avg: GroupOnUserAvgAggregateOutputType | null
+    _sum: GroupOnUserSumAggregateOutputType | null
+    _min: GroupOnUserMinAggregateOutputType | null
+    _max: GroupOnUserMaxAggregateOutputType | null
+  }
+
+  export type GroupOnUserAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    groupId: number | null
+  }
+
+  export type GroupOnUserSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    groupId: number | null
+  }
+
+  export type GroupOnUserMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    groupId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupOnUserMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    groupId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GroupOnUserCountAggregateOutputType = {
+    id: number
+    userId: number
+    groupId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GroupOnUserAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    groupId?: true
+  }
+
+  export type GroupOnUserSumAggregateInputType = {
+    id?: true
+    userId?: true
+    groupId?: true
+  }
+
+  export type GroupOnUserMinAggregateInputType = {
+    id?: true
+    userId?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupOnUserMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GroupOnUserCountAggregateInputType = {
+    id?: true
+    userId?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GroupOnUserAggregateArgs = {
+    /**
+     * Filter which GroupOnUser to aggregate.
+     */
+    where?: GroupOnUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupOnUsers to fetch.
+     */
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GroupOnUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupOnUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupOnUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GroupOnUsers
+    **/
+    _count?: true | GroupOnUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GroupOnUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GroupOnUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GroupOnUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GroupOnUserMaxAggregateInputType
+  }
+
+  export type GetGroupOnUserAggregateType<T extends GroupOnUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateGroupOnUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGroupOnUser[P]>
+      : GetScalarType<T[P], AggregateGroupOnUser[P]>
+  }
+
+
+
+
+  export type GroupOnUserGroupByArgs = {
+    where?: GroupOnUserWhereInput
+    orderBy?: Enumerable<GroupOnUserOrderByWithAggregationInput>
+    by: GroupOnUserScalarFieldEnum[]
+    having?: GroupOnUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GroupOnUserCountAggregateInputType | true
+    _avg?: GroupOnUserAvgAggregateInputType
+    _sum?: GroupOnUserSumAggregateInputType
+    _min?: GroupOnUserMinAggregateInputType
+    _max?: GroupOnUserMaxAggregateInputType
+  }
+
+
+  export type GroupOnUserGroupByOutputType = {
+    id: number
+    userId: number
+    groupId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: GroupOnUserCountAggregateOutputType | null
+    _avg: GroupOnUserAvgAggregateOutputType | null
+    _sum: GroupOnUserSumAggregateOutputType | null
+    _min: GroupOnUserMinAggregateOutputType | null
+    _max: GroupOnUserMaxAggregateOutputType | null
+  }
+
+  type GetGroupOnUserGroupByPayload<T extends GroupOnUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<GroupOnUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GroupOnUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GroupOnUserGroupByOutputType[P]>
+            : GetScalarType<T[P], GroupOnUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GroupOnUserSelect = {
+    id?: boolean
+    user?: boolean | FBUserArgs
+    userId?: boolean
+    group?: boolean | GroupArgs
+    groupId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type GroupOnUserInclude = {
+    user?: boolean | FBUserArgs
+    group?: boolean | GroupArgs
+  }
+
+  export type GroupOnUserGetPayload<S extends boolean | null | undefined | GroupOnUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? GroupOnUser :
+    S extends undefined ? never :
+    S extends { include: any } & (GroupOnUserArgs | GroupOnUserFindManyArgs)
+    ? GroupOnUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? FBUserGetPayload<S['include'][P]> :
+        P extends 'group' ? GroupGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (GroupOnUserArgs | GroupOnUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? FBUserGetPayload<S['select'][P]> :
+        P extends 'group' ? GroupGetPayload<S['select'][P]> :  P extends keyof GroupOnUser ? GroupOnUser[P] : never
+  } 
+      : GroupOnUser
+
+
+  type GroupOnUserCountArgs = 
+    Omit<GroupOnUserFindManyArgs, 'select' | 'include'> & {
+      select?: GroupOnUserCountAggregateInputType | true
+    }
+
+  export interface GroupOnUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one GroupOnUser that matches the filter.
+     * @param {GroupOnUserFindUniqueArgs} args - Arguments to find a GroupOnUser
+     * @example
+     * // Get one GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends GroupOnUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, GroupOnUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'GroupOnUser'> extends True ? Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>> : Prisma__GroupOnUserClient<GroupOnUserGetPayload<T> | null, null>
+
+    /**
+     * Find one GroupOnUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {GroupOnUserFindUniqueOrThrowArgs} args - Arguments to find a GroupOnUser
+     * @example
+     * // Get one GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends GroupOnUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, GroupOnUserFindUniqueOrThrowArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Find the first GroupOnUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserFindFirstArgs} args - Arguments to find a GroupOnUser
+     * @example
+     * // Get one GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends GroupOnUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, GroupOnUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'GroupOnUser'> extends True ? Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>> : Prisma__GroupOnUserClient<GroupOnUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first GroupOnUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserFindFirstOrThrowArgs} args - Arguments to find a GroupOnUser
+     * @example
+     * // Get one GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends GroupOnUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, GroupOnUserFindFirstOrThrowArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Find zero or more GroupOnUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GroupOnUsers
+     * const groupOnUsers = await prisma.groupOnUser.findMany()
+     * 
+     * // Get first 10 GroupOnUsers
+     * const groupOnUsers = await prisma.groupOnUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const groupOnUserWithIdOnly = await prisma.groupOnUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends GroupOnUserFindManyArgs>(
+      args?: SelectSubset<T, GroupOnUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<GroupOnUserGetPayload<T>>>
+
+    /**
+     * Create a GroupOnUser.
+     * @param {GroupOnUserCreateArgs} args - Arguments to create a GroupOnUser.
+     * @example
+     * // Create one GroupOnUser
+     * const GroupOnUser = await prisma.groupOnUser.create({
+     *   data: {
+     *     // ... data to create a GroupOnUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends GroupOnUserCreateArgs>(
+      args: SelectSubset<T, GroupOnUserCreateArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Create many GroupOnUsers.
+     *     @param {GroupOnUserCreateManyArgs} args - Arguments to create many GroupOnUsers.
+     *     @example
+     *     // Create many GroupOnUsers
+     *     const groupOnUser = await prisma.groupOnUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends GroupOnUserCreateManyArgs>(
+      args?: SelectSubset<T, GroupOnUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a GroupOnUser.
+     * @param {GroupOnUserDeleteArgs} args - Arguments to delete one GroupOnUser.
+     * @example
+     * // Delete one GroupOnUser
+     * const GroupOnUser = await prisma.groupOnUser.delete({
+     *   where: {
+     *     // ... filter to delete one GroupOnUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends GroupOnUserDeleteArgs>(
+      args: SelectSubset<T, GroupOnUserDeleteArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Update one GroupOnUser.
+     * @param {GroupOnUserUpdateArgs} args - Arguments to update one GroupOnUser.
+     * @example
+     * // Update one GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends GroupOnUserUpdateArgs>(
+      args: SelectSubset<T, GroupOnUserUpdateArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Delete zero or more GroupOnUsers.
+     * @param {GroupOnUserDeleteManyArgs} args - Arguments to filter GroupOnUsers to delete.
+     * @example
+     * // Delete a few GroupOnUsers
+     * const { count } = await prisma.groupOnUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends GroupOnUserDeleteManyArgs>(
+      args?: SelectSubset<T, GroupOnUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GroupOnUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GroupOnUsers
+     * const groupOnUser = await prisma.groupOnUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends GroupOnUserUpdateManyArgs>(
+      args: SelectSubset<T, GroupOnUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one GroupOnUser.
+     * @param {GroupOnUserUpsertArgs} args - Arguments to update or create a GroupOnUser.
+     * @example
+     * // Update or create a GroupOnUser
+     * const groupOnUser = await prisma.groupOnUser.upsert({
+     *   create: {
+     *     // ... data to create a GroupOnUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GroupOnUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends GroupOnUserUpsertArgs>(
+      args: SelectSubset<T, GroupOnUserUpsertArgs>
+    ): Prisma__GroupOnUserClient<GroupOnUserGetPayload<T>>
+
+    /**
+     * Count the number of GroupOnUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserCountArgs} args - Arguments to filter GroupOnUsers to count.
+     * @example
+     * // Count the number of GroupOnUsers
+     * const count = await prisma.groupOnUser.count({
+     *   where: {
+     *     // ... the filter for the GroupOnUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends GroupOnUserCountArgs>(
+      args?: Subset<T, GroupOnUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GroupOnUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GroupOnUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GroupOnUserAggregateArgs>(args: Subset<T, GroupOnUserAggregateArgs>): Prisma.PrismaPromise<GetGroupOnUserAggregateType<T>>
+
+    /**
+     * Group by GroupOnUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GroupOnUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GroupOnUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GroupOnUserGroupByArgs['orderBy'] }
+        : { orderBy?: GroupOnUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GroupOnUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGroupOnUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GroupOnUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__GroupOnUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    group<T extends GroupArgs= {}>(args?: Subset<T, GroupArgs>): Prisma__GroupClient<GroupGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * GroupOnUser base type for findUnique actions
+   */
+  export type GroupOnUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter, which GroupOnUser to fetch.
+     */
+    where: GroupOnUserWhereUniqueInput
+  }
+
+  /**
+   * GroupOnUser findUnique
+   */
+  export interface GroupOnUserFindUniqueArgs extends GroupOnUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * GroupOnUser findUniqueOrThrow
+   */
+  export type GroupOnUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter, which GroupOnUser to fetch.
+     */
+    where: GroupOnUserWhereUniqueInput
+  }
+
+
+  /**
+   * GroupOnUser base type for findFirst actions
+   */
+  export type GroupOnUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter, which GroupOnUser to fetch.
+     */
+    where?: GroupOnUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupOnUsers to fetch.
+     */
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupOnUsers.
+     */
+    cursor?: GroupOnUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupOnUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupOnUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupOnUsers.
+     */
+    distinct?: Enumerable<GroupOnUserScalarFieldEnum>
+  }
+
+  /**
+   * GroupOnUser findFirst
+   */
+  export interface GroupOnUserFindFirstArgs extends GroupOnUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * GroupOnUser findFirstOrThrow
+   */
+  export type GroupOnUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter, which GroupOnUser to fetch.
+     */
+    where?: GroupOnUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupOnUsers to fetch.
+     */
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GroupOnUsers.
+     */
+    cursor?: GroupOnUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupOnUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupOnUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GroupOnUsers.
+     */
+    distinct?: Enumerable<GroupOnUserScalarFieldEnum>
+  }
+
+
+  /**
+   * GroupOnUser findMany
+   */
+  export type GroupOnUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter, which GroupOnUsers to fetch.
+     */
+    where?: GroupOnUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GroupOnUsers to fetch.
+     */
+    orderBy?: Enumerable<GroupOnUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GroupOnUsers.
+     */
+    cursor?: GroupOnUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GroupOnUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GroupOnUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<GroupOnUserScalarFieldEnum>
+  }
+
+
+  /**
+   * GroupOnUser create
+   */
+  export type GroupOnUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * The data needed to create a GroupOnUser.
+     */
+    data: XOR<GroupOnUserCreateInput, GroupOnUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * GroupOnUser createMany
+   */
+  export type GroupOnUserCreateManyArgs = {
+    /**
+     * The data used to create many GroupOnUsers.
+     */
+    data: Enumerable<GroupOnUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * GroupOnUser update
+   */
+  export type GroupOnUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * The data needed to update a GroupOnUser.
+     */
+    data: XOR<GroupOnUserUpdateInput, GroupOnUserUncheckedUpdateInput>
+    /**
+     * Choose, which GroupOnUser to update.
+     */
+    where: GroupOnUserWhereUniqueInput
+  }
+
+
+  /**
+   * GroupOnUser updateMany
+   */
+  export type GroupOnUserUpdateManyArgs = {
+    /**
+     * The data used to update GroupOnUsers.
+     */
+    data: XOR<GroupOnUserUpdateManyMutationInput, GroupOnUserUncheckedUpdateManyInput>
+    /**
+     * Filter which GroupOnUsers to update
+     */
+    where?: GroupOnUserWhereInput
+  }
+
+
+  /**
+   * GroupOnUser upsert
+   */
+  export type GroupOnUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * The filter to search for the GroupOnUser to update in case it exists.
+     */
+    where: GroupOnUserWhereUniqueInput
+    /**
+     * In case the GroupOnUser found by the `where` argument doesn't exist, create a new GroupOnUser with this data.
+     */
+    create: XOR<GroupOnUserCreateInput, GroupOnUserUncheckedCreateInput>
+    /**
+     * In case the GroupOnUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GroupOnUserUpdateInput, GroupOnUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * GroupOnUser delete
+   */
+  export type GroupOnUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+    /**
+     * Filter which GroupOnUser to delete.
+     */
+    where: GroupOnUserWhereUniqueInput
+  }
+
+
+  /**
+   * GroupOnUser deleteMany
+   */
+  export type GroupOnUserDeleteManyArgs = {
+    /**
+     * Filter which GroupOnUsers to delete
+     */
+    where?: GroupOnUserWhereInput
+  }
+
+
+  /**
+   * GroupOnUser without action
+   */
+  export type GroupOnUserArgs = {
+    /**
+     * Select specific fields to fetch from the GroupOnUser
+     */
+    select?: GroupOnUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: GroupOnUserInclude | null
+  }
+
+
+
+  /**
+   * Model PostinGroup
+   */
+
+
+  export type AggregatePostinGroup = {
+    _count: PostinGroupCountAggregateOutputType | null
+    _avg: PostinGroupAvgAggregateOutputType | null
+    _sum: PostinGroupSumAggregateOutputType | null
+    _min: PostinGroupMinAggregateOutputType | null
+    _max: PostinGroupMaxAggregateOutputType | null
+  }
+
+  export type PostinGroupAvgAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    postId: number | null
+  }
+
+  export type PostinGroupSumAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    postId: number | null
+  }
+
+  export type PostinGroupMinAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PostinGroupMaxAggregateOutputType = {
+    id: number | null
+    groupId: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PostinGroupCountAggregateOutputType = {
+    id: number
+    groupId: number
+    postId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PostinGroupAvgAggregateInputType = {
+    id?: true
+    groupId?: true
+    postId?: true
+  }
+
+  export type PostinGroupSumAggregateInputType = {
+    id?: true
+    groupId?: true
+    postId?: true
+  }
+
+  export type PostinGroupMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PostinGroupMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PostinGroupCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PostinGroupAggregateArgs = {
+    /**
+     * Filter which PostinGroup to aggregate.
+     */
+    where?: PostinGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinGroups to fetch.
+     */
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PostinGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PostinGroups
+    **/
+    _count?: true | PostinGroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PostinGroupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PostinGroupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PostinGroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PostinGroupMaxAggregateInputType
+  }
+
+  export type GetPostinGroupAggregateType<T extends PostinGroupAggregateArgs> = {
+        [P in keyof T & keyof AggregatePostinGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePostinGroup[P]>
+      : GetScalarType<T[P], AggregatePostinGroup[P]>
+  }
+
+
+
+
+  export type PostinGroupGroupByArgs = {
+    where?: PostinGroupWhereInput
+    orderBy?: Enumerable<PostinGroupOrderByWithAggregationInput>
+    by: PostinGroupScalarFieldEnum[]
+    having?: PostinGroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PostinGroupCountAggregateInputType | true
+    _avg?: PostinGroupAvgAggregateInputType
+    _sum?: PostinGroupSumAggregateInputType
+    _min?: PostinGroupMinAggregateInputType
+    _max?: PostinGroupMaxAggregateInputType
+  }
+
+
+  export type PostinGroupGroupByOutputType = {
+    id: number
+    groupId: number
+    postId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: PostinGroupCountAggregateOutputType | null
+    _avg: PostinGroupAvgAggregateOutputType | null
+    _sum: PostinGroupSumAggregateOutputType | null
+    _min: PostinGroupMinAggregateOutputType | null
+    _max: PostinGroupMaxAggregateOutputType | null
+  }
+
+  type GetPostinGroupGroupByPayload<T extends PostinGroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<PostinGroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PostinGroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PostinGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], PostinGroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PostinGroupSelect = {
+    id?: boolean
+    group?: boolean | GroupArgs
+    groupId?: boolean
+    post?: boolean | FBPostArgs
+    postId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type PostinGroupInclude = {
+    group?: boolean | GroupArgs
+    post?: boolean | FBPostArgs
+  }
+
+  export type PostinGroupGetPayload<S extends boolean | null | undefined | PostinGroupArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? PostinGroup :
+    S extends undefined ? never :
+    S extends { include: any } & (PostinGroupArgs | PostinGroupFindManyArgs)
+    ? PostinGroup  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'group' ? GroupGetPayload<S['include'][P]> :
+        P extends 'post' ? FBPostGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (PostinGroupArgs | PostinGroupFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'group' ? GroupGetPayload<S['select'][P]> :
+        P extends 'post' ? FBPostGetPayload<S['select'][P]> :  P extends keyof PostinGroup ? PostinGroup[P] : never
+  } 
+      : PostinGroup
+
+
+  type PostinGroupCountArgs = 
+    Omit<PostinGroupFindManyArgs, 'select' | 'include'> & {
+      select?: PostinGroupCountAggregateInputType | true
+    }
+
+  export interface PostinGroupDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one PostinGroup that matches the filter.
+     * @param {PostinGroupFindUniqueArgs} args - Arguments to find a PostinGroup
+     * @example
+     * // Get one PostinGroup
+     * const postinGroup = await prisma.postinGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends PostinGroupFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, PostinGroupFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'PostinGroup'> extends True ? Prisma__PostinGroupClient<PostinGroupGetPayload<T>> : Prisma__PostinGroupClient<PostinGroupGetPayload<T> | null, null>
+
+    /**
+     * Find one PostinGroup that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {PostinGroupFindUniqueOrThrowArgs} args - Arguments to find a PostinGroup
+     * @example
+     * // Get one PostinGroup
+     * const postinGroup = await prisma.postinGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends PostinGroupFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, PostinGroupFindUniqueOrThrowArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Find the first PostinGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupFindFirstArgs} args - Arguments to find a PostinGroup
+     * @example
+     * // Get one PostinGroup
+     * const postinGroup = await prisma.postinGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends PostinGroupFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, PostinGroupFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'PostinGroup'> extends True ? Prisma__PostinGroupClient<PostinGroupGetPayload<T>> : Prisma__PostinGroupClient<PostinGroupGetPayload<T> | null, null>
+
+    /**
+     * Find the first PostinGroup that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupFindFirstOrThrowArgs} args - Arguments to find a PostinGroup
+     * @example
+     * // Get one PostinGroup
+     * const postinGroup = await prisma.postinGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends PostinGroupFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, PostinGroupFindFirstOrThrowArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Find zero or more PostinGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PostinGroups
+     * const postinGroups = await prisma.postinGroup.findMany()
+     * 
+     * // Get first 10 PostinGroups
+     * const postinGroups = await prisma.postinGroup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const postinGroupWithIdOnly = await prisma.postinGroup.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends PostinGroupFindManyArgs>(
+      args?: SelectSubset<T, PostinGroupFindManyArgs>
+    ): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>>
+
+    /**
+     * Create a PostinGroup.
+     * @param {PostinGroupCreateArgs} args - Arguments to create a PostinGroup.
+     * @example
+     * // Create one PostinGroup
+     * const PostinGroup = await prisma.postinGroup.create({
+     *   data: {
+     *     // ... data to create a PostinGroup
+     *   }
+     * })
+     * 
+    **/
+    create<T extends PostinGroupCreateArgs>(
+      args: SelectSubset<T, PostinGroupCreateArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Create many PostinGroups.
+     *     @param {PostinGroupCreateManyArgs} args - Arguments to create many PostinGroups.
+     *     @example
+     *     // Create many PostinGroups
+     *     const postinGroup = await prisma.postinGroup.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends PostinGroupCreateManyArgs>(
+      args?: SelectSubset<T, PostinGroupCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PostinGroup.
+     * @param {PostinGroupDeleteArgs} args - Arguments to delete one PostinGroup.
+     * @example
+     * // Delete one PostinGroup
+     * const PostinGroup = await prisma.postinGroup.delete({
+     *   where: {
+     *     // ... filter to delete one PostinGroup
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends PostinGroupDeleteArgs>(
+      args: SelectSubset<T, PostinGroupDeleteArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Update one PostinGroup.
+     * @param {PostinGroupUpdateArgs} args - Arguments to update one PostinGroup.
+     * @example
+     * // Update one PostinGroup
+     * const postinGroup = await prisma.postinGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends PostinGroupUpdateArgs>(
+      args: SelectSubset<T, PostinGroupUpdateArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Delete zero or more PostinGroups.
+     * @param {PostinGroupDeleteManyArgs} args - Arguments to filter PostinGroups to delete.
+     * @example
+     * // Delete a few PostinGroups
+     * const { count } = await prisma.postinGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends PostinGroupDeleteManyArgs>(
+      args?: SelectSubset<T, PostinGroupDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PostinGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PostinGroups
+     * const postinGroup = await prisma.postinGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends PostinGroupUpdateManyArgs>(
+      args: SelectSubset<T, PostinGroupUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PostinGroup.
+     * @param {PostinGroupUpsertArgs} args - Arguments to update or create a PostinGroup.
+     * @example
+     * // Update or create a PostinGroup
+     * const postinGroup = await prisma.postinGroup.upsert({
+     *   create: {
+     *     // ... data to create a PostinGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PostinGroup we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends PostinGroupUpsertArgs>(
+      args: SelectSubset<T, PostinGroupUpsertArgs>
+    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
+
+    /**
+     * Count the number of PostinGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupCountArgs} args - Arguments to filter PostinGroups to count.
+     * @example
+     * // Count the number of PostinGroups
+     * const count = await prisma.postinGroup.count({
+     *   where: {
+     *     // ... the filter for the PostinGroups we want to count
+     *   }
+     * })
+    **/
+    count<T extends PostinGroupCountArgs>(
+      args?: Subset<T, PostinGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PostinGroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PostinGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PostinGroupAggregateArgs>(args: Subset<T, PostinGroupAggregateArgs>): Prisma.PrismaPromise<GetPostinGroupAggregateType<T>>
+
+    /**
+     * Group by PostinGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PostinGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PostinGroupGroupByArgs['orderBy'] }
+        : { orderBy?: PostinGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PostinGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostinGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PostinGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__PostinGroupClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    group<T extends GroupArgs= {}>(args?: Subset<T, GroupArgs>): Prisma__GroupClient<GroupGetPayload<T> | Null>;
+
+    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * PostinGroup base type for findUnique actions
+   */
+  export type PostinGroupFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter, which PostinGroup to fetch.
+     */
+    where: PostinGroupWhereUniqueInput
+  }
+
+  /**
+   * PostinGroup findUnique
+   */
+  export interface PostinGroupFindUniqueArgs extends PostinGroupFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * PostinGroup findUniqueOrThrow
+   */
+  export type PostinGroupFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter, which PostinGroup to fetch.
+     */
+    where: PostinGroupWhereUniqueInput
+  }
+
+
+  /**
+   * PostinGroup base type for findFirst actions
+   */
+  export type PostinGroupFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter, which PostinGroup to fetch.
+     */
+    where?: PostinGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinGroups to fetch.
+     */
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostinGroups.
+     */
+    cursor?: PostinGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostinGroups.
+     */
+    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+  }
+
+  /**
+   * PostinGroup findFirst
+   */
+  export interface PostinGroupFindFirstArgs extends PostinGroupFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * PostinGroup findFirstOrThrow
+   */
+  export type PostinGroupFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter, which PostinGroup to fetch.
+     */
+    where?: PostinGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinGroups to fetch.
+     */
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostinGroups.
+     */
+    cursor?: PostinGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostinGroups.
+     */
+    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * PostinGroup findMany
+   */
+  export type PostinGroupFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter, which PostinGroups to fetch.
+     */
+    where?: PostinGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinGroups to fetch.
+     */
+    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PostinGroups.
+     */
+    cursor?: PostinGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinGroups.
+     */
+    skip?: number
+    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+  }
+
+
+  /**
+   * PostinGroup create
+   */
+  export type PostinGroupCreateArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * The data needed to create a PostinGroup.
+     */
+    data: XOR<PostinGroupCreateInput, PostinGroupUncheckedCreateInput>
+  }
+
+
+  /**
+   * PostinGroup createMany
+   */
+  export type PostinGroupCreateManyArgs = {
+    /**
+     * The data used to create many PostinGroups.
+     */
+    data: Enumerable<PostinGroupCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * PostinGroup update
+   */
+  export type PostinGroupUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * The data needed to update a PostinGroup.
+     */
+    data: XOR<PostinGroupUpdateInput, PostinGroupUncheckedUpdateInput>
+    /**
+     * Choose, which PostinGroup to update.
+     */
+    where: PostinGroupWhereUniqueInput
+  }
+
+
+  /**
+   * PostinGroup updateMany
+   */
+  export type PostinGroupUpdateManyArgs = {
+    /**
+     * The data used to update PostinGroups.
+     */
+    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which PostinGroups to update
+     */
+    where?: PostinGroupWhereInput
+  }
+
+
+  /**
+   * PostinGroup upsert
+   */
+  export type PostinGroupUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * The filter to search for the PostinGroup to update in case it exists.
+     */
+    where: PostinGroupWhereUniqueInput
+    /**
+     * In case the PostinGroup found by the `where` argument doesn't exist, create a new PostinGroup with this data.
+     */
+    create: XOR<PostinGroupCreateInput, PostinGroupUncheckedCreateInput>
+    /**
+     * In case the PostinGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PostinGroupUpdateInput, PostinGroupUncheckedUpdateInput>
+  }
+
+
+  /**
+   * PostinGroup delete
+   */
+  export type PostinGroupDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+    /**
+     * Filter which PostinGroup to delete.
+     */
+    where: PostinGroupWhereUniqueInput
+  }
+
+
+  /**
+   * PostinGroup deleteMany
+   */
+  export type PostinGroupDeleteManyArgs = {
+    /**
+     * Filter which PostinGroups to delete
+     */
+    where?: PostinGroupWhereInput
+  }
+
+
+  /**
+   * PostinGroup without action
+   */
+  export type PostinGroupArgs = {
+    /**
+     * Select specific fields to fetch from the PostinGroup
+     */
+    select?: PostinGroupSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinGroupInclude | null
+  }
+
+
+
+  /**
+   * Model PostinProfile
+   */
+
+
+  export type AggregatePostinProfile = {
+    _count: PostinProfileCountAggregateOutputType | null
+    _avg: PostinProfileAvgAggregateOutputType | null
+    _sum: PostinProfileSumAggregateOutputType | null
+    _min: PostinProfileMinAggregateOutputType | null
+    _max: PostinProfileMaxAggregateOutputType | null
+  }
+
+  export type PostinProfileAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+  }
+
+  export type PostinProfileSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+  }
+
+  export type PostinProfileMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PostinProfileMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PostinProfileCountAggregateOutputType = {
+    id: number
+    postId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PostinProfileAvgAggregateInputType = {
+    id?: true
+    postId?: true
+  }
+
+  export type PostinProfileSumAggregateInputType = {
+    id?: true
+    postId?: true
+  }
+
+  export type PostinProfileMinAggregateInputType = {
+    id?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PostinProfileMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PostinProfileCountAggregateInputType = {
+    id?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PostinProfileAggregateArgs = {
+    /**
+     * Filter which PostinProfile to aggregate.
+     */
+    where?: PostinProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinProfiles to fetch.
+     */
+    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PostinProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PostinProfiles
+    **/
+    _count?: true | PostinProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PostinProfileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PostinProfileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PostinProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PostinProfileMaxAggregateInputType
+  }
+
+  export type GetPostinProfileAggregateType<T extends PostinProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregatePostinProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePostinProfile[P]>
+      : GetScalarType<T[P], AggregatePostinProfile[P]>
+  }
+
+
+
+
+  export type PostinProfileGroupByArgs = {
+    where?: PostinProfileWhereInput
+    orderBy?: Enumerable<PostinProfileOrderByWithAggregationInput>
+    by: PostinProfileScalarFieldEnum[]
+    having?: PostinProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PostinProfileCountAggregateInputType | true
+    _avg?: PostinProfileAvgAggregateInputType
+    _sum?: PostinProfileSumAggregateInputType
+    _min?: PostinProfileMinAggregateInputType
+    _max?: PostinProfileMaxAggregateInputType
+  }
+
+
+  export type PostinProfileGroupByOutputType = {
+    id: number
+    postId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: PostinProfileCountAggregateOutputType | null
+    _avg: PostinProfileAvgAggregateOutputType | null
+    _sum: PostinProfileSumAggregateOutputType | null
+    _min: PostinProfileMinAggregateOutputType | null
+    _max: PostinProfileMaxAggregateOutputType | null
+  }
+
+  type GetPostinProfileGroupByPayload<T extends PostinProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<PostinProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PostinProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PostinProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], PostinProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PostinProfileSelect = {
+    id?: boolean
+    post?: boolean | FBPostArgs
+    postId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type PostinProfileInclude = {
+    post?: boolean | FBPostArgs
+  }
+
+  export type PostinProfileGetPayload<S extends boolean | null | undefined | PostinProfileArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? PostinProfile :
+    S extends undefined ? never :
+    S extends { include: any } & (PostinProfileArgs | PostinProfileFindManyArgs)
+    ? PostinProfile  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? FBPostGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (PostinProfileArgs | PostinProfileFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? FBPostGetPayload<S['select'][P]> :  P extends keyof PostinProfile ? PostinProfile[P] : never
+  } 
+      : PostinProfile
+
+
+  type PostinProfileCountArgs = 
+    Omit<PostinProfileFindManyArgs, 'select' | 'include'> & {
+      select?: PostinProfileCountAggregateInputType | true
+    }
+
+  export interface PostinProfileDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one PostinProfile that matches the filter.
+     * @param {PostinProfileFindUniqueArgs} args - Arguments to find a PostinProfile
+     * @example
+     * // Get one PostinProfile
+     * const postinProfile = await prisma.postinProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends PostinProfileFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, PostinProfileFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'PostinProfile'> extends True ? Prisma__PostinProfileClient<PostinProfileGetPayload<T>> : Prisma__PostinProfileClient<PostinProfileGetPayload<T> | null, null>
+
+    /**
+     * Find one PostinProfile that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {PostinProfileFindUniqueOrThrowArgs} args - Arguments to find a PostinProfile
+     * @example
+     * // Get one PostinProfile
+     * const postinProfile = await prisma.postinProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends PostinProfileFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, PostinProfileFindUniqueOrThrowArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Find the first PostinProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileFindFirstArgs} args - Arguments to find a PostinProfile
+     * @example
+     * // Get one PostinProfile
+     * const postinProfile = await prisma.postinProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends PostinProfileFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, PostinProfileFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'PostinProfile'> extends True ? Prisma__PostinProfileClient<PostinProfileGetPayload<T>> : Prisma__PostinProfileClient<PostinProfileGetPayload<T> | null, null>
+
+    /**
+     * Find the first PostinProfile that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileFindFirstOrThrowArgs} args - Arguments to find a PostinProfile
+     * @example
+     * // Get one PostinProfile
+     * const postinProfile = await prisma.postinProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends PostinProfileFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, PostinProfileFindFirstOrThrowArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Find zero or more PostinProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PostinProfiles
+     * const postinProfiles = await prisma.postinProfile.findMany()
+     * 
+     * // Get first 10 PostinProfiles
+     * const postinProfiles = await prisma.postinProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const postinProfileWithIdOnly = await prisma.postinProfile.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends PostinProfileFindManyArgs>(
+      args?: SelectSubset<T, PostinProfileFindManyArgs>
+    ): Prisma.PrismaPromise<Array<PostinProfileGetPayload<T>>>
+
+    /**
+     * Create a PostinProfile.
+     * @param {PostinProfileCreateArgs} args - Arguments to create a PostinProfile.
+     * @example
+     * // Create one PostinProfile
+     * const PostinProfile = await prisma.postinProfile.create({
+     *   data: {
+     *     // ... data to create a PostinProfile
+     *   }
+     * })
+     * 
+    **/
+    create<T extends PostinProfileCreateArgs>(
+      args: SelectSubset<T, PostinProfileCreateArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Create many PostinProfiles.
+     *     @param {PostinProfileCreateManyArgs} args - Arguments to create many PostinProfiles.
+     *     @example
+     *     // Create many PostinProfiles
+     *     const postinProfile = await prisma.postinProfile.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends PostinProfileCreateManyArgs>(
+      args?: SelectSubset<T, PostinProfileCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PostinProfile.
+     * @param {PostinProfileDeleteArgs} args - Arguments to delete one PostinProfile.
+     * @example
+     * // Delete one PostinProfile
+     * const PostinProfile = await prisma.postinProfile.delete({
+     *   where: {
+     *     // ... filter to delete one PostinProfile
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends PostinProfileDeleteArgs>(
+      args: SelectSubset<T, PostinProfileDeleteArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Update one PostinProfile.
+     * @param {PostinProfileUpdateArgs} args - Arguments to update one PostinProfile.
+     * @example
+     * // Update one PostinProfile
+     * const postinProfile = await prisma.postinProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends PostinProfileUpdateArgs>(
+      args: SelectSubset<T, PostinProfileUpdateArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Delete zero or more PostinProfiles.
+     * @param {PostinProfileDeleteManyArgs} args - Arguments to filter PostinProfiles to delete.
+     * @example
+     * // Delete a few PostinProfiles
+     * const { count } = await prisma.postinProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends PostinProfileDeleteManyArgs>(
+      args?: SelectSubset<T, PostinProfileDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PostinProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PostinProfiles
+     * const postinProfile = await prisma.postinProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends PostinProfileUpdateManyArgs>(
+      args: SelectSubset<T, PostinProfileUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PostinProfile.
+     * @param {PostinProfileUpsertArgs} args - Arguments to update or create a PostinProfile.
+     * @example
+     * // Update or create a PostinProfile
+     * const postinProfile = await prisma.postinProfile.upsert({
+     *   create: {
+     *     // ... data to create a PostinProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PostinProfile we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends PostinProfileUpsertArgs>(
+      args: SelectSubset<T, PostinProfileUpsertArgs>
+    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
+
+    /**
+     * Count the number of PostinProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileCountArgs} args - Arguments to filter PostinProfiles to count.
+     * @example
+     * // Count the number of PostinProfiles
+     * const count = await prisma.postinProfile.count({
+     *   where: {
+     *     // ... the filter for the PostinProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends PostinProfileCountArgs>(
+      args?: Subset<T, PostinProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PostinProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PostinProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PostinProfileAggregateArgs>(args: Subset<T, PostinProfileAggregateArgs>): Prisma.PrismaPromise<GetPostinProfileAggregateType<T>>
+
+    /**
+     * Group by PostinProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostinProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PostinProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PostinProfileGroupByArgs['orderBy'] }
+        : { orderBy?: PostinProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PostinProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostinProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PostinProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__PostinProfileClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * PostinProfile base type for findUnique actions
+   */
+  export type PostinProfileFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter, which PostinProfile to fetch.
+     */
+    where: PostinProfileWhereUniqueInput
+  }
+
+  /**
+   * PostinProfile findUnique
+   */
+  export interface PostinProfileFindUniqueArgs extends PostinProfileFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * PostinProfile findUniqueOrThrow
+   */
+  export type PostinProfileFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter, which PostinProfile to fetch.
+     */
+    where: PostinProfileWhereUniqueInput
+  }
+
+
+  /**
+   * PostinProfile base type for findFirst actions
+   */
+  export type PostinProfileFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter, which PostinProfile to fetch.
+     */
+    where?: PostinProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinProfiles to fetch.
+     */
+    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostinProfiles.
+     */
+    cursor?: PostinProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostinProfiles.
+     */
+    distinct?: Enumerable<PostinProfileScalarFieldEnum>
+  }
+
+  /**
+   * PostinProfile findFirst
+   */
+  export interface PostinProfileFindFirstArgs extends PostinProfileFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * PostinProfile findFirstOrThrow
+   */
+  export type PostinProfileFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter, which PostinProfile to fetch.
+     */
+    where?: PostinProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinProfiles to fetch.
+     */
+    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostinProfiles.
+     */
+    cursor?: PostinProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostinProfiles.
+     */
+    distinct?: Enumerable<PostinProfileScalarFieldEnum>
+  }
+
+
+  /**
+   * PostinProfile findMany
+   */
+  export type PostinProfileFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter, which PostinProfiles to fetch.
+     */
+    where?: PostinProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostinProfiles to fetch.
+     */
+    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PostinProfiles.
+     */
+    cursor?: PostinProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostinProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostinProfiles.
+     */
+    skip?: number
+    distinct?: Enumerable<PostinProfileScalarFieldEnum>
+  }
+
+
+  /**
+   * PostinProfile create
+   */
+  export type PostinProfileCreateArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * The data needed to create a PostinProfile.
+     */
+    data: XOR<PostinProfileCreateInput, PostinProfileUncheckedCreateInput>
+  }
+
+
+  /**
+   * PostinProfile createMany
+   */
+  export type PostinProfileCreateManyArgs = {
+    /**
+     * The data used to create many PostinProfiles.
+     */
+    data: Enumerable<PostinProfileCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * PostinProfile update
+   */
+  export type PostinProfileUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * The data needed to update a PostinProfile.
+     */
+    data: XOR<PostinProfileUpdateInput, PostinProfileUncheckedUpdateInput>
+    /**
+     * Choose, which PostinProfile to update.
+     */
+    where: PostinProfileWhereUniqueInput
+  }
+
+
+  /**
+   * PostinProfile updateMany
+   */
+  export type PostinProfileUpdateManyArgs = {
+    /**
+     * The data used to update PostinProfiles.
+     */
+    data: XOR<PostinProfileUpdateManyMutationInput, PostinProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which PostinProfiles to update
+     */
+    where?: PostinProfileWhereInput
+  }
+
+
+  /**
+   * PostinProfile upsert
+   */
+  export type PostinProfileUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * The filter to search for the PostinProfile to update in case it exists.
+     */
+    where: PostinProfileWhereUniqueInput
+    /**
+     * In case the PostinProfile found by the `where` argument doesn't exist, create a new PostinProfile with this data.
+     */
+    create: XOR<PostinProfileCreateInput, PostinProfileUncheckedCreateInput>
+    /**
+     * In case the PostinProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PostinProfileUpdateInput, PostinProfileUncheckedUpdateInput>
+  }
+
+
+  /**
+   * PostinProfile delete
+   */
+  export type PostinProfileDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
+    /**
+     * Filter which PostinProfile to delete.
+     */
+    where: PostinProfileWhereUniqueInput
+  }
+
+
+  /**
+   * PostinProfile deleteMany
+   */
+  export type PostinProfileDeleteManyArgs = {
+    /**
+     * Filter which PostinProfiles to delete
+     */
+    where?: PostinProfileWhereInput
+  }
+
+
+  /**
+   * PostinProfile without action
+   */
+  export type PostinProfileArgs = {
+    /**
+     * Select specific fields to fetch from the PostinProfile
+     */
+    select?: PostinProfileSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PostinProfileInclude | null
   }
 
 
@@ -19761,6 +31421,18 @@ export namespace Prisma {
   export type BinKitchenOrderScalarFieldEnum = (typeof BinKitchenOrderScalarFieldEnum)[keyof typeof BinKitchenOrderScalarFieldEnum]
 
 
+  export const CommentScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    commentDetail: 'commentDetail',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
   export const DirectMsgScalarFieldEnum: {
     id: 'id',
     fromUserId: 'fromUserId',
@@ -19771,6 +31443,31 @@ export namespace Prisma {
   };
 
   export type DirectMsgScalarFieldEnum = (typeof DirectMsgScalarFieldEnum)[keyof typeof DirectMsgScalarFieldEnum]
+
+
+  export const FBPostScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    postDetail: 'postDetail',
+    image: 'image',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FBPostScalarFieldEnum = (typeof FBPostScalarFieldEnum)[keyof typeof FBPostScalarFieldEnum]
+
+
+  export const FBUserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    profileImage: 'profileImage',
+    coverImage: 'coverImage',
+    bio: 'bio',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FBUserScalarFieldEnum = (typeof FBUserScalarFieldEnum)[keyof typeof FBUserScalarFieldEnum]
 
 
   export const FollowingScalarFieldEnum: {
@@ -19784,6 +31481,39 @@ export namespace Prisma {
   export type FollowingScalarFieldEnum = (typeof FollowingScalarFieldEnum)[keyof typeof FollowingScalarFieldEnum]
 
 
+  export const FriendsScalarFieldEnum: {
+    id: 'id',
+    fromUserId: 'fromUserId',
+    toUserId: 'toUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FriendsScalarFieldEnum = (typeof FriendsScalarFieldEnum)[keyof typeof FriendsScalarFieldEnum]
+
+
+  export const GroupOnUserScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    groupId: 'groupId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GroupOnUserScalarFieldEnum = (typeof GroupOnUserScalarFieldEnum)[keyof typeof GroupOnUserScalarFieldEnum]
+
+
+  export const GroupScalarFieldEnum: {
+    id: 'id',
+    groupName: 'groupName',
+    groupImage: 'groupImage',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
   export const HashtagScalarFieldEnum: {
     id: 'id',
     hashtag: 'hashtag',
@@ -19792,6 +31522,18 @@ export namespace Prisma {
   };
 
   export type HashtagScalarFieldEnum = (typeof HashtagScalarFieldEnum)[keyof typeof HashtagScalarFieldEnum]
+
+
+  export const LikeScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    userId: 'userId',
+    likeType: 'likeType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
 
 
   export const PostOnHashtagScalarFieldEnum: {
@@ -19816,6 +31558,27 @@ export namespace Prisma {
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
+  export const PostinGroupScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    postId: 'postId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PostinGroupScalarFieldEnum = (typeof PostinGroupScalarFieldEnum)[keyof typeof PostinGroupScalarFieldEnum]
+
+
+  export const PostinProfileScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PostinProfileScalarFieldEnum = (typeof PostinProfileScalarFieldEnum)[keyof typeof PostinProfileScalarFieldEnum]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -19836,12 +31599,36 @@ export namespace Prisma {
   export type ReplyScalarFieldEnum = (typeof ReplyScalarFieldEnum)[keyof typeof ReplyScalarFieldEnum]
 
 
+  export const ShareScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    userId: 'userId',
+    shareStatus: 'shareStatus',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ShareScalarFieldEnum = (typeof ShareScalarFieldEnum)[keyof typeof ShareScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const SubCommentScalarFieldEnum: {
+    id: 'id',
+    commentId: 'commentId',
+    subCommentDetail: 'subCommentDetail',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SubCommentScalarFieldEnum = (typeof SubCommentScalarFieldEnum)[keyof typeof SubCommentScalarFieldEnum]
 
 
   export const TodoListScalarFieldEnum: {
@@ -20158,6 +31945,611 @@ export namespace Prisma {
     orderId?: IntNullableWithAggregatesFilter | number | null
     quantity?: IntWithAggregatesFilter | number
     totalPrice?: FloatWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FBUserWhereInput = {
+    AND?: Enumerable<FBUserWhereInput>
+    OR?: Enumerable<FBUserWhereInput>
+    NOT?: Enumerable<FBUserWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    bio?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    fromFriends?: FriendsListRelationFilter
+    toFriends?: FriendsListRelationFilter
+    Post?: FBPostListRelationFilter
+    Comment?: CommentListRelationFilter
+    SubComment?: SubCommentListRelationFilter
+    GroupOnUser?: GroupOnUserListRelationFilter
+    Like?: LikeListRelationFilter
+    Share?: ShareListRelationFilter
+  }
+
+  export type FBUserOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fromFriends?: FriendsOrderByRelationAggregateInput
+    toFriends?: FriendsOrderByRelationAggregateInput
+    Post?: FBPostOrderByRelationAggregateInput
+    Comment?: CommentOrderByRelationAggregateInput
+    SubComment?: SubCommentOrderByRelationAggregateInput
+    GroupOnUser?: GroupOnUserOrderByRelationAggregateInput
+    Like?: LikeOrderByRelationAggregateInput
+    Share?: ShareOrderByRelationAggregateInput
+  }
+
+  export type FBUserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FBUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FBUserCountOrderByAggregateInput
+    _avg?: FBUserAvgOrderByAggregateInput
+    _max?: FBUserMaxOrderByAggregateInput
+    _min?: FBUserMinOrderByAggregateInput
+    _sum?: FBUserSumOrderByAggregateInput
+  }
+
+  export type FBUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FBUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FBUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FBUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    profileImage?: StringWithAggregatesFilter | string
+    coverImage?: StringWithAggregatesFilter | string
+    bio?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FriendsWhereInput = {
+    AND?: Enumerable<FriendsWhereInput>
+    OR?: Enumerable<FriendsWhereInput>
+    NOT?: Enumerable<FriendsWhereInput>
+    id?: IntFilter | number
+    from?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    fromUserId?: IntFilter | number
+    to?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    toUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FriendsOrderByWithRelationInput = {
+    id?: SortOrder
+    from?: FBUserOrderByWithRelationInput
+    fromUserId?: SortOrder
+    to?: FBUserOrderByWithRelationInput
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FriendsWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FriendsOrderByWithAggregationInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FriendsCountOrderByAggregateInput
+    _avg?: FriendsAvgOrderByAggregateInput
+    _max?: FriendsMaxOrderByAggregateInput
+    _min?: FriendsMinOrderByAggregateInput
+    _sum?: FriendsSumOrderByAggregateInput
+  }
+
+  export type FriendsScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FriendsScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FriendsScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FriendsScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    fromUserId?: IntWithAggregatesFilter | number
+    toUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type FBPostWhereInput = {
+    AND?: Enumerable<FBPostWhereInput>
+    OR?: Enumerable<FBPostWhereInput>
+    NOT?: Enumerable<FBPostWhereInput>
+    id?: IntFilter | number
+    user?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    postDetail?: StringFilter | string
+    image?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    Comment?: CommentListRelationFilter
+    PostinGroup?: PostinGroupListRelationFilter
+    PostinProfile?: PostinProfileListRelationFilter
+    Like?: LikeListRelationFilter
+    Share?: ShareListRelationFilter
+  }
+
+  export type FBPostOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    postDetail?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    Comment?: CommentOrderByRelationAggregateInput
+    PostinGroup?: PostinGroupOrderByRelationAggregateInput
+    PostinProfile?: PostinProfileOrderByRelationAggregateInput
+    Like?: LikeOrderByRelationAggregateInput
+    Share?: ShareOrderByRelationAggregateInput
+  }
+
+  export type FBPostWhereUniqueInput = {
+    id?: number
+  }
+
+  export type FBPostOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postDetail?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FBPostCountOrderByAggregateInput
+    _avg?: FBPostAvgOrderByAggregateInput
+    _max?: FBPostMaxOrderByAggregateInput
+    _min?: FBPostMinOrderByAggregateInput
+    _sum?: FBPostSumOrderByAggregateInput
+  }
+
+  export type FBPostScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<FBPostScalarWhereWithAggregatesInput>
+    OR?: Enumerable<FBPostScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<FBPostScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    postDetail?: StringWithAggregatesFilter | string
+    image?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type CommentWhereInput = {
+    AND?: Enumerable<CommentWhereInput>
+    OR?: Enumerable<CommentWhereInput>
+    NOT?: Enumerable<CommentWhereInput>
+    id?: IntFilter | number
+    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
+    postId?: IntFilter | number
+    commentDetail?: StringFilter | string
+    fromUserId?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    SubComment?: SubCommentListRelationFilter
+  }
+
+  export type CommentOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: FBPostOrderByWithRelationInput
+    postId?: SortOrder
+    commentDetail?: SortOrder
+    fromUserId?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    SubComment?: SubCommentOrderByRelationAggregateInput
+  }
+
+  export type CommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type CommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    commentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CommentCountOrderByAggregateInput
+    _avg?: CommentAvgOrderByAggregateInput
+    _max?: CommentMaxOrderByAggregateInput
+    _min?: CommentMinOrderByAggregateInput
+    _sum?: CommentSumOrderByAggregateInput
+  }
+
+  export type CommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<CommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<CommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<CommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    commentDetail?: StringWithAggregatesFilter | string
+    userId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type SubCommentWhereInput = {
+    AND?: Enumerable<SubCommentWhereInput>
+    OR?: Enumerable<SubCommentWhereInput>
+    NOT?: Enumerable<SubCommentWhereInput>
+    id?: IntFilter | number
+    comment?: XOR<CommentRelationFilter, CommentWhereInput>
+    commentId?: IntFilter | number
+    subCommentDetail?: StringFilter | string
+    fromUserId?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type SubCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    comment?: CommentOrderByWithRelationInput
+    commentId?: SortOrder
+    subCommentDetail?: SortOrder
+    fromUserId?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type SubCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    subCommentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SubCommentCountOrderByAggregateInput
+    _avg?: SubCommentAvgOrderByAggregateInput
+    _max?: SubCommentMaxOrderByAggregateInput
+    _min?: SubCommentMinOrderByAggregateInput
+    _sum?: SubCommentSumOrderByAggregateInput
+  }
+
+  export type SubCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<SubCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<SubCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<SubCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    commentId?: IntWithAggregatesFilter | number
+    subCommentDetail?: StringWithAggregatesFilter | string
+    userId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type LikeWhereInput = {
+    AND?: Enumerable<LikeWhereInput>
+    OR?: Enumerable<LikeWhereInput>
+    NOT?: Enumerable<LikeWhereInput>
+    id?: IntFilter | number
+    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
+    postId?: IntFilter | number
+    fromUserId?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    likeType?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type LikeOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: FBPostOrderByWithRelationInput
+    postId?: SortOrder
+    fromUserId?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    likeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LikeWhereUniqueInput = {
+    id?: number
+  }
+
+  export type LikeOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    likeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LikeCountOrderByAggregateInput
+    _avg?: LikeAvgOrderByAggregateInput
+    _max?: LikeMaxOrderByAggregateInput
+    _min?: LikeMinOrderByAggregateInput
+    _sum?: LikeSumOrderByAggregateInput
+  }
+
+  export type LikeScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<LikeScalarWhereWithAggregatesInput>
+    OR?: Enumerable<LikeScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<LikeScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    likeType?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type ShareWhereInput = {
+    AND?: Enumerable<ShareWhereInput>
+    OR?: Enumerable<ShareWhereInput>
+    NOT?: Enumerable<ShareWhereInput>
+    id?: IntFilter | number
+    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
+    postId?: IntFilter | number
+    fromUserId?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    shareStatus?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ShareOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: FBPostOrderByWithRelationInput
+    postId?: SortOrder
+    fromUserId?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    shareStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ShareWhereUniqueInput = {
+    id?: number
+  }
+
+  export type ShareOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    shareStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ShareCountOrderByAggregateInput
+    _avg?: ShareAvgOrderByAggregateInput
+    _max?: ShareMaxOrderByAggregateInput
+    _min?: ShareMinOrderByAggregateInput
+    _sum?: ShareSumOrderByAggregateInput
+  }
+
+  export type ShareScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<ShareScalarWhereWithAggregatesInput>
+    OR?: Enumerable<ShareScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<ShareScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    shareStatus?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type GroupWhereInput = {
+    AND?: Enumerable<GroupWhereInput>
+    OR?: Enumerable<GroupWhereInput>
+    NOT?: Enumerable<GroupWhereInput>
+    id?: IntFilter | number
+    groupName?: StringFilter | string
+    groupImage?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    GroupOnUser?: GroupOnUserListRelationFilter
+    PostinGroup?: PostinGroupListRelationFilter
+  }
+
+  export type GroupOrderByWithRelationInput = {
+    id?: SortOrder
+    groupName?: SortOrder
+    groupImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    GroupOnUser?: GroupOnUserOrderByRelationAggregateInput
+    PostinGroup?: PostinGroupOrderByRelationAggregateInput
+  }
+
+  export type GroupWhereUniqueInput = {
+    id?: number
+  }
+
+  export type GroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupName?: SortOrder
+    groupImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GroupCountOrderByAggregateInput
+    _avg?: GroupAvgOrderByAggregateInput
+    _max?: GroupMaxOrderByAggregateInput
+    _min?: GroupMinOrderByAggregateInput
+    _sum?: GroupSumOrderByAggregateInput
+  }
+
+  export type GroupScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<GroupScalarWhereWithAggregatesInput>
+    OR?: Enumerable<GroupScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<GroupScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    groupName?: StringWithAggregatesFilter | string
+    groupImage?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type GroupOnUserWhereInput = {
+    AND?: Enumerable<GroupOnUserWhereInput>
+    OR?: Enumerable<GroupOnUserWhereInput>
+    NOT?: Enumerable<GroupOnUserWhereInput>
+    id?: IntFilter | number
+    user?: XOR<FBUserRelationFilter, FBUserWhereInput>
+    userId?: IntFilter | number
+    group?: XOR<GroupRelationFilter, GroupWhereInput>
+    groupId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type GroupOnUserOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: FBUserOrderByWithRelationInput
+    userId?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupOnUserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type GroupOnUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GroupOnUserCountOrderByAggregateInput
+    _avg?: GroupOnUserAvgOrderByAggregateInput
+    _max?: GroupOnUserMaxOrderByAggregateInput
+    _min?: GroupOnUserMinOrderByAggregateInput
+    _sum?: GroupOnUserSumOrderByAggregateInput
+  }
+
+  export type GroupOnUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<GroupOnUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<GroupOnUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<GroupOnUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    groupId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type PostinGroupWhereInput = {
+    AND?: Enumerable<PostinGroupWhereInput>
+    OR?: Enumerable<PostinGroupWhereInput>
+    NOT?: Enumerable<PostinGroupWhereInput>
+    id?: IntFilter | number
+    group?: XOR<GroupRelationFilter, GroupWhereInput>
+    groupId?: IntFilter | number
+    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type PostinGroupOrderByWithRelationInput = {
+    id?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    groupId?: SortOrder
+    post?: FBPostOrderByWithRelationInput
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinGroupWhereUniqueInput = {
+    id?: number
+  }
+
+  export type PostinGroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PostinGroupCountOrderByAggregateInput
+    _avg?: PostinGroupAvgOrderByAggregateInput
+    _max?: PostinGroupMaxOrderByAggregateInput
+    _min?: PostinGroupMinOrderByAggregateInput
+    _sum?: PostinGroupSumOrderByAggregateInput
+  }
+
+  export type PostinGroupScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
+    OR?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    groupId?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type PostinProfileWhereInput = {
+    AND?: Enumerable<PostinProfileWhereInput>
+    OR?: Enumerable<PostinProfileWhereInput>
+    NOT?: Enumerable<PostinProfileWhereInput>
+    id?: IntFilter | number
+    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type PostinProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: FBPostOrderByWithRelationInput
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinProfileWhereUniqueInput = {
+    id?: number
+  }
+
+  export type PostinProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PostinProfileCountOrderByAggregateInput
+    _avg?: PostinProfileAvgOrderByAggregateInput
+    _max?: PostinProfileMaxOrderByAggregateInput
+    _min?: PostinProfileMinOrderByAggregateInput
+    _sum?: PostinProfileSumOrderByAggregateInput
+  }
+
+  export type PostinProfileScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
+    OR?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -21134,6 +33526,679 @@ export namespace Prisma {
     orderId?: NullableIntFieldUpdateOperationsInput | number | null
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBUserCreateInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserCreateManyInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FBUserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsCreateInput = {
+    from: FBUserCreateNestedOneWithoutFromFriendsInput
+    to: FBUserCreateNestedOneWithoutToFriendsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUncheckedCreateInput = {
+    id?: number
+    fromUserId: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUpdateInput = {
+    from?: FBUserUpdateOneRequiredWithoutFromFriendsNestedInput
+    to?: FBUserUpdateOneRequiredWithoutToFriendsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsCreateManyInput = {
+    id?: number
+    fromUserId: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBPostCreateInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUpdateInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostCreateManyInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FBPostUpdateManyMutationInput = {
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBPostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentCreateInput = {
+    post: FBPostCreateNestedOneWithoutCommentInput
+    commentDetail: string
+    fromUserId: FBUserCreateNestedOneWithoutCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateInput = {
+    id?: number
+    postId: number
+    commentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUpdateInput = {
+    post?: FBPostUpdateOneRequiredWithoutCommentNestedInput
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    fromUserId?: FBUserUpdateOneRequiredWithoutCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentCreateManyInput = {
+    id?: number
+    postId: number
+    commentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateManyMutationInput = {
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentCreateInput = {
+    comment: CommentCreateNestedOneWithoutSubCommentInput
+    subCommentDetail: string
+    fromUserId: FBUserCreateNestedOneWithoutSubCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUncheckedCreateInput = {
+    id?: number
+    commentId: number
+    subCommentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUpdateInput = {
+    comment?: CommentUpdateOneRequiredWithoutSubCommentNestedInput
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    fromUserId?: FBUserUpdateOneRequiredWithoutSubCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentCreateManyInput = {
+    id?: number
+    commentId: number
+    subCommentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUpdateManyMutationInput = {
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeCreateInput = {
+    post: FBPostCreateNestedOneWithoutLikeInput
+    fromUserId: FBUserCreateNestedOneWithoutLikeInput
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeUncheckedCreateInput = {
+    id?: number
+    postId: number
+    userId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeUpdateInput = {
+    post?: FBPostUpdateOneRequiredWithoutLikeNestedInput
+    fromUserId?: FBUserUpdateOneRequiredWithoutLikeNestedInput
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeCreateManyInput = {
+    id?: number
+    postId: number
+    userId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeUpdateManyMutationInput = {
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareCreateInput = {
+    post: FBPostCreateNestedOneWithoutShareInput
+    fromUserId: FBUserCreateNestedOneWithoutShareInput
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareUncheckedCreateInput = {
+    id?: number
+    postId: number
+    userId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareUpdateInput = {
+    post?: FBPostUpdateOneRequiredWithoutShareNestedInput
+    fromUserId?: FBUserUpdateOneRequiredWithoutShareNestedInput
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareCreateManyInput = {
+    id?: number
+    postId: number
+    userId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareUpdateManyMutationInput = {
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupCreateInput = {
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutGroupInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateInput = {
+    id?: number
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutGroupInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUpdateInput = {
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUpdateManyWithoutGroupNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupCreateManyInput = {
+    id?: number
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupUpdateManyMutationInput = {
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserCreateInput = {
+    user: FBUserCreateNestedOneWithoutGroupOnUserInput
+    group: GroupCreateNestedOneWithoutGroupOnUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUncheckedCreateInput = {
+    id?: number
+    userId: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUpdateInput = {
+    user?: FBUserUpdateOneRequiredWithoutGroupOnUserNestedInput
+    group?: GroupUpdateOneRequiredWithoutGroupOnUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserCreateManyInput = {
+    id?: number
+    userId: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupCreateInput = {
+    group: GroupCreateNestedOneWithoutPostinGroupInput
+    post: FBPostCreateNestedOneWithoutPostinGroupInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupUncheckedCreateInput = {
+    id?: number
+    groupId: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupUpdateInput = {
+    group?: GroupUpdateOneRequiredWithoutPostinGroupNestedInput
+    post?: FBPostUpdateOneRequiredWithoutPostinGroupNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupCreateManyInput = {
+    id?: number
+    groupId: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileCreateInput = {
+    post: FBPostCreateNestedOneWithoutPostinProfileInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileUncheckedCreateInput = {
+    id?: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileUpdateInput = {
+    post?: FBPostUpdateOneRequiredWithoutPostinProfileNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileCreateManyInput = {
+    id?: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -22305,6 +35370,518 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter
   }
 
+  export type FriendsListRelationFilter = {
+    every?: FriendsWhereInput
+    some?: FriendsWhereInput
+    none?: FriendsWhereInput
+  }
+
+  export type FBPostListRelationFilter = {
+    every?: FBPostWhereInput
+    some?: FBPostWhereInput
+    none?: FBPostWhereInput
+  }
+
+  export type CommentListRelationFilter = {
+    every?: CommentWhereInput
+    some?: CommentWhereInput
+    none?: CommentWhereInput
+  }
+
+  export type SubCommentListRelationFilter = {
+    every?: SubCommentWhereInput
+    some?: SubCommentWhereInput
+    none?: SubCommentWhereInput
+  }
+
+  export type GroupOnUserListRelationFilter = {
+    every?: GroupOnUserWhereInput
+    some?: GroupOnUserWhereInput
+    none?: GroupOnUserWhereInput
+  }
+
+  export type LikeListRelationFilter = {
+    every?: LikeWhereInput
+    some?: LikeWhereInput
+    none?: LikeWhereInput
+  }
+
+  export type ShareListRelationFilter = {
+    every?: ShareWhereInput
+    some?: ShareWhereInput
+    none?: ShareWhereInput
+  }
+
+  export type FriendsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FBPostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SubCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupOnUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ShareOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FBUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FBUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    coverImage?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type FBUserRelationFilter = {
+    is?: FBUserWhereInput
+    isNot?: FBUserWhereInput
+  }
+
+  export type FriendsCountOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FriendsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+  }
+
+  export type FriendsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FriendsMinOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FriendsSumOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+  }
+
+  export type PostinGroupListRelationFilter = {
+    every?: PostinGroupWhereInput
+    some?: PostinGroupWhereInput
+    none?: PostinGroupWhereInput
+  }
+
+  export type PostinProfileListRelationFilter = {
+    every?: PostinProfileWhereInput
+    some?: PostinProfileWhereInput
+    none?: PostinProfileWhereInput
+  }
+
+  export type PostinGroupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PostinProfileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FBPostCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postDetail?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBPostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FBPostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postDetail?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBPostMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    postDetail?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FBPostSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type FBPostRelationFilter = {
+    is?: FBPostWhereInput
+    isNot?: FBPostWhereInput
+  }
+
+  export type CommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    commentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type CommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    commentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    commentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type CommentRelationFilter = {
+    is?: CommentWhereInput
+    isNot?: CommentWhereInput
+  }
+
+  export type SubCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    subCommentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type SubCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    subCommentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    subCommentDetail?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SubCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type LikeCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    likeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LikeAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type LikeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    likeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LikeMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    likeType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LikeSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ShareCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    shareStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ShareAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ShareMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    shareStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ShareMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    shareStatus?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ShareSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type GroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupName?: SortOrder
+    groupImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type GroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupName?: SortOrder
+    groupImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupName?: SortOrder
+    groupImage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type GroupRelationFilter = {
+    is?: GroupWhereInput
+    isNot?: GroupWhereInput
+  }
+
+  export type GroupOnUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupOnUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+  }
+
+  export type GroupOnUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupOnUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GroupOnUserSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    groupId?: SortOrder
+  }
+
+  export type PostinGroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinGroupAvgOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type PostinGroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinGroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinGroupSumOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type PostinProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinProfileAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type PostinProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PostinProfileSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+  }
+
   export type TodoListCountOrderByAggregateInput = {
     id?: SortOrder
     task?: SortOrder
@@ -23146,6 +36723,902 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type FriendsCreateNestedManyWithoutFromInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
+    createMany?: FriendsCreateManyFromInputEnvelope
+    connect?: Enumerable<FriendsWhereUniqueInput>
+  }
+
+  export type FriendsCreateNestedManyWithoutToInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutToInput>, Enumerable<FriendsUncheckedCreateWithoutToInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutToInput>
+    createMany?: FriendsCreateManyToInputEnvelope
+    connect?: Enumerable<FriendsWhereUniqueInput>
+  }
+
+  export type FBPostCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
+    createMany?: FBPostCreateManyUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
+  export type CommentCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutFromUserIdInput>, Enumerable<CommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutFromUserIdInput>
+    createMany?: CommentCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
+  }
+
+  export type SubCommentCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutFromUserIdInput>, Enumerable<SubCommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutFromUserIdInput>
+    createMany?: SubCommentCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+  }
+
+  export type GroupOnUserCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutUserInput>, Enumerable<GroupOnUserUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutUserInput>
+    createMany?: GroupOnUserCreateManyUserInputEnvelope
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+  }
+
+  export type LikeCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutFromUserIdInput>, Enumerable<LikeUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutFromUserIdInput>
+    createMany?: LikeCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<LikeWhereUniqueInput>
+  }
+
+  export type ShareCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutFromUserIdInput>, Enumerable<ShareUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutFromUserIdInput>
+    createMany?: ShareCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<ShareWhereUniqueInput>
+  }
+
+  export type FriendsUncheckedCreateNestedManyWithoutFromInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
+    createMany?: FriendsCreateManyFromInputEnvelope
+    connect?: Enumerable<FriendsWhereUniqueInput>
+  }
+
+  export type FriendsUncheckedCreateNestedManyWithoutToInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutToInput>, Enumerable<FriendsUncheckedCreateWithoutToInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutToInput>
+    createMany?: FriendsCreateManyToInputEnvelope
+    connect?: Enumerable<FriendsWhereUniqueInput>
+  }
+
+  export type FBPostUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
+    createMany?: FBPostCreateManyUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutFromUserIdInput>, Enumerable<CommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutFromUserIdInput>
+    createMany?: CommentCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
+  }
+
+  export type SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutFromUserIdInput>, Enumerable<SubCommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutFromUserIdInput>
+    createMany?: SubCommentCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+  }
+
+  export type GroupOnUserUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutUserInput>, Enumerable<GroupOnUserUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutUserInput>
+    createMany?: GroupOnUserCreateManyUserInputEnvelope
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+  }
+
+  export type LikeUncheckedCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutFromUserIdInput>, Enumerable<LikeUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutFromUserIdInput>
+    createMany?: LikeCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<LikeWhereUniqueInput>
+  }
+
+  export type ShareUncheckedCreateNestedManyWithoutFromUserIdInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutFromUserIdInput>, Enumerable<ShareUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutFromUserIdInput>
+    createMany?: ShareCreateManyFromUserIdInputEnvelope
+    connect?: Enumerable<ShareWhereUniqueInput>
+  }
+
+  export type FriendsUpdateManyWithoutFromNestedInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
+    upsert?: Enumerable<FriendsUpsertWithWhereUniqueWithoutFromInput>
+    createMany?: FriendsCreateManyFromInputEnvelope
+    set?: Enumerable<FriendsWhereUniqueInput>
+    disconnect?: Enumerable<FriendsWhereUniqueInput>
+    delete?: Enumerable<FriendsWhereUniqueInput>
+    connect?: Enumerable<FriendsWhereUniqueInput>
+    update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutFromInput>
+    updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutFromInput>
+    deleteMany?: Enumerable<FriendsScalarWhereInput>
+  }
+
+  export type FriendsUpdateManyWithoutToNestedInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutToInput>, Enumerable<FriendsUncheckedCreateWithoutToInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutToInput>
+    upsert?: Enumerable<FriendsUpsertWithWhereUniqueWithoutToInput>
+    createMany?: FriendsCreateManyToInputEnvelope
+    set?: Enumerable<FriendsWhereUniqueInput>
+    disconnect?: Enumerable<FriendsWhereUniqueInput>
+    delete?: Enumerable<FriendsWhereUniqueInput>
+    connect?: Enumerable<FriendsWhereUniqueInput>
+    update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutToInput>
+    updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutToInput>
+    deleteMany?: Enumerable<FriendsScalarWhereInput>
+  }
+
+  export type FBPostUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: FBPostCreateManyUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
+  export type CommentUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutFromUserIdInput>, Enumerable<CommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: CommentCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
+  }
+
+  export type SubCommentUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutFromUserIdInput>, Enumerable<SubCommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<SubCommentUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: SubCommentCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<SubCommentWhereUniqueInput>
+    disconnect?: Enumerable<SubCommentWhereUniqueInput>
+    delete?: Enumerable<SubCommentWhereUniqueInput>
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+    update?: Enumerable<SubCommentUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<SubCommentUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<SubCommentScalarWhereInput>
+  }
+
+  export type GroupOnUserUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutUserInput>, Enumerable<GroupOnUserUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<GroupOnUserUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: GroupOnUserCreateManyUserInputEnvelope
+    set?: Enumerable<GroupOnUserWhereUniqueInput>
+    disconnect?: Enumerable<GroupOnUserWhereUniqueInput>
+    delete?: Enumerable<GroupOnUserWhereUniqueInput>
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+    update?: Enumerable<GroupOnUserUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<GroupOnUserUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
+  }
+
+  export type LikeUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutFromUserIdInput>, Enumerable<LikeUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<LikeUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: LikeCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<LikeWhereUniqueInput>
+    disconnect?: Enumerable<LikeWhereUniqueInput>
+    delete?: Enumerable<LikeWhereUniqueInput>
+    connect?: Enumerable<LikeWhereUniqueInput>
+    update?: Enumerable<LikeUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<LikeUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<LikeScalarWhereInput>
+  }
+
+  export type ShareUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutFromUserIdInput>, Enumerable<ShareUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<ShareUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: ShareCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<ShareWhereUniqueInput>
+    disconnect?: Enumerable<ShareWhereUniqueInput>
+    delete?: Enumerable<ShareWhereUniqueInput>
+    connect?: Enumerable<ShareWhereUniqueInput>
+    update?: Enumerable<ShareUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<ShareUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<ShareScalarWhereInput>
+  }
+
+  export type FriendsUncheckedUpdateManyWithoutFromNestedInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
+    upsert?: Enumerable<FriendsUpsertWithWhereUniqueWithoutFromInput>
+    createMany?: FriendsCreateManyFromInputEnvelope
+    set?: Enumerable<FriendsWhereUniqueInput>
+    disconnect?: Enumerable<FriendsWhereUniqueInput>
+    delete?: Enumerable<FriendsWhereUniqueInput>
+    connect?: Enumerable<FriendsWhereUniqueInput>
+    update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutFromInput>
+    updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutFromInput>
+    deleteMany?: Enumerable<FriendsScalarWhereInput>
+  }
+
+  export type FriendsUncheckedUpdateManyWithoutToNestedInput = {
+    create?: XOR<Enumerable<FriendsCreateWithoutToInput>, Enumerable<FriendsUncheckedCreateWithoutToInput>>
+    connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutToInput>
+    upsert?: Enumerable<FriendsUpsertWithWhereUniqueWithoutToInput>
+    createMany?: FriendsCreateManyToInputEnvelope
+    set?: Enumerable<FriendsWhereUniqueInput>
+    disconnect?: Enumerable<FriendsWhereUniqueInput>
+    delete?: Enumerable<FriendsWhereUniqueInput>
+    connect?: Enumerable<FriendsWhereUniqueInput>
+    update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutToInput>
+    updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutToInput>
+    deleteMany?: Enumerable<FriendsScalarWhereInput>
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: FBPostCreateManyUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
+  export type CommentUncheckedUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutFromUserIdInput>, Enumerable<CommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: CommentCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
+  }
+
+  export type SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutFromUserIdInput>, Enumerable<SubCommentUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<SubCommentUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: SubCommentCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<SubCommentWhereUniqueInput>
+    disconnect?: Enumerable<SubCommentWhereUniqueInput>
+    delete?: Enumerable<SubCommentWhereUniqueInput>
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+    update?: Enumerable<SubCommentUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<SubCommentUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<SubCommentScalarWhereInput>
+  }
+
+  export type GroupOnUserUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutUserInput>, Enumerable<GroupOnUserUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<GroupOnUserUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: GroupOnUserCreateManyUserInputEnvelope
+    set?: Enumerable<GroupOnUserWhereUniqueInput>
+    disconnect?: Enumerable<GroupOnUserWhereUniqueInput>
+    delete?: Enumerable<GroupOnUserWhereUniqueInput>
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+    update?: Enumerable<GroupOnUserUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<GroupOnUserUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
+  }
+
+  export type LikeUncheckedUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutFromUserIdInput>, Enumerable<LikeUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<LikeUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: LikeCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<LikeWhereUniqueInput>
+    disconnect?: Enumerable<LikeWhereUniqueInput>
+    delete?: Enumerable<LikeWhereUniqueInput>
+    connect?: Enumerable<LikeWhereUniqueInput>
+    update?: Enumerable<LikeUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<LikeUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<LikeScalarWhereInput>
+  }
+
+  export type ShareUncheckedUpdateManyWithoutFromUserIdNestedInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutFromUserIdInput>, Enumerable<ShareUncheckedCreateWithoutFromUserIdInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutFromUserIdInput>
+    upsert?: Enumerable<ShareUpsertWithWhereUniqueWithoutFromUserIdInput>
+    createMany?: ShareCreateManyFromUserIdInputEnvelope
+    set?: Enumerable<ShareWhereUniqueInput>
+    disconnect?: Enumerable<ShareWhereUniqueInput>
+    delete?: Enumerable<ShareWhereUniqueInput>
+    connect?: Enumerable<ShareWhereUniqueInput>
+    update?: Enumerable<ShareUpdateWithWhereUniqueWithoutFromUserIdInput>
+    updateMany?: Enumerable<ShareUpdateManyWithWhereWithoutFromUserIdInput>
+    deleteMany?: Enumerable<ShareScalarWhereInput>
+  }
+
+  export type FBUserCreateNestedOneWithoutFromFriendsInput = {
+    create?: XOR<FBUserCreateWithoutFromFriendsInput, FBUserUncheckedCreateWithoutFromFriendsInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutFromFriendsInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutToFriendsInput = {
+    create?: XOR<FBUserCreateWithoutToFriendsInput, FBUserUncheckedCreateWithoutToFriendsInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutToFriendsInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type FBUserUpdateOneRequiredWithoutFromFriendsNestedInput = {
+    create?: XOR<FBUserCreateWithoutFromFriendsInput, FBUserUncheckedCreateWithoutFromFriendsInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutFromFriendsInput
+    upsert?: FBUserUpsertWithoutFromFriendsInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutFromFriendsInput, FBUserUncheckedUpdateWithoutFromFriendsInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutToFriendsNestedInput = {
+    create?: XOR<FBUserCreateWithoutToFriendsInput, FBUserUncheckedCreateWithoutToFriendsInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutToFriendsInput
+    upsert?: FBUserUpsertWithoutToFriendsInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutToFriendsInput, FBUserUncheckedUpdateWithoutToFriendsInput>
+  }
+
+  export type FBUserCreateNestedOneWithoutPostInput = {
+    create?: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type CommentCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutPostInput>, Enumerable<CommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutPostInput>
+    createMany?: CommentCreateManyPostInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
+  }
+
+  export type PostinGroupCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
+    createMany?: PostinGroupCreateManyPostInputEnvelope
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  }
+
+  export type PostinProfileCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
+    createMany?: PostinProfileCreateManyPostInputEnvelope
+    connect?: Enumerable<PostinProfileWhereUniqueInput>
+  }
+
+  export type LikeCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutPostInput>, Enumerable<LikeUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutPostInput>
+    createMany?: LikeCreateManyPostInputEnvelope
+    connect?: Enumerable<LikeWhereUniqueInput>
+  }
+
+  export type ShareCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutPostInput>, Enumerable<ShareUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutPostInput>
+    createMany?: ShareCreateManyPostInputEnvelope
+    connect?: Enumerable<ShareWhereUniqueInput>
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutPostInput>, Enumerable<CommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutPostInput>
+    createMany?: CommentCreateManyPostInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
+  }
+
+  export type PostinGroupUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
+    createMany?: PostinGroupCreateManyPostInputEnvelope
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  }
+
+  export type PostinProfileUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
+    createMany?: PostinProfileCreateManyPostInputEnvelope
+    connect?: Enumerable<PostinProfileWhereUniqueInput>
+  }
+
+  export type LikeUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutPostInput>, Enumerable<LikeUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutPostInput>
+    createMany?: LikeCreateManyPostInputEnvelope
+    connect?: Enumerable<LikeWhereUniqueInput>
+  }
+
+  export type ShareUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutPostInput>, Enumerable<ShareUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutPostInput>
+    createMany?: ShareCreateManyPostInputEnvelope
+    connect?: Enumerable<ShareWhereUniqueInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutPostNestedInput = {
+    create?: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostInput
+    upsert?: FBUserUpsertWithoutPostInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutPostInput, FBUserUncheckedUpdateWithoutPostInput>
+  }
+
+  export type CommentUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutPostInput>, Enumerable<CommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: CommentCreateManyPostInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
+  }
+
+  export type PostinGroupUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostinGroupCreateManyPostInputEnvelope
+    set?: Enumerable<PostinGroupWhereUniqueInput>
+    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
+    delete?: Enumerable<PostinGroupWhereUniqueInput>
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  }
+
+  export type PostinProfileUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostinProfileUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostinProfileCreateManyPostInputEnvelope
+    set?: Enumerable<PostinProfileWhereUniqueInput>
+    disconnect?: Enumerable<PostinProfileWhereUniqueInput>
+    delete?: Enumerable<PostinProfileWhereUniqueInput>
+    connect?: Enumerable<PostinProfileWhereUniqueInput>
+    update?: Enumerable<PostinProfileUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostinProfileUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostinProfileScalarWhereInput>
+  }
+
+  export type LikeUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutPostInput>, Enumerable<LikeUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<LikeUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: LikeCreateManyPostInputEnvelope
+    set?: Enumerable<LikeWhereUniqueInput>
+    disconnect?: Enumerable<LikeWhereUniqueInput>
+    delete?: Enumerable<LikeWhereUniqueInput>
+    connect?: Enumerable<LikeWhereUniqueInput>
+    update?: Enumerable<LikeUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<LikeUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<LikeScalarWhereInput>
+  }
+
+  export type ShareUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutPostInput>, Enumerable<ShareUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<ShareUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: ShareCreateManyPostInputEnvelope
+    set?: Enumerable<ShareWhereUniqueInput>
+    disconnect?: Enumerable<ShareWhereUniqueInput>
+    delete?: Enumerable<ShareWhereUniqueInput>
+    connect?: Enumerable<ShareWhereUniqueInput>
+    update?: Enumerable<ShareUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<ShareUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<ShareScalarWhereInput>
+  }
+
+  export type CommentUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutPostInput>, Enumerable<CommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: CommentCreateManyPostInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
+  }
+
+  export type PostinGroupUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostinGroupCreateManyPostInputEnvelope
+    set?: Enumerable<PostinGroupWhereUniqueInput>
+    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
+    delete?: Enumerable<PostinGroupWhereUniqueInput>
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  }
+
+  export type PostinProfileUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostinProfileUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostinProfileCreateManyPostInputEnvelope
+    set?: Enumerable<PostinProfileWhereUniqueInput>
+    disconnect?: Enumerable<PostinProfileWhereUniqueInput>
+    delete?: Enumerable<PostinProfileWhereUniqueInput>
+    connect?: Enumerable<PostinProfileWhereUniqueInput>
+    update?: Enumerable<PostinProfileUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostinProfileUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostinProfileScalarWhereInput>
+  }
+
+  export type LikeUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<LikeCreateWithoutPostInput>, Enumerable<LikeUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<LikeUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: LikeCreateManyPostInputEnvelope
+    set?: Enumerable<LikeWhereUniqueInput>
+    disconnect?: Enumerable<LikeWhereUniqueInput>
+    delete?: Enumerable<LikeWhereUniqueInput>
+    connect?: Enumerable<LikeWhereUniqueInput>
+    update?: Enumerable<LikeUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<LikeUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<LikeScalarWhereInput>
+  }
+
+  export type ShareUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<ShareCreateWithoutPostInput>, Enumerable<ShareUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<ShareCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<ShareUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: ShareCreateManyPostInputEnvelope
+    set?: Enumerable<ShareWhereUniqueInput>
+    disconnect?: Enumerable<ShareWhereUniqueInput>
+    delete?: Enumerable<ShareWhereUniqueInput>
+    connect?: Enumerable<ShareWhereUniqueInput>
+    update?: Enumerable<ShareUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<ShareUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<ShareScalarWhereInput>
+  }
+
+  export type FBPostCreateNestedOneWithoutCommentInput = {
+    create?: XOR<FBPostCreateWithoutCommentInput, FBPostUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutCommentInput
+    connect?: FBPostWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutCommentInput = {
+    create?: XOR<FBUserCreateWithoutCommentInput, FBUserUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutCommentInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type SubCommentCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutCommentInput>, Enumerable<SubCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutCommentInput>
+    createMany?: SubCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+  }
+
+  export type SubCommentUncheckedCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutCommentInput>, Enumerable<SubCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutCommentInput>
+    createMany?: SubCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+  }
+
+  export type FBPostUpdateOneRequiredWithoutCommentNestedInput = {
+    create?: XOR<FBPostCreateWithoutCommentInput, FBPostUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutCommentInput
+    upsert?: FBPostUpsertWithoutCommentInput
+    connect?: FBPostWhereUniqueInput
+    update?: XOR<FBPostUpdateWithoutCommentInput, FBPostUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutCommentNestedInput = {
+    create?: XOR<FBUserCreateWithoutCommentInput, FBUserUncheckedCreateWithoutCommentInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutCommentInput
+    upsert?: FBUserUpsertWithoutCommentInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutCommentInput, FBUserUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type SubCommentUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutCommentInput>, Enumerable<SubCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<SubCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: SubCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<SubCommentWhereUniqueInput>
+    disconnect?: Enumerable<SubCommentWhereUniqueInput>
+    delete?: Enumerable<SubCommentWhereUniqueInput>
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+    update?: Enumerable<SubCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<SubCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<SubCommentScalarWhereInput>
+  }
+
+  export type SubCommentUncheckedUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<SubCommentCreateWithoutCommentInput>, Enumerable<SubCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<SubCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<SubCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: SubCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<SubCommentWhereUniqueInput>
+    disconnect?: Enumerable<SubCommentWhereUniqueInput>
+    delete?: Enumerable<SubCommentWhereUniqueInput>
+    connect?: Enumerable<SubCommentWhereUniqueInput>
+    update?: Enumerable<SubCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<SubCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<SubCommentScalarWhereInput>
+  }
+
+  export type CommentCreateNestedOneWithoutSubCommentInput = {
+    create?: XOR<CommentCreateWithoutSubCommentInput, CommentUncheckedCreateWithoutSubCommentInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutSubCommentInput
+    connect?: CommentWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutSubCommentInput = {
+    create?: XOR<FBUserCreateWithoutSubCommentInput, FBUserUncheckedCreateWithoutSubCommentInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutSubCommentInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type CommentUpdateOneRequiredWithoutSubCommentNestedInput = {
+    create?: XOR<CommentCreateWithoutSubCommentInput, CommentUncheckedCreateWithoutSubCommentInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutSubCommentInput
+    upsert?: CommentUpsertWithoutSubCommentInput
+    connect?: CommentWhereUniqueInput
+    update?: XOR<CommentUpdateWithoutSubCommentInput, CommentUncheckedUpdateWithoutSubCommentInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutSubCommentNestedInput = {
+    create?: XOR<FBUserCreateWithoutSubCommentInput, FBUserUncheckedCreateWithoutSubCommentInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutSubCommentInput
+    upsert?: FBUserUpsertWithoutSubCommentInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutSubCommentInput, FBUserUncheckedUpdateWithoutSubCommentInput>
+  }
+
+  export type FBPostCreateNestedOneWithoutLikeInput = {
+    create?: XOR<FBPostCreateWithoutLikeInput, FBPostUncheckedCreateWithoutLikeInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutLikeInput
+    connect?: FBPostWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutLikeInput = {
+    create?: XOR<FBUserCreateWithoutLikeInput, FBUserUncheckedCreateWithoutLikeInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutLikeInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type FBPostUpdateOneRequiredWithoutLikeNestedInput = {
+    create?: XOR<FBPostCreateWithoutLikeInput, FBPostUncheckedCreateWithoutLikeInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutLikeInput
+    upsert?: FBPostUpsertWithoutLikeInput
+    connect?: FBPostWhereUniqueInput
+    update?: XOR<FBPostUpdateWithoutLikeInput, FBPostUncheckedUpdateWithoutLikeInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutLikeNestedInput = {
+    create?: XOR<FBUserCreateWithoutLikeInput, FBUserUncheckedCreateWithoutLikeInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutLikeInput
+    upsert?: FBUserUpsertWithoutLikeInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutLikeInput, FBUserUncheckedUpdateWithoutLikeInput>
+  }
+
+  export type FBPostCreateNestedOneWithoutShareInput = {
+    create?: XOR<FBPostCreateWithoutShareInput, FBPostUncheckedCreateWithoutShareInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutShareInput
+    connect?: FBPostWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutShareInput = {
+    create?: XOR<FBUserCreateWithoutShareInput, FBUserUncheckedCreateWithoutShareInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutShareInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type FBPostUpdateOneRequiredWithoutShareNestedInput = {
+    create?: XOR<FBPostCreateWithoutShareInput, FBPostUncheckedCreateWithoutShareInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutShareInput
+    upsert?: FBPostUpsertWithoutShareInput
+    connect?: FBPostWhereUniqueInput
+    update?: XOR<FBPostUpdateWithoutShareInput, FBPostUncheckedUpdateWithoutShareInput>
+  }
+
+  export type FBUserUpdateOneRequiredWithoutShareNestedInput = {
+    create?: XOR<FBUserCreateWithoutShareInput, FBUserUncheckedCreateWithoutShareInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutShareInput
+    upsert?: FBUserUpsertWithoutShareInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutShareInput, FBUserUncheckedUpdateWithoutShareInput>
+  }
+
+  export type GroupOnUserCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutGroupInput>, Enumerable<GroupOnUserUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutGroupInput>
+    createMany?: GroupOnUserCreateManyGroupInputEnvelope
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+  }
+
+  export type PostinGroupCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
+    createMany?: PostinGroupCreateManyGroupInputEnvelope
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  }
+
+  export type GroupOnUserUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutGroupInput>, Enumerable<GroupOnUserUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutGroupInput>
+    createMany?: GroupOnUserCreateManyGroupInputEnvelope
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+  }
+
+  export type PostinGroupUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
+    createMany?: PostinGroupCreateManyGroupInputEnvelope
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  }
+
+  export type GroupOnUserUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutGroupInput>, Enumerable<GroupOnUserUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<GroupOnUserUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: GroupOnUserCreateManyGroupInputEnvelope
+    set?: Enumerable<GroupOnUserWhereUniqueInput>
+    disconnect?: Enumerable<GroupOnUserWhereUniqueInput>
+    delete?: Enumerable<GroupOnUserWhereUniqueInput>
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+    update?: Enumerable<GroupOnUserUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<GroupOnUserUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
+  }
+
+  export type PostinGroupUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: PostinGroupCreateManyGroupInputEnvelope
+    set?: Enumerable<PostinGroupWhereUniqueInput>
+    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
+    delete?: Enumerable<PostinGroupWhereUniqueInput>
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  }
+
+  export type GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<GroupOnUserCreateWithoutGroupInput>, Enumerable<GroupOnUserUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<GroupOnUserCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<GroupOnUserUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: GroupOnUserCreateManyGroupInputEnvelope
+    set?: Enumerable<GroupOnUserWhereUniqueInput>
+    disconnect?: Enumerable<GroupOnUserWhereUniqueInput>
+    delete?: Enumerable<GroupOnUserWhereUniqueInput>
+    connect?: Enumerable<GroupOnUserWhereUniqueInput>
+    update?: Enumerable<GroupOnUserUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<GroupOnUserUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
+  }
+
+  export type PostinGroupUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: PostinGroupCreateManyGroupInputEnvelope
+    set?: Enumerable<PostinGroupWhereUniqueInput>
+    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
+    delete?: Enumerable<PostinGroupWhereUniqueInput>
+    connect?: Enumerable<PostinGroupWhereUniqueInput>
+    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  }
+
+  export type FBUserCreateNestedOneWithoutGroupOnUserInput = {
+    create?: XOR<FBUserCreateWithoutGroupOnUserInput, FBUserUncheckedCreateWithoutGroupOnUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutGroupOnUserInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type GroupCreateNestedOneWithoutGroupOnUserInput = {
+    create?: XOR<GroupCreateWithoutGroupOnUserInput, GroupUncheckedCreateWithoutGroupOnUserInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutGroupOnUserInput
+    connect?: GroupWhereUniqueInput
+  }
+
+  export type FBUserUpdateOneRequiredWithoutGroupOnUserNestedInput = {
+    create?: XOR<FBUserCreateWithoutGroupOnUserInput, FBUserUncheckedCreateWithoutGroupOnUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutGroupOnUserInput
+    upsert?: FBUserUpsertWithoutGroupOnUserInput
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutGroupOnUserInput, FBUserUncheckedUpdateWithoutGroupOnUserInput>
+  }
+
+  export type GroupUpdateOneRequiredWithoutGroupOnUserNestedInput = {
+    create?: XOR<GroupCreateWithoutGroupOnUserInput, GroupUncheckedCreateWithoutGroupOnUserInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutGroupOnUserInput
+    upsert?: GroupUpsertWithoutGroupOnUserInput
+    connect?: GroupWhereUniqueInput
+    update?: XOR<GroupUpdateWithoutGroupOnUserInput, GroupUncheckedUpdateWithoutGroupOnUserInput>
+  }
+
+  export type GroupCreateNestedOneWithoutPostinGroupInput = {
+    create?: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutPostinGroupInput
+    connect?: GroupWhereUniqueInput
+  }
+
+  export type FBPostCreateNestedOneWithoutPostinGroupInput = {
+    create?: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutPostinGroupInput
+    connect?: FBPostWhereUniqueInput
+  }
+
+  export type GroupUpdateOneRequiredWithoutPostinGroupNestedInput = {
+    create?: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutPostinGroupInput
+    upsert?: GroupUpsertWithoutPostinGroupInput
+    connect?: GroupWhereUniqueInput
+    update?: XOR<GroupUpdateWithoutPostinGroupInput, GroupUncheckedUpdateWithoutPostinGroupInput>
+  }
+
+  export type FBPostUpdateOneRequiredWithoutPostinGroupNestedInput = {
+    create?: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutPostinGroupInput
+    upsert?: FBPostUpsertWithoutPostinGroupInput
+    connect?: FBPostWhereUniqueInput
+    update?: XOR<FBPostUpdateWithoutPostinGroupInput, FBPostUncheckedUpdateWithoutPostinGroupInput>
+  }
+
+  export type FBPostCreateNestedOneWithoutPostinProfileInput = {
+    create?: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutPostinProfileInput
+    connect?: FBPostWhereUniqueInput
+  }
+
+  export type FBPostUpdateOneRequiredWithoutPostinProfileNestedInput = {
+    create?: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
+    connectOrCreate?: FBPostCreateOrConnectWithoutPostinProfileInput
+    upsert?: FBPostUpsertWithoutPostinProfileInput
+    connect?: FBPostWhereUniqueInput
+    update?: XOR<FBPostUpdateWithoutPostinProfileInput, FBPostUncheckedUpdateWithoutPostinProfileInput>
   }
 
   export type TriviaQuizCreateNestedManyWithoutCategoryInput = {
@@ -24502,6 +38975,1803 @@ export namespace Prisma {
     tableId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsCreateWithoutFromInput = {
+    to: FBUserCreateNestedOneWithoutToFriendsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUncheckedCreateWithoutFromInput = {
+    id?: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsCreateOrConnectWithoutFromInput = {
+    where: FriendsWhereUniqueInput
+    create: XOR<FriendsCreateWithoutFromInput, FriendsUncheckedCreateWithoutFromInput>
+  }
+
+  export type FriendsCreateManyFromInputEnvelope = {
+    data: Enumerable<FriendsCreateManyFromInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FriendsCreateWithoutToInput = {
+    from: FBUserCreateNestedOneWithoutFromFriendsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUncheckedCreateWithoutToInput = {
+    id?: number
+    fromUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsCreateOrConnectWithoutToInput = {
+    where: FriendsWhereUniqueInput
+    create: XOR<FriendsCreateWithoutToInput, FriendsUncheckedCreateWithoutToInput>
+  }
+
+  export type FriendsCreateManyToInputEnvelope = {
+    data: Enumerable<FriendsCreateManyToInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FBPostCreateWithoutUserInput = {
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutUserInput = {
+    id?: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutUserInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutUserInput, FBPostUncheckedCreateWithoutUserInput>
+  }
+
+  export type FBPostCreateManyUserInputEnvelope = {
+    data: Enumerable<FBPostCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type CommentCreateWithoutFromUserIdInput = {
+    post: FBPostCreateNestedOneWithoutCommentInput
+    commentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutFromUserIdInput = {
+    id?: number
+    postId: number
+    commentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentCreateOrConnectWithoutFromUserIdInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutFromUserIdInput, CommentUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type CommentCreateManyFromUserIdInputEnvelope = {
+    data: Enumerable<CommentCreateManyFromUserIdInput>
+    skipDuplicates?: boolean
+  }
+
+  export type SubCommentCreateWithoutFromUserIdInput = {
+    comment: CommentCreateNestedOneWithoutSubCommentInput
+    subCommentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUncheckedCreateWithoutFromUserIdInput = {
+    id?: number
+    commentId: number
+    subCommentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentCreateOrConnectWithoutFromUserIdInput = {
+    where: SubCommentWhereUniqueInput
+    create: XOR<SubCommentCreateWithoutFromUserIdInput, SubCommentUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type SubCommentCreateManyFromUserIdInputEnvelope = {
+    data: Enumerable<SubCommentCreateManyFromUserIdInput>
+    skipDuplicates?: boolean
+  }
+
+  export type GroupOnUserCreateWithoutUserInput = {
+    group: GroupCreateNestedOneWithoutGroupOnUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUncheckedCreateWithoutUserInput = {
+    id?: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserCreateOrConnectWithoutUserInput = {
+    where: GroupOnUserWhereUniqueInput
+    create: XOR<GroupOnUserCreateWithoutUserInput, GroupOnUserUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupOnUserCreateManyUserInputEnvelope = {
+    data: Enumerable<GroupOnUserCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type LikeCreateWithoutFromUserIdInput = {
+    post: FBPostCreateNestedOneWithoutLikeInput
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeUncheckedCreateWithoutFromUserIdInput = {
+    id?: number
+    postId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeCreateOrConnectWithoutFromUserIdInput = {
+    where: LikeWhereUniqueInput
+    create: XOR<LikeCreateWithoutFromUserIdInput, LikeUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type LikeCreateManyFromUserIdInputEnvelope = {
+    data: Enumerable<LikeCreateManyFromUserIdInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ShareCreateWithoutFromUserIdInput = {
+    post: FBPostCreateNestedOneWithoutShareInput
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareUncheckedCreateWithoutFromUserIdInput = {
+    id?: number
+    postId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareCreateOrConnectWithoutFromUserIdInput = {
+    where: ShareWhereUniqueInput
+    create: XOR<ShareCreateWithoutFromUserIdInput, ShareUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type ShareCreateManyFromUserIdInputEnvelope = {
+    data: Enumerable<ShareCreateManyFromUserIdInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FriendsUpsertWithWhereUniqueWithoutFromInput = {
+    where: FriendsWhereUniqueInput
+    update: XOR<FriendsUpdateWithoutFromInput, FriendsUncheckedUpdateWithoutFromInput>
+    create: XOR<FriendsCreateWithoutFromInput, FriendsUncheckedCreateWithoutFromInput>
+  }
+
+  export type FriendsUpdateWithWhereUniqueWithoutFromInput = {
+    where: FriendsWhereUniqueInput
+    data: XOR<FriendsUpdateWithoutFromInput, FriendsUncheckedUpdateWithoutFromInput>
+  }
+
+  export type FriendsUpdateManyWithWhereWithoutFromInput = {
+    where: FriendsScalarWhereInput
+    data: XOR<FriendsUpdateManyMutationInput, FriendsUncheckedUpdateManyWithoutFromFriendsInput>
+  }
+
+  export type FriendsScalarWhereInput = {
+    AND?: Enumerable<FriendsScalarWhereInput>
+    OR?: Enumerable<FriendsScalarWhereInput>
+    NOT?: Enumerable<FriendsScalarWhereInput>
+    id?: IntFilter | number
+    fromUserId?: IntFilter | number
+    toUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FriendsUpsertWithWhereUniqueWithoutToInput = {
+    where: FriendsWhereUniqueInput
+    update: XOR<FriendsUpdateWithoutToInput, FriendsUncheckedUpdateWithoutToInput>
+    create: XOR<FriendsCreateWithoutToInput, FriendsUncheckedCreateWithoutToInput>
+  }
+
+  export type FriendsUpdateWithWhereUniqueWithoutToInput = {
+    where: FriendsWhereUniqueInput
+    data: XOR<FriendsUpdateWithoutToInput, FriendsUncheckedUpdateWithoutToInput>
+  }
+
+  export type FriendsUpdateManyWithWhereWithoutToInput = {
+    where: FriendsScalarWhereInput
+    data: XOR<FriendsUpdateManyMutationInput, FriendsUncheckedUpdateManyWithoutToFriendsInput>
+  }
+
+  export type FBPostUpsertWithWhereUniqueWithoutUserInput = {
+    where: FBPostWhereUniqueInput
+    update: XOR<FBPostUpdateWithoutUserInput, FBPostUncheckedUpdateWithoutUserInput>
+    create: XOR<FBPostCreateWithoutUserInput, FBPostUncheckedCreateWithoutUserInput>
+  }
+
+  export type FBPostUpdateWithWhereUniqueWithoutUserInput = {
+    where: FBPostWhereUniqueInput
+    data: XOR<FBPostUpdateWithoutUserInput, FBPostUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FBPostUpdateManyWithWhereWithoutUserInput = {
+    where: FBPostScalarWhereInput
+    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyWithoutPostInput>
+  }
+
+  export type FBPostScalarWhereInput = {
+    AND?: Enumerable<FBPostScalarWhereInput>
+    OR?: Enumerable<FBPostScalarWhereInput>
+    NOT?: Enumerable<FBPostScalarWhereInput>
+    id?: IntFilter | number
+    userId?: IntFilter | number
+    postDetail?: StringFilter | string
+    image?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutFromUserIdInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutFromUserIdInput, CommentUncheckedUpdateWithoutFromUserIdInput>
+    create: XOR<CommentCreateWithoutFromUserIdInput, CommentUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutFromUserIdInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutFromUserIdInput, CommentUncheckedUpdateWithoutFromUserIdInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutFromUserIdInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutCommentInput>
+  }
+
+  export type CommentScalarWhereInput = {
+    AND?: Enumerable<CommentScalarWhereInput>
+    OR?: Enumerable<CommentScalarWhereInput>
+    NOT?: Enumerable<CommentScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    commentDetail?: StringFilter | string
+    userId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type SubCommentUpsertWithWhereUniqueWithoutFromUserIdInput = {
+    where: SubCommentWhereUniqueInput
+    update: XOR<SubCommentUpdateWithoutFromUserIdInput, SubCommentUncheckedUpdateWithoutFromUserIdInput>
+    create: XOR<SubCommentCreateWithoutFromUserIdInput, SubCommentUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type SubCommentUpdateWithWhereUniqueWithoutFromUserIdInput = {
+    where: SubCommentWhereUniqueInput
+    data: XOR<SubCommentUpdateWithoutFromUserIdInput, SubCommentUncheckedUpdateWithoutFromUserIdInput>
+  }
+
+  export type SubCommentUpdateManyWithWhereWithoutFromUserIdInput = {
+    where: SubCommentScalarWhereInput
+    data: XOR<SubCommentUpdateManyMutationInput, SubCommentUncheckedUpdateManyWithoutSubCommentInput>
+  }
+
+  export type SubCommentScalarWhereInput = {
+    AND?: Enumerable<SubCommentScalarWhereInput>
+    OR?: Enumerable<SubCommentScalarWhereInput>
+    NOT?: Enumerable<SubCommentScalarWhereInput>
+    id?: IntFilter | number
+    commentId?: IntFilter | number
+    subCommentDetail?: StringFilter | string
+    userId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type GroupOnUserUpsertWithWhereUniqueWithoutUserInput = {
+    where: GroupOnUserWhereUniqueInput
+    update: XOR<GroupOnUserUpdateWithoutUserInput, GroupOnUserUncheckedUpdateWithoutUserInput>
+    create: XOR<GroupOnUserCreateWithoutUserInput, GroupOnUserUncheckedCreateWithoutUserInput>
+  }
+
+  export type GroupOnUserUpdateWithWhereUniqueWithoutUserInput = {
+    where: GroupOnUserWhereUniqueInput
+    data: XOR<GroupOnUserUpdateWithoutUserInput, GroupOnUserUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GroupOnUserUpdateManyWithWhereWithoutUserInput = {
+    where: GroupOnUserScalarWhereInput
+    data: XOR<GroupOnUserUpdateManyMutationInput, GroupOnUserUncheckedUpdateManyWithoutGroupOnUserInput>
+  }
+
+  export type GroupOnUserScalarWhereInput = {
+    AND?: Enumerable<GroupOnUserScalarWhereInput>
+    OR?: Enumerable<GroupOnUserScalarWhereInput>
+    NOT?: Enumerable<GroupOnUserScalarWhereInput>
+    id?: IntFilter | number
+    userId?: IntFilter | number
+    groupId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type LikeUpsertWithWhereUniqueWithoutFromUserIdInput = {
+    where: LikeWhereUniqueInput
+    update: XOR<LikeUpdateWithoutFromUserIdInput, LikeUncheckedUpdateWithoutFromUserIdInput>
+    create: XOR<LikeCreateWithoutFromUserIdInput, LikeUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type LikeUpdateWithWhereUniqueWithoutFromUserIdInput = {
+    where: LikeWhereUniqueInput
+    data: XOR<LikeUpdateWithoutFromUserIdInput, LikeUncheckedUpdateWithoutFromUserIdInput>
+  }
+
+  export type LikeUpdateManyWithWhereWithoutFromUserIdInput = {
+    where: LikeScalarWhereInput
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyWithoutLikeInput>
+  }
+
+  export type LikeScalarWhereInput = {
+    AND?: Enumerable<LikeScalarWhereInput>
+    OR?: Enumerable<LikeScalarWhereInput>
+    NOT?: Enumerable<LikeScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    userId?: IntFilter | number
+    likeType?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ShareUpsertWithWhereUniqueWithoutFromUserIdInput = {
+    where: ShareWhereUniqueInput
+    update: XOR<ShareUpdateWithoutFromUserIdInput, ShareUncheckedUpdateWithoutFromUserIdInput>
+    create: XOR<ShareCreateWithoutFromUserIdInput, ShareUncheckedCreateWithoutFromUserIdInput>
+  }
+
+  export type ShareUpdateWithWhereUniqueWithoutFromUserIdInput = {
+    where: ShareWhereUniqueInput
+    data: XOR<ShareUpdateWithoutFromUserIdInput, ShareUncheckedUpdateWithoutFromUserIdInput>
+  }
+
+  export type ShareUpdateManyWithWhereWithoutFromUserIdInput = {
+    where: ShareScalarWhereInput
+    data: XOR<ShareUpdateManyMutationInput, ShareUncheckedUpdateManyWithoutShareInput>
+  }
+
+  export type ShareScalarWhereInput = {
+    AND?: Enumerable<ShareScalarWhereInput>
+    OR?: Enumerable<ShareScalarWhereInput>
+    NOT?: Enumerable<ShareScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    userId?: IntFilter | number
+    shareStatus?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FBUserCreateWithoutFromFriendsInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutFromFriendsInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutFromFriendsInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutFromFriendsInput, FBUserUncheckedCreateWithoutFromFriendsInput>
+  }
+
+  export type FBUserCreateWithoutToFriendsInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutToFriendsInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutToFriendsInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutToFriendsInput, FBUserUncheckedCreateWithoutToFriendsInput>
+  }
+
+  export type FBUserUpsertWithoutFromFriendsInput = {
+    update: XOR<FBUserUpdateWithoutFromFriendsInput, FBUserUncheckedUpdateWithoutFromFriendsInput>
+    create: XOR<FBUserCreateWithoutFromFriendsInput, FBUserUncheckedCreateWithoutFromFriendsInput>
+  }
+
+  export type FBUserUpdateWithoutFromFriendsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutFromFriendsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUpsertWithoutToFriendsInput = {
+    update: XOR<FBUserUpdateWithoutToFriendsInput, FBUserUncheckedUpdateWithoutToFriendsInput>
+    create: XOR<FBUserCreateWithoutToFriendsInput, FBUserUncheckedCreateWithoutToFriendsInput>
+  }
+
+  export type FBUserUpdateWithoutToFriendsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutToFriendsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserCreateWithoutPostInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutPostInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutPostInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+  }
+
+  export type CommentCreateWithoutPostInput = {
+    commentDetail: string
+    fromUserId: FBUserCreateNestedOneWithoutCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentUncheckedCreateWithoutPostInput = {
+    id?: number
+    commentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type CommentCreateOrConnectWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type CommentCreateManyPostInputEnvelope = {
+    data: Enumerable<CommentCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type PostinGroupCreateWithoutPostInput = {
+    group: GroupCreateNestedOneWithoutPostinGroupInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupUncheckedCreateWithoutPostInput = {
+    id?: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupCreateOrConnectWithoutPostInput = {
+    where: PostinGroupWhereUniqueInput
+    create: XOR<PostinGroupCreateWithoutPostInput, PostinGroupUncheckedCreateWithoutPostInput>
+  }
+
+  export type PostinGroupCreateManyPostInputEnvelope = {
+    data: Enumerable<PostinGroupCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type PostinProfileCreateWithoutPostInput = {
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileUncheckedCreateWithoutPostInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileCreateOrConnectWithoutPostInput = {
+    where: PostinProfileWhereUniqueInput
+    create: XOR<PostinProfileCreateWithoutPostInput, PostinProfileUncheckedCreateWithoutPostInput>
+  }
+
+  export type PostinProfileCreateManyPostInputEnvelope = {
+    data: Enumerable<PostinProfileCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type LikeCreateWithoutPostInput = {
+    fromUserId: FBUserCreateNestedOneWithoutLikeInput
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeUncheckedCreateWithoutPostInput = {
+    id?: number
+    userId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeCreateOrConnectWithoutPostInput = {
+    where: LikeWhereUniqueInput
+    create: XOR<LikeCreateWithoutPostInput, LikeUncheckedCreateWithoutPostInput>
+  }
+
+  export type LikeCreateManyPostInputEnvelope = {
+    data: Enumerable<LikeCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ShareCreateWithoutPostInput = {
+    fromUserId: FBUserCreateNestedOneWithoutShareInput
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareUncheckedCreateWithoutPostInput = {
+    id?: number
+    userId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareCreateOrConnectWithoutPostInput = {
+    where: ShareWhereUniqueInput
+    create: XOR<ShareCreateWithoutPostInput, ShareUncheckedCreateWithoutPostInput>
+  }
+
+  export type ShareCreateManyPostInputEnvelope = {
+    data: Enumerable<ShareCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FBUserUpsertWithoutPostInput = {
+    update: XOR<FBUserUpdateWithoutPostInput, FBUserUncheckedUpdateWithoutPostInput>
+    create: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+  }
+
+  export type FBUserUpdateWithoutPostInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutPostInput, CommentUncheckedUpdateWithoutPostInput>
+    create: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutPostInput, CommentUncheckedUpdateWithoutPostInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutPostInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutCommentInput>
+  }
+
+  export type PostinGroupUpsertWithWhereUniqueWithoutPostInput = {
+    where: PostinGroupWhereUniqueInput
+    update: XOR<PostinGroupUpdateWithoutPostInput, PostinGroupUncheckedUpdateWithoutPostInput>
+    create: XOR<PostinGroupCreateWithoutPostInput, PostinGroupUncheckedCreateWithoutPostInput>
+  }
+
+  export type PostinGroupUpdateWithWhereUniqueWithoutPostInput = {
+    where: PostinGroupWhereUniqueInput
+    data: XOR<PostinGroupUpdateWithoutPostInput, PostinGroupUncheckedUpdateWithoutPostInput>
+  }
+
+  export type PostinGroupUpdateManyWithWhereWithoutPostInput = {
+    where: PostinGroupScalarWhereInput
+    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyWithoutPostinGroupInput>
+  }
+
+  export type PostinGroupScalarWhereInput = {
+    AND?: Enumerable<PostinGroupScalarWhereInput>
+    OR?: Enumerable<PostinGroupScalarWhereInput>
+    NOT?: Enumerable<PostinGroupScalarWhereInput>
+    id?: IntFilter | number
+    groupId?: IntFilter | number
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type PostinProfileUpsertWithWhereUniqueWithoutPostInput = {
+    where: PostinProfileWhereUniqueInput
+    update: XOR<PostinProfileUpdateWithoutPostInput, PostinProfileUncheckedUpdateWithoutPostInput>
+    create: XOR<PostinProfileCreateWithoutPostInput, PostinProfileUncheckedCreateWithoutPostInput>
+  }
+
+  export type PostinProfileUpdateWithWhereUniqueWithoutPostInput = {
+    where: PostinProfileWhereUniqueInput
+    data: XOR<PostinProfileUpdateWithoutPostInput, PostinProfileUncheckedUpdateWithoutPostInput>
+  }
+
+  export type PostinProfileUpdateManyWithWhereWithoutPostInput = {
+    where: PostinProfileScalarWhereInput
+    data: XOR<PostinProfileUpdateManyMutationInput, PostinProfileUncheckedUpdateManyWithoutPostinProfileInput>
+  }
+
+  export type PostinProfileScalarWhereInput = {
+    AND?: Enumerable<PostinProfileScalarWhereInput>
+    OR?: Enumerable<PostinProfileScalarWhereInput>
+    NOT?: Enumerable<PostinProfileScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type LikeUpsertWithWhereUniqueWithoutPostInput = {
+    where: LikeWhereUniqueInput
+    update: XOR<LikeUpdateWithoutPostInput, LikeUncheckedUpdateWithoutPostInput>
+    create: XOR<LikeCreateWithoutPostInput, LikeUncheckedCreateWithoutPostInput>
+  }
+
+  export type LikeUpdateWithWhereUniqueWithoutPostInput = {
+    where: LikeWhereUniqueInput
+    data: XOR<LikeUpdateWithoutPostInput, LikeUncheckedUpdateWithoutPostInput>
+  }
+
+  export type LikeUpdateManyWithWhereWithoutPostInput = {
+    where: LikeScalarWhereInput
+    data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyWithoutLikeInput>
+  }
+
+  export type ShareUpsertWithWhereUniqueWithoutPostInput = {
+    where: ShareWhereUniqueInput
+    update: XOR<ShareUpdateWithoutPostInput, ShareUncheckedUpdateWithoutPostInput>
+    create: XOR<ShareCreateWithoutPostInput, ShareUncheckedCreateWithoutPostInput>
+  }
+
+  export type ShareUpdateWithWhereUniqueWithoutPostInput = {
+    where: ShareWhereUniqueInput
+    data: XOR<ShareUpdateWithoutPostInput, ShareUncheckedUpdateWithoutPostInput>
+  }
+
+  export type ShareUpdateManyWithWhereWithoutPostInput = {
+    where: ShareScalarWhereInput
+    data: XOR<ShareUpdateManyMutationInput, ShareUncheckedUpdateManyWithoutShareInput>
+  }
+
+  export type FBPostCreateWithoutCommentInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutCommentInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutCommentInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutCommentInput, FBPostUncheckedCreateWithoutCommentInput>
+  }
+
+  export type FBUserCreateWithoutCommentInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutCommentInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutCommentInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutCommentInput, FBUserUncheckedCreateWithoutCommentInput>
+  }
+
+  export type SubCommentCreateWithoutCommentInput = {
+    subCommentDetail: string
+    fromUserId: FBUserCreateNestedOneWithoutSubCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUncheckedCreateWithoutCommentInput = {
+    id?: number
+    subCommentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentCreateOrConnectWithoutCommentInput = {
+    where: SubCommentWhereUniqueInput
+    create: XOR<SubCommentCreateWithoutCommentInput, SubCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type SubCommentCreateManyCommentInputEnvelope = {
+    data: Enumerable<SubCommentCreateManyCommentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FBPostUpsertWithoutCommentInput = {
+    update: XOR<FBPostUpdateWithoutCommentInput, FBPostUncheckedUpdateWithoutCommentInput>
+    create: XOR<FBPostCreateWithoutCommentInput, FBPostUncheckedCreateWithoutCommentInput>
+  }
+
+  export type FBPostUpdateWithoutCommentInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBUserUpsertWithoutCommentInput = {
+    update: XOR<FBUserUpdateWithoutCommentInput, FBUserUncheckedUpdateWithoutCommentInput>
+    create: XOR<FBUserCreateWithoutCommentInput, FBUserUncheckedCreateWithoutCommentInput>
+  }
+
+  export type FBUserUpdateWithoutCommentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type SubCommentUpsertWithWhereUniqueWithoutCommentInput = {
+    where: SubCommentWhereUniqueInput
+    update: XOR<SubCommentUpdateWithoutCommentInput, SubCommentUncheckedUpdateWithoutCommentInput>
+    create: XOR<SubCommentCreateWithoutCommentInput, SubCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type SubCommentUpdateWithWhereUniqueWithoutCommentInput = {
+    where: SubCommentWhereUniqueInput
+    data: XOR<SubCommentUpdateWithoutCommentInput, SubCommentUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type SubCommentUpdateManyWithWhereWithoutCommentInput = {
+    where: SubCommentScalarWhereInput
+    data: XOR<SubCommentUpdateManyMutationInput, SubCommentUncheckedUpdateManyWithoutSubCommentInput>
+  }
+
+  export type CommentCreateWithoutSubCommentInput = {
+    post: FBPostCreateNestedOneWithoutCommentInput
+    commentDetail: string
+    fromUserId: FBUserCreateNestedOneWithoutCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUncheckedCreateWithoutSubCommentInput = {
+    id?: number
+    postId: number
+    commentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentCreateOrConnectWithoutSubCommentInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutSubCommentInput, CommentUncheckedCreateWithoutSubCommentInput>
+  }
+
+  export type FBUserCreateWithoutSubCommentInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutSubCommentInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutSubCommentInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutSubCommentInput, FBUserUncheckedCreateWithoutSubCommentInput>
+  }
+
+  export type CommentUpsertWithoutSubCommentInput = {
+    update: XOR<CommentUpdateWithoutSubCommentInput, CommentUncheckedUpdateWithoutSubCommentInput>
+    create: XOR<CommentCreateWithoutSubCommentInput, CommentUncheckedCreateWithoutSubCommentInput>
+  }
+
+  export type CommentUpdateWithoutSubCommentInput = {
+    post?: FBPostUpdateOneRequiredWithoutCommentNestedInput
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    fromUserId?: FBUserUpdateOneRequiredWithoutCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateWithoutSubCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBUserUpsertWithoutSubCommentInput = {
+    update: XOR<FBUserUpdateWithoutSubCommentInput, FBUserUncheckedUpdateWithoutSubCommentInput>
+    create: XOR<FBUserCreateWithoutSubCommentInput, FBUserUncheckedCreateWithoutSubCommentInput>
+  }
+
+  export type FBUserUpdateWithoutSubCommentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutSubCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBPostCreateWithoutLikeInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutLikeInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutLikeInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutLikeInput, FBPostUncheckedCreateWithoutLikeInput>
+  }
+
+  export type FBUserCreateWithoutLikeInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutLikeInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutLikeInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutLikeInput, FBUserUncheckedCreateWithoutLikeInput>
+  }
+
+  export type FBPostUpsertWithoutLikeInput = {
+    update: XOR<FBPostUpdateWithoutLikeInput, FBPostUncheckedUpdateWithoutLikeInput>
+    create: XOR<FBPostCreateWithoutLikeInput, FBPostUncheckedCreateWithoutLikeInput>
+  }
+
+  export type FBPostUpdateWithoutLikeInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutLikeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBUserUpsertWithoutLikeInput = {
+    update: XOR<FBUserUpdateWithoutLikeInput, FBUserUncheckedUpdateWithoutLikeInput>
+    create: XOR<FBUserCreateWithoutLikeInput, FBUserUncheckedCreateWithoutLikeInput>
+  }
+
+  export type FBUserUpdateWithoutLikeInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutLikeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBPostCreateWithoutShareInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutShareInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutShareInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutShareInput, FBPostUncheckedCreateWithoutShareInput>
+  }
+
+  export type FBUserCreateWithoutShareInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutShareInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutShareInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutShareInput, FBUserUncheckedCreateWithoutShareInput>
+  }
+
+  export type FBPostUpsertWithoutShareInput = {
+    update: XOR<FBPostUpdateWithoutShareInput, FBPostUncheckedUpdateWithoutShareInput>
+    create: XOR<FBPostCreateWithoutShareInput, FBPostUncheckedCreateWithoutShareInput>
+  }
+
+  export type FBPostUpdateWithoutShareInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutShareInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBUserUpsertWithoutShareInput = {
+    update: XOR<FBUserUpdateWithoutShareInput, FBUserUncheckedUpdateWithoutShareInput>
+    create: XOR<FBUserCreateWithoutShareInput, FBUserUncheckedCreateWithoutShareInput>
+  }
+
+  export type FBUserUpdateWithoutShareInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutShareInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type GroupOnUserCreateWithoutGroupInput = {
+    user: FBUserCreateNestedOneWithoutGroupOnUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUncheckedCreateWithoutGroupInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserCreateOrConnectWithoutGroupInput = {
+    where: GroupOnUserWhereUniqueInput
+    create: XOR<GroupOnUserCreateWithoutGroupInput, GroupOnUserUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupOnUserCreateManyGroupInputEnvelope = {
+    data: Enumerable<GroupOnUserCreateManyGroupInput>
+    skipDuplicates?: boolean
+  }
+
+  export type PostinGroupCreateWithoutGroupInput = {
+    post: FBPostCreateNestedOneWithoutPostinGroupInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupUncheckedCreateWithoutGroupInput = {
+    id?: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupCreateOrConnectWithoutGroupInput = {
+    where: PostinGroupWhereUniqueInput
+    create: XOR<PostinGroupCreateWithoutGroupInput, PostinGroupUncheckedCreateWithoutGroupInput>
+  }
+
+  export type PostinGroupCreateManyGroupInputEnvelope = {
+    data: Enumerable<PostinGroupCreateManyGroupInput>
+    skipDuplicates?: boolean
+  }
+
+  export type GroupOnUserUpsertWithWhereUniqueWithoutGroupInput = {
+    where: GroupOnUserWhereUniqueInput
+    update: XOR<GroupOnUserUpdateWithoutGroupInput, GroupOnUserUncheckedUpdateWithoutGroupInput>
+    create: XOR<GroupOnUserCreateWithoutGroupInput, GroupOnUserUncheckedCreateWithoutGroupInput>
+  }
+
+  export type GroupOnUserUpdateWithWhereUniqueWithoutGroupInput = {
+    where: GroupOnUserWhereUniqueInput
+    data: XOR<GroupOnUserUpdateWithoutGroupInput, GroupOnUserUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type GroupOnUserUpdateManyWithWhereWithoutGroupInput = {
+    where: GroupOnUserScalarWhereInput
+    data: XOR<GroupOnUserUpdateManyMutationInput, GroupOnUserUncheckedUpdateManyWithoutGroupOnUserInput>
+  }
+
+  export type PostinGroupUpsertWithWhereUniqueWithoutGroupInput = {
+    where: PostinGroupWhereUniqueInput
+    update: XOR<PostinGroupUpdateWithoutGroupInput, PostinGroupUncheckedUpdateWithoutGroupInput>
+    create: XOR<PostinGroupCreateWithoutGroupInput, PostinGroupUncheckedCreateWithoutGroupInput>
+  }
+
+  export type PostinGroupUpdateWithWhereUniqueWithoutGroupInput = {
+    where: PostinGroupWhereUniqueInput
+    data: XOR<PostinGroupUpdateWithoutGroupInput, PostinGroupUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type PostinGroupUpdateManyWithWhereWithoutGroupInput = {
+    where: PostinGroupScalarWhereInput
+    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyWithoutPostinGroupInput>
+  }
+
+  export type FBUserCreateWithoutGroupOnUserInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Post?: FBPostCreateNestedManyWithoutUserInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserUncheckedCreateWithoutGroupOnUserInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+  }
+
+  export type FBUserCreateOrConnectWithoutGroupOnUserInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutGroupOnUserInput, FBUserUncheckedCreateWithoutGroupOnUserInput>
+  }
+
+  export type GroupCreateWithoutGroupOnUserInput = {
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PostinGroup?: PostinGroupCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutGroupOnUserInput = {
+    id?: number
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutGroupOnUserInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutGroupOnUserInput, GroupUncheckedCreateWithoutGroupOnUserInput>
+  }
+
+  export type FBUserUpsertWithoutGroupOnUserInput = {
+    update: XOR<FBUserUpdateWithoutGroupOnUserInput, FBUserUncheckedUpdateWithoutGroupOnUserInput>
+    create: XOR<FBUserCreateWithoutGroupOnUserInput, FBUserUncheckedCreateWithoutGroupOnUserInput>
+  }
+
+  export type FBUserUpdateWithoutGroupOnUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Post?: FBPostUpdateManyWithoutUserNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutGroupOnUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+  }
+
+  export type GroupUpsertWithoutGroupOnUserInput = {
+    update: XOR<GroupUpdateWithoutGroupOnUserInput, GroupUncheckedUpdateWithoutGroupOnUserInput>
+    create: XOR<GroupCreateWithoutGroupOnUserInput, GroupUncheckedCreateWithoutGroupOnUserInput>
+  }
+
+  export type GroupUpdateWithoutGroupOnUserInput = {
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PostinGroup?: PostinGroupUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutGroupOnUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupCreateWithoutPostinGroupInput = {
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutPostinGroupInput = {
+    id?: number
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutPostinGroupInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
+  }
+
+  export type FBPostCreateWithoutPostinGroupInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutPostinGroupInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutPostinGroupInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
+  }
+
+  export type GroupUpsertWithoutPostinGroupInput = {
+    update: XOR<GroupUpdateWithoutPostinGroupInput, GroupUncheckedUpdateWithoutPostinGroupInput>
+    create: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
+  }
+
+  export type GroupUpdateWithoutPostinGroupInput = {
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutPostinGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type FBPostUpsertWithoutPostinGroupInput = {
+    update: XOR<FBPostUpdateWithoutPostinGroupInput, FBPostUncheckedUpdateWithoutPostinGroupInput>
+    create: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
+  }
+
+  export type FBPostUpdateWithoutPostinGroupInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutPostinGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostCreateWithoutPostinProfileInput = {
+    user: FBUserCreateNestedOneWithoutPostInput
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutPostinProfileInput = {
+    id?: number
+    userId: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutPostinProfileInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
+  }
+
+  export type FBPostUpsertWithoutPostinProfileInput = {
+    update: XOR<FBPostUpdateWithoutPostinProfileInput, FBPostUncheckedUpdateWithoutPostinProfileInput>
+    create: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
+  }
+
+  export type FBPostUpdateWithoutPostinProfileInput = {
+    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutPostinProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type TriviaQuizCreateWithoutCategoryInput = {
@@ -26150,6 +42420,438 @@ export namespace Prisma {
     menuId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsCreateManyFromInput = {
+    id?: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsCreateManyToInput = {
+    id?: number
+    fromUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FBPostCreateManyUserInput = {
+    id?: number
+    postDetail: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentCreateManyFromUserIdInput = {
+    id?: number
+    postId: number
+    commentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentCreateManyFromUserIdInput = {
+    id?: number
+    commentId: number
+    subCommentDetail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserCreateManyUserInput = {
+    id?: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeCreateManyFromUserIdInput = {
+    id?: number
+    postId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareCreateManyFromUserIdInput = {
+    id?: number
+    postId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FriendsUpdateWithoutFromInput = {
+    to?: FBUserUpdateOneRequiredWithoutToFriendsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateWithoutFromInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateManyWithoutFromFriendsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUpdateWithoutToInput = {
+    from?: FBUserUpdateOneRequiredWithoutFromFriendsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateWithoutToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FriendsUncheckedUpdateManyWithoutToFriendsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBPostUpdateWithoutUserInput = {
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
+    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postDetail?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUpdateWithoutFromUserIdInput = {
+    post?: FBPostUpdateOneRequiredWithoutCommentNestedInput
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutFromUserIdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUpdateWithoutFromUserIdInput = {
+    comment?: CommentUpdateOneRequiredWithoutSubCommentNestedInput
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUncheckedUpdateWithoutFromUserIdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUncheckedUpdateManyWithoutSubCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUpdateWithoutUserInput = {
+    group?: GroupUpdateOneRequiredWithoutGroupOnUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUncheckedUpdateManyWithoutGroupOnUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUpdateWithoutFromUserIdInput = {
+    post?: FBPostUpdateOneRequiredWithoutLikeNestedInput
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateWithoutFromUserIdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateManyWithoutLikeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUpdateWithoutFromUserIdInput = {
+    post?: FBPostUpdateOneRequiredWithoutShareNestedInput
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateWithoutFromUserIdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateManyWithoutShareInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentCreateManyPostInput = {
+    id?: number
+    commentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupCreateManyPostInput = {
+    id?: number
+    groupId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinProfileCreateManyPostInput = {
+    id?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LikeCreateManyPostInput = {
+    id?: number
+    userId: number
+    likeType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ShareCreateManyPostInput = {
+    id?: number
+    userId: number
+    shareStatus: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateWithoutPostInput = {
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    fromUserId?: FBUserUpdateOneRequiredWithoutCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    SubComment?: SubCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type PostinGroupUpdateWithoutPostInput = {
+    group?: GroupUpdateOneRequiredWithoutPostinGroupNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUncheckedUpdateManyWithoutPostinGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileUpdateWithoutPostInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinProfileUncheckedUpdateManyWithoutPostinProfileInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUpdateWithoutPostInput = {
+    fromUserId?: FBUserUpdateOneRequiredWithoutLikeNestedInput
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LikeUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    likeType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUpdateWithoutPostInput = {
+    fromUserId?: FBUserUpdateOneRequiredWithoutShareNestedInput
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    shareStatus?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentCreateManyCommentInput = {
+    id?: number
+    subCommentDetail: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SubCommentUpdateWithoutCommentInput = {
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    fromUserId?: FBUserUpdateOneRequiredWithoutSubCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SubCommentUncheckedUpdateWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    subCommentDetail?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserCreateManyGroupInput = {
+    id?: number
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostinGroupCreateManyGroupInput = {
+    id?: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GroupOnUserUpdateWithoutGroupInput = {
+    user?: FBUserUpdateOneRequiredWithoutGroupOnUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupOnUserUncheckedUpdateWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUpdateWithoutGroupInput = {
+    post?: FBPostUpdateOneRequiredWithoutPostinGroupNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostinGroupUncheckedUpdateWithoutGroupInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

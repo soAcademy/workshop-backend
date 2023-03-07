@@ -1,0 +1,125 @@
+model FBUser {
+  id           Int           @id @default(autoincrement())
+  name         String
+  profileImage String
+  coverImage   String
+  bio          String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  fromFriends  Friends[]     @relation("FromFriend")
+  toFriends    Friends[]     @relation("ToFriend")
+  Post         FBPost[]
+  Comment      Comment[]
+  SubComment   SubComment[]
+  GroupOnUser  GroupOnUser[]
+  Like         Like[]
+  Share        Share[]
+}
+
+model Friends {
+  id         Int      @id @default(autoincrement())
+  from       FBUser   @relation("FromFriend", fields: [fromUserId], references: [id])
+  fromUserId Int
+  to         FBUser   @relation("ToFriend", fields: [toUserId], references: [id])
+  toUserId   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model FBPost {
+  id            Int             @id @default(autoincrement())
+  user          FBUser          @relation(fields: [userId], references: [id])
+  userId        Int
+  postDetail    String
+  image         String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Comment       Comment[]
+  PostinGroup   PostinGroup[]
+  PostinProfile PostinProfile[]
+  Like          Like[]
+  Share         Share[]
+}
+
+model Comment {
+  id            Int          @id @default(autoincrement())
+  post          FBPost       @relation(fields: [postId], references: [id])
+  postId        Int
+  commentDetail String
+  fromUserId    FBUser       @relation(fields: [userId], references: [id])
+  userId        Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  SubComment    SubComment[]
+}
+
+model SubComment {
+  id               Int      @id @default(autoincrement())
+  comment          Comment  @relation(fields: [commentId], references: [id])
+  commentId        Int
+  subCommentDetail String
+  fromUserId       FBUser   @relation(fields: [userId], references: [id])
+  userId           Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  post       FBPost   @relation(fields: [postId], references: [id])
+  postId     Int
+  fromUserId FBUser   @relation(fields: [userId], references: [id])
+  userId     Int
+  likeType   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Share {
+  id          Int      @id @default(autoincrement())
+  post        FBPost   @relation(fields: [postId], references: [id])
+  postId      Int
+  fromUserId  FBUser   @relation(fields: [userId], references: [id])
+  userId      Int
+  shareStatus String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Group {
+  id          Int           @id @default(autoincrement())
+  groupName   String
+  groupImage  String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  GroupOnUser GroupOnUser[]
+  PostinGroup PostinGroup[]
+}
+
+model GroupOnUser {
+  id        Int      @id @default(autoincrement())
+  user      FBUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostinGroup {
+  id        Int      @id @default(autoincrement())
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   Int
+  post      FBPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PostinProfile {
+  id        Int      @id @default(autoincrement())
+  post      FBPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

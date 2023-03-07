@@ -124,11 +124,39 @@ exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.CommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  commentDetail: 'commentDetail',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.DirectMsgScalarFieldEnum = makeEnum({
   id: 'id',
   fromUserId: 'fromUserId',
   toUserId: 'toUserId',
   msgDetail: 'msgDetail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FBPostScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  postDetail: 'postDetail',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FBUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImage: 'profileImage',
+  coverImage: 'coverImage',
+  bio: 'bio',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -141,9 +169,42 @@ exports.Prisma.FollowingScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.FriendsScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.GroupOnUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  groupId: 'groupId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.GroupScalarFieldEnum = makeEnum({
+  id: 'id',
+  groupName: 'groupName',
+  groupImage: 'groupImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.HashtagScalarFieldEnum = makeEnum({
   id: 'id',
   hashtag: 'hashtag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LikeScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  likeType: 'likeType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -164,6 +225,21 @@ exports.Prisma.PostScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.PostinGroupScalarFieldEnum = makeEnum({
+  id: 'id',
+  groupId: 'groupId',
+  postId: 'postId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PostinProfileScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -178,9 +254,27 @@ exports.Prisma.ReplyScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.ShareScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  shareStatus: 'shareStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
+});
+
+exports.Prisma.SubCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentId: 'commentId',
+  subCommentDetail: 'subCommentDetail',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.TodoListScalarFieldEnum = makeEnum({
@@ -262,6 +356,17 @@ exports.Prisma.ModelName = makeEnum({
   BinKitchenMenu: 'BinKitchenMenu',
   BinKitchenOrder: 'BinKitchenOrder',
   BinKitchenOrderItem: 'BinKitchenOrderItem',
+  FBUser: 'FBUser',
+  Friends: 'Friends',
+  FBPost: 'FBPost',
+  Comment: 'Comment',
+  SubComment: 'SubComment',
+  Like: 'Like',
+  Share: 'Share',
+  Group: 'Group',
+  GroupOnUser: 'GroupOnUser',
+  PostinGroup: 'PostinGroup',
+  PostinProfile: 'PostinProfile',
   TodoList: 'TodoList',
   TriviaCategory: 'TriviaCategory',
   TriviaQuiz: 'TriviaQuiz',
