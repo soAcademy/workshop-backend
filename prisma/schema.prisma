@@ -47,6 +47,145 @@ model TodoList {
   updatedAt DateTime @default(now())
 }
 
+model TriviaCategory {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  triviaQuizes TriviaQuiz[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  rounds TriviaRound[]
+}
+
+model TriviaQuiz {
+  id           Int               @id @default(autoincrement())
+  quiz         String
+  category     TriviaCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  choices      TriviaChoice[]
+  answerId     Int
+  roundQuizes  TriviaRoundQuiz[]
+}
+
+model TriviaChoice {
+  id          Int               @id @default(autoincrement())
+  choice      String
+  quiz        TriviaQuiz?       @relation(fields: [quizId], references: [id])
+  quizId      Int
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  roundQuizes TriviaRoundQuiz[]
+}
+
+model TriviaRound {
+  id          Int               @id @default(autoincrement())
+  round       String
+  category    TriviaCategory?   @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  score       Int
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  roundQuizes TriviaRoundQuiz[]
+}
+
+model TriviaRoundQuiz {
+  id           Int           @id @default(autoincrement())
+  round        TriviaRound?  @relation(fields: [roundId], references: [id])
+  roundId      Int
+  quiz         TriviaQuiz?   @relation(fields: [quizId], references: [id])
+  quizId       Int
+  userChoice   TriviaChoice? @relation(fields: [userChoiceId], references: [id])
+  userChoiceId Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// model BinKitchenOrderItem {
+//   id         Int              @id @default(autoincrement())
+//   menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
+//   menuId     Int
+//   order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
+//   orderId    Int?
+//   quantity   Int
+//   totalPrice Float
+//   createdAt  DateTime         @default(now())
+//   updatedAt  DateTime         @updatedAt
+// }
+model TwitterUser {
+  id           Int                   @id @default(autoincrement())
+  image        String                @unique
+  name         String                @unique
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  follwer      TwitterUserRelation[] @relation("FromId")
+  following    TwitterUserRelation[] @relation("ToId")
+  TwitterPost  TwitterPost[]
+  TwitterReply TwitterReply[]
+  directFrom   TwitterDM[]           @relation("DMFromId")
+  directTo     TwitterDM[]           @relation("DMToId")
+}
+
+model TwitterUserRelation {
+  id          Int         @id @default(autoincrement())
+  follwer     TwitterUser @relation("FromId", fields: [followerId], references: [id])
+  followerId  Int
+  following   TwitterUser @relation("ToId", fields: [followingId], references: [id])
+  followingId Int
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model TwitterPost {
+  id           Int              @id @default(autoincrement())
+  message      String
+  user         TwitterUser      @relation(fields: [postByUserId], references: [id])
+  postByUserId Int
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  TwitterReply TwitterReply[]
+  hashTags     TwitterHashTag[]
+  // TwitterPostTohashtag TwitterPostTohashtag[]
+}
+
+model TwitterHashTag {
+  id        Int           @id @default(autoincrement())
+  message   String
+  posts     TwitterPost[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  // TwitterPostTohashtag TwitterPostTohashtag[]
+}
+
+// model TwitterPostTohashtag {
+//   id      Int            @id @default(autoincrement())
+//   post    TwitterPost    @relation(fields: [twitterPostId], references: [id])
+//   hashtag TwitterHashTag @relation(fields: [twitterHashTagId], references: [id])
+//   twitterPostId    Int
+//   twitterHashTagId Int
+// }
+
+model TwitterReply {
+  id           Int         @id @default(autoincrement())
+  message      String
+  post         TwitterPost @relation(fields: [postId], references: [id])
+  postId       Int
+  user         TwitterUser @relation(fields: [postByUserId], references: [id])
+  postByUserId Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model TwitterDM {
+  id           Int         @id @default(autoincrement())
+  message      String
+  directFrom   TwitterUser @relation("DMFromId", fields: [directFromId], references: [id])
+  directFromId Int
+  directTo     TwitterUser @relation("DMToId", fields: [directToId], references: [id])
+  directToId   Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

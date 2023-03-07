@@ -1,0 +1,65 @@
+model TriviaCategory {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  triviaQuizes TriviaQuiz[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  rounds TriviaRound[]
+}
+
+model TriviaQuiz {
+  id           Int               @id @default(autoincrement())
+  quiz         String
+  category     TriviaCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  choices      TriviaChoice[]
+  answerId     Int
+  roundQuizes  TriviaRoundQuiz[]
+}
+
+model TriviaChoice {
+  id          Int               @id @default(autoincrement())
+  choice      String
+  quiz        TriviaQuiz?       @relation(fields: [quizId], references: [id])
+  quizId      Int
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  roundQuizes TriviaRoundQuiz[]
+}
+
+model TriviaRound {
+  id          Int               @id @default(autoincrement())
+  round       String
+  category    TriviaCategory?   @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  score       Int
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  roundQuizes TriviaRoundQuiz[]
+}
+
+model TriviaRoundQuiz {
+  id           Int           @id @default(autoincrement())
+  round        TriviaRound?  @relation(fields: [roundId], references: [id])
+  roundId      Int
+  quiz         TriviaQuiz?   @relation(fields: [quizId], references: [id])
+  quizId       Int
+  userChoice   TriviaChoice? @relation(fields: [userChoiceId], references: [id])
+  userChoiceId Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// model BinKitchenOrderItem {
+//   id         Int              @id @default(autoincrement())
+//   menu       BinKitchenMenu   @relation(fields: [menuId], references: [id])
+//   menuId     Int
+//   order      BinKitchenOrder? @relation(fields: [orderId], references: [id])
+//   orderId    Int?
+//   quantity   Int
+//   totalPrice Float
+//   createdAt  DateTime         @default(now())
+//   updatedAt  DateTime         @updatedAt
+// }

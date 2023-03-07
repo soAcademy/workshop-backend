@@ -150,13 +150,115 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  choice: 'choice',
+  quizId: 'quizId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  quiz: 'quiz',
+  categoryName: 'categoryName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  answerId: 'answerId'
+});
+
+exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundId: 'roundId',
+  quizId: 'quizId',
+  userChoiceId: 'userChoiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  round: 'round',
+  categoryId: 'categoryId',
+  score: 'score',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterDMScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  directFromId: 'directFromId',
+  directToId: 'directToId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterHashTagScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterPostScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  postByUserId: 'postByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterReplyScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  postId: 'postId',
+  postByUserId: 'postByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterUserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  followerId: 'followerId',
+  followingId: 'followingId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  image: 'image',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
   BinKitchenMenu: 'BinKitchenMenu',
   BinKitchenOrder: 'BinKitchenOrder',
   BinKitchenOrderItem: 'BinKitchenOrderItem',
-  TodoList: 'TodoList'
+  TodoList: 'TodoList',
+  TriviaCategory: 'TriviaCategory',
+  TriviaQuiz: 'TriviaQuiz',
+  TriviaChoice: 'TriviaChoice',
+  TriviaRound: 'TriviaRound',
+  TriviaRoundQuiz: 'TriviaRoundQuiz',
+  TwitterUser: 'TwitterUser',
+  TwitterUserRelation: 'TwitterUserRelation',
+  TwitterPost: 'TwitterPost',
+  TwitterHashTag: 'TwitterHashTag',
+  TwitterReply: 'TwitterReply',
+  TwitterDM: 'TwitterDM'
 });
 
 /**
