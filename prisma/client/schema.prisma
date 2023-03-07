@@ -40,10 +40,12 @@
 model BinKitchenCategory {
   id        Int              @id @default(autoincrement())
   name      String           @unique
-  menus     BinKitchenMenu[]
+  menus     BinKitchenMenu[] //*
   createdAt DateTime         @default(now())
   updatedAt DateTime         @default(now())
 }
+
+//----------------------------------------------------------------
 
 model BinKitchenMenu {
   id           Int                   @id @default(autoincrement())
@@ -51,11 +53,14 @@ model BinKitchenMenu {
   image        String
   price        Float
   category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  //                        ระบุว่า categoryName มี foreign key คือ name ใน BinKitchenCategory
   categoryName String?
   orderItems   BinKitchenOrderItem[]
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @default(now())
 }
+
+//----------------------------------------------------------------
 
 model BinKitchenOrder {
   id        Int                   @id @default(autoincrement())
@@ -65,6 +70,8 @@ model BinKitchenOrder {
   createdAt DateTime              @default(now())
   updatedAt DateTime              @default(now())
 }
+
+//----------------------------------------------------------------
 
 model BinKitchenOrderItem {
   id         Int              @id @default(autoincrement())
@@ -78,9 +85,69 @@ model BinKitchenOrderItem {
   updatedAt  DateTime         @default(now())
 }
 
+//----------------------------------------------------------------
+//ชื่อโมเดลปกติจะตั้งเป็น singular
+//แล้วชื่อตัวแปรค่อยเป็น plural
+//แล้วชื่อตัวแปรให้เป็น camelCase หมด
+
+model Category {
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
+  question Question[]
+  round    Round[]
+  createAt DateTime   @default(now())
+  updateAt DateTime   @default(now())
+}
+
+model Question {
+  id              Int           @id @default(autoincrement())
+  name            String
+  categories      Category      @relation(fields: [categoriesId], references: [id])
+  categoriesId    Int
+  roundQuestion   RoundQuestion @relation(fields: [roundQuestionId], references: [id])
+  roundQuestionId Int
+  choices         Choice[]
+  answerId        Int
+  createAt        DateTime      @default(now())
+  updateAt        DateTime      @default(now())
+}
+
+model RoundQuestion {
+  id            Int        @id @default(autoincrement())
+  question      Question[]
+  round         Round      @relation(fields: [roundId], references: [id])
+  roundId       Int
+  // choiceUser    Int
+  choice        Choice     @relation(fields: [choiceId], references: [id])
+  correctAnswer Boolean
+  createAt      DateTime   @default(now())
+  updateAt      DateTime   @updatedAt
+  choiceId      Int
+}
+
+model Round {
+  id            Int             @id @default(autoincrement())
+  category      Category        @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @default(now())
+  score         Int
+  roundQuestion RoundQuestion[]
+}
+
+model Choice {
+  id            Int             @id @default(autoincrement())
+  choices       Int             @unique
+  question      Question        @relation(fields: [questionId], references: [id])
+  questionId    Int
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @default(now())
+  roundQuestion RoundQuestion[]
+}
+
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_GOOGLE_CLOUD")
 }
 
 generator client {
@@ -95,5 +162,4 @@ model TodoList {
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  level     Int      @default(0)
 }

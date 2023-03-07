@@ -124,9 +124,51 @@ exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.CategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  choices: 'choices',
+  questionId: 'questionId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
+});
+
+exports.Prisma.QuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  categoriesId: 'categoriesId',
+  roundQuestionId: 'roundQuestionId',
+  answerId: 'answerId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.RoundQuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundId: 'roundId',
+  correctAnswer: 'correctAnswer',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  choiceId: 'choiceId'
+});
+
+exports.Prisma.RoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  categoryId: 'categoryId',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  score: 'score'
 });
 
 exports.Prisma.SortOrder = makeEnum({
@@ -139,8 +181,7 @@ exports.Prisma.TodoListScalarFieldEnum = makeEnum({
   task: 'task',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  level: 'level'
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
@@ -156,6 +197,11 @@ exports.Prisma.ModelName = makeEnum({
   BinKitchenMenu: 'BinKitchenMenu',
   BinKitchenOrder: 'BinKitchenOrder',
   BinKitchenOrderItem: 'BinKitchenOrderItem',
+  Category: 'Category',
+  Question: 'Question',
+  RoundQuestion: 'RoundQuestion',
+  Round: 'Round',
+  Choice: 'Choice',
   TodoList: 'TodoList'
 });
 
