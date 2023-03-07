@@ -96,6 +96,14 @@ exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  answerText: 'answerText',
+  quizId: 'quizId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.MenuScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -129,6 +137,22 @@ exports.Prisma.QueryMode = makeEnum({
   insensitive: 'insensitive'
 });
 
+exports.Prisma.QuizCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.QuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  questionText: 'questionText',
+  quizCategoryId: 'quizCategoryId',
+  correctChoiceId: 'correctChoiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
@@ -156,6 +180,9 @@ exports.Prisma.ModelName = makeEnum({
   Menu: 'Menu',
   Order: 'Order',
   OrderItem: 'OrderItem',
+  QuizCategory: 'QuizCategory',
+  Choice: 'Choice',
+  Quiz: 'Quiz',
   TodoList: 'TodoList'
 });
 

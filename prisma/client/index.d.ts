@@ -62,6 +62,42 @@ export type OrderItem = {
 }
 
 /**
+ * Model QuizCategory
+ * 
+ */
+export type QuizCategory = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Choice
+ * 
+ */
+export type Choice = {
+  id: number
+  answerText: string
+  quizId: number | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Quiz
+ * 
+ */
+export type Quiz = {
+  id: number
+  questionText: string
+  quizCategoryId: number
+  correctChoiceId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model TodoList
  * 
  */
@@ -231,6 +267,36 @@ export class PrismaClient<
     * ```
     */
   get orderItem(): Prisma.OrderItemDelegate<GlobalReject>;
+
+  /**
+   * `prisma.quizCategory`: Exposes CRUD operations for the **QuizCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more QuizCategories
+    * const quizCategories = await prisma.quizCategory.findMany()
+    * ```
+    */
+  get quizCategory(): Prisma.QuizCategoryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.choice`: Exposes CRUD operations for the **Choice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Choices
+    * const choices = await prisma.choice.findMany()
+    * ```
+    */
+  get choice(): Prisma.ChoiceDelegate<GlobalReject>;
+
+  /**
+   * `prisma.quiz`: Exposes CRUD operations for the **Quiz** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Quizzes
+    * const quizzes = await prisma.quiz.findMany()
+    * ```
+    */
+  get quiz(): Prisma.QuizDelegate<GlobalReject>;
 
   /**
    * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
@@ -714,6 +780,9 @@ export namespace Prisma {
     Menu: 'Menu',
     Order: 'Order',
     OrderItem: 'OrderItem',
+    QuizCategory: 'QuizCategory',
+    Choice: 'Choice',
+    Quiz: 'Quiz',
     TodoList: 'TodoList'
   };
 
@@ -1000,6 +1069,135 @@ export namespace Prisma {
      * Select specific fields to fetch from the OrderCountOutputType
      */
     select?: OrderCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type QuizCategoryCountOutputType
+   */
+
+
+  export type QuizCategoryCountOutputType = {
+    Quiz: number
+  }
+
+  export type QuizCategoryCountOutputTypeSelect = {
+    Quiz?: boolean
+  }
+
+  export type QuizCategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | QuizCategoryCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? QuizCategoryCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (QuizCategoryCountOutputTypeArgs)
+    ? QuizCategoryCountOutputType 
+    : S extends { select: any } & (QuizCategoryCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof QuizCategoryCountOutputType ? QuizCategoryCountOutputType[P] : never
+  } 
+      : QuizCategoryCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * QuizCategoryCountOutputType without action
+   */
+  export type QuizCategoryCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategoryCountOutputType
+     */
+    select?: QuizCategoryCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type ChoiceCountOutputType
+   */
+
+
+  export type ChoiceCountOutputType = {
+    correctQuiz: number
+  }
+
+  export type ChoiceCountOutputTypeSelect = {
+    correctQuiz?: boolean
+  }
+
+  export type ChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | ChoiceCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? ChoiceCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (ChoiceCountOutputTypeArgs)
+    ? ChoiceCountOutputType 
+    : S extends { select: any } & (ChoiceCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof ChoiceCountOutputType ? ChoiceCountOutputType[P] : never
+  } 
+      : ChoiceCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * ChoiceCountOutputType without action
+   */
+  export type ChoiceCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the ChoiceCountOutputType
+     */
+    select?: ChoiceCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type QuizCountOutputType
+   */
+
+
+  export type QuizCountOutputType = {
+    choices: number
+  }
+
+  export type QuizCountOutputTypeSelect = {
+    choices?: boolean
+  }
+
+  export type QuizCountOutputTypeGetPayload<S extends boolean | null | undefined | QuizCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? QuizCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (QuizCountOutputTypeArgs)
+    ? QuizCountOutputType 
+    : S extends { select: any } & (QuizCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof QuizCountOutputType ? QuizCountOutputType[P] : never
+  } 
+      : QuizCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * QuizCountOutputType without action
+   */
+  export type QuizCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCountOutputType
+     */
+    select?: QuizCountOutputTypeSelect | null
   }
 
 
@@ -5008,6 +5206,3006 @@ export namespace Prisma {
 
 
   /**
+   * Model QuizCategory
+   */
+
+
+  export type AggregateQuizCategory = {
+    _count: QuizCategoryCountAggregateOutputType | null
+    _avg: QuizCategoryAvgAggregateOutputType | null
+    _sum: QuizCategorySumAggregateOutputType | null
+    _min: QuizCategoryMinAggregateOutputType | null
+    _max: QuizCategoryMaxAggregateOutputType | null
+  }
+
+  export type QuizCategoryAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type QuizCategorySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type QuizCategoryMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizCategoryMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizCategoryCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type QuizCategoryAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type QuizCategorySumAggregateInputType = {
+    id?: true
+  }
+
+  export type QuizCategoryMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizCategoryMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizCategoryCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type QuizCategoryAggregateArgs = {
+    /**
+     * Filter which QuizCategory to aggregate.
+     */
+    where?: QuizCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizCategories to fetch.
+     */
+    orderBy?: Enumerable<QuizCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuizCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned QuizCategories
+    **/
+    _count?: true | QuizCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: QuizCategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: QuizCategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuizCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuizCategoryMaxAggregateInputType
+  }
+
+  export type GetQuizCategoryAggregateType<T extends QuizCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuizCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuizCategory[P]>
+      : GetScalarType<T[P], AggregateQuizCategory[P]>
+  }
+
+
+
+
+  export type QuizCategoryGroupByArgs = {
+    where?: QuizCategoryWhereInput
+    orderBy?: Enumerable<QuizCategoryOrderByWithAggregationInput>
+    by: QuizCategoryScalarFieldEnum[]
+    having?: QuizCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuizCategoryCountAggregateInputType | true
+    _avg?: QuizCategoryAvgAggregateInputType
+    _sum?: QuizCategorySumAggregateInputType
+    _min?: QuizCategoryMinAggregateInputType
+    _max?: QuizCategoryMaxAggregateInputType
+  }
+
+
+  export type QuizCategoryGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: QuizCategoryCountAggregateOutputType | null
+    _avg: QuizCategoryAvgAggregateOutputType | null
+    _sum: QuizCategorySumAggregateOutputType | null
+    _min: QuizCategoryMinAggregateOutputType | null
+    _max: QuizCategoryMaxAggregateOutputType | null
+  }
+
+  type GetQuizCategoryGroupByPayload<T extends QuizCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<QuizCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuizCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuizCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], QuizCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuizCategorySelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Quiz?: boolean | QuizCategory$QuizArgs
+    _count?: boolean | QuizCategoryCountOutputTypeArgs
+  }
+
+
+  export type QuizCategoryInclude = {
+    Quiz?: boolean | QuizCategory$QuizArgs
+    _count?: boolean | QuizCategoryCountOutputTypeArgs
+  }
+
+  export type QuizCategoryGetPayload<S extends boolean | null | undefined | QuizCategoryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? QuizCategory :
+    S extends undefined ? never :
+    S extends { include: any } & (QuizCategoryArgs | QuizCategoryFindManyArgs)
+    ? QuizCategory  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'Quiz' ? Array < QuizGetPayload<S['include'][P]>>  :
+        P extends '_count' ? QuizCategoryCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (QuizCategoryArgs | QuizCategoryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'Quiz' ? Array < QuizGetPayload<S['select'][P]>>  :
+        P extends '_count' ? QuizCategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof QuizCategory ? QuizCategory[P] : never
+  } 
+      : QuizCategory
+
+
+  type QuizCategoryCountArgs = 
+    Omit<QuizCategoryFindManyArgs, 'select' | 'include'> & {
+      select?: QuizCategoryCountAggregateInputType | true
+    }
+
+  export interface QuizCategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one QuizCategory that matches the filter.
+     * @param {QuizCategoryFindUniqueArgs} args - Arguments to find a QuizCategory
+     * @example
+     * // Get one QuizCategory
+     * const quizCategory = await prisma.quizCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends QuizCategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuizCategoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'QuizCategory'> extends True ? Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>> : Prisma__QuizCategoryClient<QuizCategoryGetPayload<T> | null, null>
+
+    /**
+     * Find one QuizCategory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {QuizCategoryFindUniqueOrThrowArgs} args - Arguments to find a QuizCategory
+     * @example
+     * // Get one QuizCategory
+     * const quizCategory = await prisma.quizCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends QuizCategoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuizCategoryFindUniqueOrThrowArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Find the first QuizCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryFindFirstArgs} args - Arguments to find a QuizCategory
+     * @example
+     * // Get one QuizCategory
+     * const quizCategory = await prisma.quizCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends QuizCategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuizCategoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'QuizCategory'> extends True ? Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>> : Prisma__QuizCategoryClient<QuizCategoryGetPayload<T> | null, null>
+
+    /**
+     * Find the first QuizCategory that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryFindFirstOrThrowArgs} args - Arguments to find a QuizCategory
+     * @example
+     * // Get one QuizCategory
+     * const quizCategory = await prisma.quizCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends QuizCategoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuizCategoryFindFirstOrThrowArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Find zero or more QuizCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all QuizCategories
+     * const quizCategories = await prisma.quizCategory.findMany()
+     * 
+     * // Get first 10 QuizCategories
+     * const quizCategories = await prisma.quizCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const quizCategoryWithIdOnly = await prisma.quizCategory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends QuizCategoryFindManyArgs>(
+      args?: SelectSubset<T, QuizCategoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuizCategoryGetPayload<T>>>
+
+    /**
+     * Create a QuizCategory.
+     * @param {QuizCategoryCreateArgs} args - Arguments to create a QuizCategory.
+     * @example
+     * // Create one QuizCategory
+     * const QuizCategory = await prisma.quizCategory.create({
+     *   data: {
+     *     // ... data to create a QuizCategory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends QuizCategoryCreateArgs>(
+      args: SelectSubset<T, QuizCategoryCreateArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Create many QuizCategories.
+     *     @param {QuizCategoryCreateManyArgs} args - Arguments to create many QuizCategories.
+     *     @example
+     *     // Create many QuizCategories
+     *     const quizCategory = await prisma.quizCategory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends QuizCategoryCreateManyArgs>(
+      args?: SelectSubset<T, QuizCategoryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a QuizCategory.
+     * @param {QuizCategoryDeleteArgs} args - Arguments to delete one QuizCategory.
+     * @example
+     * // Delete one QuizCategory
+     * const QuizCategory = await prisma.quizCategory.delete({
+     *   where: {
+     *     // ... filter to delete one QuizCategory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends QuizCategoryDeleteArgs>(
+      args: SelectSubset<T, QuizCategoryDeleteArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Update one QuizCategory.
+     * @param {QuizCategoryUpdateArgs} args - Arguments to update one QuizCategory.
+     * @example
+     * // Update one QuizCategory
+     * const quizCategory = await prisma.quizCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends QuizCategoryUpdateArgs>(
+      args: SelectSubset<T, QuizCategoryUpdateArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Delete zero or more QuizCategories.
+     * @param {QuizCategoryDeleteManyArgs} args - Arguments to filter QuizCategories to delete.
+     * @example
+     * // Delete a few QuizCategories
+     * const { count } = await prisma.quizCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends QuizCategoryDeleteManyArgs>(
+      args?: SelectSubset<T, QuizCategoryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuizCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many QuizCategories
+     * const quizCategory = await prisma.quizCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends QuizCategoryUpdateManyArgs>(
+      args: SelectSubset<T, QuizCategoryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one QuizCategory.
+     * @param {QuizCategoryUpsertArgs} args - Arguments to update or create a QuizCategory.
+     * @example
+     * // Update or create a QuizCategory
+     * const quizCategory = await prisma.quizCategory.upsert({
+     *   create: {
+     *     // ... data to create a QuizCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the QuizCategory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends QuizCategoryUpsertArgs>(
+      args: SelectSubset<T, QuizCategoryUpsertArgs>
+    ): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T>>
+
+    /**
+     * Count the number of QuizCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryCountArgs} args - Arguments to filter QuizCategories to count.
+     * @example
+     * // Count the number of QuizCategories
+     * const count = await prisma.quizCategory.count({
+     *   where: {
+     *     // ... the filter for the QuizCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuizCategoryCountArgs>(
+      args?: Subset<T, QuizCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuizCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a QuizCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuizCategoryAggregateArgs>(args: Subset<T, QuizCategoryAggregateArgs>): Prisma.PrismaPromise<GetQuizCategoryAggregateType<T>>
+
+    /**
+     * Group by QuizCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuizCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuizCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: QuizCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuizCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuizCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for QuizCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__QuizCategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    Quiz<T extends QuizCategory$QuizArgs= {}>(args?: Subset<T, QuizCategory$QuizArgs>): Prisma.PrismaPromise<Array<QuizGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * QuizCategory base type for findUnique actions
+   */
+  export type QuizCategoryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter, which QuizCategory to fetch.
+     */
+    where: QuizCategoryWhereUniqueInput
+  }
+
+  /**
+   * QuizCategory findUnique
+   */
+  export interface QuizCategoryFindUniqueArgs extends QuizCategoryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * QuizCategory findUniqueOrThrow
+   */
+  export type QuizCategoryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter, which QuizCategory to fetch.
+     */
+    where: QuizCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * QuizCategory base type for findFirst actions
+   */
+  export type QuizCategoryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter, which QuizCategory to fetch.
+     */
+    where?: QuizCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizCategories to fetch.
+     */
+    orderBy?: Enumerable<QuizCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuizCategories.
+     */
+    cursor?: QuizCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuizCategories.
+     */
+    distinct?: Enumerable<QuizCategoryScalarFieldEnum>
+  }
+
+  /**
+   * QuizCategory findFirst
+   */
+  export interface QuizCategoryFindFirstArgs extends QuizCategoryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * QuizCategory findFirstOrThrow
+   */
+  export type QuizCategoryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter, which QuizCategory to fetch.
+     */
+    where?: QuizCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizCategories to fetch.
+     */
+    orderBy?: Enumerable<QuizCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuizCategories.
+     */
+    cursor?: QuizCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuizCategories.
+     */
+    distinct?: Enumerable<QuizCategoryScalarFieldEnum>
+  }
+
+
+  /**
+   * QuizCategory findMany
+   */
+  export type QuizCategoryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter, which QuizCategories to fetch.
+     */
+    where?: QuizCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizCategories to fetch.
+     */
+    orderBy?: Enumerable<QuizCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing QuizCategories.
+     */
+    cursor?: QuizCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizCategories.
+     */
+    skip?: number
+    distinct?: Enumerable<QuizCategoryScalarFieldEnum>
+  }
+
+
+  /**
+   * QuizCategory create
+   */
+  export type QuizCategoryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * The data needed to create a QuizCategory.
+     */
+    data: XOR<QuizCategoryCreateInput, QuizCategoryUncheckedCreateInput>
+  }
+
+
+  /**
+   * QuizCategory createMany
+   */
+  export type QuizCategoryCreateManyArgs = {
+    /**
+     * The data used to create many QuizCategories.
+     */
+    data: Enumerable<QuizCategoryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * QuizCategory update
+   */
+  export type QuizCategoryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * The data needed to update a QuizCategory.
+     */
+    data: XOR<QuizCategoryUpdateInput, QuizCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which QuizCategory to update.
+     */
+    where: QuizCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * QuizCategory updateMany
+   */
+  export type QuizCategoryUpdateManyArgs = {
+    /**
+     * The data used to update QuizCategories.
+     */
+    data: XOR<QuizCategoryUpdateManyMutationInput, QuizCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which QuizCategories to update
+     */
+    where?: QuizCategoryWhereInput
+  }
+
+
+  /**
+   * QuizCategory upsert
+   */
+  export type QuizCategoryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * The filter to search for the QuizCategory to update in case it exists.
+     */
+    where: QuizCategoryWhereUniqueInput
+    /**
+     * In case the QuizCategory found by the `where` argument doesn't exist, create a new QuizCategory with this data.
+     */
+    create: XOR<QuizCategoryCreateInput, QuizCategoryUncheckedCreateInput>
+    /**
+     * In case the QuizCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuizCategoryUpdateInput, QuizCategoryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * QuizCategory delete
+   */
+  export type QuizCategoryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+    /**
+     * Filter which QuizCategory to delete.
+     */
+    where: QuizCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * QuizCategory deleteMany
+   */
+  export type QuizCategoryDeleteManyArgs = {
+    /**
+     * Filter which QuizCategories to delete
+     */
+    where?: QuizCategoryWhereInput
+  }
+
+
+  /**
+   * QuizCategory.Quiz
+   */
+  export type QuizCategory$QuizArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    where?: QuizWhereInput
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    cursor?: QuizWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<QuizScalarFieldEnum>
+  }
+
+
+  /**
+   * QuizCategory without action
+   */
+  export type QuizCategoryArgs = {
+    /**
+     * Select specific fields to fetch from the QuizCategory
+     */
+    select?: QuizCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizCategoryInclude | null
+  }
+
+
+
+  /**
+   * Model Choice
+   */
+
+
+  export type AggregateChoice = {
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
+  }
+
+  export type ChoiceAvgAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+  }
+
+  export type ChoiceSumAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+  }
+
+  export type ChoiceMinAggregateOutputType = {
+    id: number | null
+    answerText: string | null
+    quizId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChoiceMaxAggregateOutputType = {
+    id: number | null
+    answerText: string | null
+    quizId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChoiceCountAggregateOutputType = {
+    id: number
+    answerText: number
+    quizId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChoiceAvgAggregateInputType = {
+    id?: true
+    quizId?: true
+  }
+
+  export type ChoiceSumAggregateInputType = {
+    id?: true
+    quizId?: true
+  }
+
+  export type ChoiceMinAggregateInputType = {
+    id?: true
+    answerText?: true
+    quizId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChoiceMaxAggregateInputType = {
+    id?: true
+    answerText?: true
+    quizId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChoiceCountAggregateInputType = {
+    id?: true
+    answerText?: true
+    quizId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChoiceAggregateArgs = {
+    /**
+     * Filter which Choice to aggregate.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Choices
+    **/
+    _count?: true | ChoiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChoiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChoiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChoiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChoiceMaxAggregateInputType
+  }
+
+  export type GetChoiceAggregateType<T extends ChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateChoice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChoice[P]>
+      : GetScalarType<T[P], AggregateChoice[P]>
+  }
+
+
+
+
+  export type ChoiceGroupByArgs = {
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithAggregationInput>
+    by: ChoiceScalarFieldEnum[]
+    having?: ChoiceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChoiceCountAggregateInputType | true
+    _avg?: ChoiceAvgAggregateInputType
+    _sum?: ChoiceSumAggregateInputType
+    _min?: ChoiceMinAggregateInputType
+    _max?: ChoiceMaxAggregateInputType
+  }
+
+
+  export type ChoiceGroupByOutputType = {
+    id: number
+    answerText: string
+    quizId: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
+  }
+
+  type GetChoiceGroupByPayload<T extends ChoiceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<ChoiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChoiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChoiceSelect = {
+    id?: boolean
+    answerText?: boolean
+    quiz?: boolean | QuizArgs
+    quizId?: boolean
+    correctQuiz?: boolean | Choice$correctQuizArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | ChoiceCountOutputTypeArgs
+  }
+
+
+  export type ChoiceInclude = {
+    quiz?: boolean | QuizArgs
+    correctQuiz?: boolean | Choice$correctQuizArgs
+    _count?: boolean | ChoiceCountOutputTypeArgs
+  }
+
+  export type ChoiceGetPayload<S extends boolean | null | undefined | ChoiceArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Choice :
+    S extends undefined ? never :
+    S extends { include: any } & (ChoiceArgs | ChoiceFindManyArgs)
+    ? Choice  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'quiz' ? QuizGetPayload<S['include'][P]> | null :
+        P extends 'correctQuiz' ? Array < QuizGetPayload<S['include'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (ChoiceArgs | ChoiceFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'quiz' ? QuizGetPayload<S['select'][P]> | null :
+        P extends 'correctQuiz' ? Array < QuizGetPayload<S['select'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Choice ? Choice[P] : never
+  } 
+      : Choice
+
+
+  type ChoiceCountArgs = 
+    Omit<ChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: ChoiceCountAggregateInputType | true
+    }
+
+  export interface ChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Choice that matches the filter.
+     * @param {ChoiceFindUniqueArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, ChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find one Choice that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ChoiceFindUniqueOrThrowArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindUniqueOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Find the first Choice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindFirstArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, ChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find the first Choice that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindFirstOrThrowArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindFirstOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Find zero or more Choices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Choices
+     * const choices = await prisma.choice.findMany()
+     * 
+     * // Get first 10 Choices
+     * const choices = await prisma.choice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const choiceWithIdOnly = await prisma.choice.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ChoiceFindManyArgs>(
+      args?: SelectSubset<T, ChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>>
+
+    /**
+     * Create a Choice.
+     * @param {ChoiceCreateArgs} args - Arguments to create a Choice.
+     * @example
+     * // Create one Choice
+     * const Choice = await prisma.choice.create({
+     *   data: {
+     *     // ... data to create a Choice
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ChoiceCreateArgs>(
+      args: SelectSubset<T, ChoiceCreateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Create many Choices.
+     *     @param {ChoiceCreateManyArgs} args - Arguments to create many Choices.
+     *     @example
+     *     // Create many Choices
+     *     const choice = await prisma.choice.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ChoiceCreateManyArgs>(
+      args?: SelectSubset<T, ChoiceCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Choice.
+     * @param {ChoiceDeleteArgs} args - Arguments to delete one Choice.
+     * @example
+     * // Delete one Choice
+     * const Choice = await prisma.choice.delete({
+     *   where: {
+     *     // ... filter to delete one Choice
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ChoiceDeleteArgs>(
+      args: SelectSubset<T, ChoiceDeleteArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Update one Choice.
+     * @param {ChoiceUpdateArgs} args - Arguments to update one Choice.
+     * @example
+     * // Update one Choice
+     * const choice = await prisma.choice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ChoiceUpdateArgs>(
+      args: SelectSubset<T, ChoiceUpdateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Delete zero or more Choices.
+     * @param {ChoiceDeleteManyArgs} args - Arguments to filter Choices to delete.
+     * @example
+     * // Delete a few Choices
+     * const { count } = await prisma.choice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, ChoiceDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Choices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Choices
+     * const choice = await prisma.choice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ChoiceUpdateManyArgs>(
+      args: SelectSubset<T, ChoiceUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Choice.
+     * @param {ChoiceUpsertArgs} args - Arguments to update or create a Choice.
+     * @example
+     * // Update or create a Choice
+     * const choice = await prisma.choice.upsert({
+     *   create: {
+     *     // ... data to create a Choice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Choice we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ChoiceUpsertArgs>(
+      args: SelectSubset<T, ChoiceUpsertArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Count the number of Choices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceCountArgs} args - Arguments to filter Choices to count.
+     * @example
+     * // Count the number of Choices
+     * const count = await prisma.choice.count({
+     *   where: {
+     *     // ... the filter for the Choices we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChoiceCountArgs>(
+      args?: Subset<T, ChoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Choice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChoiceAggregateArgs>(args: Subset<T, ChoiceAggregateArgs>): Prisma.PrismaPromise<GetChoiceAggregateType<T>>
+
+    /**
+     * Group by Choice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: ChoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Choice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__ChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    quiz<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
+
+    correctQuiz<T extends Choice$correctQuizArgs= {}>(args?: Subset<T, Choice$correctQuizArgs>): Prisma.PrismaPromise<Array<QuizGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Choice base type for findUnique actions
+   */
+  export type ChoiceFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+  /**
+   * Choice findUnique
+   */
+  export interface ChoiceFindUniqueArgs extends ChoiceFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Choice findUniqueOrThrow
+   */
+  export type ChoiceFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice base type for findFirst actions
+   */
+  export type ChoiceFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Choices.
+     */
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+  /**
+   * Choice findFirst
+   */
+  export interface ChoiceFindFirstArgs extends ChoiceFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Choice findFirstOrThrow
+   */
+  export type ChoiceFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Choices.
+     */
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice findMany
+   */
+  export type ChoiceFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choices to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice create
+   */
+  export type ChoiceCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The data needed to create a Choice.
+     */
+    data: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
+  }
+
+
+  /**
+   * Choice createMany
+   */
+  export type ChoiceCreateManyArgs = {
+    /**
+     * The data used to create many Choices.
+     */
+    data: Enumerable<ChoiceCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Choice update
+   */
+  export type ChoiceUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The data needed to update a Choice.
+     */
+    data: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
+    /**
+     * Choose, which Choice to update.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice updateMany
+   */
+  export type ChoiceUpdateManyArgs = {
+    /**
+     * The data used to update Choices.
+     */
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which Choices to update
+     */
+    where?: ChoiceWhereInput
+  }
+
+
+  /**
+   * Choice upsert
+   */
+  export type ChoiceUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The filter to search for the Choice to update in case it exists.
+     */
+    where: ChoiceWhereUniqueInput
+    /**
+     * In case the Choice found by the `where` argument doesn't exist, create a new Choice with this data.
+     */
+    create: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
+    /**
+     * In case the Choice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Choice delete
+   */
+  export type ChoiceDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter which Choice to delete.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice deleteMany
+   */
+  export type ChoiceDeleteManyArgs = {
+    /**
+     * Filter which Choices to delete
+     */
+    where?: ChoiceWhereInput
+  }
+
+
+  /**
+   * Choice.correctQuiz
+   */
+  export type Choice$correctQuizArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    where?: QuizWhereInput
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    cursor?: QuizWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<QuizScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice without action
+   */
+  export type ChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+  }
+
+
+
+  /**
+   * Model Quiz
+   */
+
+
+  export type AggregateQuiz = {
+    _count: QuizCountAggregateOutputType | null
+    _avg: QuizAvgAggregateOutputType | null
+    _sum: QuizSumAggregateOutputType | null
+    _min: QuizMinAggregateOutputType | null
+    _max: QuizMaxAggregateOutputType | null
+  }
+
+  export type QuizAvgAggregateOutputType = {
+    id: number | null
+    quizCategoryId: number | null
+    correctChoiceId: number | null
+  }
+
+  export type QuizSumAggregateOutputType = {
+    id: number | null
+    quizCategoryId: number | null
+    correctChoiceId: number | null
+  }
+
+  export type QuizMinAggregateOutputType = {
+    id: number | null
+    questionText: string | null
+    quizCategoryId: number | null
+    correctChoiceId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizMaxAggregateOutputType = {
+    id: number | null
+    questionText: string | null
+    quizCategoryId: number | null
+    correctChoiceId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizCountAggregateOutputType = {
+    id: number
+    questionText: number
+    quizCategoryId: number
+    correctChoiceId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type QuizAvgAggregateInputType = {
+    id?: true
+    quizCategoryId?: true
+    correctChoiceId?: true
+  }
+
+  export type QuizSumAggregateInputType = {
+    id?: true
+    quizCategoryId?: true
+    correctChoiceId?: true
+  }
+
+  export type QuizMinAggregateInputType = {
+    id?: true
+    questionText?: true
+    quizCategoryId?: true
+    correctChoiceId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizMaxAggregateInputType = {
+    id?: true
+    questionText?: true
+    quizCategoryId?: true
+    correctChoiceId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizCountAggregateInputType = {
+    id?: true
+    questionText?: true
+    quizCategoryId?: true
+    correctChoiceId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type QuizAggregateArgs = {
+    /**
+     * Filter which Quiz to aggregate.
+     */
+    where?: QuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Quizzes to fetch.
+     */
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Quizzes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Quizzes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Quizzes
+    **/
+    _count?: true | QuizCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: QuizAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: QuizSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuizMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuizMaxAggregateInputType
+  }
+
+  export type GetQuizAggregateType<T extends QuizAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuiz]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuiz[P]>
+      : GetScalarType<T[P], AggregateQuiz[P]>
+  }
+
+
+
+
+  export type QuizGroupByArgs = {
+    where?: QuizWhereInput
+    orderBy?: Enumerable<QuizOrderByWithAggregationInput>
+    by: QuizScalarFieldEnum[]
+    having?: QuizScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuizCountAggregateInputType | true
+    _avg?: QuizAvgAggregateInputType
+    _sum?: QuizSumAggregateInputType
+    _min?: QuizMinAggregateInputType
+    _max?: QuizMaxAggregateInputType
+  }
+
+
+  export type QuizGroupByOutputType = {
+    id: number
+    questionText: string
+    quizCategoryId: number
+    correctChoiceId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: QuizCountAggregateOutputType | null
+    _avg: QuizAvgAggregateOutputType | null
+    _sum: QuizSumAggregateOutputType | null
+    _min: QuizMinAggregateOutputType | null
+    _max: QuizMaxAggregateOutputType | null
+  }
+
+  type GetQuizGroupByPayload<T extends QuizGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<QuizGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuizGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuizGroupByOutputType[P]>
+            : GetScalarType<T[P], QuizGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuizSelect = {
+    id?: boolean
+    questionText?: boolean
+    category?: boolean | QuizCategoryArgs
+    quizCategoryId?: boolean
+    choices?: boolean | Quiz$choicesArgs
+    correctChoice?: boolean | ChoiceArgs
+    correctChoiceId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | QuizCountOutputTypeArgs
+  }
+
+
+  export type QuizInclude = {
+    category?: boolean | QuizCategoryArgs
+    choices?: boolean | Quiz$choicesArgs
+    correctChoice?: boolean | ChoiceArgs
+    _count?: boolean | QuizCountOutputTypeArgs
+  }
+
+  export type QuizGetPayload<S extends boolean | null | undefined | QuizArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Quiz :
+    S extends undefined ? never :
+    S extends { include: any } & (QuizArgs | QuizFindManyArgs)
+    ? Quiz  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'category' ? QuizCategoryGetPayload<S['include'][P]> :
+        P extends 'choices' ? Array < ChoiceGetPayload<S['include'][P]>>  :
+        P extends 'correctChoice' ? ChoiceGetPayload<S['include'][P]> :
+        P extends '_count' ? QuizCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (QuizArgs | QuizFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'category' ? QuizCategoryGetPayload<S['select'][P]> :
+        P extends 'choices' ? Array < ChoiceGetPayload<S['select'][P]>>  :
+        P extends 'correctChoice' ? ChoiceGetPayload<S['select'][P]> :
+        P extends '_count' ? QuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Quiz ? Quiz[P] : never
+  } 
+      : Quiz
+
+
+  type QuizCountArgs = 
+    Omit<QuizFindManyArgs, 'select' | 'include'> & {
+      select?: QuizCountAggregateInputType | true
+    }
+
+  export interface QuizDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Quiz that matches the filter.
+     * @param {QuizFindUniqueArgs} args - Arguments to find a Quiz
+     * @example
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends QuizFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuizFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Quiz'> extends True ? Prisma__QuizClient<QuizGetPayload<T>> : Prisma__QuizClient<QuizGetPayload<T> | null, null>
+
+    /**
+     * Find one Quiz that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {QuizFindUniqueOrThrowArgs} args - Arguments to find a Quiz
+     * @example
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends QuizFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuizFindUniqueOrThrowArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Find the first Quiz that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizFindFirstArgs} args - Arguments to find a Quiz
+     * @example
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends QuizFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuizFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Quiz'> extends True ? Prisma__QuizClient<QuizGetPayload<T>> : Prisma__QuizClient<QuizGetPayload<T> | null, null>
+
+    /**
+     * Find the first Quiz that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizFindFirstOrThrowArgs} args - Arguments to find a Quiz
+     * @example
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends QuizFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuizFindFirstOrThrowArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Find zero or more Quizzes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Quizzes
+     * const quizzes = await prisma.quiz.findMany()
+     * 
+     * // Get first 10 Quizzes
+     * const quizzes = await prisma.quiz.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const quizWithIdOnly = await prisma.quiz.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends QuizFindManyArgs>(
+      args?: SelectSubset<T, QuizFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuizGetPayload<T>>>
+
+    /**
+     * Create a Quiz.
+     * @param {QuizCreateArgs} args - Arguments to create a Quiz.
+     * @example
+     * // Create one Quiz
+     * const Quiz = await prisma.quiz.create({
+     *   data: {
+     *     // ... data to create a Quiz
+     *   }
+     * })
+     * 
+    **/
+    create<T extends QuizCreateArgs>(
+      args: SelectSubset<T, QuizCreateArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Create many Quizzes.
+     *     @param {QuizCreateManyArgs} args - Arguments to create many Quizzes.
+     *     @example
+     *     // Create many Quizzes
+     *     const quiz = await prisma.quiz.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends QuizCreateManyArgs>(
+      args?: SelectSubset<T, QuizCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Quiz.
+     * @param {QuizDeleteArgs} args - Arguments to delete one Quiz.
+     * @example
+     * // Delete one Quiz
+     * const Quiz = await prisma.quiz.delete({
+     *   where: {
+     *     // ... filter to delete one Quiz
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends QuizDeleteArgs>(
+      args: SelectSubset<T, QuizDeleteArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Update one Quiz.
+     * @param {QuizUpdateArgs} args - Arguments to update one Quiz.
+     * @example
+     * // Update one Quiz
+     * const quiz = await prisma.quiz.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends QuizUpdateArgs>(
+      args: SelectSubset<T, QuizUpdateArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Delete zero or more Quizzes.
+     * @param {QuizDeleteManyArgs} args - Arguments to filter Quizzes to delete.
+     * @example
+     * // Delete a few Quizzes
+     * const { count } = await prisma.quiz.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends QuizDeleteManyArgs>(
+      args?: SelectSubset<T, QuizDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Quizzes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Quizzes
+     * const quiz = await prisma.quiz.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends QuizUpdateManyArgs>(
+      args: SelectSubset<T, QuizUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Quiz.
+     * @param {QuizUpsertArgs} args - Arguments to update or create a Quiz.
+     * @example
+     * // Update or create a Quiz
+     * const quiz = await prisma.quiz.upsert({
+     *   create: {
+     *     // ... data to create a Quiz
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Quiz we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends QuizUpsertArgs>(
+      args: SelectSubset<T, QuizUpsertArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
+
+    /**
+     * Count the number of Quizzes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizCountArgs} args - Arguments to filter Quizzes to count.
+     * @example
+     * // Count the number of Quizzes
+     * const count = await prisma.quiz.count({
+     *   where: {
+     *     // ... the filter for the Quizzes we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuizCountArgs>(
+      args?: Subset<T, QuizCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuizCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Quiz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuizAggregateArgs>(args: Subset<T, QuizAggregateArgs>): Prisma.PrismaPromise<GetQuizAggregateType<T>>
+
+    /**
+     * Group by Quiz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuizGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuizGroupByArgs['orderBy'] }
+        : { orderBy?: QuizGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuizGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuizGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Quiz.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__QuizClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    category<T extends QuizCategoryArgs= {}>(args?: Subset<T, QuizCategoryArgs>): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T> | Null>;
+
+    choices<T extends Quiz$choicesArgs= {}>(args?: Subset<T, Quiz$choicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
+
+    correctChoice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Quiz base type for findUnique actions
+   */
+  export type QuizFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter, which Quiz to fetch.
+     */
+    where: QuizWhereUniqueInput
+  }
+
+  /**
+   * Quiz findUnique
+   */
+  export interface QuizFindUniqueArgs extends QuizFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Quiz findUniqueOrThrow
+   */
+  export type QuizFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter, which Quiz to fetch.
+     */
+    where: QuizWhereUniqueInput
+  }
+
+
+  /**
+   * Quiz base type for findFirst actions
+   */
+  export type QuizFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter, which Quiz to fetch.
+     */
+    where?: QuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Quizzes to fetch.
+     */
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Quizzes.
+     */
+    cursor?: QuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Quizzes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Quizzes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Quizzes.
+     */
+    distinct?: Enumerable<QuizScalarFieldEnum>
+  }
+
+  /**
+   * Quiz findFirst
+   */
+  export interface QuizFindFirstArgs extends QuizFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Quiz findFirstOrThrow
+   */
+  export type QuizFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter, which Quiz to fetch.
+     */
+    where?: QuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Quizzes to fetch.
+     */
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Quizzes.
+     */
+    cursor?: QuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Quizzes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Quizzes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Quizzes.
+     */
+    distinct?: Enumerable<QuizScalarFieldEnum>
+  }
+
+
+  /**
+   * Quiz findMany
+   */
+  export type QuizFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter, which Quizzes to fetch.
+     */
+    where?: QuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Quizzes to fetch.
+     */
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Quizzes.
+     */
+    cursor?: QuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Quizzes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Quizzes.
+     */
+    skip?: number
+    distinct?: Enumerable<QuizScalarFieldEnum>
+  }
+
+
+  /**
+   * Quiz create
+   */
+  export type QuizCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * The data needed to create a Quiz.
+     */
+    data: XOR<QuizCreateInput, QuizUncheckedCreateInput>
+  }
+
+
+  /**
+   * Quiz createMany
+   */
+  export type QuizCreateManyArgs = {
+    /**
+     * The data used to create many Quizzes.
+     */
+    data: Enumerable<QuizCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Quiz update
+   */
+  export type QuizUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * The data needed to update a Quiz.
+     */
+    data: XOR<QuizUpdateInput, QuizUncheckedUpdateInput>
+    /**
+     * Choose, which Quiz to update.
+     */
+    where: QuizWhereUniqueInput
+  }
+
+
+  /**
+   * Quiz updateMany
+   */
+  export type QuizUpdateManyArgs = {
+    /**
+     * The data used to update Quizzes.
+     */
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyInput>
+    /**
+     * Filter which Quizzes to update
+     */
+    where?: QuizWhereInput
+  }
+
+
+  /**
+   * Quiz upsert
+   */
+  export type QuizUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * The filter to search for the Quiz to update in case it exists.
+     */
+    where: QuizWhereUniqueInput
+    /**
+     * In case the Quiz found by the `where` argument doesn't exist, create a new Quiz with this data.
+     */
+    create: XOR<QuizCreateInput, QuizUncheckedCreateInput>
+    /**
+     * In case the Quiz was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuizUpdateInput, QuizUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Quiz delete
+   */
+  export type QuizDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+    /**
+     * Filter which Quiz to delete.
+     */
+    where: QuizWhereUniqueInput
+  }
+
+
+  /**
+   * Quiz deleteMany
+   */
+  export type QuizDeleteManyArgs = {
+    /**
+     * Filter which Quizzes to delete
+     */
+    where?: QuizWhereInput
+  }
+
+
+  /**
+   * Quiz.choices
+   */
+  export type Quiz$choicesArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    cursor?: ChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Quiz without action
+   */
+  export type QuizArgs = {
+    /**
+     * Select specific fields to fetch from the Quiz
+     */
+    select?: QuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuizInclude | null
+  }
+
+
+
+  /**
    * Model TodoList
    */
 
@@ -5948,6 +9146,17 @@ export namespace Prisma {
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
+  export const ChoiceScalarFieldEnum: {
+    id: 'id',
+    answerText: 'answerText',
+    quizId: 'quizId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
+
+
   export const MenuScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -5991,6 +9200,28 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const QuizCategoryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type QuizCategoryScalarFieldEnum = (typeof QuizCategoryScalarFieldEnum)[keyof typeof QuizCategoryScalarFieldEnum]
+
+
+  export const QuizScalarFieldEnum: {
+    id: 'id',
+    questionText: 'questionText',
+    quizCategoryId: 'quizCategoryId',
+    correctChoiceId: 'correctChoiceId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6236,6 +9467,159 @@ export namespace Prisma {
     orderId?: IntNullableWithAggregatesFilter | number | null
     quantity?: IntWithAggregatesFilter | number
     totalPrice?: FloatWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type QuizCategoryWhereInput = {
+    AND?: Enumerable<QuizCategoryWhereInput>
+    OR?: Enumerable<QuizCategoryWhereInput>
+    NOT?: Enumerable<QuizCategoryWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    Quiz?: QuizListRelationFilter
+  }
+
+  export type QuizCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    Quiz?: QuizOrderByRelationAggregateInput
+  }
+
+  export type QuizCategoryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type QuizCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: QuizCategoryCountOrderByAggregateInput
+    _avg?: QuizCategoryAvgOrderByAggregateInput
+    _max?: QuizCategoryMaxOrderByAggregateInput
+    _min?: QuizCategoryMinOrderByAggregateInput
+    _sum?: QuizCategorySumOrderByAggregateInput
+  }
+
+  export type QuizCategoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuizCategoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuizCategoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuizCategoryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type ChoiceWhereInput = {
+    AND?: Enumerable<ChoiceWhereInput>
+    OR?: Enumerable<ChoiceWhereInput>
+    NOT?: Enumerable<ChoiceWhereInput>
+    id?: IntFilter | number
+    answerText?: StringFilter | string
+    quiz?: XOR<QuizRelationFilter, QuizWhereInput> | null
+    quizId?: IntNullableFilter | number | null
+    correctQuiz?: QuizListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ChoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    answerText?: SortOrder
+    quiz?: QuizOrderByWithRelationInput
+    quizId?: SortOrder
+    correctQuiz?: QuizOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceWhereUniqueInput = {
+    id?: number
+  }
+
+  export type ChoiceOrderByWithAggregationInput = {
+    id?: SortOrder
+    answerText?: SortOrder
+    quizId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChoiceCountOrderByAggregateInput
+    _avg?: ChoiceAvgOrderByAggregateInput
+    _max?: ChoiceMaxOrderByAggregateInput
+    _min?: ChoiceMinOrderByAggregateInput
+    _sum?: ChoiceSumOrderByAggregateInput
+  }
+
+  export type ChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    answerText?: StringWithAggregatesFilter | string
+    quizId?: IntNullableWithAggregatesFilter | number | null
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type QuizWhereInput = {
+    AND?: Enumerable<QuizWhereInput>
+    OR?: Enumerable<QuizWhereInput>
+    NOT?: Enumerable<QuizWhereInput>
+    id?: IntFilter | number
+    questionText?: StringFilter | string
+    category?: XOR<QuizCategoryRelationFilter, QuizCategoryWhereInput>
+    quizCategoryId?: IntFilter | number
+    choices?: ChoiceListRelationFilter
+    correctChoice?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    correctChoiceId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type QuizOrderByWithRelationInput = {
+    id?: SortOrder
+    questionText?: SortOrder
+    category?: QuizCategoryOrderByWithRelationInput
+    quizCategoryId?: SortOrder
+    choices?: ChoiceOrderByRelationAggregateInput
+    correctChoice?: ChoiceOrderByWithRelationInput
+    correctChoiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizWhereUniqueInput = {
+    id?: number
+  }
+
+  export type QuizOrderByWithAggregationInput = {
+    id?: SortOrder
+    questionText?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: QuizCountOrderByAggregateInput
+    _avg?: QuizAvgOrderByAggregateInput
+    _max?: QuizMaxOrderByAggregateInput
+    _min?: QuizMinOrderByAggregateInput
+    _sum?: QuizSumOrderByAggregateInput
+  }
+
+  export type QuizScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuizScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuizScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuizScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    questionText?: StringWithAggregatesFilter | string
+    quizCategoryId?: IntWithAggregatesFilter | number
+    correctChoiceId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -6529,6 +9913,174 @@ export namespace Prisma {
     orderId?: NullableIntFieldUpdateOperationsInput | number | null
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCategoryCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Quiz?: QuizCreateNestedManyWithoutCategoryInput
+  }
+
+  export type QuizCategoryUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Quiz?: QuizUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type QuizCategoryUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Quiz?: QuizUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type QuizCategoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Quiz?: QuizUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type QuizCategoryCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCategoryUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCategoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateInput = {
+    answerText: string
+    quiz?: QuizCreateNestedOneWithoutChoicesInput
+    correctQuiz?: QuizCreateNestedManyWithoutCorrectChoiceInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateInput = {
+    id?: number
+    answerText: string
+    quizId?: number | null
+    correctQuiz?: QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUpdateInput = {
+    answerText?: StringFieldUpdateOperationsInput | string
+    quiz?: QuizUpdateOneWithoutChoicesNestedInput
+    correctQuiz?: QuizUpdateManyWithoutCorrectChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    correctQuiz?: QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateManyInput = {
+    id?: number
+    answerText: string
+    quizId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUpdateManyMutationInput = {
+    answerText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCreateInput = {
+    questionText: string
+    category: QuizCategoryCreateNestedOneWithoutQuizInput
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUncheckedCreateInput = {
+    id?: number
+    questionText: string
+    quizCategoryId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    correctChoiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUpdateInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    category?: QuizCategoryUpdateOneRequiredWithoutQuizNestedInput
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    correctChoiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCreateManyInput = {
+    id?: number
+    questionText: string
+    quizCategoryId: number
+    correctChoiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUpdateManyMutationInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    correctChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6918,6 +10470,143 @@ export namespace Prisma {
     totalPrice?: SortOrder
   }
 
+  export type QuizListRelationFilter = {
+    every?: QuizWhereInput
+    some?: QuizWhereInput
+    none?: QuizWhereInput
+  }
+
+  export type QuizOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuizCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizCategoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type QuizCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizCategorySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type QuizRelationFilter = {
+    is?: QuizWhereInput | null
+    isNot?: QuizWhereInput | null
+  }
+
+  export type ChoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    answerText?: SortOrder
+    quizId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type ChoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    answerText?: SortOrder
+    quizId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    answerText?: SortOrder
+    quizId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type QuizCategoryRelationFilter = {
+    is?: QuizCategoryWhereInput
+    isNot?: QuizCategoryWhereInput
+  }
+
+  export type ChoiceListRelationFilter = {
+    every?: ChoiceWhereInput
+    some?: ChoiceWhereInput
+    none?: ChoiceWhereInput
+  }
+
+  export type ChoiceRelationFilter = {
+    is?: ChoiceWhereInput
+    isNot?: ChoiceWhereInput
+  }
+
+  export type ChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuizCountOrderByAggregateInput = {
+    id?: SortOrder
+    questionText?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+  }
+
+  export type QuizMaxOrderByAggregateInput = {
+    id?: SortOrder
+    questionText?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizMinOrderByAggregateInput = {
+    id?: SortOrder
+    questionText?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizCategoryId?: SortOrder
+    correctChoiceId?: SortOrder
+  }
+
   export type TodoListCountOrderByAggregateInput = {
     id?: SortOrder
     task?: SortOrder
@@ -7155,6 +10844,176 @@ export namespace Prisma {
     delete?: boolean
     connect?: OrderWhereUniqueInput
     update?: XOR<OrderUpdateWithoutItemsInput, OrderUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type QuizCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
+  }
+
+  export type QuizUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
+  }
+
+  export type QuizUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
+  }
+
+  export type QuizUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
+  }
+
+  export type QuizCreateNestedOneWithoutChoicesInput = {
+    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
+    connect?: QuizWhereUniqueInput
+  }
+
+  export type QuizCreateNestedManyWithoutCorrectChoiceInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
+    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
+  }
+
+  export type QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
+    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
+  }
+
+  export type QuizUpdateOneWithoutChoicesNestedInput = {
+    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
+    upsert?: QuizUpsertWithoutChoicesInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
+  }
+
+  export type QuizUpdateManyWithoutCorrectChoiceNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput>
+    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCorrectChoiceInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
+  }
+
+  export type QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput>
+    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCorrectChoiceInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
+  }
+
+  export type QuizCategoryCreateNestedOneWithoutQuizInput = {
+    create?: XOR<QuizCategoryCreateWithoutQuizInput, QuizCategoryUncheckedCreateWithoutQuizInput>
+    connectOrCreate?: QuizCategoryCreateOrConnectWithoutQuizInput
+    connect?: QuizCategoryWhereUniqueInput
+  }
+
+  export type ChoiceCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+  }
+
+  export type ChoiceCreateNestedOneWithoutCorrectQuizInput = {
+    create?: XOR<ChoiceCreateWithoutCorrectQuizInput, ChoiceUncheckedCreateWithoutCorrectQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectQuizInput
+    connect?: ChoiceWhereUniqueInput
+  }
+
+  export type ChoiceUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+  }
+
+  export type QuizCategoryUpdateOneRequiredWithoutQuizNestedInput = {
+    create?: XOR<QuizCategoryCreateWithoutQuizInput, QuizCategoryUncheckedCreateWithoutQuizInput>
+    connectOrCreate?: QuizCategoryCreateOrConnectWithoutQuizInput
+    upsert?: QuizCategoryUpsertWithoutQuizInput
+    connect?: QuizCategoryWhereUniqueInput
+    update?: XOR<QuizCategoryUpdateWithoutQuizInput, QuizCategoryUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type ChoiceUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
+  }
+
+  export type ChoiceUpdateOneRequiredWithoutCorrectQuizNestedInput = {
+    create?: XOR<ChoiceCreateWithoutCorrectQuizInput, ChoiceUncheckedCreateWithoutCorrectQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectQuizInput
+    upsert?: ChoiceUpsertWithoutCorrectQuizInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutCorrectQuizInput, ChoiceUncheckedUpdateWithoutCorrectQuizInput>
+  }
+
+  export type ChoiceUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
   export type NestedIntFilter = {
@@ -7586,6 +11445,276 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type QuizCreateWithoutCategoryInput = {
+    questionText: string
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    questionText: string
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    correctChoiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCreateOrConnectWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutCategoryInput, QuizUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type QuizCreateManyCategoryInputEnvelope = {
+    data: Enumerable<QuizCreateManyCategoryInput>
+    skipDuplicates?: boolean
+  }
+
+  export type QuizUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    update: XOR<QuizUpdateWithoutCategoryInput, QuizUncheckedUpdateWithoutCategoryInput>
+    create: XOR<QuizCreateWithoutCategoryInput, QuizUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type QuizUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    data: XOR<QuizUpdateWithoutCategoryInput, QuizUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type QuizUpdateManyWithWhereWithoutCategoryInput = {
+    where: QuizScalarWhereInput
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutQuizInput>
+  }
+
+  export type QuizScalarWhereInput = {
+    AND?: Enumerable<QuizScalarWhereInput>
+    OR?: Enumerable<QuizScalarWhereInput>
+    NOT?: Enumerable<QuizScalarWhereInput>
+    id?: IntFilter | number
+    questionText?: StringFilter | string
+    quizCategoryId?: IntFilter | number
+    correctChoiceId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type QuizCreateWithoutChoicesInput = {
+    questionText: string
+    category: QuizCategoryCreateNestedOneWithoutQuizInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUncheckedCreateWithoutChoicesInput = {
+    id?: number
+    questionText: string
+    quizCategoryId: number
+    correctChoiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCreateOrConnectWithoutChoicesInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type QuizCreateWithoutCorrectChoiceInput = {
+    questionText: string
+    category: QuizCategoryCreateNestedOneWithoutQuizInput
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUncheckedCreateWithoutCorrectChoiceInput = {
+    id?: number
+    questionText: string
+    quizCategoryId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCreateOrConnectWithoutCorrectChoiceInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+  }
+
+  export type QuizCreateManyCorrectChoiceInputEnvelope = {
+    data: Enumerable<QuizCreateManyCorrectChoiceInput>
+    skipDuplicates?: boolean
+  }
+
+  export type QuizUpsertWithoutChoicesInput = {
+    update: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
+    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type QuizUpdateWithoutChoicesInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    category?: QuizCategoryUpdateOneRequiredWithoutQuizNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    correctChoiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput = {
+    where: QuizWhereUniqueInput
+    update: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
+    create: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+  }
+
+  export type QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput = {
+    where: QuizWhereUniqueInput
+    data: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
+  }
+
+  export type QuizUpdateManyWithWhereWithoutCorrectChoiceInput = {
+    where: QuizScalarWhereInput
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutCorrectQuizInput>
+  }
+
+  export type QuizCategoryCreateWithoutQuizInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCategoryUncheckedCreateWithoutQuizInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizCategoryCreateOrConnectWithoutQuizInput = {
+    where: QuizCategoryWhereUniqueInput
+    create: XOR<QuizCategoryCreateWithoutQuizInput, QuizCategoryUncheckedCreateWithoutQuizInput>
+  }
+
+  export type ChoiceCreateWithoutQuizInput = {
+    answerText: string
+    correctQuiz?: QuizCreateNestedManyWithoutCorrectChoiceInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutQuizInput = {
+    id?: number
+    answerText: string
+    correctQuiz?: QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutQuizInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutQuizInput, ChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type ChoiceCreateManyQuizInputEnvelope = {
+    data: Enumerable<ChoiceCreateManyQuizInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ChoiceCreateWithoutCorrectQuizInput = {
+    answerText: string
+    quiz?: QuizCreateNestedOneWithoutChoicesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutCorrectQuizInput = {
+    id?: number
+    answerText: string
+    quizId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutCorrectQuizInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutCorrectQuizInput, ChoiceUncheckedCreateWithoutCorrectQuizInput>
+  }
+
+  export type QuizCategoryUpsertWithoutQuizInput = {
+    update: XOR<QuizCategoryUpdateWithoutQuizInput, QuizCategoryUncheckedUpdateWithoutQuizInput>
+    create: XOR<QuizCategoryCreateWithoutQuizInput, QuizCategoryUncheckedCreateWithoutQuizInput>
+  }
+
+  export type QuizCategoryUpdateWithoutQuizInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCategoryUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUpsertWithWhereUniqueWithoutQuizInput = {
+    where: ChoiceWhereUniqueInput
+    update: XOR<ChoiceUpdateWithoutQuizInput, ChoiceUncheckedUpdateWithoutQuizInput>
+    create: XOR<ChoiceCreateWithoutQuizInput, ChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type ChoiceUpdateWithWhereUniqueWithoutQuizInput = {
+    where: ChoiceWhereUniqueInput
+    data: XOR<ChoiceUpdateWithoutQuizInput, ChoiceUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type ChoiceUpdateManyWithWhereWithoutQuizInput = {
+    where: ChoiceScalarWhereInput
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutChoicesInput>
+  }
+
+  export type ChoiceScalarWhereInput = {
+    AND?: Enumerable<ChoiceScalarWhereInput>
+    OR?: Enumerable<ChoiceScalarWhereInput>
+    NOT?: Enumerable<ChoiceScalarWhereInput>
+    id?: IntFilter | number
+    answerText?: StringFilter | string
+    quizId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ChoiceUpsertWithoutCorrectQuizInput = {
+    update: XOR<ChoiceUpdateWithoutCorrectQuizInput, ChoiceUncheckedUpdateWithoutCorrectQuizInput>
+    create: XOR<ChoiceCreateWithoutCorrectQuizInput, ChoiceUncheckedCreateWithoutCorrectQuizInput>
+  }
+
+  export type ChoiceUpdateWithoutCorrectQuizInput = {
+    answerText?: StringFieldUpdateOperationsInput | string
+    quiz?: QuizUpdateOneWithoutChoicesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutCorrectQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MenuCreateManyCategoryInput = {
     id?: number
     name: string
@@ -7689,6 +11818,101 @@ export namespace Prisma {
     menuId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCreateManyCategoryInput = {
+    id?: number
+    questionText: string
+    correctChoiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUpdateWithoutCategoryInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    correctChoiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateManyWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    correctChoiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizCreateManyCorrectChoiceInput = {
+    id?: number
+    questionText: string
+    quizCategoryId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizUpdateWithoutCorrectChoiceInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    category?: QuizCategoryUpdateOneRequiredWithoutQuizNestedInput
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateWithoutCorrectChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizUncheckedUpdateManyWithoutCorrectQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateManyQuizInput = {
+    id?: number
+    answerText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUpdateWithoutQuizInput = {
+    answerText?: StringFieldUpdateOperationsInput | string
+    correctQuiz?: QuizUpdateManyWithoutCorrectChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
+    correctQuiz?: QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateManyWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
