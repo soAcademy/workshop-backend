@@ -1,0 +1,67 @@
+model User {
+  id                     Int             @id @default(autoincrement())
+  name                   String
+  imageUrl               String
+  bio                    String
+  followingUserRelations UserRelation[]  @relation("followingUser")
+  followedUserRelations  UserRelation[]  @relation("followedUser")
+  tweets                 Tweet[]
+  directMessagesFrom     DirectMessage[] @relation("fromUser")
+  directMessagesTo       DirectMessage[] @relation("toUser")
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+
+  @@schema("twitter")
+}
+
+// https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations
+
+model UserRelation {
+  id              Int      @id @default(autoincrement())
+  followingUser   User     @relation("followingUser", fields: [followingUserId], references: [id])
+  followingUserId Int
+  followedUser    User     @relation("followedUser", fields: [followedUserId], references: [id])
+  followedUserId  Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@schema("twitter")
+}
+
+model Tweet {
+  id             Int       @id @default(autoincrement())
+  tweetText      String
+  tweetingUser   User      @relation(fields: [userId], references: [id])
+  replyToTweet   Tweet?    @relation("replyToTweet", fields: [replyToTweetId], references: [id])
+  replyToTweetId Int?      @unique
+  repliedTweet   Tweet?    @relation("replyToTweet")
+  userId         Int
+  hashTags       HashTag[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@schema("twitter")
+}
+
+model HashTag {
+  id          Int      @id @default(autoincrement())
+  hashTagText String
+  isIntweets  Tweet[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@schema("twitter")
+}
+
+model DirectMessage {
+  id         Int      @id @default(autoincrement())
+  dmText     String
+  fromUser   User     @relation("fromUser", fields: [fromUserId], references: [id])
+  toUser     User     @relation("toUser", fields: [toUserId], references: [id])
+  fromUserId Int
+  toUserId   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@schema("twitter")
+}

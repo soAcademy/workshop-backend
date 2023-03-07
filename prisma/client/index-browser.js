@@ -104,6 +104,22 @@ exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.DirectMessageScalarFieldEnum = makeEnum({
+  id: 'id',
+  dmText: 'dmText',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.HashTagScalarFieldEnum = makeEnum({
+  id: 'id',
+  hashTagText: 'hashTagText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.MenuScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -180,6 +196,32 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TweetScalarFieldEnum = makeEnum({
+  id: 'id',
+  tweetText: 'tweetText',
+  replyToTweetId: 'replyToTweetId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  followingUserId: 'followingUserId',
+  followedUserId: 'followedUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  imageUrl: 'imageUrl',
+  bio: 'bio',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
@@ -190,7 +232,12 @@ exports.Prisma.ModelName = makeEnum({
   Choice: 'Choice',
   Quiz: 'Quiz',
   Round: 'Round',
-  TodoList: 'TodoList'
+  TodoList: 'TodoList',
+  User: 'User',
+  UserRelation: 'UserRelation',
+  Tweet: 'Tweet',
+  HashTag: 'HashTag',
+  DirectMessage: 'DirectMessage'
 });
 
 /**

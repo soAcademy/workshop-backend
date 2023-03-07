@@ -120,6 +120,68 @@ export type TodoList = {
   updatedAt: Date
 }
 
+/**
+ * Model User
+ * 
+ */
+export type User = {
+  id: number
+  name: string
+  imageUrl: string
+  bio: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model UserRelation
+ * 
+ */
+export type UserRelation = {
+  id: number
+  followingUserId: number
+  followedUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Tweet
+ * 
+ */
+export type Tweet = {
+  id: number
+  tweetText: string
+  replyToTweetId: number | null
+  userId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model HashTag
+ * 
+ */
+export type HashTag = {
+  id: number
+  hashTagText: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model DirectMessage
+ * 
+ */
+export type DirectMessage = {
+  id: number
+  dmText: string
+  fromUserId: number
+  toUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -327,6 +389,56 @@ export class PrismaClient<
     * ```
     */
   get todoList(): Prisma.TodoListDelegate<GlobalReject>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.userRelation`: Exposes CRUD operations for the **UserRelation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserRelations
+    * const userRelations = await prisma.userRelation.findMany()
+    * ```
+    */
+  get userRelation(): Prisma.UserRelationDelegate<GlobalReject>;
+
+  /**
+   * `prisma.tweet`: Exposes CRUD operations for the **Tweet** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tweets
+    * const tweets = await prisma.tweet.findMany()
+    * ```
+    */
+  get tweet(): Prisma.TweetDelegate<GlobalReject>;
+
+  /**
+   * `prisma.hashTag`: Exposes CRUD operations for the **HashTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HashTags
+    * const hashTags = await prisma.hashTag.findMany()
+    * ```
+    */
+  get hashTag(): Prisma.HashTagDelegate<GlobalReject>;
+
+  /**
+   * `prisma.directMessage`: Exposes CRUD operations for the **DirectMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DirectMessages
+    * const directMessages = await prisma.directMessage.findMany()
+    * ```
+    */
+  get directMessage(): Prisma.DirectMessageDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -804,7 +916,12 @@ export namespace Prisma {
     Choice: 'Choice',
     Quiz: 'Quiz',
     Round: 'Round',
-    TodoList: 'TodoList'
+    TodoList: 'TodoList',
+    User: 'User',
+    UserRelation: 'UserRelation',
+    Tweet: 'Tweet',
+    HashTag: 'HashTag',
+    DirectMessage: 'DirectMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1268,6 +1385,143 @@ export namespace Prisma {
      * Select specific fields to fetch from the RoundCountOutputType
      */
     select?: RoundCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+
+  export type UserCountOutputType = {
+    followingUserRelations: number
+    followedUserRelations: number
+    tweets: number
+    directMessagesFrom: number
+    directMessagesTo: number
+  }
+
+  export type UserCountOutputTypeSelect = {
+    followingUserRelations?: boolean
+    followedUserRelations?: boolean
+    tweets?: boolean
+    directMessagesFrom?: boolean
+    directMessagesTo?: boolean
+  }
+
+  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (UserCountOutputTypeArgs)
+    ? UserCountOutputType 
+    : S extends { select: any } & (UserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
+  } 
+      : UserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type TweetCountOutputType
+   */
+
+
+  export type TweetCountOutputType = {
+    hashTags: number
+  }
+
+  export type TweetCountOutputTypeSelect = {
+    hashTags?: boolean
+  }
+
+  export type TweetCountOutputTypeGetPayload<S extends boolean | null | undefined | TweetCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TweetCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TweetCountOutputTypeArgs)
+    ? TweetCountOutputType 
+    : S extends { select: any } & (TweetCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof TweetCountOutputType ? TweetCountOutputType[P] : never
+  } 
+      : TweetCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TweetCountOutputType without action
+   */
+  export type TweetCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TweetCountOutputType
+     */
+    select?: TweetCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type HashTagCountOutputType
+   */
+
+
+  export type HashTagCountOutputType = {
+    isIntweets: number
+  }
+
+  export type HashTagCountOutputTypeSelect = {
+    isIntweets?: boolean
+  }
+
+  export type HashTagCountOutputTypeGetPayload<S extends boolean | null | undefined | HashTagCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? HashTagCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (HashTagCountOutputTypeArgs)
+    ? HashTagCountOutputType 
+    : S extends { select: any } & (HashTagCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof HashTagCountOutputType ? HashTagCountOutputType[P] : never
+  } 
+      : HashTagCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * HashTagCountOutputType without action
+   */
+  export type HashTagCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the HashTagCountOutputType
+     */
+    select?: HashTagCountOutputTypeSelect | null
   }
 
 
@@ -10255,6 +10509,5084 @@ export namespace Prisma {
 
 
   /**
+   * Model User
+   */
+
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    imageUrl: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    imageUrl: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    name: number
+    imageUrl: number
+    bio: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    name?: true
+    imageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    name?: true
+    imageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    name?: true
+    imageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs = {
+    where?: UserWhereInput
+    orderBy?: Enumerable<UserOrderByWithAggregationInput>
+    by: UserScalarFieldEnum[]
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+
+  export type UserGroupByOutputType = {
+    id: number
+    name: string
+    imageUrl: string
+    bio: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect = {
+    id?: boolean
+    name?: boolean
+    imageUrl?: boolean
+    bio?: boolean
+    followingUserRelations?: boolean | User$followingUserRelationsArgs
+    followedUserRelations?: boolean | User$followedUserRelationsArgs
+    tweets?: boolean | User$tweetsArgs
+    directMessagesFrom?: boolean | User$directMessagesFromArgs
+    directMessagesTo?: boolean | User$directMessagesToArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | UserCountOutputTypeArgs
+  }
+
+
+  export type UserInclude = {
+    followingUserRelations?: boolean | User$followingUserRelationsArgs
+    followedUserRelations?: boolean | User$followedUserRelationsArgs
+    tweets?: boolean | User$tweetsArgs
+    directMessagesFrom?: boolean | User$directMessagesFromArgs
+    directMessagesTo?: boolean | User$directMessagesToArgs
+    _count?: boolean | UserCountOutputTypeArgs
+  }
+
+  export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? User :
+    S extends undefined ? never :
+    S extends { include: any } & (UserArgs | UserFindManyArgs)
+    ? User  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'followingUserRelations' ? Array < UserRelationGetPayload<S['include'][P]>>  :
+        P extends 'followedUserRelations' ? Array < UserRelationGetPayload<S['include'][P]>>  :
+        P extends 'tweets' ? Array < TweetGetPayload<S['include'][P]>>  :
+        P extends 'directMessagesFrom' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
+        P extends 'directMessagesTo' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UserArgs | UserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'followingUserRelations' ? Array < UserRelationGetPayload<S['select'][P]>>  :
+        P extends 'followedUserRelations' ? Array < UserRelationGetPayload<S['select'][P]>>  :
+        P extends 'tweets' ? Array < TweetGetPayload<S['select'][P]>>  :
+        P extends 'directMessagesFrom' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
+        P extends 'directMessagesTo' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
+  } 
+      : User
+
+
+  type UserCountArgs = 
+    Omit<UserFindManyArgs, 'select' | 'include'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
+
+    /**
+     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserFindUniqueOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserFindFirstOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UserFindManyArgs>(
+      args?: SelectSubset<T, UserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UserGetPayload<T>>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UserCreateArgs>(
+      args: SelectSubset<T, UserCreateArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Create many Users.
+     *     @param {UserCreateManyArgs} args - Arguments to create many Users.
+     *     @example
+     *     // Create many Users
+     *     const user = await prisma.user.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UserCreateManyArgs>(
+      args?: SelectSubset<T, UserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UserDeleteArgs>(
+      args: SelectSubset<T, UserDeleteArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UserUpdateArgs>(
+      args: SelectSubset<T, UserUpdateArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UserDeleteManyArgs>(
+      args?: SelectSubset<T, UserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UserUpdateManyArgs>(
+      args: SelectSubset<T, UserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UserUpsertArgs>(
+      args: SelectSubset<T, UserUpsertArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    followingUserRelations<T extends User$followingUserRelationsArgs= {}>(args?: Subset<T, User$followingUserRelationsArgs>): Prisma.PrismaPromise<Array<UserRelationGetPayload<T>>| Null>;
+
+    followedUserRelations<T extends User$followedUserRelationsArgs= {}>(args?: Subset<T, User$followedUserRelationsArgs>): Prisma.PrismaPromise<Array<UserRelationGetPayload<T>>| Null>;
+
+    tweets<T extends User$tweetsArgs= {}>(args?: Subset<T, User$tweetsArgs>): Prisma.PrismaPromise<Array<TweetGetPayload<T>>| Null>;
+
+    directMessagesFrom<T extends User$directMessagesFromArgs= {}>(args?: Subset<T, User$directMessagesFromArgs>): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>| Null>;
+
+    directMessagesTo<T extends User$directMessagesToArgs= {}>(args?: Subset<T, User$directMessagesToArgs>): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * User base type for findUnique actions
+   */
+  export type UserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUnique
+   */
+  export interface UserFindUniqueArgs extends UserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+
+  /**
+   * User base type for findFirst actions
+   */
+  export type UserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+  /**
+   * User findFirst
+   */
+  export interface UserFindFirstArgs extends UserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs = {
+    /**
+     * The data used to create many Users.
+     */
+    data: Enumerable<UserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+  }
+
+
+  /**
+   * User.followingUserRelations
+   */
+  export type User$followingUserRelationsArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    where?: UserRelationWhereInput
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    cursor?: UserRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * User.followedUserRelations
+   */
+  export type User$followedUserRelationsArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    where?: UserRelationWhereInput
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    cursor?: UserRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * User.tweets
+   */
+  export type User$tweetsArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    where?: TweetWhereInput
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    cursor?: TweetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TweetScalarFieldEnum>
+  }
+
+
+  /**
+   * User.directMessagesFrom
+   */
+  export type User$directMessagesFromArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    where?: DirectMessageWhereInput
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    cursor?: DirectMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<DirectMessageScalarFieldEnum>
+  }
+
+
+  /**
+   * User.directMessagesTo
+   */
+  export type User$directMessagesToArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    where?: DirectMessageWhereInput
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    cursor?: DirectMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<DirectMessageScalarFieldEnum>
+  }
+
+
+  /**
+   * User without action
+   */
+  export type UserArgs = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserInclude | null
+  }
+
+
+
+  /**
+   * Model UserRelation
+   */
+
+
+  export type AggregateUserRelation = {
+    _count: UserRelationCountAggregateOutputType | null
+    _avg: UserRelationAvgAggregateOutputType | null
+    _sum: UserRelationSumAggregateOutputType | null
+    _min: UserRelationMinAggregateOutputType | null
+    _max: UserRelationMaxAggregateOutputType | null
+  }
+
+  export type UserRelationAvgAggregateOutputType = {
+    id: number | null
+    followingUserId: number | null
+    followedUserId: number | null
+  }
+
+  export type UserRelationSumAggregateOutputType = {
+    id: number | null
+    followingUserId: number | null
+    followedUserId: number | null
+  }
+
+  export type UserRelationMinAggregateOutputType = {
+    id: number | null
+    followingUserId: number | null
+    followedUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserRelationMaxAggregateOutputType = {
+    id: number | null
+    followingUserId: number | null
+    followedUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserRelationCountAggregateOutputType = {
+    id: number
+    followingUserId: number
+    followedUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserRelationAvgAggregateInputType = {
+    id?: true
+    followingUserId?: true
+    followedUserId?: true
+  }
+
+  export type UserRelationSumAggregateInputType = {
+    id?: true
+    followingUserId?: true
+    followedUserId?: true
+  }
+
+  export type UserRelationMinAggregateInputType = {
+    id?: true
+    followingUserId?: true
+    followedUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserRelationMaxAggregateInputType = {
+    id?: true
+    followingUserId?: true
+    followedUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserRelationCountAggregateInputType = {
+    id?: true
+    followingUserId?: true
+    followedUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserRelationAggregateArgs = {
+    /**
+     * Filter which UserRelation to aggregate.
+     */
+    where?: UserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRelations to fetch.
+     */
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserRelations
+    **/
+    _count?: true | UserRelationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserRelationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserRelationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserRelationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserRelationMaxAggregateInputType
+  }
+
+  export type GetUserRelationAggregateType<T extends UserRelationAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserRelation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserRelation[P]>
+      : GetScalarType<T[P], AggregateUserRelation[P]>
+  }
+
+
+
+
+  export type UserRelationGroupByArgs = {
+    where?: UserRelationWhereInput
+    orderBy?: Enumerable<UserRelationOrderByWithAggregationInput>
+    by: UserRelationScalarFieldEnum[]
+    having?: UserRelationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserRelationCountAggregateInputType | true
+    _avg?: UserRelationAvgAggregateInputType
+    _sum?: UserRelationSumAggregateInputType
+    _min?: UserRelationMinAggregateInputType
+    _max?: UserRelationMaxAggregateInputType
+  }
+
+
+  export type UserRelationGroupByOutputType = {
+    id: number
+    followingUserId: number
+    followedUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: UserRelationCountAggregateOutputType | null
+    _avg: UserRelationAvgAggregateOutputType | null
+    _sum: UserRelationSumAggregateOutputType | null
+    _min: UserRelationMinAggregateOutputType | null
+    _max: UserRelationMaxAggregateOutputType | null
+  }
+
+  type GetUserRelationGroupByPayload<T extends UserRelationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UserRelationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserRelationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserRelationGroupByOutputType[P]>
+            : GetScalarType<T[P], UserRelationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserRelationSelect = {
+    id?: boolean
+    followingUser?: boolean | UserArgs
+    followingUserId?: boolean
+    followedUser?: boolean | UserArgs
+    followedUserId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type UserRelationInclude = {
+    followingUser?: boolean | UserArgs
+    followedUser?: boolean | UserArgs
+  }
+
+  export type UserRelationGetPayload<S extends boolean | null | undefined | UserRelationArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserRelation :
+    S extends undefined ? never :
+    S extends { include: any } & (UserRelationArgs | UserRelationFindManyArgs)
+    ? UserRelation  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'followingUser' ? UserGetPayload<S['include'][P]> :
+        P extends 'followedUser' ? UserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UserRelationArgs | UserRelationFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'followingUser' ? UserGetPayload<S['select'][P]> :
+        P extends 'followedUser' ? UserGetPayload<S['select'][P]> :  P extends keyof UserRelation ? UserRelation[P] : never
+  } 
+      : UserRelation
+
+
+  type UserRelationCountArgs = 
+    Omit<UserRelationFindManyArgs, 'select' | 'include'> & {
+      select?: UserRelationCountAggregateInputType | true
+    }
+
+  export interface UserRelationDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one UserRelation that matches the filter.
+     * @param {UserRelationFindUniqueArgs} args - Arguments to find a UserRelation
+     * @example
+     * // Get one UserRelation
+     * const userRelation = await prisma.userRelation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UserRelationFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UserRelationFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UserRelation'> extends True ? Prisma__UserRelationClient<UserRelationGetPayload<T>> : Prisma__UserRelationClient<UserRelationGetPayload<T> | null, null>
+
+    /**
+     * Find one UserRelation that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UserRelationFindUniqueOrThrowArgs} args - Arguments to find a UserRelation
+     * @example
+     * // Get one UserRelation
+     * const userRelation = await prisma.userRelation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UserRelationFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserRelationFindUniqueOrThrowArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Find the first UserRelation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationFindFirstArgs} args - Arguments to find a UserRelation
+     * @example
+     * // Get one UserRelation
+     * const userRelation = await prisma.userRelation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UserRelationFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UserRelationFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UserRelation'> extends True ? Prisma__UserRelationClient<UserRelationGetPayload<T>> : Prisma__UserRelationClient<UserRelationGetPayload<T> | null, null>
+
+    /**
+     * Find the first UserRelation that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationFindFirstOrThrowArgs} args - Arguments to find a UserRelation
+     * @example
+     * // Get one UserRelation
+     * const userRelation = await prisma.userRelation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UserRelationFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserRelationFindFirstOrThrowArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Find zero or more UserRelations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserRelations
+     * const userRelations = await prisma.userRelation.findMany()
+     * 
+     * // Get first 10 UserRelations
+     * const userRelations = await prisma.userRelation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userRelationWithIdOnly = await prisma.userRelation.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UserRelationFindManyArgs>(
+      args?: SelectSubset<T, UserRelationFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UserRelationGetPayload<T>>>
+
+    /**
+     * Create a UserRelation.
+     * @param {UserRelationCreateArgs} args - Arguments to create a UserRelation.
+     * @example
+     * // Create one UserRelation
+     * const UserRelation = await prisma.userRelation.create({
+     *   data: {
+     *     // ... data to create a UserRelation
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UserRelationCreateArgs>(
+      args: SelectSubset<T, UserRelationCreateArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Create many UserRelations.
+     *     @param {UserRelationCreateManyArgs} args - Arguments to create many UserRelations.
+     *     @example
+     *     // Create many UserRelations
+     *     const userRelation = await prisma.userRelation.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UserRelationCreateManyArgs>(
+      args?: SelectSubset<T, UserRelationCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserRelation.
+     * @param {UserRelationDeleteArgs} args - Arguments to delete one UserRelation.
+     * @example
+     * // Delete one UserRelation
+     * const UserRelation = await prisma.userRelation.delete({
+     *   where: {
+     *     // ... filter to delete one UserRelation
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UserRelationDeleteArgs>(
+      args: SelectSubset<T, UserRelationDeleteArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Update one UserRelation.
+     * @param {UserRelationUpdateArgs} args - Arguments to update one UserRelation.
+     * @example
+     * // Update one UserRelation
+     * const userRelation = await prisma.userRelation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UserRelationUpdateArgs>(
+      args: SelectSubset<T, UserRelationUpdateArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Delete zero or more UserRelations.
+     * @param {UserRelationDeleteManyArgs} args - Arguments to filter UserRelations to delete.
+     * @example
+     * // Delete a few UserRelations
+     * const { count } = await prisma.userRelation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UserRelationDeleteManyArgs>(
+      args?: SelectSubset<T, UserRelationDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserRelations
+     * const userRelation = await prisma.userRelation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UserRelationUpdateManyArgs>(
+      args: SelectSubset<T, UserRelationUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserRelation.
+     * @param {UserRelationUpsertArgs} args - Arguments to update or create a UserRelation.
+     * @example
+     * // Update or create a UserRelation
+     * const userRelation = await prisma.userRelation.upsert({
+     *   create: {
+     *     // ... data to create a UserRelation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserRelation we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UserRelationUpsertArgs>(
+      args: SelectSubset<T, UserRelationUpsertArgs>
+    ): Prisma__UserRelationClient<UserRelationGetPayload<T>>
+
+    /**
+     * Count the number of UserRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationCountArgs} args - Arguments to filter UserRelations to count.
+     * @example
+     * // Count the number of UserRelations
+     * const count = await prisma.userRelation.count({
+     *   where: {
+     *     // ... the filter for the UserRelations we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserRelationCountArgs>(
+      args?: Subset<T, UserRelationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserRelationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserRelationAggregateArgs>(args: Subset<T, UserRelationAggregateArgs>): Prisma.PrismaPromise<GetUserRelationAggregateType<T>>
+
+    /**
+     * Group by UserRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserRelationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserRelationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserRelationGroupByArgs['orderBy'] }
+        : { orderBy?: UserRelationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserRelationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserRelationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserRelation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UserRelationClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    followingUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    followedUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserRelation base type for findUnique actions
+   */
+  export type UserRelationFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter, which UserRelation to fetch.
+     */
+    where: UserRelationWhereUniqueInput
+  }
+
+  /**
+   * UserRelation findUnique
+   */
+  export interface UserRelationFindUniqueArgs extends UserRelationFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserRelation findUniqueOrThrow
+   */
+  export type UserRelationFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter, which UserRelation to fetch.
+     */
+    where: UserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * UserRelation base type for findFirst actions
+   */
+  export type UserRelationFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter, which UserRelation to fetch.
+     */
+    where?: UserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRelations to fetch.
+     */
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRelations.
+     */
+    cursor?: UserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRelations.
+     */
+    distinct?: Enumerable<UserRelationScalarFieldEnum>
+  }
+
+  /**
+   * UserRelation findFirst
+   */
+  export interface UserRelationFindFirstArgs extends UserRelationFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserRelation findFirstOrThrow
+   */
+  export type UserRelationFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter, which UserRelation to fetch.
+     */
+    where?: UserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRelations to fetch.
+     */
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserRelations.
+     */
+    cursor?: UserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRelations.
+     */
+    distinct?: Enumerable<UserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * UserRelation findMany
+   */
+  export type UserRelationFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter, which UserRelations to fetch.
+     */
+    where?: UserRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserRelations to fetch.
+     */
+    orderBy?: Enumerable<UserRelationOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserRelations.
+     */
+    cursor?: UserRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserRelations.
+     */
+    skip?: number
+    distinct?: Enumerable<UserRelationScalarFieldEnum>
+  }
+
+
+  /**
+   * UserRelation create
+   */
+  export type UserRelationCreateArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * The data needed to create a UserRelation.
+     */
+    data: XOR<UserRelationCreateInput, UserRelationUncheckedCreateInput>
+  }
+
+
+  /**
+   * UserRelation createMany
+   */
+  export type UserRelationCreateManyArgs = {
+    /**
+     * The data used to create many UserRelations.
+     */
+    data: Enumerable<UserRelationCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * UserRelation update
+   */
+  export type UserRelationUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * The data needed to update a UserRelation.
+     */
+    data: XOR<UserRelationUpdateInput, UserRelationUncheckedUpdateInput>
+    /**
+     * Choose, which UserRelation to update.
+     */
+    where: UserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * UserRelation updateMany
+   */
+  export type UserRelationUpdateManyArgs = {
+    /**
+     * The data used to update UserRelations.
+     */
+    data: XOR<UserRelationUpdateManyMutationInput, UserRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which UserRelations to update
+     */
+    where?: UserRelationWhereInput
+  }
+
+
+  /**
+   * UserRelation upsert
+   */
+  export type UserRelationUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * The filter to search for the UserRelation to update in case it exists.
+     */
+    where: UserRelationWhereUniqueInput
+    /**
+     * In case the UserRelation found by the `where` argument doesn't exist, create a new UserRelation with this data.
+     */
+    create: XOR<UserRelationCreateInput, UserRelationUncheckedCreateInput>
+    /**
+     * In case the UserRelation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserRelationUpdateInput, UserRelationUncheckedUpdateInput>
+  }
+
+
+  /**
+   * UserRelation delete
+   */
+  export type UserRelationDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+    /**
+     * Filter which UserRelation to delete.
+     */
+    where: UserRelationWhereUniqueInput
+  }
+
+
+  /**
+   * UserRelation deleteMany
+   */
+  export type UserRelationDeleteManyArgs = {
+    /**
+     * Filter which UserRelations to delete
+     */
+    where?: UserRelationWhereInput
+  }
+
+
+  /**
+   * UserRelation without action
+   */
+  export type UserRelationArgs = {
+    /**
+     * Select specific fields to fetch from the UserRelation
+     */
+    select?: UserRelationSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserRelationInclude | null
+  }
+
+
+
+  /**
+   * Model Tweet
+   */
+
+
+  export type AggregateTweet = {
+    _count: TweetCountAggregateOutputType | null
+    _avg: TweetAvgAggregateOutputType | null
+    _sum: TweetSumAggregateOutputType | null
+    _min: TweetMinAggregateOutputType | null
+    _max: TweetMaxAggregateOutputType | null
+  }
+
+  export type TweetAvgAggregateOutputType = {
+    id: number | null
+    replyToTweetId: number | null
+    userId: number | null
+  }
+
+  export type TweetSumAggregateOutputType = {
+    id: number | null
+    replyToTweetId: number | null
+    userId: number | null
+  }
+
+  export type TweetMinAggregateOutputType = {
+    id: number | null
+    tweetText: string | null
+    replyToTweetId: number | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TweetMaxAggregateOutputType = {
+    id: number | null
+    tweetText: string | null
+    replyToTweetId: number | null
+    userId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TweetCountAggregateOutputType = {
+    id: number
+    tweetText: number
+    replyToTweetId: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TweetAvgAggregateInputType = {
+    id?: true
+    replyToTweetId?: true
+    userId?: true
+  }
+
+  export type TweetSumAggregateInputType = {
+    id?: true
+    replyToTweetId?: true
+    userId?: true
+  }
+
+  export type TweetMinAggregateInputType = {
+    id?: true
+    tweetText?: true
+    replyToTweetId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TweetMaxAggregateInputType = {
+    id?: true
+    tweetText?: true
+    replyToTweetId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TweetCountAggregateInputType = {
+    id?: true
+    tweetText?: true
+    replyToTweetId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TweetAggregateArgs = {
+    /**
+     * Filter which Tweet to aggregate.
+     */
+    where?: TweetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tweets to fetch.
+     */
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TweetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tweets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tweets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tweets
+    **/
+    _count?: true | TweetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TweetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TweetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TweetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TweetMaxAggregateInputType
+  }
+
+  export type GetTweetAggregateType<T extends TweetAggregateArgs> = {
+        [P in keyof T & keyof AggregateTweet]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTweet[P]>
+      : GetScalarType<T[P], AggregateTweet[P]>
+  }
+
+
+
+
+  export type TweetGroupByArgs = {
+    where?: TweetWhereInput
+    orderBy?: Enumerable<TweetOrderByWithAggregationInput>
+    by: TweetScalarFieldEnum[]
+    having?: TweetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TweetCountAggregateInputType | true
+    _avg?: TweetAvgAggregateInputType
+    _sum?: TweetSumAggregateInputType
+    _min?: TweetMinAggregateInputType
+    _max?: TweetMaxAggregateInputType
+  }
+
+
+  export type TweetGroupByOutputType = {
+    id: number
+    tweetText: string
+    replyToTweetId: number | null
+    userId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: TweetCountAggregateOutputType | null
+    _avg: TweetAvgAggregateOutputType | null
+    _sum: TweetSumAggregateOutputType | null
+    _min: TweetMinAggregateOutputType | null
+    _max: TweetMaxAggregateOutputType | null
+  }
+
+  type GetTweetGroupByPayload<T extends TweetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TweetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TweetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TweetGroupByOutputType[P]>
+            : GetScalarType<T[P], TweetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TweetSelect = {
+    id?: boolean
+    tweetText?: boolean
+    tweetingUser?: boolean | UserArgs
+    replyToTweet?: boolean | TweetArgs
+    replyToTweetId?: boolean
+    repliedTweet?: boolean | TweetArgs
+    userId?: boolean
+    hashTags?: boolean | Tweet$hashTagsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | TweetCountOutputTypeArgs
+  }
+
+
+  export type TweetInclude = {
+    tweetingUser?: boolean | UserArgs
+    replyToTweet?: boolean | TweetArgs
+    repliedTweet?: boolean | TweetArgs
+    hashTags?: boolean | Tweet$hashTagsArgs
+    _count?: boolean | TweetCountOutputTypeArgs
+  }
+
+  export type TweetGetPayload<S extends boolean | null | undefined | TweetArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Tweet :
+    S extends undefined ? never :
+    S extends { include: any } & (TweetArgs | TweetFindManyArgs)
+    ? Tweet  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'tweetingUser' ? UserGetPayload<S['include'][P]> :
+        P extends 'replyToTweet' ? TweetGetPayload<S['include'][P]> | null :
+        P extends 'repliedTweet' ? TweetGetPayload<S['include'][P]> | null :
+        P extends 'hashTags' ? Array < HashTagGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TweetCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TweetArgs | TweetFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'tweetingUser' ? UserGetPayload<S['select'][P]> :
+        P extends 'replyToTweet' ? TweetGetPayload<S['select'][P]> | null :
+        P extends 'repliedTweet' ? TweetGetPayload<S['select'][P]> | null :
+        P extends 'hashTags' ? Array < HashTagGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TweetCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Tweet ? Tweet[P] : never
+  } 
+      : Tweet
+
+
+  type TweetCountArgs = 
+    Omit<TweetFindManyArgs, 'select' | 'include'> & {
+      select?: TweetCountAggregateInputType | true
+    }
+
+  export interface TweetDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Tweet that matches the filter.
+     * @param {TweetFindUniqueArgs} args - Arguments to find a Tweet
+     * @example
+     * // Get one Tweet
+     * const tweet = await prisma.tweet.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TweetFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TweetFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Tweet'> extends True ? Prisma__TweetClient<TweetGetPayload<T>> : Prisma__TweetClient<TweetGetPayload<T> | null, null>
+
+    /**
+     * Find one Tweet that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TweetFindUniqueOrThrowArgs} args - Arguments to find a Tweet
+     * @example
+     * // Get one Tweet
+     * const tweet = await prisma.tweet.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TweetFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TweetFindUniqueOrThrowArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Find the first Tweet that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetFindFirstArgs} args - Arguments to find a Tweet
+     * @example
+     * // Get one Tweet
+     * const tweet = await prisma.tweet.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TweetFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TweetFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Tweet'> extends True ? Prisma__TweetClient<TweetGetPayload<T>> : Prisma__TweetClient<TweetGetPayload<T> | null, null>
+
+    /**
+     * Find the first Tweet that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetFindFirstOrThrowArgs} args - Arguments to find a Tweet
+     * @example
+     * // Get one Tweet
+     * const tweet = await prisma.tweet.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TweetFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TweetFindFirstOrThrowArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Find zero or more Tweets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tweets
+     * const tweets = await prisma.tweet.findMany()
+     * 
+     * // Get first 10 Tweets
+     * const tweets = await prisma.tweet.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tweetWithIdOnly = await prisma.tweet.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TweetFindManyArgs>(
+      args?: SelectSubset<T, TweetFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TweetGetPayload<T>>>
+
+    /**
+     * Create a Tweet.
+     * @param {TweetCreateArgs} args - Arguments to create a Tweet.
+     * @example
+     * // Create one Tweet
+     * const Tweet = await prisma.tweet.create({
+     *   data: {
+     *     // ... data to create a Tweet
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TweetCreateArgs>(
+      args: SelectSubset<T, TweetCreateArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Create many Tweets.
+     *     @param {TweetCreateManyArgs} args - Arguments to create many Tweets.
+     *     @example
+     *     // Create many Tweets
+     *     const tweet = await prisma.tweet.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TweetCreateManyArgs>(
+      args?: SelectSubset<T, TweetCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Tweet.
+     * @param {TweetDeleteArgs} args - Arguments to delete one Tweet.
+     * @example
+     * // Delete one Tweet
+     * const Tweet = await prisma.tweet.delete({
+     *   where: {
+     *     // ... filter to delete one Tweet
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TweetDeleteArgs>(
+      args: SelectSubset<T, TweetDeleteArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Update one Tweet.
+     * @param {TweetUpdateArgs} args - Arguments to update one Tweet.
+     * @example
+     * // Update one Tweet
+     * const tweet = await prisma.tweet.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TweetUpdateArgs>(
+      args: SelectSubset<T, TweetUpdateArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Delete zero or more Tweets.
+     * @param {TweetDeleteManyArgs} args - Arguments to filter Tweets to delete.
+     * @example
+     * // Delete a few Tweets
+     * const { count } = await prisma.tweet.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TweetDeleteManyArgs>(
+      args?: SelectSubset<T, TweetDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tweets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tweets
+     * const tweet = await prisma.tweet.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TweetUpdateManyArgs>(
+      args: SelectSubset<T, TweetUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Tweet.
+     * @param {TweetUpsertArgs} args - Arguments to update or create a Tweet.
+     * @example
+     * // Update or create a Tweet
+     * const tweet = await prisma.tweet.upsert({
+     *   create: {
+     *     // ... data to create a Tweet
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tweet we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TweetUpsertArgs>(
+      args: SelectSubset<T, TweetUpsertArgs>
+    ): Prisma__TweetClient<TweetGetPayload<T>>
+
+    /**
+     * Count the number of Tweets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetCountArgs} args - Arguments to filter Tweets to count.
+     * @example
+     * // Count the number of Tweets
+     * const count = await prisma.tweet.count({
+     *   where: {
+     *     // ... the filter for the Tweets we want to count
+     *   }
+     * })
+    **/
+    count<T extends TweetCountArgs>(
+      args?: Subset<T, TweetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TweetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tweet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TweetAggregateArgs>(args: Subset<T, TweetAggregateArgs>): Prisma.PrismaPromise<GetTweetAggregateType<T>>
+
+    /**
+     * Group by Tweet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TweetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TweetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TweetGroupByArgs['orderBy'] }
+        : { orderBy?: TweetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TweetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTweetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tweet.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TweetClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    tweetingUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    replyToTweet<T extends TweetArgs= {}>(args?: Subset<T, TweetArgs>): Prisma__TweetClient<TweetGetPayload<T> | Null>;
+
+    repliedTweet<T extends TweetArgs= {}>(args?: Subset<T, TweetArgs>): Prisma__TweetClient<TweetGetPayload<T> | Null>;
+
+    hashTags<T extends Tweet$hashTagsArgs= {}>(args?: Subset<T, Tweet$hashTagsArgs>): Prisma.PrismaPromise<Array<HashTagGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Tweet base type for findUnique actions
+   */
+  export type TweetFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter, which Tweet to fetch.
+     */
+    where: TweetWhereUniqueInput
+  }
+
+  /**
+   * Tweet findUnique
+   */
+  export interface TweetFindUniqueArgs extends TweetFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Tweet findUniqueOrThrow
+   */
+  export type TweetFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter, which Tweet to fetch.
+     */
+    where: TweetWhereUniqueInput
+  }
+
+
+  /**
+   * Tweet base type for findFirst actions
+   */
+  export type TweetFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter, which Tweet to fetch.
+     */
+    where?: TweetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tweets to fetch.
+     */
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tweets.
+     */
+    cursor?: TweetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tweets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tweets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tweets.
+     */
+    distinct?: Enumerable<TweetScalarFieldEnum>
+  }
+
+  /**
+   * Tweet findFirst
+   */
+  export interface TweetFindFirstArgs extends TweetFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Tweet findFirstOrThrow
+   */
+  export type TweetFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter, which Tweet to fetch.
+     */
+    where?: TweetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tweets to fetch.
+     */
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tweets.
+     */
+    cursor?: TweetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tweets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tweets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tweets.
+     */
+    distinct?: Enumerable<TweetScalarFieldEnum>
+  }
+
+
+  /**
+   * Tweet findMany
+   */
+  export type TweetFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter, which Tweets to fetch.
+     */
+    where?: TweetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tweets to fetch.
+     */
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tweets.
+     */
+    cursor?: TweetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tweets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tweets.
+     */
+    skip?: number
+    distinct?: Enumerable<TweetScalarFieldEnum>
+  }
+
+
+  /**
+   * Tweet create
+   */
+  export type TweetCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * The data needed to create a Tweet.
+     */
+    data: XOR<TweetCreateInput, TweetUncheckedCreateInput>
+  }
+
+
+  /**
+   * Tweet createMany
+   */
+  export type TweetCreateManyArgs = {
+    /**
+     * The data used to create many Tweets.
+     */
+    data: Enumerable<TweetCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Tweet update
+   */
+  export type TweetUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * The data needed to update a Tweet.
+     */
+    data: XOR<TweetUpdateInput, TweetUncheckedUpdateInput>
+    /**
+     * Choose, which Tweet to update.
+     */
+    where: TweetWhereUniqueInput
+  }
+
+
+  /**
+   * Tweet updateMany
+   */
+  export type TweetUpdateManyArgs = {
+    /**
+     * The data used to update Tweets.
+     */
+    data: XOR<TweetUpdateManyMutationInput, TweetUncheckedUpdateManyInput>
+    /**
+     * Filter which Tweets to update
+     */
+    where?: TweetWhereInput
+  }
+
+
+  /**
+   * Tweet upsert
+   */
+  export type TweetUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * The filter to search for the Tweet to update in case it exists.
+     */
+    where: TweetWhereUniqueInput
+    /**
+     * In case the Tweet found by the `where` argument doesn't exist, create a new Tweet with this data.
+     */
+    create: XOR<TweetCreateInput, TweetUncheckedCreateInput>
+    /**
+     * In case the Tweet was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TweetUpdateInput, TweetUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Tweet delete
+   */
+  export type TweetDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    /**
+     * Filter which Tweet to delete.
+     */
+    where: TweetWhereUniqueInput
+  }
+
+
+  /**
+   * Tweet deleteMany
+   */
+  export type TweetDeleteManyArgs = {
+    /**
+     * Filter which Tweets to delete
+     */
+    where?: TweetWhereInput
+  }
+
+
+  /**
+   * Tweet.hashTags
+   */
+  export type Tweet$hashTagsArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    where?: HashTagWhereInput
+    orderBy?: Enumerable<HashTagOrderByWithRelationInput>
+    cursor?: HashTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<HashTagScalarFieldEnum>
+  }
+
+
+  /**
+   * Tweet without action
+   */
+  export type TweetArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+  }
+
+
+
+  /**
+   * Model HashTag
+   */
+
+
+  export type AggregateHashTag = {
+    _count: HashTagCountAggregateOutputType | null
+    _avg: HashTagAvgAggregateOutputType | null
+    _sum: HashTagSumAggregateOutputType | null
+    _min: HashTagMinAggregateOutputType | null
+    _max: HashTagMaxAggregateOutputType | null
+  }
+
+  export type HashTagAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HashTagSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type HashTagMinAggregateOutputType = {
+    id: number | null
+    hashTagText: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HashTagMaxAggregateOutputType = {
+    id: number | null
+    hashTagText: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HashTagCountAggregateOutputType = {
+    id: number
+    hashTagText: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HashTagAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type HashTagSumAggregateInputType = {
+    id?: true
+  }
+
+  export type HashTagMinAggregateInputType = {
+    id?: true
+    hashTagText?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HashTagMaxAggregateInputType = {
+    id?: true
+    hashTagText?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HashTagCountAggregateInputType = {
+    id?: true
+    hashTagText?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HashTagAggregateArgs = {
+    /**
+     * Filter which HashTag to aggregate.
+     */
+    where?: HashTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HashTags to fetch.
+     */
+    orderBy?: Enumerable<HashTagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HashTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HashTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HashTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HashTags
+    **/
+    _count?: true | HashTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HashTagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HashTagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HashTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HashTagMaxAggregateInputType
+  }
+
+  export type GetHashTagAggregateType<T extends HashTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateHashTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHashTag[P]>
+      : GetScalarType<T[P], AggregateHashTag[P]>
+  }
+
+
+
+
+  export type HashTagGroupByArgs = {
+    where?: HashTagWhereInput
+    orderBy?: Enumerable<HashTagOrderByWithAggregationInput>
+    by: HashTagScalarFieldEnum[]
+    having?: HashTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HashTagCountAggregateInputType | true
+    _avg?: HashTagAvgAggregateInputType
+    _sum?: HashTagSumAggregateInputType
+    _min?: HashTagMinAggregateInputType
+    _max?: HashTagMaxAggregateInputType
+  }
+
+
+  export type HashTagGroupByOutputType = {
+    id: number
+    hashTagText: string
+    createdAt: Date
+    updatedAt: Date
+    _count: HashTagCountAggregateOutputType | null
+    _avg: HashTagAvgAggregateOutputType | null
+    _sum: HashTagSumAggregateOutputType | null
+    _min: HashTagMinAggregateOutputType | null
+    _max: HashTagMaxAggregateOutputType | null
+  }
+
+  type GetHashTagGroupByPayload<T extends HashTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<HashTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HashTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HashTagGroupByOutputType[P]>
+            : GetScalarType<T[P], HashTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HashTagSelect = {
+    id?: boolean
+    hashTagText?: boolean
+    isIntweets?: boolean | HashTag$isIntweetsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | HashTagCountOutputTypeArgs
+  }
+
+
+  export type HashTagInclude = {
+    isIntweets?: boolean | HashTag$isIntweetsArgs
+    _count?: boolean | HashTagCountOutputTypeArgs
+  }
+
+  export type HashTagGetPayload<S extends boolean | null | undefined | HashTagArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? HashTag :
+    S extends undefined ? never :
+    S extends { include: any } & (HashTagArgs | HashTagFindManyArgs)
+    ? HashTag  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'isIntweets' ? Array < TweetGetPayload<S['include'][P]>>  :
+        P extends '_count' ? HashTagCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (HashTagArgs | HashTagFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'isIntweets' ? Array < TweetGetPayload<S['select'][P]>>  :
+        P extends '_count' ? HashTagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof HashTag ? HashTag[P] : never
+  } 
+      : HashTag
+
+
+  type HashTagCountArgs = 
+    Omit<HashTagFindManyArgs, 'select' | 'include'> & {
+      select?: HashTagCountAggregateInputType | true
+    }
+
+  export interface HashTagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one HashTag that matches the filter.
+     * @param {HashTagFindUniqueArgs} args - Arguments to find a HashTag
+     * @example
+     * // Get one HashTag
+     * const hashTag = await prisma.hashTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends HashTagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, HashTagFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'HashTag'> extends True ? Prisma__HashTagClient<HashTagGetPayload<T>> : Prisma__HashTagClient<HashTagGetPayload<T> | null, null>
+
+    /**
+     * Find one HashTag that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {HashTagFindUniqueOrThrowArgs} args - Arguments to find a HashTag
+     * @example
+     * // Get one HashTag
+     * const hashTag = await prisma.hashTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends HashTagFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, HashTagFindUniqueOrThrowArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Find the first HashTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagFindFirstArgs} args - Arguments to find a HashTag
+     * @example
+     * // Get one HashTag
+     * const hashTag = await prisma.hashTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends HashTagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, HashTagFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'HashTag'> extends True ? Prisma__HashTagClient<HashTagGetPayload<T>> : Prisma__HashTagClient<HashTagGetPayload<T> | null, null>
+
+    /**
+     * Find the first HashTag that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagFindFirstOrThrowArgs} args - Arguments to find a HashTag
+     * @example
+     * // Get one HashTag
+     * const hashTag = await prisma.hashTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends HashTagFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, HashTagFindFirstOrThrowArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Find zero or more HashTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HashTags
+     * const hashTags = await prisma.hashTag.findMany()
+     * 
+     * // Get first 10 HashTags
+     * const hashTags = await prisma.hashTag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const hashTagWithIdOnly = await prisma.hashTag.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends HashTagFindManyArgs>(
+      args?: SelectSubset<T, HashTagFindManyArgs>
+    ): Prisma.PrismaPromise<Array<HashTagGetPayload<T>>>
+
+    /**
+     * Create a HashTag.
+     * @param {HashTagCreateArgs} args - Arguments to create a HashTag.
+     * @example
+     * // Create one HashTag
+     * const HashTag = await prisma.hashTag.create({
+     *   data: {
+     *     // ... data to create a HashTag
+     *   }
+     * })
+     * 
+    **/
+    create<T extends HashTagCreateArgs>(
+      args: SelectSubset<T, HashTagCreateArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Create many HashTags.
+     *     @param {HashTagCreateManyArgs} args - Arguments to create many HashTags.
+     *     @example
+     *     // Create many HashTags
+     *     const hashTag = await prisma.hashTag.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends HashTagCreateManyArgs>(
+      args?: SelectSubset<T, HashTagCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a HashTag.
+     * @param {HashTagDeleteArgs} args - Arguments to delete one HashTag.
+     * @example
+     * // Delete one HashTag
+     * const HashTag = await prisma.hashTag.delete({
+     *   where: {
+     *     // ... filter to delete one HashTag
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends HashTagDeleteArgs>(
+      args: SelectSubset<T, HashTagDeleteArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Update one HashTag.
+     * @param {HashTagUpdateArgs} args - Arguments to update one HashTag.
+     * @example
+     * // Update one HashTag
+     * const hashTag = await prisma.hashTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends HashTagUpdateArgs>(
+      args: SelectSubset<T, HashTagUpdateArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Delete zero or more HashTags.
+     * @param {HashTagDeleteManyArgs} args - Arguments to filter HashTags to delete.
+     * @example
+     * // Delete a few HashTags
+     * const { count } = await prisma.hashTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends HashTagDeleteManyArgs>(
+      args?: SelectSubset<T, HashTagDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HashTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HashTags
+     * const hashTag = await prisma.hashTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends HashTagUpdateManyArgs>(
+      args: SelectSubset<T, HashTagUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one HashTag.
+     * @param {HashTagUpsertArgs} args - Arguments to update or create a HashTag.
+     * @example
+     * // Update or create a HashTag
+     * const hashTag = await prisma.hashTag.upsert({
+     *   create: {
+     *     // ... data to create a HashTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HashTag we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends HashTagUpsertArgs>(
+      args: SelectSubset<T, HashTagUpsertArgs>
+    ): Prisma__HashTagClient<HashTagGetPayload<T>>
+
+    /**
+     * Count the number of HashTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagCountArgs} args - Arguments to filter HashTags to count.
+     * @example
+     * // Count the number of HashTags
+     * const count = await prisma.hashTag.count({
+     *   where: {
+     *     // ... the filter for the HashTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends HashTagCountArgs>(
+      args?: Subset<T, HashTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HashTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HashTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HashTagAggregateArgs>(args: Subset<T, HashTagAggregateArgs>): Prisma.PrismaPromise<GetHashTagAggregateType<T>>
+
+    /**
+     * Group by HashTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HashTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HashTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HashTagGroupByArgs['orderBy'] }
+        : { orderBy?: HashTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HashTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHashTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HashTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__HashTagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    isIntweets<T extends HashTag$isIntweetsArgs= {}>(args?: Subset<T, HashTag$isIntweetsArgs>): Prisma.PrismaPromise<Array<TweetGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * HashTag base type for findUnique actions
+   */
+  export type HashTagFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter, which HashTag to fetch.
+     */
+    where: HashTagWhereUniqueInput
+  }
+
+  /**
+   * HashTag findUnique
+   */
+  export interface HashTagFindUniqueArgs extends HashTagFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * HashTag findUniqueOrThrow
+   */
+  export type HashTagFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter, which HashTag to fetch.
+     */
+    where: HashTagWhereUniqueInput
+  }
+
+
+  /**
+   * HashTag base type for findFirst actions
+   */
+  export type HashTagFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter, which HashTag to fetch.
+     */
+    where?: HashTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HashTags to fetch.
+     */
+    orderBy?: Enumerable<HashTagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HashTags.
+     */
+    cursor?: HashTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HashTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HashTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HashTags.
+     */
+    distinct?: Enumerable<HashTagScalarFieldEnum>
+  }
+
+  /**
+   * HashTag findFirst
+   */
+  export interface HashTagFindFirstArgs extends HashTagFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * HashTag findFirstOrThrow
+   */
+  export type HashTagFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter, which HashTag to fetch.
+     */
+    where?: HashTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HashTags to fetch.
+     */
+    orderBy?: Enumerable<HashTagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HashTags.
+     */
+    cursor?: HashTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HashTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HashTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HashTags.
+     */
+    distinct?: Enumerable<HashTagScalarFieldEnum>
+  }
+
+
+  /**
+   * HashTag findMany
+   */
+  export type HashTagFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter, which HashTags to fetch.
+     */
+    where?: HashTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HashTags to fetch.
+     */
+    orderBy?: Enumerable<HashTagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HashTags.
+     */
+    cursor?: HashTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HashTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HashTags.
+     */
+    skip?: number
+    distinct?: Enumerable<HashTagScalarFieldEnum>
+  }
+
+
+  /**
+   * HashTag create
+   */
+  export type HashTagCreateArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * The data needed to create a HashTag.
+     */
+    data: XOR<HashTagCreateInput, HashTagUncheckedCreateInput>
+  }
+
+
+  /**
+   * HashTag createMany
+   */
+  export type HashTagCreateManyArgs = {
+    /**
+     * The data used to create many HashTags.
+     */
+    data: Enumerable<HashTagCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * HashTag update
+   */
+  export type HashTagUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * The data needed to update a HashTag.
+     */
+    data: XOR<HashTagUpdateInput, HashTagUncheckedUpdateInput>
+    /**
+     * Choose, which HashTag to update.
+     */
+    where: HashTagWhereUniqueInput
+  }
+
+
+  /**
+   * HashTag updateMany
+   */
+  export type HashTagUpdateManyArgs = {
+    /**
+     * The data used to update HashTags.
+     */
+    data: XOR<HashTagUpdateManyMutationInput, HashTagUncheckedUpdateManyInput>
+    /**
+     * Filter which HashTags to update
+     */
+    where?: HashTagWhereInput
+  }
+
+
+  /**
+   * HashTag upsert
+   */
+  export type HashTagUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * The filter to search for the HashTag to update in case it exists.
+     */
+    where: HashTagWhereUniqueInput
+    /**
+     * In case the HashTag found by the `where` argument doesn't exist, create a new HashTag with this data.
+     */
+    create: XOR<HashTagCreateInput, HashTagUncheckedCreateInput>
+    /**
+     * In case the HashTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HashTagUpdateInput, HashTagUncheckedUpdateInput>
+  }
+
+
+  /**
+   * HashTag delete
+   */
+  export type HashTagDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+    /**
+     * Filter which HashTag to delete.
+     */
+    where: HashTagWhereUniqueInput
+  }
+
+
+  /**
+   * HashTag deleteMany
+   */
+  export type HashTagDeleteManyArgs = {
+    /**
+     * Filter which HashTags to delete
+     */
+    where?: HashTagWhereInput
+  }
+
+
+  /**
+   * HashTag.isIntweets
+   */
+  export type HashTag$isIntweetsArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    where?: TweetWhereInput
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    cursor?: TweetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TweetScalarFieldEnum>
+  }
+
+
+  /**
+   * HashTag without action
+   */
+  export type HashTagArgs = {
+    /**
+     * Select specific fields to fetch from the HashTag
+     */
+    select?: HashTagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: HashTagInclude | null
+  }
+
+
+
+  /**
+   * Model DirectMessage
+   */
+
+
+  export type AggregateDirectMessage = {
+    _count: DirectMessageCountAggregateOutputType | null
+    _avg: DirectMessageAvgAggregateOutputType | null
+    _sum: DirectMessageSumAggregateOutputType | null
+    _min: DirectMessageMinAggregateOutputType | null
+    _max: DirectMessageMaxAggregateOutputType | null
+  }
+
+  export type DirectMessageAvgAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+  }
+
+  export type DirectMessageSumAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toUserId: number | null
+  }
+
+  export type DirectMessageMinAggregateOutputType = {
+    id: number | null
+    dmText: string | null
+    fromUserId: number | null
+    toUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DirectMessageMaxAggregateOutputType = {
+    id: number | null
+    dmText: string | null
+    fromUserId: number | null
+    toUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DirectMessageCountAggregateOutputType = {
+    id: number
+    dmText: number
+    fromUserId: number
+    toUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DirectMessageAvgAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+  }
+
+  export type DirectMessageSumAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toUserId?: true
+  }
+
+  export type DirectMessageMinAggregateInputType = {
+    id?: true
+    dmText?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DirectMessageMaxAggregateInputType = {
+    id?: true
+    dmText?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DirectMessageCountAggregateInputType = {
+    id?: true
+    dmText?: true
+    fromUserId?: true
+    toUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DirectMessageAggregateArgs = {
+    /**
+     * Filter which DirectMessage to aggregate.
+     */
+    where?: DirectMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DirectMessages to fetch.
+     */
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DirectMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DirectMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DirectMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DirectMessages
+    **/
+    _count?: true | DirectMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DirectMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DirectMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DirectMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DirectMessageMaxAggregateInputType
+  }
+
+  export type GetDirectMessageAggregateType<T extends DirectMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateDirectMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDirectMessage[P]>
+      : GetScalarType<T[P], AggregateDirectMessage[P]>
+  }
+
+
+
+
+  export type DirectMessageGroupByArgs = {
+    where?: DirectMessageWhereInput
+    orderBy?: Enumerable<DirectMessageOrderByWithAggregationInput>
+    by: DirectMessageScalarFieldEnum[]
+    having?: DirectMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DirectMessageCountAggregateInputType | true
+    _avg?: DirectMessageAvgAggregateInputType
+    _sum?: DirectMessageSumAggregateInputType
+    _min?: DirectMessageMinAggregateInputType
+    _max?: DirectMessageMaxAggregateInputType
+  }
+
+
+  export type DirectMessageGroupByOutputType = {
+    id: number
+    dmText: string
+    fromUserId: number
+    toUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: DirectMessageCountAggregateOutputType | null
+    _avg: DirectMessageAvgAggregateOutputType | null
+    _sum: DirectMessageSumAggregateOutputType | null
+    _min: DirectMessageMinAggregateOutputType | null
+    _max: DirectMessageMaxAggregateOutputType | null
+  }
+
+  type GetDirectMessageGroupByPayload<T extends DirectMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<DirectMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DirectMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DirectMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], DirectMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DirectMessageSelect = {
+    id?: boolean
+    dmText?: boolean
+    fromUser?: boolean | UserArgs
+    toUser?: boolean | UserArgs
+    fromUserId?: boolean
+    toUserId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type DirectMessageInclude = {
+    fromUser?: boolean | UserArgs
+    toUser?: boolean | UserArgs
+  }
+
+  export type DirectMessageGetPayload<S extends boolean | null | undefined | DirectMessageArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? DirectMessage :
+    S extends undefined ? never :
+    S extends { include: any } & (DirectMessageArgs | DirectMessageFindManyArgs)
+    ? DirectMessage  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'fromUser' ? UserGetPayload<S['include'][P]> :
+        P extends 'toUser' ? UserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (DirectMessageArgs | DirectMessageFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'fromUser' ? UserGetPayload<S['select'][P]> :
+        P extends 'toUser' ? UserGetPayload<S['select'][P]> :  P extends keyof DirectMessage ? DirectMessage[P] : never
+  } 
+      : DirectMessage
+
+
+  type DirectMessageCountArgs = 
+    Omit<DirectMessageFindManyArgs, 'select' | 'include'> & {
+      select?: DirectMessageCountAggregateInputType | true
+    }
+
+  export interface DirectMessageDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one DirectMessage that matches the filter.
+     * @param {DirectMessageFindUniqueArgs} args - Arguments to find a DirectMessage
+     * @example
+     * // Get one DirectMessage
+     * const directMessage = await prisma.directMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends DirectMessageFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, DirectMessageFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'DirectMessage'> extends True ? Prisma__DirectMessageClient<DirectMessageGetPayload<T>> : Prisma__DirectMessageClient<DirectMessageGetPayload<T> | null, null>
+
+    /**
+     * Find one DirectMessage that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {DirectMessageFindUniqueOrThrowArgs} args - Arguments to find a DirectMessage
+     * @example
+     * // Get one DirectMessage
+     * const directMessage = await prisma.directMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends DirectMessageFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, DirectMessageFindUniqueOrThrowArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Find the first DirectMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageFindFirstArgs} args - Arguments to find a DirectMessage
+     * @example
+     * // Get one DirectMessage
+     * const directMessage = await prisma.directMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends DirectMessageFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, DirectMessageFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'DirectMessage'> extends True ? Prisma__DirectMessageClient<DirectMessageGetPayload<T>> : Prisma__DirectMessageClient<DirectMessageGetPayload<T> | null, null>
+
+    /**
+     * Find the first DirectMessage that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageFindFirstOrThrowArgs} args - Arguments to find a DirectMessage
+     * @example
+     * // Get one DirectMessage
+     * const directMessage = await prisma.directMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends DirectMessageFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, DirectMessageFindFirstOrThrowArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Find zero or more DirectMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DirectMessages
+     * const directMessages = await prisma.directMessage.findMany()
+     * 
+     * // Get first 10 DirectMessages
+     * const directMessages = await prisma.directMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const directMessageWithIdOnly = await prisma.directMessage.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends DirectMessageFindManyArgs>(
+      args?: SelectSubset<T, DirectMessageFindManyArgs>
+    ): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>>
+
+    /**
+     * Create a DirectMessage.
+     * @param {DirectMessageCreateArgs} args - Arguments to create a DirectMessage.
+     * @example
+     * // Create one DirectMessage
+     * const DirectMessage = await prisma.directMessage.create({
+     *   data: {
+     *     // ... data to create a DirectMessage
+     *   }
+     * })
+     * 
+    **/
+    create<T extends DirectMessageCreateArgs>(
+      args: SelectSubset<T, DirectMessageCreateArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Create many DirectMessages.
+     *     @param {DirectMessageCreateManyArgs} args - Arguments to create many DirectMessages.
+     *     @example
+     *     // Create many DirectMessages
+     *     const directMessage = await prisma.directMessage.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends DirectMessageCreateManyArgs>(
+      args?: SelectSubset<T, DirectMessageCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DirectMessage.
+     * @param {DirectMessageDeleteArgs} args - Arguments to delete one DirectMessage.
+     * @example
+     * // Delete one DirectMessage
+     * const DirectMessage = await prisma.directMessage.delete({
+     *   where: {
+     *     // ... filter to delete one DirectMessage
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends DirectMessageDeleteArgs>(
+      args: SelectSubset<T, DirectMessageDeleteArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Update one DirectMessage.
+     * @param {DirectMessageUpdateArgs} args - Arguments to update one DirectMessage.
+     * @example
+     * // Update one DirectMessage
+     * const directMessage = await prisma.directMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends DirectMessageUpdateArgs>(
+      args: SelectSubset<T, DirectMessageUpdateArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Delete zero or more DirectMessages.
+     * @param {DirectMessageDeleteManyArgs} args - Arguments to filter DirectMessages to delete.
+     * @example
+     * // Delete a few DirectMessages
+     * const { count } = await prisma.directMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends DirectMessageDeleteManyArgs>(
+      args?: SelectSubset<T, DirectMessageDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DirectMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DirectMessages
+     * const directMessage = await prisma.directMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends DirectMessageUpdateManyArgs>(
+      args: SelectSubset<T, DirectMessageUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DirectMessage.
+     * @param {DirectMessageUpsertArgs} args - Arguments to update or create a DirectMessage.
+     * @example
+     * // Update or create a DirectMessage
+     * const directMessage = await prisma.directMessage.upsert({
+     *   create: {
+     *     // ... data to create a DirectMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DirectMessage we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends DirectMessageUpsertArgs>(
+      args: SelectSubset<T, DirectMessageUpsertArgs>
+    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
+
+    /**
+     * Count the number of DirectMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageCountArgs} args - Arguments to filter DirectMessages to count.
+     * @example
+     * // Count the number of DirectMessages
+     * const count = await prisma.directMessage.count({
+     *   where: {
+     *     // ... the filter for the DirectMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends DirectMessageCountArgs>(
+      args?: Subset<T, DirectMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DirectMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DirectMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DirectMessageAggregateArgs>(args: Subset<T, DirectMessageAggregateArgs>): Prisma.PrismaPromise<GetDirectMessageAggregateType<T>>
+
+    /**
+     * Group by DirectMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DirectMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DirectMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DirectMessageGroupByArgs['orderBy'] }
+        : { orderBy?: DirectMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DirectMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDirectMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DirectMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__DirectMessageClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    fromUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    toUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * DirectMessage base type for findUnique actions
+   */
+  export type DirectMessageFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter, which DirectMessage to fetch.
+     */
+    where: DirectMessageWhereUniqueInput
+  }
+
+  /**
+   * DirectMessage findUnique
+   */
+  export interface DirectMessageFindUniqueArgs extends DirectMessageFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * DirectMessage findUniqueOrThrow
+   */
+  export type DirectMessageFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter, which DirectMessage to fetch.
+     */
+    where: DirectMessageWhereUniqueInput
+  }
+
+
+  /**
+   * DirectMessage base type for findFirst actions
+   */
+  export type DirectMessageFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter, which DirectMessage to fetch.
+     */
+    where?: DirectMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DirectMessages to fetch.
+     */
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DirectMessages.
+     */
+    cursor?: DirectMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DirectMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DirectMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DirectMessages.
+     */
+    distinct?: Enumerable<DirectMessageScalarFieldEnum>
+  }
+
+  /**
+   * DirectMessage findFirst
+   */
+  export interface DirectMessageFindFirstArgs extends DirectMessageFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * DirectMessage findFirstOrThrow
+   */
+  export type DirectMessageFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter, which DirectMessage to fetch.
+     */
+    where?: DirectMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DirectMessages to fetch.
+     */
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DirectMessages.
+     */
+    cursor?: DirectMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DirectMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DirectMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DirectMessages.
+     */
+    distinct?: Enumerable<DirectMessageScalarFieldEnum>
+  }
+
+
+  /**
+   * DirectMessage findMany
+   */
+  export type DirectMessageFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter, which DirectMessages to fetch.
+     */
+    where?: DirectMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DirectMessages to fetch.
+     */
+    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DirectMessages.
+     */
+    cursor?: DirectMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DirectMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DirectMessages.
+     */
+    skip?: number
+    distinct?: Enumerable<DirectMessageScalarFieldEnum>
+  }
+
+
+  /**
+   * DirectMessage create
+   */
+  export type DirectMessageCreateArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * The data needed to create a DirectMessage.
+     */
+    data: XOR<DirectMessageCreateInput, DirectMessageUncheckedCreateInput>
+  }
+
+
+  /**
+   * DirectMessage createMany
+   */
+  export type DirectMessageCreateManyArgs = {
+    /**
+     * The data used to create many DirectMessages.
+     */
+    data: Enumerable<DirectMessageCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * DirectMessage update
+   */
+  export type DirectMessageUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * The data needed to update a DirectMessage.
+     */
+    data: XOR<DirectMessageUpdateInput, DirectMessageUncheckedUpdateInput>
+    /**
+     * Choose, which DirectMessage to update.
+     */
+    where: DirectMessageWhereUniqueInput
+  }
+
+
+  /**
+   * DirectMessage updateMany
+   */
+  export type DirectMessageUpdateManyArgs = {
+    /**
+     * The data used to update DirectMessages.
+     */
+    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which DirectMessages to update
+     */
+    where?: DirectMessageWhereInput
+  }
+
+
+  /**
+   * DirectMessage upsert
+   */
+  export type DirectMessageUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * The filter to search for the DirectMessage to update in case it exists.
+     */
+    where: DirectMessageWhereUniqueInput
+    /**
+     * In case the DirectMessage found by the `where` argument doesn't exist, create a new DirectMessage with this data.
+     */
+    create: XOR<DirectMessageCreateInput, DirectMessageUncheckedCreateInput>
+    /**
+     * In case the DirectMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DirectMessageUpdateInput, DirectMessageUncheckedUpdateInput>
+  }
+
+
+  /**
+   * DirectMessage delete
+   */
+  export type DirectMessageDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+    /**
+     * Filter which DirectMessage to delete.
+     */
+    where: DirectMessageWhereUniqueInput
+  }
+
+
+  /**
+   * DirectMessage deleteMany
+   */
+  export type DirectMessageDeleteManyArgs = {
+    /**
+     * Filter which DirectMessages to delete
+     */
+    where?: DirectMessageWhereInput
+  }
+
+
+  /**
+   * DirectMessage without action
+   */
+  export type DirectMessageArgs = {
+    /**
+     * Select specific fields to fetch from the DirectMessage
+     */
+    select?: DirectMessageSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: DirectMessageInclude | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -10280,6 +15612,28 @@ export namespace Prisma {
   };
 
   export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
+
+
+  export const DirectMessageScalarFieldEnum: {
+    id: 'id',
+    dmText: 'dmText',
+    fromUserId: 'fromUserId',
+    toUserId: 'toUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DirectMessageScalarFieldEnum = (typeof DirectMessageScalarFieldEnum)[keyof typeof DirectMessageScalarFieldEnum]
+
+
+  export const HashTagScalarFieldEnum: {
+    id: 'id',
+    hashTagText: 'hashTagText',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HashTagScalarFieldEnum = (typeof HashTagScalarFieldEnum)[keyof typeof HashTagScalarFieldEnum]
 
 
   export const MenuScalarFieldEnum: {
@@ -10386,6 +15740,41 @@ export namespace Prisma {
   };
 
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+  export const TweetScalarFieldEnum: {
+    id: 'id',
+    tweetText: 'tweetText',
+    replyToTweetId: 'replyToTweetId',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TweetScalarFieldEnum = (typeof TweetScalarFieldEnum)[keyof typeof TweetScalarFieldEnum]
+
+
+  export const UserRelationScalarFieldEnum: {
+    id: 'id',
+    followingUserId: 'followingUserId',
+    followedUserId: 'followedUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserRelationScalarFieldEnum = (typeof UserRelationScalarFieldEnum)[keyof typeof UserRelationScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    imageUrl: 'imageUrl',
+    bio: 'bio',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   /**
@@ -10852,6 +16241,278 @@ export namespace Prisma {
     task?: StringWithAggregatesFilter | string
     status?: StringWithAggregatesFilter | string
     bgColor?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UserWhereInput = {
+    AND?: Enumerable<UserWhereInput>
+    OR?: Enumerable<UserWhereInput>
+    NOT?: Enumerable<UserWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    imageUrl?: StringFilter | string
+    bio?: StringFilter | string
+    followingUserRelations?: UserRelationListRelationFilter
+    followedUserRelations?: UserRelationListRelationFilter
+    tweets?: TweetListRelationFilter
+    directMessagesFrom?: DirectMessageListRelationFilter
+    directMessagesTo?: DirectMessageListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    imageUrl?: SortOrder
+    bio?: SortOrder
+    followingUserRelations?: UserRelationOrderByRelationAggregateInput
+    followedUserRelations?: UserRelationOrderByRelationAggregateInput
+    tweets?: TweetOrderByRelationAggregateInput
+    directMessagesFrom?: DirectMessageOrderByRelationAggregateInput
+    directMessagesTo?: DirectMessageOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    imageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    imageUrl?: StringWithAggregatesFilter | string
+    bio?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UserRelationWhereInput = {
+    AND?: Enumerable<UserRelationWhereInput>
+    OR?: Enumerable<UserRelationWhereInput>
+    NOT?: Enumerable<UserRelationWhereInput>
+    id?: IntFilter | number
+    followingUser?: XOR<UserRelationFilter, UserWhereInput>
+    followingUserId?: IntFilter | number
+    followedUser?: XOR<UserRelationFilter, UserWhereInput>
+    followedUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserRelationOrderByWithRelationInput = {
+    id?: SortOrder
+    followingUser?: UserOrderByWithRelationInput
+    followingUserId?: SortOrder
+    followedUser?: UserOrderByWithRelationInput
+    followedUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UserRelationOrderByWithAggregationInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserRelationCountOrderByAggregateInput
+    _avg?: UserRelationAvgOrderByAggregateInput
+    _max?: UserRelationMaxOrderByAggregateInput
+    _min?: UserRelationMinOrderByAggregateInput
+    _sum?: UserRelationSumOrderByAggregateInput
+  }
+
+  export type UserRelationScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UserRelationScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UserRelationScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UserRelationScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    followingUserId?: IntWithAggregatesFilter | number
+    followedUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type TweetWhereInput = {
+    AND?: Enumerable<TweetWhereInput>
+    OR?: Enumerable<TweetWhereInput>
+    NOT?: Enumerable<TweetWhereInput>
+    id?: IntFilter | number
+    tweetText?: StringFilter | string
+    tweetingUser?: XOR<UserRelationFilter, UserWhereInput>
+    replyToTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
+    replyToTweetId?: IntNullableFilter | number | null
+    repliedTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
+    userId?: IntFilter | number
+    hashTags?: HashTagListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TweetOrderByWithRelationInput = {
+    id?: SortOrder
+    tweetText?: SortOrder
+    tweetingUser?: UserOrderByWithRelationInput
+    replyToTweet?: TweetOrderByWithRelationInput
+    replyToTweetId?: SortOrder
+    repliedTweet?: TweetOrderByWithRelationInput
+    userId?: SortOrder
+    hashTags?: HashTagOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TweetWhereUniqueInput = {
+    id?: number
+    replyToTweetId?: number
+  }
+
+  export type TweetOrderByWithAggregationInput = {
+    id?: SortOrder
+    tweetText?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TweetCountOrderByAggregateInput
+    _avg?: TweetAvgOrderByAggregateInput
+    _max?: TweetMaxOrderByAggregateInput
+    _min?: TweetMinOrderByAggregateInput
+    _sum?: TweetSumOrderByAggregateInput
+  }
+
+  export type TweetScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TweetScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TweetScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TweetScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    tweetText?: StringWithAggregatesFilter | string
+    replyToTweetId?: IntNullableWithAggregatesFilter | number | null
+    userId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type HashTagWhereInput = {
+    AND?: Enumerable<HashTagWhereInput>
+    OR?: Enumerable<HashTagWhereInput>
+    NOT?: Enumerable<HashTagWhereInput>
+    id?: IntFilter | number
+    hashTagText?: StringFilter | string
+    isIntweets?: TweetListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type HashTagOrderByWithRelationInput = {
+    id?: SortOrder
+    hashTagText?: SortOrder
+    isIntweets?: TweetOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HashTagWhereUniqueInput = {
+    id?: number
+  }
+
+  export type HashTagOrderByWithAggregationInput = {
+    id?: SortOrder
+    hashTagText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HashTagCountOrderByAggregateInput
+    _avg?: HashTagAvgOrderByAggregateInput
+    _max?: HashTagMaxOrderByAggregateInput
+    _min?: HashTagMinOrderByAggregateInput
+    _sum?: HashTagSumOrderByAggregateInput
+  }
+
+  export type HashTagScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<HashTagScalarWhereWithAggregatesInput>
+    OR?: Enumerable<HashTagScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<HashTagScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    hashTagText?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type DirectMessageWhereInput = {
+    AND?: Enumerable<DirectMessageWhereInput>
+    OR?: Enumerable<DirectMessageWhereInput>
+    NOT?: Enumerable<DirectMessageWhereInput>
+    id?: IntFilter | number
+    dmText?: StringFilter | string
+    fromUser?: XOR<UserRelationFilter, UserWhereInput>
+    toUser?: XOR<UserRelationFilter, UserWhereInput>
+    fromUserId?: IntFilter | number
+    toUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type DirectMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    dmText?: SortOrder
+    fromUser?: UserOrderByWithRelationInput
+    toUser?: UserOrderByWithRelationInput
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DirectMessageWhereUniqueInput = {
+    id?: number
+  }
+
+  export type DirectMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    dmText?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DirectMessageCountOrderByAggregateInput
+    _avg?: DirectMessageAvgOrderByAggregateInput
+    _max?: DirectMessageMaxOrderByAggregateInput
+    _min?: DirectMessageMinOrderByAggregateInput
+    _sum?: DirectMessageSumOrderByAggregateInput
+  }
+
+  export type DirectMessageScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
+    OR?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    dmText?: StringWithAggregatesFilter | string
+    fromUserId?: IntWithAggregatesFilter | number
+    toUserId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -11377,6 +17038,311 @@ export namespace Prisma {
     task?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     bgColor?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageUncheckedCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUncheckedUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateManyInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationCreateInput = {
+    followingUser: UserCreateNestedOneWithoutFollowingUserRelationsInput
+    followedUser: UserCreateNestedOneWithoutFollowedUserRelationsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUncheckedCreateInput = {
+    id?: number
+    followingUserId: number
+    followedUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUpdateInput = {
+    followingUser?: UserUpdateOneRequiredWithoutFollowingUserRelationsNestedInput
+    followedUser?: UserUpdateOneRequiredWithoutFollowedUserRelationsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    followedUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationCreateManyInput = {
+    id?: number
+    followingUserId: number
+    followedUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    followedUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetCreateInput = {
+    tweetText: string
+    tweetingUser: UserCreateNestedOneWithoutTweetsInput
+    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
+    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    hashTags?: HashTagCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUncheckedCreateInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    userId: number
+    hashTags?: HashTagUncheckedCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUpdateInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
+    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
+    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    hashTags?: HashTagUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    userId?: IntFieldUpdateOperationsInput | number
+    hashTags?: HashTagUncheckedUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetCreateManyInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUpdateManyMutationInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagCreateInput = {
+    hashTagText: string
+    isIntweets?: TweetCreateNestedManyWithoutHashTagsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HashTagUncheckedCreateInput = {
+    id?: number
+    hashTagText: string
+    isIntweets?: TweetUncheckedCreateNestedManyWithoutHashTagsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HashTagUpdateInput = {
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    isIntweets?: TweetUpdateManyWithoutHashTagsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    isIntweets?: TweetUncheckedUpdateManyWithoutHashTagsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagCreateManyInput = {
+    id?: number
+    hashTagText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HashTagUpdateManyMutationInput = {
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageCreateInput = {
+    dmText: string
+    fromUser: UserCreateNestedOneWithoutDirectMessagesFromInput
+    toUser: UserCreateNestedOneWithoutDirectMessagesToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageUncheckedCreateInput = {
+    id?: number
+    dmText: string
+    fromUserId: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageUpdateInput = {
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUser?: UserUpdateOneRequiredWithoutDirectMessagesFromNestedInput
+    toUser?: UserUpdateOneRequiredWithoutDirectMessagesToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageCreateManyInput = {
+    id?: number
+    dmText: string
+    fromUserId: number
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageUpdateManyMutationInput = {
+    dmText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11914,6 +17880,234 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type UserRelationListRelationFilter = {
+    every?: UserRelationWhereInput
+    some?: UserRelationWhereInput
+    none?: UserRelationWhereInput
+  }
+
+  export type TweetListRelationFilter = {
+    every?: TweetWhereInput
+    some?: TweetWhereInput
+    none?: TweetWhereInput
+  }
+
+  export type DirectMessageListRelationFilter = {
+    every?: DirectMessageWhereInput
+    some?: DirectMessageWhereInput
+    none?: DirectMessageWhereInput
+  }
+
+  export type UserRelationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TweetOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DirectMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    imageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    imageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    imageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type UserRelationCountOrderByAggregateInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+  }
+
+  export type UserRelationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationMinOrderByAggregateInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserRelationSumOrderByAggregateInput = {
+    id?: SortOrder
+    followingUserId?: SortOrder
+    followedUserId?: SortOrder
+  }
+
+  export type TweetRelationFilter = {
+    is?: TweetWhereInput | null
+    isNot?: TweetWhereInput | null
+  }
+
+  export type HashTagListRelationFilter = {
+    every?: HashTagWhereInput
+    some?: HashTagWhereInput
+    none?: HashTagWhereInput
+  }
+
+  export type HashTagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TweetCountOrderByAggregateInput = {
+    id?: SortOrder
+    tweetText?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TweetAvgOrderByAggregateInput = {
+    id?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type TweetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tweetText?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TweetMinOrderByAggregateInput = {
+    id?: SortOrder
+    tweetText?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TweetSumOrderByAggregateInput = {
+    id?: SortOrder
+    replyToTweetId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type HashTagCountOrderByAggregateInput = {
+    id?: SortOrder
+    hashTagText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HashTagAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type HashTagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    hashTagText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HashTagMinOrderByAggregateInput = {
+    id?: SortOrder
+    hashTagText?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HashTagSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DirectMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    dmText?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DirectMessageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+  }
+
+  export type DirectMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dmText?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DirectMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    dmText?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DirectMessageSumOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
+  }
+
   export type MenuCreateNestedManyWithoutCategoryInput = {
     create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
     connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
@@ -12438,6 +18632,410 @@ export namespace Prisma {
     update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutRoundsInput>
     updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutRoundsInput>
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
+  }
+
+  export type UserRelationCreateNestedManyWithoutFollowingUserInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
+    createMany?: UserRelationCreateManyFollowingUserInputEnvelope
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+  }
+
+  export type UserRelationCreateNestedManyWithoutFollowedUserInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowedUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowedUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowedUserInput>
+    createMany?: UserRelationCreateManyFollowedUserInputEnvelope
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+  }
+
+  export type TweetCreateNestedManyWithoutTweetingUserInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutTweetingUserInput>, Enumerable<TweetUncheckedCreateWithoutTweetingUserInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutTweetingUserInput>
+    createMany?: TweetCreateManyTweetingUserInputEnvelope
+    connect?: Enumerable<TweetWhereUniqueInput>
+  }
+
+  export type DirectMessageCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutFromUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromUserInput>
+    createMany?: DirectMessageCreateManyFromUserInputEnvelope
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+  }
+
+  export type DirectMessageCreateNestedManyWithoutToUserInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutToUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutToUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToUserInput>
+    createMany?: DirectMessageCreateManyToUserInputEnvelope
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+  }
+
+  export type UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
+    createMany?: UserRelationCreateManyFollowingUserInputEnvelope
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+  }
+
+  export type UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowedUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowedUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowedUserInput>
+    createMany?: UserRelationCreateManyFollowedUserInputEnvelope
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+  }
+
+  export type TweetUncheckedCreateNestedManyWithoutTweetingUserInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutTweetingUserInput>, Enumerable<TweetUncheckedCreateWithoutTweetingUserInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutTweetingUserInput>
+    createMany?: TweetCreateManyTweetingUserInputEnvelope
+    connect?: Enumerable<TweetWhereUniqueInput>
+  }
+
+  export type DirectMessageUncheckedCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutFromUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromUserInput>
+    createMany?: DirectMessageCreateManyFromUserInputEnvelope
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+  }
+
+  export type DirectMessageUncheckedCreateNestedManyWithoutToUserInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutToUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutToUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToUserInput>
+    createMany?: DirectMessageCreateManyToUserInputEnvelope
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+  }
+
+  export type UserRelationUpdateManyWithoutFollowingUserNestedInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
+    upsert?: Enumerable<UserRelationUpsertWithWhereUniqueWithoutFollowingUserInput>
+    createMany?: UserRelationCreateManyFollowingUserInputEnvelope
+    set?: Enumerable<UserRelationWhereUniqueInput>
+    disconnect?: Enumerable<UserRelationWhereUniqueInput>
+    delete?: Enumerable<UserRelationWhereUniqueInput>
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+    update?: Enumerable<UserRelationUpdateWithWhereUniqueWithoutFollowingUserInput>
+    updateMany?: Enumerable<UserRelationUpdateManyWithWhereWithoutFollowingUserInput>
+    deleteMany?: Enumerable<UserRelationScalarWhereInput>
+  }
+
+  export type UserRelationUpdateManyWithoutFollowedUserNestedInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowedUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowedUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowedUserInput>
+    upsert?: Enumerable<UserRelationUpsertWithWhereUniqueWithoutFollowedUserInput>
+    createMany?: UserRelationCreateManyFollowedUserInputEnvelope
+    set?: Enumerable<UserRelationWhereUniqueInput>
+    disconnect?: Enumerable<UserRelationWhereUniqueInput>
+    delete?: Enumerable<UserRelationWhereUniqueInput>
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+    update?: Enumerable<UserRelationUpdateWithWhereUniqueWithoutFollowedUserInput>
+    updateMany?: Enumerable<UserRelationUpdateManyWithWhereWithoutFollowedUserInput>
+    deleteMany?: Enumerable<UserRelationScalarWhereInput>
+  }
+
+  export type TweetUpdateManyWithoutTweetingUserNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutTweetingUserInput>, Enumerable<TweetUncheckedCreateWithoutTweetingUserInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutTweetingUserInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutTweetingUserInput>
+    createMany?: TweetCreateManyTweetingUserInputEnvelope
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutTweetingUserInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutTweetingUserInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
+  }
+
+  export type DirectMessageUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutFromUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromUserInput>
+    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutFromUserInput>
+    createMany?: DirectMessageCreateManyFromUserInputEnvelope
+    set?: Enumerable<DirectMessageWhereUniqueInput>
+    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
+    delete?: Enumerable<DirectMessageWhereUniqueInput>
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutFromUserInput>
+    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutFromUserInput>
+    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
+  }
+
+  export type DirectMessageUpdateManyWithoutToUserNestedInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutToUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutToUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToUserInput>
+    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutToUserInput>
+    createMany?: DirectMessageCreateManyToUserInputEnvelope
+    set?: Enumerable<DirectMessageWhereUniqueInput>
+    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
+    delete?: Enumerable<DirectMessageWhereUniqueInput>
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutToUserInput>
+    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutToUserInput>
+    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
+  }
+
+  export type UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
+    upsert?: Enumerable<UserRelationUpsertWithWhereUniqueWithoutFollowingUserInput>
+    createMany?: UserRelationCreateManyFollowingUserInputEnvelope
+    set?: Enumerable<UserRelationWhereUniqueInput>
+    disconnect?: Enumerable<UserRelationWhereUniqueInput>
+    delete?: Enumerable<UserRelationWhereUniqueInput>
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+    update?: Enumerable<UserRelationUpdateWithWhereUniqueWithoutFollowingUserInput>
+    updateMany?: Enumerable<UserRelationUpdateManyWithWhereWithoutFollowingUserInput>
+    deleteMany?: Enumerable<UserRelationScalarWhereInput>
+  }
+
+  export type UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput = {
+    create?: XOR<Enumerable<UserRelationCreateWithoutFollowedUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowedUserInput>>
+    connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowedUserInput>
+    upsert?: Enumerable<UserRelationUpsertWithWhereUniqueWithoutFollowedUserInput>
+    createMany?: UserRelationCreateManyFollowedUserInputEnvelope
+    set?: Enumerable<UserRelationWhereUniqueInput>
+    disconnect?: Enumerable<UserRelationWhereUniqueInput>
+    delete?: Enumerable<UserRelationWhereUniqueInput>
+    connect?: Enumerable<UserRelationWhereUniqueInput>
+    update?: Enumerable<UserRelationUpdateWithWhereUniqueWithoutFollowedUserInput>
+    updateMany?: Enumerable<UserRelationUpdateManyWithWhereWithoutFollowedUserInput>
+    deleteMany?: Enumerable<UserRelationScalarWhereInput>
+  }
+
+  export type TweetUncheckedUpdateManyWithoutTweetingUserNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutTweetingUserInput>, Enumerable<TweetUncheckedCreateWithoutTweetingUserInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutTweetingUserInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutTweetingUserInput>
+    createMany?: TweetCreateManyTweetingUserInputEnvelope
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutTweetingUserInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutTweetingUserInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
+  }
+
+  export type DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutFromUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromUserInput>
+    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutFromUserInput>
+    createMany?: DirectMessageCreateManyFromUserInputEnvelope
+    set?: Enumerable<DirectMessageWhereUniqueInput>
+    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
+    delete?: Enumerable<DirectMessageWhereUniqueInput>
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutFromUserInput>
+    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutFromUserInput>
+    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
+  }
+
+  export type DirectMessageUncheckedUpdateManyWithoutToUserNestedInput = {
+    create?: XOR<Enumerable<DirectMessageCreateWithoutToUserInput>, Enumerable<DirectMessageUncheckedCreateWithoutToUserInput>>
+    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToUserInput>
+    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutToUserInput>
+    createMany?: DirectMessageCreateManyToUserInputEnvelope
+    set?: Enumerable<DirectMessageWhereUniqueInput>
+    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
+    delete?: Enumerable<DirectMessageWhereUniqueInput>
+    connect?: Enumerable<DirectMessageWhereUniqueInput>
+    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutToUserInput>
+    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutToUserInput>
+    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
+  }
+
+  export type UserCreateNestedOneWithoutFollowingUserRelationsInput = {
+    create?: XOR<UserCreateWithoutFollowingUserRelationsInput, UserUncheckedCreateWithoutFollowingUserRelationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingUserRelationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutFollowedUserRelationsInput = {
+    create?: XOR<UserCreateWithoutFollowedUserRelationsInput, UserUncheckedCreateWithoutFollowedUserRelationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowedUserRelationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutFollowingUserRelationsNestedInput = {
+    create?: XOR<UserCreateWithoutFollowingUserRelationsInput, UserUncheckedCreateWithoutFollowingUserRelationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingUserRelationsInput
+    upsert?: UserUpsertWithoutFollowingUserRelationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutFollowingUserRelationsInput, UserUncheckedUpdateWithoutFollowingUserRelationsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutFollowedUserRelationsNestedInput = {
+    create?: XOR<UserCreateWithoutFollowedUserRelationsInput, UserUncheckedCreateWithoutFollowedUserRelationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFollowedUserRelationsInput
+    upsert?: UserUpsertWithoutFollowedUserRelationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutFollowedUserRelationsInput, UserUncheckedUpdateWithoutFollowedUserRelationsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTweetsInput = {
+    create?: XOR<UserCreateWithoutTweetsInput, UserUncheckedCreateWithoutTweetsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTweetsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TweetCreateNestedOneWithoutRepliedTweetInput = {
+    create?: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutRepliedTweetInput
+    connect?: TweetWhereUniqueInput
+  }
+
+  export type TweetCreateNestedOneWithoutReplyToTweetInput = {
+    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
+    connect?: TweetWhereUniqueInput
+  }
+
+  export type HashTagCreateNestedManyWithoutIsIntweetsInput = {
+    create?: XOR<Enumerable<HashTagCreateWithoutIsIntweetsInput>, Enumerable<HashTagUncheckedCreateWithoutIsIntweetsInput>>
+    connectOrCreate?: Enumerable<HashTagCreateOrConnectWithoutIsIntweetsInput>
+    connect?: Enumerable<HashTagWhereUniqueInput>
+  }
+
+  export type TweetUncheckedCreateNestedOneWithoutReplyToTweetInput = {
+    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
+    connect?: TweetWhereUniqueInput
+  }
+
+  export type HashTagUncheckedCreateNestedManyWithoutIsIntweetsInput = {
+    create?: XOR<Enumerable<HashTagCreateWithoutIsIntweetsInput>, Enumerable<HashTagUncheckedCreateWithoutIsIntweetsInput>>
+    connectOrCreate?: Enumerable<HashTagCreateOrConnectWithoutIsIntweetsInput>
+    connect?: Enumerable<HashTagWhereUniqueInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTweetsNestedInput = {
+    create?: XOR<UserCreateWithoutTweetsInput, UserUncheckedCreateWithoutTweetsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTweetsInput
+    upsert?: UserUpsertWithoutTweetsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutTweetsInput, UserUncheckedUpdateWithoutTweetsInput>
+  }
+
+  export type TweetUpdateOneWithoutRepliedTweetNestedInput = {
+    create?: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutRepliedTweetInput
+    upsert?: TweetUpsertWithoutRepliedTweetInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TweetWhereUniqueInput
+    update?: XOR<TweetUpdateWithoutRepliedTweetInput, TweetUncheckedUpdateWithoutRepliedTweetInput>
+  }
+
+  export type TweetUpdateOneWithoutReplyToTweetNestedInput = {
+    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
+    upsert?: TweetUpsertWithoutReplyToTweetInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TweetWhereUniqueInput
+    update?: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
+  }
+
+  export type HashTagUpdateManyWithoutIsIntweetsNestedInput = {
+    create?: XOR<Enumerable<HashTagCreateWithoutIsIntweetsInput>, Enumerable<HashTagUncheckedCreateWithoutIsIntweetsInput>>
+    connectOrCreate?: Enumerable<HashTagCreateOrConnectWithoutIsIntweetsInput>
+    upsert?: Enumerable<HashTagUpsertWithWhereUniqueWithoutIsIntweetsInput>
+    set?: Enumerable<HashTagWhereUniqueInput>
+    disconnect?: Enumerable<HashTagWhereUniqueInput>
+    delete?: Enumerable<HashTagWhereUniqueInput>
+    connect?: Enumerable<HashTagWhereUniqueInput>
+    update?: Enumerable<HashTagUpdateWithWhereUniqueWithoutIsIntweetsInput>
+    updateMany?: Enumerable<HashTagUpdateManyWithWhereWithoutIsIntweetsInput>
+    deleteMany?: Enumerable<HashTagScalarWhereInput>
+  }
+
+  export type TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput = {
+    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
+    upsert?: TweetUpsertWithoutReplyToTweetInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TweetWhereUniqueInput
+    update?: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
+  }
+
+  export type HashTagUncheckedUpdateManyWithoutIsIntweetsNestedInput = {
+    create?: XOR<Enumerable<HashTagCreateWithoutIsIntweetsInput>, Enumerable<HashTagUncheckedCreateWithoutIsIntweetsInput>>
+    connectOrCreate?: Enumerable<HashTagCreateOrConnectWithoutIsIntweetsInput>
+    upsert?: Enumerable<HashTagUpsertWithWhereUniqueWithoutIsIntweetsInput>
+    set?: Enumerable<HashTagWhereUniqueInput>
+    disconnect?: Enumerable<HashTagWhereUniqueInput>
+    delete?: Enumerable<HashTagWhereUniqueInput>
+    connect?: Enumerable<HashTagWhereUniqueInput>
+    update?: Enumerable<HashTagUpdateWithWhereUniqueWithoutIsIntweetsInput>
+    updateMany?: Enumerable<HashTagUpdateManyWithWhereWithoutIsIntweetsInput>
+    deleteMany?: Enumerable<HashTagScalarWhereInput>
+  }
+
+  export type TweetCreateNestedManyWithoutHashTagsInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutHashTagsInput>, Enumerable<TweetUncheckedCreateWithoutHashTagsInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutHashTagsInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+  }
+
+  export type TweetUncheckedCreateNestedManyWithoutHashTagsInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutHashTagsInput>, Enumerable<TweetUncheckedCreateWithoutHashTagsInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutHashTagsInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+  }
+
+  export type TweetUpdateManyWithoutHashTagsNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutHashTagsInput>, Enumerable<TweetUncheckedCreateWithoutHashTagsInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutHashTagsInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutHashTagsInput>
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutHashTagsInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutHashTagsInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
+  }
+
+  export type TweetUncheckedUpdateManyWithoutHashTagsNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutHashTagsInput>, Enumerable<TweetUncheckedCreateWithoutHashTagsInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutHashTagsInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutHashTagsInput>
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutHashTagsInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutHashTagsInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
+  }
+
+  export type UserCreateNestedOneWithoutDirectMessagesFromInput = {
+    create?: XOR<UserCreateWithoutDirectMessagesFromInput, UserUncheckedCreateWithoutDirectMessagesFromInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDirectMessagesFromInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutDirectMessagesToInput = {
+    create?: XOR<UserCreateWithoutDirectMessagesToInput, UserUncheckedCreateWithoutDirectMessagesToInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDirectMessagesToInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDirectMessagesFromNestedInput = {
+    create?: XOR<UserCreateWithoutDirectMessagesFromInput, UserUncheckedCreateWithoutDirectMessagesFromInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDirectMessagesFromInput
+    upsert?: UserUpsertWithoutDirectMessagesFromInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutDirectMessagesFromInput, UserUncheckedUpdateWithoutDirectMessagesFromInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutDirectMessagesToNestedInput = {
+    create?: XOR<UserCreateWithoutDirectMessagesToInput, UserUncheckedCreateWithoutDirectMessagesToInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDirectMessagesToInput
+    upsert?: UserUpsertWithoutDirectMessagesToInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutDirectMessagesToInput, UserUncheckedUpdateWithoutDirectMessagesToInput>
   }
 
   export type NestedIntFilter = {
@@ -13308,6 +19906,726 @@ export namespace Prisma {
     data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutSelectedChoicesInput>
   }
 
+  export type UserRelationCreateWithoutFollowingUserInput = {
+    followedUser: UserCreateNestedOneWithoutFollowedUserRelationsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUncheckedCreateWithoutFollowingUserInput = {
+    id?: number
+    followedUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationCreateOrConnectWithoutFollowingUserInput = {
+    where: UserRelationWhereUniqueInput
+    create: XOR<UserRelationCreateWithoutFollowingUserInput, UserRelationUncheckedCreateWithoutFollowingUserInput>
+  }
+
+  export type UserRelationCreateManyFollowingUserInputEnvelope = {
+    data: Enumerable<UserRelationCreateManyFollowingUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type UserRelationCreateWithoutFollowedUserInput = {
+    followingUser: UserCreateNestedOneWithoutFollowingUserRelationsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUncheckedCreateWithoutFollowedUserInput = {
+    id?: number
+    followingUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationCreateOrConnectWithoutFollowedUserInput = {
+    where: UserRelationWhereUniqueInput
+    create: XOR<UserRelationCreateWithoutFollowedUserInput, UserRelationUncheckedCreateWithoutFollowedUserInput>
+  }
+
+  export type UserRelationCreateManyFollowedUserInputEnvelope = {
+    data: Enumerable<UserRelationCreateManyFollowedUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TweetCreateWithoutTweetingUserInput = {
+    tweetText: string
+    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
+    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    hashTags?: HashTagCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUncheckedCreateWithoutTweetingUserInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    hashTags?: HashTagUncheckedCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetCreateOrConnectWithoutTweetingUserInput = {
+    where: TweetWhereUniqueInput
+    create: XOR<TweetCreateWithoutTweetingUserInput, TweetUncheckedCreateWithoutTweetingUserInput>
+  }
+
+  export type TweetCreateManyTweetingUserInputEnvelope = {
+    data: Enumerable<TweetCreateManyTweetingUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type DirectMessageCreateWithoutFromUserInput = {
+    dmText: string
+    toUser: UserCreateNestedOneWithoutDirectMessagesToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageUncheckedCreateWithoutFromUserInput = {
+    id?: number
+    dmText: string
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageCreateOrConnectWithoutFromUserInput = {
+    where: DirectMessageWhereUniqueInput
+    create: XOR<DirectMessageCreateWithoutFromUserInput, DirectMessageUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type DirectMessageCreateManyFromUserInputEnvelope = {
+    data: Enumerable<DirectMessageCreateManyFromUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type DirectMessageCreateWithoutToUserInput = {
+    dmText: string
+    fromUser: UserCreateNestedOneWithoutDirectMessagesFromInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageUncheckedCreateWithoutToUserInput = {
+    id?: number
+    dmText: string
+    fromUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageCreateOrConnectWithoutToUserInput = {
+    where: DirectMessageWhereUniqueInput
+    create: XOR<DirectMessageCreateWithoutToUserInput, DirectMessageUncheckedCreateWithoutToUserInput>
+  }
+
+  export type DirectMessageCreateManyToUserInputEnvelope = {
+    data: Enumerable<DirectMessageCreateManyToUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type UserRelationUpsertWithWhereUniqueWithoutFollowingUserInput = {
+    where: UserRelationWhereUniqueInput
+    update: XOR<UserRelationUpdateWithoutFollowingUserInput, UserRelationUncheckedUpdateWithoutFollowingUserInput>
+    create: XOR<UserRelationCreateWithoutFollowingUserInput, UserRelationUncheckedCreateWithoutFollowingUserInput>
+  }
+
+  export type UserRelationUpdateWithWhereUniqueWithoutFollowingUserInput = {
+    where: UserRelationWhereUniqueInput
+    data: XOR<UserRelationUpdateWithoutFollowingUserInput, UserRelationUncheckedUpdateWithoutFollowingUserInput>
+  }
+
+  export type UserRelationUpdateManyWithWhereWithoutFollowingUserInput = {
+    where: UserRelationScalarWhereInput
+    data: XOR<UserRelationUpdateManyMutationInput, UserRelationUncheckedUpdateManyWithoutFollowingUserRelationsInput>
+  }
+
+  export type UserRelationScalarWhereInput = {
+    AND?: Enumerable<UserRelationScalarWhereInput>
+    OR?: Enumerable<UserRelationScalarWhereInput>
+    NOT?: Enumerable<UserRelationScalarWhereInput>
+    id?: IntFilter | number
+    followingUserId?: IntFilter | number
+    followedUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserRelationUpsertWithWhereUniqueWithoutFollowedUserInput = {
+    where: UserRelationWhereUniqueInput
+    update: XOR<UserRelationUpdateWithoutFollowedUserInput, UserRelationUncheckedUpdateWithoutFollowedUserInput>
+    create: XOR<UserRelationCreateWithoutFollowedUserInput, UserRelationUncheckedCreateWithoutFollowedUserInput>
+  }
+
+  export type UserRelationUpdateWithWhereUniqueWithoutFollowedUserInput = {
+    where: UserRelationWhereUniqueInput
+    data: XOR<UserRelationUpdateWithoutFollowedUserInput, UserRelationUncheckedUpdateWithoutFollowedUserInput>
+  }
+
+  export type UserRelationUpdateManyWithWhereWithoutFollowedUserInput = {
+    where: UserRelationScalarWhereInput
+    data: XOR<UserRelationUpdateManyMutationInput, UserRelationUncheckedUpdateManyWithoutFollowedUserRelationsInput>
+  }
+
+  export type TweetUpsertWithWhereUniqueWithoutTweetingUserInput = {
+    where: TweetWhereUniqueInput
+    update: XOR<TweetUpdateWithoutTweetingUserInput, TweetUncheckedUpdateWithoutTweetingUserInput>
+    create: XOR<TweetCreateWithoutTweetingUserInput, TweetUncheckedCreateWithoutTweetingUserInput>
+  }
+
+  export type TweetUpdateWithWhereUniqueWithoutTweetingUserInput = {
+    where: TweetWhereUniqueInput
+    data: XOR<TweetUpdateWithoutTweetingUserInput, TweetUncheckedUpdateWithoutTweetingUserInput>
+  }
+
+  export type TweetUpdateManyWithWhereWithoutTweetingUserInput = {
+    where: TweetScalarWhereInput
+    data: XOR<TweetUpdateManyMutationInput, TweetUncheckedUpdateManyWithoutTweetsInput>
+  }
+
+  export type TweetScalarWhereInput = {
+    AND?: Enumerable<TweetScalarWhereInput>
+    OR?: Enumerable<TweetScalarWhereInput>
+    NOT?: Enumerable<TweetScalarWhereInput>
+    id?: IntFilter | number
+    tweetText?: StringFilter | string
+    replyToTweetId?: IntNullableFilter | number | null
+    userId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type DirectMessageUpsertWithWhereUniqueWithoutFromUserInput = {
+    where: DirectMessageWhereUniqueInput
+    update: XOR<DirectMessageUpdateWithoutFromUserInput, DirectMessageUncheckedUpdateWithoutFromUserInput>
+    create: XOR<DirectMessageCreateWithoutFromUserInput, DirectMessageUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type DirectMessageUpdateWithWhereUniqueWithoutFromUserInput = {
+    where: DirectMessageWhereUniqueInput
+    data: XOR<DirectMessageUpdateWithoutFromUserInput, DirectMessageUncheckedUpdateWithoutFromUserInput>
+  }
+
+  export type DirectMessageUpdateManyWithWhereWithoutFromUserInput = {
+    where: DirectMessageScalarWhereInput
+    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyWithoutDirectMessagesFromInput>
+  }
+
+  export type DirectMessageScalarWhereInput = {
+    AND?: Enumerable<DirectMessageScalarWhereInput>
+    OR?: Enumerable<DirectMessageScalarWhereInput>
+    NOT?: Enumerable<DirectMessageScalarWhereInput>
+    id?: IntFilter | number
+    dmText?: StringFilter | string
+    fromUserId?: IntFilter | number
+    toUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type DirectMessageUpsertWithWhereUniqueWithoutToUserInput = {
+    where: DirectMessageWhereUniqueInput
+    update: XOR<DirectMessageUpdateWithoutToUserInput, DirectMessageUncheckedUpdateWithoutToUserInput>
+    create: XOR<DirectMessageCreateWithoutToUserInput, DirectMessageUncheckedCreateWithoutToUserInput>
+  }
+
+  export type DirectMessageUpdateWithWhereUniqueWithoutToUserInput = {
+    where: DirectMessageWhereUniqueInput
+    data: XOR<DirectMessageUpdateWithoutToUserInput, DirectMessageUncheckedUpdateWithoutToUserInput>
+  }
+
+  export type DirectMessageUpdateManyWithWhereWithoutToUserInput = {
+    where: DirectMessageScalarWhereInput
+    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyWithoutDirectMessagesToInput>
+  }
+
+  export type UserCreateWithoutFollowingUserRelationsInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutFollowingUserRelationsInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageUncheckedCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutFollowingUserRelationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFollowingUserRelationsInput, UserUncheckedCreateWithoutFollowingUserRelationsInput>
+  }
+
+  export type UserCreateWithoutFollowedUserRelationsInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
+    tweets?: TweetCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutFollowedUserRelationsInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
+    tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageUncheckedCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutFollowedUserRelationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFollowedUserRelationsInput, UserUncheckedCreateWithoutFollowedUserRelationsInput>
+  }
+
+  export type UserUpsertWithoutFollowingUserRelationsInput = {
+    update: XOR<UserUpdateWithoutFollowingUserRelationsInput, UserUncheckedUpdateWithoutFollowingUserRelationsInput>
+    create: XOR<UserCreateWithoutFollowingUserRelationsInput, UserUncheckedCreateWithoutFollowingUserRelationsInput>
+  }
+
+  export type UserUpdateWithoutFollowingUserRelationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutFollowingUserRelationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUncheckedUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutFollowedUserRelationsInput = {
+    update: XOR<UserUpdateWithoutFollowedUserRelationsInput, UserUncheckedUpdateWithoutFollowedUserRelationsInput>
+    create: XOR<UserCreateWithoutFollowedUserRelationsInput, UserUncheckedCreateWithoutFollowedUserRelationsInput>
+  }
+
+  export type UserUpdateWithoutFollowedUserRelationsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
+    tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutFollowedUserRelationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
+    tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUncheckedUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutTweetsInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
+    directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutTweetsInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
+    directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
+    directMessagesTo?: DirectMessageUncheckedCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutTweetsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTweetsInput, UserUncheckedCreateWithoutTweetsInput>
+  }
+
+  export type TweetCreateWithoutRepliedTweetInput = {
+    tweetText: string
+    tweetingUser: UserCreateNestedOneWithoutTweetsInput
+    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
+    hashTags?: HashTagCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUncheckedCreateWithoutRepliedTweetInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    userId: number
+    hashTags?: HashTagUncheckedCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetCreateOrConnectWithoutRepliedTweetInput = {
+    where: TweetWhereUniqueInput
+    create: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+  }
+
+  export type TweetCreateWithoutReplyToTweetInput = {
+    tweetText: string
+    tweetingUser: UserCreateNestedOneWithoutTweetsInput
+    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    hashTags?: HashTagCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUncheckedCreateWithoutReplyToTweetInput = {
+    id?: number
+    tweetText: string
+    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    userId: number
+    hashTags?: HashTagUncheckedCreateNestedManyWithoutIsIntweetsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetCreateOrConnectWithoutReplyToTweetInput = {
+    where: TweetWhereUniqueInput
+    create: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+  }
+
+  export type HashTagCreateWithoutIsIntweetsInput = {
+    hashTagText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HashTagUncheckedCreateWithoutIsIntweetsInput = {
+    id?: number
+    hashTagText: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HashTagCreateOrConnectWithoutIsIntweetsInput = {
+    where: HashTagWhereUniqueInput
+    create: XOR<HashTagCreateWithoutIsIntweetsInput, HashTagUncheckedCreateWithoutIsIntweetsInput>
+  }
+
+  export type UserUpsertWithoutTweetsInput = {
+    update: XOR<UserUpdateWithoutTweetsInput, UserUncheckedUpdateWithoutTweetsInput>
+    create: XOR<UserCreateWithoutTweetsInput, UserUncheckedCreateWithoutTweetsInput>
+  }
+
+  export type UserUpdateWithoutTweetsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
+    directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutTweetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
+    directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    directMessagesTo?: DirectMessageUncheckedUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUpsertWithoutRepliedTweetInput = {
+    update: XOR<TweetUpdateWithoutRepliedTweetInput, TweetUncheckedUpdateWithoutRepliedTweetInput>
+    create: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+  }
+
+  export type TweetUpdateWithoutRepliedTweetInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
+    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
+    hashTags?: HashTagUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateWithoutRepliedTweetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: IntFieldUpdateOperationsInput | number
+    hashTags?: HashTagUncheckedUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUpsertWithoutReplyToTweetInput = {
+    update: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
+    create: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+  }
+
+  export type TweetUpdateWithoutReplyToTweetInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
+    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    hashTags?: HashTagUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateWithoutReplyToTweetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    userId?: IntFieldUpdateOperationsInput | number
+    hashTags?: HashTagUncheckedUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUpsertWithWhereUniqueWithoutIsIntweetsInput = {
+    where: HashTagWhereUniqueInput
+    update: XOR<HashTagUpdateWithoutIsIntweetsInput, HashTagUncheckedUpdateWithoutIsIntweetsInput>
+    create: XOR<HashTagCreateWithoutIsIntweetsInput, HashTagUncheckedCreateWithoutIsIntweetsInput>
+  }
+
+  export type HashTagUpdateWithWhereUniqueWithoutIsIntweetsInput = {
+    where: HashTagWhereUniqueInput
+    data: XOR<HashTagUpdateWithoutIsIntweetsInput, HashTagUncheckedUpdateWithoutIsIntweetsInput>
+  }
+
+  export type HashTagUpdateManyWithWhereWithoutIsIntweetsInput = {
+    where: HashTagScalarWhereInput
+    data: XOR<HashTagUpdateManyMutationInput, HashTagUncheckedUpdateManyWithoutHashTagsInput>
+  }
+
+  export type HashTagScalarWhereInput = {
+    AND?: Enumerable<HashTagScalarWhereInput>
+    OR?: Enumerable<HashTagScalarWhereInput>
+    NOT?: Enumerable<HashTagScalarWhereInput>
+    id?: IntFilter | number
+    hashTagText?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TweetCreateWithoutHashTagsInput = {
+    tweetText: string
+    tweetingUser: UserCreateNestedOneWithoutTweetsInput
+    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
+    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUncheckedCreateWithoutHashTagsInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetCreateOrConnectWithoutHashTagsInput = {
+    where: TweetWhereUniqueInput
+    create: XOR<TweetCreateWithoutHashTagsInput, TweetUncheckedCreateWithoutHashTagsInput>
+  }
+
+  export type TweetUpsertWithWhereUniqueWithoutHashTagsInput = {
+    where: TweetWhereUniqueInput
+    update: XOR<TweetUpdateWithoutHashTagsInput, TweetUncheckedUpdateWithoutHashTagsInput>
+    create: XOR<TweetCreateWithoutHashTagsInput, TweetUncheckedCreateWithoutHashTagsInput>
+  }
+
+  export type TweetUpdateWithWhereUniqueWithoutHashTagsInput = {
+    where: TweetWhereUniqueInput
+    data: XOR<TweetUpdateWithoutHashTagsInput, TweetUncheckedUpdateWithoutHashTagsInput>
+  }
+
+  export type TweetUpdateManyWithWhereWithoutHashTagsInput = {
+    where: TweetScalarWhereInput
+    data: XOR<TweetUpdateManyMutationInput, TweetUncheckedUpdateManyWithoutIsIntweetsInput>
+  }
+
+  export type UserCreateWithoutDirectMessagesFromInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetCreateNestedManyWithoutTweetingUserInput
+    directMessagesTo?: DirectMessageCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutDirectMessagesFromInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
+    directMessagesTo?: DirectMessageUncheckedCreateNestedManyWithoutToUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutDirectMessagesFromInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDirectMessagesFromInput, UserUncheckedCreateWithoutDirectMessagesFromInput>
+  }
+
+  export type UserCreateWithoutDirectMessagesToInput = {
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutDirectMessagesToInput = {
+    id?: number
+    name: string
+    imageUrl: string
+    bio: string
+    followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
+    followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
+    tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
+    directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutDirectMessagesToInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDirectMessagesToInput, UserUncheckedCreateWithoutDirectMessagesToInput>
+  }
+
+  export type UserUpsertWithoutDirectMessagesFromInput = {
+    update: XOR<UserUpdateWithoutDirectMessagesFromInput, UserUncheckedUpdateWithoutDirectMessagesFromInput>
+    create: XOR<UserCreateWithoutDirectMessagesFromInput, UserUncheckedCreateWithoutDirectMessagesFromInput>
+  }
+
+  export type UserUpdateWithoutDirectMessagesFromInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
+    directMessagesTo?: DirectMessageUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutDirectMessagesFromInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
+    directMessagesTo?: DirectMessageUncheckedUpdateManyWithoutToUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutDirectMessagesToInput = {
+    update: XOR<UserUpdateWithoutDirectMessagesToInput, UserUncheckedUpdateWithoutDirectMessagesToInput>
+    create: XOR<UserCreateWithoutDirectMessagesToInput, UserUncheckedCreateWithoutDirectMessagesToInput>
+  }
+
+  export type UserUpdateWithoutDirectMessagesToInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutDirectMessagesToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
+    followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
+    tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
+    directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MenuCreateManyCategoryInput = {
     id?: number
     name: string
@@ -13588,6 +20906,205 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationCreateManyFollowingUserInput = {
+    id?: number
+    followedUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationCreateManyFollowedUserInput = {
+    id?: number
+    followingUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetCreateManyTweetingUserInput = {
+    id?: number
+    tweetText: string
+    replyToTweetId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageCreateManyFromUserInput = {
+    id?: number
+    dmText: string
+    toUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DirectMessageCreateManyToUserInput = {
+    id?: number
+    dmText: string
+    fromUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserRelationUpdateWithoutFollowingUserInput = {
+    followedUser?: UserUpdateOneRequiredWithoutFollowedUserRelationsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateWithoutFollowingUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followedUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateManyWithoutFollowingUserRelationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followedUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUpdateWithoutFollowedUserInput = {
+    followingUser?: UserUpdateOneRequiredWithoutFollowingUserRelationsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateWithoutFollowedUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserRelationUncheckedUpdateManyWithoutFollowedUserRelationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUpdateWithoutTweetingUserInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
+    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    hashTags?: HashTagUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateWithoutTweetingUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    hashTags?: HashTagUncheckedUpdateManyWithoutIsIntweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateManyWithoutTweetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUpdateWithoutFromUserInput = {
+    dmText?: StringFieldUpdateOperationsInput | string
+    toUser?: UserUpdateOneRequiredWithoutDirectMessagesToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateWithoutFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateManyWithoutDirectMessagesFromInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUpdateWithoutToUserInput = {
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUser?: UserUpdateOneRequiredWithoutDirectMessagesFromNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateWithoutToUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DirectMessageUncheckedUpdateManyWithoutDirectMessagesToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dmText?: StringFieldUpdateOperationsInput | string
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUpdateWithoutIsIntweetsInput = {
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUncheckedUpdateWithoutIsIntweetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HashTagUncheckedUpdateManyWithoutHashTagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUpdateWithoutHashTagsInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
+    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
+    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateWithoutHashTagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateManyWithoutIsIntweetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
