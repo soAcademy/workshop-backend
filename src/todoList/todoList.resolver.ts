@@ -26,11 +26,11 @@ export const getTasks = () =>
     orderBy: {
       id: "desc",
     },
-    select: {
-      id: true,
-      task: true,
-      status: true,
-    },
+    // select: {
+    //   id: true,
+    //   task: true,
+    //   status: true,
+    // },
   });
 
 export const updateTaskStatus = (args: IUpdateTaskStatus) =>

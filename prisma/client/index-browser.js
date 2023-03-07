@@ -124,9 +124,58 @@ exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.DirectMsgScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  msgDetail: 'msgDetail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FollowingScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.HashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  hashtag: 'hashtag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PostOnHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  hashtagId: 'hashtagId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PostScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  postDetail: 'postDetail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
+});
+
+exports.Prisma.ReplyScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  reply: 'reply',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.SortOrder = makeEnum({
@@ -150,13 +199,83 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaQuizChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  quizId: 'quizId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  categoryId: 'categoryId',
+  answerId: 'answerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaRoundQuizChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundQuizId: 'roundQuizId',
+  quizChoiceId: 'quizChoiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundId: 'roundId',
+  quizId: 'quizId',
+  playerChooseChoice: 'playerChooseChoice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  score: 'score',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImage: 'profileImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
   BinKitchenMenu: 'BinKitchenMenu',
   BinKitchenOrder: 'BinKitchenOrder',
   BinKitchenOrderItem: 'BinKitchenOrderItem',
-  TodoList: 'TodoList'
+  TodoList: 'TodoList',
+  TriviaCategory: 'TriviaCategory',
+  TriviaQuiz: 'TriviaQuiz',
+  TriviaQuizChoice: 'TriviaQuizChoice',
+  TriviaRound: 'TriviaRound',
+  TriviaRoundQuiz: 'TriviaRoundQuiz',
+  TriviaRoundQuizChoice: 'TriviaRoundQuizChoice',
+  User: 'User',
+  Following: 'Following',
+  Post: 'Post',
+  DirectMsg: 'DirectMsg',
+  Hashtag: 'Hashtag',
+  Reply: 'Reply',
+  PostOnHashtag: 'PostOnHashtag'
 });
 
 /**
