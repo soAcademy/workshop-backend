@@ -1,0 +1,53 @@
+model QuizCat {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  updateAt  DateTime   @updatedAt
+  questions Question[]
+  rounds    Round[]
+}
+
+model Question {
+  id             Int             @id @default(autoincrement())
+  question       String
+  catName        QuizCat         @relation(fields: [quizCatId], references: [id])
+  choices        Choice[]
+  createdAt      DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  quizCatId      Int
+  answerId       Int
+  roundQuestions RoundQuestion[]
+}
+
+model Choice {
+  id             Int             @id @default(autoincrement())
+  questionId     Int
+  choice         String
+  createdAt      DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  question       Question?       @relation(fields: [questionId], references: [id])
+  questionsId    Int?
+  roundQuestions RoundQuestion[]
+}
+
+model Round {
+  id        Int             @id @default(autoincrement())
+  cat       QuizCat         @relation(fields: [quizCatId], references: [id])
+  score     Int
+  questions RoundQuestion[]
+  createdAt DateTime        @default(now())
+  updateAt  DateTime        @updatedAt
+  quizCatId Int
+}
+
+model RoundQuestion {
+  id         Int      @id @default(autoincrement())
+  question   Question @relation(fields: [questionId], references: [id])
+  userChoice Choice   @relation(fields: [choiceId], references: [id])
+  round      Round?   @relation(fields: [roundId], references: [id])
+  roundId    Int?
+  questionId Int
+  choiceId   Int
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}

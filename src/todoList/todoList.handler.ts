@@ -28,18 +28,17 @@ export const updateTaskStatusHandler = (req: Request, res: Response) => {
   return updateTaskStatus({
     id: body.id,
     status: body.status,
+    task: body.task,
   })
     .then((response) => res.status(200).send(response))
     .catch((error) => res.status(500).send(error));
 };
 
+// อันนี้ไม่ควรที่จะเป็นแบบนี้แต่เราขัดดอกไปก่อนโดยในการใช้ body ไปเลย
 export const createManyTasksHandler = (req: Request, res: Response) => {
   console.log(req.body);
   const body = req?.body;
-  return createManyTasks({
-    id: body.id,
-    status: body.status,
-  })
+  return createManyTasks(body)
     .then((response) => res.status(200).send(response))
     .catch((error) => res.status(500).send(error));
 };

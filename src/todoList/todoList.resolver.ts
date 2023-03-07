@@ -3,7 +3,7 @@ import { PrismaClient } from "../../prisma/client";
 import {
   ICreateTask,
   IDeleteTasks,
-  IDeleteManyTasks
+  IDeleteManyTasks,
   IGetTasks,
   IUpdateTaskStatus,
   IUpdateTasks,
@@ -13,7 +13,7 @@ import {
 } from "./todoList.interface";
 
 export const prisma = new PrismaClient();
-// คลิกขวาไปที createTask เพื่อดูว่ามันสามารถส่ง Key value ตัวไหนได้บ้าง แล้วก็ทำวนไป
+// คลิกขวาไปที createTask เพื่อดูว่ามันสามารถส่ง Key value ตัวไหนได้บ้าง
 export const createTask = (args: ICreateTask) =>
   prisma.todoList.create({
     data: { task: args.task },
