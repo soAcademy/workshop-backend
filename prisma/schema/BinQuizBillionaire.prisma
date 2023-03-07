@@ -1,0 +1,51 @@
+model QuizCategory {
+  id        Int            @id @default(autoincrement())
+  name      String         @unique
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  questions QuizQuestion[]
+  rounds    QuizRound[]
+}
+
+model QuizQuestion {
+  id             Int                 @id @default(autoincrement())
+  name           String
+  category       QuizCategory        @relation(fields: [categoryName], references: [name])
+  categoryName   String
+  anwserChoiceId Int
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  choices        QuizChoice[]
+  roundQuestions QuizRoundQuestion[]
+}
+
+model QuizChoice {
+  id         Int          @id @default(autoincrement())
+  name       String
+  question   QuizQuestion @relation(fields: [questionId], references: [id])
+  questionId Int
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model QuizRoundQuestion {
+  id           Int          @id @default(autoincrement())
+  userChoiceId Int
+  question     QuizQuestion @relation(fields: [questionId], references: [id])
+  questionId   Int
+  round        QuizRound    @relation(fields: [roundId], references: [id])
+  roundId      Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model QuizRound {
+  id           Int                 @id @default(autoincrement())
+  user         String
+  category     QuizCategory        @relation(fields: [categoryName], references: [name])
+  categoryName String
+  score        Int
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  questions    QuizRoundQuestion[]
+}
