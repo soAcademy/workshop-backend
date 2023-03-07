@@ -9,7 +9,7 @@ model Category {
   question Question[]
   round    Round[]
   createAt DateTime   @default(now())
-  updateAt DateTime   @default(now())
+  updateAt DateTime   @updatedAt
 }
 
 model Question {
@@ -22,7 +22,7 @@ model Question {
   choices         Choice[]
   answerId        Int
   createAt        DateTime      @default(now())
-  updateAt        DateTime      @default(now())
+  updateAt        DateTime      @updatedAt
 }
 
 model RoundQuestion {
@@ -43,7 +43,7 @@ model Round {
   category      Category        @relation(fields: [categoryId], references: [id])
   categoryId    Int
   createAt      DateTime        @default(now())
-  updateAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
   score         Int
   roundQuestion RoundQuestion[]
 }
@@ -54,6 +54,6 @@ model Choice {
   question      Question        @relation(fields: [questionId], references: [id])
   questionId    Int
   createAt      DateTime        @default(now())
-  updateAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
   roundQuestion RoundQuestion[]
 }
