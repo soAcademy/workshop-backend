@@ -1,0 +1,73 @@
+model TwitterUser {
+  id                     Int                    @id @default(autoincrement())
+  name                   String                 @unique
+  image                  String
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  posts                  TwitterPost[]
+  fromDirectMessages     TwitterDirectMessage[] @relation("fromDirectMessage")
+  comments               TwitterComment[]
+  toDirectMessages       TwitterDirectMessage[] @relation("toDirectMessage")
+  followingUserRelations TwitterUserRelation[]  @relation("followings")
+  followerUserRelations  TwitterUserRelation[]  @relation("followers")
+}
+
+model TwitterPost {
+  id             Int                    @id @default(autoincrement())
+  user           TwitterUser            @relation(fields: [twitterUserId], references: [id])
+  post           String
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  twitterUserId  Int
+  postToHashtags TwitterPostToHashtag[]
+  comments       TwitterComment[]
+}
+
+model TwitterHashtag {
+  id              Int                    @id @default(autoincrement())
+  hashtag         String
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  postsToHashtags TwitterPostToHashtag[]
+}
+
+model TwitterPostToHashtag {
+  id               Int            @id @default(autoincrement())
+  post             TwitterPost    @relation(fields: [twitterPostId], references: [id])
+  hashtag          TwitterHashtag @relation(fields: [twitterHashtagId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  twitterPostId    Int
+  twitterHashtagId Int
+}
+
+model TwitterDirectMessage {
+  id              Int         @id @default(autoincrement())
+  message         String
+  from            TwitterUser @relation("fromDirectMessage", fields: [followingUserId], references: [id])
+  to              TwitterUser @relation("toDirectMessage", fields: [followerUserId], references: [id])
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  followingUserId Int
+  followerUserId  Int
+}
+
+model TwitterUserRelation {
+  id         Int         @id @default(autoincrement())
+  from       TwitterUser @relation("followings", fields: [fromUserId], references: [id])
+  to         TwitterUser @relation("followers", fields: [toUserId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  fromUserId Int
+  toUserId   Int
+}
+
+model TwitterComment {
+  id            Int         @id @default(autoincrement())
+  post          TwitterPost @relation(fields: [twitterPostId], references: [id])
+  user          TwitterUser @relation(fields: [twitterUserId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  twitterPostId Int
+  twitterUserId Int
+}

@@ -1,0 +1,101 @@
+model LaundryBranch {
+  id                    Int                     @id @default(autoincrement())
+  name                  String                  @unique
+  machineAmount         Int
+  owner                 String
+  tel                   Int
+  location              String
+  areaSize              Int
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  laundryWashingMachines LaundryWashingMachine[]
+}
+
+model LaundryWashingMachine {
+  id                             Int                              @id @default(autoincrement())
+  branch                         LaundryBranch                    @relation(fields: [laundryBranchId], references: [id])
+  brand                          String
+  variant                        String
+  size                           Int
+  machineType                    String
+  yearManufactured               Int
+  insuranceExpiryYear            Int
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @updatedAt
+  laundryBranchId                Int
+  laundryWashingMachinesToPrograms LaundryWashingMachineToProgram[]
+  laundryMaintainances           LaundryMaintainance[]
+  laundryUserHistories           LaundryUserHistory[]
+}
+
+model LaundryProgram {
+  id                             Int                              @id @default(autoincrement())
+  name                           String                           @unique
+  price                          Int
+  duration                       Int
+  weight                         Int
+  createdAt                      DateTime                         @default(now())
+  updatedAt                      DateTime                         @updatedAt
+  laundryWashingMachinesToPrograms LaundryWashingMachineToProgram[]
+  laundryUserHistories             LaundryUserHistory[]
+}
+
+model LaundryWashingMachineToProgram {
+  id                      Int                   @id @default(autoincrement())
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  program                 LaundryProgram        @relation(fields: [laundryProgramId], references: [id])
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryWashingMachineId Int
+  laundryProgramId        Int
+}
+
+model LaundryMaintainance {
+  id                      Int                   @id @default(autoincrement())
+  round                   Int
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  date                    Int
+  damageLevel             Int
+  description             String
+  technicianName          String
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryWashingMachineId Int
+}
+
+model LaundryUser {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  tel                 Int
+  balance             Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  laundryUserHistories  LaundryUserHistory[]
+  laundryBalanceTopups LaundryBalanceTopup[]
+}
+
+model LaundryUserHistory {
+  id                      Int                   @id @default(autoincrement())
+  user                    LaundryUser           @relation(fields: [laundryUserId], references: [id])
+  washNumber              Int
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  program                 LaundryProgram        @relation(fields: [laundryProgramId], references: [id])
+  date                    Int
+  duration                Int
+  price                   Int
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryUserId           Int
+  laundryWashingMachineId Int
+  laundryProgramId        Int
+}
+
+model LaundryBalanceTopup {
+  id            Int         @id @default(autoincrement())
+  user          LaundryUser @relation(fields: [laundryUserId], references: [id])
+  topUpRound    Int
+  topUpAmount   Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  laundryUserId Int
+}

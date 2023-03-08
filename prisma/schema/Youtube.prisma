@@ -1,0 +1,108 @@
+model YoutubeUser {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique
+  email                  String
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  youtubeUsersToChannels YoutubeUserToChannel[]
+  youtubeSubscriptions   YoutubeSubscription[]
+  YoutubeReaction        YoutubeReaction[]
+  YoutubeComment         YoutubeComment[]
+  YoutubeCommentReaction YoutubeCommentReaction[]
+}
+
+model YoutubeChannel {
+  id                     Int                    @id @default(autoincrement())
+  name                   String                 @unique
+  description            String
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  youtubeUsersToChannels YoutubeUserToChannel[]
+  youtubeVideos          YoutubeVideo[]
+  youtubeSubscriptions   YoutubeSubscription[]
+}
+
+model YoutubeSubscription {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  channel          YoutubeChannel @relation(fields: [youtubeChannelId], references: [id])
+  membership       Boolean
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+}
+
+enum RoleEnum {
+  ADMIN
+  EDITOR
+  CREATOR
+}
+
+model YoutubeUserToChannel {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  channel          YoutubeChannel @relation(fields: [youtubeChannelId], references: [id])
+  description      String
+  role             RoleEnum
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+}
+
+enum ReactionEnum {
+  LIKE
+  DISLIKE
+}
+
+model YoutubeVideo {
+  id               Int               @id @default(autoincrement())
+  name             String
+  videoUrl         String
+  description      String
+  channel          YoutubeChannel    @relation(fields: [youtubeChannelId], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  youtubeChannelId Int
+  youtubeComments  YoutubeComment[]
+  youtubeReactions YoutubeReaction[]
+}
+
+model YoutubeReaction {
+  id               Int          @id @default(autoincrement())
+  user             YoutubeUser  @relation(fields: [youtubeUserId], references: [id])
+  video            YoutubeVideo @relation(fields: [youtubeVideoId], references: [id])
+  reaction         ReactionEnum
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+  youtubeVideoId   Int
+  youtubeCommentId Int
+}
+
+model YoutubeComment {
+  id                      Int                      @id @default(autoincrement())
+  comment                 String
+  user                    YoutubeUser              @relation(fields: [youtubeUserId], references: [id])
+  video                   YoutubeVideo             @relation(fields: [youtubeVideoId], references: [id])
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  youtubeVideoId          Int
+  youtubeUserId           Int
+  youtubeCommentReactions YoutubeCommentReaction[]
+}
+
+model YoutubeCommentReaction {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  comment          YoutubeComment @relation(fields: [youtubeCommentId], references: [id])
+  reaction         ReactionEnum
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+  youtubeVideoId   Int
+  youtubeCommentId Int
+}

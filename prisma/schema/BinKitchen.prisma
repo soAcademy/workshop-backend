@@ -1,0 +1,44 @@
+//model Category
+model BinKitchenCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  menus     BinKitchenMenu[]
+}
+
+//model Menu
+model BinKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  image        String
+  price        Float
+  category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name]) //categoryName refer to name in model Category
+  categoryName String?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now())
+  items        BinKitchenOrderItem[] //one to many => allows multiple orderItems of the same menu
+}
+
+//model Order
+model BinKitchenOrder {
+  id        Int                   @id @default(autoincrement())
+  tableId   Int
+  status    String
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @default(now())
+  items     BinKitchenOrderItem[] //one to many => one order allows multiple orderItems
+}
+
+//model OrderItem
+model BinKitchenOrderItem {
+  id         Int             @id @default(autoincrement())
+  menu       BinKitchenMenu  @relation(fields: [menuId], references: [id]) // link munuID ผ่าน foreign key "id" จาก BinKitchenMenu
+  order      BinKitchenOrder @relation(fields: [orderId], references: [id])
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @default(now())
+  menuId     Int
+  orderId    Int
+}

@@ -1,3 +1,4 @@
+import { createCategoryHandler, createManyMenusHandler, createMenuHandler, createOrderHandler, getCategoriesHandler, getMenuHandler, getManyOrdersHandler, updateCategoryHandler, updateMenuHandler, getOrderHandler, updateOrderHandler } from "./binKitchen/binKitchen.handler";
 import {
   functionAddHandler,
   functionHelloAtHandler,
@@ -14,7 +15,7 @@ import {
   updateTeacherHandler,
   deleteTeacherHandler,
 } from "./sql";
-import { createManyTasksHandler, createTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
+import { createManyTasksHandler, createTaskHandler, deleteManyTasksHandler, deleteTaskHandler, findUniqueOrThrowTaskHandler, findUniqueTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -100,5 +101,90 @@ export const AppRoutes = [
     path: "/todoList/updateManyTasks",
     method: "post",
     action: updateManyTasksHandler,
+  },
+  {
+    path: "/todoList/findUniqueTask",
+    method: "post",
+    action: findUniqueTaskHandler,
+  },
+  {
+    path: "/todoList/findUniqueOrThrowTask",
+    method: "post",
+    action: findUniqueOrThrowTaskHandler,
+  },
+  {
+    path: "/todoList/deleteTask",
+    method: "post",
+    action: deleteTaskHandler,
+  },
+  {
+    path: "/todoList/deleteManyTasks",
+    method: "post",
+    action: deleteManyTasksHandler,
+  },
+  {
+    path: "/todoList/deleteManyTasks",
+    method: "post",
+    action: deleteManyTasksHandler,
+  },
+  {
+    path: "/binKitchen/createCategory",
+    method: "post",
+    action: createCategoryHandler,
+  },
+  {
+    path: "/binKitchen/getCategories",
+    method: "post",
+    action: getCategoriesHandler,
+  },
+  {
+    path: "/binKitchen/updateCategory",
+    method: "post",
+    action: updateCategoryHandler,
+  },
+  {
+    path: "/binKitchen/createMenu",
+    method: "post",
+    action: createMenuHandler,
+  },
+  {
+    path: "/binKitchen/createMenu",
+    method: "post",
+    action: createMenuHandler,
+  },
+  {
+    path: "/binKitchen/createManyMenus",
+    method: "post",
+    action: createManyMenusHandler,
+  },
+  {
+    path: "/binKitchen/getMenu",
+    method: "post",
+    action: getMenuHandler,
+  },
+  {
+    path: "/binKitchen/updateMenu",
+    method: "post",
+    action: updateMenuHandler,
+  },
+  {
+    path: "/binKitchen/createOrder",
+    method: "post",
+    action: createOrderHandler,
+  },
+  {
+    path: "/binKitchen/getManyOrders",
+    method: "post",
+    action: getManyOrdersHandler,
+  },
+  {
+    path: "/binKitchen/getOrder",
+    method: "post",
+    action: getOrderHandler,
+  },
+  {
+    path: "/binKitchen/updateOrder",
+    method: "post",
+    action: updateOrderHandler,
   },
 ];

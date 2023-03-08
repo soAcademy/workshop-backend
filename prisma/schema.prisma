@@ -1,10 +1,510 @@
+//model Category
+model BinKitchenCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  menus     BinKitchenMenu[]
+}
+
+//model Menu
+model BinKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  image        String
+  price        Float
+  category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name]) //categoryName refer to name in model Category
+  categoryName String?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @default(now())
+  items        BinKitchenOrderItem[] //one to many => allows multiple orderItems of the same menu
+}
+
+//model Order
+model BinKitchenOrder {
+  id        Int                   @id @default(autoincrement())
+  tableId   Int
+  status    String
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @default(now())
+  items     BinKitchenOrderItem[] //one to many => one order allows multiple orderItems
+}
+
+//model OrderItem
+model BinKitchenOrderItem {
+  id         Int             @id @default(autoincrement())
+  menu       BinKitchenMenu  @relation(fields: [menuId], references: [id]) // link munuID ผ่าน foreign key "id" จาก BinKitchenMenu
+  order      BinKitchenOrder @relation(fields: [orderId], references: [id])
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @default(now())
+  menuId     Int
+  orderId    Int
+}
+
+model LaundryBranch {
+  id                     Int                     @id @default(autoincrement())
+  name                   String                  @unique
+  machineAmount          Int
+  owner                  String
+  tel                    Int
+  location               String
+  areaSize               Int
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  laundryWashingMachines LaundryWashingMachine[]
+}
+
+model LaundryWashingMachine {
+  id                               Int                              @id @default(autoincrement())
+  branch                           LaundryBranch                    @relation(fields: [laundryBranchId], references: [id])
+  brand                            String
+  variant                          String
+  size                             Int
+  machineType                      String
+  yearManufactured                 Int
+  insuranceExpiryYear              Int
+  createdAt                        DateTime                         @default(now())
+  updatedAt                        DateTime                         @updatedAt
+  laundryBranchId                  Int
+  laundryWashingMachinesToPrograms LaundryWashingMachineToProgram[]
+  laundryMaintainances             LaundryMaintainance[]
+  laundryUserHistories             LaundryUserHistory[]
+}
+
+model LaundryProgram {
+  id                               Int                              @id @default(autoincrement())
+  name                             String                           @unique
+  price                            Int
+  duration                         Int
+  weight                           Int
+  createdAt                        DateTime                         @default(now())
+  updatedAt                        DateTime                         @updatedAt
+  laundryWashingMachinesToPrograms LaundryWashingMachineToProgram[]
+  laundryUserHistories             LaundryUserHistory[]
+}
+
+model LaundryWashingMachineToProgram {
+  id                      Int                   @id @default(autoincrement())
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  program                 LaundryProgram        @relation(fields: [laundryProgramId], references: [id])
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryWashingMachineId Int
+  laundryProgramId        Int
+}
+
+model LaundryMaintainance {
+  id                      Int                   @id @default(autoincrement())
+  round                   Int
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  date                    Int
+  damageLevel             Int
+  description             String
+  technicianName          String
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryWashingMachineId Int
+}
+
+model LaundryUser {
+  id                   Int                   @id @default(autoincrement())
+  name                 String
+  tel                  Int
+  balance              Int
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  laundryUserHistories LaundryUserHistory[]
+  laundryBalanceTopups LaundryBalanceTopup[]
+}
+
+model LaundryUserHistory {
+  id                      Int                   @id @default(autoincrement())
+  user                    LaundryUser           @relation(fields: [laundryUserId], references: [id])
+  washNumber              Int
+  machine                 LaundryWashingMachine @relation(fields: [laundryWashingMachineId], references: [id])
+  program                 LaundryProgram        @relation(fields: [laundryProgramId], references: [id])
+  date                    Int
+  duration                Int
+  price                   Int
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  laundryUserId           Int
+  laundryWashingMachineId Int
+  laundryProgramId        Int
+}
+
+model LaundryBalanceTopup {
+  id            Int         @id @default(autoincrement())
+  user          LaundryUser @relation(fields: [laundryUserId], references: [id])
+  topUpRound    Int
+  topUpAmount   Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  laundryUserId Int
+}
+
+model LibraryBookCategory {
+  id                       Int                     @id @default(autoincrement())
+  name                     String                  @unique
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+  libraryCategoriesToBooks LibraryCategoryToBook[]
+}
+
+model LibraryBook {
+  id                       Int                     @id @default(autoincrement())
+  name                     String                  @unique
+  ISBN                     Int
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+  libraryCategoriesToBooks LibraryCategoryToBook[]
+  libraryBooksToAuthors    LibraryBookToAuthor[]
+  libraryBookCopies        LibraryBookCopy[]
+}
+
+model LibraryCategoryToBook {
+  id                    Int                 @id @default(autoincrement())
+  category              LibraryBookCategory @relation(fields: [libraryBookCategoryId], references: [id])
+  book                  LibraryBook         @relation(fields: [libraryBookId], references: [id])
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  libraryBookCategoryId Int
+  libraryBookId         Int
+}
+
+model LibraryBookAuthor {
+  id                    Int                   @id @default(autoincrement())
+  name                  String                @unique
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  libraryBooksToAuthors LibraryBookToAuthor[]
+}
+
+model LibraryBookToAuthor {
+  id                  Int               @id @default(autoincrement())
+  book                LibraryBook       @relation(fields: [libraryBookId], references: [id])
+  author              LibraryBookAuthor @relation(fields: [libraryBookAuthorId], references: [id])
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  libraryBookId       Int
+  libraryBookAuthorId Int
+}
+
+model LibraryUniversity {
+  id                        Int                       @id @default(autoincrement())
+  name                      String                    @unique
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  libraryStudenta           LibraryStudent[]
+  libraryBookCopies         LibraryBookCopy[]
+  libraryBorrowingHistories LibraryBorrowingHistory[]
+  fromLibraryRequests       LibraryRequest[]          @relation("from")
+  toLibraryRequests         LibraryRequest[]          @relation("to")
+}
+
+model LibraryStudent {
+  id                        Int                       @id @default(autoincrement())
+  studentId                 Int
+  name                      String                    @unique
+  university                LibraryUniversity         @relation(fields: [libraryUniversityId], references: [id])
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  libraryUniversityId       Int
+  libraryBookCopies         LibraryBookCopy[]
+  libraryBorrowingHistories LibraryBorrowingHistory[]
+  libraryRequests           LibraryRequest[]
+}
+
+model LibraryBookCopy {
+  id                        Int                       @id @default(autoincrement())
+  book                      LibraryBook               @relation(fields: [libraryBookId], references: [id])
+  status                    String
+  university                LibraryUniversity         @relation(fields: [libraryUniversityId], references: [id])
+  borrowedBy                LibraryStudent            @relation(fields: [libraryStudentId], references: [id])
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  libraryBookId             Int
+  libraryUniversityId       Int
+  libraryStudentId          Int
+  libraryBorrowingHistories LibraryBorrowingHistory[]
+  libraryRequests           LibraryRequest[]
+}
+
+model LibraryBorrowingHistory {
+  id                  Int               @id @default(autoincrement())
+  student             LibraryStudent    @relation(fields: [libraryStudentId], references: [id])
+  copy                LibraryBookCopy   @relation(fields: [libraryBookCopyId], references: [id])
+  borrowDate          Int
+  returnDate          Int
+  actualReturnDate    Int
+  borrowedFrom        LibraryUniversity @relation(fields: [libraryUniversityId], references: [id])
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  libraryStudentId    Int
+  libraryBookCopyId   Int
+  libraryUniversityId Int
+}
+
+model LibraryRequest {
+  id                      Int               @id @default(autoincrement())
+  student                 LibraryStudent    @relation(fields: [libraryStudentId], references: [id])
+  copy                    LibraryBookCopy   @relation(fields: [libraryBookCopyId], references: [id])
+  from                    LibraryUniversity @relation("from", fields: [fromLibraryUniversityId], references: [id])
+  to                      LibraryUniversity @relation("to", fields: [toLibraryUniversityId], references: [id])
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  libraryStudentId        Int
+  libraryBookCopyId       Int
+  fromLibraryUniversityId Int
+  toLibraryUniversityId   Int
+}
+
+model QuizCategory {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  QuizQuestion QuizQuestion[]
+  QuizRound    QuizRound[]
+}
+
+model QuizQuestion {
+  id             Int           @id @default(autoincrement())
+  name           String        @unique
+  answerId       Int
+  category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId Int?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizChoices    QuizChoice[]
+  quizRecords    QuizRecord[]
+}
+
+model QuizChoice {
+  id             Int           @id @default(autoincrement())
+  name           String
+  question       QuizQuestion? @relation(fields: [quizQuestionId], references: [id])
+  quizQuestionId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizRecords    QuizRecord[]
+}
+
+model QuizRound {
+  id             Int           @id @default(autoincrement())
+  name           String        @unique //playerName (unique)
+  totalScore     String
+  category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizRecords    QuizRecord[]
+}
+
+model QuizRecord {
+  id             Int           @id @default(autoincrement())
+  round          QuizRound?    @relation(fields: [quizRoundId], references: [id]) //ซ้ำได้
+  playerChoice   QuizChoice?   @relation(fields: [quizChoiceId], references: [id]) //choice chooses by player
+  question       QuizQuestion? @relation(fields: [quizQuestionId], references: [id])
+  quizRoundId    Int
+  quizChoiceId   Int
+  quizQuestionId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+}
+
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
-  note      String?
+  note      String? //optional => can be left empty
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+}
+
+model TwitterUser {
+  id                     Int                    @id @default(autoincrement())
+  name                   String                 @unique
+  image                  String
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  posts                  TwitterPost[]
+  fromDirectMessages     TwitterDirectMessage[] @relation("fromDirectMessage")
+  comments               TwitterComment[]
+  toDirectMessages       TwitterDirectMessage[] @relation("toDirectMessage")
+  followingUserRelations TwitterUserRelation[]  @relation("followings")
+  followerUserRelations  TwitterUserRelation[]  @relation("followers")
+}
+
+model TwitterPost {
+  id             Int                    @id @default(autoincrement())
+  user           TwitterUser            @relation(fields: [twitterUserId], references: [id])
+  post           String
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  twitterUserId  Int
+  postToHashtags TwitterPostToHashtag[]
+  comments       TwitterComment[]
+}
+
+model TwitterHashtag {
+  id              Int                    @id @default(autoincrement())
+  hashtag         String
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+  postsToHashtags TwitterPostToHashtag[]
+}
+
+model TwitterPostToHashtag {
+  id               Int            @id @default(autoincrement())
+  post             TwitterPost    @relation(fields: [twitterPostId], references: [id])
+  hashtag          TwitterHashtag @relation(fields: [twitterHashtagId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  twitterPostId    Int
+  twitterHashtagId Int
+}
+
+model TwitterDirectMessage {
+  id              Int         @id @default(autoincrement())
+  message         String
+  from            TwitterUser @relation("fromDirectMessage", fields: [followingUserId], references: [id])
+  to              TwitterUser @relation("toDirectMessage", fields: [followerUserId], references: [id])
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  followingUserId Int
+  followerUserId  Int
+}
+
+model TwitterUserRelation {
+  id         Int         @id @default(autoincrement())
+  from       TwitterUser @relation("followings", fields: [fromUserId], references: [id])
+  to         TwitterUser @relation("followers", fields: [toUserId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  fromUserId Int
+  toUserId   Int
+}
+
+model TwitterComment {
+  id            Int         @id @default(autoincrement())
+  post          TwitterPost @relation(fields: [twitterPostId], references: [id])
+  user          TwitterUser @relation(fields: [twitterUserId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  twitterPostId Int
+  twitterUserId Int
+}
+
+model YoutubeUser {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique
+  email                  String
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  youtubeUsersToChannels YoutubeUserToChannel[]
+  youtubeSubscriptions   YoutubeSubscription[]
+  YoutubeReaction        YoutubeReaction[]
+  YoutubeComment         YoutubeComment[]
+  YoutubeCommentReaction YoutubeCommentReaction[]
+}
+
+model YoutubeChannel {
+  id                     Int                    @id @default(autoincrement())
+  name                   String                 @unique
+  description            String
+  createdAt              DateTime               @default(now())
+  updatedAt              DateTime               @updatedAt
+  youtubeUsersToChannels YoutubeUserToChannel[]
+  youtubeVideos          YoutubeVideo[]
+  youtubeSubscriptions   YoutubeSubscription[]
+}
+
+model YoutubeSubscription {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  channel          YoutubeChannel @relation(fields: [youtubeChannelId], references: [id])
+  membership       Boolean
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+}
+
+enum RoleEnum {
+  ADMIN
+  EDITOR
+  CREATOR
+}
+
+model YoutubeUserToChannel {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  channel          YoutubeChannel @relation(fields: [youtubeChannelId], references: [id])
+  description      String
+  role             RoleEnum
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+}
+
+enum ReactionEnum {
+  LIKE
+  DISLIKE
+}
+
+model YoutubeVideo {
+  id               Int               @id @default(autoincrement())
+  name             String
+  videoUrl         String
+  description      String
+  channel          YoutubeChannel    @relation(fields: [youtubeChannelId], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  youtubeChannelId Int
+  youtubeComments  YoutubeComment[]
+  youtubeReactions YoutubeReaction[]
+}
+
+model YoutubeReaction {
+  id               Int          @id @default(autoincrement())
+  user             YoutubeUser  @relation(fields: [youtubeUserId], references: [id])
+  video            YoutubeVideo @relation(fields: [youtubeVideoId], references: [id])
+  reaction         ReactionEnum
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+  youtubeVideoId   Int
+  youtubeCommentId Int
+}
+
+model YoutubeComment {
+  id                      Int                      @id @default(autoincrement())
+  comment                 String
+  user                    YoutubeUser              @relation(fields: [youtubeUserId], references: [id])
+  video                   YoutubeVideo             @relation(fields: [youtubeVideoId], references: [id])
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  youtubeVideoId          Int
+  youtubeUserId           Int
+  youtubeCommentReactions YoutubeCommentReaction[]
+}
+
+model YoutubeCommentReaction {
+  id               Int            @id @default(autoincrement())
+  user             YoutubeUser    @relation(fields: [youtubeUserId], references: [id])
+  comment          YoutubeComment @relation(fields: [youtubeCommentId], references: [id])
+  reaction         ReactionEnum
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  youtubeUserId    Int
+  youtubeChannelId Int
+  youtubeVideoId   Int
+  youtubeCommentId Int
 }
 
 datasource db {

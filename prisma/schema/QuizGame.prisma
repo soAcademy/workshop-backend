@@ -1,0 +1,53 @@
+model QuizCategory {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  QuizQuestion QuizQuestion[]
+  QuizRound    QuizRound[]
+}
+
+model QuizQuestion {
+  id             Int           @id @default(autoincrement())
+  name           String        @unique
+  answerId       Int
+  category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId Int?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizChoices    QuizChoice[]
+  quizRecords    QuizRecord[]
+}
+
+model QuizChoice {
+  id             Int           @id @default(autoincrement())
+  name           String
+  question       QuizQuestion? @relation(fields: [quizQuestionId], references: [id])
+  quizQuestionId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizRecords    QuizRecord[]
+}
+
+model QuizRound {
+  id             Int           @id @default(autoincrement())
+  name           String        @unique //playerName (unique)
+  totalScore     String
+  category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  quizRecords    QuizRecord[]
+}
+
+model QuizRecord {
+  id             Int           @id @default(autoincrement())
+  round          QuizRound?    @relation(fields: [quizRoundId], references: [id]) //ซ้ำได้
+  playerChoice   QuizChoice?   @relation(fields: [quizChoiceId], references: [id]) //choice chooses by player
+  question       QuizQuestion? @relation(fields: [quizQuestionId], references: [id])
+  quizRoundId    Int
+  quizChoiceId   Int
+  quizQuestionId Int
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+}
