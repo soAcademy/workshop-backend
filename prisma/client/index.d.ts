@@ -264,8 +264,8 @@ export type DirectMessage = {
 export type YouTubeUser = {
   id: number
   name: string
-  profileImageUrl: string
-  bio: string
+  profileImageUrl: string | null
+  bio: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -277,8 +277,8 @@ export type YouTubeUser = {
 export type Channel = {
   id: number
   name: string
-  profileImageUrl: string
-  description: string
+  profileImageUrl: string | null
+  description: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -291,7 +291,7 @@ export type UserToChannelwithRole = {
   id: number
   youTubeUserId: number
   channelId: number
-  role: Role
+  role: RoleEnum
   createdAt: Date
   updatedAt: Date
 }
@@ -304,8 +304,8 @@ export type Video = {
   id: number
   title: string
   videoUrl: string
-  thumbnailImageUrl: string
-  description: string
+  thumbnailImageUrl: string | null
+  description: string | null
   channelId: number
   createdAt: Date
   updatedAt: Date
@@ -319,7 +319,7 @@ export type UserToVideoWithReaction = {
   id: number
   youTubeUserId: number
   videoId: number
-  reaction: Reaction
+  reaction: ReactionEnum
   createdAt: Date
   updatedAt: Date
 }
@@ -346,21 +346,21 @@ export type VideoComment = {
 // Based on
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
-export const Reaction: {
+export const ReactionEnum: {
   LIKE: 'LIKE',
   DISLIKE: 'DISLIKE'
 };
 
-export type Reaction = (typeof Reaction)[keyof typeof Reaction]
+export type ReactionEnum = (typeof ReactionEnum)[keyof typeof ReactionEnum]
 
 
-export const Role: {
+export const RoleEnum: {
   MANAGER: 'MANAGER',
   EDITOR: 'EDITOR',
   VIEWER: 'VIEWER'
 };
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
 
 
 /**
@@ -2030,7 +2030,7 @@ export namespace Prisma {
 
 
   export type YouTubeUserCountOutputType = {
-    memberOfChannels: number
+    adminOfChannels: number
     usersToChannelswithRoles: number
     subscribingToChannels: number
     reactedVideos: number
@@ -2039,7 +2039,7 @@ export namespace Prisma {
   }
 
   export type YouTubeUserCountOutputTypeSelect = {
-    memberOfChannels?: boolean
+    adminOfChannels?: boolean
     usersToChannelswithRoles?: boolean
     subscribingToChannels?: boolean
     reactedVideos?: boolean
@@ -2083,14 +2083,14 @@ export namespace Prisma {
 
 
   export type ChannelCountOutputType = {
-    memberUsers: number
+    adminUsers: number
     subscribedUsers: number
     usersToChannelswithRoles: number
     owningVideos: number
   }
 
   export type ChannelCountOutputTypeSelect = {
-    memberUsers?: boolean
+    adminUsers?: boolean
     subscribedUsers?: boolean
     usersToChannelswithRoles?: boolean
     owningVideos?: boolean
@@ -22617,8 +22617,8 @@ export namespace Prisma {
   export type YouTubeUserGroupByOutputType = {
     id: number
     name: string
-    profileImageUrl: string
-    bio: string
+    profileImageUrl: string | null
+    bio: string | null
     createdAt: Date
     updatedAt: Date
     _count: YouTubeUserCountAggregateOutputType | null
@@ -22647,7 +22647,7 @@ export namespace Prisma {
     name?: boolean
     profileImageUrl?: boolean
     bio?: boolean
-    memberOfChannels?: boolean | YouTubeUser$memberOfChannelsArgs
+    adminOfChannels?: boolean | YouTubeUser$adminOfChannelsArgs
     usersToChannelswithRoles?: boolean | YouTubeUser$usersToChannelswithRolesArgs
     subscribingToChannels?: boolean | YouTubeUser$subscribingToChannelsArgs
     reactedVideos?: boolean | YouTubeUser$reactedVideosArgs
@@ -22660,7 +22660,7 @@ export namespace Prisma {
 
 
   export type YouTubeUserInclude = {
-    memberOfChannels?: boolean | YouTubeUser$memberOfChannelsArgs
+    adminOfChannels?: boolean | YouTubeUser$adminOfChannelsArgs
     usersToChannelswithRoles?: boolean | YouTubeUser$usersToChannelswithRolesArgs
     subscribingToChannels?: boolean | YouTubeUser$subscribingToChannelsArgs
     reactedVideos?: boolean | YouTubeUser$reactedVideosArgs
@@ -22676,7 +22676,7 @@ export namespace Prisma {
     S extends { include: any } & (YouTubeUserArgs | YouTubeUserFindManyArgs)
     ? YouTubeUser  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'memberOfChannels' ? Array < ChannelGetPayload<S['include'][P]>>  :
+        P extends 'adminOfChannels' ? Array < ChannelGetPayload<S['include'][P]>>  :
         P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['include'][P]>>  :
         P extends 'subscribingToChannels' ? Array < ChannelGetPayload<S['include'][P]>>  :
         P extends 'reactedVideos' ? Array < VideoGetPayload<S['include'][P]>>  :
@@ -22687,7 +22687,7 @@ export namespace Prisma {
     : S extends { select: any } & (YouTubeUserArgs | YouTubeUserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'memberOfChannels' ? Array < ChannelGetPayload<S['select'][P]>>  :
+        P extends 'adminOfChannels' ? Array < ChannelGetPayload<S['select'][P]>>  :
         P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['select'][P]>>  :
         P extends 'subscribingToChannels' ? Array < ChannelGetPayload<S['select'][P]>>  :
         P extends 'reactedVideos' ? Array < VideoGetPayload<S['select'][P]>>  :
@@ -23065,7 +23065,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    memberOfChannels<T extends YouTubeUser$memberOfChannelsArgs= {}>(args?: Subset<T, YouTubeUser$memberOfChannelsArgs>): Prisma.PrismaPromise<Array<ChannelGetPayload<T>>| Null>;
+    adminOfChannels<T extends YouTubeUser$adminOfChannelsArgs= {}>(args?: Subset<T, YouTubeUser$adminOfChannelsArgs>): Prisma.PrismaPromise<Array<ChannelGetPayload<T>>| Null>;
 
     usersToChannelswithRoles<T extends YouTubeUser$usersToChannelswithRolesArgs= {}>(args?: Subset<T, YouTubeUser$usersToChannelswithRolesArgs>): Prisma.PrismaPromise<Array<UserToChannelwithRoleGetPayload<T>>| Null>;
 
@@ -23433,9 +23433,9 @@ export namespace Prisma {
 
 
   /**
-   * YouTubeUser.memberOfChannels
+   * YouTubeUser.adminOfChannels
    */
-  export type YouTubeUser$memberOfChannelsArgs = {
+  export type YouTubeUser$adminOfChannelsArgs = {
     /**
      * Select specific fields to fetch from the Channel
      */
@@ -23750,8 +23750,8 @@ export namespace Prisma {
   export type ChannelGroupByOutputType = {
     id: number
     name: string
-    profileImageUrl: string
-    description: string
+    profileImageUrl: string | null
+    description: string | null
     createdAt: Date
     updatedAt: Date
     _count: ChannelCountAggregateOutputType | null
@@ -23780,7 +23780,7 @@ export namespace Prisma {
     name?: boolean
     profileImageUrl?: boolean
     description?: boolean
-    memberUsers?: boolean | Channel$memberUsersArgs
+    adminUsers?: boolean | Channel$adminUsersArgs
     subscribedUsers?: boolean | Channel$subscribedUsersArgs
     usersToChannelswithRoles?: boolean | Channel$usersToChannelswithRolesArgs
     owningVideos?: boolean | Channel$owningVideosArgs
@@ -23791,7 +23791,7 @@ export namespace Prisma {
 
 
   export type ChannelInclude = {
-    memberUsers?: boolean | Channel$memberUsersArgs
+    adminUsers?: boolean | Channel$adminUsersArgs
     subscribedUsers?: boolean | Channel$subscribedUsersArgs
     usersToChannelswithRoles?: boolean | Channel$usersToChannelswithRolesArgs
     owningVideos?: boolean | Channel$owningVideosArgs
@@ -23805,7 +23805,7 @@ export namespace Prisma {
     S extends { include: any } & (ChannelArgs | ChannelFindManyArgs)
     ? Channel  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'memberUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
+        P extends 'adminUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
         P extends 'subscribedUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
         P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['include'][P]>>  :
         P extends 'owningVideos' ? Array < VideoGetPayload<S['include'][P]>>  :
@@ -23814,7 +23814,7 @@ export namespace Prisma {
     : S extends { select: any } & (ChannelArgs | ChannelFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'memberUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
+        P extends 'adminUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
         P extends 'subscribedUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
         P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['select'][P]>>  :
         P extends 'owningVideos' ? Array < VideoGetPayload<S['select'][P]>>  :
@@ -24190,7 +24190,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    memberUsers<T extends Channel$memberUsersArgs= {}>(args?: Subset<T, Channel$memberUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
+    adminUsers<T extends Channel$adminUsersArgs= {}>(args?: Subset<T, Channel$adminUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
 
     subscribedUsers<T extends Channel$subscribedUsersArgs= {}>(args?: Subset<T, Channel$subscribedUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
 
@@ -24554,9 +24554,9 @@ export namespace Prisma {
 
 
   /**
-   * Channel.memberUsers
+   * Channel.adminUsers
    */
-  export type Channel$memberUsersArgs = {
+  export type Channel$adminUsersArgs = {
     /**
      * Select specific fields to fetch from the YouTubeUser
      */
@@ -24682,7 +24682,7 @@ export namespace Prisma {
     id: number | null
     youTubeUserId: number | null
     channelId: number | null
-    role: Role | null
+    role: RoleEnum | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -24691,7 +24691,7 @@ export namespace Prisma {
     id: number | null
     youTubeUserId: number | null
     channelId: number | null
-    role: Role | null
+    role: RoleEnum | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -24838,7 +24838,7 @@ export namespace Prisma {
     id: number
     youTubeUserId: number
     channelId: number
-    role: Role
+    role: RoleEnum
     createdAt: Date
     updatedAt: Date
     _count: UserToChannelwithRoleCountAggregateOutputType | null
@@ -25833,8 +25833,8 @@ export namespace Prisma {
     id: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl: string | null
+    description: string | null
     channelId: number
     createdAt: Date
     updatedAt: Date
@@ -26747,7 +26747,7 @@ export namespace Prisma {
     id: number | null
     youTubeUserId: number | null
     videoId: number | null
-    reaction: Reaction | null
+    reaction: ReactionEnum | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -26756,7 +26756,7 @@ export namespace Prisma {
     id: number | null
     youTubeUserId: number | null
     videoId: number | null
-    reaction: Reaction | null
+    reaction: ReactionEnum | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -26903,7 +26903,7 @@ export namespace Prisma {
     id: number
     youTubeUserId: number
     videoId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt: Date
     updatedAt: Date
     _count: UserToVideoWithReactionCountAggregateOutputType | null
@@ -30151,9 +30151,9 @@ export namespace Prisma {
     NOT?: Enumerable<YouTubeUserWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    profileImageUrl?: StringFilter | string
-    bio?: StringFilter | string
-    memberOfChannels?: ChannelListRelationFilter
+    profileImageUrl?: StringNullableFilter | string | null
+    bio?: StringNullableFilter | string | null
+    adminOfChannels?: ChannelListRelationFilter
     usersToChannelswithRoles?: UserToChannelwithRoleListRelationFilter
     subscribingToChannels?: ChannelListRelationFilter
     reactedVideos?: VideoListRelationFilter
@@ -30168,7 +30168,7 @@ export namespace Prisma {
     name?: SortOrder
     profileImageUrl?: SortOrder
     bio?: SortOrder
-    memberOfChannels?: ChannelOrderByRelationAggregateInput
+    adminOfChannels?: ChannelOrderByRelationAggregateInput
     usersToChannelswithRoles?: UserToChannelwithRoleOrderByRelationAggregateInput
     subscribingToChannels?: ChannelOrderByRelationAggregateInput
     reactedVideos?: VideoOrderByRelationAggregateInput
@@ -30202,8 +30202,8 @@ export namespace Prisma {
     NOT?: Enumerable<YouTubeUserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    profileImageUrl?: StringWithAggregatesFilter | string
-    bio?: StringWithAggregatesFilter | string
+    profileImageUrl?: StringNullableWithAggregatesFilter | string | null
+    bio?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -30214,9 +30214,9 @@ export namespace Prisma {
     NOT?: Enumerable<ChannelWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    profileImageUrl?: StringFilter | string
-    description?: StringFilter | string
-    memberUsers?: YouTubeUserListRelationFilter
+    profileImageUrl?: StringNullableFilter | string | null
+    description?: StringNullableFilter | string | null
+    adminUsers?: YouTubeUserListRelationFilter
     subscribedUsers?: YouTubeUserListRelationFilter
     usersToChannelswithRoles?: UserToChannelwithRoleListRelationFilter
     owningVideos?: VideoListRelationFilter
@@ -30229,7 +30229,7 @@ export namespace Prisma {
     name?: SortOrder
     profileImageUrl?: SortOrder
     description?: SortOrder
-    memberUsers?: YouTubeUserOrderByRelationAggregateInput
+    adminUsers?: YouTubeUserOrderByRelationAggregateInput
     subscribedUsers?: YouTubeUserOrderByRelationAggregateInput
     usersToChannelswithRoles?: UserToChannelwithRoleOrderByRelationAggregateInput
     owningVideos?: VideoOrderByRelationAggregateInput
@@ -30261,8 +30261,8 @@ export namespace Prisma {
     NOT?: Enumerable<ChannelScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    profileImageUrl?: StringWithAggregatesFilter | string
-    description?: StringWithAggregatesFilter | string
+    profileImageUrl?: StringNullableWithAggregatesFilter | string | null
+    description?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -30276,7 +30276,7 @@ export namespace Prisma {
     youTubeUserId?: IntFilter | number
     channel?: XOR<ChannelRelationFilter, ChannelWhereInput>
     channelId?: IntFilter | number
-    role?: EnumRoleFilter | Role
+    role?: EnumRoleEnumFilter | RoleEnum
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -30317,7 +30317,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     youTubeUserId?: IntWithAggregatesFilter | number
     channelId?: IntWithAggregatesFilter | number
-    role?: EnumRoleWithAggregatesFilter | Role
+    role?: EnumRoleEnumWithAggregatesFilter | RoleEnum
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -30329,8 +30329,8 @@ export namespace Prisma {
     id?: IntFilter | number
     title?: StringFilter | string
     videoUrl?: StringFilter | string
-    thumbnailImageUrl?: StringFilter | string
-    description?: StringFilter | string
+    thumbnailImageUrl?: StringNullableFilter | string | null
+    description?: StringNullableFilter | string | null
     belongsToChannel?: XOR<ChannelRelationFilter, ChannelWhereInput>
     channelId?: IntFilter | number
     reactedByYouTubeUsers?: YouTubeUserListRelationFilter
@@ -30382,8 +30382,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     title?: StringWithAggregatesFilter | string
     videoUrl?: StringWithAggregatesFilter | string
-    thumbnailImageUrl?: StringWithAggregatesFilter | string
-    description?: StringWithAggregatesFilter | string
+    thumbnailImageUrl?: StringNullableWithAggregatesFilter | string | null
+    description?: StringNullableWithAggregatesFilter | string | null
     channelId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
@@ -30398,7 +30398,7 @@ export namespace Prisma {
     youTubeUserId?: IntFilter | number
     video?: XOR<VideoRelationFilter, VideoWhereInput>
     videoId?: IntFilter | number
-    reaction?: EnumReactionFilter | Reaction
+    reaction?: EnumReactionEnumFilter | ReactionEnum
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -30439,7 +30439,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     youTubeUserId?: IntWithAggregatesFilter | number
     videoId?: IntWithAggregatesFilter | number
-    reaction?: EnumReactionWithAggregatesFilter | Reaction
+    reaction?: EnumReactionEnumWithAggregatesFilter | ReactionEnum
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -31710,9 +31710,9 @@ export namespace Prisma {
 
   export type YouTubeUserCreateInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -31725,9 +31725,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -31739,9 +31739,9 @@ export namespace Prisma {
 
   export type YouTubeUserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -31754,9 +31754,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -31769,16 +31769,16 @@ export namespace Prisma {
   export type YouTubeUserCreateManyInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
+    profileImageUrl?: string | null
+    bio?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type YouTubeUserUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31786,17 +31786,17 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChannelCreateInput = {
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
     owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
@@ -31807,9 +31807,9 @@ export namespace Prisma {
   export type ChannelUncheckedCreateInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserUncheckedCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
     owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
@@ -31819,9 +31819,9 @@ export namespace Prisma {
 
   export type ChannelUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
@@ -31832,9 +31832,9 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUncheckedUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
@@ -31845,16 +31845,16 @@ export namespace Prisma {
   export type ChannelCreateManyInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
+    profileImageUrl?: string | null
+    description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type ChannelUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31862,8 +31862,8 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31871,7 +31871,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleCreateInput = {
     user: YouTubeUserCreateNestedOneWithoutUsersToChannelswithRolesInput
     channel: ChannelCreateNestedOneWithoutUsersToChannelswithRolesInput
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -31880,7 +31880,7 @@ export namespace Prisma {
     id?: number
     youTubeUserId: number
     channelId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -31888,7 +31888,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleUpdateInput = {
     user?: YouTubeUserUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
     channel?: ChannelUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31897,7 +31897,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
     channelId?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31906,13 +31906,13 @@ export namespace Prisma {
     id?: number
     youTubeUserId: number
     channelId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserToChannelwithRoleUpdateManyMutationInput = {
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31921,7 +31921,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
     channelId?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -31929,8 +31929,8 @@ export namespace Prisma {
   export type VideoCreateInput = {
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
     reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
@@ -31943,8 +31943,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     channelId: number
     reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
@@ -31956,8 +31956,8 @@ export namespace Prisma {
   export type VideoUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
     reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
@@ -31970,8 +31970,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
@@ -31984,8 +31984,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     channelId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -31994,8 +31994,8 @@ export namespace Prisma {
   export type VideoUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32004,8 +32004,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32014,7 +32014,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionCreateInput = {
     user: YouTubeUserCreateNestedOneWithoutUsersToVideosWithReactionsInput
     video: VideoCreateNestedOneWithoutUsersToVideosWithReactionsInput
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -32023,7 +32023,7 @@ export namespace Prisma {
     id?: number
     youTubeUserId: number
     videoId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -32031,7 +32031,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUpdateInput = {
     user?: YouTubeUserUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
     video?: VideoUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32040,7 +32040,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
     videoId?: IntFieldUpdateOperationsInput | number
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32049,13 +32049,13 @@ export namespace Prisma {
     id?: number
     youTubeUserId: number
     videoId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserToVideoWithReactionUpdateManyMutationInput = {
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32064,7 +32064,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
     videoId?: IntFieldUpdateOperationsInput | number
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -33180,6 +33180,21 @@ export namespace Prisma {
     toUserId?: SortOrder
   }
 
+  export type StringNullableFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableFilter | string | null
+  }
+
   export type ChannelListRelationFilter = {
     every?: ChannelWhereInput
     some?: ChannelWhereInput
@@ -33265,6 +33280,24 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type StringNullableWithAggregatesFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedStringNullableFilter
+    _max?: NestedStringNullableFilter
+  }
+
   export type YouTubeUserListRelationFilter = {
     every?: YouTubeUserWhereInput
     some?: YouTubeUserWhereInput
@@ -33320,11 +33353,11 @@ export namespace Prisma {
     isNot?: ChannelWhereInput
   }
 
-  export type EnumRoleFilter = {
-    equals?: Role
-    in?: Enumerable<Role>
-    notIn?: Enumerable<Role>
-    not?: NestedEnumRoleFilter | Role
+  export type EnumRoleEnumFilter = {
+    equals?: RoleEnum
+    in?: Enumerable<RoleEnum>
+    notIn?: Enumerable<RoleEnum>
+    not?: NestedEnumRoleEnumFilter | RoleEnum
   }
 
   export type UserToChannelwithRoleCountOrderByAggregateInput = {
@@ -33366,14 +33399,14 @@ export namespace Prisma {
     channelId?: SortOrder
   }
 
-  export type EnumRoleWithAggregatesFilter = {
-    equals?: Role
-    in?: Enumerable<Role>
-    notIn?: Enumerable<Role>
-    not?: NestedEnumRoleWithAggregatesFilter | Role
+  export type EnumRoleEnumWithAggregatesFilter = {
+    equals?: RoleEnum
+    in?: Enumerable<RoleEnum>
+    notIn?: Enumerable<RoleEnum>
+    not?: NestedEnumRoleEnumWithAggregatesFilter | RoleEnum
     _count?: NestedIntFilter
-    _min?: NestedEnumRoleFilter
-    _max?: NestedEnumRoleFilter
+    _min?: NestedEnumRoleEnumFilter
+    _max?: NestedEnumRoleEnumFilter
   }
 
   export type VideoCountOrderByAggregateInput = {
@@ -33424,11 +33457,11 @@ export namespace Prisma {
     isNot?: VideoWhereInput
   }
 
-  export type EnumReactionFilter = {
-    equals?: Reaction
-    in?: Enumerable<Reaction>
-    notIn?: Enumerable<Reaction>
-    not?: NestedEnumReactionFilter | Reaction
+  export type EnumReactionEnumFilter = {
+    equals?: ReactionEnum
+    in?: Enumerable<ReactionEnum>
+    notIn?: Enumerable<ReactionEnum>
+    not?: NestedEnumReactionEnumFilter | ReactionEnum
   }
 
   export type UserToVideoWithReactionCountOrderByAggregateInput = {
@@ -33470,14 +33503,14 @@ export namespace Prisma {
     videoId?: SortOrder
   }
 
-  export type EnumReactionWithAggregatesFilter = {
-    equals?: Reaction
-    in?: Enumerable<Reaction>
-    notIn?: Enumerable<Reaction>
-    not?: NestedEnumReactionWithAggregatesFilter | Reaction
+  export type EnumReactionEnumWithAggregatesFilter = {
+    equals?: ReactionEnum
+    in?: Enumerable<ReactionEnum>
+    notIn?: Enumerable<ReactionEnum>
+    not?: NestedEnumReactionEnumWithAggregatesFilter | ReactionEnum
     _count?: NestedIntFilter
-    _min?: NestedEnumReactionFilter
-    _max?: NestedEnumReactionFilter
+    _min?: NestedEnumReactionEnumFilter
+    _max?: NestedEnumReactionEnumFilter
   }
 
   export type VideoCommentRelationFilter = {
@@ -34995,9 +35028,9 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutDirectMessagesToInput, UserUncheckedUpdateWithoutDirectMessagesToInput>
   }
 
-  export type ChannelCreateNestedManyWithoutMemberUsersInput = {
-    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
-    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+  export type ChannelCreateNestedManyWithoutAdminUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutAdminUsersInput>, Enumerable<ChannelUncheckedCreateWithoutAdminUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutAdminUsersInput>
     connect?: Enumerable<ChannelWhereUniqueInput>
   }
 
@@ -35034,9 +35067,9 @@ export namespace Prisma {
     connect?: Enumerable<VideoCommentWhereUniqueInput>
   }
 
-  export type ChannelUncheckedCreateNestedManyWithoutMemberUsersInput = {
-    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
-    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+  export type ChannelUncheckedCreateNestedManyWithoutAdminUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutAdminUsersInput>, Enumerable<ChannelUncheckedCreateWithoutAdminUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutAdminUsersInput>
     connect?: Enumerable<ChannelWhereUniqueInput>
   }
 
@@ -35073,16 +35106,20 @@ export namespace Prisma {
     connect?: Enumerable<VideoCommentWhereUniqueInput>
   }
 
-  export type ChannelUpdateManyWithoutMemberUsersNestedInput = {
-    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
-    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
-    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutMemberUsersInput>
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type ChannelUpdateManyWithoutAdminUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutAdminUsersInput>, Enumerable<ChannelUncheckedCreateWithoutAdminUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutAdminUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutAdminUsersInput>
     set?: Enumerable<ChannelWhereUniqueInput>
     disconnect?: Enumerable<ChannelWhereUniqueInput>
     delete?: Enumerable<ChannelWhereUniqueInput>
     connect?: Enumerable<ChannelWhereUniqueInput>
-    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutMemberUsersInput>
-    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutMemberUsersInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutAdminUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutAdminUsersInput>
     deleteMany?: Enumerable<ChannelScalarWhereInput>
   }
 
@@ -35154,16 +35191,16 @@ export namespace Prisma {
     deleteMany?: Enumerable<VideoCommentScalarWhereInput>
   }
 
-  export type ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput = {
-    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
-    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
-    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutMemberUsersInput>
+  export type ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutAdminUsersInput>, Enumerable<ChannelUncheckedCreateWithoutAdminUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutAdminUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutAdminUsersInput>
     set?: Enumerable<ChannelWhereUniqueInput>
     disconnect?: Enumerable<ChannelWhereUniqueInput>
     delete?: Enumerable<ChannelWhereUniqueInput>
     connect?: Enumerable<ChannelWhereUniqueInput>
-    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutMemberUsersInput>
-    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutMemberUsersInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutAdminUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutAdminUsersInput>
     deleteMany?: Enumerable<ChannelScalarWhereInput>
   }
 
@@ -35235,9 +35272,9 @@ export namespace Prisma {
     deleteMany?: Enumerable<VideoCommentScalarWhereInput>
   }
 
-  export type YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput = {
-    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
-    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+  export type YouTubeUserCreateNestedManyWithoutAdminOfChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutAdminOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutAdminOfChannelsInput>
     connect?: Enumerable<YouTubeUserWhereUniqueInput>
   }
 
@@ -35261,9 +35298,9 @@ export namespace Prisma {
     connect?: Enumerable<VideoWhereUniqueInput>
   }
 
-  export type YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput = {
-    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
-    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+  export type YouTubeUserUncheckedCreateNestedManyWithoutAdminOfChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutAdminOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutAdminOfChannelsInput>
     connect?: Enumerable<YouTubeUserWhereUniqueInput>
   }
 
@@ -35287,16 +35324,16 @@ export namespace Prisma {
     connect?: Enumerable<VideoWhereUniqueInput>
   }
 
-  export type YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput = {
-    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
-    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
-    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput>
+  export type YouTubeUserUpdateManyWithoutAdminOfChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutAdminOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutAdminOfChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutAdminOfChannelsInput>
     set?: Enumerable<YouTubeUserWhereUniqueInput>
     disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
     delete?: Enumerable<YouTubeUserWhereUniqueInput>
     connect?: Enumerable<YouTubeUserWhereUniqueInput>
-    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput>
-    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutAdminOfChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutAdminOfChannelsInput>
     deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
   }
 
@@ -35341,16 +35378,16 @@ export namespace Prisma {
     deleteMany?: Enumerable<VideoScalarWhereInput>
   }
 
-  export type YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput = {
-    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
-    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
-    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput>
+  export type YouTubeUserUncheckedUpdateManyWithoutAdminOfChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutAdminOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutAdminOfChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutAdminOfChannelsInput>
     set?: Enumerable<YouTubeUserWhereUniqueInput>
     disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
     delete?: Enumerable<YouTubeUserWhereUniqueInput>
     connect?: Enumerable<YouTubeUserWhereUniqueInput>
-    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput>
-    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutAdminOfChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutAdminOfChannelsInput>
     deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
   }
 
@@ -35423,8 +35460,8 @@ export namespace Prisma {
     update?: XOR<ChannelUpdateWithoutUsersToChannelswithRolesInput, ChannelUncheckedUpdateWithoutUsersToChannelswithRolesInput>
   }
 
-  export type EnumRoleFieldUpdateOperationsInput = {
-    set?: Role
+  export type EnumRoleEnumFieldUpdateOperationsInput = {
+    set?: RoleEnum
   }
 
   export type ChannelCreateNestedOneWithoutOwningVideosInput = {
@@ -35591,8 +35628,8 @@ export namespace Prisma {
     update?: XOR<VideoUpdateWithoutUsersToVideosWithReactionsInput, VideoUncheckedUpdateWithoutUsersToVideosWithReactionsInput>
   }
 
-  export type EnumReactionFieldUpdateOperationsInput = {
-    set?: Reaction
+  export type EnumReactionEnumFieldUpdateOperationsInput = {
+    set?: ReactionEnum
   }
 
   export type YouTubeUserCreateNestedOneWithoutVideoCommentsInput = {
@@ -35829,38 +35866,69 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
-  export type NestedEnumRoleFilter = {
-    equals?: Role
-    in?: Enumerable<Role>
-    notIn?: Enumerable<Role>
-    not?: NestedEnumRoleFilter | Role
+  export type NestedStringNullableFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    not?: NestedStringNullableFilter | string | null
   }
 
-  export type NestedEnumRoleWithAggregatesFilter = {
-    equals?: Role
-    in?: Enumerable<Role>
-    notIn?: Enumerable<Role>
-    not?: NestedEnumRoleWithAggregatesFilter | Role
+  export type NestedStringNullableWithAggregatesFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    not?: NestedStringNullableWithAggregatesFilter | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedStringNullableFilter
+    _max?: NestedStringNullableFilter
+  }
+
+  export type NestedEnumRoleEnumFilter = {
+    equals?: RoleEnum
+    in?: Enumerable<RoleEnum>
+    notIn?: Enumerable<RoleEnum>
+    not?: NestedEnumRoleEnumFilter | RoleEnum
+  }
+
+  export type NestedEnumRoleEnumWithAggregatesFilter = {
+    equals?: RoleEnum
+    in?: Enumerable<RoleEnum>
+    notIn?: Enumerable<RoleEnum>
+    not?: NestedEnumRoleEnumWithAggregatesFilter | RoleEnum
     _count?: NestedIntFilter
-    _min?: NestedEnumRoleFilter
-    _max?: NestedEnumRoleFilter
+    _min?: NestedEnumRoleEnumFilter
+    _max?: NestedEnumRoleEnumFilter
   }
 
-  export type NestedEnumReactionFilter = {
-    equals?: Reaction
-    in?: Enumerable<Reaction>
-    notIn?: Enumerable<Reaction>
-    not?: NestedEnumReactionFilter | Reaction
+  export type NestedEnumReactionEnumFilter = {
+    equals?: ReactionEnum
+    in?: Enumerable<ReactionEnum>
+    notIn?: Enumerable<ReactionEnum>
+    not?: NestedEnumReactionEnumFilter | ReactionEnum
   }
 
-  export type NestedEnumReactionWithAggregatesFilter = {
-    equals?: Reaction
-    in?: Enumerable<Reaction>
-    notIn?: Enumerable<Reaction>
-    not?: NestedEnumReactionWithAggregatesFilter | Reaction
+  export type NestedEnumReactionEnumWithAggregatesFilter = {
+    equals?: ReactionEnum
+    in?: Enumerable<ReactionEnum>
+    notIn?: Enumerable<ReactionEnum>
+    not?: NestedEnumReactionEnumWithAggregatesFilter | ReactionEnum
     _count?: NestedIntFilter
-    _min?: NestedEnumReactionFilter
-    _max?: NestedEnumReactionFilter
+    _min?: NestedEnumReactionEnumFilter
+    _max?: NestedEnumReactionEnumFilter
   }
 
   export type MenuCreateWithoutCategoryInput = {
@@ -38243,10 +38311,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChannelCreateWithoutMemberUsersInput = {
+  export type ChannelCreateWithoutAdminUsersInput = {
     name: string
-    profileImageUrl: string
-    description: string
+    profileImageUrl?: string | null
+    description?: string | null
     subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
     owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
@@ -38254,11 +38322,11 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ChannelUncheckedCreateWithoutMemberUsersInput = {
+  export type ChannelUncheckedCreateWithoutAdminUsersInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
+    profileImageUrl?: string | null
+    description?: string | null
     subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
     owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
@@ -38266,14 +38334,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ChannelCreateOrConnectWithoutMemberUsersInput = {
+  export type ChannelCreateOrConnectWithoutAdminUsersInput = {
     where: ChannelWhereUniqueInput
-    create: XOR<ChannelCreateWithoutMemberUsersInput, ChannelUncheckedCreateWithoutMemberUsersInput>
+    create: XOR<ChannelCreateWithoutAdminUsersInput, ChannelUncheckedCreateWithoutAdminUsersInput>
   }
 
   export type UserToChannelwithRoleCreateWithoutUserInput = {
     channel: ChannelCreateNestedOneWithoutUsersToChannelswithRolesInput
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38281,7 +38349,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleUncheckedCreateWithoutUserInput = {
     id?: number
     channelId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38298,9 +38366,9 @@ export namespace Prisma {
 
   export type ChannelCreateWithoutSubscribedUsersInput = {
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserCreateNestedManyWithoutAdminOfChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
     owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
     createdAt?: Date | string
@@ -38310,9 +38378,9 @@ export namespace Prisma {
   export type ChannelUncheckedCreateWithoutSubscribedUsersInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserUncheckedCreateNestedManyWithoutAdminOfChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
     owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
     createdAt?: Date | string
@@ -38327,8 +38395,8 @@ export namespace Prisma {
   export type VideoCreateWithoutReactedByYouTubeUsersInput = {
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
     videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
@@ -38340,8 +38408,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     channelId: number
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
     videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
@@ -38356,7 +38424,7 @@ export namespace Prisma {
 
   export type UserToVideoWithReactionCreateWithoutUserInput = {
     video: VideoCreateNestedOneWithoutUsersToVideosWithReactionsInput
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38364,7 +38432,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUncheckedCreateWithoutUserInput = {
     id?: number
     videoId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38408,20 +38476,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ChannelUpsertWithWhereUniqueWithoutMemberUsersInput = {
+  export type ChannelUpsertWithWhereUniqueWithoutAdminUsersInput = {
     where: ChannelWhereUniqueInput
-    update: XOR<ChannelUpdateWithoutMemberUsersInput, ChannelUncheckedUpdateWithoutMemberUsersInput>
-    create: XOR<ChannelCreateWithoutMemberUsersInput, ChannelUncheckedCreateWithoutMemberUsersInput>
+    update: XOR<ChannelUpdateWithoutAdminUsersInput, ChannelUncheckedUpdateWithoutAdminUsersInput>
+    create: XOR<ChannelCreateWithoutAdminUsersInput, ChannelUncheckedCreateWithoutAdminUsersInput>
   }
 
-  export type ChannelUpdateWithWhereUniqueWithoutMemberUsersInput = {
+  export type ChannelUpdateWithWhereUniqueWithoutAdminUsersInput = {
     where: ChannelWhereUniqueInput
-    data: XOR<ChannelUpdateWithoutMemberUsersInput, ChannelUncheckedUpdateWithoutMemberUsersInput>
+    data: XOR<ChannelUpdateWithoutAdminUsersInput, ChannelUncheckedUpdateWithoutAdminUsersInput>
   }
 
-  export type ChannelUpdateManyWithWhereWithoutMemberUsersInput = {
+  export type ChannelUpdateManyWithWhereWithoutAdminUsersInput = {
     where: ChannelScalarWhereInput
-    data: XOR<ChannelUpdateManyMutationInput, ChannelUncheckedUpdateManyWithoutMemberOfChannelsInput>
+    data: XOR<ChannelUpdateManyMutationInput, ChannelUncheckedUpdateManyWithoutAdminOfChannelsInput>
   }
 
   export type ChannelScalarWhereInput = {
@@ -38430,8 +38498,8 @@ export namespace Prisma {
     NOT?: Enumerable<ChannelScalarWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    profileImageUrl?: StringFilter | string
-    description?: StringFilter | string
+    profileImageUrl?: StringNullableFilter | string | null
+    description?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -38459,7 +38527,7 @@ export namespace Prisma {
     id?: IntFilter | number
     youTubeUserId?: IntFilter | number
     channelId?: IntFilter | number
-    role?: EnumRoleFilter | Role
+    role?: EnumRoleEnumFilter | RoleEnum
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -38503,8 +38571,8 @@ export namespace Prisma {
     id?: IntFilter | number
     title?: StringFilter | string
     videoUrl?: StringFilter | string
-    thumbnailImageUrl?: StringFilter | string
-    description?: StringFilter | string
+    thumbnailImageUrl?: StringNullableFilter | string | null
+    description?: StringNullableFilter | string | null
     channelId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -38533,7 +38601,7 @@ export namespace Prisma {
     id?: IntFilter | number
     youTubeUserId?: IntFilter | number
     videoId?: IntFilter | number
-    reaction?: EnumReactionFilter | Reaction
+    reaction?: EnumReactionEnumFilter | ReactionEnum
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -38567,10 +38635,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type YouTubeUserCreateWithoutMemberOfChannelsInput = {
+  export type YouTubeUserCreateWithoutAdminOfChannelsInput = {
     name: string
-    profileImageUrl: string
-    bio: string
+    profileImageUrl?: string | null
+    bio?: string | null
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -38580,11 +38648,11 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
+    profileImageUrl?: string | null
+    bio?: string | null
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -38594,16 +38662,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput = {
+  export type YouTubeUserCreateOrConnectWithoutAdminOfChannelsInput = {
     where: YouTubeUserWhereUniqueInput
-    create: XOR<YouTubeUserCreateWithoutMemberOfChannelsInput, YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>
+    create: XOR<YouTubeUserCreateWithoutAdminOfChannelsInput, YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>
   }
 
   export type YouTubeUserCreateWithoutSubscribingToChannelsInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
@@ -38615,9 +38683,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
@@ -38633,7 +38701,7 @@ export namespace Prisma {
 
   export type UserToChannelwithRoleCreateWithoutChannelInput = {
     user: YouTubeUserCreateNestedOneWithoutUsersToChannelswithRolesInput
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38641,7 +38709,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleUncheckedCreateWithoutChannelInput = {
     id?: number
     youTubeUserId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38659,8 +38727,8 @@ export namespace Prisma {
   export type VideoCreateWithoutBelongsToChannelInput = {
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
     videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
@@ -38672,8 +38740,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
     videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
@@ -38691,20 +38759,20 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUpsertWithWhereUniqueWithoutAdminOfChannelsInput = {
     where: YouTubeUserWhereUniqueInput
-    update: XOR<YouTubeUserUpdateWithoutMemberOfChannelsInput, YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput>
-    create: XOR<YouTubeUserCreateWithoutMemberOfChannelsInput, YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>
+    update: XOR<YouTubeUserUpdateWithoutAdminOfChannelsInput, YouTubeUserUncheckedUpdateWithoutAdminOfChannelsInput>
+    create: XOR<YouTubeUserCreateWithoutAdminOfChannelsInput, YouTubeUserUncheckedCreateWithoutAdminOfChannelsInput>
   }
 
-  export type YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUpdateWithWhereUniqueWithoutAdminOfChannelsInput = {
     where: YouTubeUserWhereUniqueInput
-    data: XOR<YouTubeUserUpdateWithoutMemberOfChannelsInput, YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput>
+    data: XOR<YouTubeUserUpdateWithoutAdminOfChannelsInput, YouTubeUserUncheckedUpdateWithoutAdminOfChannelsInput>
   }
 
-  export type YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUpdateManyWithWhereWithoutAdminOfChannelsInput = {
     where: YouTubeUserScalarWhereInput
-    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyWithoutMemberUsersInput>
+    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyWithoutAdminUsersInput>
   }
 
   export type YouTubeUserScalarWhereInput = {
@@ -38713,8 +38781,8 @@ export namespace Prisma {
     NOT?: Enumerable<YouTubeUserScalarWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    profileImageUrl?: StringFilter | string
-    bio?: StringFilter | string
+    profileImageUrl?: StringNullableFilter | string | null
+    bio?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -38769,9 +38837,9 @@ export namespace Prisma {
 
   export type YouTubeUserCreateWithoutUsersToChannelswithRolesInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
@@ -38783,9 +38851,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
@@ -38801,9 +38869,9 @@ export namespace Prisma {
 
   export type ChannelCreateWithoutUsersToChannelswithRolesInput = {
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
     owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
     createdAt?: Date | string
@@ -38813,9 +38881,9 @@ export namespace Prisma {
   export type ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserUncheckedCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
     owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
     createdAt?: Date | string
@@ -38834,9 +38902,9 @@ export namespace Prisma {
 
   export type YouTubeUserUpdateWithoutUsersToChannelswithRolesInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
@@ -38848,9 +38916,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateWithoutUsersToChannelswithRolesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -38866,9 +38934,9 @@ export namespace Prisma {
 
   export type ChannelUpdateWithoutUsersToChannelswithRolesInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
     owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38878,9 +38946,9 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateWithoutUsersToChannelswithRolesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUncheckedUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
     owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38889,9 +38957,9 @@ export namespace Prisma {
 
   export type ChannelCreateWithoutOwningVideosInput = {
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
     createdAt?: Date | string
@@ -38901,9 +38969,9 @@ export namespace Prisma {
   export type ChannelUncheckedCreateWithoutOwningVideosInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    description: string
-    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    profileImageUrl?: string | null
+    description?: string | null
+    adminUsers?: YouTubeUserUncheckedCreateNestedManyWithoutAdminOfChannelsInput
     subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
     createdAt?: Date | string
@@ -38917,9 +38985,9 @@ export namespace Prisma {
 
   export type YouTubeUserCreateWithoutReactedVideosInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
@@ -38931,9 +38999,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateWithoutReactedVideosInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
@@ -38949,7 +39017,7 @@ export namespace Prisma {
 
   export type UserToVideoWithReactionCreateWithoutVideoInput = {
     user: YouTubeUserCreateNestedOneWithoutUsersToVideosWithReactionsInput
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -38957,7 +39025,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUncheckedCreateWithoutVideoInput = {
     id?: number
     youTubeUserId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39008,9 +39076,9 @@ export namespace Prisma {
 
   export type ChannelUpdateWithoutOwningVideosInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39020,9 +39088,9 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateWithoutOwningVideosInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUncheckedUpdateManyWithoutAdminOfChannelsNestedInput
     subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39079,9 +39147,9 @@ export namespace Prisma {
 
   export type YouTubeUserCreateWithoutUsersToVideosWithReactionsInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -39093,9 +39161,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -39112,8 +39180,8 @@ export namespace Prisma {
   export type VideoCreateWithoutUsersToVideosWithReactionsInput = {
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
     reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
     videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
@@ -39125,8 +39193,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     channelId: number
     reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
     videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
@@ -39146,9 +39214,9 @@ export namespace Prisma {
 
   export type YouTubeUserUpdateWithoutUsersToVideosWithReactionsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -39160,9 +39228,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateWithoutUsersToVideosWithReactionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -39179,8 +39247,8 @@ export namespace Prisma {
   export type VideoUpdateWithoutUsersToVideosWithReactionsInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
     reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
     videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
@@ -39192,8 +39260,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
     videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
@@ -39203,9 +39271,9 @@ export namespace Prisma {
 
   export type YouTubeUserCreateWithoutVideoCommentsInput = {
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -39217,9 +39285,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedCreateWithoutVideoCommentsInput = {
     id?: number
     name: string
-    profileImageUrl: string
-    bio: string
-    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    profileImageUrl?: string | null
+    bio?: string | null
+    adminOfChannels?: ChannelUncheckedCreateNestedManyWithoutAdminUsersInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
     subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
     reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
@@ -39236,8 +39304,8 @@ export namespace Prisma {
   export type VideoCreateWithoutVideoCommentsInput = {
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
     reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
@@ -39249,8 +39317,8 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     channelId: number
     reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
@@ -39323,9 +39391,9 @@ export namespace Prisma {
 
   export type YouTubeUserUpdateWithoutVideoCommentsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -39337,9 +39405,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateWithoutVideoCommentsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -39356,8 +39424,8 @@ export namespace Prisma {
   export type VideoUpdateWithoutVideoCommentsInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
     reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
@@ -39369,8 +39437,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
@@ -40233,7 +40301,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleCreateManyUserInput = {
     id?: number
     channelId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -40241,7 +40309,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionCreateManyUserInput = {
     id?: number
     videoId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -40255,10 +40323,10 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ChannelUpdateWithoutMemberUsersInput = {
+  export type ChannelUpdateWithoutAdminUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
@@ -40266,11 +40334,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChannelUncheckedUpdateWithoutMemberUsersInput = {
+  export type ChannelUncheckedUpdateWithoutAdminUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
@@ -40278,18 +40346,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChannelUncheckedUpdateManyWithoutMemberOfChannelsInput = {
+  export type ChannelUncheckedUpdateManyWithoutAdminOfChannelsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserToChannelwithRoleUpdateWithoutUserInput = {
     channel?: ChannelUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40297,7 +40365,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     channelId?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40305,16 +40373,16 @@ export namespace Prisma {
   export type UserToChannelwithRoleUncheckedUpdateManyWithoutUsersToChannelswithRolesInput = {
     id?: IntFieldUpdateOperationsInput | number
     channelId?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChannelUpdateWithoutSubscribedUsersInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUpdateManyWithoutAdminOfChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40324,9 +40392,9 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateWithoutSubscribedUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    adminUsers?: YouTubeUserUncheckedUpdateManyWithoutAdminOfChannelsNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
     owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40336,8 +40404,8 @@ export namespace Prisma {
   export type ChannelUncheckedUpdateManyWithoutSubscribingToChannelsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40345,8 +40413,8 @@ export namespace Prisma {
   export type VideoUpdateWithoutReactedByYouTubeUsersInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
     videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
@@ -40358,8 +40426,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
     videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
@@ -40371,8 +40439,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     channelId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40380,7 +40448,7 @@ export namespace Prisma {
 
   export type UserToVideoWithReactionUpdateWithoutUserInput = {
     video?: VideoUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40388,7 +40456,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     videoId?: IntFieldUpdateOperationsInput | number
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40396,7 +40464,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUncheckedUpdateManyWithoutUsersToVideosWithReactionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     videoId?: IntFieldUpdateOperationsInput | number
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40432,7 +40500,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleCreateManyChannelInput = {
     id?: number
     youTubeUserId: number
-    role: Role
+    role: RoleEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -40441,16 +40509,16 @@ export namespace Prisma {
     id?: number
     title: string
     videoUrl: string
-    thumbnailImageUrl: string
-    description: string
+    thumbnailImageUrl?: string | null
+    description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type YouTubeUserUpdateWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUpdateWithoutAdminOfChannelsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -40460,11 +40528,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput = {
+  export type YouTubeUserUncheckedUpdateWithoutAdminOfChannelsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
@@ -40474,20 +40542,20 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type YouTubeUserUncheckedUpdateManyWithoutMemberUsersInput = {
+  export type YouTubeUserUncheckedUpdateManyWithoutAdminUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type YouTubeUserUpdateWithoutSubscribingToChannelsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
@@ -40499,9 +40567,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateWithoutSubscribingToChannelsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -40513,15 +40581,15 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateManyWithoutSubscribedUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserToChannelwithRoleUpdateWithoutChannelInput = {
     user?: YouTubeUserUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40529,7 +40597,7 @@ export namespace Prisma {
   export type UserToChannelwithRoleUncheckedUpdateWithoutChannelInput = {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleFieldUpdateOperationsInput | Role
+    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40537,8 +40605,8 @@ export namespace Prisma {
   export type VideoUpdateWithoutBelongsToChannelInput = {
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
     videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
@@ -40550,8 +40618,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
     videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
@@ -40563,8 +40631,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     videoUrl?: StringFieldUpdateOperationsInput | string
-    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40572,7 +40640,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionCreateManyVideoInput = {
     id?: number
     youTubeUserId: number
-    reaction: Reaction
+    reaction: ReactionEnum
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -40588,9 +40656,9 @@ export namespace Prisma {
 
   export type YouTubeUserUpdateWithoutReactedVideosInput = {
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
@@ -40602,9 +40670,9 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateWithoutReactedVideosInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
-    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adminOfChannels?: ChannelUncheckedUpdateManyWithoutAdminUsersNestedInput
     usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
     subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
     usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
@@ -40616,15 +40684,15 @@ export namespace Prisma {
   export type YouTubeUserUncheckedUpdateManyWithoutReactedByYouTubeUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    profileImageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserToVideoWithReactionUpdateWithoutVideoInput = {
     user?: YouTubeUserUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -40632,7 +40700,7 @@ export namespace Prisma {
   export type UserToVideoWithReactionUncheckedUpdateWithoutVideoInput = {
     id?: IntFieldUpdateOperationsInput | number
     youTubeUserId?: IntFieldUpdateOperationsInput | number
-    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    reaction?: EnumReactionEnumFieldUpdateOperationsInput | ReactionEnum
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

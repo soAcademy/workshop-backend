@@ -329,12 +329,12 @@ exports.Prisma.YouTubeUserScalarFieldEnum = makeEnum({
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
-exports.Reaction = makeEnum({
+exports.ReactionEnum = makeEnum({
   LIKE: 'LIKE',
   DISLIKE: 'DISLIKE'
 });
 
-exports.Role = makeEnum({
+exports.RoleEnum = makeEnum({
   MANAGER: 'MANAGER',
   EDITOR: 'EDITOR',
   VIEWER: 'VIEWER'

@@ -277,9 +277,9 @@ generator client {
 model YouTubeUser {
   id                         Int                       @id @default(autoincrement())
   name                       String
-  profileImageUrl            String
-  bio                        String
-  memberOfChannels           Channel[]                 @relation("memberOfChannels")
+  profileImageUrl            String?
+  bio                        String?
+  adminOfChannels            Channel[]                 @relation("adminOfChannels")
   usersToChannelswithRoles   UserToChannelwithRole[]
   subscribingToChannels      Channel[]                 @relation("subscribingToChannels")
   reactedVideos              Video[]
@@ -295,9 +295,9 @@ model YouTubeUser {
 model Channel {
   id                       Int                     @id @default(autoincrement())
   name                     String
-  profileImageUrl          String
-  description              String
-  memberUsers              YouTubeUser[]           @relation("memberOfChannels")
+  profileImageUrl          String?
+  description              String?
+  adminUsers               YouTubeUser[]           @relation("adminOfChannels")
   subscribedUsers          YouTubeUser[]           @relation("subscribingToChannels")
   usersToChannelswithRoles UserToChannelwithRole[]
   owningVideos             Video[]
@@ -307,7 +307,7 @@ model Channel {
   @@schema("youtube")
 }
 
-enum Role {
+enum RoleEnum {
   MANAGER
   EDITOR
   VIEWER
@@ -321,7 +321,7 @@ model UserToChannelwithRole {
   youTubeUserId Int
   channel       Channel     @relation(fields: [channelId], references: [id])
   channelId     Int
-  role          Role
+  role          RoleEnum
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
@@ -332,8 +332,8 @@ model Video {
   id                         Int                       @id @default(autoincrement())
   title                      String
   videoUrl                   String
-  thumbnailImageUrl          String
-  description                String
+  thumbnailImageUrl          String?
+  description                String?
   belongsToChannel           Channel                   @relation(fields: [channelId], references: [id])
   channelId                  Int
   reactedByYouTubeUsers      YouTubeUser[]
@@ -345,7 +345,7 @@ model Video {
   @@schema("youtube")
 }
 
-enum Reaction {
+enum ReactionEnum {
   LIKE
   DISLIKE
 
@@ -353,14 +353,14 @@ enum Reaction {
 }
 
 model UserToVideoWithReaction {
-  id            Int         @id @default(autoincrement())
-  user          YouTubeUser @relation(fields: [youTubeUserId], references: [id])
+  id            Int          @id @default(autoincrement())
+  user          YouTubeUser  @relation(fields: [youTubeUserId], references: [id])
   youTubeUserId Int
-  video         Video       @relation(fields: [videoId], references: [id])
+  video         Video        @relation(fields: [videoId], references: [id])
   videoId       Int
-  reaction      Reaction
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  reaction      ReactionEnum
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   @@schema("youtube")
 }
