@@ -38,7 +38,253 @@ model BinKitchenOrderItem {
   createdAt  DateTime         @default(now())
   updateAt   DateTime         @default(now())
 }
+model Student {
+  id        Int       @id @default(autoincrement())
+  studentId Int       @unique
+  books     Book[]
+  requests  Request[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
 
+model University {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Request {
+  id             Int        @id @default(autoincrement())
+  copy           Copy
+  fromUniversity University @relation("FromUniversity")
+  toUniversity   University @relation("ToUniversity")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  student        Student?   @relation(fields: [studentId], references: [id])
+  studentId      Int?
+}
+
+model Borrowing {
+  id             Int        @id @default(autoincrement())
+  copy           Copy
+  student        Student
+  university     University
+  status         String
+  dateBorrow     DateTime
+  dateReturn     DateTime
+  dateReturnReal DateTime
+  // เราไม่ต้องใส่ defauly เพราะมันเป็นวันจริง ๆ 
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model BookCategory {
+  id        Int      @id @default(autoincrement())
+  books     Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id        Int            @id @default(autoincrement())
+  name      String
+  isbn      Int            @Unique
+  copy      Copy[]
+  category  BookCategory[]
+  author    Author[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  student   Student?       @relation(fields: [studentId], references: [id])
+  studentId Int?
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  book      Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Copy {
+  id         Int        @id @default(autoincrement())
+  university University
+  status     String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+model UserRelation {
+  id         Int      @id @default(autoincrement())
+  from       User     @relation("FromUserRelation", fields: [fromUserId], references: [id])
+  to         User     @relation("ToUserRelation", fields: [toUserId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  fromUserId Int
+  toUserId   Int
+}
+
+model User {
+  id                 Int             @id @default(autoincrement())
+  name               String
+  profileImage       String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  posts              Post[]
+  fromDirectMessages DirectMessage[] @relation("FromDirectMessage")
+  toDirectMessages   DirectMessage[] @relation("ToDirectMessage")
+  postReplies        PostReply[]
+  fromUserRelations  UserRelation[]  @relation("FromUserRelation")
+  toUserRelations    UserRelation[]  @relation("ToUserRelation")
+  ShareUser          SharePost[]     @relation("ShareUser")
+  GroupPost          GroupPost[]
+  LikePost           LikePost[]
+}
+
+model Post {
+  id                Int                @id @default(autoincrement())
+  user              User               @relation(fields: [userId], references: [id])
+  message           String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  userId            Int
+  messageToHashTags MessageToHashTag[]
+  postReplies       PostReply[]
+  LikePost          LikePost[]
+}
+
+model DirectMessage {
+  id         Int      @id @default(autoincrement())
+  from       User     @relation("FromDirectMessage", fields: [fromUserId], references: [id])
+  to         User     @relation("ToDirectMessage", fields: [toUserId], references: [id])
+  message    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  fromUserId Int
+  toUserId   Int
+}
+
+model MessageToHashTag {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  hashtag   Hashtag  @relation(fields: [hashtagId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    Int
+  hashtagId Int
+}
+
+model Hashtag {
+  id               Int                @id @default(autoincrement())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  MessageToHashTag MessageToHashTag[]
+}
+
+model PostReply {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  message   String
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+  postId    Int
+}
+
+model GroupPost {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+}
+
+model LikePost {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  likecategory String
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       Int
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       Int?
+}
+
+model SharePost {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation("ShareUser", fields: [shareUserId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  shareUserId Int
+}
+ถ้าจะใ่สต้งอใส่ทั้งคู่ model Company {
+  id        Int      @id @default(autoincrement())
+  branches  Branch[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  cleaningHistory CleaningHistory[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model Branch {
+  id        Int      @id @default(autoincrement())
+  washers   Washer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  company   company? @relation(fields: [companyId], references: [id])
+  companyId Int?
+}
+
+model Washer {
+  id            Int             @id @default(autoincrement())
+  fixingHistory FixingHistory[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Branch        Branch?         @relation(fields: [branchId], references: [id])
+  branchId      Int?
+}
+
+model Programming {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FixingHistory {
+  id                   Int                   @id @default(autoincrement())
+  fixingHistoryDetails FixingHistoryDetail[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  Washer               Washer?               @relation(fields: [washerId], references: [id])
+  washerId             Int?
+}
+
+model FixingHistoryDetail {
+  id              Int            @id @default(autoincrement())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  FixingHistory   FixingHistory? @relation(fields: [fixingHistoryId], references: [id])
+  fixingHistoryId Int?
+}
+
+enum Role {
+  Owner
+  Editor
+  Admin
+}
+
+model CleaningHistory {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+}
 model QuizCat {
   id        Int        @id @default(autoincrement())
   name      String     @unique
@@ -92,7 +338,6 @@ model RoundQuestion {
   createdAt  DateTime @default(now())
   updateAt   DateTime @updatedAt
 }
-
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String
@@ -100,9 +345,7 @@ model TodoList {
   notes     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-}
-
-model Following {
+}model Following {
   id         Int      @id @default(autoincrement())
   from       User     @relation("FromFollowing", fields: [fromUserId], references: [id])
   to         User     @relation("ToFollowing", fields: [toUserId], references: [id])
@@ -176,7 +419,74 @@ model PostReply {
   userId    Int
   postId    Int
 }
+model User {
+  id                        Int                         @id @default(autoincrement())
+  userToChannels            UserToChannel[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  channelId                 Int?
+  userToChannelSubscription UserToChannelSubscription[]
+}
 
+enum Role {
+  Owner
+  Editor
+  Admin
+}
+
+model Channel {
+  id                        Int                         @id @default(autoincrement())
+  userToChannels            UserToChannel[]
+  videos                    Video[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  channelId                 Int?
+  UserToChannelSubscription UserToChannelSubscription[]
+}
+
+model UserToChannel {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  channel   Channel @relation(fields: [channelId], references: [id])
+  role      Role
+  userId    Int
+  channelId Int
+}
+
+model UserToChannelSubscription {
+  id           Int     @id @default(autoincrement())
+  user         User    @relation(fields: [userId], references: [id])
+  channel      Channel @relation(fields: [channelId], references: [id])
+  isPaidMember Boolean
+  userId       Int
+  channelId    Int
+}
+
+model Video {
+  id        Int        @id @default(autoincrement())
+  comments  Comment[]
+  reactions Reaction[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  channel   Channel?   @relation(fields: [channelId], references: [id])
+  channelId Int?
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Video     Video?   @relation(fields: [videoId], references: [id])
+  videoId   Int?
+}
+
+model Reaction {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Video     Video?   @relation(fields: [videoId], references: [id])
+  videoId   Int?
+}
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

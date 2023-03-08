@@ -103,4 +103,5 @@ model SharePost {
   updatedAt   DateTime @updatedAt
   shareUserId Int
 }
-ถ้าจะใ่สต้งอใส่ทั้งคู่ 
+
+// ถ้าจะใ่สต้งอใส่ทั้งคู่

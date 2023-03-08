@@ -1,0 +1,81 @@
+model Student {
+  id        Int       @id @default(autoincrement())
+  studentId Int       @unique
+  books     Book[]    @relation("BookStudent")
+  requests  Request[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model University {
+  id               Int        @id @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  fromUniversity   University @relation("FromUniversity", fields: [fromUniversityId], references: [id])
+  fromUniversityId Int?
+  toUniversity     University @relation("ToUniversity", fields: [toUniversityId], references: [id])
+  toUniversityId   Int?
+}
+
+model Request {
+  // การขอยืมหนังสือระหว่างมหาลัย
+  id             Int        @id @default(autoincrement())
+  copy           Copy
+  fromUniversity University @relation("FromUniversity")
+  toUniversity   University @relation("ToUniversity")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  student        Student?   @relation(fields: [studentId], references: [id])
+  studentId      Int?
+}
+
+model Borrowing {
+  id             Int        @id @default(autoincrement())
+  copy           Copy
+  student        Student
+  university     University
+  status         String
+  dateBorrow     DateTime
+  dateReturn     DateTime
+  dateReturnReal DateTime
+  // เราไม่ต้องใส่ default เพราะมันเป็นวันจริง ๆ ไม่ใช่วันที่เราสร้างแล้วค้างยาว
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model BookCategory {
+  id        Int      @id @default(autoincrement())
+  books     Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id        Int            @id @default(autoincrement())
+  name      String
+  isbn      Int            @Unique
+  copy      Copy[]
+  category  BookCategory[]
+  author    Author[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  student   Student        @relation("BookStudent", fields: [studentId], references: [id])
+  studentId Int?
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  book      Book[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    Author?  @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+model Copy {
+  id         Int        @id @default(autoincrement())
+  university University
+  status     String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}

@@ -1,0 +1,68 @@
+model Company {
+  id        Int      @id @default(autoincrement())
+  // branches  Branch[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  cleaningHistory CleaningHistory[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model Branch {
+  id        Int      @id @default(autoincrement())
+  washers   Washer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // company   company? @relation(fields: [companyId], references: [id])
+  companyId Int?
+}
+
+model Washer {
+  id            Int             @id @default(autoincrement())
+  fixingHistory FixingHistory[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Branch        Branch?         @relation(fields: [branchId], references: [id])
+  branchId      Int?
+}
+
+model Programming {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FixingHistory {
+  id                   Int                   @id @default(autoincrement())
+  fixingHistoryDetails FixingHistoryDetail[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  Washer               Washer?               @relation(fields: [washerId], references: [id])
+  washerId             Int?
+}
+
+model FixingHistoryDetail {
+  id              Int            @id @default(autoincrement())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  FixingHistory   FixingHistory? @relation(fields: [fixingHistoryId], references: [id])
+  fixingHistoryId Int?
+}
+
+enum Role {
+  Owner
+  Editor
+  Admin
+}
+
+model CleaningHistory {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+}
