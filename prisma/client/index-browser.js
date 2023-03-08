@@ -89,9 +89,52 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.AuthorScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.BinWashUserScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
+  balance: 'balance',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BookCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BookScalarFieldEnum = makeEnum({
+  id: 'id',
+  bookTitleId: 'bookTitleId',
+  libraryId: 'libraryId',
+  isAvailable: 'isAvailable',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BookTitleScalarFieldEnum = makeEnum({
+  id: 'id',
+  title: 'title',
+  isbn: 'isbn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BorrowingRecordScalarFieldEnum = makeEnum({
+  id: 'id',
+  studentId: 'studentId',
+  bookId: 'bookId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  actualEndDate: 'actualEndDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -181,6 +224,15 @@ exports.Prisma.HashTagScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.LibraryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  location: 'location',
+  universityId: 'universityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.MenuScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -247,6 +299,20 @@ exports.Prisma.QuizScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.RequestRecordScalarFieldEnum = makeEnum({
+  id: 'id',
+  studentId: 'studentId',
+  bookTitleId: 'bookTitleId',
+  requestingLibraryId: 'requestingLibraryId',
+  requestedLibraryId: 'requestedLibraryId',
+  requestDate: 'requestDate',
+  acquiredDate: 'acquiredDate',
+  returnDate: 'returnDate',
+  bookId: 'bookId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.RoundScalarFieldEnum = makeEnum({
   id: 'id',
   createdAt: 'createdAt',
@@ -256,6 +322,14 @@ exports.Prisma.RoundScalarFieldEnum = makeEnum({
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
+});
+
+exports.Prisma.StudentScalarFieldEnum = makeEnum({
+  id: 'id',
+  Name: 'Name',
+  universityId: 'universityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.TodoListScalarFieldEnum = makeEnum({
@@ -288,6 +362,14 @@ exports.Prisma.TweetScalarFieldEnum = makeEnum({
   tweetText: 'tweetText',
   parentTweetId: 'parentTweetId',
   userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UniversityScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  location: 'location',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -439,6 +521,15 @@ exports.Prisma.ModelName = makeEnum({
   Comment: 'Comment',
   FacebookHashTag: 'FacebookHashTag',
   MessengerMessage: 'MessengerMessage',
+  Author: 'Author',
+  BookTitle: 'BookTitle',
+  BookCategory: 'BookCategory',
+  Book: 'Book',
+  Library: 'Library',
+  University: 'University',
+  Student: 'Student',
+  BorrowingRecord: 'BorrowingRecord',
+  RequestRecord: 'RequestRecord',
   TodoList: 'TodoList',
   User: 'User',
   UserRelation: 'UserRelation',

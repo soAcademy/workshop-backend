@@ -1,6 +1,7 @@
 model BinWashUser {
   id                   Int                   @id @default(autoincrement())
   name                 String
+  balance              Float
   owningBranches       Branch[]
   wMMaintenanceRecords WMMaintenanceRecord[]
   usageRecords         UsageRecord[]

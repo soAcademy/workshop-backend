@@ -1,7 +1,7 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["todolist", "binkitchen", "binquiz", "twitter", "facebook", "youtube", "binwash"]
+  schemas  = ["todolist", "binkitchen", "binquiz", "twitter", "facebook", "youtube", "binwash", "library"]
 }
 
 generator client {

@@ -114,6 +114,7 @@ export type Round = {
 export type BinWashUser = {
   id: number
   name: string
+  balance: number
   createdAt: Date
   updatedAt: Date
 }
@@ -278,6 +279,123 @@ export type MessengerMessage = {
   messengerText: string
   fromUserId: number
   toUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Author
+ * 
+ */
+export type Author = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model BookTitle
+ * 
+ */
+export type BookTitle = {
+  id: number
+  title: string
+  isbn: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model BookCategory
+ * 
+ */
+export type BookCategory = {
+  id: number
+  category: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Book
+ * 
+ */
+export type Book = {
+  id: number
+  bookTitleId: number
+  libraryId: number
+  isAvailable: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Library
+ * 
+ */
+export type Library = {
+  id: number
+  name: string
+  location: string
+  universityId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model University
+ * 
+ */
+export type University = {
+  id: number
+  name: string
+  location: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Student
+ * 
+ */
+export type Student = {
+  id: number
+  Name: string
+  universityId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model BorrowingRecord
+ * 
+ */
+export type BorrowingRecord = {
+  id: number
+  studentId: number
+  bookId: number
+  startDate: Date
+  endDate: Date | null
+  actualEndDate: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model RequestRecord
+ * 
+ */
+export type RequestRecord = {
+  id: number
+  studentId: number
+  bookTitleId: number
+  requestingLibraryId: number
+  requestedLibraryId: number
+  requestDate: Date
+  acquiredDate: Date | null
+  returnDate: Date | null
+  bookId: number
   createdAt: Date
   updatedAt: Date
 }
@@ -797,6 +915,96 @@ export class PrismaClient<
     * ```
     */
   get messengerMessage(): Prisma.MessengerMessageDelegate<GlobalReject>;
+
+  /**
+   * `prisma.author`: Exposes CRUD operations for the **Author** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Authors
+    * const authors = await prisma.author.findMany()
+    * ```
+    */
+  get author(): Prisma.AuthorDelegate<GlobalReject>;
+
+  /**
+   * `prisma.bookTitle`: Exposes CRUD operations for the **BookTitle** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BookTitles
+    * const bookTitles = await prisma.bookTitle.findMany()
+    * ```
+    */
+  get bookTitle(): Prisma.BookTitleDelegate<GlobalReject>;
+
+  /**
+   * `prisma.bookCategory`: Exposes CRUD operations for the **BookCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BookCategories
+    * const bookCategories = await prisma.bookCategory.findMany()
+    * ```
+    */
+  get bookCategory(): Prisma.BookCategoryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.book`: Exposes CRUD operations for the **Book** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Books
+    * const books = await prisma.book.findMany()
+    * ```
+    */
+  get book(): Prisma.BookDelegate<GlobalReject>;
+
+  /**
+   * `prisma.library`: Exposes CRUD operations for the **Library** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Libraries
+    * const libraries = await prisma.library.findMany()
+    * ```
+    */
+  get library(): Prisma.LibraryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.university`: Exposes CRUD operations for the **University** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Universities
+    * const universities = await prisma.university.findMany()
+    * ```
+    */
+  get university(): Prisma.UniversityDelegate<GlobalReject>;
+
+  /**
+   * `prisma.student`: Exposes CRUD operations for the **Student** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Students
+    * const students = await prisma.student.findMany()
+    * ```
+    */
+  get student(): Prisma.StudentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.borrowingRecord`: Exposes CRUD operations for the **BorrowingRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BorrowingRecords
+    * const borrowingRecords = await prisma.borrowingRecord.findMany()
+    * ```
+    */
+  get borrowingRecord(): Prisma.BorrowingRecordDelegate<GlobalReject>;
+
+  /**
+   * `prisma.requestRecord`: Exposes CRUD operations for the **RequestRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RequestRecords
+    * const requestRecords = await prisma.requestRecord.findMany()
+    * ```
+    */
+  get requestRecord(): Prisma.RequestRecordDelegate<GlobalReject>;
 
   /**
    * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
@@ -1407,6 +1615,15 @@ export namespace Prisma {
     Comment: 'Comment',
     FacebookHashTag: 'FacebookHashTag',
     MessengerMessage: 'MessengerMessage',
+    Author: 'Author',
+    BookTitle: 'BookTitle',
+    BookCategory: 'BookCategory',
+    Book: 'Book',
+    Library: 'Library',
+    University: 'University',
+    Student: 'Student',
+    BorrowingRecord: 'BorrowingRecord',
+    RequestRecord: 'RequestRecord',
     TodoList: 'TodoList',
     User: 'User',
     UserRelation: 'UserRelation',
@@ -2250,6 +2467,323 @@ export namespace Prisma {
      * Select specific fields to fetch from the FacebookHashTagCountOutputType
      */
     select?: FacebookHashTagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type AuthorCountOutputType
+   */
+
+
+  export type AuthorCountOutputType = {
+    bookTitles: number
+  }
+
+  export type AuthorCountOutputTypeSelect = {
+    bookTitles?: boolean
+  }
+
+  export type AuthorCountOutputTypeGetPayload<S extends boolean | null | undefined | AuthorCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? AuthorCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (AuthorCountOutputTypeArgs)
+    ? AuthorCountOutputType 
+    : S extends { select: any } & (AuthorCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof AuthorCountOutputType ? AuthorCountOutputType[P] : never
+  } 
+      : AuthorCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * AuthorCountOutputType without action
+   */
+  export type AuthorCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the AuthorCountOutputType
+     */
+    select?: AuthorCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type BookTitleCountOutputType
+   */
+
+
+  export type BookTitleCountOutputType = {
+    authors: number
+    categories: number
+    books: number
+    requestRecords: number
+  }
+
+  export type BookTitleCountOutputTypeSelect = {
+    authors?: boolean
+    categories?: boolean
+    books?: boolean
+    requestRecords?: boolean
+  }
+
+  export type BookTitleCountOutputTypeGetPayload<S extends boolean | null | undefined | BookTitleCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BookTitleCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (BookTitleCountOutputTypeArgs)
+    ? BookTitleCountOutputType 
+    : S extends { select: any } & (BookTitleCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof BookTitleCountOutputType ? BookTitleCountOutputType[P] : never
+  } 
+      : BookTitleCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BookTitleCountOutputType without action
+   */
+  export type BookTitleCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitleCountOutputType
+     */
+    select?: BookTitleCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type BookCategoryCountOutputType
+   */
+
+
+  export type BookCategoryCountOutputType = {
+    bookTitles: number
+  }
+
+  export type BookCategoryCountOutputTypeSelect = {
+    bookTitles?: boolean
+  }
+
+  export type BookCategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | BookCategoryCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BookCategoryCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (BookCategoryCountOutputTypeArgs)
+    ? BookCategoryCountOutputType 
+    : S extends { select: any } & (BookCategoryCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof BookCategoryCountOutputType ? BookCategoryCountOutputType[P] : never
+  } 
+      : BookCategoryCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BookCategoryCountOutputType without action
+   */
+  export type BookCategoryCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategoryCountOutputType
+     */
+    select?: BookCategoryCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type BookCountOutputType
+   */
+
+
+  export type BookCountOutputType = {
+    borrowingRecords: number
+    requestRecords: number
+  }
+
+  export type BookCountOutputTypeSelect = {
+    borrowingRecords?: boolean
+    requestRecords?: boolean
+  }
+
+  export type BookCountOutputTypeGetPayload<S extends boolean | null | undefined | BookCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BookCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (BookCountOutputTypeArgs)
+    ? BookCountOutputType 
+    : S extends { select: any } & (BookCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof BookCountOutputType ? BookCountOutputType[P] : never
+  } 
+      : BookCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BookCountOutputType without action
+   */
+  export type BookCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the BookCountOutputType
+     */
+    select?: BookCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type LibraryCountOutputType
+   */
+
+
+  export type LibraryCountOutputType = {
+    books: number
+    requestingRecords: number
+    requestedRecords: number
+  }
+
+  export type LibraryCountOutputTypeSelect = {
+    books?: boolean
+    requestingRecords?: boolean
+    requestedRecords?: boolean
+  }
+
+  export type LibraryCountOutputTypeGetPayload<S extends boolean | null | undefined | LibraryCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? LibraryCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (LibraryCountOutputTypeArgs)
+    ? LibraryCountOutputType 
+    : S extends { select: any } & (LibraryCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof LibraryCountOutputType ? LibraryCountOutputType[P] : never
+  } 
+      : LibraryCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * LibraryCountOutputType without action
+   */
+  export type LibraryCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the LibraryCountOutputType
+     */
+    select?: LibraryCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type UniversityCountOutputType
+   */
+
+
+  export type UniversityCountOutputType = {
+    libraries: number
+    students: number
+  }
+
+  export type UniversityCountOutputTypeSelect = {
+    libraries?: boolean
+    students?: boolean
+  }
+
+  export type UniversityCountOutputTypeGetPayload<S extends boolean | null | undefined | UniversityCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UniversityCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (UniversityCountOutputTypeArgs)
+    ? UniversityCountOutputType 
+    : S extends { select: any } & (UniversityCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof UniversityCountOutputType ? UniversityCountOutputType[P] : never
+  } 
+      : UniversityCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UniversityCountOutputType without action
+   */
+  export type UniversityCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the UniversityCountOutputType
+     */
+    select?: UniversityCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type StudentCountOutputType
+   */
+
+
+  export type StudentCountOutputType = {
+    borrowingRecords: number
+    requestRecords: number
+  }
+
+  export type StudentCountOutputTypeSelect = {
+    borrowingRecords?: boolean
+    requestRecords?: boolean
+  }
+
+  export type StudentCountOutputTypeGetPayload<S extends boolean | null | undefined | StudentCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? StudentCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (StudentCountOutputTypeArgs)
+    ? StudentCountOutputType 
+    : S extends { select: any } & (StudentCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof StudentCountOutputType ? StudentCountOutputType[P] : never
+  } 
+      : StudentCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the StudentCountOutputType
+     */
+    select?: StudentCountOutputTypeSelect | null
   }
 
 
@@ -10658,15 +11192,18 @@ export namespace Prisma {
 
   export type BinWashUserAvgAggregateOutputType = {
     id: number | null
+    balance: number | null
   }
 
   export type BinWashUserSumAggregateOutputType = {
     id: number | null
+    balance: number | null
   }
 
   export type BinWashUserMinAggregateOutputType = {
     id: number | null
     name: string | null
+    balance: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10674,6 +11211,7 @@ export namespace Prisma {
   export type BinWashUserMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    balance: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10681,6 +11219,7 @@ export namespace Prisma {
   export type BinWashUserCountAggregateOutputType = {
     id: number
     name: number
+    balance: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10689,15 +11228,18 @@ export namespace Prisma {
 
   export type BinWashUserAvgAggregateInputType = {
     id?: true
+    balance?: true
   }
 
   export type BinWashUserSumAggregateInputType = {
     id?: true
+    balance?: true
   }
 
   export type BinWashUserMinAggregateInputType = {
     id?: true
     name?: true
+    balance?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10705,6 +11247,7 @@ export namespace Prisma {
   export type BinWashUserMaxAggregateInputType = {
     id?: true
     name?: true
+    balance?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10712,6 +11255,7 @@ export namespace Prisma {
   export type BinWashUserCountAggregateInputType = {
     id?: true
     name?: true
+    balance?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10807,6 +11351,7 @@ export namespace Prisma {
   export type BinWashUserGroupByOutputType = {
     id: number
     name: string
+    balance: number
     createdAt: Date
     updatedAt: Date
     _count: BinWashUserCountAggregateOutputType | null
@@ -10833,6 +11378,7 @@ export namespace Prisma {
   export type BinWashUserSelect = {
     id?: boolean
     name?: boolean
+    balance?: boolean
     owningBranches?: boolean | BinWashUser$owningBranchesArgs
     wMMaintenanceRecords?: boolean | BinWashUser$wMMaintenanceRecordsArgs
     usageRecords?: boolean | BinWashUser$usageRecordsArgs
@@ -24027,6 +24573,9252 @@ export namespace Prisma {
 
 
   /**
+   * Model Author
+   */
+
+
+  export type AggregateAuthor = {
+    _count: AuthorCountAggregateOutputType | null
+    _avg: AuthorAvgAggregateOutputType | null
+    _sum: AuthorSumAggregateOutputType | null
+    _min: AuthorMinAggregateOutputType | null
+    _max: AuthorMaxAggregateOutputType | null
+  }
+
+  export type AuthorAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AuthorSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type AuthorMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AuthorMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AuthorCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AuthorAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type AuthorSumAggregateInputType = {
+    id?: true
+  }
+
+  export type AuthorMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AuthorMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AuthorCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AuthorAggregateArgs = {
+    /**
+     * Filter which Author to aggregate.
+     */
+    where?: AuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Authors to fetch.
+     */
+    orderBy?: Enumerable<AuthorOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Authors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Authors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Authors
+    **/
+    _count?: true | AuthorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AuthorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AuthorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AuthorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AuthorMaxAggregateInputType
+  }
+
+  export type GetAuthorAggregateType<T extends AuthorAggregateArgs> = {
+        [P in keyof T & keyof AggregateAuthor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAuthor[P]>
+      : GetScalarType<T[P], AggregateAuthor[P]>
+  }
+
+
+
+
+  export type AuthorGroupByArgs = {
+    where?: AuthorWhereInput
+    orderBy?: Enumerable<AuthorOrderByWithAggregationInput>
+    by: AuthorScalarFieldEnum[]
+    having?: AuthorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AuthorCountAggregateInputType | true
+    _avg?: AuthorAvgAggregateInputType
+    _sum?: AuthorSumAggregateInputType
+    _min?: AuthorMinAggregateInputType
+    _max?: AuthorMaxAggregateInputType
+  }
+
+
+  export type AuthorGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: AuthorCountAggregateOutputType | null
+    _avg: AuthorAvgAggregateOutputType | null
+    _sum: AuthorSumAggregateOutputType | null
+    _min: AuthorMinAggregateOutputType | null
+    _max: AuthorMaxAggregateOutputType | null
+  }
+
+  type GetAuthorGroupByPayload<T extends AuthorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<AuthorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AuthorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AuthorGroupByOutputType[P]>
+            : GetScalarType<T[P], AuthorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AuthorSelect = {
+    id?: boolean
+    name?: boolean
+    bookTitles?: boolean | Author$bookTitlesArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | AuthorCountOutputTypeArgs
+  }
+
+
+  export type AuthorInclude = {
+    bookTitles?: boolean | Author$bookTitlesArgs
+    _count?: boolean | AuthorCountOutputTypeArgs
+  }
+
+  export type AuthorGetPayload<S extends boolean | null | undefined | AuthorArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Author :
+    S extends undefined ? never :
+    S extends { include: any } & (AuthorArgs | AuthorFindManyArgs)
+    ? Author  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'bookTitles' ? Array < BookTitleGetPayload<S['include'][P]>>  :
+        P extends '_count' ? AuthorCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (AuthorArgs | AuthorFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'bookTitles' ? Array < BookTitleGetPayload<S['select'][P]>>  :
+        P extends '_count' ? AuthorCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Author ? Author[P] : never
+  } 
+      : Author
+
+
+  type AuthorCountArgs = 
+    Omit<AuthorFindManyArgs, 'select' | 'include'> & {
+      select?: AuthorCountAggregateInputType | true
+    }
+
+  export interface AuthorDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Author that matches the filter.
+     * @param {AuthorFindUniqueArgs} args - Arguments to find a Author
+     * @example
+     * // Get one Author
+     * const author = await prisma.author.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends AuthorFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, AuthorFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Author'> extends True ? Prisma__AuthorClient<AuthorGetPayload<T>> : Prisma__AuthorClient<AuthorGetPayload<T> | null, null>
+
+    /**
+     * Find one Author that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {AuthorFindUniqueOrThrowArgs} args - Arguments to find a Author
+     * @example
+     * // Get one Author
+     * const author = await prisma.author.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends AuthorFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, AuthorFindUniqueOrThrowArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Find the first Author that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorFindFirstArgs} args - Arguments to find a Author
+     * @example
+     * // Get one Author
+     * const author = await prisma.author.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends AuthorFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, AuthorFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Author'> extends True ? Prisma__AuthorClient<AuthorGetPayload<T>> : Prisma__AuthorClient<AuthorGetPayload<T> | null, null>
+
+    /**
+     * Find the first Author that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorFindFirstOrThrowArgs} args - Arguments to find a Author
+     * @example
+     * // Get one Author
+     * const author = await prisma.author.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends AuthorFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, AuthorFindFirstOrThrowArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Find zero or more Authors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Authors
+     * const authors = await prisma.author.findMany()
+     * 
+     * // Get first 10 Authors
+     * const authors = await prisma.author.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const authorWithIdOnly = await prisma.author.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends AuthorFindManyArgs>(
+      args?: SelectSubset<T, AuthorFindManyArgs>
+    ): Prisma.PrismaPromise<Array<AuthorGetPayload<T>>>
+
+    /**
+     * Create a Author.
+     * @param {AuthorCreateArgs} args - Arguments to create a Author.
+     * @example
+     * // Create one Author
+     * const Author = await prisma.author.create({
+     *   data: {
+     *     // ... data to create a Author
+     *   }
+     * })
+     * 
+    **/
+    create<T extends AuthorCreateArgs>(
+      args: SelectSubset<T, AuthorCreateArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Create many Authors.
+     *     @param {AuthorCreateManyArgs} args - Arguments to create many Authors.
+     *     @example
+     *     // Create many Authors
+     *     const author = await prisma.author.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends AuthorCreateManyArgs>(
+      args?: SelectSubset<T, AuthorCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Author.
+     * @param {AuthorDeleteArgs} args - Arguments to delete one Author.
+     * @example
+     * // Delete one Author
+     * const Author = await prisma.author.delete({
+     *   where: {
+     *     // ... filter to delete one Author
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends AuthorDeleteArgs>(
+      args: SelectSubset<T, AuthorDeleteArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Update one Author.
+     * @param {AuthorUpdateArgs} args - Arguments to update one Author.
+     * @example
+     * // Update one Author
+     * const author = await prisma.author.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends AuthorUpdateArgs>(
+      args: SelectSubset<T, AuthorUpdateArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Delete zero or more Authors.
+     * @param {AuthorDeleteManyArgs} args - Arguments to filter Authors to delete.
+     * @example
+     * // Delete a few Authors
+     * const { count } = await prisma.author.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends AuthorDeleteManyArgs>(
+      args?: SelectSubset<T, AuthorDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Authors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Authors
+     * const author = await prisma.author.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends AuthorUpdateManyArgs>(
+      args: SelectSubset<T, AuthorUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Author.
+     * @param {AuthorUpsertArgs} args - Arguments to update or create a Author.
+     * @example
+     * // Update or create a Author
+     * const author = await prisma.author.upsert({
+     *   create: {
+     *     // ... data to create a Author
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Author we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends AuthorUpsertArgs>(
+      args: SelectSubset<T, AuthorUpsertArgs>
+    ): Prisma__AuthorClient<AuthorGetPayload<T>>
+
+    /**
+     * Count the number of Authors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorCountArgs} args - Arguments to filter Authors to count.
+     * @example
+     * // Count the number of Authors
+     * const count = await prisma.author.count({
+     *   where: {
+     *     // ... the filter for the Authors we want to count
+     *   }
+     * })
+    **/
+    count<T extends AuthorCountArgs>(
+      args?: Subset<T, AuthorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AuthorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Author.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AuthorAggregateArgs>(args: Subset<T, AuthorAggregateArgs>): Prisma.PrismaPromise<GetAuthorAggregateType<T>>
+
+    /**
+     * Group by Author.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AuthorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AuthorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AuthorGroupByArgs['orderBy'] }
+        : { orderBy?: AuthorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AuthorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAuthorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Author.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__AuthorClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    bookTitles<T extends Author$bookTitlesArgs= {}>(args?: Subset<T, Author$bookTitlesArgs>): Prisma.PrismaPromise<Array<BookTitleGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Author base type for findUnique actions
+   */
+  export type AuthorFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter, which Author to fetch.
+     */
+    where: AuthorWhereUniqueInput
+  }
+
+  /**
+   * Author findUnique
+   */
+  export interface AuthorFindUniqueArgs extends AuthorFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Author findUniqueOrThrow
+   */
+  export type AuthorFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter, which Author to fetch.
+     */
+    where: AuthorWhereUniqueInput
+  }
+
+
+  /**
+   * Author base type for findFirst actions
+   */
+  export type AuthorFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter, which Author to fetch.
+     */
+    where?: AuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Authors to fetch.
+     */
+    orderBy?: Enumerable<AuthorOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Authors.
+     */
+    cursor?: AuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Authors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Authors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Authors.
+     */
+    distinct?: Enumerable<AuthorScalarFieldEnum>
+  }
+
+  /**
+   * Author findFirst
+   */
+  export interface AuthorFindFirstArgs extends AuthorFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Author findFirstOrThrow
+   */
+  export type AuthorFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter, which Author to fetch.
+     */
+    where?: AuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Authors to fetch.
+     */
+    orderBy?: Enumerable<AuthorOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Authors.
+     */
+    cursor?: AuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Authors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Authors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Authors.
+     */
+    distinct?: Enumerable<AuthorScalarFieldEnum>
+  }
+
+
+  /**
+   * Author findMany
+   */
+  export type AuthorFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter, which Authors to fetch.
+     */
+    where?: AuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Authors to fetch.
+     */
+    orderBy?: Enumerable<AuthorOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Authors.
+     */
+    cursor?: AuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Authors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Authors.
+     */
+    skip?: number
+    distinct?: Enumerable<AuthorScalarFieldEnum>
+  }
+
+
+  /**
+   * Author create
+   */
+  export type AuthorCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * The data needed to create a Author.
+     */
+    data: XOR<AuthorCreateInput, AuthorUncheckedCreateInput>
+  }
+
+
+  /**
+   * Author createMany
+   */
+  export type AuthorCreateManyArgs = {
+    /**
+     * The data used to create many Authors.
+     */
+    data: Enumerable<AuthorCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Author update
+   */
+  export type AuthorUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * The data needed to update a Author.
+     */
+    data: XOR<AuthorUpdateInput, AuthorUncheckedUpdateInput>
+    /**
+     * Choose, which Author to update.
+     */
+    where: AuthorWhereUniqueInput
+  }
+
+
+  /**
+   * Author updateMany
+   */
+  export type AuthorUpdateManyArgs = {
+    /**
+     * The data used to update Authors.
+     */
+    data: XOR<AuthorUpdateManyMutationInput, AuthorUncheckedUpdateManyInput>
+    /**
+     * Filter which Authors to update
+     */
+    where?: AuthorWhereInput
+  }
+
+
+  /**
+   * Author upsert
+   */
+  export type AuthorUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * The filter to search for the Author to update in case it exists.
+     */
+    where: AuthorWhereUniqueInput
+    /**
+     * In case the Author found by the `where` argument doesn't exist, create a new Author with this data.
+     */
+    create: XOR<AuthorCreateInput, AuthorUncheckedCreateInput>
+    /**
+     * In case the Author was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AuthorUpdateInput, AuthorUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Author delete
+   */
+  export type AuthorDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    /**
+     * Filter which Author to delete.
+     */
+    where: AuthorWhereUniqueInput
+  }
+
+
+  /**
+   * Author deleteMany
+   */
+  export type AuthorDeleteManyArgs = {
+    /**
+     * Filter which Authors to delete
+     */
+    where?: AuthorWhereInput
+  }
+
+
+  /**
+   * Author.bookTitles
+   */
+  export type Author$bookTitlesArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    where?: BookTitleWhereInput
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    cursor?: BookTitleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BookTitleScalarFieldEnum>
+  }
+
+
+  /**
+   * Author without action
+   */
+  export type AuthorArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+  }
+
+
+
+  /**
+   * Model BookTitle
+   */
+
+
+  export type AggregateBookTitle = {
+    _count: BookTitleCountAggregateOutputType | null
+    _avg: BookTitleAvgAggregateOutputType | null
+    _sum: BookTitleSumAggregateOutputType | null
+    _min: BookTitleMinAggregateOutputType | null
+    _max: BookTitleMaxAggregateOutputType | null
+  }
+
+  export type BookTitleAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BookTitleSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BookTitleMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    isbn: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookTitleMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    isbn: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookTitleCountAggregateOutputType = {
+    id: number
+    title: number
+    isbn: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BookTitleAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type BookTitleSumAggregateInputType = {
+    id?: true
+  }
+
+  export type BookTitleMinAggregateInputType = {
+    id?: true
+    title?: true
+    isbn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookTitleMaxAggregateInputType = {
+    id?: true
+    title?: true
+    isbn?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookTitleCountAggregateInputType = {
+    id?: true
+    title?: true
+    isbn?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BookTitleAggregateArgs = {
+    /**
+     * Filter which BookTitle to aggregate.
+     */
+    where?: BookTitleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookTitles to fetch.
+     */
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BookTitleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookTitles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookTitles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BookTitles
+    **/
+    _count?: true | BookTitleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BookTitleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BookTitleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BookTitleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BookTitleMaxAggregateInputType
+  }
+
+  export type GetBookTitleAggregateType<T extends BookTitleAggregateArgs> = {
+        [P in keyof T & keyof AggregateBookTitle]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBookTitle[P]>
+      : GetScalarType<T[P], AggregateBookTitle[P]>
+  }
+
+
+
+
+  export type BookTitleGroupByArgs = {
+    where?: BookTitleWhereInput
+    orderBy?: Enumerable<BookTitleOrderByWithAggregationInput>
+    by: BookTitleScalarFieldEnum[]
+    having?: BookTitleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BookTitleCountAggregateInputType | true
+    _avg?: BookTitleAvgAggregateInputType
+    _sum?: BookTitleSumAggregateInputType
+    _min?: BookTitleMinAggregateInputType
+    _max?: BookTitleMaxAggregateInputType
+  }
+
+
+  export type BookTitleGroupByOutputType = {
+    id: number
+    title: string
+    isbn: string
+    createdAt: Date
+    updatedAt: Date
+    _count: BookTitleCountAggregateOutputType | null
+    _avg: BookTitleAvgAggregateOutputType | null
+    _sum: BookTitleSumAggregateOutputType | null
+    _min: BookTitleMinAggregateOutputType | null
+    _max: BookTitleMaxAggregateOutputType | null
+  }
+
+  type GetBookTitleGroupByPayload<T extends BookTitleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BookTitleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BookTitleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BookTitleGroupByOutputType[P]>
+            : GetScalarType<T[P], BookTitleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BookTitleSelect = {
+    id?: boolean
+    title?: boolean
+    isbn?: boolean
+    authors?: boolean | BookTitle$authorsArgs
+    categories?: boolean | BookTitle$categoriesArgs
+    books?: boolean | BookTitle$booksArgs
+    requestRecords?: boolean | BookTitle$requestRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | BookTitleCountOutputTypeArgs
+  }
+
+
+  export type BookTitleInclude = {
+    authors?: boolean | BookTitle$authorsArgs
+    categories?: boolean | BookTitle$categoriesArgs
+    books?: boolean | BookTitle$booksArgs
+    requestRecords?: boolean | BookTitle$requestRecordsArgs
+    _count?: boolean | BookTitleCountOutputTypeArgs
+  }
+
+  export type BookTitleGetPayload<S extends boolean | null | undefined | BookTitleArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BookTitle :
+    S extends undefined ? never :
+    S extends { include: any } & (BookTitleArgs | BookTitleFindManyArgs)
+    ? BookTitle  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'authors' ? Array < AuthorGetPayload<S['include'][P]>>  :
+        P extends 'categories' ? Array < BookCategoryGetPayload<S['include'][P]>>  :
+        P extends 'books' ? Array < BookGetPayload<S['include'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? BookTitleCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BookTitleArgs | BookTitleFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'authors' ? Array < AuthorGetPayload<S['select'][P]>>  :
+        P extends 'categories' ? Array < BookCategoryGetPayload<S['select'][P]>>  :
+        P extends 'books' ? Array < BookGetPayload<S['select'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? BookTitleCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BookTitle ? BookTitle[P] : never
+  } 
+      : BookTitle
+
+
+  type BookTitleCountArgs = 
+    Omit<BookTitleFindManyArgs, 'select' | 'include'> & {
+      select?: BookTitleCountAggregateInputType | true
+    }
+
+  export interface BookTitleDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one BookTitle that matches the filter.
+     * @param {BookTitleFindUniqueArgs} args - Arguments to find a BookTitle
+     * @example
+     * // Get one BookTitle
+     * const bookTitle = await prisma.bookTitle.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BookTitleFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BookTitleFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BookTitle'> extends True ? Prisma__BookTitleClient<BookTitleGetPayload<T>> : Prisma__BookTitleClient<BookTitleGetPayload<T> | null, null>
+
+    /**
+     * Find one BookTitle that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BookTitleFindUniqueOrThrowArgs} args - Arguments to find a BookTitle
+     * @example
+     * // Get one BookTitle
+     * const bookTitle = await prisma.bookTitle.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BookTitleFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BookTitleFindUniqueOrThrowArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Find the first BookTitle that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleFindFirstArgs} args - Arguments to find a BookTitle
+     * @example
+     * // Get one BookTitle
+     * const bookTitle = await prisma.bookTitle.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BookTitleFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BookTitleFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BookTitle'> extends True ? Prisma__BookTitleClient<BookTitleGetPayload<T>> : Prisma__BookTitleClient<BookTitleGetPayload<T> | null, null>
+
+    /**
+     * Find the first BookTitle that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleFindFirstOrThrowArgs} args - Arguments to find a BookTitle
+     * @example
+     * // Get one BookTitle
+     * const bookTitle = await prisma.bookTitle.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BookTitleFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BookTitleFindFirstOrThrowArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Find zero or more BookTitles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BookTitles
+     * const bookTitles = await prisma.bookTitle.findMany()
+     * 
+     * // Get first 10 BookTitles
+     * const bookTitles = await prisma.bookTitle.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bookTitleWithIdOnly = await prisma.bookTitle.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BookTitleFindManyArgs>(
+      args?: SelectSubset<T, BookTitleFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BookTitleGetPayload<T>>>
+
+    /**
+     * Create a BookTitle.
+     * @param {BookTitleCreateArgs} args - Arguments to create a BookTitle.
+     * @example
+     * // Create one BookTitle
+     * const BookTitle = await prisma.bookTitle.create({
+     *   data: {
+     *     // ... data to create a BookTitle
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BookTitleCreateArgs>(
+      args: SelectSubset<T, BookTitleCreateArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Create many BookTitles.
+     *     @param {BookTitleCreateManyArgs} args - Arguments to create many BookTitles.
+     *     @example
+     *     // Create many BookTitles
+     *     const bookTitle = await prisma.bookTitle.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BookTitleCreateManyArgs>(
+      args?: SelectSubset<T, BookTitleCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BookTitle.
+     * @param {BookTitleDeleteArgs} args - Arguments to delete one BookTitle.
+     * @example
+     * // Delete one BookTitle
+     * const BookTitle = await prisma.bookTitle.delete({
+     *   where: {
+     *     // ... filter to delete one BookTitle
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BookTitleDeleteArgs>(
+      args: SelectSubset<T, BookTitleDeleteArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Update one BookTitle.
+     * @param {BookTitleUpdateArgs} args - Arguments to update one BookTitle.
+     * @example
+     * // Update one BookTitle
+     * const bookTitle = await prisma.bookTitle.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BookTitleUpdateArgs>(
+      args: SelectSubset<T, BookTitleUpdateArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Delete zero or more BookTitles.
+     * @param {BookTitleDeleteManyArgs} args - Arguments to filter BookTitles to delete.
+     * @example
+     * // Delete a few BookTitles
+     * const { count } = await prisma.bookTitle.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BookTitleDeleteManyArgs>(
+      args?: SelectSubset<T, BookTitleDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BookTitles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BookTitles
+     * const bookTitle = await prisma.bookTitle.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BookTitleUpdateManyArgs>(
+      args: SelectSubset<T, BookTitleUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BookTitle.
+     * @param {BookTitleUpsertArgs} args - Arguments to update or create a BookTitle.
+     * @example
+     * // Update or create a BookTitle
+     * const bookTitle = await prisma.bookTitle.upsert({
+     *   create: {
+     *     // ... data to create a BookTitle
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BookTitle we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BookTitleUpsertArgs>(
+      args: SelectSubset<T, BookTitleUpsertArgs>
+    ): Prisma__BookTitleClient<BookTitleGetPayload<T>>
+
+    /**
+     * Count the number of BookTitles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleCountArgs} args - Arguments to filter BookTitles to count.
+     * @example
+     * // Count the number of BookTitles
+     * const count = await prisma.bookTitle.count({
+     *   where: {
+     *     // ... the filter for the BookTitles we want to count
+     *   }
+     * })
+    **/
+    count<T extends BookTitleCountArgs>(
+      args?: Subset<T, BookTitleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BookTitleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BookTitle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BookTitleAggregateArgs>(args: Subset<T, BookTitleAggregateArgs>): Prisma.PrismaPromise<GetBookTitleAggregateType<T>>
+
+    /**
+     * Group by BookTitle.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookTitleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BookTitleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BookTitleGroupByArgs['orderBy'] }
+        : { orderBy?: BookTitleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BookTitleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBookTitleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BookTitle.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BookTitleClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    authors<T extends BookTitle$authorsArgs= {}>(args?: Subset<T, BookTitle$authorsArgs>): Prisma.PrismaPromise<Array<AuthorGetPayload<T>>| Null>;
+
+    categories<T extends BookTitle$categoriesArgs= {}>(args?: Subset<T, BookTitle$categoriesArgs>): Prisma.PrismaPromise<Array<BookCategoryGetPayload<T>>| Null>;
+
+    books<T extends BookTitle$booksArgs= {}>(args?: Subset<T, BookTitle$booksArgs>): Prisma.PrismaPromise<Array<BookGetPayload<T>>| Null>;
+
+    requestRecords<T extends BookTitle$requestRecordsArgs= {}>(args?: Subset<T, BookTitle$requestRecordsArgs>): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BookTitle base type for findUnique actions
+   */
+  export type BookTitleFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter, which BookTitle to fetch.
+     */
+    where: BookTitleWhereUniqueInput
+  }
+
+  /**
+   * BookTitle findUnique
+   */
+  export interface BookTitleFindUniqueArgs extends BookTitleFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BookTitle findUniqueOrThrow
+   */
+  export type BookTitleFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter, which BookTitle to fetch.
+     */
+    where: BookTitleWhereUniqueInput
+  }
+
+
+  /**
+   * BookTitle base type for findFirst actions
+   */
+  export type BookTitleFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter, which BookTitle to fetch.
+     */
+    where?: BookTitleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookTitles to fetch.
+     */
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookTitles.
+     */
+    cursor?: BookTitleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookTitles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookTitles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookTitles.
+     */
+    distinct?: Enumerable<BookTitleScalarFieldEnum>
+  }
+
+  /**
+   * BookTitle findFirst
+   */
+  export interface BookTitleFindFirstArgs extends BookTitleFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BookTitle findFirstOrThrow
+   */
+  export type BookTitleFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter, which BookTitle to fetch.
+     */
+    where?: BookTitleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookTitles to fetch.
+     */
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookTitles.
+     */
+    cursor?: BookTitleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookTitles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookTitles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookTitles.
+     */
+    distinct?: Enumerable<BookTitleScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle findMany
+   */
+  export type BookTitleFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter, which BookTitles to fetch.
+     */
+    where?: BookTitleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookTitles to fetch.
+     */
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BookTitles.
+     */
+    cursor?: BookTitleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookTitles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookTitles.
+     */
+    skip?: number
+    distinct?: Enumerable<BookTitleScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle create
+   */
+  export type BookTitleCreateArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * The data needed to create a BookTitle.
+     */
+    data: XOR<BookTitleCreateInput, BookTitleUncheckedCreateInput>
+  }
+
+
+  /**
+   * BookTitle createMany
+   */
+  export type BookTitleCreateManyArgs = {
+    /**
+     * The data used to create many BookTitles.
+     */
+    data: Enumerable<BookTitleCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * BookTitle update
+   */
+  export type BookTitleUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * The data needed to update a BookTitle.
+     */
+    data: XOR<BookTitleUpdateInput, BookTitleUncheckedUpdateInput>
+    /**
+     * Choose, which BookTitle to update.
+     */
+    where: BookTitleWhereUniqueInput
+  }
+
+
+  /**
+   * BookTitle updateMany
+   */
+  export type BookTitleUpdateManyArgs = {
+    /**
+     * The data used to update BookTitles.
+     */
+    data: XOR<BookTitleUpdateManyMutationInput, BookTitleUncheckedUpdateManyInput>
+    /**
+     * Filter which BookTitles to update
+     */
+    where?: BookTitleWhereInput
+  }
+
+
+  /**
+   * BookTitle upsert
+   */
+  export type BookTitleUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * The filter to search for the BookTitle to update in case it exists.
+     */
+    where: BookTitleWhereUniqueInput
+    /**
+     * In case the BookTitle found by the `where` argument doesn't exist, create a new BookTitle with this data.
+     */
+    create: XOR<BookTitleCreateInput, BookTitleUncheckedCreateInput>
+    /**
+     * In case the BookTitle was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BookTitleUpdateInput, BookTitleUncheckedUpdateInput>
+  }
+
+
+  /**
+   * BookTitle delete
+   */
+  export type BookTitleDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    /**
+     * Filter which BookTitle to delete.
+     */
+    where: BookTitleWhereUniqueInput
+  }
+
+
+  /**
+   * BookTitle deleteMany
+   */
+  export type BookTitleDeleteManyArgs = {
+    /**
+     * Filter which BookTitles to delete
+     */
+    where?: BookTitleWhereInput
+  }
+
+
+  /**
+   * BookTitle.authors
+   */
+  export type BookTitle$authorsArgs = {
+    /**
+     * Select specific fields to fetch from the Author
+     */
+    select?: AuthorSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AuthorInclude | null
+    where?: AuthorWhereInput
+    orderBy?: Enumerable<AuthorOrderByWithRelationInput>
+    cursor?: AuthorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<AuthorScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle.categories
+   */
+  export type BookTitle$categoriesArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    where?: BookCategoryWhereInput
+    orderBy?: Enumerable<BookCategoryOrderByWithRelationInput>
+    cursor?: BookCategoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BookCategoryScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle.books
+   */
+  export type BookTitle$booksArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    where?: BookWhereInput
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    cursor?: BookWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BookScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle.requestRecords
+   */
+  export type BookTitle$requestRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    cursor?: RequestRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BookTitle without action
+   */
+  export type BookTitleArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+  }
+
+
+
+  /**
+   * Model BookCategory
+   */
+
+
+  export type AggregateBookCategory = {
+    _count: BookCategoryCountAggregateOutputType | null
+    _avg: BookCategoryAvgAggregateOutputType | null
+    _sum: BookCategorySumAggregateOutputType | null
+    _min: BookCategoryMinAggregateOutputType | null
+    _max: BookCategoryMaxAggregateOutputType | null
+  }
+
+  export type BookCategoryAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BookCategorySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BookCategoryMinAggregateOutputType = {
+    id: number | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookCategoryMaxAggregateOutputType = {
+    id: number | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookCategoryCountAggregateOutputType = {
+    id: number
+    category: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BookCategoryAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type BookCategorySumAggregateInputType = {
+    id?: true
+  }
+
+  export type BookCategoryMinAggregateInputType = {
+    id?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookCategoryMaxAggregateInputType = {
+    id?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookCategoryCountAggregateInputType = {
+    id?: true
+    category?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BookCategoryAggregateArgs = {
+    /**
+     * Filter which BookCategory to aggregate.
+     */
+    where?: BookCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookCategories to fetch.
+     */
+    orderBy?: Enumerable<BookCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BookCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BookCategories
+    **/
+    _count?: true | BookCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BookCategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BookCategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BookCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BookCategoryMaxAggregateInputType
+  }
+
+  export type GetBookCategoryAggregateType<T extends BookCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateBookCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBookCategory[P]>
+      : GetScalarType<T[P], AggregateBookCategory[P]>
+  }
+
+
+
+
+  export type BookCategoryGroupByArgs = {
+    where?: BookCategoryWhereInput
+    orderBy?: Enumerable<BookCategoryOrderByWithAggregationInput>
+    by: BookCategoryScalarFieldEnum[]
+    having?: BookCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BookCategoryCountAggregateInputType | true
+    _avg?: BookCategoryAvgAggregateInputType
+    _sum?: BookCategorySumAggregateInputType
+    _min?: BookCategoryMinAggregateInputType
+    _max?: BookCategoryMaxAggregateInputType
+  }
+
+
+  export type BookCategoryGroupByOutputType = {
+    id: number
+    category: string
+    createdAt: Date
+    updatedAt: Date
+    _count: BookCategoryCountAggregateOutputType | null
+    _avg: BookCategoryAvgAggregateOutputType | null
+    _sum: BookCategorySumAggregateOutputType | null
+    _min: BookCategoryMinAggregateOutputType | null
+    _max: BookCategoryMaxAggregateOutputType | null
+  }
+
+  type GetBookCategoryGroupByPayload<T extends BookCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BookCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BookCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BookCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], BookCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BookCategorySelect = {
+    id?: boolean
+    category?: boolean
+    bookTitles?: boolean | BookCategory$bookTitlesArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | BookCategoryCountOutputTypeArgs
+  }
+
+
+  export type BookCategoryInclude = {
+    bookTitles?: boolean | BookCategory$bookTitlesArgs
+    _count?: boolean | BookCategoryCountOutputTypeArgs
+  }
+
+  export type BookCategoryGetPayload<S extends boolean | null | undefined | BookCategoryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BookCategory :
+    S extends undefined ? never :
+    S extends { include: any } & (BookCategoryArgs | BookCategoryFindManyArgs)
+    ? BookCategory  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'bookTitles' ? Array < BookTitleGetPayload<S['include'][P]>>  :
+        P extends '_count' ? BookCategoryCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BookCategoryArgs | BookCategoryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'bookTitles' ? Array < BookTitleGetPayload<S['select'][P]>>  :
+        P extends '_count' ? BookCategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BookCategory ? BookCategory[P] : never
+  } 
+      : BookCategory
+
+
+  type BookCategoryCountArgs = 
+    Omit<BookCategoryFindManyArgs, 'select' | 'include'> & {
+      select?: BookCategoryCountAggregateInputType | true
+    }
+
+  export interface BookCategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one BookCategory that matches the filter.
+     * @param {BookCategoryFindUniqueArgs} args - Arguments to find a BookCategory
+     * @example
+     * // Get one BookCategory
+     * const bookCategory = await prisma.bookCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BookCategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BookCategoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BookCategory'> extends True ? Prisma__BookCategoryClient<BookCategoryGetPayload<T>> : Prisma__BookCategoryClient<BookCategoryGetPayload<T> | null, null>
+
+    /**
+     * Find one BookCategory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BookCategoryFindUniqueOrThrowArgs} args - Arguments to find a BookCategory
+     * @example
+     * // Get one BookCategory
+     * const bookCategory = await prisma.bookCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BookCategoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BookCategoryFindUniqueOrThrowArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Find the first BookCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryFindFirstArgs} args - Arguments to find a BookCategory
+     * @example
+     * // Get one BookCategory
+     * const bookCategory = await prisma.bookCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BookCategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BookCategoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BookCategory'> extends True ? Prisma__BookCategoryClient<BookCategoryGetPayload<T>> : Prisma__BookCategoryClient<BookCategoryGetPayload<T> | null, null>
+
+    /**
+     * Find the first BookCategory that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryFindFirstOrThrowArgs} args - Arguments to find a BookCategory
+     * @example
+     * // Get one BookCategory
+     * const bookCategory = await prisma.bookCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BookCategoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BookCategoryFindFirstOrThrowArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Find zero or more BookCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BookCategories
+     * const bookCategories = await prisma.bookCategory.findMany()
+     * 
+     * // Get first 10 BookCategories
+     * const bookCategories = await prisma.bookCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bookCategoryWithIdOnly = await prisma.bookCategory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BookCategoryFindManyArgs>(
+      args?: SelectSubset<T, BookCategoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BookCategoryGetPayload<T>>>
+
+    /**
+     * Create a BookCategory.
+     * @param {BookCategoryCreateArgs} args - Arguments to create a BookCategory.
+     * @example
+     * // Create one BookCategory
+     * const BookCategory = await prisma.bookCategory.create({
+     *   data: {
+     *     // ... data to create a BookCategory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BookCategoryCreateArgs>(
+      args: SelectSubset<T, BookCategoryCreateArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Create many BookCategories.
+     *     @param {BookCategoryCreateManyArgs} args - Arguments to create many BookCategories.
+     *     @example
+     *     // Create many BookCategories
+     *     const bookCategory = await prisma.bookCategory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BookCategoryCreateManyArgs>(
+      args?: SelectSubset<T, BookCategoryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BookCategory.
+     * @param {BookCategoryDeleteArgs} args - Arguments to delete one BookCategory.
+     * @example
+     * // Delete one BookCategory
+     * const BookCategory = await prisma.bookCategory.delete({
+     *   where: {
+     *     // ... filter to delete one BookCategory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BookCategoryDeleteArgs>(
+      args: SelectSubset<T, BookCategoryDeleteArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Update one BookCategory.
+     * @param {BookCategoryUpdateArgs} args - Arguments to update one BookCategory.
+     * @example
+     * // Update one BookCategory
+     * const bookCategory = await prisma.bookCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BookCategoryUpdateArgs>(
+      args: SelectSubset<T, BookCategoryUpdateArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Delete zero or more BookCategories.
+     * @param {BookCategoryDeleteManyArgs} args - Arguments to filter BookCategories to delete.
+     * @example
+     * // Delete a few BookCategories
+     * const { count } = await prisma.bookCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BookCategoryDeleteManyArgs>(
+      args?: SelectSubset<T, BookCategoryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BookCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BookCategories
+     * const bookCategory = await prisma.bookCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BookCategoryUpdateManyArgs>(
+      args: SelectSubset<T, BookCategoryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BookCategory.
+     * @param {BookCategoryUpsertArgs} args - Arguments to update or create a BookCategory.
+     * @example
+     * // Update or create a BookCategory
+     * const bookCategory = await prisma.bookCategory.upsert({
+     *   create: {
+     *     // ... data to create a BookCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BookCategory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BookCategoryUpsertArgs>(
+      args: SelectSubset<T, BookCategoryUpsertArgs>
+    ): Prisma__BookCategoryClient<BookCategoryGetPayload<T>>
+
+    /**
+     * Count the number of BookCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryCountArgs} args - Arguments to filter BookCategories to count.
+     * @example
+     * // Count the number of BookCategories
+     * const count = await prisma.bookCategory.count({
+     *   where: {
+     *     // ... the filter for the BookCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends BookCategoryCountArgs>(
+      args?: Subset<T, BookCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BookCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BookCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BookCategoryAggregateArgs>(args: Subset<T, BookCategoryAggregateArgs>): Prisma.PrismaPromise<GetBookCategoryAggregateType<T>>
+
+    /**
+     * Group by BookCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BookCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BookCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: BookCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BookCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBookCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BookCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BookCategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    bookTitles<T extends BookCategory$bookTitlesArgs= {}>(args?: Subset<T, BookCategory$bookTitlesArgs>): Prisma.PrismaPromise<Array<BookTitleGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BookCategory base type for findUnique actions
+   */
+  export type BookCategoryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter, which BookCategory to fetch.
+     */
+    where: BookCategoryWhereUniqueInput
+  }
+
+  /**
+   * BookCategory findUnique
+   */
+  export interface BookCategoryFindUniqueArgs extends BookCategoryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BookCategory findUniqueOrThrow
+   */
+  export type BookCategoryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter, which BookCategory to fetch.
+     */
+    where: BookCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * BookCategory base type for findFirst actions
+   */
+  export type BookCategoryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter, which BookCategory to fetch.
+     */
+    where?: BookCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookCategories to fetch.
+     */
+    orderBy?: Enumerable<BookCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookCategories.
+     */
+    cursor?: BookCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookCategories.
+     */
+    distinct?: Enumerable<BookCategoryScalarFieldEnum>
+  }
+
+  /**
+   * BookCategory findFirst
+   */
+  export interface BookCategoryFindFirstArgs extends BookCategoryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BookCategory findFirstOrThrow
+   */
+  export type BookCategoryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter, which BookCategory to fetch.
+     */
+    where?: BookCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookCategories to fetch.
+     */
+    orderBy?: Enumerable<BookCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BookCategories.
+     */
+    cursor?: BookCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BookCategories.
+     */
+    distinct?: Enumerable<BookCategoryScalarFieldEnum>
+  }
+
+
+  /**
+   * BookCategory findMany
+   */
+  export type BookCategoryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter, which BookCategories to fetch.
+     */
+    where?: BookCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BookCategories to fetch.
+     */
+    orderBy?: Enumerable<BookCategoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BookCategories.
+     */
+    cursor?: BookCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BookCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BookCategories.
+     */
+    skip?: number
+    distinct?: Enumerable<BookCategoryScalarFieldEnum>
+  }
+
+
+  /**
+   * BookCategory create
+   */
+  export type BookCategoryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * The data needed to create a BookCategory.
+     */
+    data: XOR<BookCategoryCreateInput, BookCategoryUncheckedCreateInput>
+  }
+
+
+  /**
+   * BookCategory createMany
+   */
+  export type BookCategoryCreateManyArgs = {
+    /**
+     * The data used to create many BookCategories.
+     */
+    data: Enumerable<BookCategoryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * BookCategory update
+   */
+  export type BookCategoryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * The data needed to update a BookCategory.
+     */
+    data: XOR<BookCategoryUpdateInput, BookCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which BookCategory to update.
+     */
+    where: BookCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * BookCategory updateMany
+   */
+  export type BookCategoryUpdateManyArgs = {
+    /**
+     * The data used to update BookCategories.
+     */
+    data: XOR<BookCategoryUpdateManyMutationInput, BookCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which BookCategories to update
+     */
+    where?: BookCategoryWhereInput
+  }
+
+
+  /**
+   * BookCategory upsert
+   */
+  export type BookCategoryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * The filter to search for the BookCategory to update in case it exists.
+     */
+    where: BookCategoryWhereUniqueInput
+    /**
+     * In case the BookCategory found by the `where` argument doesn't exist, create a new BookCategory with this data.
+     */
+    create: XOR<BookCategoryCreateInput, BookCategoryUncheckedCreateInput>
+    /**
+     * In case the BookCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BookCategoryUpdateInput, BookCategoryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * BookCategory delete
+   */
+  export type BookCategoryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+    /**
+     * Filter which BookCategory to delete.
+     */
+    where: BookCategoryWhereUniqueInput
+  }
+
+
+  /**
+   * BookCategory deleteMany
+   */
+  export type BookCategoryDeleteManyArgs = {
+    /**
+     * Filter which BookCategories to delete
+     */
+    where?: BookCategoryWhereInput
+  }
+
+
+  /**
+   * BookCategory.bookTitles
+   */
+  export type BookCategory$bookTitlesArgs = {
+    /**
+     * Select specific fields to fetch from the BookTitle
+     */
+    select?: BookTitleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookTitleInclude | null
+    where?: BookTitleWhereInput
+    orderBy?: Enumerable<BookTitleOrderByWithRelationInput>
+    cursor?: BookTitleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BookTitleScalarFieldEnum>
+  }
+
+
+  /**
+   * BookCategory without action
+   */
+  export type BookCategoryArgs = {
+    /**
+     * Select specific fields to fetch from the BookCategory
+     */
+    select?: BookCategorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookCategoryInclude | null
+  }
+
+
+
+  /**
+   * Model Book
+   */
+
+
+  export type AggregateBook = {
+    _count: BookCountAggregateOutputType | null
+    _avg: BookAvgAggregateOutputType | null
+    _sum: BookSumAggregateOutputType | null
+    _min: BookMinAggregateOutputType | null
+    _max: BookMaxAggregateOutputType | null
+  }
+
+  export type BookAvgAggregateOutputType = {
+    id: number | null
+    bookTitleId: number | null
+    libraryId: number | null
+  }
+
+  export type BookSumAggregateOutputType = {
+    id: number | null
+    bookTitleId: number | null
+    libraryId: number | null
+  }
+
+  export type BookMinAggregateOutputType = {
+    id: number | null
+    bookTitleId: number | null
+    libraryId: number | null
+    isAvailable: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookMaxAggregateOutputType = {
+    id: number | null
+    bookTitleId: number | null
+    libraryId: number | null
+    isAvailable: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BookCountAggregateOutputType = {
+    id: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BookAvgAggregateInputType = {
+    id?: true
+    bookTitleId?: true
+    libraryId?: true
+  }
+
+  export type BookSumAggregateInputType = {
+    id?: true
+    bookTitleId?: true
+    libraryId?: true
+  }
+
+  export type BookMinAggregateInputType = {
+    id?: true
+    bookTitleId?: true
+    libraryId?: true
+    isAvailable?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookMaxAggregateInputType = {
+    id?: true
+    bookTitleId?: true
+    libraryId?: true
+    isAvailable?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BookCountAggregateInputType = {
+    id?: true
+    bookTitleId?: true
+    libraryId?: true
+    isAvailable?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BookAggregateArgs = {
+    /**
+     * Filter which Book to aggregate.
+     */
+    where?: BookWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Books to fetch.
+     */
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BookWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Books from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Books.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Books
+    **/
+    _count?: true | BookCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BookAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BookSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BookMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BookMaxAggregateInputType
+  }
+
+  export type GetBookAggregateType<T extends BookAggregateArgs> = {
+        [P in keyof T & keyof AggregateBook]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBook[P]>
+      : GetScalarType<T[P], AggregateBook[P]>
+  }
+
+
+
+
+  export type BookGroupByArgs = {
+    where?: BookWhereInput
+    orderBy?: Enumerable<BookOrderByWithAggregationInput>
+    by: BookScalarFieldEnum[]
+    having?: BookScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BookCountAggregateInputType | true
+    _avg?: BookAvgAggregateInputType
+    _sum?: BookSumAggregateInputType
+    _min?: BookMinAggregateInputType
+    _max?: BookMaxAggregateInputType
+  }
+
+
+  export type BookGroupByOutputType = {
+    id: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: BookCountAggregateOutputType | null
+    _avg: BookAvgAggregateOutputType | null
+    _sum: BookSumAggregateOutputType | null
+    _min: BookMinAggregateOutputType | null
+    _max: BookMaxAggregateOutputType | null
+  }
+
+  type GetBookGroupByPayload<T extends BookGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BookGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BookGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BookGroupByOutputType[P]>
+            : GetScalarType<T[P], BookGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BookSelect = {
+    id?: boolean
+    title?: boolean | BookTitleArgs
+    bookTitleId?: boolean
+    belongsToLibrary?: boolean | LibraryArgs
+    libraryId?: boolean
+    isAvailable?: boolean
+    borrowingRecords?: boolean | Book$borrowingRecordsArgs
+    requestRecords?: boolean | Book$requestRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | BookCountOutputTypeArgs
+  }
+
+
+  export type BookInclude = {
+    title?: boolean | BookTitleArgs
+    belongsToLibrary?: boolean | LibraryArgs
+    borrowingRecords?: boolean | Book$borrowingRecordsArgs
+    requestRecords?: boolean | Book$requestRecordsArgs
+    _count?: boolean | BookCountOutputTypeArgs
+  }
+
+  export type BookGetPayload<S extends boolean | null | undefined | BookArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Book :
+    S extends undefined ? never :
+    S extends { include: any } & (BookArgs | BookFindManyArgs)
+    ? Book  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'title' ? BookTitleGetPayload<S['include'][P]> :
+        P extends 'belongsToLibrary' ? LibraryGetPayload<S['include'][P]> :
+        P extends 'borrowingRecords' ? Array < BorrowingRecordGetPayload<S['include'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? BookCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BookArgs | BookFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'title' ? BookTitleGetPayload<S['select'][P]> :
+        P extends 'belongsToLibrary' ? LibraryGetPayload<S['select'][P]> :
+        P extends 'borrowingRecords' ? Array < BorrowingRecordGetPayload<S['select'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? BookCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Book ? Book[P] : never
+  } 
+      : Book
+
+
+  type BookCountArgs = 
+    Omit<BookFindManyArgs, 'select' | 'include'> & {
+      select?: BookCountAggregateInputType | true
+    }
+
+  export interface BookDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Book that matches the filter.
+     * @param {BookFindUniqueArgs} args - Arguments to find a Book
+     * @example
+     * // Get one Book
+     * const book = await prisma.book.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BookFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BookFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Book'> extends True ? Prisma__BookClient<BookGetPayload<T>> : Prisma__BookClient<BookGetPayload<T> | null, null>
+
+    /**
+     * Find one Book that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BookFindUniqueOrThrowArgs} args - Arguments to find a Book
+     * @example
+     * // Get one Book
+     * const book = await prisma.book.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BookFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BookFindUniqueOrThrowArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Find the first Book that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookFindFirstArgs} args - Arguments to find a Book
+     * @example
+     * // Get one Book
+     * const book = await prisma.book.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BookFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BookFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Book'> extends True ? Prisma__BookClient<BookGetPayload<T>> : Prisma__BookClient<BookGetPayload<T> | null, null>
+
+    /**
+     * Find the first Book that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookFindFirstOrThrowArgs} args - Arguments to find a Book
+     * @example
+     * // Get one Book
+     * const book = await prisma.book.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BookFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BookFindFirstOrThrowArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Find zero or more Books that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Books
+     * const books = await prisma.book.findMany()
+     * 
+     * // Get first 10 Books
+     * const books = await prisma.book.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bookWithIdOnly = await prisma.book.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BookFindManyArgs>(
+      args?: SelectSubset<T, BookFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BookGetPayload<T>>>
+
+    /**
+     * Create a Book.
+     * @param {BookCreateArgs} args - Arguments to create a Book.
+     * @example
+     * // Create one Book
+     * const Book = await prisma.book.create({
+     *   data: {
+     *     // ... data to create a Book
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BookCreateArgs>(
+      args: SelectSubset<T, BookCreateArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Create many Books.
+     *     @param {BookCreateManyArgs} args - Arguments to create many Books.
+     *     @example
+     *     // Create many Books
+     *     const book = await prisma.book.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BookCreateManyArgs>(
+      args?: SelectSubset<T, BookCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Book.
+     * @param {BookDeleteArgs} args - Arguments to delete one Book.
+     * @example
+     * // Delete one Book
+     * const Book = await prisma.book.delete({
+     *   where: {
+     *     // ... filter to delete one Book
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BookDeleteArgs>(
+      args: SelectSubset<T, BookDeleteArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Update one Book.
+     * @param {BookUpdateArgs} args - Arguments to update one Book.
+     * @example
+     * // Update one Book
+     * const book = await prisma.book.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BookUpdateArgs>(
+      args: SelectSubset<T, BookUpdateArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Delete zero or more Books.
+     * @param {BookDeleteManyArgs} args - Arguments to filter Books to delete.
+     * @example
+     * // Delete a few Books
+     * const { count } = await prisma.book.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BookDeleteManyArgs>(
+      args?: SelectSubset<T, BookDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Books.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Books
+     * const book = await prisma.book.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BookUpdateManyArgs>(
+      args: SelectSubset<T, BookUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Book.
+     * @param {BookUpsertArgs} args - Arguments to update or create a Book.
+     * @example
+     * // Update or create a Book
+     * const book = await prisma.book.upsert({
+     *   create: {
+     *     // ... data to create a Book
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Book we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BookUpsertArgs>(
+      args: SelectSubset<T, BookUpsertArgs>
+    ): Prisma__BookClient<BookGetPayload<T>>
+
+    /**
+     * Count the number of Books.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookCountArgs} args - Arguments to filter Books to count.
+     * @example
+     * // Count the number of Books
+     * const count = await prisma.book.count({
+     *   where: {
+     *     // ... the filter for the Books we want to count
+     *   }
+     * })
+    **/
+    count<T extends BookCountArgs>(
+      args?: Subset<T, BookCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BookCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Book.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BookAggregateArgs>(args: Subset<T, BookAggregateArgs>): Prisma.PrismaPromise<GetBookAggregateType<T>>
+
+    /**
+     * Group by Book.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BookGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BookGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BookGroupByArgs['orderBy'] }
+        : { orderBy?: BookGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BookGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBookGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Book.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BookClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    title<T extends BookTitleArgs= {}>(args?: Subset<T, BookTitleArgs>): Prisma__BookTitleClient<BookTitleGetPayload<T> | Null>;
+
+    belongsToLibrary<T extends LibraryArgs= {}>(args?: Subset<T, LibraryArgs>): Prisma__LibraryClient<LibraryGetPayload<T> | Null>;
+
+    borrowingRecords<T extends Book$borrowingRecordsArgs= {}>(args?: Subset<T, Book$borrowingRecordsArgs>): Prisma.PrismaPromise<Array<BorrowingRecordGetPayload<T>>| Null>;
+
+    requestRecords<T extends Book$requestRecordsArgs= {}>(args?: Subset<T, Book$requestRecordsArgs>): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Book base type for findUnique actions
+   */
+  export type BookFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter, which Book to fetch.
+     */
+    where: BookWhereUniqueInput
+  }
+
+  /**
+   * Book findUnique
+   */
+  export interface BookFindUniqueArgs extends BookFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Book findUniqueOrThrow
+   */
+  export type BookFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter, which Book to fetch.
+     */
+    where: BookWhereUniqueInput
+  }
+
+
+  /**
+   * Book base type for findFirst actions
+   */
+  export type BookFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter, which Book to fetch.
+     */
+    where?: BookWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Books to fetch.
+     */
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Books.
+     */
+    cursor?: BookWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Books from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Books.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Books.
+     */
+    distinct?: Enumerable<BookScalarFieldEnum>
+  }
+
+  /**
+   * Book findFirst
+   */
+  export interface BookFindFirstArgs extends BookFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Book findFirstOrThrow
+   */
+  export type BookFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter, which Book to fetch.
+     */
+    where?: BookWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Books to fetch.
+     */
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Books.
+     */
+    cursor?: BookWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Books from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Books.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Books.
+     */
+    distinct?: Enumerable<BookScalarFieldEnum>
+  }
+
+
+  /**
+   * Book findMany
+   */
+  export type BookFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter, which Books to fetch.
+     */
+    where?: BookWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Books to fetch.
+     */
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Books.
+     */
+    cursor?: BookWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Books from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Books.
+     */
+    skip?: number
+    distinct?: Enumerable<BookScalarFieldEnum>
+  }
+
+
+  /**
+   * Book create
+   */
+  export type BookCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * The data needed to create a Book.
+     */
+    data: XOR<BookCreateInput, BookUncheckedCreateInput>
+  }
+
+
+  /**
+   * Book createMany
+   */
+  export type BookCreateManyArgs = {
+    /**
+     * The data used to create many Books.
+     */
+    data: Enumerable<BookCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Book update
+   */
+  export type BookUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * The data needed to update a Book.
+     */
+    data: XOR<BookUpdateInput, BookUncheckedUpdateInput>
+    /**
+     * Choose, which Book to update.
+     */
+    where: BookWhereUniqueInput
+  }
+
+
+  /**
+   * Book updateMany
+   */
+  export type BookUpdateManyArgs = {
+    /**
+     * The data used to update Books.
+     */
+    data: XOR<BookUpdateManyMutationInput, BookUncheckedUpdateManyInput>
+    /**
+     * Filter which Books to update
+     */
+    where?: BookWhereInput
+  }
+
+
+  /**
+   * Book upsert
+   */
+  export type BookUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * The filter to search for the Book to update in case it exists.
+     */
+    where: BookWhereUniqueInput
+    /**
+     * In case the Book found by the `where` argument doesn't exist, create a new Book with this data.
+     */
+    create: XOR<BookCreateInput, BookUncheckedCreateInput>
+    /**
+     * In case the Book was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BookUpdateInput, BookUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Book delete
+   */
+  export type BookDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    /**
+     * Filter which Book to delete.
+     */
+    where: BookWhereUniqueInput
+  }
+
+
+  /**
+   * Book deleteMany
+   */
+  export type BookDeleteManyArgs = {
+    /**
+     * Filter which Books to delete
+     */
+    where?: BookWhereInput
+  }
+
+
+  /**
+   * Book.borrowingRecords
+   */
+  export type Book$borrowingRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    where?: BorrowingRecordWhereInput
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    cursor?: BorrowingRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BorrowingRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Book.requestRecords
+   */
+  export type Book$requestRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    cursor?: RequestRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Book without action
+   */
+  export type BookArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+  }
+
+
+
+  /**
+   * Model Library
+   */
+
+
+  export type AggregateLibrary = {
+    _count: LibraryCountAggregateOutputType | null
+    _avg: LibraryAvgAggregateOutputType | null
+    _sum: LibrarySumAggregateOutputType | null
+    _min: LibraryMinAggregateOutputType | null
+    _max: LibraryMaxAggregateOutputType | null
+  }
+
+  export type LibraryAvgAggregateOutputType = {
+    id: number | null
+    universityId: number | null
+  }
+
+  export type LibrarySumAggregateOutputType = {
+    id: number | null
+    universityId: number | null
+  }
+
+  export type LibraryMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    universityId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LibraryMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    universityId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LibraryCountAggregateOutputType = {
+    id: number
+    name: number
+    location: number
+    universityId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LibraryAvgAggregateInputType = {
+    id?: true
+    universityId?: true
+  }
+
+  export type LibrarySumAggregateInputType = {
+    id?: true
+    universityId?: true
+  }
+
+  export type LibraryMinAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LibraryMaxAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LibraryCountAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LibraryAggregateArgs = {
+    /**
+     * Filter which Library to aggregate.
+     */
+    where?: LibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Libraries to fetch.
+     */
+    orderBy?: Enumerable<LibraryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Libraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Libraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Libraries
+    **/
+    _count?: true | LibraryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LibraryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LibrarySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LibraryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LibraryMaxAggregateInputType
+  }
+
+  export type GetLibraryAggregateType<T extends LibraryAggregateArgs> = {
+        [P in keyof T & keyof AggregateLibrary]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLibrary[P]>
+      : GetScalarType<T[P], AggregateLibrary[P]>
+  }
+
+
+
+
+  export type LibraryGroupByArgs = {
+    where?: LibraryWhereInput
+    orderBy?: Enumerable<LibraryOrderByWithAggregationInput>
+    by: LibraryScalarFieldEnum[]
+    having?: LibraryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LibraryCountAggregateInputType | true
+    _avg?: LibraryAvgAggregateInputType
+    _sum?: LibrarySumAggregateInputType
+    _min?: LibraryMinAggregateInputType
+    _max?: LibraryMaxAggregateInputType
+  }
+
+
+  export type LibraryGroupByOutputType = {
+    id: number
+    name: string
+    location: string
+    universityId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: LibraryCountAggregateOutputType | null
+    _avg: LibraryAvgAggregateOutputType | null
+    _sum: LibrarySumAggregateOutputType | null
+    _min: LibraryMinAggregateOutputType | null
+    _max: LibraryMaxAggregateOutputType | null
+  }
+
+  type GetLibraryGroupByPayload<T extends LibraryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<LibraryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LibraryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LibraryGroupByOutputType[P]>
+            : GetScalarType<T[P], LibraryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LibrarySelect = {
+    id?: boolean
+    name?: boolean
+    location?: boolean
+    belongsToUniversity?: boolean | UniversityArgs
+    universityId?: boolean
+    books?: boolean | Library$booksArgs
+    requestingRecords?: boolean | Library$requestingRecordsArgs
+    requestedRecords?: boolean | Library$requestedRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | LibraryCountOutputTypeArgs
+  }
+
+
+  export type LibraryInclude = {
+    belongsToUniversity?: boolean | UniversityArgs
+    books?: boolean | Library$booksArgs
+    requestingRecords?: boolean | Library$requestingRecordsArgs
+    requestedRecords?: boolean | Library$requestedRecordsArgs
+    _count?: boolean | LibraryCountOutputTypeArgs
+  }
+
+  export type LibraryGetPayload<S extends boolean | null | undefined | LibraryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Library :
+    S extends undefined ? never :
+    S extends { include: any } & (LibraryArgs | LibraryFindManyArgs)
+    ? Library  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'belongsToUniversity' ? UniversityGetPayload<S['include'][P]> :
+        P extends 'books' ? Array < BookGetPayload<S['include'][P]>>  :
+        P extends 'requestingRecords' ? Array < RequestRecordGetPayload<S['include'][P]>>  :
+        P extends 'requestedRecords' ? Array < RequestRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? LibraryCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (LibraryArgs | LibraryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'belongsToUniversity' ? UniversityGetPayload<S['select'][P]> :
+        P extends 'books' ? Array < BookGetPayload<S['select'][P]>>  :
+        P extends 'requestingRecords' ? Array < RequestRecordGetPayload<S['select'][P]>>  :
+        P extends 'requestedRecords' ? Array < RequestRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? LibraryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Library ? Library[P] : never
+  } 
+      : Library
+
+
+  type LibraryCountArgs = 
+    Omit<LibraryFindManyArgs, 'select' | 'include'> & {
+      select?: LibraryCountAggregateInputType | true
+    }
+
+  export interface LibraryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Library that matches the filter.
+     * @param {LibraryFindUniqueArgs} args - Arguments to find a Library
+     * @example
+     * // Get one Library
+     * const library = await prisma.library.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends LibraryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, LibraryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Library'> extends True ? Prisma__LibraryClient<LibraryGetPayload<T>> : Prisma__LibraryClient<LibraryGetPayload<T> | null, null>
+
+    /**
+     * Find one Library that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {LibraryFindUniqueOrThrowArgs} args - Arguments to find a Library
+     * @example
+     * // Get one Library
+     * const library = await prisma.library.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends LibraryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, LibraryFindUniqueOrThrowArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Find the first Library that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryFindFirstArgs} args - Arguments to find a Library
+     * @example
+     * // Get one Library
+     * const library = await prisma.library.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends LibraryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, LibraryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Library'> extends True ? Prisma__LibraryClient<LibraryGetPayload<T>> : Prisma__LibraryClient<LibraryGetPayload<T> | null, null>
+
+    /**
+     * Find the first Library that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryFindFirstOrThrowArgs} args - Arguments to find a Library
+     * @example
+     * // Get one Library
+     * const library = await prisma.library.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends LibraryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, LibraryFindFirstOrThrowArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Find zero or more Libraries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Libraries
+     * const libraries = await prisma.library.findMany()
+     * 
+     * // Get first 10 Libraries
+     * const libraries = await prisma.library.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const libraryWithIdOnly = await prisma.library.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends LibraryFindManyArgs>(
+      args?: SelectSubset<T, LibraryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<LibraryGetPayload<T>>>
+
+    /**
+     * Create a Library.
+     * @param {LibraryCreateArgs} args - Arguments to create a Library.
+     * @example
+     * // Create one Library
+     * const Library = await prisma.library.create({
+     *   data: {
+     *     // ... data to create a Library
+     *   }
+     * })
+     * 
+    **/
+    create<T extends LibraryCreateArgs>(
+      args: SelectSubset<T, LibraryCreateArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Create many Libraries.
+     *     @param {LibraryCreateManyArgs} args - Arguments to create many Libraries.
+     *     @example
+     *     // Create many Libraries
+     *     const library = await prisma.library.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends LibraryCreateManyArgs>(
+      args?: SelectSubset<T, LibraryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Library.
+     * @param {LibraryDeleteArgs} args - Arguments to delete one Library.
+     * @example
+     * // Delete one Library
+     * const Library = await prisma.library.delete({
+     *   where: {
+     *     // ... filter to delete one Library
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends LibraryDeleteArgs>(
+      args: SelectSubset<T, LibraryDeleteArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Update one Library.
+     * @param {LibraryUpdateArgs} args - Arguments to update one Library.
+     * @example
+     * // Update one Library
+     * const library = await prisma.library.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends LibraryUpdateArgs>(
+      args: SelectSubset<T, LibraryUpdateArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Delete zero or more Libraries.
+     * @param {LibraryDeleteManyArgs} args - Arguments to filter Libraries to delete.
+     * @example
+     * // Delete a few Libraries
+     * const { count } = await prisma.library.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends LibraryDeleteManyArgs>(
+      args?: SelectSubset<T, LibraryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Libraries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Libraries
+     * const library = await prisma.library.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends LibraryUpdateManyArgs>(
+      args: SelectSubset<T, LibraryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Library.
+     * @param {LibraryUpsertArgs} args - Arguments to update or create a Library.
+     * @example
+     * // Update or create a Library
+     * const library = await prisma.library.upsert({
+     *   create: {
+     *     // ... data to create a Library
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Library we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends LibraryUpsertArgs>(
+      args: SelectSubset<T, LibraryUpsertArgs>
+    ): Prisma__LibraryClient<LibraryGetPayload<T>>
+
+    /**
+     * Count the number of Libraries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryCountArgs} args - Arguments to filter Libraries to count.
+     * @example
+     * // Count the number of Libraries
+     * const count = await prisma.library.count({
+     *   where: {
+     *     // ... the filter for the Libraries we want to count
+     *   }
+     * })
+    **/
+    count<T extends LibraryCountArgs>(
+      args?: Subset<T, LibraryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LibraryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Library.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LibraryAggregateArgs>(args: Subset<T, LibraryAggregateArgs>): Prisma.PrismaPromise<GetLibraryAggregateType<T>>
+
+    /**
+     * Group by Library.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LibraryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LibraryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LibraryGroupByArgs['orderBy'] }
+        : { orderBy?: LibraryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LibraryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLibraryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Library.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__LibraryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    belongsToUniversity<T extends UniversityArgs= {}>(args?: Subset<T, UniversityArgs>): Prisma__UniversityClient<UniversityGetPayload<T> | Null>;
+
+    books<T extends Library$booksArgs= {}>(args?: Subset<T, Library$booksArgs>): Prisma.PrismaPromise<Array<BookGetPayload<T>>| Null>;
+
+    requestingRecords<T extends Library$requestingRecordsArgs= {}>(args?: Subset<T, Library$requestingRecordsArgs>): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>| Null>;
+
+    requestedRecords<T extends Library$requestedRecordsArgs= {}>(args?: Subset<T, Library$requestedRecordsArgs>): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Library base type for findUnique actions
+   */
+  export type LibraryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter, which Library to fetch.
+     */
+    where: LibraryWhereUniqueInput
+  }
+
+  /**
+   * Library findUnique
+   */
+  export interface LibraryFindUniqueArgs extends LibraryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Library findUniqueOrThrow
+   */
+  export type LibraryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter, which Library to fetch.
+     */
+    where: LibraryWhereUniqueInput
+  }
+
+
+  /**
+   * Library base type for findFirst actions
+   */
+  export type LibraryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter, which Library to fetch.
+     */
+    where?: LibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Libraries to fetch.
+     */
+    orderBy?: Enumerable<LibraryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Libraries.
+     */
+    cursor?: LibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Libraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Libraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Libraries.
+     */
+    distinct?: Enumerable<LibraryScalarFieldEnum>
+  }
+
+  /**
+   * Library findFirst
+   */
+  export interface LibraryFindFirstArgs extends LibraryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Library findFirstOrThrow
+   */
+  export type LibraryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter, which Library to fetch.
+     */
+    where?: LibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Libraries to fetch.
+     */
+    orderBy?: Enumerable<LibraryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Libraries.
+     */
+    cursor?: LibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Libraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Libraries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Libraries.
+     */
+    distinct?: Enumerable<LibraryScalarFieldEnum>
+  }
+
+
+  /**
+   * Library findMany
+   */
+  export type LibraryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter, which Libraries to fetch.
+     */
+    where?: LibraryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Libraries to fetch.
+     */
+    orderBy?: Enumerable<LibraryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Libraries.
+     */
+    cursor?: LibraryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Libraries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Libraries.
+     */
+    skip?: number
+    distinct?: Enumerable<LibraryScalarFieldEnum>
+  }
+
+
+  /**
+   * Library create
+   */
+  export type LibraryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * The data needed to create a Library.
+     */
+    data: XOR<LibraryCreateInput, LibraryUncheckedCreateInput>
+  }
+
+
+  /**
+   * Library createMany
+   */
+  export type LibraryCreateManyArgs = {
+    /**
+     * The data used to create many Libraries.
+     */
+    data: Enumerable<LibraryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Library update
+   */
+  export type LibraryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * The data needed to update a Library.
+     */
+    data: XOR<LibraryUpdateInput, LibraryUncheckedUpdateInput>
+    /**
+     * Choose, which Library to update.
+     */
+    where: LibraryWhereUniqueInput
+  }
+
+
+  /**
+   * Library updateMany
+   */
+  export type LibraryUpdateManyArgs = {
+    /**
+     * The data used to update Libraries.
+     */
+    data: XOR<LibraryUpdateManyMutationInput, LibraryUncheckedUpdateManyInput>
+    /**
+     * Filter which Libraries to update
+     */
+    where?: LibraryWhereInput
+  }
+
+
+  /**
+   * Library upsert
+   */
+  export type LibraryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * The filter to search for the Library to update in case it exists.
+     */
+    where: LibraryWhereUniqueInput
+    /**
+     * In case the Library found by the `where` argument doesn't exist, create a new Library with this data.
+     */
+    create: XOR<LibraryCreateInput, LibraryUncheckedCreateInput>
+    /**
+     * In case the Library was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LibraryUpdateInput, LibraryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Library delete
+   */
+  export type LibraryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    /**
+     * Filter which Library to delete.
+     */
+    where: LibraryWhereUniqueInput
+  }
+
+
+  /**
+   * Library deleteMany
+   */
+  export type LibraryDeleteManyArgs = {
+    /**
+     * Filter which Libraries to delete
+     */
+    where?: LibraryWhereInput
+  }
+
+
+  /**
+   * Library.books
+   */
+  export type Library$booksArgs = {
+    /**
+     * Select specific fields to fetch from the Book
+     */
+    select?: BookSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BookInclude | null
+    where?: BookWhereInput
+    orderBy?: Enumerable<BookOrderByWithRelationInput>
+    cursor?: BookWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BookScalarFieldEnum>
+  }
+
+
+  /**
+   * Library.requestingRecords
+   */
+  export type Library$requestingRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    cursor?: RequestRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Library.requestedRecords
+   */
+  export type Library$requestedRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    cursor?: RequestRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Library without action
+   */
+  export type LibraryArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+  }
+
+
+
+  /**
+   * Model University
+   */
+
+
+  export type AggregateUniversity = {
+    _count: UniversityCountAggregateOutputType | null
+    _avg: UniversityAvgAggregateOutputType | null
+    _sum: UniversitySumAggregateOutputType | null
+    _min: UniversityMinAggregateOutputType | null
+    _max: UniversityMaxAggregateOutputType | null
+  }
+
+  export type UniversityAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UniversitySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UniversityMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UniversityMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UniversityCountAggregateOutputType = {
+    id: number
+    name: number
+    location: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UniversityAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UniversitySumAggregateInputType = {
+    id?: true
+  }
+
+  export type UniversityMinAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UniversityMaxAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UniversityCountAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UniversityAggregateArgs = {
+    /**
+     * Filter which University to aggregate.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: Enumerable<UniversityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Universities
+    **/
+    _count?: true | UniversityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UniversityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UniversitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UniversityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UniversityMaxAggregateInputType
+  }
+
+  export type GetUniversityAggregateType<T extends UniversityAggregateArgs> = {
+        [P in keyof T & keyof AggregateUniversity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUniversity[P]>
+      : GetScalarType<T[P], AggregateUniversity[P]>
+  }
+
+
+
+
+  export type UniversityGroupByArgs = {
+    where?: UniversityWhereInput
+    orderBy?: Enumerable<UniversityOrderByWithAggregationInput>
+    by: UniversityScalarFieldEnum[]
+    having?: UniversityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UniversityCountAggregateInputType | true
+    _avg?: UniversityAvgAggregateInputType
+    _sum?: UniversitySumAggregateInputType
+    _min?: UniversityMinAggregateInputType
+    _max?: UniversityMaxAggregateInputType
+  }
+
+
+  export type UniversityGroupByOutputType = {
+    id: number
+    name: string
+    location: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UniversityCountAggregateOutputType | null
+    _avg: UniversityAvgAggregateOutputType | null
+    _sum: UniversitySumAggregateOutputType | null
+    _min: UniversityMinAggregateOutputType | null
+    _max: UniversityMaxAggregateOutputType | null
+  }
+
+  type GetUniversityGroupByPayload<T extends UniversityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UniversityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UniversityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UniversityGroupByOutputType[P]>
+            : GetScalarType<T[P], UniversityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UniversitySelect = {
+    id?: boolean
+    name?: boolean
+    location?: boolean
+    libraries?: boolean | University$librariesArgs
+    students?: boolean | University$studentsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | UniversityCountOutputTypeArgs
+  }
+
+
+  export type UniversityInclude = {
+    libraries?: boolean | University$librariesArgs
+    students?: boolean | University$studentsArgs
+    _count?: boolean | UniversityCountOutputTypeArgs
+  }
+
+  export type UniversityGetPayload<S extends boolean | null | undefined | UniversityArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? University :
+    S extends undefined ? never :
+    S extends { include: any } & (UniversityArgs | UniversityFindManyArgs)
+    ? University  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'libraries' ? Array < LibraryGetPayload<S['include'][P]>>  :
+        P extends 'students' ? Array < StudentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? UniversityCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UniversityArgs | UniversityFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'libraries' ? Array < LibraryGetPayload<S['select'][P]>>  :
+        P extends 'students' ? Array < StudentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? UniversityCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof University ? University[P] : never
+  } 
+      : University
+
+
+  type UniversityCountArgs = 
+    Omit<UniversityFindManyArgs, 'select' | 'include'> & {
+      select?: UniversityCountAggregateInputType | true
+    }
+
+  export interface UniversityDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one University that matches the filter.
+     * @param {UniversityFindUniqueArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UniversityFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UniversityFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'University'> extends True ? Prisma__UniversityClient<UniversityGetPayload<T>> : Prisma__UniversityClient<UniversityGetPayload<T> | null, null>
+
+    /**
+     * Find one University that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UniversityFindUniqueOrThrowArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UniversityFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UniversityFindUniqueOrThrowArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Find the first University that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindFirstArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UniversityFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UniversityFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'University'> extends True ? Prisma__UniversityClient<UniversityGetPayload<T>> : Prisma__UniversityClient<UniversityGetPayload<T> | null, null>
+
+    /**
+     * Find the first University that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindFirstOrThrowArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UniversityFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UniversityFindFirstOrThrowArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Find zero or more Universities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Universities
+     * const universities = await prisma.university.findMany()
+     * 
+     * // Get first 10 Universities
+     * const universities = await prisma.university.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const universityWithIdOnly = await prisma.university.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UniversityFindManyArgs>(
+      args?: SelectSubset<T, UniversityFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UniversityGetPayload<T>>>
+
+    /**
+     * Create a University.
+     * @param {UniversityCreateArgs} args - Arguments to create a University.
+     * @example
+     * // Create one University
+     * const University = await prisma.university.create({
+     *   data: {
+     *     // ... data to create a University
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UniversityCreateArgs>(
+      args: SelectSubset<T, UniversityCreateArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Create many Universities.
+     *     @param {UniversityCreateManyArgs} args - Arguments to create many Universities.
+     *     @example
+     *     // Create many Universities
+     *     const university = await prisma.university.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UniversityCreateManyArgs>(
+      args?: SelectSubset<T, UniversityCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a University.
+     * @param {UniversityDeleteArgs} args - Arguments to delete one University.
+     * @example
+     * // Delete one University
+     * const University = await prisma.university.delete({
+     *   where: {
+     *     // ... filter to delete one University
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UniversityDeleteArgs>(
+      args: SelectSubset<T, UniversityDeleteArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Update one University.
+     * @param {UniversityUpdateArgs} args - Arguments to update one University.
+     * @example
+     * // Update one University
+     * const university = await prisma.university.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UniversityUpdateArgs>(
+      args: SelectSubset<T, UniversityUpdateArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Delete zero or more Universities.
+     * @param {UniversityDeleteManyArgs} args - Arguments to filter Universities to delete.
+     * @example
+     * // Delete a few Universities
+     * const { count } = await prisma.university.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UniversityDeleteManyArgs>(
+      args?: SelectSubset<T, UniversityDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Universities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Universities
+     * const university = await prisma.university.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UniversityUpdateManyArgs>(
+      args: SelectSubset<T, UniversityUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one University.
+     * @param {UniversityUpsertArgs} args - Arguments to update or create a University.
+     * @example
+     * // Update or create a University
+     * const university = await prisma.university.upsert({
+     *   create: {
+     *     // ... data to create a University
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the University we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UniversityUpsertArgs>(
+      args: SelectSubset<T, UniversityUpsertArgs>
+    ): Prisma__UniversityClient<UniversityGetPayload<T>>
+
+    /**
+     * Count the number of Universities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityCountArgs} args - Arguments to filter Universities to count.
+     * @example
+     * // Count the number of Universities
+     * const count = await prisma.university.count({
+     *   where: {
+     *     // ... the filter for the Universities we want to count
+     *   }
+     * })
+    **/
+    count<T extends UniversityCountArgs>(
+      args?: Subset<T, UniversityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UniversityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a University.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UniversityAggregateArgs>(args: Subset<T, UniversityAggregateArgs>): Prisma.PrismaPromise<GetUniversityAggregateType<T>>
+
+    /**
+     * Group by University.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UniversityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UniversityGroupByArgs['orderBy'] }
+        : { orderBy?: UniversityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UniversityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUniversityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for University.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UniversityClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    libraries<T extends University$librariesArgs= {}>(args?: Subset<T, University$librariesArgs>): Prisma.PrismaPromise<Array<LibraryGetPayload<T>>| Null>;
+
+    students<T extends University$studentsArgs= {}>(args?: Subset<T, University$studentsArgs>): Prisma.PrismaPromise<Array<StudentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * University base type for findUnique actions
+   */
+  export type UniversityFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+  /**
+   * University findUnique
+   */
+  export interface UniversityFindUniqueArgs extends UniversityFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * University findUniqueOrThrow
+   */
+  export type UniversityFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+
+  /**
+   * University base type for findFirst actions
+   */
+  export type UniversityFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: Enumerable<UniversityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Universities.
+     */
+    distinct?: Enumerable<UniversityScalarFieldEnum>
+  }
+
+  /**
+   * University findFirst
+   */
+  export interface UniversityFindFirstArgs extends UniversityFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * University findFirstOrThrow
+   */
+  export type UniversityFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: Enumerable<UniversityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Universities.
+     */
+    distinct?: Enumerable<UniversityScalarFieldEnum>
+  }
+
+
+  /**
+   * University findMany
+   */
+  export type UniversityFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter, which Universities to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: Enumerable<UniversityOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    distinct?: Enumerable<UniversityScalarFieldEnum>
+  }
+
+
+  /**
+   * University create
+   */
+  export type UniversityCreateArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * The data needed to create a University.
+     */
+    data: XOR<UniversityCreateInput, UniversityUncheckedCreateInput>
+  }
+
+
+  /**
+   * University createMany
+   */
+  export type UniversityCreateManyArgs = {
+    /**
+     * The data used to create many Universities.
+     */
+    data: Enumerable<UniversityCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * University update
+   */
+  export type UniversityUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * The data needed to update a University.
+     */
+    data: XOR<UniversityUpdateInput, UniversityUncheckedUpdateInput>
+    /**
+     * Choose, which University to update.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+
+  /**
+   * University updateMany
+   */
+  export type UniversityUpdateManyArgs = {
+    /**
+     * The data used to update Universities.
+     */
+    data: XOR<UniversityUpdateManyMutationInput, UniversityUncheckedUpdateManyInput>
+    /**
+     * Filter which Universities to update
+     */
+    where?: UniversityWhereInput
+  }
+
+
+  /**
+   * University upsert
+   */
+  export type UniversityUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * The filter to search for the University to update in case it exists.
+     */
+    where: UniversityWhereUniqueInput
+    /**
+     * In case the University found by the `where` argument doesn't exist, create a new University with this data.
+     */
+    create: XOR<UniversityCreateInput, UniversityUncheckedCreateInput>
+    /**
+     * In case the University was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UniversityUpdateInput, UniversityUncheckedUpdateInput>
+  }
+
+
+  /**
+   * University delete
+   */
+  export type UniversityDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+    /**
+     * Filter which University to delete.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+
+  /**
+   * University deleteMany
+   */
+  export type UniversityDeleteManyArgs = {
+    /**
+     * Filter which Universities to delete
+     */
+    where?: UniversityWhereInput
+  }
+
+
+  /**
+   * University.libraries
+   */
+  export type University$librariesArgs = {
+    /**
+     * Select specific fields to fetch from the Library
+     */
+    select?: LibrarySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: LibraryInclude | null
+    where?: LibraryWhereInput
+    orderBy?: Enumerable<LibraryOrderByWithRelationInput>
+    cursor?: LibraryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<LibraryScalarFieldEnum>
+  }
+
+
+  /**
+   * University.students
+   */
+  export type University$studentsArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    where?: StudentWhereInput
+    orderBy?: Enumerable<StudentOrderByWithRelationInput>
+    cursor?: StudentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<StudentScalarFieldEnum>
+  }
+
+
+  /**
+   * University without action
+   */
+  export type UniversityArgs = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UniversityInclude | null
+  }
+
+
+
+  /**
+   * Model Student
+   */
+
+
+  export type AggregateStudent = {
+    _count: StudentCountAggregateOutputType | null
+    _avg: StudentAvgAggregateOutputType | null
+    _sum: StudentSumAggregateOutputType | null
+    _min: StudentMinAggregateOutputType | null
+    _max: StudentMaxAggregateOutputType | null
+  }
+
+  export type StudentAvgAggregateOutputType = {
+    id: number | null
+    universityId: number | null
+  }
+
+  export type StudentSumAggregateOutputType = {
+    id: number | null
+    universityId: number | null
+  }
+
+  export type StudentMinAggregateOutputType = {
+    id: number | null
+    Name: string | null
+    universityId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type StudentMaxAggregateOutputType = {
+    id: number | null
+    Name: string | null
+    universityId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type StudentCountAggregateOutputType = {
+    id: number
+    Name: number
+    universityId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type StudentAvgAggregateInputType = {
+    id?: true
+    universityId?: true
+  }
+
+  export type StudentSumAggregateInputType = {
+    id?: true
+    universityId?: true
+  }
+
+  export type StudentMinAggregateInputType = {
+    id?: true
+    Name?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type StudentMaxAggregateInputType = {
+    id?: true
+    Name?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type StudentCountAggregateInputType = {
+    id?: true
+    Name?: true
+    universityId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type StudentAggregateArgs = {
+    /**
+     * Filter which Student to aggregate.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: Enumerable<StudentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Students
+    **/
+    _count?: true | StudentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StudentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StudentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudentMaxAggregateInputType
+  }
+
+  export type GetStudentAggregateType<T extends StudentAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudent[P]>
+      : GetScalarType<T[P], AggregateStudent[P]>
+  }
+
+
+
+
+  export type StudentGroupByArgs = {
+    where?: StudentWhereInput
+    orderBy?: Enumerable<StudentOrderByWithAggregationInput>
+    by: StudentScalarFieldEnum[]
+    having?: StudentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudentCountAggregateInputType | true
+    _avg?: StudentAvgAggregateInputType
+    _sum?: StudentSumAggregateInputType
+    _min?: StudentMinAggregateInputType
+    _max?: StudentMaxAggregateInputType
+  }
+
+
+  export type StudentGroupByOutputType = {
+    id: number
+    Name: string
+    universityId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: StudentCountAggregateOutputType | null
+    _avg: StudentAvgAggregateOutputType | null
+    _sum: StudentSumAggregateOutputType | null
+    _min: StudentMinAggregateOutputType | null
+    _max: StudentMaxAggregateOutputType | null
+  }
+
+  type GetStudentGroupByPayload<T extends StudentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<StudentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudentGroupByOutputType[P]>
+            : GetScalarType<T[P], StudentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudentSelect = {
+    id?: boolean
+    Name?: boolean
+    belongsToUniversity?: boolean | UniversityArgs
+    universityId?: boolean
+    borrowingRecords?: boolean | Student$borrowingRecordsArgs
+    requestRecords?: boolean | Student$requestRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | StudentCountOutputTypeArgs
+  }
+
+
+  export type StudentInclude = {
+    belongsToUniversity?: boolean | UniversityArgs
+    borrowingRecords?: boolean | Student$borrowingRecordsArgs
+    requestRecords?: boolean | Student$requestRecordsArgs
+    _count?: boolean | StudentCountOutputTypeArgs
+  }
+
+  export type StudentGetPayload<S extends boolean | null | undefined | StudentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Student :
+    S extends undefined ? never :
+    S extends { include: any } & (StudentArgs | StudentFindManyArgs)
+    ? Student  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'belongsToUniversity' ? UniversityGetPayload<S['include'][P]> :
+        P extends 'borrowingRecords' ? Array < BorrowingRecordGetPayload<S['include'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? StudentCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (StudentArgs | StudentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'belongsToUniversity' ? UniversityGetPayload<S['select'][P]> :
+        P extends 'borrowingRecords' ? Array < BorrowingRecordGetPayload<S['select'][P]>>  :
+        P extends 'requestRecords' ? Array < RequestRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? StudentCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Student ? Student[P] : never
+  } 
+      : Student
+
+
+  type StudentCountArgs = 
+    Omit<StudentFindManyArgs, 'select' | 'include'> & {
+      select?: StudentCountAggregateInputType | true
+    }
+
+  export interface StudentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Student that matches the filter.
+     * @param {StudentFindUniqueArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends StudentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, StudentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Student'> extends True ? Prisma__StudentClient<StudentGetPayload<T>> : Prisma__StudentClient<StudentGetPayload<T> | null, null>
+
+    /**
+     * Find one Student that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {StudentFindUniqueOrThrowArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends StudentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, StudentFindUniqueOrThrowArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Find the first Student that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindFirstArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends StudentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, StudentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Student'> extends True ? Prisma__StudentClient<StudentGetPayload<T>> : Prisma__StudentClient<StudentGetPayload<T> | null, null>
+
+    /**
+     * Find the first Student that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindFirstOrThrowArgs} args - Arguments to find a Student
+     * @example
+     * // Get one Student
+     * const student = await prisma.student.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends StudentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, StudentFindFirstOrThrowArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Find zero or more Students that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Students
+     * const students = await prisma.student.findMany()
+     * 
+     * // Get first 10 Students
+     * const students = await prisma.student.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const studentWithIdOnly = await prisma.student.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends StudentFindManyArgs>(
+      args?: SelectSubset<T, StudentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<StudentGetPayload<T>>>
+
+    /**
+     * Create a Student.
+     * @param {StudentCreateArgs} args - Arguments to create a Student.
+     * @example
+     * // Create one Student
+     * const Student = await prisma.student.create({
+     *   data: {
+     *     // ... data to create a Student
+     *   }
+     * })
+     * 
+    **/
+    create<T extends StudentCreateArgs>(
+      args: SelectSubset<T, StudentCreateArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Create many Students.
+     *     @param {StudentCreateManyArgs} args - Arguments to create many Students.
+     *     @example
+     *     // Create many Students
+     *     const student = await prisma.student.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends StudentCreateManyArgs>(
+      args?: SelectSubset<T, StudentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Student.
+     * @param {StudentDeleteArgs} args - Arguments to delete one Student.
+     * @example
+     * // Delete one Student
+     * const Student = await prisma.student.delete({
+     *   where: {
+     *     // ... filter to delete one Student
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends StudentDeleteArgs>(
+      args: SelectSubset<T, StudentDeleteArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Update one Student.
+     * @param {StudentUpdateArgs} args - Arguments to update one Student.
+     * @example
+     * // Update one Student
+     * const student = await prisma.student.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends StudentUpdateArgs>(
+      args: SelectSubset<T, StudentUpdateArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Delete zero or more Students.
+     * @param {StudentDeleteManyArgs} args - Arguments to filter Students to delete.
+     * @example
+     * // Delete a few Students
+     * const { count } = await prisma.student.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends StudentDeleteManyArgs>(
+      args?: SelectSubset<T, StudentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Students.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Students
+     * const student = await prisma.student.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends StudentUpdateManyArgs>(
+      args: SelectSubset<T, StudentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Student.
+     * @param {StudentUpsertArgs} args - Arguments to update or create a Student.
+     * @example
+     * // Update or create a Student
+     * const student = await prisma.student.upsert({
+     *   create: {
+     *     // ... data to create a Student
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Student we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends StudentUpsertArgs>(
+      args: SelectSubset<T, StudentUpsertArgs>
+    ): Prisma__StudentClient<StudentGetPayload<T>>
+
+    /**
+     * Count the number of Students.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentCountArgs} args - Arguments to filter Students to count.
+     * @example
+     * // Count the number of Students
+     * const count = await prisma.student.count({
+     *   where: {
+     *     // ... the filter for the Students we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudentCountArgs>(
+      args?: Subset<T, StudentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Student.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudentAggregateArgs>(args: Subset<T, StudentAggregateArgs>): Prisma.PrismaPromise<GetStudentAggregateType<T>>
+
+    /**
+     * Group by Student.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudentGroupByArgs['orderBy'] }
+        : { orderBy?: StudentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Student.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__StudentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    belongsToUniversity<T extends UniversityArgs= {}>(args?: Subset<T, UniversityArgs>): Prisma__UniversityClient<UniversityGetPayload<T> | Null>;
+
+    borrowingRecords<T extends Student$borrowingRecordsArgs= {}>(args?: Subset<T, Student$borrowingRecordsArgs>): Prisma.PrismaPromise<Array<BorrowingRecordGetPayload<T>>| Null>;
+
+    requestRecords<T extends Student$requestRecordsArgs= {}>(args?: Subset<T, Student$requestRecordsArgs>): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Student base type for findUnique actions
+   */
+  export type StudentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+  /**
+   * Student findUnique
+   */
+  export interface StudentFindUniqueArgs extends StudentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Student findUniqueOrThrow
+   */
+  export type StudentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+
+  /**
+   * Student base type for findFirst actions
+   */
+  export type StudentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: Enumerable<StudentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Students.
+     */
+    distinct?: Enumerable<StudentScalarFieldEnum>
+  }
+
+  /**
+   * Student findFirst
+   */
+  export interface StudentFindFirstArgs extends StudentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Student findFirstOrThrow
+   */
+  export type StudentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter, which Student to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: Enumerable<StudentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Students.
+     */
+    distinct?: Enumerable<StudentScalarFieldEnum>
+  }
+
+
+  /**
+   * Student findMany
+   */
+  export type StudentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter, which Students to fetch.
+     */
+    where?: StudentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Students to fetch.
+     */
+    orderBy?: Enumerable<StudentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Students.
+     */
+    cursor?: StudentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Students from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Students.
+     */
+    skip?: number
+    distinct?: Enumerable<StudentScalarFieldEnum>
+  }
+
+
+  /**
+   * Student create
+   */
+  export type StudentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * The data needed to create a Student.
+     */
+    data: XOR<StudentCreateInput, StudentUncheckedCreateInput>
+  }
+
+
+  /**
+   * Student createMany
+   */
+  export type StudentCreateManyArgs = {
+    /**
+     * The data used to create many Students.
+     */
+    data: Enumerable<StudentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Student update
+   */
+  export type StudentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * The data needed to update a Student.
+     */
+    data: XOR<StudentUpdateInput, StudentUncheckedUpdateInput>
+    /**
+     * Choose, which Student to update.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+
+  /**
+   * Student updateMany
+   */
+  export type StudentUpdateManyArgs = {
+    /**
+     * The data used to update Students.
+     */
+    data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyInput>
+    /**
+     * Filter which Students to update
+     */
+    where?: StudentWhereInput
+  }
+
+
+  /**
+   * Student upsert
+   */
+  export type StudentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * The filter to search for the Student to update in case it exists.
+     */
+    where: StudentWhereUniqueInput
+    /**
+     * In case the Student found by the `where` argument doesn't exist, create a new Student with this data.
+     */
+    create: XOR<StudentCreateInput, StudentUncheckedCreateInput>
+    /**
+     * In case the Student was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudentUpdateInput, StudentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Student delete
+   */
+  export type StudentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+    /**
+     * Filter which Student to delete.
+     */
+    where: StudentWhereUniqueInput
+  }
+
+
+  /**
+   * Student deleteMany
+   */
+  export type StudentDeleteManyArgs = {
+    /**
+     * Filter which Students to delete
+     */
+    where?: StudentWhereInput
+  }
+
+
+  /**
+   * Student.borrowingRecords
+   */
+  export type Student$borrowingRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    where?: BorrowingRecordWhereInput
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    cursor?: BorrowingRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BorrowingRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Student.requestRecords
+   */
+  export type Student$requestRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    cursor?: RequestRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * Student without action
+   */
+  export type StudentArgs = {
+    /**
+     * Select specific fields to fetch from the Student
+     */
+    select?: StudentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: StudentInclude | null
+  }
+
+
+
+  /**
+   * Model BorrowingRecord
+   */
+
+
+  export type AggregateBorrowingRecord = {
+    _count: BorrowingRecordCountAggregateOutputType | null
+    _avg: BorrowingRecordAvgAggregateOutputType | null
+    _sum: BorrowingRecordSumAggregateOutputType | null
+    _min: BorrowingRecordMinAggregateOutputType | null
+    _max: BorrowingRecordMaxAggregateOutputType | null
+  }
+
+  export type BorrowingRecordAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookId: number | null
+  }
+
+  export type BorrowingRecordSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookId: number | null
+  }
+
+  export type BorrowingRecordMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookId: number | null
+    startDate: Date | null
+    endDate: Date | null
+    actualEndDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BorrowingRecordMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookId: number | null
+    startDate: Date | null
+    endDate: Date | null
+    actualEndDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BorrowingRecordCountAggregateOutputType = {
+    id: number
+    studentId: number
+    bookId: number
+    startDate: number
+    endDate: number
+    actualEndDate: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BorrowingRecordAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookId?: true
+  }
+
+  export type BorrowingRecordSumAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookId?: true
+  }
+
+  export type BorrowingRecordMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookId?: true
+    startDate?: true
+    endDate?: true
+    actualEndDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BorrowingRecordMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookId?: true
+    startDate?: true
+    endDate?: true
+    actualEndDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BorrowingRecordCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookId?: true
+    startDate?: true
+    endDate?: true
+    actualEndDate?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BorrowingRecordAggregateArgs = {
+    /**
+     * Filter which BorrowingRecord to aggregate.
+     */
+    where?: BorrowingRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BorrowingRecords to fetch.
+     */
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BorrowingRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BorrowingRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BorrowingRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BorrowingRecords
+    **/
+    _count?: true | BorrowingRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BorrowingRecordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BorrowingRecordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BorrowingRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BorrowingRecordMaxAggregateInputType
+  }
+
+  export type GetBorrowingRecordAggregateType<T extends BorrowingRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateBorrowingRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBorrowingRecord[P]>
+      : GetScalarType<T[P], AggregateBorrowingRecord[P]>
+  }
+
+
+
+
+  export type BorrowingRecordGroupByArgs = {
+    where?: BorrowingRecordWhereInput
+    orderBy?: Enumerable<BorrowingRecordOrderByWithAggregationInput>
+    by: BorrowingRecordScalarFieldEnum[]
+    having?: BorrowingRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BorrowingRecordCountAggregateInputType | true
+    _avg?: BorrowingRecordAvgAggregateInputType
+    _sum?: BorrowingRecordSumAggregateInputType
+    _min?: BorrowingRecordMinAggregateInputType
+    _max?: BorrowingRecordMaxAggregateInputType
+  }
+
+
+  export type BorrowingRecordGroupByOutputType = {
+    id: number
+    studentId: number
+    bookId: number
+    startDate: Date
+    endDate: Date | null
+    actualEndDate: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BorrowingRecordCountAggregateOutputType | null
+    _avg: BorrowingRecordAvgAggregateOutputType | null
+    _sum: BorrowingRecordSumAggregateOutputType | null
+    _min: BorrowingRecordMinAggregateOutputType | null
+    _max: BorrowingRecordMaxAggregateOutputType | null
+  }
+
+  type GetBorrowingRecordGroupByPayload<T extends BorrowingRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BorrowingRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BorrowingRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BorrowingRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], BorrowingRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BorrowingRecordSelect = {
+    id?: boolean
+    borrowingStudent?: boolean | StudentArgs
+    studentId?: boolean
+    borrowedBook?: boolean | BookArgs
+    bookId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    actualEndDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type BorrowingRecordInclude = {
+    borrowingStudent?: boolean | StudentArgs
+    borrowedBook?: boolean | BookArgs
+  }
+
+  export type BorrowingRecordGetPayload<S extends boolean | null | undefined | BorrowingRecordArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BorrowingRecord :
+    S extends undefined ? never :
+    S extends { include: any } & (BorrowingRecordArgs | BorrowingRecordFindManyArgs)
+    ? BorrowingRecord  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'borrowingStudent' ? StudentGetPayload<S['include'][P]> :
+        P extends 'borrowedBook' ? BookGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BorrowingRecordArgs | BorrowingRecordFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'borrowingStudent' ? StudentGetPayload<S['select'][P]> :
+        P extends 'borrowedBook' ? BookGetPayload<S['select'][P]> :  P extends keyof BorrowingRecord ? BorrowingRecord[P] : never
+  } 
+      : BorrowingRecord
+
+
+  type BorrowingRecordCountArgs = 
+    Omit<BorrowingRecordFindManyArgs, 'select' | 'include'> & {
+      select?: BorrowingRecordCountAggregateInputType | true
+    }
+
+  export interface BorrowingRecordDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one BorrowingRecord that matches the filter.
+     * @param {BorrowingRecordFindUniqueArgs} args - Arguments to find a BorrowingRecord
+     * @example
+     * // Get one BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BorrowingRecordFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BorrowingRecordFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BorrowingRecord'> extends True ? Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>> : Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T> | null, null>
+
+    /**
+     * Find one BorrowingRecord that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BorrowingRecordFindUniqueOrThrowArgs} args - Arguments to find a BorrowingRecord
+     * @example
+     * // Get one BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BorrowingRecordFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BorrowingRecordFindUniqueOrThrowArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Find the first BorrowingRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordFindFirstArgs} args - Arguments to find a BorrowingRecord
+     * @example
+     * // Get one BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BorrowingRecordFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BorrowingRecordFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BorrowingRecord'> extends True ? Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>> : Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T> | null, null>
+
+    /**
+     * Find the first BorrowingRecord that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordFindFirstOrThrowArgs} args - Arguments to find a BorrowingRecord
+     * @example
+     * // Get one BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BorrowingRecordFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BorrowingRecordFindFirstOrThrowArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Find zero or more BorrowingRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BorrowingRecords
+     * const borrowingRecords = await prisma.borrowingRecord.findMany()
+     * 
+     * // Get first 10 BorrowingRecords
+     * const borrowingRecords = await prisma.borrowingRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const borrowingRecordWithIdOnly = await prisma.borrowingRecord.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BorrowingRecordFindManyArgs>(
+      args?: SelectSubset<T, BorrowingRecordFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BorrowingRecordGetPayload<T>>>
+
+    /**
+     * Create a BorrowingRecord.
+     * @param {BorrowingRecordCreateArgs} args - Arguments to create a BorrowingRecord.
+     * @example
+     * // Create one BorrowingRecord
+     * const BorrowingRecord = await prisma.borrowingRecord.create({
+     *   data: {
+     *     // ... data to create a BorrowingRecord
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BorrowingRecordCreateArgs>(
+      args: SelectSubset<T, BorrowingRecordCreateArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Create many BorrowingRecords.
+     *     @param {BorrowingRecordCreateManyArgs} args - Arguments to create many BorrowingRecords.
+     *     @example
+     *     // Create many BorrowingRecords
+     *     const borrowingRecord = await prisma.borrowingRecord.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BorrowingRecordCreateManyArgs>(
+      args?: SelectSubset<T, BorrowingRecordCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BorrowingRecord.
+     * @param {BorrowingRecordDeleteArgs} args - Arguments to delete one BorrowingRecord.
+     * @example
+     * // Delete one BorrowingRecord
+     * const BorrowingRecord = await prisma.borrowingRecord.delete({
+     *   where: {
+     *     // ... filter to delete one BorrowingRecord
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BorrowingRecordDeleteArgs>(
+      args: SelectSubset<T, BorrowingRecordDeleteArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Update one BorrowingRecord.
+     * @param {BorrowingRecordUpdateArgs} args - Arguments to update one BorrowingRecord.
+     * @example
+     * // Update one BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BorrowingRecordUpdateArgs>(
+      args: SelectSubset<T, BorrowingRecordUpdateArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Delete zero or more BorrowingRecords.
+     * @param {BorrowingRecordDeleteManyArgs} args - Arguments to filter BorrowingRecords to delete.
+     * @example
+     * // Delete a few BorrowingRecords
+     * const { count } = await prisma.borrowingRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BorrowingRecordDeleteManyArgs>(
+      args?: SelectSubset<T, BorrowingRecordDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BorrowingRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BorrowingRecords
+     * const borrowingRecord = await prisma.borrowingRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BorrowingRecordUpdateManyArgs>(
+      args: SelectSubset<T, BorrowingRecordUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BorrowingRecord.
+     * @param {BorrowingRecordUpsertArgs} args - Arguments to update or create a BorrowingRecord.
+     * @example
+     * // Update or create a BorrowingRecord
+     * const borrowingRecord = await prisma.borrowingRecord.upsert({
+     *   create: {
+     *     // ... data to create a BorrowingRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BorrowingRecord we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BorrowingRecordUpsertArgs>(
+      args: SelectSubset<T, BorrowingRecordUpsertArgs>
+    ): Prisma__BorrowingRecordClient<BorrowingRecordGetPayload<T>>
+
+    /**
+     * Count the number of BorrowingRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordCountArgs} args - Arguments to filter BorrowingRecords to count.
+     * @example
+     * // Count the number of BorrowingRecords
+     * const count = await prisma.borrowingRecord.count({
+     *   where: {
+     *     // ... the filter for the BorrowingRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends BorrowingRecordCountArgs>(
+      args?: Subset<T, BorrowingRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BorrowingRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BorrowingRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BorrowingRecordAggregateArgs>(args: Subset<T, BorrowingRecordAggregateArgs>): Prisma.PrismaPromise<GetBorrowingRecordAggregateType<T>>
+
+    /**
+     * Group by BorrowingRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BorrowingRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BorrowingRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BorrowingRecordGroupByArgs['orderBy'] }
+        : { orderBy?: BorrowingRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BorrowingRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBorrowingRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BorrowingRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BorrowingRecordClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    borrowingStudent<T extends StudentArgs= {}>(args?: Subset<T, StudentArgs>): Prisma__StudentClient<StudentGetPayload<T> | Null>;
+
+    borrowedBook<T extends BookArgs= {}>(args?: Subset<T, BookArgs>): Prisma__BookClient<BookGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BorrowingRecord base type for findUnique actions
+   */
+  export type BorrowingRecordFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter, which BorrowingRecord to fetch.
+     */
+    where: BorrowingRecordWhereUniqueInput
+  }
+
+  /**
+   * BorrowingRecord findUnique
+   */
+  export interface BorrowingRecordFindUniqueArgs extends BorrowingRecordFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BorrowingRecord findUniqueOrThrow
+   */
+  export type BorrowingRecordFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter, which BorrowingRecord to fetch.
+     */
+    where: BorrowingRecordWhereUniqueInput
+  }
+
+
+  /**
+   * BorrowingRecord base type for findFirst actions
+   */
+  export type BorrowingRecordFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter, which BorrowingRecord to fetch.
+     */
+    where?: BorrowingRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BorrowingRecords to fetch.
+     */
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BorrowingRecords.
+     */
+    cursor?: BorrowingRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BorrowingRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BorrowingRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BorrowingRecords.
+     */
+    distinct?: Enumerable<BorrowingRecordScalarFieldEnum>
+  }
+
+  /**
+   * BorrowingRecord findFirst
+   */
+  export interface BorrowingRecordFindFirstArgs extends BorrowingRecordFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BorrowingRecord findFirstOrThrow
+   */
+  export type BorrowingRecordFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter, which BorrowingRecord to fetch.
+     */
+    where?: BorrowingRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BorrowingRecords to fetch.
+     */
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BorrowingRecords.
+     */
+    cursor?: BorrowingRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BorrowingRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BorrowingRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BorrowingRecords.
+     */
+    distinct?: Enumerable<BorrowingRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BorrowingRecord findMany
+   */
+  export type BorrowingRecordFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter, which BorrowingRecords to fetch.
+     */
+    where?: BorrowingRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BorrowingRecords to fetch.
+     */
+    orderBy?: Enumerable<BorrowingRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BorrowingRecords.
+     */
+    cursor?: BorrowingRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BorrowingRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BorrowingRecords.
+     */
+    skip?: number
+    distinct?: Enumerable<BorrowingRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BorrowingRecord create
+   */
+  export type BorrowingRecordCreateArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * The data needed to create a BorrowingRecord.
+     */
+    data: XOR<BorrowingRecordCreateInput, BorrowingRecordUncheckedCreateInput>
+  }
+
+
+  /**
+   * BorrowingRecord createMany
+   */
+  export type BorrowingRecordCreateManyArgs = {
+    /**
+     * The data used to create many BorrowingRecords.
+     */
+    data: Enumerable<BorrowingRecordCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * BorrowingRecord update
+   */
+  export type BorrowingRecordUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * The data needed to update a BorrowingRecord.
+     */
+    data: XOR<BorrowingRecordUpdateInput, BorrowingRecordUncheckedUpdateInput>
+    /**
+     * Choose, which BorrowingRecord to update.
+     */
+    where: BorrowingRecordWhereUniqueInput
+  }
+
+
+  /**
+   * BorrowingRecord updateMany
+   */
+  export type BorrowingRecordUpdateManyArgs = {
+    /**
+     * The data used to update BorrowingRecords.
+     */
+    data: XOR<BorrowingRecordUpdateManyMutationInput, BorrowingRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which BorrowingRecords to update
+     */
+    where?: BorrowingRecordWhereInput
+  }
+
+
+  /**
+   * BorrowingRecord upsert
+   */
+  export type BorrowingRecordUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * The filter to search for the BorrowingRecord to update in case it exists.
+     */
+    where: BorrowingRecordWhereUniqueInput
+    /**
+     * In case the BorrowingRecord found by the `where` argument doesn't exist, create a new BorrowingRecord with this data.
+     */
+    create: XOR<BorrowingRecordCreateInput, BorrowingRecordUncheckedCreateInput>
+    /**
+     * In case the BorrowingRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BorrowingRecordUpdateInput, BorrowingRecordUncheckedUpdateInput>
+  }
+
+
+  /**
+   * BorrowingRecord delete
+   */
+  export type BorrowingRecordDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+    /**
+     * Filter which BorrowingRecord to delete.
+     */
+    where: BorrowingRecordWhereUniqueInput
+  }
+
+
+  /**
+   * BorrowingRecord deleteMany
+   */
+  export type BorrowingRecordDeleteManyArgs = {
+    /**
+     * Filter which BorrowingRecords to delete
+     */
+    where?: BorrowingRecordWhereInput
+  }
+
+
+  /**
+   * BorrowingRecord without action
+   */
+  export type BorrowingRecordArgs = {
+    /**
+     * Select specific fields to fetch from the BorrowingRecord
+     */
+    select?: BorrowingRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BorrowingRecordInclude | null
+  }
+
+
+
+  /**
+   * Model RequestRecord
+   */
+
+
+  export type AggregateRequestRecord = {
+    _count: RequestRecordCountAggregateOutputType | null
+    _avg: RequestRecordAvgAggregateOutputType | null
+    _sum: RequestRecordSumAggregateOutputType | null
+    _min: RequestRecordMinAggregateOutputType | null
+    _max: RequestRecordMaxAggregateOutputType | null
+  }
+
+  export type RequestRecordAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookTitleId: number | null
+    requestingLibraryId: number | null
+    requestedLibraryId: number | null
+    bookId: number | null
+  }
+
+  export type RequestRecordSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookTitleId: number | null
+    requestingLibraryId: number | null
+    requestedLibraryId: number | null
+    bookId: number | null
+  }
+
+  export type RequestRecordMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookTitleId: number | null
+    requestingLibraryId: number | null
+    requestedLibraryId: number | null
+    requestDate: Date | null
+    acquiredDate: Date | null
+    returnDate: Date | null
+    bookId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RequestRecordMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    bookTitleId: number | null
+    requestingLibraryId: number | null
+    requestedLibraryId: number | null
+    requestDate: Date | null
+    acquiredDate: Date | null
+    returnDate: Date | null
+    bookId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RequestRecordCountAggregateOutputType = {
+    id: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: number
+    acquiredDate: number
+    returnDate: number
+    bookId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RequestRecordAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookTitleId?: true
+    requestingLibraryId?: true
+    requestedLibraryId?: true
+    bookId?: true
+  }
+
+  export type RequestRecordSumAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookTitleId?: true
+    requestingLibraryId?: true
+    requestedLibraryId?: true
+    bookId?: true
+  }
+
+  export type RequestRecordMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookTitleId?: true
+    requestingLibraryId?: true
+    requestedLibraryId?: true
+    requestDate?: true
+    acquiredDate?: true
+    returnDate?: true
+    bookId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RequestRecordMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookTitleId?: true
+    requestingLibraryId?: true
+    requestedLibraryId?: true
+    requestDate?: true
+    acquiredDate?: true
+    returnDate?: true
+    bookId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RequestRecordCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    bookTitleId?: true
+    requestingLibraryId?: true
+    requestedLibraryId?: true
+    requestDate?: true
+    acquiredDate?: true
+    returnDate?: true
+    bookId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RequestRecordAggregateArgs = {
+    /**
+     * Filter which RequestRecord to aggregate.
+     */
+    where?: RequestRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RequestRecords to fetch.
+     */
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RequestRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RequestRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RequestRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RequestRecords
+    **/
+    _count?: true | RequestRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RequestRecordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RequestRecordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RequestRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RequestRecordMaxAggregateInputType
+  }
+
+  export type GetRequestRecordAggregateType<T extends RequestRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateRequestRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRequestRecord[P]>
+      : GetScalarType<T[P], AggregateRequestRecord[P]>
+  }
+
+
+
+
+  export type RequestRecordGroupByArgs = {
+    where?: RequestRecordWhereInput
+    orderBy?: Enumerable<RequestRecordOrderByWithAggregationInput>
+    by: RequestRecordScalarFieldEnum[]
+    having?: RequestRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RequestRecordCountAggregateInputType | true
+    _avg?: RequestRecordAvgAggregateInputType
+    _sum?: RequestRecordSumAggregateInputType
+    _min?: RequestRecordMinAggregateInputType
+    _max?: RequestRecordMaxAggregateInputType
+  }
+
+
+  export type RequestRecordGroupByOutputType = {
+    id: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date
+    acquiredDate: Date | null
+    returnDate: Date | null
+    bookId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: RequestRecordCountAggregateOutputType | null
+    _avg: RequestRecordAvgAggregateOutputType | null
+    _sum: RequestRecordSumAggregateOutputType | null
+    _min: RequestRecordMinAggregateOutputType | null
+    _max: RequestRecordMaxAggregateOutputType | null
+  }
+
+  type GetRequestRecordGroupByPayload<T extends RequestRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RequestRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RequestRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RequestRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], RequestRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RequestRecordSelect = {
+    id?: boolean
+    requestingStudent?: boolean | StudentArgs
+    studentId?: boolean
+    requestedBookTitle?: boolean | BookTitleArgs
+    bookTitleId?: boolean
+    requestingLibrary?: boolean | LibraryArgs
+    requestingLibraryId?: boolean
+    requestedLibrary?: boolean | LibraryArgs
+    requestedLibraryId?: boolean
+    requestDate?: boolean
+    acquiredDate?: boolean
+    returnDate?: boolean
+    acquiredBook?: boolean | BookArgs
+    bookId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type RequestRecordInclude = {
+    requestingStudent?: boolean | StudentArgs
+    requestedBookTitle?: boolean | BookTitleArgs
+    requestingLibrary?: boolean | LibraryArgs
+    requestedLibrary?: boolean | LibraryArgs
+    acquiredBook?: boolean | BookArgs
+  }
+
+  export type RequestRecordGetPayload<S extends boolean | null | undefined | RequestRecordArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RequestRecord :
+    S extends undefined ? never :
+    S extends { include: any } & (RequestRecordArgs | RequestRecordFindManyArgs)
+    ? RequestRecord  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'requestingStudent' ? StudentGetPayload<S['include'][P]> :
+        P extends 'requestedBookTitle' ? BookTitleGetPayload<S['include'][P]> :
+        P extends 'requestingLibrary' ? LibraryGetPayload<S['include'][P]> :
+        P extends 'requestedLibrary' ? LibraryGetPayload<S['include'][P]> :
+        P extends 'acquiredBook' ? BookGetPayload<S['include'][P]> | null :  never
+  } 
+    : S extends { select: any } & (RequestRecordArgs | RequestRecordFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'requestingStudent' ? StudentGetPayload<S['select'][P]> :
+        P extends 'requestedBookTitle' ? BookTitleGetPayload<S['select'][P]> :
+        P extends 'requestingLibrary' ? LibraryGetPayload<S['select'][P]> :
+        P extends 'requestedLibrary' ? LibraryGetPayload<S['select'][P]> :
+        P extends 'acquiredBook' ? BookGetPayload<S['select'][P]> | null :  P extends keyof RequestRecord ? RequestRecord[P] : never
+  } 
+      : RequestRecord
+
+
+  type RequestRecordCountArgs = 
+    Omit<RequestRecordFindManyArgs, 'select' | 'include'> & {
+      select?: RequestRecordCountAggregateInputType | true
+    }
+
+  export interface RequestRecordDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one RequestRecord that matches the filter.
+     * @param {RequestRecordFindUniqueArgs} args - Arguments to find a RequestRecord
+     * @example
+     * // Get one RequestRecord
+     * const requestRecord = await prisma.requestRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RequestRecordFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RequestRecordFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RequestRecord'> extends True ? Prisma__RequestRecordClient<RequestRecordGetPayload<T>> : Prisma__RequestRecordClient<RequestRecordGetPayload<T> | null, null>
+
+    /**
+     * Find one RequestRecord that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RequestRecordFindUniqueOrThrowArgs} args - Arguments to find a RequestRecord
+     * @example
+     * // Get one RequestRecord
+     * const requestRecord = await prisma.requestRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RequestRecordFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RequestRecordFindUniqueOrThrowArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Find the first RequestRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordFindFirstArgs} args - Arguments to find a RequestRecord
+     * @example
+     * // Get one RequestRecord
+     * const requestRecord = await prisma.requestRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RequestRecordFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RequestRecordFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RequestRecord'> extends True ? Prisma__RequestRecordClient<RequestRecordGetPayload<T>> : Prisma__RequestRecordClient<RequestRecordGetPayload<T> | null, null>
+
+    /**
+     * Find the first RequestRecord that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordFindFirstOrThrowArgs} args - Arguments to find a RequestRecord
+     * @example
+     * // Get one RequestRecord
+     * const requestRecord = await prisma.requestRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RequestRecordFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RequestRecordFindFirstOrThrowArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Find zero or more RequestRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RequestRecords
+     * const requestRecords = await prisma.requestRecord.findMany()
+     * 
+     * // Get first 10 RequestRecords
+     * const requestRecords = await prisma.requestRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const requestRecordWithIdOnly = await prisma.requestRecord.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends RequestRecordFindManyArgs>(
+      args?: SelectSubset<T, RequestRecordFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RequestRecordGetPayload<T>>>
+
+    /**
+     * Create a RequestRecord.
+     * @param {RequestRecordCreateArgs} args - Arguments to create a RequestRecord.
+     * @example
+     * // Create one RequestRecord
+     * const RequestRecord = await prisma.requestRecord.create({
+     *   data: {
+     *     // ... data to create a RequestRecord
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RequestRecordCreateArgs>(
+      args: SelectSubset<T, RequestRecordCreateArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Create many RequestRecords.
+     *     @param {RequestRecordCreateManyArgs} args - Arguments to create many RequestRecords.
+     *     @example
+     *     // Create many RequestRecords
+     *     const requestRecord = await prisma.requestRecord.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RequestRecordCreateManyArgs>(
+      args?: SelectSubset<T, RequestRecordCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RequestRecord.
+     * @param {RequestRecordDeleteArgs} args - Arguments to delete one RequestRecord.
+     * @example
+     * // Delete one RequestRecord
+     * const RequestRecord = await prisma.requestRecord.delete({
+     *   where: {
+     *     // ... filter to delete one RequestRecord
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RequestRecordDeleteArgs>(
+      args: SelectSubset<T, RequestRecordDeleteArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Update one RequestRecord.
+     * @param {RequestRecordUpdateArgs} args - Arguments to update one RequestRecord.
+     * @example
+     * // Update one RequestRecord
+     * const requestRecord = await prisma.requestRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RequestRecordUpdateArgs>(
+      args: SelectSubset<T, RequestRecordUpdateArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Delete zero or more RequestRecords.
+     * @param {RequestRecordDeleteManyArgs} args - Arguments to filter RequestRecords to delete.
+     * @example
+     * // Delete a few RequestRecords
+     * const { count } = await prisma.requestRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RequestRecordDeleteManyArgs>(
+      args?: SelectSubset<T, RequestRecordDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RequestRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RequestRecords
+     * const requestRecord = await prisma.requestRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RequestRecordUpdateManyArgs>(
+      args: SelectSubset<T, RequestRecordUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RequestRecord.
+     * @param {RequestRecordUpsertArgs} args - Arguments to update or create a RequestRecord.
+     * @example
+     * // Update or create a RequestRecord
+     * const requestRecord = await prisma.requestRecord.upsert({
+     *   create: {
+     *     // ... data to create a RequestRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RequestRecord we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RequestRecordUpsertArgs>(
+      args: SelectSubset<T, RequestRecordUpsertArgs>
+    ): Prisma__RequestRecordClient<RequestRecordGetPayload<T>>
+
+    /**
+     * Count the number of RequestRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordCountArgs} args - Arguments to filter RequestRecords to count.
+     * @example
+     * // Count the number of RequestRecords
+     * const count = await prisma.requestRecord.count({
+     *   where: {
+     *     // ... the filter for the RequestRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends RequestRecordCountArgs>(
+      args?: Subset<T, RequestRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RequestRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RequestRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RequestRecordAggregateArgs>(args: Subset<T, RequestRecordAggregateArgs>): Prisma.PrismaPromise<GetRequestRecordAggregateType<T>>
+
+    /**
+     * Group by RequestRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RequestRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RequestRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RequestRecordGroupByArgs['orderBy'] }
+        : { orderBy?: RequestRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RequestRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRequestRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RequestRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__RequestRecordClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    requestingStudent<T extends StudentArgs= {}>(args?: Subset<T, StudentArgs>): Prisma__StudentClient<StudentGetPayload<T> | Null>;
+
+    requestedBookTitle<T extends BookTitleArgs= {}>(args?: Subset<T, BookTitleArgs>): Prisma__BookTitleClient<BookTitleGetPayload<T> | Null>;
+
+    requestingLibrary<T extends LibraryArgs= {}>(args?: Subset<T, LibraryArgs>): Prisma__LibraryClient<LibraryGetPayload<T> | Null>;
+
+    requestedLibrary<T extends LibraryArgs= {}>(args?: Subset<T, LibraryArgs>): Prisma__LibraryClient<LibraryGetPayload<T> | Null>;
+
+    acquiredBook<T extends BookArgs= {}>(args?: Subset<T, BookArgs>): Prisma__BookClient<BookGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RequestRecord base type for findUnique actions
+   */
+  export type RequestRecordFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter, which RequestRecord to fetch.
+     */
+    where: RequestRecordWhereUniqueInput
+  }
+
+  /**
+   * RequestRecord findUnique
+   */
+  export interface RequestRecordFindUniqueArgs extends RequestRecordFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RequestRecord findUniqueOrThrow
+   */
+  export type RequestRecordFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter, which RequestRecord to fetch.
+     */
+    where: RequestRecordWhereUniqueInput
+  }
+
+
+  /**
+   * RequestRecord base type for findFirst actions
+   */
+  export type RequestRecordFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter, which RequestRecord to fetch.
+     */
+    where?: RequestRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RequestRecords to fetch.
+     */
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RequestRecords.
+     */
+    cursor?: RequestRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RequestRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RequestRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RequestRecords.
+     */
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+  /**
+   * RequestRecord findFirst
+   */
+  export interface RequestRecordFindFirstArgs extends RequestRecordFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RequestRecord findFirstOrThrow
+   */
+  export type RequestRecordFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter, which RequestRecord to fetch.
+     */
+    where?: RequestRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RequestRecords to fetch.
+     */
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RequestRecords.
+     */
+    cursor?: RequestRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RequestRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RequestRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RequestRecords.
+     */
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * RequestRecord findMany
+   */
+  export type RequestRecordFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter, which RequestRecords to fetch.
+     */
+    where?: RequestRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RequestRecords to fetch.
+     */
+    orderBy?: Enumerable<RequestRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RequestRecords.
+     */
+    cursor?: RequestRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RequestRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RequestRecords.
+     */
+    skip?: number
+    distinct?: Enumerable<RequestRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * RequestRecord create
+   */
+  export type RequestRecordCreateArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * The data needed to create a RequestRecord.
+     */
+    data: XOR<RequestRecordCreateInput, RequestRecordUncheckedCreateInput>
+  }
+
+
+  /**
+   * RequestRecord createMany
+   */
+  export type RequestRecordCreateManyArgs = {
+    /**
+     * The data used to create many RequestRecords.
+     */
+    data: Enumerable<RequestRecordCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * RequestRecord update
+   */
+  export type RequestRecordUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * The data needed to update a RequestRecord.
+     */
+    data: XOR<RequestRecordUpdateInput, RequestRecordUncheckedUpdateInput>
+    /**
+     * Choose, which RequestRecord to update.
+     */
+    where: RequestRecordWhereUniqueInput
+  }
+
+
+  /**
+   * RequestRecord updateMany
+   */
+  export type RequestRecordUpdateManyArgs = {
+    /**
+     * The data used to update RequestRecords.
+     */
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which RequestRecords to update
+     */
+    where?: RequestRecordWhereInput
+  }
+
+
+  /**
+   * RequestRecord upsert
+   */
+  export type RequestRecordUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * The filter to search for the RequestRecord to update in case it exists.
+     */
+    where: RequestRecordWhereUniqueInput
+    /**
+     * In case the RequestRecord found by the `where` argument doesn't exist, create a new RequestRecord with this data.
+     */
+    create: XOR<RequestRecordCreateInput, RequestRecordUncheckedCreateInput>
+    /**
+     * In case the RequestRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RequestRecordUpdateInput, RequestRecordUncheckedUpdateInput>
+  }
+
+
+  /**
+   * RequestRecord delete
+   */
+  export type RequestRecordDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+    /**
+     * Filter which RequestRecord to delete.
+     */
+    where: RequestRecordWhereUniqueInput
+  }
+
+
+  /**
+   * RequestRecord deleteMany
+   */
+  export type RequestRecordDeleteManyArgs = {
+    /**
+     * Filter which RequestRecords to delete
+     */
+    where?: RequestRecordWhereInput
+  }
+
+
+  /**
+   * RequestRecord without action
+   */
+  export type RequestRecordArgs = {
+    /**
+     * Select specific fields to fetch from the RequestRecord
+     */
+    select?: RequestRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RequestRecordInclude | null
+  }
+
+
+
+  /**
    * Model TodoList
    */
 
@@ -36356,14 +46148,72 @@ export namespace Prisma {
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
-  export const BinWashUserScalarFieldEnum: {
+  export const AuthorScalarFieldEnum: {
     id: 'id',
     name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
+  export type AuthorScalarFieldEnum = (typeof AuthorScalarFieldEnum)[keyof typeof AuthorScalarFieldEnum]
+
+
+  export const BinWashUserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    balance: 'balance',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
   export type BinWashUserScalarFieldEnum = (typeof BinWashUserScalarFieldEnum)[keyof typeof BinWashUserScalarFieldEnum]
+
+
+  export const BookCategoryScalarFieldEnum: {
+    id: 'id',
+    category: 'category',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BookCategoryScalarFieldEnum = (typeof BookCategoryScalarFieldEnum)[keyof typeof BookCategoryScalarFieldEnum]
+
+
+  export const BookScalarFieldEnum: {
+    id: 'id',
+    bookTitleId: 'bookTitleId',
+    libraryId: 'libraryId',
+    isAvailable: 'isAvailable',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BookScalarFieldEnum = (typeof BookScalarFieldEnum)[keyof typeof BookScalarFieldEnum]
+
+
+  export const BookTitleScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    isbn: 'isbn',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BookTitleScalarFieldEnum = (typeof BookTitleScalarFieldEnum)[keyof typeof BookTitleScalarFieldEnum]
+
+
+  export const BorrowingRecordScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    bookId: 'bookId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    actualEndDate: 'actualEndDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BorrowingRecordScalarFieldEnum = (typeof BorrowingRecordScalarFieldEnum)[keyof typeof BorrowingRecordScalarFieldEnum]
 
 
   export const BranchScalarFieldEnum: {
@@ -36481,6 +46331,18 @@ export namespace Prisma {
   export type HashTagScalarFieldEnum = (typeof HashTagScalarFieldEnum)[keyof typeof HashTagScalarFieldEnum]
 
 
+  export const LibraryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    location: 'location',
+    universityId: 'universityId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LibraryScalarFieldEnum = (typeof LibraryScalarFieldEnum)[keyof typeof LibraryScalarFieldEnum]
+
+
   export const MenuScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -36571,6 +46433,23 @@ export namespace Prisma {
   export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
+  export const RequestRecordScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    bookTitleId: 'bookTitleId',
+    requestingLibraryId: 'requestingLibraryId',
+    requestedLibraryId: 'requestedLibraryId',
+    requestDate: 'requestDate',
+    acquiredDate: 'acquiredDate',
+    returnDate: 'returnDate',
+    bookId: 'bookId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RequestRecordScalarFieldEnum = (typeof RequestRecordScalarFieldEnum)[keyof typeof RequestRecordScalarFieldEnum]
+
+
   export const RoundScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
@@ -36586,6 +46465,17 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const StudentScalarFieldEnum: {
+    id: 'id',
+    Name: 'Name',
+    universityId: 'universityId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
 
 
   export const TodoListScalarFieldEnum: {
@@ -36632,6 +46522,17 @@ export namespace Prisma {
   };
 
   export type TweetScalarFieldEnum = (typeof TweetScalarFieldEnum)[keyof typeof TweetScalarFieldEnum]
+
+
+  export const UniversityScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    location: 'location',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UniversityScalarFieldEnum = (typeof UniversityScalarFieldEnum)[keyof typeof UniversityScalarFieldEnum]
 
 
   export const UsageRecordScalarFieldEnum: {
@@ -37200,6 +47101,7 @@ export namespace Prisma {
     NOT?: Enumerable<BinWashUserWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
+    balance?: FloatFilter | number
     owningBranches?: BranchListRelationFilter
     wMMaintenanceRecords?: WMMaintenanceRecordListRelationFilter
     usageRecords?: UsageRecordListRelationFilter
@@ -37211,6 +47113,7 @@ export namespace Prisma {
   export type BinWashUserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    balance?: SortOrder
     owningBranches?: BranchOrderByRelationAggregateInput
     wMMaintenanceRecords?: WMMaintenanceRecordOrderByRelationAggregateInput
     usageRecords?: UsageRecordOrderByRelationAggregateInput
@@ -37226,6 +47129,7 @@ export namespace Prisma {
   export type BinWashUserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    balance?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BinWashUserCountOrderByAggregateInput
@@ -37241,6 +47145,7 @@ export namespace Prisma {
     NOT?: Enumerable<BinWashUserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
+    balance?: FloatWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -37949,6 +47854,517 @@ export namespace Prisma {
     messengerText?: StringWithAggregatesFilter | string
     fromUserId?: IntWithAggregatesFilter | number
     toUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type AuthorWhereInput = {
+    AND?: Enumerable<AuthorWhereInput>
+    OR?: Enumerable<AuthorWhereInput>
+    NOT?: Enumerable<AuthorWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    bookTitles?: BookTitleListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type AuthorOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    bookTitles?: BookTitleOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AuthorWhereUniqueInput = {
+    id?: number
+  }
+
+  export type AuthorOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AuthorCountOrderByAggregateInput
+    _avg?: AuthorAvgOrderByAggregateInput
+    _max?: AuthorMaxOrderByAggregateInput
+    _min?: AuthorMinOrderByAggregateInput
+    _sum?: AuthorSumOrderByAggregateInput
+  }
+
+  export type AuthorScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<AuthorScalarWhereWithAggregatesInput>
+    OR?: Enumerable<AuthorScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<AuthorScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BookTitleWhereInput = {
+    AND?: Enumerable<BookTitleWhereInput>
+    OR?: Enumerable<BookTitleWhereInput>
+    NOT?: Enumerable<BookTitleWhereInput>
+    id?: IntFilter | number
+    title?: StringFilter | string
+    isbn?: StringFilter | string
+    authors?: AuthorListRelationFilter
+    categories?: BookCategoryListRelationFilter
+    books?: BookListRelationFilter
+    requestRecords?: RequestRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookTitleOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    isbn?: SortOrder
+    authors?: AuthorOrderByRelationAggregateInput
+    categories?: BookCategoryOrderByRelationAggregateInput
+    books?: BookOrderByRelationAggregateInput
+    requestRecords?: RequestRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookTitleWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BookTitleOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    isbn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BookTitleCountOrderByAggregateInput
+    _avg?: BookTitleAvgOrderByAggregateInput
+    _max?: BookTitleMaxOrderByAggregateInput
+    _min?: BookTitleMinOrderByAggregateInput
+    _sum?: BookTitleSumOrderByAggregateInput
+  }
+
+  export type BookTitleScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BookTitleScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BookTitleScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BookTitleScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    title?: StringWithAggregatesFilter | string
+    isbn?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BookCategoryWhereInput = {
+    AND?: Enumerable<BookCategoryWhereInput>
+    OR?: Enumerable<BookCategoryWhereInput>
+    NOT?: Enumerable<BookCategoryWhereInput>
+    id?: IntFilter | number
+    category?: StringFilter | string
+    bookTitles?: BookTitleListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    category?: SortOrder
+    bookTitles?: BookTitleOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookCategoryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BookCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BookCategoryCountOrderByAggregateInput
+    _avg?: BookCategoryAvgOrderByAggregateInput
+    _max?: BookCategoryMaxOrderByAggregateInput
+    _min?: BookCategoryMinOrderByAggregateInput
+    _sum?: BookCategorySumOrderByAggregateInput
+  }
+
+  export type BookCategoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BookCategoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BookCategoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BookCategoryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    category?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BookWhereInput = {
+    AND?: Enumerable<BookWhereInput>
+    OR?: Enumerable<BookWhereInput>
+    NOT?: Enumerable<BookWhereInput>
+    id?: IntFilter | number
+    title?: XOR<BookTitleRelationFilter, BookTitleWhereInput>
+    bookTitleId?: IntFilter | number
+    belongsToLibrary?: XOR<LibraryRelationFilter, LibraryWhereInput>
+    libraryId?: IntFilter | number
+    isAvailable?: BoolFilter | boolean
+    borrowingRecords?: BorrowingRecordListRelationFilter
+    requestRecords?: RequestRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: BookTitleOrderByWithRelationInput
+    bookTitleId?: SortOrder
+    belongsToLibrary?: LibraryOrderByWithRelationInput
+    libraryId?: SortOrder
+    isAvailable?: SortOrder
+    borrowingRecords?: BorrowingRecordOrderByRelationAggregateInput
+    requestRecords?: RequestRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BookOrderByWithAggregationInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+    isAvailable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BookCountOrderByAggregateInput
+    _avg?: BookAvgOrderByAggregateInput
+    _max?: BookMaxOrderByAggregateInput
+    _min?: BookMinOrderByAggregateInput
+    _sum?: BookSumOrderByAggregateInput
+  }
+
+  export type BookScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BookScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BookScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BookScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    bookTitleId?: IntWithAggregatesFilter | number
+    libraryId?: IntWithAggregatesFilter | number
+    isAvailable?: BoolWithAggregatesFilter | boolean
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type LibraryWhereInput = {
+    AND?: Enumerable<LibraryWhereInput>
+    OR?: Enumerable<LibraryWhereInput>
+    NOT?: Enumerable<LibraryWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    location?: StringFilter | string
+    belongsToUniversity?: XOR<UniversityRelationFilter, UniversityWhereInput>
+    universityId?: IntFilter | number
+    books?: BookListRelationFilter
+    requestingRecords?: RequestRecordListRelationFilter
+    requestedRecords?: RequestRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type LibraryOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    belongsToUniversity?: UniversityOrderByWithRelationInput
+    universityId?: SortOrder
+    books?: BookOrderByRelationAggregateInput
+    requestingRecords?: RequestRecordOrderByRelationAggregateInput
+    requestedRecords?: RequestRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LibraryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type LibraryOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LibraryCountOrderByAggregateInput
+    _avg?: LibraryAvgOrderByAggregateInput
+    _max?: LibraryMaxOrderByAggregateInput
+    _min?: LibraryMinOrderByAggregateInput
+    _sum?: LibrarySumOrderByAggregateInput
+  }
+
+  export type LibraryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<LibraryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<LibraryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<LibraryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    location?: StringWithAggregatesFilter | string
+    universityId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UniversityWhereInput = {
+    AND?: Enumerable<UniversityWhereInput>
+    OR?: Enumerable<UniversityWhereInput>
+    NOT?: Enumerable<UniversityWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    location?: StringFilter | string
+    libraries?: LibraryListRelationFilter
+    students?: StudentListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UniversityOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    libraries?: LibraryOrderByRelationAggregateInput
+    students?: StudentOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversityWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UniversityOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UniversityCountOrderByAggregateInput
+    _avg?: UniversityAvgOrderByAggregateInput
+    _max?: UniversityMaxOrderByAggregateInput
+    _min?: UniversityMinOrderByAggregateInput
+    _sum?: UniversitySumOrderByAggregateInput
+  }
+
+  export type UniversityScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UniversityScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UniversityScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UniversityScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    location?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type StudentWhereInput = {
+    AND?: Enumerable<StudentWhereInput>
+    OR?: Enumerable<StudentWhereInput>
+    NOT?: Enumerable<StudentWhereInput>
+    id?: IntFilter | number
+    Name?: StringFilter | string
+    belongsToUniversity?: XOR<UniversityRelationFilter, UniversityWhereInput>
+    universityId?: IntFilter | number
+    borrowingRecords?: BorrowingRecordListRelationFilter
+    requestRecords?: RequestRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type StudentOrderByWithRelationInput = {
+    id?: SortOrder
+    Name?: SortOrder
+    belongsToUniversity?: UniversityOrderByWithRelationInput
+    universityId?: SortOrder
+    borrowingRecords?: BorrowingRecordOrderByRelationAggregateInput
+    requestRecords?: RequestRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type StudentOrderByWithAggregationInput = {
+    id?: SortOrder
+    Name?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: StudentCountOrderByAggregateInput
+    _avg?: StudentAvgOrderByAggregateInput
+    _max?: StudentMaxOrderByAggregateInput
+    _min?: StudentMinOrderByAggregateInput
+    _sum?: StudentSumOrderByAggregateInput
+  }
+
+  export type StudentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<StudentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<StudentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<StudentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    Name?: StringWithAggregatesFilter | string
+    universityId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BorrowingRecordWhereInput = {
+    AND?: Enumerable<BorrowingRecordWhereInput>
+    OR?: Enumerable<BorrowingRecordWhereInput>
+    NOT?: Enumerable<BorrowingRecordWhereInput>
+    id?: IntFilter | number
+    borrowingStudent?: XOR<StudentRelationFilter, StudentWhereInput>
+    studentId?: IntFilter | number
+    borrowedBook?: XOR<BookRelationFilter, BookWhereInput>
+    bookId?: IntFilter | number
+    startDate?: DateTimeFilter | Date | string
+    endDate?: DateTimeNullableFilter | Date | string | null
+    actualEndDate?: DateTimeNullableFilter | Date | string | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BorrowingRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    borrowingStudent?: StudentOrderByWithRelationInput
+    studentId?: SortOrder
+    borrowedBook?: BookOrderByWithRelationInput
+    bookId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualEndDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BorrowingRecordWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BorrowingRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualEndDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BorrowingRecordCountOrderByAggregateInput
+    _avg?: BorrowingRecordAvgOrderByAggregateInput
+    _max?: BorrowingRecordMaxOrderByAggregateInput
+    _min?: BorrowingRecordMinOrderByAggregateInput
+    _sum?: BorrowingRecordSumOrderByAggregateInput
+  }
+
+  export type BorrowingRecordScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BorrowingRecordScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BorrowingRecordScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BorrowingRecordScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    studentId?: IntWithAggregatesFilter | number
+    bookId?: IntWithAggregatesFilter | number
+    startDate?: DateTimeWithAggregatesFilter | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    actualEndDate?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type RequestRecordWhereInput = {
+    AND?: Enumerable<RequestRecordWhereInput>
+    OR?: Enumerable<RequestRecordWhereInput>
+    NOT?: Enumerable<RequestRecordWhereInput>
+    id?: IntFilter | number
+    requestingStudent?: XOR<StudentRelationFilter, StudentWhereInput>
+    studentId?: IntFilter | number
+    requestedBookTitle?: XOR<BookTitleRelationFilter, BookTitleWhereInput>
+    bookTitleId?: IntFilter | number
+    requestingLibrary?: XOR<LibraryRelationFilter, LibraryWhereInput>
+    requestingLibraryId?: IntFilter | number
+    requestedLibrary?: XOR<LibraryRelationFilter, LibraryWhereInput>
+    requestedLibraryId?: IntFilter | number
+    requestDate?: DateTimeFilter | Date | string
+    acquiredDate?: DateTimeNullableFilter | Date | string | null
+    returnDate?: DateTimeNullableFilter | Date | string | null
+    acquiredBook?: XOR<BookRelationFilter, BookWhereInput> | null
+    bookId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type RequestRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    requestingStudent?: StudentOrderByWithRelationInput
+    studentId?: SortOrder
+    requestedBookTitle?: BookTitleOrderByWithRelationInput
+    bookTitleId?: SortOrder
+    requestingLibrary?: LibraryOrderByWithRelationInput
+    requestingLibraryId?: SortOrder
+    requestedLibrary?: LibraryOrderByWithRelationInput
+    requestedLibraryId?: SortOrder
+    requestDate?: SortOrder
+    acquiredDate?: SortOrder
+    returnDate?: SortOrder
+    acquiredBook?: BookOrderByWithRelationInput
+    bookId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RequestRecordWhereUniqueInput = {
+    id?: number
+  }
+
+  export type RequestRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    requestDate?: SortOrder
+    acquiredDate?: SortOrder
+    returnDate?: SortOrder
+    bookId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RequestRecordCountOrderByAggregateInput
+    _avg?: RequestRecordAvgOrderByAggregateInput
+    _max?: RequestRecordMaxOrderByAggregateInput
+    _min?: RequestRecordMinOrderByAggregateInput
+    _sum?: RequestRecordSumOrderByAggregateInput
+  }
+
+  export type RequestRecordScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RequestRecordScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RequestRecordScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RequestRecordScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    studentId?: IntWithAggregatesFilter | number
+    bookTitleId?: IntWithAggregatesFilter | number
+    requestingLibraryId?: IntWithAggregatesFilter | number
+    requestedLibraryId?: IntWithAggregatesFilter | number
+    requestDate?: DateTimeWithAggregatesFilter | Date | string
+    acquiredDate?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    returnDate?: DateTimeNullableWithAggregatesFilter | Date | string | null
+    bookId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -39104,6 +49520,7 @@ export namespace Prisma {
 
   export type BinWashUserCreateInput = {
     name: string
+    balance: number
     owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
@@ -39115,6 +49532,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedCreateInput = {
     id?: number
     name: string
+    balance: number
     owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
@@ -39125,6 +49543,7 @@ export namespace Prisma {
 
   export type BinWashUserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
@@ -39136,6 +49555,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
@@ -39147,12 +49567,14 @@ export namespace Prisma {
   export type BinWashUserCreateManyInput = {
     id?: number
     name: string
+    balance: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type BinWashUserUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39160,6 +49582,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39984,6 +50407,595 @@ export namespace Prisma {
     messengerText?: StringFieldUpdateOperationsInput | string
     fromUserId?: IntFieldUpdateOperationsInput | number
     toUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorCreateInput = {
+    name: string
+    bookTitles?: BookTitleCreateNestedManyWithoutAuthorsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorUncheckedCreateInput = {
+    id?: number
+    name: string
+    bookTitles?: BookTitleUncheckedCreateNestedManyWithoutAuthorsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    bookTitles?: BookTitleUpdateManyWithoutAuthorsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    bookTitles?: BookTitleUncheckedUpdateManyWithoutAuthorsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleCreateInput = {
+    title: string
+    isbn: string
+    authors?: AuthorCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryCreateNestedManyWithoutBookTitlesInput
+    books?: BookCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUncheckedCreateInput = {
+    id?: number
+    title: string
+    isbn: string
+    authors?: AuthorUncheckedCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryUncheckedCreateNestedManyWithoutBookTitlesInput
+    books?: BookUncheckedCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUncheckedUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUncheckedUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUncheckedUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleCreateManyInput = {
+    id?: number
+    title: string
+    isbn: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryCreateInput = {
+    category: string
+    bookTitles?: BookTitleCreateNestedManyWithoutCategoriesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCategoryUncheckedCreateInput = {
+    id?: number
+    category: string
+    bookTitles?: BookTitleUncheckedCreateNestedManyWithoutCategoriesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCategoryUpdateInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    bookTitles?: BookTitleUpdateManyWithoutCategoriesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    bookTitles?: BookTitleUncheckedUpdateManyWithoutCategoriesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryCreateManyInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCategoryUpdateManyMutationInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCreateInput = {
+    title: BookTitleCreateNestedOneWithoutBooksInput
+    belongsToLibrary: LibraryCreateNestedOneWithoutBooksInput
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUncheckedCreateInput = {
+    id?: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUpdateInput = {
+    title?: BookTitleUpdateOneRequiredWithoutBooksNestedInput
+    belongsToLibrary?: LibraryUpdateOneRequiredWithoutBooksNestedInput
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCreateManyInput = {
+    id?: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUpdateManyMutationInput = {
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryCreateInput = {
+    name: string
+    location: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutLibrariesInput
+    books?: BookCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUncheckedCreateInput = {
+    id?: number
+    name: string
+    location: string
+    universityId: number
+    books?: BookUncheckedCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutLibrariesNestedInput
+    books?: BookUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    books?: BookUncheckedUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryCreateManyInput = {
+    id?: number
+    name: string
+    location: string
+    universityId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityCreateInput = {
+    name: string
+    location: string
+    libraries?: LibraryCreateNestedManyWithoutBelongsToUniversityInput
+    students?: StudentCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUncheckedCreateInput = {
+    id?: number
+    name: string
+    location: string
+    libraries?: LibraryUncheckedCreateNestedManyWithoutBelongsToUniversityInput
+    students?: StudentUncheckedCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    libraries?: LibraryUpdateManyWithoutBelongsToUniversityNestedInput
+    students?: StudentUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    libraries?: LibraryUncheckedUpdateManyWithoutBelongsToUniversityNestedInput
+    students?: StudentUncheckedUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityCreateManyInput = {
+    id?: number
+    name: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCreateInput = {
+    Name: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutStudentsInput
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowingStudentInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUncheckedCreateInput = {
+    id?: number
+    Name: string
+    universityId: number
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowingStudentInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUpdateInput = {
+    Name?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutStudentsNestedInput
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowingStudentNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowingStudentNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCreateManyInput = {
+    id?: number
+    Name: string
+    universityId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUpdateManyMutationInput = {
+    Name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordCreateInput = {
+    borrowingStudent: StudentCreateNestedOneWithoutBorrowingRecordsInput
+    borrowedBook: BookCreateNestedOneWithoutBorrowingRecordsInput
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    bookId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUpdateInput = {
+    borrowingStudent?: StudentUpdateOneRequiredWithoutBorrowingRecordsNestedInput
+    borrowedBook?: BookUpdateOneRequiredWithoutBorrowingRecordsNestedInput
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordCreateManyInput = {
+    id?: number
+    studentId: number
+    bookId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUpdateManyMutationInput = {
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordCreateInput = {
+    requestingStudent: StudentCreateNestedOneWithoutRequestRecordsInput
+    requestedBookTitle: BookTitleCreateNestedOneWithoutRequestRecordsInput
+    requestingLibrary: LibraryCreateNestedOneWithoutRequestingRecordsInput
+    requestedLibrary: LibraryCreateNestedOneWithoutRequestedRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    acquiredBook?: BookCreateNestedOneWithoutRequestRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUpdateInput = {
+    requestingStudent?: StudentUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestedBookTitle?: BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestingLibrary?: LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput
+    requestedLibrary?: LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredBook?: BookUpdateOneWithoutRequestRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordCreateManyInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUpdateManyMutationInput = {
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41323,17 +52335,20 @@ export namespace Prisma {
   export type BinWashUserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    balance?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type BinWashUserAvgOrderByAggregateInput = {
     id?: SortOrder
+    balance?: SortOrder
   }
 
   export type BinWashUserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    balance?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41341,12 +52356,14 @@ export namespace Prisma {
   export type BinWashUserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    balance?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type BinWashUserSumOrderByAggregateInput = {
     id?: SortOrder
+    balance?: SortOrder
   }
 
   export type BinWashUserRelationFilter = {
@@ -41961,6 +52978,486 @@ export namespace Prisma {
     id?: SortOrder
     fromUserId?: SortOrder
     toUserId?: SortOrder
+  }
+
+  export type BookTitleListRelationFilter = {
+    every?: BookTitleWhereInput
+    some?: BookTitleWhereInput
+    none?: BookTitleWhereInput
+  }
+
+  export type BookTitleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AuthorCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AuthorAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AuthorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AuthorMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AuthorSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type AuthorListRelationFilter = {
+    every?: AuthorWhereInput
+    some?: AuthorWhereInput
+    none?: AuthorWhereInput
+  }
+
+  export type BookCategoryListRelationFilter = {
+    every?: BookCategoryWhereInput
+    some?: BookCategoryWhereInput
+    none?: BookCategoryWhereInput
+  }
+
+  export type BookListRelationFilter = {
+    every?: BookWhereInput
+    some?: BookWhereInput
+    none?: BookWhereInput
+  }
+
+  export type RequestRecordListRelationFilter = {
+    every?: RequestRecordWhereInput
+    some?: RequestRecordWhereInput
+    none?: RequestRecordWhereInput
+  }
+
+  export type AuthorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookCategoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RequestRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookTitleCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    isbn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookTitleAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BookTitleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    isbn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookTitleMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    isbn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookTitleSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BookCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookCategoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BookCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookCategorySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BookTitleRelationFilter = {
+    is?: BookTitleWhereInput
+    isNot?: BookTitleWhereInput
+  }
+
+  export type LibraryRelationFilter = {
+    is?: LibraryWhereInput
+    isNot?: LibraryWhereInput
+  }
+
+  export type BoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
+  export type BorrowingRecordListRelationFilter = {
+    every?: BorrowingRecordWhereInput
+    some?: BorrowingRecordWhereInput
+    none?: BorrowingRecordWhereInput
+  }
+
+  export type BorrowingRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BookCountOrderByAggregateInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+    isAvailable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookAvgOrderByAggregateInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+  }
+
+  export type BookMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+    isAvailable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookMinOrderByAggregateInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+    isAvailable?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BookSumOrderByAggregateInput = {
+    id?: SortOrder
+    bookTitleId?: SortOrder
+    libraryId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter = {
+    equals?: boolean
+    not?: NestedBoolWithAggregatesFilter | boolean
+    _count?: NestedIntFilter
+    _min?: NestedBoolFilter
+    _max?: NestedBoolFilter
+  }
+
+  export type UniversityRelationFilter = {
+    is?: UniversityWhereInput
+    isNot?: UniversityWhereInput
+  }
+
+  export type LibraryCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LibraryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    universityId?: SortOrder
+  }
+
+  export type LibraryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LibraryMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LibrarySumOrderByAggregateInput = {
+    id?: SortOrder
+    universityId?: SortOrder
+  }
+
+  export type LibraryListRelationFilter = {
+    every?: LibraryWhereInput
+    some?: LibraryWhereInput
+    none?: LibraryWhereInput
+  }
+
+  export type StudentListRelationFilter = {
+    every?: StudentWhereInput
+    some?: StudentWhereInput
+    none?: StudentWhereInput
+  }
+
+  export type LibraryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StudentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UniversityCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversityAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UniversityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversityMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversitySumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type StudentCountOrderByAggregateInput = {
+    id?: SortOrder
+    Name?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    universityId?: SortOrder
+  }
+
+  export type StudentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    Name?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentMinOrderByAggregateInput = {
+    id?: SortOrder
+    Name?: SortOrder
+    universityId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudentSumOrderByAggregateInput = {
+    id?: SortOrder
+    universityId?: SortOrder
+  }
+
+  export type StudentRelationFilter = {
+    is?: StudentWhereInput
+    isNot?: StudentWhereInput
+  }
+
+  export type BookRelationFilter = {
+    is?: BookWhereInput
+    isNot?: BookWhereInput
+  }
+
+  export type DateTimeNullableFilter = {
+    equals?: Date | string | null
+    in?: Enumerable<Date> | Enumerable<string> | null
+    notIn?: Enumerable<Date> | Enumerable<string> | null
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeNullableFilter | Date | string | null
+  }
+
+  export type BorrowingRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualEndDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BorrowingRecordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+  }
+
+  export type BorrowingRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualEndDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BorrowingRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualEndDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BorrowingRecordSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookId?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter = {
+    equals?: Date | string | null
+    in?: Enumerable<Date> | Enumerable<string> | null
+    notIn?: Enumerable<Date> | Enumerable<string> | null
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeNullableWithAggregatesFilter | Date | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedDateTimeNullableFilter
+    _max?: NestedDateTimeNullableFilter
+  }
+
+  export type RequestRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    requestDate?: SortOrder
+    acquiredDate?: SortOrder
+    returnDate?: SortOrder
+    bookId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RequestRecordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    bookId?: SortOrder
+  }
+
+  export type RequestRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    requestDate?: SortOrder
+    acquiredDate?: SortOrder
+    returnDate?: SortOrder
+    bookId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RequestRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    requestDate?: SortOrder
+    acquiredDate?: SortOrder
+    returnDate?: SortOrder
+    bookId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RequestRecordSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    bookTitleId?: SortOrder
+    requestingLibraryId?: SortOrder
+    requestedLibraryId?: SortOrder
+    bookId?: SortOrder
   }
 
   export type TodoListCountOrderByAggregateInput = {
@@ -44188,6 +55685,784 @@ export namespace Prisma {
     update?: XOR<FacebookUserUpdateWithoutMessengerMessagesToInput, FacebookUserUncheckedUpdateWithoutMessengerMessagesToInput>
   }
 
+  export type BookTitleCreateNestedManyWithoutAuthorsInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutAuthorsInput>, Enumerable<BookTitleUncheckedCreateWithoutAuthorsInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutAuthorsInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+  }
+
+  export type BookTitleUncheckedCreateNestedManyWithoutAuthorsInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutAuthorsInput>, Enumerable<BookTitleUncheckedCreateWithoutAuthorsInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutAuthorsInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+  }
+
+  export type BookTitleUpdateManyWithoutAuthorsNestedInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutAuthorsInput>, Enumerable<BookTitleUncheckedCreateWithoutAuthorsInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutAuthorsInput>
+    upsert?: Enumerable<BookTitleUpsertWithWhereUniqueWithoutAuthorsInput>
+    set?: Enumerable<BookTitleWhereUniqueInput>
+    disconnect?: Enumerable<BookTitleWhereUniqueInput>
+    delete?: Enumerable<BookTitleWhereUniqueInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+    update?: Enumerable<BookTitleUpdateWithWhereUniqueWithoutAuthorsInput>
+    updateMany?: Enumerable<BookTitleUpdateManyWithWhereWithoutAuthorsInput>
+    deleteMany?: Enumerable<BookTitleScalarWhereInput>
+  }
+
+  export type BookTitleUncheckedUpdateManyWithoutAuthorsNestedInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutAuthorsInput>, Enumerable<BookTitleUncheckedCreateWithoutAuthorsInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutAuthorsInput>
+    upsert?: Enumerable<BookTitleUpsertWithWhereUniqueWithoutAuthorsInput>
+    set?: Enumerable<BookTitleWhereUniqueInput>
+    disconnect?: Enumerable<BookTitleWhereUniqueInput>
+    delete?: Enumerable<BookTitleWhereUniqueInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+    update?: Enumerable<BookTitleUpdateWithWhereUniqueWithoutAuthorsInput>
+    updateMany?: Enumerable<BookTitleUpdateManyWithWhereWithoutAuthorsInput>
+    deleteMany?: Enumerable<BookTitleScalarWhereInput>
+  }
+
+  export type AuthorCreateNestedManyWithoutBookTitlesInput = {
+    create?: XOR<Enumerable<AuthorCreateWithoutBookTitlesInput>, Enumerable<AuthorUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<AuthorCreateOrConnectWithoutBookTitlesInput>
+    connect?: Enumerable<AuthorWhereUniqueInput>
+  }
+
+  export type BookCategoryCreateNestedManyWithoutBookTitlesInput = {
+    create?: XOR<Enumerable<BookCategoryCreateWithoutBookTitlesInput>, Enumerable<BookCategoryUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<BookCategoryCreateOrConnectWithoutBookTitlesInput>
+    connect?: Enumerable<BookCategoryWhereUniqueInput>
+  }
+
+  export type BookCreateNestedManyWithoutTitleInput = {
+    create?: XOR<Enumerable<BookCreateWithoutTitleInput>, Enumerable<BookUncheckedCreateWithoutTitleInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutTitleInput>
+    createMany?: BookCreateManyTitleInputEnvelope
+    connect?: Enumerable<BookWhereUniqueInput>
+  }
+
+  export type RequestRecordCreateNestedManyWithoutRequestedBookTitleInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedBookTitleInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedBookTitleInput>
+    createMany?: RequestRecordCreateManyRequestedBookTitleInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type AuthorUncheckedCreateNestedManyWithoutBookTitlesInput = {
+    create?: XOR<Enumerable<AuthorCreateWithoutBookTitlesInput>, Enumerable<AuthorUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<AuthorCreateOrConnectWithoutBookTitlesInput>
+    connect?: Enumerable<AuthorWhereUniqueInput>
+  }
+
+  export type BookCategoryUncheckedCreateNestedManyWithoutBookTitlesInput = {
+    create?: XOR<Enumerable<BookCategoryCreateWithoutBookTitlesInput>, Enumerable<BookCategoryUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<BookCategoryCreateOrConnectWithoutBookTitlesInput>
+    connect?: Enumerable<BookCategoryWhereUniqueInput>
+  }
+
+  export type BookUncheckedCreateNestedManyWithoutTitleInput = {
+    create?: XOR<Enumerable<BookCreateWithoutTitleInput>, Enumerable<BookUncheckedCreateWithoutTitleInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutTitleInput>
+    createMany?: BookCreateManyTitleInputEnvelope
+    connect?: Enumerable<BookWhereUniqueInput>
+  }
+
+  export type RequestRecordUncheckedCreateNestedManyWithoutRequestedBookTitleInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedBookTitleInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedBookTitleInput>
+    createMany?: RequestRecordCreateManyRequestedBookTitleInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type AuthorUpdateManyWithoutBookTitlesNestedInput = {
+    create?: XOR<Enumerable<AuthorCreateWithoutBookTitlesInput>, Enumerable<AuthorUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<AuthorCreateOrConnectWithoutBookTitlesInput>
+    upsert?: Enumerable<AuthorUpsertWithWhereUniqueWithoutBookTitlesInput>
+    set?: Enumerable<AuthorWhereUniqueInput>
+    disconnect?: Enumerable<AuthorWhereUniqueInput>
+    delete?: Enumerable<AuthorWhereUniqueInput>
+    connect?: Enumerable<AuthorWhereUniqueInput>
+    update?: Enumerable<AuthorUpdateWithWhereUniqueWithoutBookTitlesInput>
+    updateMany?: Enumerable<AuthorUpdateManyWithWhereWithoutBookTitlesInput>
+    deleteMany?: Enumerable<AuthorScalarWhereInput>
+  }
+
+  export type BookCategoryUpdateManyWithoutBookTitlesNestedInput = {
+    create?: XOR<Enumerable<BookCategoryCreateWithoutBookTitlesInput>, Enumerable<BookCategoryUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<BookCategoryCreateOrConnectWithoutBookTitlesInput>
+    upsert?: Enumerable<BookCategoryUpsertWithWhereUniqueWithoutBookTitlesInput>
+    set?: Enumerable<BookCategoryWhereUniqueInput>
+    disconnect?: Enumerable<BookCategoryWhereUniqueInput>
+    delete?: Enumerable<BookCategoryWhereUniqueInput>
+    connect?: Enumerable<BookCategoryWhereUniqueInput>
+    update?: Enumerable<BookCategoryUpdateWithWhereUniqueWithoutBookTitlesInput>
+    updateMany?: Enumerable<BookCategoryUpdateManyWithWhereWithoutBookTitlesInput>
+    deleteMany?: Enumerable<BookCategoryScalarWhereInput>
+  }
+
+  export type BookUpdateManyWithoutTitleNestedInput = {
+    create?: XOR<Enumerable<BookCreateWithoutTitleInput>, Enumerable<BookUncheckedCreateWithoutTitleInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutTitleInput>
+    upsert?: Enumerable<BookUpsertWithWhereUniqueWithoutTitleInput>
+    createMany?: BookCreateManyTitleInputEnvelope
+    set?: Enumerable<BookWhereUniqueInput>
+    disconnect?: Enumerable<BookWhereUniqueInput>
+    delete?: Enumerable<BookWhereUniqueInput>
+    connect?: Enumerable<BookWhereUniqueInput>
+    update?: Enumerable<BookUpdateWithWhereUniqueWithoutTitleInput>
+    updateMany?: Enumerable<BookUpdateManyWithWhereWithoutTitleInput>
+    deleteMany?: Enumerable<BookScalarWhereInput>
+  }
+
+  export type RequestRecordUpdateManyWithoutRequestedBookTitleNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedBookTitleInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedBookTitleInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestedBookTitleInput>
+    createMany?: RequestRecordCreateManyRequestedBookTitleInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestedBookTitleInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestedBookTitleInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type AuthorUncheckedUpdateManyWithoutBookTitlesNestedInput = {
+    create?: XOR<Enumerable<AuthorCreateWithoutBookTitlesInput>, Enumerable<AuthorUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<AuthorCreateOrConnectWithoutBookTitlesInput>
+    upsert?: Enumerable<AuthorUpsertWithWhereUniqueWithoutBookTitlesInput>
+    set?: Enumerable<AuthorWhereUniqueInput>
+    disconnect?: Enumerable<AuthorWhereUniqueInput>
+    delete?: Enumerable<AuthorWhereUniqueInput>
+    connect?: Enumerable<AuthorWhereUniqueInput>
+    update?: Enumerable<AuthorUpdateWithWhereUniqueWithoutBookTitlesInput>
+    updateMany?: Enumerable<AuthorUpdateManyWithWhereWithoutBookTitlesInput>
+    deleteMany?: Enumerable<AuthorScalarWhereInput>
+  }
+
+  export type BookCategoryUncheckedUpdateManyWithoutBookTitlesNestedInput = {
+    create?: XOR<Enumerable<BookCategoryCreateWithoutBookTitlesInput>, Enumerable<BookCategoryUncheckedCreateWithoutBookTitlesInput>>
+    connectOrCreate?: Enumerable<BookCategoryCreateOrConnectWithoutBookTitlesInput>
+    upsert?: Enumerable<BookCategoryUpsertWithWhereUniqueWithoutBookTitlesInput>
+    set?: Enumerable<BookCategoryWhereUniqueInput>
+    disconnect?: Enumerable<BookCategoryWhereUniqueInput>
+    delete?: Enumerable<BookCategoryWhereUniqueInput>
+    connect?: Enumerable<BookCategoryWhereUniqueInput>
+    update?: Enumerable<BookCategoryUpdateWithWhereUniqueWithoutBookTitlesInput>
+    updateMany?: Enumerable<BookCategoryUpdateManyWithWhereWithoutBookTitlesInput>
+    deleteMany?: Enumerable<BookCategoryScalarWhereInput>
+  }
+
+  export type BookUncheckedUpdateManyWithoutTitleNestedInput = {
+    create?: XOR<Enumerable<BookCreateWithoutTitleInput>, Enumerable<BookUncheckedCreateWithoutTitleInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutTitleInput>
+    upsert?: Enumerable<BookUpsertWithWhereUniqueWithoutTitleInput>
+    createMany?: BookCreateManyTitleInputEnvelope
+    set?: Enumerable<BookWhereUniqueInput>
+    disconnect?: Enumerable<BookWhereUniqueInput>
+    delete?: Enumerable<BookWhereUniqueInput>
+    connect?: Enumerable<BookWhereUniqueInput>
+    update?: Enumerable<BookUpdateWithWhereUniqueWithoutTitleInput>
+    updateMany?: Enumerable<BookUpdateManyWithWhereWithoutTitleInput>
+    deleteMany?: Enumerable<BookScalarWhereInput>
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestedBookTitleNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedBookTitleInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedBookTitleInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestedBookTitleInput>
+    createMany?: RequestRecordCreateManyRequestedBookTitleInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestedBookTitleInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestedBookTitleInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type BookTitleCreateNestedManyWithoutCategoriesInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutCategoriesInput>, Enumerable<BookTitleUncheckedCreateWithoutCategoriesInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutCategoriesInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+  }
+
+  export type BookTitleUncheckedCreateNestedManyWithoutCategoriesInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutCategoriesInput>, Enumerable<BookTitleUncheckedCreateWithoutCategoriesInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutCategoriesInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+  }
+
+  export type BookTitleUpdateManyWithoutCategoriesNestedInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutCategoriesInput>, Enumerable<BookTitleUncheckedCreateWithoutCategoriesInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutCategoriesInput>
+    upsert?: Enumerable<BookTitleUpsertWithWhereUniqueWithoutCategoriesInput>
+    set?: Enumerable<BookTitleWhereUniqueInput>
+    disconnect?: Enumerable<BookTitleWhereUniqueInput>
+    delete?: Enumerable<BookTitleWhereUniqueInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+    update?: Enumerable<BookTitleUpdateWithWhereUniqueWithoutCategoriesInput>
+    updateMany?: Enumerable<BookTitleUpdateManyWithWhereWithoutCategoriesInput>
+    deleteMany?: Enumerable<BookTitleScalarWhereInput>
+  }
+
+  export type BookTitleUncheckedUpdateManyWithoutCategoriesNestedInput = {
+    create?: XOR<Enumerable<BookTitleCreateWithoutCategoriesInput>, Enumerable<BookTitleUncheckedCreateWithoutCategoriesInput>>
+    connectOrCreate?: Enumerable<BookTitleCreateOrConnectWithoutCategoriesInput>
+    upsert?: Enumerable<BookTitleUpsertWithWhereUniqueWithoutCategoriesInput>
+    set?: Enumerable<BookTitleWhereUniqueInput>
+    disconnect?: Enumerable<BookTitleWhereUniqueInput>
+    delete?: Enumerable<BookTitleWhereUniqueInput>
+    connect?: Enumerable<BookTitleWhereUniqueInput>
+    update?: Enumerable<BookTitleUpdateWithWhereUniqueWithoutCategoriesInput>
+    updateMany?: Enumerable<BookTitleUpdateManyWithWhereWithoutCategoriesInput>
+    deleteMany?: Enumerable<BookTitleScalarWhereInput>
+  }
+
+  export type BookTitleCreateNestedOneWithoutBooksInput = {
+    create?: XOR<BookTitleCreateWithoutBooksInput, BookTitleUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: BookTitleCreateOrConnectWithoutBooksInput
+    connect?: BookTitleWhereUniqueInput
+  }
+
+  export type LibraryCreateNestedOneWithoutBooksInput = {
+    create?: XOR<LibraryCreateWithoutBooksInput, LibraryUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutBooksInput
+    connect?: LibraryWhereUniqueInput
+  }
+
+  export type BorrowingRecordCreateNestedManyWithoutBorrowedBookInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowedBookInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowedBookInput>
+    createMany?: BorrowingRecordCreateManyBorrowedBookInputEnvelope
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordCreateNestedManyWithoutAcquiredBookInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutAcquiredBookInput>, Enumerable<RequestRecordUncheckedCreateWithoutAcquiredBookInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutAcquiredBookInput>
+    createMany?: RequestRecordCreateManyAcquiredBookInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type BorrowingRecordUncheckedCreateNestedManyWithoutBorrowedBookInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowedBookInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowedBookInput>
+    createMany?: BorrowingRecordCreateManyBorrowedBookInputEnvelope
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordUncheckedCreateNestedManyWithoutAcquiredBookInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutAcquiredBookInput>, Enumerable<RequestRecordUncheckedCreateWithoutAcquiredBookInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutAcquiredBookInput>
+    createMany?: RequestRecordCreateManyAcquiredBookInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type BookTitleUpdateOneRequiredWithoutBooksNestedInput = {
+    create?: XOR<BookTitleCreateWithoutBooksInput, BookTitleUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: BookTitleCreateOrConnectWithoutBooksInput
+    upsert?: BookTitleUpsertWithoutBooksInput
+    connect?: BookTitleWhereUniqueInput
+    update?: XOR<BookTitleUpdateWithoutBooksInput, BookTitleUncheckedUpdateWithoutBooksInput>
+  }
+
+  export type LibraryUpdateOneRequiredWithoutBooksNestedInput = {
+    create?: XOR<LibraryCreateWithoutBooksInput, LibraryUncheckedCreateWithoutBooksInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutBooksInput
+    upsert?: LibraryUpsertWithoutBooksInput
+    connect?: LibraryWhereUniqueInput
+    update?: XOR<LibraryUpdateWithoutBooksInput, LibraryUncheckedUpdateWithoutBooksInput>
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type BorrowingRecordUpdateManyWithoutBorrowedBookNestedInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowedBookInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowedBookInput>
+    upsert?: Enumerable<BorrowingRecordUpsertWithWhereUniqueWithoutBorrowedBookInput>
+    createMany?: BorrowingRecordCreateManyBorrowedBookInputEnvelope
+    set?: Enumerable<BorrowingRecordWhereUniqueInput>
+    disconnect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    delete?: Enumerable<BorrowingRecordWhereUniqueInput>
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    update?: Enumerable<BorrowingRecordUpdateWithWhereUniqueWithoutBorrowedBookInput>
+    updateMany?: Enumerable<BorrowingRecordUpdateManyWithWhereWithoutBorrowedBookInput>
+    deleteMany?: Enumerable<BorrowingRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUpdateManyWithoutAcquiredBookNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutAcquiredBookInput>, Enumerable<RequestRecordUncheckedCreateWithoutAcquiredBookInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutAcquiredBookInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutAcquiredBookInput>
+    createMany?: RequestRecordCreateManyAcquiredBookInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutAcquiredBookInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutAcquiredBookInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type BorrowingRecordUncheckedUpdateManyWithoutBorrowedBookNestedInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowedBookInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowedBookInput>
+    upsert?: Enumerable<BorrowingRecordUpsertWithWhereUniqueWithoutBorrowedBookInput>
+    createMany?: BorrowingRecordCreateManyBorrowedBookInputEnvelope
+    set?: Enumerable<BorrowingRecordWhereUniqueInput>
+    disconnect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    delete?: Enumerable<BorrowingRecordWhereUniqueInput>
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    update?: Enumerable<BorrowingRecordUpdateWithWhereUniqueWithoutBorrowedBookInput>
+    updateMany?: Enumerable<BorrowingRecordUpdateManyWithWhereWithoutBorrowedBookInput>
+    deleteMany?: Enumerable<BorrowingRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutAcquiredBookNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutAcquiredBookInput>, Enumerable<RequestRecordUncheckedCreateWithoutAcquiredBookInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutAcquiredBookInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutAcquiredBookInput>
+    createMany?: RequestRecordCreateManyAcquiredBookInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutAcquiredBookInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutAcquiredBookInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type UniversityCreateNestedOneWithoutLibrariesInput = {
+    create?: XOR<UniversityCreateWithoutLibrariesInput, UniversityUncheckedCreateWithoutLibrariesInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutLibrariesInput
+    connect?: UniversityWhereUniqueInput
+  }
+
+  export type BookCreateNestedManyWithoutBelongsToLibraryInput = {
+    create?: XOR<Enumerable<BookCreateWithoutBelongsToLibraryInput>, Enumerable<BookUncheckedCreateWithoutBelongsToLibraryInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutBelongsToLibraryInput>
+    createMany?: BookCreateManyBelongsToLibraryInputEnvelope
+    connect?: Enumerable<BookWhereUniqueInput>
+  }
+
+  export type RequestRecordCreateNestedManyWithoutRequestingLibraryInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingLibraryInput>
+    createMany?: RequestRecordCreateManyRequestingLibraryInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordCreateNestedManyWithoutRequestedLibraryInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedLibraryInput>
+    createMany?: RequestRecordCreateManyRequestedLibraryInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type BookUncheckedCreateNestedManyWithoutBelongsToLibraryInput = {
+    create?: XOR<Enumerable<BookCreateWithoutBelongsToLibraryInput>, Enumerable<BookUncheckedCreateWithoutBelongsToLibraryInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutBelongsToLibraryInput>
+    createMany?: BookCreateManyBelongsToLibraryInputEnvelope
+    connect?: Enumerable<BookWhereUniqueInput>
+  }
+
+  export type RequestRecordUncheckedCreateNestedManyWithoutRequestingLibraryInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingLibraryInput>
+    createMany?: RequestRecordCreateManyRequestingLibraryInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordUncheckedCreateNestedManyWithoutRequestedLibraryInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedLibraryInput>
+    createMany?: RequestRecordCreateManyRequestedLibraryInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type UniversityUpdateOneRequiredWithoutLibrariesNestedInput = {
+    create?: XOR<UniversityCreateWithoutLibrariesInput, UniversityUncheckedCreateWithoutLibrariesInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutLibrariesInput
+    upsert?: UniversityUpsertWithoutLibrariesInput
+    connect?: UniversityWhereUniqueInput
+    update?: XOR<UniversityUpdateWithoutLibrariesInput, UniversityUncheckedUpdateWithoutLibrariesInput>
+  }
+
+  export type BookUpdateManyWithoutBelongsToLibraryNestedInput = {
+    create?: XOR<Enumerable<BookCreateWithoutBelongsToLibraryInput>, Enumerable<BookUncheckedCreateWithoutBelongsToLibraryInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutBelongsToLibraryInput>
+    upsert?: Enumerable<BookUpsertWithWhereUniqueWithoutBelongsToLibraryInput>
+    createMany?: BookCreateManyBelongsToLibraryInputEnvelope
+    set?: Enumerable<BookWhereUniqueInput>
+    disconnect?: Enumerable<BookWhereUniqueInput>
+    delete?: Enumerable<BookWhereUniqueInput>
+    connect?: Enumerable<BookWhereUniqueInput>
+    update?: Enumerable<BookUpdateWithWhereUniqueWithoutBelongsToLibraryInput>
+    updateMany?: Enumerable<BookUpdateManyWithWhereWithoutBelongsToLibraryInput>
+    deleteMany?: Enumerable<BookScalarWhereInput>
+  }
+
+  export type RequestRecordUpdateManyWithoutRequestingLibraryNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingLibraryInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestingLibraryInput>
+    createMany?: RequestRecordCreateManyRequestingLibraryInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestingLibraryInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestingLibraryInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUpdateManyWithoutRequestedLibraryNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedLibraryInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestedLibraryInput>
+    createMany?: RequestRecordCreateManyRequestedLibraryInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestedLibraryInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestedLibraryInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type BookUncheckedUpdateManyWithoutBelongsToLibraryNestedInput = {
+    create?: XOR<Enumerable<BookCreateWithoutBelongsToLibraryInput>, Enumerable<BookUncheckedCreateWithoutBelongsToLibraryInput>>
+    connectOrCreate?: Enumerable<BookCreateOrConnectWithoutBelongsToLibraryInput>
+    upsert?: Enumerable<BookUpsertWithWhereUniqueWithoutBelongsToLibraryInput>
+    createMany?: BookCreateManyBelongsToLibraryInputEnvelope
+    set?: Enumerable<BookWhereUniqueInput>
+    disconnect?: Enumerable<BookWhereUniqueInput>
+    delete?: Enumerable<BookWhereUniqueInput>
+    connect?: Enumerable<BookWhereUniqueInput>
+    update?: Enumerable<BookUpdateWithWhereUniqueWithoutBelongsToLibraryInput>
+    updateMany?: Enumerable<BookUpdateManyWithWhereWithoutBelongsToLibraryInput>
+    deleteMany?: Enumerable<BookScalarWhereInput>
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestingLibraryNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingLibraryInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestingLibraryInput>
+    createMany?: RequestRecordCreateManyRequestingLibraryInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestingLibraryInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestingLibraryInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestedLibraryNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestedLibraryInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestedLibraryInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestedLibraryInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestedLibraryInput>
+    createMany?: RequestRecordCreateManyRequestedLibraryInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestedLibraryInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestedLibraryInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type LibraryCreateNestedManyWithoutBelongsToUniversityInput = {
+    create?: XOR<Enumerable<LibraryCreateWithoutBelongsToUniversityInput>, Enumerable<LibraryUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<LibraryCreateOrConnectWithoutBelongsToUniversityInput>
+    createMany?: LibraryCreateManyBelongsToUniversityInputEnvelope
+    connect?: Enumerable<LibraryWhereUniqueInput>
+  }
+
+  export type StudentCreateNestedManyWithoutBelongsToUniversityInput = {
+    create?: XOR<Enumerable<StudentCreateWithoutBelongsToUniversityInput>, Enumerable<StudentUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<StudentCreateOrConnectWithoutBelongsToUniversityInput>
+    createMany?: StudentCreateManyBelongsToUniversityInputEnvelope
+    connect?: Enumerable<StudentWhereUniqueInput>
+  }
+
+  export type LibraryUncheckedCreateNestedManyWithoutBelongsToUniversityInput = {
+    create?: XOR<Enumerable<LibraryCreateWithoutBelongsToUniversityInput>, Enumerable<LibraryUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<LibraryCreateOrConnectWithoutBelongsToUniversityInput>
+    createMany?: LibraryCreateManyBelongsToUniversityInputEnvelope
+    connect?: Enumerable<LibraryWhereUniqueInput>
+  }
+
+  export type StudentUncheckedCreateNestedManyWithoutBelongsToUniversityInput = {
+    create?: XOR<Enumerable<StudentCreateWithoutBelongsToUniversityInput>, Enumerable<StudentUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<StudentCreateOrConnectWithoutBelongsToUniversityInput>
+    createMany?: StudentCreateManyBelongsToUniversityInputEnvelope
+    connect?: Enumerable<StudentWhereUniqueInput>
+  }
+
+  export type LibraryUpdateManyWithoutBelongsToUniversityNestedInput = {
+    create?: XOR<Enumerable<LibraryCreateWithoutBelongsToUniversityInput>, Enumerable<LibraryUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<LibraryCreateOrConnectWithoutBelongsToUniversityInput>
+    upsert?: Enumerable<LibraryUpsertWithWhereUniqueWithoutBelongsToUniversityInput>
+    createMany?: LibraryCreateManyBelongsToUniversityInputEnvelope
+    set?: Enumerable<LibraryWhereUniqueInput>
+    disconnect?: Enumerable<LibraryWhereUniqueInput>
+    delete?: Enumerable<LibraryWhereUniqueInput>
+    connect?: Enumerable<LibraryWhereUniqueInput>
+    update?: Enumerable<LibraryUpdateWithWhereUniqueWithoutBelongsToUniversityInput>
+    updateMany?: Enumerable<LibraryUpdateManyWithWhereWithoutBelongsToUniversityInput>
+    deleteMany?: Enumerable<LibraryScalarWhereInput>
+  }
+
+  export type StudentUpdateManyWithoutBelongsToUniversityNestedInput = {
+    create?: XOR<Enumerable<StudentCreateWithoutBelongsToUniversityInput>, Enumerable<StudentUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<StudentCreateOrConnectWithoutBelongsToUniversityInput>
+    upsert?: Enumerable<StudentUpsertWithWhereUniqueWithoutBelongsToUniversityInput>
+    createMany?: StudentCreateManyBelongsToUniversityInputEnvelope
+    set?: Enumerable<StudentWhereUniqueInput>
+    disconnect?: Enumerable<StudentWhereUniqueInput>
+    delete?: Enumerable<StudentWhereUniqueInput>
+    connect?: Enumerable<StudentWhereUniqueInput>
+    update?: Enumerable<StudentUpdateWithWhereUniqueWithoutBelongsToUniversityInput>
+    updateMany?: Enumerable<StudentUpdateManyWithWhereWithoutBelongsToUniversityInput>
+    deleteMany?: Enumerable<StudentScalarWhereInput>
+  }
+
+  export type LibraryUncheckedUpdateManyWithoutBelongsToUniversityNestedInput = {
+    create?: XOR<Enumerable<LibraryCreateWithoutBelongsToUniversityInput>, Enumerable<LibraryUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<LibraryCreateOrConnectWithoutBelongsToUniversityInput>
+    upsert?: Enumerable<LibraryUpsertWithWhereUniqueWithoutBelongsToUniversityInput>
+    createMany?: LibraryCreateManyBelongsToUniversityInputEnvelope
+    set?: Enumerable<LibraryWhereUniqueInput>
+    disconnect?: Enumerable<LibraryWhereUniqueInput>
+    delete?: Enumerable<LibraryWhereUniqueInput>
+    connect?: Enumerable<LibraryWhereUniqueInput>
+    update?: Enumerable<LibraryUpdateWithWhereUniqueWithoutBelongsToUniversityInput>
+    updateMany?: Enumerable<LibraryUpdateManyWithWhereWithoutBelongsToUniversityInput>
+    deleteMany?: Enumerable<LibraryScalarWhereInput>
+  }
+
+  export type StudentUncheckedUpdateManyWithoutBelongsToUniversityNestedInput = {
+    create?: XOR<Enumerable<StudentCreateWithoutBelongsToUniversityInput>, Enumerable<StudentUncheckedCreateWithoutBelongsToUniversityInput>>
+    connectOrCreate?: Enumerable<StudentCreateOrConnectWithoutBelongsToUniversityInput>
+    upsert?: Enumerable<StudentUpsertWithWhereUniqueWithoutBelongsToUniversityInput>
+    createMany?: StudentCreateManyBelongsToUniversityInputEnvelope
+    set?: Enumerable<StudentWhereUniqueInput>
+    disconnect?: Enumerable<StudentWhereUniqueInput>
+    delete?: Enumerable<StudentWhereUniqueInput>
+    connect?: Enumerable<StudentWhereUniqueInput>
+    update?: Enumerable<StudentUpdateWithWhereUniqueWithoutBelongsToUniversityInput>
+    updateMany?: Enumerable<StudentUpdateManyWithWhereWithoutBelongsToUniversityInput>
+    deleteMany?: Enumerable<StudentScalarWhereInput>
+  }
+
+  export type UniversityCreateNestedOneWithoutStudentsInput = {
+    create?: XOR<UniversityCreateWithoutStudentsInput, UniversityUncheckedCreateWithoutStudentsInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutStudentsInput
+    connect?: UniversityWhereUniqueInput
+  }
+
+  export type BorrowingRecordCreateNestedManyWithoutBorrowingStudentInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowingStudentInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowingStudentInput>
+    createMany?: BorrowingRecordCreateManyBorrowingStudentInputEnvelope
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordCreateNestedManyWithoutRequestingStudentInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingStudentInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingStudentInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingStudentInput>
+    createMany?: RequestRecordCreateManyRequestingStudentInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type BorrowingRecordUncheckedCreateNestedManyWithoutBorrowingStudentInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowingStudentInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowingStudentInput>
+    createMany?: BorrowingRecordCreateManyBorrowingStudentInputEnvelope
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+  }
+
+  export type RequestRecordUncheckedCreateNestedManyWithoutRequestingStudentInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingStudentInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingStudentInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingStudentInput>
+    createMany?: RequestRecordCreateManyRequestingStudentInputEnvelope
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+  }
+
+  export type UniversityUpdateOneRequiredWithoutStudentsNestedInput = {
+    create?: XOR<UniversityCreateWithoutStudentsInput, UniversityUncheckedCreateWithoutStudentsInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutStudentsInput
+    upsert?: UniversityUpsertWithoutStudentsInput
+    connect?: UniversityWhereUniqueInput
+    update?: XOR<UniversityUpdateWithoutStudentsInput, UniversityUncheckedUpdateWithoutStudentsInput>
+  }
+
+  export type BorrowingRecordUpdateManyWithoutBorrowingStudentNestedInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowingStudentInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowingStudentInput>
+    upsert?: Enumerable<BorrowingRecordUpsertWithWhereUniqueWithoutBorrowingStudentInput>
+    createMany?: BorrowingRecordCreateManyBorrowingStudentInputEnvelope
+    set?: Enumerable<BorrowingRecordWhereUniqueInput>
+    disconnect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    delete?: Enumerable<BorrowingRecordWhereUniqueInput>
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    update?: Enumerable<BorrowingRecordUpdateWithWhereUniqueWithoutBorrowingStudentInput>
+    updateMany?: Enumerable<BorrowingRecordUpdateManyWithWhereWithoutBorrowingStudentInput>
+    deleteMany?: Enumerable<BorrowingRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUpdateManyWithoutRequestingStudentNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingStudentInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingStudentInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingStudentInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestingStudentInput>
+    createMany?: RequestRecordCreateManyRequestingStudentInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestingStudentInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestingStudentInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type BorrowingRecordUncheckedUpdateManyWithoutBorrowingStudentNestedInput = {
+    create?: XOR<Enumerable<BorrowingRecordCreateWithoutBorrowingStudentInput>, Enumerable<BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>>
+    connectOrCreate?: Enumerable<BorrowingRecordCreateOrConnectWithoutBorrowingStudentInput>
+    upsert?: Enumerable<BorrowingRecordUpsertWithWhereUniqueWithoutBorrowingStudentInput>
+    createMany?: BorrowingRecordCreateManyBorrowingStudentInputEnvelope
+    set?: Enumerable<BorrowingRecordWhereUniqueInput>
+    disconnect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    delete?: Enumerable<BorrowingRecordWhereUniqueInput>
+    connect?: Enumerable<BorrowingRecordWhereUniqueInput>
+    update?: Enumerable<BorrowingRecordUpdateWithWhereUniqueWithoutBorrowingStudentInput>
+    updateMany?: Enumerable<BorrowingRecordUpdateManyWithWhereWithoutBorrowingStudentInput>
+    deleteMany?: Enumerable<BorrowingRecordScalarWhereInput>
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestingStudentNestedInput = {
+    create?: XOR<Enumerable<RequestRecordCreateWithoutRequestingStudentInput>, Enumerable<RequestRecordUncheckedCreateWithoutRequestingStudentInput>>
+    connectOrCreate?: Enumerable<RequestRecordCreateOrConnectWithoutRequestingStudentInput>
+    upsert?: Enumerable<RequestRecordUpsertWithWhereUniqueWithoutRequestingStudentInput>
+    createMany?: RequestRecordCreateManyRequestingStudentInputEnvelope
+    set?: Enumerable<RequestRecordWhereUniqueInput>
+    disconnect?: Enumerable<RequestRecordWhereUniqueInput>
+    delete?: Enumerable<RequestRecordWhereUniqueInput>
+    connect?: Enumerable<RequestRecordWhereUniqueInput>
+    update?: Enumerable<RequestRecordUpdateWithWhereUniqueWithoutRequestingStudentInput>
+    updateMany?: Enumerable<RequestRecordUpdateManyWithWhereWithoutRequestingStudentInput>
+    deleteMany?: Enumerable<RequestRecordScalarWhereInput>
+  }
+
+  export type StudentCreateNestedOneWithoutBorrowingRecordsInput = {
+    create?: XOR<StudentCreateWithoutBorrowingRecordsInput, StudentUncheckedCreateWithoutBorrowingRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutBorrowingRecordsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type BookCreateNestedOneWithoutBorrowingRecordsInput = {
+    create?: XOR<BookCreateWithoutBorrowingRecordsInput, BookUncheckedCreateWithoutBorrowingRecordsInput>
+    connectOrCreate?: BookCreateOrConnectWithoutBorrowingRecordsInput
+    connect?: BookWhereUniqueInput
+  }
+
+  export type StudentUpdateOneRequiredWithoutBorrowingRecordsNestedInput = {
+    create?: XOR<StudentCreateWithoutBorrowingRecordsInput, StudentUncheckedCreateWithoutBorrowingRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutBorrowingRecordsInput
+    upsert?: StudentUpsertWithoutBorrowingRecordsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<StudentUpdateWithoutBorrowingRecordsInput, StudentUncheckedUpdateWithoutBorrowingRecordsInput>
+  }
+
+  export type BookUpdateOneRequiredWithoutBorrowingRecordsNestedInput = {
+    create?: XOR<BookCreateWithoutBorrowingRecordsInput, BookUncheckedCreateWithoutBorrowingRecordsInput>
+    connectOrCreate?: BookCreateOrConnectWithoutBorrowingRecordsInput
+    upsert?: BookUpsertWithoutBorrowingRecordsInput
+    connect?: BookWhereUniqueInput
+    update?: XOR<BookUpdateWithoutBorrowingRecordsInput, BookUncheckedUpdateWithoutBorrowingRecordsInput>
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type StudentCreateNestedOneWithoutRequestRecordsInput = {
+    create?: XOR<StudentCreateWithoutRequestRecordsInput, StudentUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutRequestRecordsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type BookTitleCreateNestedOneWithoutRequestRecordsInput = {
+    create?: XOR<BookTitleCreateWithoutRequestRecordsInput, BookTitleUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: BookTitleCreateOrConnectWithoutRequestRecordsInput
+    connect?: BookTitleWhereUniqueInput
+  }
+
+  export type LibraryCreateNestedOneWithoutRequestingRecordsInput = {
+    create?: XOR<LibraryCreateWithoutRequestingRecordsInput, LibraryUncheckedCreateWithoutRequestingRecordsInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutRequestingRecordsInput
+    connect?: LibraryWhereUniqueInput
+  }
+
+  export type LibraryCreateNestedOneWithoutRequestedRecordsInput = {
+    create?: XOR<LibraryCreateWithoutRequestedRecordsInput, LibraryUncheckedCreateWithoutRequestedRecordsInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutRequestedRecordsInput
+    connect?: LibraryWhereUniqueInput
+  }
+
+  export type BookCreateNestedOneWithoutRequestRecordsInput = {
+    create?: XOR<BookCreateWithoutRequestRecordsInput, BookUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: BookCreateOrConnectWithoutRequestRecordsInput
+    connect?: BookWhereUniqueInput
+  }
+
+  export type StudentUpdateOneRequiredWithoutRequestRecordsNestedInput = {
+    create?: XOR<StudentCreateWithoutRequestRecordsInput, StudentUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutRequestRecordsInput
+    upsert?: StudentUpsertWithoutRequestRecordsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<StudentUpdateWithoutRequestRecordsInput, StudentUncheckedUpdateWithoutRequestRecordsInput>
+  }
+
+  export type BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput = {
+    create?: XOR<BookTitleCreateWithoutRequestRecordsInput, BookTitleUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: BookTitleCreateOrConnectWithoutRequestRecordsInput
+    upsert?: BookTitleUpsertWithoutRequestRecordsInput
+    connect?: BookTitleWhereUniqueInput
+    update?: XOR<BookTitleUpdateWithoutRequestRecordsInput, BookTitleUncheckedUpdateWithoutRequestRecordsInput>
+  }
+
+  export type LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput = {
+    create?: XOR<LibraryCreateWithoutRequestingRecordsInput, LibraryUncheckedCreateWithoutRequestingRecordsInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutRequestingRecordsInput
+    upsert?: LibraryUpsertWithoutRequestingRecordsInput
+    connect?: LibraryWhereUniqueInput
+    update?: XOR<LibraryUpdateWithoutRequestingRecordsInput, LibraryUncheckedUpdateWithoutRequestingRecordsInput>
+  }
+
+  export type LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput = {
+    create?: XOR<LibraryCreateWithoutRequestedRecordsInput, LibraryUncheckedCreateWithoutRequestedRecordsInput>
+    connectOrCreate?: LibraryCreateOrConnectWithoutRequestedRecordsInput
+    upsert?: LibraryUpsertWithoutRequestedRecordsInput
+    connect?: LibraryWhereUniqueInput
+    update?: XOR<LibraryUpdateWithoutRequestedRecordsInput, LibraryUncheckedUpdateWithoutRequestedRecordsInput>
+  }
+
+  export type BookUpdateOneWithoutRequestRecordsNestedInput = {
+    create?: XOR<BookCreateWithoutRequestRecordsInput, BookUncheckedCreateWithoutRequestRecordsInput>
+    connectOrCreate?: BookCreateOrConnectWithoutRequestRecordsInput
+    upsert?: BookUpsertWithoutRequestRecordsInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: BookWhereUniqueInput
+    update?: XOR<BookUpdateWithoutRequestRecordsInput, BookUncheckedUpdateWithoutRequestRecordsInput>
+  }
+
   export type UserRelationCreateNestedManyWithoutFollowingUserInput = {
     create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
     connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
@@ -45457,6 +57732,44 @@ export namespace Prisma {
     _max?: NestedEnumWMTypeEnumFilter
   }
 
+  export type NestedBoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter = {
+    equals?: boolean
+    not?: NestedBoolWithAggregatesFilter | boolean
+    _count?: NestedIntFilter
+    _min?: NestedBoolFilter
+    _max?: NestedBoolFilter
+  }
+
+  export type NestedDateTimeNullableFilter = {
+    equals?: Date | string | null
+    in?: Enumerable<Date> | Enumerable<string> | null
+    notIn?: Enumerable<Date> | Enumerable<string> | null
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeNullableFilter | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter = {
+    equals?: Date | string | null
+    in?: Enumerable<Date> | Enumerable<string> | null
+    notIn?: Enumerable<Date> | Enumerable<string> | null
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeNullableWithAggregatesFilter | Date | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedDateTimeNullableFilter
+    _max?: NestedDateTimeNullableFilter
+  }
+
   export type NestedStringNullableFilter = {
     equals?: string | null
     in?: Enumerable<string> | null
@@ -46476,6 +58789,7 @@ export namespace Prisma {
 
   export type BinWashUserCreateWithoutOwningBranchesInput = {
     name: string
+    balance: number
     wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
     topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
@@ -46486,6 +58800,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedCreateWithoutOwningBranchesInput = {
     id?: number
     name: string
+    balance: number
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
     topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
@@ -46544,6 +58859,7 @@ export namespace Prisma {
 
   export type BinWashUserUpdateWithoutOwningBranchesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
     topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
@@ -46554,6 +58870,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateWithoutOwningBranchesInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
     topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
@@ -46921,6 +59238,7 @@ export namespace Prisma {
 
   export type BinWashUserCreateWithoutWMMaintenanceRecordsInput = {
     name: string
+    balance: number
     owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
     usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
     topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
@@ -46931,6 +59249,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput = {
     id?: number
     name: string
+    balance: number
     owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
     usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
     topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
@@ -46984,6 +59303,7 @@ export namespace Prisma {
 
   export type BinWashUserUpdateWithoutWMMaintenanceRecordsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
     usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
     topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
@@ -46994,6 +59314,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateWithoutWMMaintenanceRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
     usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
     topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
@@ -47003,6 +59324,7 @@ export namespace Prisma {
 
   export type BinWashUserCreateWithoutUsageRecordsInput = {
     name: string
+    balance: number
     owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
     topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
@@ -47013,6 +59335,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedCreateWithoutUsageRecordsInput = {
     id?: number
     name: string
+    balance: number
     owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
     topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
@@ -47092,6 +59415,7 @@ export namespace Prisma {
 
   export type BinWashUserUpdateWithoutUsageRecordsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
     topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
@@ -47102,6 +59426,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateWithoutUsageRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
     topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
@@ -47171,6 +59496,7 @@ export namespace Prisma {
 
   export type BinWashUserCreateWithoutTopUpRecordsInput = {
     name: string
+    balance: number
     owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
@@ -47181,6 +59507,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedCreateWithoutTopUpRecordsInput = {
     id?: number
     name: string
+    balance: number
     owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
     usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
@@ -47200,6 +59527,7 @@ export namespace Prisma {
 
   export type BinWashUserUpdateWithoutTopUpRecordsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
@@ -47210,6 +59538,7 @@ export namespace Prisma {
   export type BinWashUserUncheckedUpdateWithoutTopUpRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    balance?: FloatFieldUpdateOperationsInput | number
     owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
     wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
     usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
@@ -48156,6 +60485,1312 @@ export namespace Prisma {
     posts?: PostUncheckedUpdateManyWithoutPostingUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutCommentingUserNestedInput
     messengerMessagesFrom?: MessengerMessageUncheckedUpdateManyWithoutFromUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleCreateWithoutAuthorsInput = {
+    title: string
+    isbn: string
+    categories?: BookCategoryCreateNestedManyWithoutBookTitlesInput
+    books?: BookCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUncheckedCreateWithoutAuthorsInput = {
+    id?: number
+    title: string
+    isbn: string
+    categories?: BookCategoryUncheckedCreateNestedManyWithoutBookTitlesInput
+    books?: BookUncheckedCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleCreateOrConnectWithoutAuthorsInput = {
+    where: BookTitleWhereUniqueInput
+    create: XOR<BookTitleCreateWithoutAuthorsInput, BookTitleUncheckedCreateWithoutAuthorsInput>
+  }
+
+  export type BookTitleUpsertWithWhereUniqueWithoutAuthorsInput = {
+    where: BookTitleWhereUniqueInput
+    update: XOR<BookTitleUpdateWithoutAuthorsInput, BookTitleUncheckedUpdateWithoutAuthorsInput>
+    create: XOR<BookTitleCreateWithoutAuthorsInput, BookTitleUncheckedCreateWithoutAuthorsInput>
+  }
+
+  export type BookTitleUpdateWithWhereUniqueWithoutAuthorsInput = {
+    where: BookTitleWhereUniqueInput
+    data: XOR<BookTitleUpdateWithoutAuthorsInput, BookTitleUncheckedUpdateWithoutAuthorsInput>
+  }
+
+  export type BookTitleUpdateManyWithWhereWithoutAuthorsInput = {
+    where: BookTitleScalarWhereInput
+    data: XOR<BookTitleUpdateManyMutationInput, BookTitleUncheckedUpdateManyWithoutBookTitlesInput>
+  }
+
+  export type BookTitleScalarWhereInput = {
+    AND?: Enumerable<BookTitleScalarWhereInput>
+    OR?: Enumerable<BookTitleScalarWhereInput>
+    NOT?: Enumerable<BookTitleScalarWhereInput>
+    id?: IntFilter | number
+    title?: StringFilter | string
+    isbn?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type AuthorCreateWithoutBookTitlesInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorUncheckedCreateWithoutBookTitlesInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorCreateOrConnectWithoutBookTitlesInput = {
+    where: AuthorWhereUniqueInput
+    create: XOR<AuthorCreateWithoutBookTitlesInput, AuthorUncheckedCreateWithoutBookTitlesInput>
+  }
+
+  export type BookCategoryCreateWithoutBookTitlesInput = {
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCategoryUncheckedCreateWithoutBookTitlesInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCategoryCreateOrConnectWithoutBookTitlesInput = {
+    where: BookCategoryWhereUniqueInput
+    create: XOR<BookCategoryCreateWithoutBookTitlesInput, BookCategoryUncheckedCreateWithoutBookTitlesInput>
+  }
+
+  export type BookCreateWithoutTitleInput = {
+    belongsToLibrary: LibraryCreateNestedOneWithoutBooksInput
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUncheckedCreateWithoutTitleInput = {
+    id?: number
+    libraryId: number
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCreateOrConnectWithoutTitleInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutTitleInput, BookUncheckedCreateWithoutTitleInput>
+  }
+
+  export type BookCreateManyTitleInputEnvelope = {
+    data: Enumerable<BookCreateManyTitleInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RequestRecordCreateWithoutRequestedBookTitleInput = {
+    requestingStudent: StudentCreateNestedOneWithoutRequestRecordsInput
+    requestingLibrary: LibraryCreateNestedOneWithoutRequestingRecordsInput
+    requestedLibrary: LibraryCreateNestedOneWithoutRequestedRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    acquiredBook?: BookCreateNestedOneWithoutRequestRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateWithoutRequestedBookTitleInput = {
+    id?: number
+    studentId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateOrConnectWithoutRequestedBookTitleInput = {
+    where: RequestRecordWhereUniqueInput
+    create: XOR<RequestRecordCreateWithoutRequestedBookTitleInput, RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>
+  }
+
+  export type RequestRecordCreateManyRequestedBookTitleInputEnvelope = {
+    data: Enumerable<RequestRecordCreateManyRequestedBookTitleInput>
+    skipDuplicates?: boolean
+  }
+
+  export type AuthorUpsertWithWhereUniqueWithoutBookTitlesInput = {
+    where: AuthorWhereUniqueInput
+    update: XOR<AuthorUpdateWithoutBookTitlesInput, AuthorUncheckedUpdateWithoutBookTitlesInput>
+    create: XOR<AuthorCreateWithoutBookTitlesInput, AuthorUncheckedCreateWithoutBookTitlesInput>
+  }
+
+  export type AuthorUpdateWithWhereUniqueWithoutBookTitlesInput = {
+    where: AuthorWhereUniqueInput
+    data: XOR<AuthorUpdateWithoutBookTitlesInput, AuthorUncheckedUpdateWithoutBookTitlesInput>
+  }
+
+  export type AuthorUpdateManyWithWhereWithoutBookTitlesInput = {
+    where: AuthorScalarWhereInput
+    data: XOR<AuthorUpdateManyMutationInput, AuthorUncheckedUpdateManyWithoutAuthorsInput>
+  }
+
+  export type AuthorScalarWhereInput = {
+    AND?: Enumerable<AuthorScalarWhereInput>
+    OR?: Enumerable<AuthorScalarWhereInput>
+    NOT?: Enumerable<AuthorScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookCategoryUpsertWithWhereUniqueWithoutBookTitlesInput = {
+    where: BookCategoryWhereUniqueInput
+    update: XOR<BookCategoryUpdateWithoutBookTitlesInput, BookCategoryUncheckedUpdateWithoutBookTitlesInput>
+    create: XOR<BookCategoryCreateWithoutBookTitlesInput, BookCategoryUncheckedCreateWithoutBookTitlesInput>
+  }
+
+  export type BookCategoryUpdateWithWhereUniqueWithoutBookTitlesInput = {
+    where: BookCategoryWhereUniqueInput
+    data: XOR<BookCategoryUpdateWithoutBookTitlesInput, BookCategoryUncheckedUpdateWithoutBookTitlesInput>
+  }
+
+  export type BookCategoryUpdateManyWithWhereWithoutBookTitlesInput = {
+    where: BookCategoryScalarWhereInput
+    data: XOR<BookCategoryUpdateManyMutationInput, BookCategoryUncheckedUpdateManyWithoutCategoriesInput>
+  }
+
+  export type BookCategoryScalarWhereInput = {
+    AND?: Enumerable<BookCategoryScalarWhereInput>
+    OR?: Enumerable<BookCategoryScalarWhereInput>
+    NOT?: Enumerable<BookCategoryScalarWhereInput>
+    id?: IntFilter | number
+    category?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookUpsertWithWhereUniqueWithoutTitleInput = {
+    where: BookWhereUniqueInput
+    update: XOR<BookUpdateWithoutTitleInput, BookUncheckedUpdateWithoutTitleInput>
+    create: XOR<BookCreateWithoutTitleInput, BookUncheckedCreateWithoutTitleInput>
+  }
+
+  export type BookUpdateWithWhereUniqueWithoutTitleInput = {
+    where: BookWhereUniqueInput
+    data: XOR<BookUpdateWithoutTitleInput, BookUncheckedUpdateWithoutTitleInput>
+  }
+
+  export type BookUpdateManyWithWhereWithoutTitleInput = {
+    where: BookScalarWhereInput
+    data: XOR<BookUpdateManyMutationInput, BookUncheckedUpdateManyWithoutBooksInput>
+  }
+
+  export type BookScalarWhereInput = {
+    AND?: Enumerable<BookScalarWhereInput>
+    OR?: Enumerable<BookScalarWhereInput>
+    NOT?: Enumerable<BookScalarWhereInput>
+    id?: IntFilter | number
+    bookTitleId?: IntFilter | number
+    libraryId?: IntFilter | number
+    isAvailable?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type RequestRecordUpsertWithWhereUniqueWithoutRequestedBookTitleInput = {
+    where: RequestRecordWhereUniqueInput
+    update: XOR<RequestRecordUpdateWithoutRequestedBookTitleInput, RequestRecordUncheckedUpdateWithoutRequestedBookTitleInput>
+    create: XOR<RequestRecordCreateWithoutRequestedBookTitleInput, RequestRecordUncheckedCreateWithoutRequestedBookTitleInput>
+  }
+
+  export type RequestRecordUpdateWithWhereUniqueWithoutRequestedBookTitleInput = {
+    where: RequestRecordWhereUniqueInput
+    data: XOR<RequestRecordUpdateWithoutRequestedBookTitleInput, RequestRecordUncheckedUpdateWithoutRequestedBookTitleInput>
+  }
+
+  export type RequestRecordUpdateManyWithWhereWithoutRequestedBookTitleInput = {
+    where: RequestRecordScalarWhereInput
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyWithoutRequestRecordsInput>
+  }
+
+  export type RequestRecordScalarWhereInput = {
+    AND?: Enumerable<RequestRecordScalarWhereInput>
+    OR?: Enumerable<RequestRecordScalarWhereInput>
+    NOT?: Enumerable<RequestRecordScalarWhereInput>
+    id?: IntFilter | number
+    studentId?: IntFilter | number
+    bookTitleId?: IntFilter | number
+    requestingLibraryId?: IntFilter | number
+    requestedLibraryId?: IntFilter | number
+    requestDate?: DateTimeFilter | Date | string
+    acquiredDate?: DateTimeNullableFilter | Date | string | null
+    returnDate?: DateTimeNullableFilter | Date | string | null
+    bookId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BookTitleCreateWithoutCategoriesInput = {
+    title: string
+    isbn: string
+    authors?: AuthorCreateNestedManyWithoutBookTitlesInput
+    books?: BookCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUncheckedCreateWithoutCategoriesInput = {
+    id?: number
+    title: string
+    isbn: string
+    authors?: AuthorUncheckedCreateNestedManyWithoutBookTitlesInput
+    books?: BookUncheckedCreateNestedManyWithoutTitleInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleCreateOrConnectWithoutCategoriesInput = {
+    where: BookTitleWhereUniqueInput
+    create: XOR<BookTitleCreateWithoutCategoriesInput, BookTitleUncheckedCreateWithoutCategoriesInput>
+  }
+
+  export type BookTitleUpsertWithWhereUniqueWithoutCategoriesInput = {
+    where: BookTitleWhereUniqueInput
+    update: XOR<BookTitleUpdateWithoutCategoriesInput, BookTitleUncheckedUpdateWithoutCategoriesInput>
+    create: XOR<BookTitleCreateWithoutCategoriesInput, BookTitleUncheckedCreateWithoutCategoriesInput>
+  }
+
+  export type BookTitleUpdateWithWhereUniqueWithoutCategoriesInput = {
+    where: BookTitleWhereUniqueInput
+    data: XOR<BookTitleUpdateWithoutCategoriesInput, BookTitleUncheckedUpdateWithoutCategoriesInput>
+  }
+
+  export type BookTitleUpdateManyWithWhereWithoutCategoriesInput = {
+    where: BookTitleScalarWhereInput
+    data: XOR<BookTitleUpdateManyMutationInput, BookTitleUncheckedUpdateManyWithoutBookTitlesInput>
+  }
+
+  export type BookTitleCreateWithoutBooksInput = {
+    title: string
+    isbn: string
+    authors?: AuthorCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryCreateNestedManyWithoutBookTitlesInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUncheckedCreateWithoutBooksInput = {
+    id?: number
+    title: string
+    isbn: string
+    authors?: AuthorUncheckedCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryUncheckedCreateNestedManyWithoutBookTitlesInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedBookTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleCreateOrConnectWithoutBooksInput = {
+    where: BookTitleWhereUniqueInput
+    create: XOR<BookTitleCreateWithoutBooksInput, BookTitleUncheckedCreateWithoutBooksInput>
+  }
+
+  export type LibraryCreateWithoutBooksInput = {
+    name: string
+    location: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutLibrariesInput
+    requestingRecords?: RequestRecordCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUncheckedCreateWithoutBooksInput = {
+    id?: number
+    name: string
+    location: string
+    universityId: number
+    requestingRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryCreateOrConnectWithoutBooksInput = {
+    where: LibraryWhereUniqueInput
+    create: XOR<LibraryCreateWithoutBooksInput, LibraryUncheckedCreateWithoutBooksInput>
+  }
+
+  export type BorrowingRecordCreateWithoutBorrowedBookInput = {
+    borrowingStudent: StudentCreateNestedOneWithoutBorrowingRecordsInput
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUncheckedCreateWithoutBorrowedBookInput = {
+    id?: number
+    studentId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordCreateOrConnectWithoutBorrowedBookInput = {
+    where: BorrowingRecordWhereUniqueInput
+    create: XOR<BorrowingRecordCreateWithoutBorrowedBookInput, BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>
+  }
+
+  export type BorrowingRecordCreateManyBorrowedBookInputEnvelope = {
+    data: Enumerable<BorrowingRecordCreateManyBorrowedBookInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RequestRecordCreateWithoutAcquiredBookInput = {
+    requestingStudent: StudentCreateNestedOneWithoutRequestRecordsInput
+    requestedBookTitle: BookTitleCreateNestedOneWithoutRequestRecordsInput
+    requestingLibrary: LibraryCreateNestedOneWithoutRequestingRecordsInput
+    requestedLibrary: LibraryCreateNestedOneWithoutRequestedRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateWithoutAcquiredBookInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateOrConnectWithoutAcquiredBookInput = {
+    where: RequestRecordWhereUniqueInput
+    create: XOR<RequestRecordCreateWithoutAcquiredBookInput, RequestRecordUncheckedCreateWithoutAcquiredBookInput>
+  }
+
+  export type RequestRecordCreateManyAcquiredBookInputEnvelope = {
+    data: Enumerable<RequestRecordCreateManyAcquiredBookInput>
+    skipDuplicates?: boolean
+  }
+
+  export type BookTitleUpsertWithoutBooksInput = {
+    update: XOR<BookTitleUpdateWithoutBooksInput, BookTitleUncheckedUpdateWithoutBooksInput>
+    create: XOR<BookTitleCreateWithoutBooksInput, BookTitleUncheckedCreateWithoutBooksInput>
+  }
+
+  export type BookTitleUpdateWithoutBooksInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUpdateManyWithoutBookTitlesNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateWithoutBooksInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUncheckedUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUncheckedUpdateManyWithoutBookTitlesNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUpsertWithoutBooksInput = {
+    update: XOR<LibraryUpdateWithoutBooksInput, LibraryUncheckedUpdateWithoutBooksInput>
+    create: XOR<LibraryCreateWithoutBooksInput, LibraryUncheckedCreateWithoutBooksInput>
+  }
+
+  export type LibraryUpdateWithoutBooksInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutLibrariesNestedInput
+    requestingRecords?: RequestRecordUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateWithoutBooksInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    requestingRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUpsertWithWhereUniqueWithoutBorrowedBookInput = {
+    where: BorrowingRecordWhereUniqueInput
+    update: XOR<BorrowingRecordUpdateWithoutBorrowedBookInput, BorrowingRecordUncheckedUpdateWithoutBorrowedBookInput>
+    create: XOR<BorrowingRecordCreateWithoutBorrowedBookInput, BorrowingRecordUncheckedCreateWithoutBorrowedBookInput>
+  }
+
+  export type BorrowingRecordUpdateWithWhereUniqueWithoutBorrowedBookInput = {
+    where: BorrowingRecordWhereUniqueInput
+    data: XOR<BorrowingRecordUpdateWithoutBorrowedBookInput, BorrowingRecordUncheckedUpdateWithoutBorrowedBookInput>
+  }
+
+  export type BorrowingRecordUpdateManyWithWhereWithoutBorrowedBookInput = {
+    where: BorrowingRecordScalarWhereInput
+    data: XOR<BorrowingRecordUpdateManyMutationInput, BorrowingRecordUncheckedUpdateManyWithoutBorrowingRecordsInput>
+  }
+
+  export type BorrowingRecordScalarWhereInput = {
+    AND?: Enumerable<BorrowingRecordScalarWhereInput>
+    OR?: Enumerable<BorrowingRecordScalarWhereInput>
+    NOT?: Enumerable<BorrowingRecordScalarWhereInput>
+    id?: IntFilter | number
+    studentId?: IntFilter | number
+    bookId?: IntFilter | number
+    startDate?: DateTimeFilter | Date | string
+    endDate?: DateTimeNullableFilter | Date | string | null
+    actualEndDate?: DateTimeNullableFilter | Date | string | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type RequestRecordUpsertWithWhereUniqueWithoutAcquiredBookInput = {
+    where: RequestRecordWhereUniqueInput
+    update: XOR<RequestRecordUpdateWithoutAcquiredBookInput, RequestRecordUncheckedUpdateWithoutAcquiredBookInput>
+    create: XOR<RequestRecordCreateWithoutAcquiredBookInput, RequestRecordUncheckedCreateWithoutAcquiredBookInput>
+  }
+
+  export type RequestRecordUpdateWithWhereUniqueWithoutAcquiredBookInput = {
+    where: RequestRecordWhereUniqueInput
+    data: XOR<RequestRecordUpdateWithoutAcquiredBookInput, RequestRecordUncheckedUpdateWithoutAcquiredBookInput>
+  }
+
+  export type RequestRecordUpdateManyWithWhereWithoutAcquiredBookInput = {
+    where: RequestRecordScalarWhereInput
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyWithoutRequestRecordsInput>
+  }
+
+  export type UniversityCreateWithoutLibrariesInput = {
+    name: string
+    location: string
+    students?: StudentCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUncheckedCreateWithoutLibrariesInput = {
+    id?: number
+    name: string
+    location: string
+    students?: StudentUncheckedCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityCreateOrConnectWithoutLibrariesInput = {
+    where: UniversityWhereUniqueInput
+    create: XOR<UniversityCreateWithoutLibrariesInput, UniversityUncheckedCreateWithoutLibrariesInput>
+  }
+
+  export type BookCreateWithoutBelongsToLibraryInput = {
+    title: BookTitleCreateNestedOneWithoutBooksInput
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUncheckedCreateWithoutBelongsToLibraryInput = {
+    id?: number
+    bookTitleId: number
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowedBookInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCreateOrConnectWithoutBelongsToLibraryInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutBelongsToLibraryInput, BookUncheckedCreateWithoutBelongsToLibraryInput>
+  }
+
+  export type BookCreateManyBelongsToLibraryInputEnvelope = {
+    data: Enumerable<BookCreateManyBelongsToLibraryInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RequestRecordCreateWithoutRequestingLibraryInput = {
+    requestingStudent: StudentCreateNestedOneWithoutRequestRecordsInput
+    requestedBookTitle: BookTitleCreateNestedOneWithoutRequestRecordsInput
+    requestedLibrary: LibraryCreateNestedOneWithoutRequestedRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    acquiredBook?: BookCreateNestedOneWithoutRequestRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateWithoutRequestingLibraryInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateOrConnectWithoutRequestingLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    create: XOR<RequestRecordCreateWithoutRequestingLibraryInput, RequestRecordUncheckedCreateWithoutRequestingLibraryInput>
+  }
+
+  export type RequestRecordCreateManyRequestingLibraryInputEnvelope = {
+    data: Enumerable<RequestRecordCreateManyRequestingLibraryInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RequestRecordCreateWithoutRequestedLibraryInput = {
+    requestingStudent: StudentCreateNestedOneWithoutRequestRecordsInput
+    requestedBookTitle: BookTitleCreateNestedOneWithoutRequestRecordsInput
+    requestingLibrary: LibraryCreateNestedOneWithoutRequestingRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    acquiredBook?: BookCreateNestedOneWithoutRequestRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateWithoutRequestedLibraryInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateOrConnectWithoutRequestedLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    create: XOR<RequestRecordCreateWithoutRequestedLibraryInput, RequestRecordUncheckedCreateWithoutRequestedLibraryInput>
+  }
+
+  export type RequestRecordCreateManyRequestedLibraryInputEnvelope = {
+    data: Enumerable<RequestRecordCreateManyRequestedLibraryInput>
+    skipDuplicates?: boolean
+  }
+
+  export type UniversityUpsertWithoutLibrariesInput = {
+    update: XOR<UniversityUpdateWithoutLibrariesInput, UniversityUncheckedUpdateWithoutLibrariesInput>
+    create: XOR<UniversityCreateWithoutLibrariesInput, UniversityUncheckedCreateWithoutLibrariesInput>
+  }
+
+  export type UniversityUpdateWithoutLibrariesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    students?: StudentUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityUncheckedUpdateWithoutLibrariesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    students?: StudentUncheckedUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUpsertWithWhereUniqueWithoutBelongsToLibraryInput = {
+    where: BookWhereUniqueInput
+    update: XOR<BookUpdateWithoutBelongsToLibraryInput, BookUncheckedUpdateWithoutBelongsToLibraryInput>
+    create: XOR<BookCreateWithoutBelongsToLibraryInput, BookUncheckedCreateWithoutBelongsToLibraryInput>
+  }
+
+  export type BookUpdateWithWhereUniqueWithoutBelongsToLibraryInput = {
+    where: BookWhereUniqueInput
+    data: XOR<BookUpdateWithoutBelongsToLibraryInput, BookUncheckedUpdateWithoutBelongsToLibraryInput>
+  }
+
+  export type BookUpdateManyWithWhereWithoutBelongsToLibraryInput = {
+    where: BookScalarWhereInput
+    data: XOR<BookUpdateManyMutationInput, BookUncheckedUpdateManyWithoutBooksInput>
+  }
+
+  export type RequestRecordUpsertWithWhereUniqueWithoutRequestingLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    update: XOR<RequestRecordUpdateWithoutRequestingLibraryInput, RequestRecordUncheckedUpdateWithoutRequestingLibraryInput>
+    create: XOR<RequestRecordCreateWithoutRequestingLibraryInput, RequestRecordUncheckedCreateWithoutRequestingLibraryInput>
+  }
+
+  export type RequestRecordUpdateWithWhereUniqueWithoutRequestingLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    data: XOR<RequestRecordUpdateWithoutRequestingLibraryInput, RequestRecordUncheckedUpdateWithoutRequestingLibraryInput>
+  }
+
+  export type RequestRecordUpdateManyWithWhereWithoutRequestingLibraryInput = {
+    where: RequestRecordScalarWhereInput
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyWithoutRequestingRecordsInput>
+  }
+
+  export type RequestRecordUpsertWithWhereUniqueWithoutRequestedLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    update: XOR<RequestRecordUpdateWithoutRequestedLibraryInput, RequestRecordUncheckedUpdateWithoutRequestedLibraryInput>
+    create: XOR<RequestRecordCreateWithoutRequestedLibraryInput, RequestRecordUncheckedCreateWithoutRequestedLibraryInput>
+  }
+
+  export type RequestRecordUpdateWithWhereUniqueWithoutRequestedLibraryInput = {
+    where: RequestRecordWhereUniqueInput
+    data: XOR<RequestRecordUpdateWithoutRequestedLibraryInput, RequestRecordUncheckedUpdateWithoutRequestedLibraryInput>
+  }
+
+  export type RequestRecordUpdateManyWithWhereWithoutRequestedLibraryInput = {
+    where: RequestRecordScalarWhereInput
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyWithoutRequestedRecordsInput>
+  }
+
+  export type LibraryCreateWithoutBelongsToUniversityInput = {
+    name: string
+    location: string
+    books?: BookCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUncheckedCreateWithoutBelongsToUniversityInput = {
+    id?: number
+    name: string
+    location: string
+    books?: BookUncheckedCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingLibraryInput
+    requestedRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryCreateOrConnectWithoutBelongsToUniversityInput = {
+    where: LibraryWhereUniqueInput
+    create: XOR<LibraryCreateWithoutBelongsToUniversityInput, LibraryUncheckedCreateWithoutBelongsToUniversityInput>
+  }
+
+  export type LibraryCreateManyBelongsToUniversityInputEnvelope = {
+    data: Enumerable<LibraryCreateManyBelongsToUniversityInput>
+    skipDuplicates?: boolean
+  }
+
+  export type StudentCreateWithoutBelongsToUniversityInput = {
+    Name: string
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowingStudentInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUncheckedCreateWithoutBelongsToUniversityInput = {
+    id?: number
+    Name: string
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowingStudentInput
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentCreateOrConnectWithoutBelongsToUniversityInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutBelongsToUniversityInput, StudentUncheckedCreateWithoutBelongsToUniversityInput>
+  }
+
+  export type StudentCreateManyBelongsToUniversityInputEnvelope = {
+    data: Enumerable<StudentCreateManyBelongsToUniversityInput>
+    skipDuplicates?: boolean
+  }
+
+  export type LibraryUpsertWithWhereUniqueWithoutBelongsToUniversityInput = {
+    where: LibraryWhereUniqueInput
+    update: XOR<LibraryUpdateWithoutBelongsToUniversityInput, LibraryUncheckedUpdateWithoutBelongsToUniversityInput>
+    create: XOR<LibraryCreateWithoutBelongsToUniversityInput, LibraryUncheckedCreateWithoutBelongsToUniversityInput>
+  }
+
+  export type LibraryUpdateWithWhereUniqueWithoutBelongsToUniversityInput = {
+    where: LibraryWhereUniqueInput
+    data: XOR<LibraryUpdateWithoutBelongsToUniversityInput, LibraryUncheckedUpdateWithoutBelongsToUniversityInput>
+  }
+
+  export type LibraryUpdateManyWithWhereWithoutBelongsToUniversityInput = {
+    where: LibraryScalarWhereInput
+    data: XOR<LibraryUpdateManyMutationInput, LibraryUncheckedUpdateManyWithoutLibrariesInput>
+  }
+
+  export type LibraryScalarWhereInput = {
+    AND?: Enumerable<LibraryScalarWhereInput>
+    OR?: Enumerable<LibraryScalarWhereInput>
+    NOT?: Enumerable<LibraryScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    location?: StringFilter | string
+    universityId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type StudentUpsertWithWhereUniqueWithoutBelongsToUniversityInput = {
+    where: StudentWhereUniqueInput
+    update: XOR<StudentUpdateWithoutBelongsToUniversityInput, StudentUncheckedUpdateWithoutBelongsToUniversityInput>
+    create: XOR<StudentCreateWithoutBelongsToUniversityInput, StudentUncheckedCreateWithoutBelongsToUniversityInput>
+  }
+
+  export type StudentUpdateWithWhereUniqueWithoutBelongsToUniversityInput = {
+    where: StudentWhereUniqueInput
+    data: XOR<StudentUpdateWithoutBelongsToUniversityInput, StudentUncheckedUpdateWithoutBelongsToUniversityInput>
+  }
+
+  export type StudentUpdateManyWithWhereWithoutBelongsToUniversityInput = {
+    where: StudentScalarWhereInput
+    data: XOR<StudentUpdateManyMutationInput, StudentUncheckedUpdateManyWithoutStudentsInput>
+  }
+
+  export type StudentScalarWhereInput = {
+    AND?: Enumerable<StudentScalarWhereInput>
+    OR?: Enumerable<StudentScalarWhereInput>
+    NOT?: Enumerable<StudentScalarWhereInput>
+    id?: IntFilter | number
+    Name?: StringFilter | string
+    universityId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UniversityCreateWithoutStudentsInput = {
+    name: string
+    location: string
+    libraries?: LibraryCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUncheckedCreateWithoutStudentsInput = {
+    id?: number
+    name: string
+    location: string
+    libraries?: LibraryUncheckedCreateNestedManyWithoutBelongsToUniversityInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityCreateOrConnectWithoutStudentsInput = {
+    where: UniversityWhereUniqueInput
+    create: XOR<UniversityCreateWithoutStudentsInput, UniversityUncheckedCreateWithoutStudentsInput>
+  }
+
+  export type BorrowingRecordCreateWithoutBorrowingStudentInput = {
+    borrowedBook: BookCreateNestedOneWithoutBorrowingRecordsInput
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput = {
+    id?: number
+    bookId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordCreateOrConnectWithoutBorrowingStudentInput = {
+    where: BorrowingRecordWhereUniqueInput
+    create: XOR<BorrowingRecordCreateWithoutBorrowingStudentInput, BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>
+  }
+
+  export type BorrowingRecordCreateManyBorrowingStudentInputEnvelope = {
+    data: Enumerable<BorrowingRecordCreateManyBorrowingStudentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RequestRecordCreateWithoutRequestingStudentInput = {
+    requestedBookTitle: BookTitleCreateNestedOneWithoutRequestRecordsInput
+    requestingLibrary: LibraryCreateNestedOneWithoutRequestingRecordsInput
+    requestedLibrary: LibraryCreateNestedOneWithoutRequestedRecordsInput
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    acquiredBook?: BookCreateNestedOneWithoutRequestRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordUncheckedCreateWithoutRequestingStudentInput = {
+    id?: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateOrConnectWithoutRequestingStudentInput = {
+    where: RequestRecordWhereUniqueInput
+    create: XOR<RequestRecordCreateWithoutRequestingStudentInput, RequestRecordUncheckedCreateWithoutRequestingStudentInput>
+  }
+
+  export type RequestRecordCreateManyRequestingStudentInputEnvelope = {
+    data: Enumerable<RequestRecordCreateManyRequestingStudentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type UniversityUpsertWithoutStudentsInput = {
+    update: XOR<UniversityUpdateWithoutStudentsInput, UniversityUncheckedUpdateWithoutStudentsInput>
+    create: XOR<UniversityCreateWithoutStudentsInput, UniversityUncheckedCreateWithoutStudentsInput>
+  }
+
+  export type UniversityUpdateWithoutStudentsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    libraries?: LibraryUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityUncheckedUpdateWithoutStudentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    libraries?: LibraryUncheckedUpdateManyWithoutBelongsToUniversityNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUpsertWithWhereUniqueWithoutBorrowingStudentInput = {
+    where: BorrowingRecordWhereUniqueInput
+    update: XOR<BorrowingRecordUpdateWithoutBorrowingStudentInput, BorrowingRecordUncheckedUpdateWithoutBorrowingStudentInput>
+    create: XOR<BorrowingRecordCreateWithoutBorrowingStudentInput, BorrowingRecordUncheckedCreateWithoutBorrowingStudentInput>
+  }
+
+  export type BorrowingRecordUpdateWithWhereUniqueWithoutBorrowingStudentInput = {
+    where: BorrowingRecordWhereUniqueInput
+    data: XOR<BorrowingRecordUpdateWithoutBorrowingStudentInput, BorrowingRecordUncheckedUpdateWithoutBorrowingStudentInput>
+  }
+
+  export type BorrowingRecordUpdateManyWithWhereWithoutBorrowingStudentInput = {
+    where: BorrowingRecordScalarWhereInput
+    data: XOR<BorrowingRecordUpdateManyMutationInput, BorrowingRecordUncheckedUpdateManyWithoutBorrowingRecordsInput>
+  }
+
+  export type RequestRecordUpsertWithWhereUniqueWithoutRequestingStudentInput = {
+    where: RequestRecordWhereUniqueInput
+    update: XOR<RequestRecordUpdateWithoutRequestingStudentInput, RequestRecordUncheckedUpdateWithoutRequestingStudentInput>
+    create: XOR<RequestRecordCreateWithoutRequestingStudentInput, RequestRecordUncheckedCreateWithoutRequestingStudentInput>
+  }
+
+  export type RequestRecordUpdateWithWhereUniqueWithoutRequestingStudentInput = {
+    where: RequestRecordWhereUniqueInput
+    data: XOR<RequestRecordUpdateWithoutRequestingStudentInput, RequestRecordUncheckedUpdateWithoutRequestingStudentInput>
+  }
+
+  export type RequestRecordUpdateManyWithWhereWithoutRequestingStudentInput = {
+    where: RequestRecordScalarWhereInput
+    data: XOR<RequestRecordUpdateManyMutationInput, RequestRecordUncheckedUpdateManyWithoutRequestRecordsInput>
+  }
+
+  export type StudentCreateWithoutBorrowingRecordsInput = {
+    Name: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutStudentsInput
+    requestRecords?: RequestRecordCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUncheckedCreateWithoutBorrowingRecordsInput = {
+    id?: number
+    Name: string
+    universityId: number
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentCreateOrConnectWithoutBorrowingRecordsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutBorrowingRecordsInput, StudentUncheckedCreateWithoutBorrowingRecordsInput>
+  }
+
+  export type BookCreateWithoutBorrowingRecordsInput = {
+    title: BookTitleCreateNestedOneWithoutBooksInput
+    belongsToLibrary: LibraryCreateNestedOneWithoutBooksInput
+    isAvailable: boolean
+    requestRecords?: RequestRecordCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUncheckedCreateWithoutBorrowingRecordsInput = {
+    id?: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: boolean
+    requestRecords?: RequestRecordUncheckedCreateNestedManyWithoutAcquiredBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCreateOrConnectWithoutBorrowingRecordsInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutBorrowingRecordsInput, BookUncheckedCreateWithoutBorrowingRecordsInput>
+  }
+
+  export type StudentUpsertWithoutBorrowingRecordsInput = {
+    update: XOR<StudentUpdateWithoutBorrowingRecordsInput, StudentUncheckedUpdateWithoutBorrowingRecordsInput>
+    create: XOR<StudentCreateWithoutBorrowingRecordsInput, StudentUncheckedCreateWithoutBorrowingRecordsInput>
+  }
+
+  export type StudentUpdateWithoutBorrowingRecordsInput = {
+    Name?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutStudentsNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateWithoutBorrowingRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUpsertWithoutBorrowingRecordsInput = {
+    update: XOR<BookUpdateWithoutBorrowingRecordsInput, BookUncheckedUpdateWithoutBorrowingRecordsInput>
+    create: XOR<BookCreateWithoutBorrowingRecordsInput, BookUncheckedCreateWithoutBorrowingRecordsInput>
+  }
+
+  export type BookUpdateWithoutBorrowingRecordsInput = {
+    title?: BookTitleUpdateOneRequiredWithoutBooksNestedInput
+    belongsToLibrary?: LibraryUpdateOneRequiredWithoutBooksNestedInput
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    requestRecords?: RequestRecordUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateWithoutBorrowingRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCreateWithoutRequestRecordsInput = {
+    Name: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutStudentsInput
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentUncheckedCreateWithoutRequestRecordsInput = {
+    id?: number
+    Name: string
+    universityId: number
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowingStudentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentCreateOrConnectWithoutRequestRecordsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutRequestRecordsInput, StudentUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type BookTitleCreateWithoutRequestRecordsInput = {
+    title: string
+    isbn: string
+    authors?: AuthorCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryCreateNestedManyWithoutBookTitlesInput
+    books?: BookCreateNestedManyWithoutTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleUncheckedCreateWithoutRequestRecordsInput = {
+    id?: number
+    title: string
+    isbn: string
+    authors?: AuthorUncheckedCreateNestedManyWithoutBookTitlesInput
+    categories?: BookCategoryUncheckedCreateNestedManyWithoutBookTitlesInput
+    books?: BookUncheckedCreateNestedManyWithoutTitleInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookTitleCreateOrConnectWithoutRequestRecordsInput = {
+    where: BookTitleWhereUniqueInput
+    create: XOR<BookTitleCreateWithoutRequestRecordsInput, BookTitleUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type LibraryCreateWithoutRequestingRecordsInput = {
+    name: string
+    location: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutLibrariesInput
+    books?: BookCreateNestedManyWithoutBelongsToLibraryInput
+    requestedRecords?: RequestRecordCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUncheckedCreateWithoutRequestingRecordsInput = {
+    id?: number
+    name: string
+    location: string
+    universityId: number
+    books?: BookUncheckedCreateNestedManyWithoutBelongsToLibraryInput
+    requestedRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestedLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryCreateOrConnectWithoutRequestingRecordsInput = {
+    where: LibraryWhereUniqueInput
+    create: XOR<LibraryCreateWithoutRequestingRecordsInput, LibraryUncheckedCreateWithoutRequestingRecordsInput>
+  }
+
+  export type LibraryCreateWithoutRequestedRecordsInput = {
+    name: string
+    location: string
+    belongsToUniversity: UniversityCreateNestedOneWithoutLibrariesInput
+    books?: BookCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordCreateNestedManyWithoutRequestingLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUncheckedCreateWithoutRequestedRecordsInput = {
+    id?: number
+    name: string
+    location: string
+    universityId: number
+    books?: BookUncheckedCreateNestedManyWithoutBelongsToLibraryInput
+    requestingRecords?: RequestRecordUncheckedCreateNestedManyWithoutRequestingLibraryInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryCreateOrConnectWithoutRequestedRecordsInput = {
+    where: LibraryWhereUniqueInput
+    create: XOR<LibraryCreateWithoutRequestedRecordsInput, LibraryUncheckedCreateWithoutRequestedRecordsInput>
+  }
+
+  export type BookCreateWithoutRequestRecordsInput = {
+    title: BookTitleCreateNestedOneWithoutBooksInput
+    belongsToLibrary: LibraryCreateNestedOneWithoutBooksInput
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordCreateNestedManyWithoutBorrowedBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUncheckedCreateWithoutRequestRecordsInput = {
+    id?: number
+    bookTitleId: number
+    libraryId: number
+    isAvailable: boolean
+    borrowingRecords?: BorrowingRecordUncheckedCreateNestedManyWithoutBorrowedBookInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookCreateOrConnectWithoutRequestRecordsInput = {
+    where: BookWhereUniqueInput
+    create: XOR<BookCreateWithoutRequestRecordsInput, BookUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type StudentUpsertWithoutRequestRecordsInput = {
+    update: XOR<StudentUpdateWithoutRequestRecordsInput, StudentUncheckedUpdateWithoutRequestRecordsInput>
+    create: XOR<StudentCreateWithoutRequestRecordsInput, StudentUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type StudentUpdateWithoutRequestRecordsInput = {
+    Name?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutStudentsNestedInput
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateWithoutRequestRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUpsertWithoutRequestRecordsInput = {
+    update: XOR<BookTitleUpdateWithoutRequestRecordsInput, BookTitleUncheckedUpdateWithoutRequestRecordsInput>
+    create: XOR<BookTitleCreateWithoutRequestRecordsInput, BookTitleUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type BookTitleUpdateWithoutRequestRecordsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUpdateManyWithoutTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateWithoutRequestRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUncheckedUpdateManyWithoutBookTitlesNestedInput
+    categories?: BookCategoryUncheckedUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUncheckedUpdateManyWithoutTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUpsertWithoutRequestingRecordsInput = {
+    update: XOR<LibraryUpdateWithoutRequestingRecordsInput, LibraryUncheckedUpdateWithoutRequestingRecordsInput>
+    create: XOR<LibraryCreateWithoutRequestingRecordsInput, LibraryUncheckedCreateWithoutRequestingRecordsInput>
+  }
+
+  export type LibraryUpdateWithoutRequestingRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutLibrariesNestedInput
+    books?: BookUpdateManyWithoutBelongsToLibraryNestedInput
+    requestedRecords?: RequestRecordUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateWithoutRequestingRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    books?: BookUncheckedUpdateManyWithoutBelongsToLibraryNestedInput
+    requestedRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUpsertWithoutRequestedRecordsInput = {
+    update: XOR<LibraryUpdateWithoutRequestedRecordsInput, LibraryUncheckedUpdateWithoutRequestedRecordsInput>
+    create: XOR<LibraryCreateWithoutRequestedRecordsInput, LibraryUncheckedCreateWithoutRequestedRecordsInput>
+  }
+
+  export type LibraryUpdateWithoutRequestedRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    belongsToUniversity?: UniversityUpdateOneRequiredWithoutLibrariesNestedInput
+    books?: BookUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUpdateManyWithoutRequestingLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateWithoutRequestedRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    universityId?: IntFieldUpdateOperationsInput | number
+    books?: BookUncheckedUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUpsertWithoutRequestRecordsInput = {
+    update: XOR<BookUpdateWithoutRequestRecordsInput, BookUncheckedUpdateWithoutRequestRecordsInput>
+    create: XOR<BookCreateWithoutRequestRecordsInput, BookUncheckedCreateWithoutRequestRecordsInput>
+  }
+
+  export type BookUpdateWithoutRequestRecordsInput = {
+    title?: BookTitleUpdateOneRequiredWithoutBooksNestedInput
+    belongsToLibrary?: LibraryUpdateOneRequiredWithoutBooksNestedInput
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowedBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateWithoutRequestRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowedBookNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50989,6 +64624,523 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     postText?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUpdateWithoutAuthorsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    categories?: BookCategoryUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateWithoutAuthorsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    categories?: BookCategoryUncheckedUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUncheckedUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateManyWithoutBookTitlesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCreateManyTitleInput = {
+    id?: number
+    libraryId: number
+    isAvailable: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateManyRequestedBookTitleInput = {
+    id?: number
+    studentId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AuthorUpdateWithoutBookTitlesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorUncheckedUpdateWithoutBookTitlesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AuthorUncheckedUpdateManyWithoutAuthorsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryUpdateWithoutBookTitlesInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryUncheckedUpdateWithoutBookTitlesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCategoryUncheckedUpdateManyWithoutCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUpdateWithoutTitleInput = {
+    belongsToLibrary?: LibraryUpdateOneRequiredWithoutBooksNestedInput
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateWithoutTitleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateManyWithoutBooksInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    libraryId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUpdateWithoutRequestedBookTitleInput = {
+    requestingStudent?: StudentUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestingLibrary?: LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput
+    requestedLibrary?: LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredBook?: BookUpdateOneWithoutRequestRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateWithoutRequestedBookTitleInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUpdateWithoutCategoriesInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookTitleUncheckedUpdateWithoutCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    isbn?: StringFieldUpdateOperationsInput | string
+    authors?: AuthorUncheckedUpdateManyWithoutBookTitlesNestedInput
+    books?: BookUncheckedUpdateManyWithoutTitleNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedBookTitleNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordCreateManyBorrowedBookInput = {
+    id?: number
+    studentId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateManyAcquiredBookInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUpdateWithoutBorrowedBookInput = {
+    borrowingStudent?: StudentUpdateOneRequiredWithoutBorrowingRecordsNestedInput
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUncheckedUpdateWithoutBorrowedBookInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUncheckedUpdateManyWithoutBorrowingRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUpdateWithoutAcquiredBookInput = {
+    requestingStudent?: StudentUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestedBookTitle?: BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestingLibrary?: LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput
+    requestedLibrary?: LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateWithoutAcquiredBookInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookCreateManyBelongsToLibraryInput = {
+    id?: number
+    bookTitleId: number
+    isAvailable: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateManyRequestingLibraryInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateManyRequestedLibraryInput = {
+    id?: number
+    studentId: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BookUpdateWithoutBelongsToLibraryInput = {
+    title?: BookTitleUpdateOneRequiredWithoutBooksNestedInput
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BookUncheckedUpdateWithoutBelongsToLibraryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowedBookNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutAcquiredBookNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUpdateWithoutRequestingLibraryInput = {
+    requestingStudent?: StudentUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestedBookTitle?: BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestedLibrary?: LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredBook?: BookUpdateOneWithoutRequestRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateWithoutRequestingLibraryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestingRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUpdateWithoutRequestedLibraryInput = {
+    requestingStudent?: StudentUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestedBookTitle?: BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestingLibrary?: LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredBook?: BookUpdateOneWithoutRequestRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateWithoutRequestedLibraryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateManyWithoutRequestedRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryCreateManyBelongsToUniversityInput = {
+    id?: number
+    name: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StudentCreateManyBelongsToUniversityInput = {
+    id?: number
+    Name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LibraryUpdateWithoutBelongsToUniversityInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    books?: BookUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateWithoutBelongsToUniversityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    books?: BookUncheckedUpdateManyWithoutBelongsToLibraryNestedInput
+    requestingRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingLibraryNestedInput
+    requestedRecords?: RequestRecordUncheckedUpdateManyWithoutRequestedLibraryNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LibraryUncheckedUpdateManyWithoutLibrariesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUpdateWithoutBelongsToUniversityInput = {
+    Name?: StringFieldUpdateOperationsInput | string
+    borrowingRecords?: BorrowingRecordUpdateManyWithoutBorrowingStudentNestedInput
+    requestRecords?: RequestRecordUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateWithoutBelongsToUniversityInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    borrowingRecords?: BorrowingRecordUncheckedUpdateManyWithoutBorrowingStudentNestedInput
+    requestRecords?: RequestRecordUncheckedUpdateManyWithoutRequestingStudentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentUncheckedUpdateManyWithoutStudentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordCreateManyBorrowingStudentInput = {
+    id?: number
+    bookId: number
+    startDate: Date | string
+    endDate?: Date | string | null
+    actualEndDate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RequestRecordCreateManyRequestingStudentInput = {
+    id?: number
+    bookTitleId: number
+    requestingLibraryId: number
+    requestedLibraryId: number
+    requestDate: Date | string
+    acquiredDate?: Date | string | null
+    returnDate?: Date | string | null
+    bookId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BorrowingRecordUpdateWithoutBorrowingStudentInput = {
+    borrowedBook?: BookUpdateOneRequiredWithoutBorrowingRecordsNestedInput
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BorrowingRecordUncheckedUpdateWithoutBorrowingStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookId?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    actualEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUpdateWithoutRequestingStudentInput = {
+    requestedBookTitle?: BookTitleUpdateOneRequiredWithoutRequestRecordsNestedInput
+    requestingLibrary?: LibraryUpdateOneRequiredWithoutRequestingRecordsNestedInput
+    requestedLibrary?: LibraryUpdateOneRequiredWithoutRequestedRecordsNestedInput
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    acquiredBook?: BookUpdateOneWithoutRequestRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RequestRecordUncheckedUpdateWithoutRequestingStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookTitleId?: IntFieldUpdateOperationsInput | number
+    requestingLibraryId?: IntFieldUpdateOperationsInput | number
+    requestedLibraryId?: IntFieldUpdateOperationsInput | number
+    requestDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    acquiredDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bookId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

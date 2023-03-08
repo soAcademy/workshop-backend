@@ -1,0 +1,126 @@
+model Author {
+  id         Int         @id @default(autoincrement())
+  name       String
+  bookTitles BookTitle[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@schema("library")
+}
+
+model BookTitle {
+  id             Int             @id @default(autoincrement())
+  title          String
+  isbn           String
+  authors        Author[]
+  categories     BookCategory[]
+  books          Book[]
+  requestRecords RequestRecord[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@schema("library")
+}
+
+// category = subject
+
+model BookCategory {
+  id         Int         @id @default(autoincrement())
+  category   String
+  bookTitles BookTitle[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@schema("library")
+}
+
+model Book {
+  id               Int               @id @default(autoincrement())
+  title            BookTitle         @relation(fields: [bookTitleId], references: [id])
+  bookTitleId      Int
+  belongsToLibrary Library           @relation(fields: [libraryId], references: [id])
+  libraryId        Int
+  isAvailable      Boolean
+  borrowingRecords BorrowingRecord[]
+  requestRecords   RequestRecord[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@schema("library")
+}
+
+model Library {
+  id                  Int             @id @default(autoincrement())
+  name                String
+  location            String
+  belongsToUniversity University      @relation(fields: [universityId], references: [id])
+  universityId        Int
+  books               Book[]
+  requestingRecords   RequestRecord[] @relation("requestingLibrary")
+  requestedRecords    RequestRecord[] @relation("requestedLibrary")
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@schema("library")
+}
+
+model University {
+  id        Int       @id @default(autoincrement())
+  name      String
+  location  String
+  libraries Library[]
+  students  Student[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@schema("library")
+}
+
+model Student {
+  id                  Int               @id @default(autoincrement())
+  Name                String
+  belongsToUniversity University        @relation(fields: [universityId], references: [id])
+  universityId        Int
+  borrowingRecords    BorrowingRecord[]
+  requestRecords      RequestRecord[]
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@schema("library")
+}
+
+model BorrowingRecord {
+  id               Int       @id @default(autoincrement())
+  borrowingStudent Student   @relation(fields: [studentId], references: [id])
+  studentId        Int
+  borrowedBook     Book      @relation(fields: [bookId], references: [id])
+  bookId           Int
+  startDate        DateTime
+  endDate          DateTime?
+  actualEndDate    DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@schema("library")
+}
+
+model RequestRecord {
+  id                  Int       @id @default(autoincrement())
+  requestingStudent   Student   @relation(fields: [studentId], references: [id])
+  studentId           Int
+  requestedBookTitle  BookTitle @relation(fields: [bookTitleId], references: [id])
+  bookTitleId         Int
+  requestingLibrary   Library   @relation("requestingLibrary", fields: [requestingLibraryId], references: [id])
+  requestingLibraryId Int
+  requestedLibrary    Library   @relation("requestedLibrary", fields: [requestedLibraryId], references: [id])
+  requestedLibraryId  Int
+  requestDate         DateTime
+  acquiredDate        DateTime?
+  returnDate          DateTime?
+  acquiredBook        Book?     @relation(fields: [bookId], references: [id])
+  bookId              Int
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@schema("library")
+}
