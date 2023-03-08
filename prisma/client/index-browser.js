@@ -89,85 +89,34 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
-exports.Prisma.BinKitchenCategoryScalarFieldEnum = makeEnum({
+exports.Prisma.ChanelScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  description: 'description',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  userId: 'userId'
 });
 
-exports.Prisma.BinKitchenMenuScalarFieldEnum = makeEnum({
+exports.Prisma.CommentScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
-  image: 'image',
-  price: 'price',
-  categoryName: 'categoryName',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.BinKitchenOrderItemScalarFieldEnum = makeEnum({
-  id: 'id',
-  menuId: 'menuId',
-  orderId: 'orderId',
-  quantity: 'quantity',
-  totalPrice: 'totalPrice',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
-  id: 'id',
-  status: 'status',
-  tableId: 'tableId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.CategoryScalarFieldEnum = makeEnum({
-  id: 'id',
-  name: 'name',
+  userId: 'userId',
+  videoId: 'videoId',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });
 
-exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
+exports.Prisma.PermissionScalarFieldEnum = makeEnum({
   id: 'id',
-  choices: 'choices',
-  questionId: 'questionId',
+  role: 'role',
+  edit: 'edit',
+  post: 'post',
+  delete: 'delete',
+  upload: 'upload',
   createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.DirecMessageScalarFieldEnum = makeEnum({
-  id: 'id',
-  message: 'message',
-  fromUser: 'fromUser',
-  toUser: 'toUser',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.HashTagOnPostScalarFieldEnum = makeEnum({
-  id: 'id',
-  postId: 'postId',
-  hashTagId: 'hashTagId',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.HashTagScalarFieldEnum = makeEnum({
-  id: 'id',
-  name: 'name',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.PostScalarFieldEnum = makeEnum({
-  id: 'id',
-  message: 'message',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
+  updateAt: 'updateAt',
+  userId: 'userId',
+  chanelId: 'chanelId'
 });
 
 exports.Prisma.QueryMode = makeEnum({
@@ -175,53 +124,9 @@ exports.Prisma.QueryMode = makeEnum({
   insensitive: 'insensitive'
 });
 
-exports.Prisma.QuestionScalarFieldEnum = makeEnum({
-  id: 'id',
-  name: 'name',
-  categoriesId: 'categoriesId',
-  roundQuestionId: 'roundQuestionId',
-  answerId: 'answerId',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.ReplyScalarFieldEnum = makeEnum({
-  id: 'id',
-  postId: 'postId',
-  userId: 'userId',
-  message: 'message',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
-});
-
-exports.Prisma.RoundQuestionScalarFieldEnum = makeEnum({
-  id: 'id',
-  roundId: 'roundId',
-  correctAnswer: 'correctAnswer',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  choiceId: 'choiceId'
-});
-
-exports.Prisma.RoundScalarFieldEnum = makeEnum({
-  id: 'id',
-  categoryId: 'categoryId',
-  createAt: 'createAt',
-  updateAt: 'updateAt',
-  score: 'score'
-});
-
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
-});
-
-exports.Prisma.TodoListScalarFieldEnum = makeEnum({
-  id: 'id',
-  task: 'task',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
@@ -231,41 +136,45 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserRelationScalarFieldEnum = makeEnum({
+exports.Prisma.UserToChanelScalarFieldEnum = makeEnum({
   id: 'id',
-  fromId: 'fromId',
-  toId: 'toId',
-  createAt: 'createAt',
-  updateAt: 'updateAt'
+  role: 'role',
+  userId: 'userId',
+  chanelId: 'chanelId',
+  permissionId: 'permissionId'
 });
 
-exports.Prisma.UserScalarFieldEnum = makeEnum({
+exports.Prisma.UserYoutubeScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
-  profileImage: 'profileImage',
+  email: 'email',
+  imageProfile: 'imageProfile',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });
 
+exports.Prisma.VideoScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  url: 'url',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  chanelId: 'chanelId'
+});
+exports.RoleEnum = makeEnum({
+  Admin: 'Admin',
+  Editor: 'Editor',
+  Creater: 'Creater'
+});
 
 exports.Prisma.ModelName = makeEnum({
-  BinKitchenCategory: 'BinKitchenCategory',
-  BinKitchenMenu: 'BinKitchenMenu',
-  BinKitchenOrder: 'BinKitchenOrder',
-  BinKitchenOrderItem: 'BinKitchenOrderItem',
-  Category: 'Category',
-  Question: 'Question',
-  RoundQuestion: 'RoundQuestion',
-  Round: 'Round',
-  Choice: 'Choice',
-  User: 'User',
-  Post: 'Post',
-  DirecMessage: 'DirecMessage',
-  HashTag: 'HashTag',
-  HashTagOnPost: 'HashTagOnPost',
-  Reply: 'Reply',
-  UserRelation: 'UserRelation',
-  TodoList: 'TodoList'
+  UserYoutube: 'UserYoutube',
+  Chanel: 'Chanel',
+  Comment: 'Comment',
+  Video: 'Video',
+  Permission: 'Permission',
+  UserToChanel: 'UserToChanel'
 });
 
 /**

@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../prisma/client";
+/*import { PrismaClient } from "../../prisma/client";
 import {
   ICreateTask,
   IDeleteTask,
@@ -74,3 +74,4 @@ export const getTaskUniqueOrThrow = (args: { id: number }) => {
   });
 };
 //return เป็นค่า error
+*/

@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../prisma/client";
+/*import { PrismaClient } from "../../prisma/client";
 import {
   ICreateCategory,
   ICreateMenu,
@@ -173,3 +173,4 @@ export const updateOrder = (args: IUpdateOrderCodec) =>
   });
 
 //-----------------------------------------------------------
+*/
