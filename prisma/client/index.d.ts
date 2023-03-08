@@ -210,6 +210,147 @@ export type TwitterDM = {
 }
 
 /**
+ * Model WashExpressOwner
+ * 
+ */
+export type WashExpressOwner = {
+  id: number
+  name: string
+  call: string
+  location: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMember
+ * 
+ */
+export type WashExpressMember = {
+  id: number
+  name: string
+  call: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressTopupHistory
+ * 
+ */
+export type WashExpressTopupHistory = {
+  id: number
+  memberId: number
+  topupAmount: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressTechnician
+ * 
+ */
+export type WashExpressTechnician = {
+  id: number
+  name: string
+  call: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressBranch
+ * 
+ */
+export type WashExpressBranch = {
+  id: number
+  name: string
+  ownerId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMachineBrand
+ * 
+ */
+export type WashExpressMachineBrand = {
+  id: number
+  name: venderList
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMachineType
+ * 
+ */
+export type WashExpressMachineType = {
+  id: number
+  name: machineType
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMachineProgram
+ * 
+ */
+export type WashExpressMachineProgram = {
+  id: number
+  typeId: number
+  name: machineType
+  timeMinites: number
+  priceBath: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMachineList
+ * 
+ */
+export type WashExpressMachineList = {
+  id: number
+  brandId: number
+  typeId: number
+  branchId: number
+  installDate: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressServiceHistory
+ * 
+ */
+export type WashExpressServiceHistory = {
+  id: number
+  machineId: number
+  memberId: number
+  branchId: number
+  programId: number
+  recordedPrice: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashExpressMaintenanceHistory
+ * 
+ */
+export type WashExpressMaintenanceHistory = {
+  id: number
+  machineId: number
+  technicianId: number
+  problem: string
+  startdate: Date
+  finishdate: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model YoutubeUser
  * 
  */
@@ -559,6 +700,23 @@ export const YoutubePermissionEnum: {
 export type YoutubePermissionEnum = (typeof YoutubePermissionEnum)[keyof typeof YoutubePermissionEnum]
 
 
+export const machineType: {
+  WASHER: 'WASHER',
+  DRYER: 'DRYER'
+};
+
+export type machineType = (typeof machineType)[keyof typeof machineType]
+
+
+export const venderList: {
+  TOSHIBA: 'TOSHIBA',
+  SAMSUNG: 'SAMSUNG',
+  HITACHI: 'HITACHI'
+};
+
+export type venderList = (typeof venderList)[keyof typeof venderList]
+
+
 /**
  * ##  Prisma Client ʲˢ
  * 
@@ -835,6 +993,116 @@ export class PrismaClient<
     * ```
     */
   get twitterDM(): Prisma.TwitterDMDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressOwner`: Exposes CRUD operations for the **WashExpressOwner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressOwners
+    * const washExpressOwners = await prisma.washExpressOwner.findMany()
+    * ```
+    */
+  get washExpressOwner(): Prisma.WashExpressOwnerDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMember`: Exposes CRUD operations for the **WashExpressMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMembers
+    * const washExpressMembers = await prisma.washExpressMember.findMany()
+    * ```
+    */
+  get washExpressMember(): Prisma.WashExpressMemberDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressTopupHistory`: Exposes CRUD operations for the **WashExpressTopupHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressTopupHistories
+    * const washExpressTopupHistories = await prisma.washExpressTopupHistory.findMany()
+    * ```
+    */
+  get washExpressTopupHistory(): Prisma.WashExpressTopupHistoryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressTechnician`: Exposes CRUD operations for the **WashExpressTechnician** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressTechnicians
+    * const washExpressTechnicians = await prisma.washExpressTechnician.findMany()
+    * ```
+    */
+  get washExpressTechnician(): Prisma.WashExpressTechnicianDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressBranch`: Exposes CRUD operations for the **WashExpressBranch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressBranches
+    * const washExpressBranches = await prisma.washExpressBranch.findMany()
+    * ```
+    */
+  get washExpressBranch(): Prisma.WashExpressBranchDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMachineBrand`: Exposes CRUD operations for the **WashExpressMachineBrand** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMachineBrands
+    * const washExpressMachineBrands = await prisma.washExpressMachineBrand.findMany()
+    * ```
+    */
+  get washExpressMachineBrand(): Prisma.WashExpressMachineBrandDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMachineType`: Exposes CRUD operations for the **WashExpressMachineType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMachineTypes
+    * const washExpressMachineTypes = await prisma.washExpressMachineType.findMany()
+    * ```
+    */
+  get washExpressMachineType(): Prisma.WashExpressMachineTypeDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMachineProgram`: Exposes CRUD operations for the **WashExpressMachineProgram** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMachinePrograms
+    * const washExpressMachinePrograms = await prisma.washExpressMachineProgram.findMany()
+    * ```
+    */
+  get washExpressMachineProgram(): Prisma.WashExpressMachineProgramDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMachineList`: Exposes CRUD operations for the **WashExpressMachineList** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMachineLists
+    * const washExpressMachineLists = await prisma.washExpressMachineList.findMany()
+    * ```
+    */
+  get washExpressMachineList(): Prisma.WashExpressMachineListDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressServiceHistory`: Exposes CRUD operations for the **WashExpressServiceHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressServiceHistories
+    * const washExpressServiceHistories = await prisma.washExpressServiceHistory.findMany()
+    * ```
+    */
+  get washExpressServiceHistory(): Prisma.WashExpressServiceHistoryDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washExpressMaintenanceHistory`: Exposes CRUD operations for the **WashExpressMaintenanceHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashExpressMaintenanceHistories
+    * const washExpressMaintenanceHistories = await prisma.washExpressMaintenanceHistory.findMany()
+    * ```
+    */
+  get washExpressMaintenanceHistory(): Prisma.WashExpressMaintenanceHistoryDelegate<GlobalReject>;
 
   /**
    * `prisma.youtubeUser`: Exposes CRUD operations for the **YoutubeUser** model.
@@ -1570,6 +1838,17 @@ export namespace Prisma {
     TwitterHashTag: 'TwitterHashTag',
     TwitterReply: 'TwitterReply',
     TwitterDM: 'TwitterDM',
+    WashExpressOwner: 'WashExpressOwner',
+    WashExpressMember: 'WashExpressMember',
+    WashExpressTopupHistory: 'WashExpressTopupHistory',
+    WashExpressTechnician: 'WashExpressTechnician',
+    WashExpressBranch: 'WashExpressBranch',
+    WashExpressMachineBrand: 'WashExpressMachineBrand',
+    WashExpressMachineType: 'WashExpressMachineType',
+    WashExpressMachineProgram: 'WashExpressMachineProgram',
+    WashExpressMachineList: 'WashExpressMachineList',
+    WashExpressServiceHistory: 'WashExpressServiceHistory',
+    WashExpressMaintenanceHistory: 'WashExpressMaintenanceHistory',
     YoutubeUser: 'YoutubeUser',
     YoutubeChanelPermission: 'YoutubeChanelPermission',
     YoutubeChanel: 'YoutubeChanel',
@@ -2197,6 +2476,362 @@ export namespace Prisma {
      * Select specific fields to fetch from the TwitterHashTagCountOutputType
      */
     select?: TwitterHashTagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressOwnerCountOutputType
+   */
+
+
+  export type WashExpressOwnerCountOutputType = {
+    branchs: number
+  }
+
+  export type WashExpressOwnerCountOutputTypeSelect = {
+    branchs?: boolean
+  }
+
+  export type WashExpressOwnerCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressOwnerCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressOwnerCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressOwnerCountOutputTypeArgs)
+    ? WashExpressOwnerCountOutputType 
+    : S extends { select: any } & (WashExpressOwnerCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressOwnerCountOutputType ? WashExpressOwnerCountOutputType[P] : never
+  } 
+      : WashExpressOwnerCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressOwnerCountOutputType without action
+   */
+  export type WashExpressOwnerCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwnerCountOutputType
+     */
+    select?: WashExpressOwnerCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressMemberCountOutputType
+   */
+
+
+  export type WashExpressMemberCountOutputType = {
+    topupHistories: number
+    serviceHistories: number
+  }
+
+  export type WashExpressMemberCountOutputTypeSelect = {
+    topupHistories?: boolean
+    serviceHistories?: boolean
+  }
+
+  export type WashExpressMemberCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressMemberCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMemberCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMemberCountOutputTypeArgs)
+    ? WashExpressMemberCountOutputType 
+    : S extends { select: any } & (WashExpressMemberCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressMemberCountOutputType ? WashExpressMemberCountOutputType[P] : never
+  } 
+      : WashExpressMemberCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMemberCountOutputType without action
+   */
+  export type WashExpressMemberCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMemberCountOutputType
+     */
+    select?: WashExpressMemberCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressTechnicianCountOutputType
+   */
+
+
+  export type WashExpressTechnicianCountOutputType = {
+    maintenanceHistories: number
+  }
+
+  export type WashExpressTechnicianCountOutputTypeSelect = {
+    maintenanceHistories?: boolean
+  }
+
+  export type WashExpressTechnicianCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressTechnicianCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressTechnicianCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressTechnicianCountOutputTypeArgs)
+    ? WashExpressTechnicianCountOutputType 
+    : S extends { select: any } & (WashExpressTechnicianCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressTechnicianCountOutputType ? WashExpressTechnicianCountOutputType[P] : never
+  } 
+      : WashExpressTechnicianCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressTechnicianCountOutputType without action
+   */
+  export type WashExpressTechnicianCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnicianCountOutputType
+     */
+    select?: WashExpressTechnicianCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressBranchCountOutputType
+   */
+
+
+  export type WashExpressBranchCountOutputType = {
+    machineLists: number
+    serviceHistories: number
+  }
+
+  export type WashExpressBranchCountOutputTypeSelect = {
+    machineLists?: boolean
+    serviceHistories?: boolean
+  }
+
+  export type WashExpressBranchCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressBranchCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressBranchCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressBranchCountOutputTypeArgs)
+    ? WashExpressBranchCountOutputType 
+    : S extends { select: any } & (WashExpressBranchCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressBranchCountOutputType ? WashExpressBranchCountOutputType[P] : never
+  } 
+      : WashExpressBranchCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressBranchCountOutputType without action
+   */
+  export type WashExpressBranchCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranchCountOutputType
+     */
+    select?: WashExpressBranchCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressMachineBrandCountOutputType
+   */
+
+
+  export type WashExpressMachineBrandCountOutputType = {
+    machineLists: number
+  }
+
+  export type WashExpressMachineBrandCountOutputTypeSelect = {
+    machineLists?: boolean
+  }
+
+  export type WashExpressMachineBrandCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressMachineBrandCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineBrandCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineBrandCountOutputTypeArgs)
+    ? WashExpressMachineBrandCountOutputType 
+    : S extends { select: any } & (WashExpressMachineBrandCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressMachineBrandCountOutputType ? WashExpressMachineBrandCountOutputType[P] : never
+  } 
+      : WashExpressMachineBrandCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineBrandCountOutputType without action
+   */
+  export type WashExpressMachineBrandCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrandCountOutputType
+     */
+    select?: WashExpressMachineBrandCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressMachineTypeCountOutputType
+   */
+
+
+  export type WashExpressMachineTypeCountOutputType = {
+    machinePrograms: number
+    machineLists: number
+  }
+
+  export type WashExpressMachineTypeCountOutputTypeSelect = {
+    machinePrograms?: boolean
+    machineLists?: boolean
+  }
+
+  export type WashExpressMachineTypeCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressMachineTypeCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineTypeCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineTypeCountOutputTypeArgs)
+    ? WashExpressMachineTypeCountOutputType 
+    : S extends { select: any } & (WashExpressMachineTypeCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressMachineTypeCountOutputType ? WashExpressMachineTypeCountOutputType[P] : never
+  } 
+      : WashExpressMachineTypeCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineTypeCountOutputType without action
+   */
+  export type WashExpressMachineTypeCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineTypeCountOutputType
+     */
+    select?: WashExpressMachineTypeCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressMachineProgramCountOutputType
+   */
+
+
+  export type WashExpressMachineProgramCountOutputType = {
+    machineLists: number
+    serviceHistories: number
+  }
+
+  export type WashExpressMachineProgramCountOutputTypeSelect = {
+    machineLists?: boolean
+    serviceHistories?: boolean
+  }
+
+  export type WashExpressMachineProgramCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressMachineProgramCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineProgramCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineProgramCountOutputTypeArgs)
+    ? WashExpressMachineProgramCountOutputType 
+    : S extends { select: any } & (WashExpressMachineProgramCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressMachineProgramCountOutputType ? WashExpressMachineProgramCountOutputType[P] : never
+  } 
+      : WashExpressMachineProgramCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineProgramCountOutputType without action
+   */
+  export type WashExpressMachineProgramCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgramCountOutputType
+     */
+    select?: WashExpressMachineProgramCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashExpressMachineListCountOutputType
+   */
+
+
+  export type WashExpressMachineListCountOutputType = {
+    programs: number
+    serviceHistories: number
+    WashExpressMaintenanceHistory: number
+  }
+
+  export type WashExpressMachineListCountOutputTypeSelect = {
+    programs?: boolean
+    serviceHistories?: boolean
+    WashExpressMaintenanceHistory?: boolean
+  }
+
+  export type WashExpressMachineListCountOutputTypeGetPayload<S extends boolean | null | undefined | WashExpressMachineListCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineListCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineListCountOutputTypeArgs)
+    ? WashExpressMachineListCountOutputType 
+    : S extends { select: any } & (WashExpressMachineListCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashExpressMachineListCountOutputType ? WashExpressMachineListCountOutputType[P] : never
+  } 
+      : WashExpressMachineListCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineListCountOutputType without action
+   */
+  export type WashExpressMachineListCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineListCountOutputType
+     */
+    select?: WashExpressMachineListCountOutputTypeSelect | null
   }
 
 
@@ -18914,6 +19549,11173 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: TwitterDMInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressOwner
+   */
+
+
+  export type AggregateWashExpressOwner = {
+    _count: WashExpressOwnerCountAggregateOutputType | null
+    _avg: WashExpressOwnerAvgAggregateOutputType | null
+    _sum: WashExpressOwnerSumAggregateOutputType | null
+    _min: WashExpressOwnerMinAggregateOutputType | null
+    _max: WashExpressOwnerMaxAggregateOutputType | null
+  }
+
+  export type WashExpressOwnerAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressOwnerSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressOwnerMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    location: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressOwnerMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    location: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressOwnerCountAggregateOutputType = {
+    id: number
+    name: number
+    call: number
+    location: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressOwnerAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressOwnerSumAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressOwnerMinAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressOwnerMaxAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressOwnerCountAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    location?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressOwnerAggregateArgs = {
+    /**
+     * Filter which WashExpressOwner to aggregate.
+     */
+    where?: WashExpressOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressOwners to fetch.
+     */
+    orderBy?: Enumerable<WashExpressOwnerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressOwners
+    **/
+    _count?: true | WashExpressOwnerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressOwnerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressOwnerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressOwnerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressOwnerMaxAggregateInputType
+  }
+
+  export type GetWashExpressOwnerAggregateType<T extends WashExpressOwnerAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressOwner]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressOwner[P]>
+      : GetScalarType<T[P], AggregateWashExpressOwner[P]>
+  }
+
+
+
+
+  export type WashExpressOwnerGroupByArgs = {
+    where?: WashExpressOwnerWhereInput
+    orderBy?: Enumerable<WashExpressOwnerOrderByWithAggregationInput>
+    by: WashExpressOwnerScalarFieldEnum[]
+    having?: WashExpressOwnerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressOwnerCountAggregateInputType | true
+    _avg?: WashExpressOwnerAvgAggregateInputType
+    _sum?: WashExpressOwnerSumAggregateInputType
+    _min?: WashExpressOwnerMinAggregateInputType
+    _max?: WashExpressOwnerMaxAggregateInputType
+  }
+
+
+  export type WashExpressOwnerGroupByOutputType = {
+    id: number
+    name: string
+    call: string
+    location: string
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressOwnerCountAggregateOutputType | null
+    _avg: WashExpressOwnerAvgAggregateOutputType | null
+    _sum: WashExpressOwnerSumAggregateOutputType | null
+    _min: WashExpressOwnerMinAggregateOutputType | null
+    _max: WashExpressOwnerMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressOwnerGroupByPayload<T extends WashExpressOwnerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressOwnerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressOwnerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressOwnerGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressOwnerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressOwnerSelect = {
+    id?: boolean
+    name?: boolean
+    call?: boolean
+    location?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    branchs?: boolean | WashExpressOwner$branchsArgs
+    _count?: boolean | WashExpressOwnerCountOutputTypeArgs
+  }
+
+
+  export type WashExpressOwnerInclude = {
+    branchs?: boolean | WashExpressOwner$branchsArgs
+    _count?: boolean | WashExpressOwnerCountOutputTypeArgs
+  }
+
+  export type WashExpressOwnerGetPayload<S extends boolean | null | undefined | WashExpressOwnerArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressOwner :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressOwnerArgs | WashExpressOwnerFindManyArgs)
+    ? WashExpressOwner  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'branchs' ? Array < WashExpressBranchGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressOwnerCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressOwnerArgs | WashExpressOwnerFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'branchs' ? Array < WashExpressBranchGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressOwnerCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressOwner ? WashExpressOwner[P] : never
+  } 
+      : WashExpressOwner
+
+
+  type WashExpressOwnerCountArgs = 
+    Omit<WashExpressOwnerFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressOwnerCountAggregateInputType | true
+    }
+
+  export interface WashExpressOwnerDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressOwner that matches the filter.
+     * @param {WashExpressOwnerFindUniqueArgs} args - Arguments to find a WashExpressOwner
+     * @example
+     * // Get one WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressOwnerFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressOwnerFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressOwner'> extends True ? Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>> : Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressOwner that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressOwnerFindUniqueOrThrowArgs} args - Arguments to find a WashExpressOwner
+     * @example
+     * // Get one WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressOwnerFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressOwnerFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Find the first WashExpressOwner that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerFindFirstArgs} args - Arguments to find a WashExpressOwner
+     * @example
+     * // Get one WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressOwnerFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressOwnerFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressOwner'> extends True ? Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>> : Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressOwner that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerFindFirstOrThrowArgs} args - Arguments to find a WashExpressOwner
+     * @example
+     * // Get one WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressOwnerFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressOwnerFindFirstOrThrowArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressOwners that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressOwners
+     * const washExpressOwners = await prisma.washExpressOwner.findMany()
+     * 
+     * // Get first 10 WashExpressOwners
+     * const washExpressOwners = await prisma.washExpressOwner.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressOwnerWithIdOnly = await prisma.washExpressOwner.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressOwnerFindManyArgs>(
+      args?: SelectSubset<T, WashExpressOwnerFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressOwnerGetPayload<T>>>
+
+    /**
+     * Create a WashExpressOwner.
+     * @param {WashExpressOwnerCreateArgs} args - Arguments to create a WashExpressOwner.
+     * @example
+     * // Create one WashExpressOwner
+     * const WashExpressOwner = await prisma.washExpressOwner.create({
+     *   data: {
+     *     // ... data to create a WashExpressOwner
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressOwnerCreateArgs>(
+      args: SelectSubset<T, WashExpressOwnerCreateArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Create many WashExpressOwners.
+     *     @param {WashExpressOwnerCreateManyArgs} args - Arguments to create many WashExpressOwners.
+     *     @example
+     *     // Create many WashExpressOwners
+     *     const washExpressOwner = await prisma.washExpressOwner.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressOwnerCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressOwnerCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressOwner.
+     * @param {WashExpressOwnerDeleteArgs} args - Arguments to delete one WashExpressOwner.
+     * @example
+     * // Delete one WashExpressOwner
+     * const WashExpressOwner = await prisma.washExpressOwner.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressOwner
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressOwnerDeleteArgs>(
+      args: SelectSubset<T, WashExpressOwnerDeleteArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Update one WashExpressOwner.
+     * @param {WashExpressOwnerUpdateArgs} args - Arguments to update one WashExpressOwner.
+     * @example
+     * // Update one WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressOwnerUpdateArgs>(
+      args: SelectSubset<T, WashExpressOwnerUpdateArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressOwners.
+     * @param {WashExpressOwnerDeleteManyArgs} args - Arguments to filter WashExpressOwners to delete.
+     * @example
+     * // Delete a few WashExpressOwners
+     * const { count } = await prisma.washExpressOwner.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressOwnerDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressOwnerDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressOwners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressOwners
+     * const washExpressOwner = await prisma.washExpressOwner.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressOwnerUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressOwnerUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressOwner.
+     * @param {WashExpressOwnerUpsertArgs} args - Arguments to update or create a WashExpressOwner.
+     * @example
+     * // Update or create a WashExpressOwner
+     * const washExpressOwner = await prisma.washExpressOwner.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressOwner
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressOwner we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressOwnerUpsertArgs>(
+      args: SelectSubset<T, WashExpressOwnerUpsertArgs>
+    ): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressOwners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerCountArgs} args - Arguments to filter WashExpressOwners to count.
+     * @example
+     * // Count the number of WashExpressOwners
+     * const count = await prisma.washExpressOwner.count({
+     *   where: {
+     *     // ... the filter for the WashExpressOwners we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressOwnerCountArgs>(
+      args?: Subset<T, WashExpressOwnerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressOwnerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressOwner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressOwnerAggregateArgs>(args: Subset<T, WashExpressOwnerAggregateArgs>): Prisma.PrismaPromise<GetWashExpressOwnerAggregateType<T>>
+
+    /**
+     * Group by WashExpressOwner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressOwnerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressOwnerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressOwnerGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressOwnerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressOwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressOwner.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressOwnerClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    branchs<T extends WashExpressOwner$branchsArgs= {}>(args?: Subset<T, WashExpressOwner$branchsArgs>): Prisma.PrismaPromise<Array<WashExpressBranchGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressOwner base type for findUnique actions
+   */
+  export type WashExpressOwnerFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter, which WashExpressOwner to fetch.
+     */
+    where: WashExpressOwnerWhereUniqueInput
+  }
+
+  /**
+   * WashExpressOwner findUnique
+   */
+  export interface WashExpressOwnerFindUniqueArgs extends WashExpressOwnerFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressOwner findUniqueOrThrow
+   */
+  export type WashExpressOwnerFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter, which WashExpressOwner to fetch.
+     */
+    where: WashExpressOwnerWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressOwner base type for findFirst actions
+   */
+  export type WashExpressOwnerFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter, which WashExpressOwner to fetch.
+     */
+    where?: WashExpressOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressOwners to fetch.
+     */
+    orderBy?: Enumerable<WashExpressOwnerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressOwners.
+     */
+    cursor?: WashExpressOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressOwners.
+     */
+    distinct?: Enumerable<WashExpressOwnerScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressOwner findFirst
+   */
+  export interface WashExpressOwnerFindFirstArgs extends WashExpressOwnerFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressOwner findFirstOrThrow
+   */
+  export type WashExpressOwnerFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter, which WashExpressOwner to fetch.
+     */
+    where?: WashExpressOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressOwners to fetch.
+     */
+    orderBy?: Enumerable<WashExpressOwnerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressOwners.
+     */
+    cursor?: WashExpressOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressOwners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressOwners.
+     */
+    distinct?: Enumerable<WashExpressOwnerScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressOwner findMany
+   */
+  export type WashExpressOwnerFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter, which WashExpressOwners to fetch.
+     */
+    where?: WashExpressOwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressOwners to fetch.
+     */
+    orderBy?: Enumerable<WashExpressOwnerOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressOwners.
+     */
+    cursor?: WashExpressOwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressOwners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressOwners.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressOwnerScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressOwner create
+   */
+  export type WashExpressOwnerCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * The data needed to create a WashExpressOwner.
+     */
+    data: XOR<WashExpressOwnerCreateInput, WashExpressOwnerUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressOwner createMany
+   */
+  export type WashExpressOwnerCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressOwners.
+     */
+    data: Enumerable<WashExpressOwnerCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressOwner update
+   */
+  export type WashExpressOwnerUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * The data needed to update a WashExpressOwner.
+     */
+    data: XOR<WashExpressOwnerUpdateInput, WashExpressOwnerUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressOwner to update.
+     */
+    where: WashExpressOwnerWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressOwner updateMany
+   */
+  export type WashExpressOwnerUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressOwners.
+     */
+    data: XOR<WashExpressOwnerUpdateManyMutationInput, WashExpressOwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressOwners to update
+     */
+    where?: WashExpressOwnerWhereInput
+  }
+
+
+  /**
+   * WashExpressOwner upsert
+   */
+  export type WashExpressOwnerUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * The filter to search for the WashExpressOwner to update in case it exists.
+     */
+    where: WashExpressOwnerWhereUniqueInput
+    /**
+     * In case the WashExpressOwner found by the `where` argument doesn't exist, create a new WashExpressOwner with this data.
+     */
+    create: XOR<WashExpressOwnerCreateInput, WashExpressOwnerUncheckedCreateInput>
+    /**
+     * In case the WashExpressOwner was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressOwnerUpdateInput, WashExpressOwnerUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressOwner delete
+   */
+  export type WashExpressOwnerDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+    /**
+     * Filter which WashExpressOwner to delete.
+     */
+    where: WashExpressOwnerWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressOwner deleteMany
+   */
+  export type WashExpressOwnerDeleteManyArgs = {
+    /**
+     * Filter which WashExpressOwners to delete
+     */
+    where?: WashExpressOwnerWhereInput
+  }
+
+
+  /**
+   * WashExpressOwner.branchs
+   */
+  export type WashExpressOwner$branchsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    where?: WashExpressBranchWhereInput
+    orderBy?: Enumerable<WashExpressBranchOrderByWithRelationInput>
+    cursor?: WashExpressBranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressBranchScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressOwner without action
+   */
+  export type WashExpressOwnerArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressOwner
+     */
+    select?: WashExpressOwnerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressOwnerInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMember
+   */
+
+
+  export type AggregateWashExpressMember = {
+    _count: WashExpressMemberCountAggregateOutputType | null
+    _avg: WashExpressMemberAvgAggregateOutputType | null
+    _sum: WashExpressMemberSumAggregateOutputType | null
+    _min: WashExpressMemberMinAggregateOutputType | null
+    _max: WashExpressMemberMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMemberAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMemberSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMemberMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMemberMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMemberCountAggregateOutputType = {
+    id: number
+    name: number
+    call: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMemberAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMemberSumAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMemberMinAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMemberMaxAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMemberCountAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMemberAggregateArgs = {
+    /**
+     * Filter which WashExpressMember to aggregate.
+     */
+    where?: WashExpressMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMembers to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMemberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMembers
+    **/
+    _count?: true | WashExpressMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMemberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMemberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMemberMaxAggregateInputType
+  }
+
+  export type GetWashExpressMemberAggregateType<T extends WashExpressMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMember[P]>
+      : GetScalarType<T[P], AggregateWashExpressMember[P]>
+  }
+
+
+
+
+  export type WashExpressMemberGroupByArgs = {
+    where?: WashExpressMemberWhereInput
+    orderBy?: Enumerable<WashExpressMemberOrderByWithAggregationInput>
+    by: WashExpressMemberScalarFieldEnum[]
+    having?: WashExpressMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMemberCountAggregateInputType | true
+    _avg?: WashExpressMemberAvgAggregateInputType
+    _sum?: WashExpressMemberSumAggregateInputType
+    _min?: WashExpressMemberMinAggregateInputType
+    _max?: WashExpressMemberMaxAggregateInputType
+  }
+
+
+  export type WashExpressMemberGroupByOutputType = {
+    id: number
+    name: string
+    call: string
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMemberCountAggregateOutputType | null
+    _avg: WashExpressMemberAvgAggregateOutputType | null
+    _sum: WashExpressMemberSumAggregateOutputType | null
+    _min: WashExpressMemberMinAggregateOutputType | null
+    _max: WashExpressMemberMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMemberGroupByPayload<T extends WashExpressMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMemberSelect = {
+    id?: boolean
+    name?: boolean
+    call?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    topupHistories?: boolean | WashExpressMember$topupHistoriesArgs
+    serviceHistories?: boolean | WashExpressMember$serviceHistoriesArgs
+    _count?: boolean | WashExpressMemberCountOutputTypeArgs
+  }
+
+
+  export type WashExpressMemberInclude = {
+    topupHistories?: boolean | WashExpressMember$topupHistoriesArgs
+    serviceHistories?: boolean | WashExpressMember$serviceHistoriesArgs
+    _count?: boolean | WashExpressMemberCountOutputTypeArgs
+  }
+
+  export type WashExpressMemberGetPayload<S extends boolean | null | undefined | WashExpressMemberArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMember :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMemberArgs | WashExpressMemberFindManyArgs)
+    ? WashExpressMember  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'topupHistories' ? Array < WashExpressTopupHistoryGetPayload<S['include'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressMemberCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMemberArgs | WashExpressMemberFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'topupHistories' ? Array < WashExpressTopupHistoryGetPayload<S['select'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressMemberCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressMember ? WashExpressMember[P] : never
+  } 
+      : WashExpressMember
+
+
+  type WashExpressMemberCountArgs = 
+    Omit<WashExpressMemberFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMemberCountAggregateInputType | true
+    }
+
+  export interface WashExpressMemberDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMember that matches the filter.
+     * @param {WashExpressMemberFindUniqueArgs} args - Arguments to find a WashExpressMember
+     * @example
+     * // Get one WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMemberFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMemberFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMember'> extends True ? Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>> : Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMember that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMemberFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMember
+     * @example
+     * // Get one WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMemberFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMemberFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberFindFirstArgs} args - Arguments to find a WashExpressMember
+     * @example
+     * // Get one WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMemberFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMemberFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMember'> extends True ? Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>> : Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMember that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberFindFirstOrThrowArgs} args - Arguments to find a WashExpressMember
+     * @example
+     * // Get one WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMemberFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMemberFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMembers
+     * const washExpressMembers = await prisma.washExpressMember.findMany()
+     * 
+     * // Get first 10 WashExpressMembers
+     * const washExpressMembers = await prisma.washExpressMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMemberWithIdOnly = await prisma.washExpressMember.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMemberFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMemberFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMemberGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMember.
+     * @param {WashExpressMemberCreateArgs} args - Arguments to create a WashExpressMember.
+     * @example
+     * // Create one WashExpressMember
+     * const WashExpressMember = await prisma.washExpressMember.create({
+     *   data: {
+     *     // ... data to create a WashExpressMember
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMemberCreateArgs>(
+      args: SelectSubset<T, WashExpressMemberCreateArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Create many WashExpressMembers.
+     *     @param {WashExpressMemberCreateManyArgs} args - Arguments to create many WashExpressMembers.
+     *     @example
+     *     // Create many WashExpressMembers
+     *     const washExpressMember = await prisma.washExpressMember.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMemberCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMemberCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMember.
+     * @param {WashExpressMemberDeleteArgs} args - Arguments to delete one WashExpressMember.
+     * @example
+     * // Delete one WashExpressMember
+     * const WashExpressMember = await prisma.washExpressMember.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMember
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMemberDeleteArgs>(
+      args: SelectSubset<T, WashExpressMemberDeleteArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Update one WashExpressMember.
+     * @param {WashExpressMemberUpdateArgs} args - Arguments to update one WashExpressMember.
+     * @example
+     * // Update one WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMemberUpdateArgs>(
+      args: SelectSubset<T, WashExpressMemberUpdateArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMembers.
+     * @param {WashExpressMemberDeleteManyArgs} args - Arguments to filter WashExpressMembers to delete.
+     * @example
+     * // Delete a few WashExpressMembers
+     * const { count } = await prisma.washExpressMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMemberDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMemberDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMembers
+     * const washExpressMember = await prisma.washExpressMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMemberUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMemberUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMember.
+     * @param {WashExpressMemberUpsertArgs} args - Arguments to update or create a WashExpressMember.
+     * @example
+     * // Update or create a WashExpressMember
+     * const washExpressMember = await prisma.washExpressMember.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMember we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMemberUpsertArgs>(
+      args: SelectSubset<T, WashExpressMemberUpsertArgs>
+    ): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberCountArgs} args - Arguments to filter WashExpressMembers to count.
+     * @example
+     * // Count the number of WashExpressMembers
+     * const count = await prisma.washExpressMember.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMemberCountArgs>(
+      args?: Subset<T, WashExpressMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMemberAggregateArgs>(args: Subset<T, WashExpressMemberAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMemberAggregateType<T>>
+
+    /**
+     * Group by WashExpressMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMemberGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMemberClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    topupHistories<T extends WashExpressMember$topupHistoriesArgs= {}>(args?: Subset<T, WashExpressMember$topupHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressTopupHistoryGetPayload<T>>| Null>;
+
+    serviceHistories<T extends WashExpressMember$serviceHistoriesArgs= {}>(args?: Subset<T, WashExpressMember$serviceHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressServiceHistoryGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMember base type for findUnique actions
+   */
+  export type WashExpressMemberFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter, which WashExpressMember to fetch.
+     */
+    where: WashExpressMemberWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMember findUnique
+   */
+  export interface WashExpressMemberFindUniqueArgs extends WashExpressMemberFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMember findUniqueOrThrow
+   */
+  export type WashExpressMemberFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter, which WashExpressMember to fetch.
+     */
+    where: WashExpressMemberWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMember base type for findFirst actions
+   */
+  export type WashExpressMemberFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter, which WashExpressMember to fetch.
+     */
+    where?: WashExpressMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMembers to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMemberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMembers.
+     */
+    cursor?: WashExpressMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMembers.
+     */
+    distinct?: Enumerable<WashExpressMemberScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMember findFirst
+   */
+  export interface WashExpressMemberFindFirstArgs extends WashExpressMemberFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMember findFirstOrThrow
+   */
+  export type WashExpressMemberFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter, which WashExpressMember to fetch.
+     */
+    where?: WashExpressMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMembers to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMemberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMembers.
+     */
+    cursor?: WashExpressMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMembers.
+     */
+    distinct?: Enumerable<WashExpressMemberScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMember findMany
+   */
+  export type WashExpressMemberFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter, which WashExpressMembers to fetch.
+     */
+    where?: WashExpressMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMembers to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMemberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMembers.
+     */
+    cursor?: WashExpressMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMembers.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMemberScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMember create
+   */
+  export type WashExpressMemberCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * The data needed to create a WashExpressMember.
+     */
+    data: XOR<WashExpressMemberCreateInput, WashExpressMemberUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMember createMany
+   */
+  export type WashExpressMemberCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMembers.
+     */
+    data: Enumerable<WashExpressMemberCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMember update
+   */
+  export type WashExpressMemberUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * The data needed to update a WashExpressMember.
+     */
+    data: XOR<WashExpressMemberUpdateInput, WashExpressMemberUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMember to update.
+     */
+    where: WashExpressMemberWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMember updateMany
+   */
+  export type WashExpressMemberUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMembers.
+     */
+    data: XOR<WashExpressMemberUpdateManyMutationInput, WashExpressMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMembers to update
+     */
+    where?: WashExpressMemberWhereInput
+  }
+
+
+  /**
+   * WashExpressMember upsert
+   */
+  export type WashExpressMemberUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * The filter to search for the WashExpressMember to update in case it exists.
+     */
+    where: WashExpressMemberWhereUniqueInput
+    /**
+     * In case the WashExpressMember found by the `where` argument doesn't exist, create a new WashExpressMember with this data.
+     */
+    create: XOR<WashExpressMemberCreateInput, WashExpressMemberUncheckedCreateInput>
+    /**
+     * In case the WashExpressMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMemberUpdateInput, WashExpressMemberUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMember delete
+   */
+  export type WashExpressMemberDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+    /**
+     * Filter which WashExpressMember to delete.
+     */
+    where: WashExpressMemberWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMember deleteMany
+   */
+  export type WashExpressMemberDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMembers to delete
+     */
+    where?: WashExpressMemberWhereInput
+  }
+
+
+  /**
+   * WashExpressMember.topupHistories
+   */
+  export type WashExpressMember$topupHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    where?: WashExpressTopupHistoryWhereInput
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithRelationInput>
+    cursor?: WashExpressTopupHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressTopupHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMember.serviceHistories
+   */
+  export type WashExpressMember$serviceHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    where?: WashExpressServiceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMember without action
+   */
+  export type WashExpressMemberArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMember
+     */
+    select?: WashExpressMemberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMemberInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressTopupHistory
+   */
+
+
+  export type AggregateWashExpressTopupHistory = {
+    _count: WashExpressTopupHistoryCountAggregateOutputType | null
+    _avg: WashExpressTopupHistoryAvgAggregateOutputType | null
+    _sum: WashExpressTopupHistorySumAggregateOutputType | null
+    _min: WashExpressTopupHistoryMinAggregateOutputType | null
+    _max: WashExpressTopupHistoryMaxAggregateOutputType | null
+  }
+
+  export type WashExpressTopupHistoryAvgAggregateOutputType = {
+    id: number | null
+    memberId: number | null
+    topupAmount: number | null
+  }
+
+  export type WashExpressTopupHistorySumAggregateOutputType = {
+    id: number | null
+    memberId: number | null
+    topupAmount: number | null
+  }
+
+  export type WashExpressTopupHistoryMinAggregateOutputType = {
+    id: number | null
+    memberId: number | null
+    topupAmount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressTopupHistoryMaxAggregateOutputType = {
+    id: number | null
+    memberId: number | null
+    topupAmount: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressTopupHistoryCountAggregateOutputType = {
+    id: number
+    memberId: number
+    topupAmount: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressTopupHistoryAvgAggregateInputType = {
+    id?: true
+    memberId?: true
+    topupAmount?: true
+  }
+
+  export type WashExpressTopupHistorySumAggregateInputType = {
+    id?: true
+    memberId?: true
+    topupAmount?: true
+  }
+
+  export type WashExpressTopupHistoryMinAggregateInputType = {
+    id?: true
+    memberId?: true
+    topupAmount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressTopupHistoryMaxAggregateInputType = {
+    id?: true
+    memberId?: true
+    topupAmount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressTopupHistoryCountAggregateInputType = {
+    id?: true
+    memberId?: true
+    topupAmount?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressTopupHistoryAggregateArgs = {
+    /**
+     * Filter which WashExpressTopupHistory to aggregate.
+     */
+    where?: WashExpressTopupHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTopupHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressTopupHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTopupHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTopupHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressTopupHistories
+    **/
+    _count?: true | WashExpressTopupHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressTopupHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressTopupHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressTopupHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressTopupHistoryMaxAggregateInputType
+  }
+
+  export type GetWashExpressTopupHistoryAggregateType<T extends WashExpressTopupHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressTopupHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressTopupHistory[P]>
+      : GetScalarType<T[P], AggregateWashExpressTopupHistory[P]>
+  }
+
+
+
+
+  export type WashExpressTopupHistoryGroupByArgs = {
+    where?: WashExpressTopupHistoryWhereInput
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithAggregationInput>
+    by: WashExpressTopupHistoryScalarFieldEnum[]
+    having?: WashExpressTopupHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressTopupHistoryCountAggregateInputType | true
+    _avg?: WashExpressTopupHistoryAvgAggregateInputType
+    _sum?: WashExpressTopupHistorySumAggregateInputType
+    _min?: WashExpressTopupHistoryMinAggregateInputType
+    _max?: WashExpressTopupHistoryMaxAggregateInputType
+  }
+
+
+  export type WashExpressTopupHistoryGroupByOutputType = {
+    id: number
+    memberId: number
+    topupAmount: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressTopupHistoryCountAggregateOutputType | null
+    _avg: WashExpressTopupHistoryAvgAggregateOutputType | null
+    _sum: WashExpressTopupHistorySumAggregateOutputType | null
+    _min: WashExpressTopupHistoryMinAggregateOutputType | null
+    _max: WashExpressTopupHistoryMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressTopupHistoryGroupByPayload<T extends WashExpressTopupHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressTopupHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressTopupHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressTopupHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressTopupHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressTopupHistorySelect = {
+    id?: boolean
+    member?: boolean | WashExpressMemberArgs
+    memberId?: boolean
+    topupAmount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type WashExpressTopupHistoryInclude = {
+    member?: boolean | WashExpressMemberArgs
+  }
+
+  export type WashExpressTopupHistoryGetPayload<S extends boolean | null | undefined | WashExpressTopupHistoryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressTopupHistory :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressTopupHistoryArgs | WashExpressTopupHistoryFindManyArgs)
+    ? WashExpressTopupHistory  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'member' ? WashExpressMemberGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressTopupHistoryArgs | WashExpressTopupHistoryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'member' ? WashExpressMemberGetPayload<S['select'][P]> :  P extends keyof WashExpressTopupHistory ? WashExpressTopupHistory[P] : never
+  } 
+      : WashExpressTopupHistory
+
+
+  type WashExpressTopupHistoryCountArgs = 
+    Omit<WashExpressTopupHistoryFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressTopupHistoryCountAggregateInputType | true
+    }
+
+  export interface WashExpressTopupHistoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressTopupHistory that matches the filter.
+     * @param {WashExpressTopupHistoryFindUniqueArgs} args - Arguments to find a WashExpressTopupHistory
+     * @example
+     * // Get one WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressTopupHistoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressTopupHistoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressTopupHistory'> extends True ? Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>> : Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressTopupHistory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressTopupHistoryFindUniqueOrThrowArgs} args - Arguments to find a WashExpressTopupHistory
+     * @example
+     * // Get one WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressTopupHistoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressTopupHistoryFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Find the first WashExpressTopupHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryFindFirstArgs} args - Arguments to find a WashExpressTopupHistory
+     * @example
+     * // Get one WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressTopupHistoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressTopupHistoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressTopupHistory'> extends True ? Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>> : Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressTopupHistory that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryFindFirstOrThrowArgs} args - Arguments to find a WashExpressTopupHistory
+     * @example
+     * // Get one WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressTopupHistoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressTopupHistoryFindFirstOrThrowArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressTopupHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressTopupHistories
+     * const washExpressTopupHistories = await prisma.washExpressTopupHistory.findMany()
+     * 
+     * // Get first 10 WashExpressTopupHistories
+     * const washExpressTopupHistories = await prisma.washExpressTopupHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressTopupHistoryWithIdOnly = await prisma.washExpressTopupHistory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressTopupHistoryFindManyArgs>(
+      args?: SelectSubset<T, WashExpressTopupHistoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressTopupHistoryGetPayload<T>>>
+
+    /**
+     * Create a WashExpressTopupHistory.
+     * @param {WashExpressTopupHistoryCreateArgs} args - Arguments to create a WashExpressTopupHistory.
+     * @example
+     * // Create one WashExpressTopupHistory
+     * const WashExpressTopupHistory = await prisma.washExpressTopupHistory.create({
+     *   data: {
+     *     // ... data to create a WashExpressTopupHistory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressTopupHistoryCreateArgs>(
+      args: SelectSubset<T, WashExpressTopupHistoryCreateArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Create many WashExpressTopupHistories.
+     *     @param {WashExpressTopupHistoryCreateManyArgs} args - Arguments to create many WashExpressTopupHistories.
+     *     @example
+     *     // Create many WashExpressTopupHistories
+     *     const washExpressTopupHistory = await prisma.washExpressTopupHistory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressTopupHistoryCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressTopupHistoryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressTopupHistory.
+     * @param {WashExpressTopupHistoryDeleteArgs} args - Arguments to delete one WashExpressTopupHistory.
+     * @example
+     * // Delete one WashExpressTopupHistory
+     * const WashExpressTopupHistory = await prisma.washExpressTopupHistory.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressTopupHistory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressTopupHistoryDeleteArgs>(
+      args: SelectSubset<T, WashExpressTopupHistoryDeleteArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Update one WashExpressTopupHistory.
+     * @param {WashExpressTopupHistoryUpdateArgs} args - Arguments to update one WashExpressTopupHistory.
+     * @example
+     * // Update one WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressTopupHistoryUpdateArgs>(
+      args: SelectSubset<T, WashExpressTopupHistoryUpdateArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressTopupHistories.
+     * @param {WashExpressTopupHistoryDeleteManyArgs} args - Arguments to filter WashExpressTopupHistories to delete.
+     * @example
+     * // Delete a few WashExpressTopupHistories
+     * const { count } = await prisma.washExpressTopupHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressTopupHistoryDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressTopupHistoryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressTopupHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressTopupHistories
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressTopupHistoryUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressTopupHistoryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressTopupHistory.
+     * @param {WashExpressTopupHistoryUpsertArgs} args - Arguments to update or create a WashExpressTopupHistory.
+     * @example
+     * // Update or create a WashExpressTopupHistory
+     * const washExpressTopupHistory = await prisma.washExpressTopupHistory.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressTopupHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressTopupHistory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressTopupHistoryUpsertArgs>(
+      args: SelectSubset<T, WashExpressTopupHistoryUpsertArgs>
+    ): Prisma__WashExpressTopupHistoryClient<WashExpressTopupHistoryGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressTopupHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryCountArgs} args - Arguments to filter WashExpressTopupHistories to count.
+     * @example
+     * // Count the number of WashExpressTopupHistories
+     * const count = await prisma.washExpressTopupHistory.count({
+     *   where: {
+     *     // ... the filter for the WashExpressTopupHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressTopupHistoryCountArgs>(
+      args?: Subset<T, WashExpressTopupHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressTopupHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressTopupHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressTopupHistoryAggregateArgs>(args: Subset<T, WashExpressTopupHistoryAggregateArgs>): Prisma.PrismaPromise<GetWashExpressTopupHistoryAggregateType<T>>
+
+    /**
+     * Group by WashExpressTopupHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTopupHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressTopupHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressTopupHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressTopupHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressTopupHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressTopupHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressTopupHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressTopupHistoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    member<T extends WashExpressMemberArgs= {}>(args?: Subset<T, WashExpressMemberArgs>): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressTopupHistory base type for findUnique actions
+   */
+  export type WashExpressTopupHistoryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter, which WashExpressTopupHistory to fetch.
+     */
+    where: WashExpressTopupHistoryWhereUniqueInput
+  }
+
+  /**
+   * WashExpressTopupHistory findUnique
+   */
+  export interface WashExpressTopupHistoryFindUniqueArgs extends WashExpressTopupHistoryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressTopupHistory findUniqueOrThrow
+   */
+  export type WashExpressTopupHistoryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter, which WashExpressTopupHistory to fetch.
+     */
+    where: WashExpressTopupHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTopupHistory base type for findFirst actions
+   */
+  export type WashExpressTopupHistoryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter, which WashExpressTopupHistory to fetch.
+     */
+    where?: WashExpressTopupHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTopupHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressTopupHistories.
+     */
+    cursor?: WashExpressTopupHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTopupHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTopupHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressTopupHistories.
+     */
+    distinct?: Enumerable<WashExpressTopupHistoryScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressTopupHistory findFirst
+   */
+  export interface WashExpressTopupHistoryFindFirstArgs extends WashExpressTopupHistoryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressTopupHistory findFirstOrThrow
+   */
+  export type WashExpressTopupHistoryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter, which WashExpressTopupHistory to fetch.
+     */
+    where?: WashExpressTopupHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTopupHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressTopupHistories.
+     */
+    cursor?: WashExpressTopupHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTopupHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTopupHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressTopupHistories.
+     */
+    distinct?: Enumerable<WashExpressTopupHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressTopupHistory findMany
+   */
+  export type WashExpressTopupHistoryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter, which WashExpressTopupHistories to fetch.
+     */
+    where?: WashExpressTopupHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTopupHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTopupHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressTopupHistories.
+     */
+    cursor?: WashExpressTopupHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTopupHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTopupHistories.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressTopupHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressTopupHistory create
+   */
+  export type WashExpressTopupHistoryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * The data needed to create a WashExpressTopupHistory.
+     */
+    data: XOR<WashExpressTopupHistoryCreateInput, WashExpressTopupHistoryUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressTopupHistory createMany
+   */
+  export type WashExpressTopupHistoryCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressTopupHistories.
+     */
+    data: Enumerable<WashExpressTopupHistoryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressTopupHistory update
+   */
+  export type WashExpressTopupHistoryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * The data needed to update a WashExpressTopupHistory.
+     */
+    data: XOR<WashExpressTopupHistoryUpdateInput, WashExpressTopupHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressTopupHistory to update.
+     */
+    where: WashExpressTopupHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTopupHistory updateMany
+   */
+  export type WashExpressTopupHistoryUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressTopupHistories.
+     */
+    data: XOR<WashExpressTopupHistoryUpdateManyMutationInput, WashExpressTopupHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressTopupHistories to update
+     */
+    where?: WashExpressTopupHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressTopupHistory upsert
+   */
+  export type WashExpressTopupHistoryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * The filter to search for the WashExpressTopupHistory to update in case it exists.
+     */
+    where: WashExpressTopupHistoryWhereUniqueInput
+    /**
+     * In case the WashExpressTopupHistory found by the `where` argument doesn't exist, create a new WashExpressTopupHistory with this data.
+     */
+    create: XOR<WashExpressTopupHistoryCreateInput, WashExpressTopupHistoryUncheckedCreateInput>
+    /**
+     * In case the WashExpressTopupHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressTopupHistoryUpdateInput, WashExpressTopupHistoryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressTopupHistory delete
+   */
+  export type WashExpressTopupHistoryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+    /**
+     * Filter which WashExpressTopupHistory to delete.
+     */
+    where: WashExpressTopupHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTopupHistory deleteMany
+   */
+  export type WashExpressTopupHistoryDeleteManyArgs = {
+    /**
+     * Filter which WashExpressTopupHistories to delete
+     */
+    where?: WashExpressTopupHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressTopupHistory without action
+   */
+  export type WashExpressTopupHistoryArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTopupHistory
+     */
+    select?: WashExpressTopupHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTopupHistoryInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressTechnician
+   */
+
+
+  export type AggregateWashExpressTechnician = {
+    _count: WashExpressTechnicianCountAggregateOutputType | null
+    _avg: WashExpressTechnicianAvgAggregateOutputType | null
+    _sum: WashExpressTechnicianSumAggregateOutputType | null
+    _min: WashExpressTechnicianMinAggregateOutputType | null
+    _max: WashExpressTechnicianMaxAggregateOutputType | null
+  }
+
+  export type WashExpressTechnicianAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressTechnicianSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressTechnicianMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressTechnicianMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    call: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressTechnicianCountAggregateOutputType = {
+    id: number
+    name: number
+    call: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressTechnicianAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressTechnicianSumAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressTechnicianMinAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressTechnicianMaxAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressTechnicianCountAggregateInputType = {
+    id?: true
+    name?: true
+    call?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressTechnicianAggregateArgs = {
+    /**
+     * Filter which WashExpressTechnician to aggregate.
+     */
+    where?: WashExpressTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTechnicians to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTechnicianOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressTechnicians
+    **/
+    _count?: true | WashExpressTechnicianCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressTechnicianAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressTechnicianSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressTechnicianMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressTechnicianMaxAggregateInputType
+  }
+
+  export type GetWashExpressTechnicianAggregateType<T extends WashExpressTechnicianAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressTechnician]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressTechnician[P]>
+      : GetScalarType<T[P], AggregateWashExpressTechnician[P]>
+  }
+
+
+
+
+  export type WashExpressTechnicianGroupByArgs = {
+    where?: WashExpressTechnicianWhereInput
+    orderBy?: Enumerable<WashExpressTechnicianOrderByWithAggregationInput>
+    by: WashExpressTechnicianScalarFieldEnum[]
+    having?: WashExpressTechnicianScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressTechnicianCountAggregateInputType | true
+    _avg?: WashExpressTechnicianAvgAggregateInputType
+    _sum?: WashExpressTechnicianSumAggregateInputType
+    _min?: WashExpressTechnicianMinAggregateInputType
+    _max?: WashExpressTechnicianMaxAggregateInputType
+  }
+
+
+  export type WashExpressTechnicianGroupByOutputType = {
+    id: number
+    name: string
+    call: string
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressTechnicianCountAggregateOutputType | null
+    _avg: WashExpressTechnicianAvgAggregateOutputType | null
+    _sum: WashExpressTechnicianSumAggregateOutputType | null
+    _min: WashExpressTechnicianMinAggregateOutputType | null
+    _max: WashExpressTechnicianMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressTechnicianGroupByPayload<T extends WashExpressTechnicianGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressTechnicianGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressTechnicianGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressTechnicianGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressTechnicianGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressTechnicianSelect = {
+    id?: boolean
+    name?: boolean
+    call?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    maintenanceHistories?: boolean | WashExpressTechnician$maintenanceHistoriesArgs
+    _count?: boolean | WashExpressTechnicianCountOutputTypeArgs
+  }
+
+
+  export type WashExpressTechnicianInclude = {
+    maintenanceHistories?: boolean | WashExpressTechnician$maintenanceHistoriesArgs
+    _count?: boolean | WashExpressTechnicianCountOutputTypeArgs
+  }
+
+  export type WashExpressTechnicianGetPayload<S extends boolean | null | undefined | WashExpressTechnicianArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressTechnician :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressTechnicianArgs | WashExpressTechnicianFindManyArgs)
+    ? WashExpressTechnician  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'maintenanceHistories' ? Array < WashExpressMaintenanceHistoryGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressTechnicianCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressTechnicianArgs | WashExpressTechnicianFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'maintenanceHistories' ? Array < WashExpressMaintenanceHistoryGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressTechnicianCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressTechnician ? WashExpressTechnician[P] : never
+  } 
+      : WashExpressTechnician
+
+
+  type WashExpressTechnicianCountArgs = 
+    Omit<WashExpressTechnicianFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressTechnicianCountAggregateInputType | true
+    }
+
+  export interface WashExpressTechnicianDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressTechnician that matches the filter.
+     * @param {WashExpressTechnicianFindUniqueArgs} args - Arguments to find a WashExpressTechnician
+     * @example
+     * // Get one WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressTechnicianFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressTechnicianFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressTechnician'> extends True ? Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>> : Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressTechnician that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressTechnicianFindUniqueOrThrowArgs} args - Arguments to find a WashExpressTechnician
+     * @example
+     * // Get one WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressTechnicianFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressTechnicianFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Find the first WashExpressTechnician that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianFindFirstArgs} args - Arguments to find a WashExpressTechnician
+     * @example
+     * // Get one WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressTechnicianFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressTechnicianFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressTechnician'> extends True ? Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>> : Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressTechnician that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianFindFirstOrThrowArgs} args - Arguments to find a WashExpressTechnician
+     * @example
+     * // Get one WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressTechnicianFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressTechnicianFindFirstOrThrowArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressTechnicians that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressTechnicians
+     * const washExpressTechnicians = await prisma.washExpressTechnician.findMany()
+     * 
+     * // Get first 10 WashExpressTechnicians
+     * const washExpressTechnicians = await prisma.washExpressTechnician.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressTechnicianWithIdOnly = await prisma.washExpressTechnician.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressTechnicianFindManyArgs>(
+      args?: SelectSubset<T, WashExpressTechnicianFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressTechnicianGetPayload<T>>>
+
+    /**
+     * Create a WashExpressTechnician.
+     * @param {WashExpressTechnicianCreateArgs} args - Arguments to create a WashExpressTechnician.
+     * @example
+     * // Create one WashExpressTechnician
+     * const WashExpressTechnician = await prisma.washExpressTechnician.create({
+     *   data: {
+     *     // ... data to create a WashExpressTechnician
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressTechnicianCreateArgs>(
+      args: SelectSubset<T, WashExpressTechnicianCreateArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Create many WashExpressTechnicians.
+     *     @param {WashExpressTechnicianCreateManyArgs} args - Arguments to create many WashExpressTechnicians.
+     *     @example
+     *     // Create many WashExpressTechnicians
+     *     const washExpressTechnician = await prisma.washExpressTechnician.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressTechnicianCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressTechnicianCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressTechnician.
+     * @param {WashExpressTechnicianDeleteArgs} args - Arguments to delete one WashExpressTechnician.
+     * @example
+     * // Delete one WashExpressTechnician
+     * const WashExpressTechnician = await prisma.washExpressTechnician.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressTechnician
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressTechnicianDeleteArgs>(
+      args: SelectSubset<T, WashExpressTechnicianDeleteArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Update one WashExpressTechnician.
+     * @param {WashExpressTechnicianUpdateArgs} args - Arguments to update one WashExpressTechnician.
+     * @example
+     * // Update one WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressTechnicianUpdateArgs>(
+      args: SelectSubset<T, WashExpressTechnicianUpdateArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressTechnicians.
+     * @param {WashExpressTechnicianDeleteManyArgs} args - Arguments to filter WashExpressTechnicians to delete.
+     * @example
+     * // Delete a few WashExpressTechnicians
+     * const { count } = await prisma.washExpressTechnician.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressTechnicianDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressTechnicianDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressTechnicians.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressTechnicians
+     * const washExpressTechnician = await prisma.washExpressTechnician.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressTechnicianUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressTechnicianUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressTechnician.
+     * @param {WashExpressTechnicianUpsertArgs} args - Arguments to update or create a WashExpressTechnician.
+     * @example
+     * // Update or create a WashExpressTechnician
+     * const washExpressTechnician = await prisma.washExpressTechnician.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressTechnician
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressTechnician we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressTechnicianUpsertArgs>(
+      args: SelectSubset<T, WashExpressTechnicianUpsertArgs>
+    ): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressTechnicians.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianCountArgs} args - Arguments to filter WashExpressTechnicians to count.
+     * @example
+     * // Count the number of WashExpressTechnicians
+     * const count = await prisma.washExpressTechnician.count({
+     *   where: {
+     *     // ... the filter for the WashExpressTechnicians we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressTechnicianCountArgs>(
+      args?: Subset<T, WashExpressTechnicianCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressTechnicianCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressTechnician.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressTechnicianAggregateArgs>(args: Subset<T, WashExpressTechnicianAggregateArgs>): Prisma.PrismaPromise<GetWashExpressTechnicianAggregateType<T>>
+
+    /**
+     * Group by WashExpressTechnician.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressTechnicianGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressTechnicianGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressTechnicianGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressTechnicianGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressTechnicianGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressTechnicianGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressTechnician.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressTechnicianClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    maintenanceHistories<T extends WashExpressTechnician$maintenanceHistoriesArgs= {}>(args?: Subset<T, WashExpressTechnician$maintenanceHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressMaintenanceHistoryGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressTechnician base type for findUnique actions
+   */
+  export type WashExpressTechnicianFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter, which WashExpressTechnician to fetch.
+     */
+    where: WashExpressTechnicianWhereUniqueInput
+  }
+
+  /**
+   * WashExpressTechnician findUnique
+   */
+  export interface WashExpressTechnicianFindUniqueArgs extends WashExpressTechnicianFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressTechnician findUniqueOrThrow
+   */
+  export type WashExpressTechnicianFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter, which WashExpressTechnician to fetch.
+     */
+    where: WashExpressTechnicianWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTechnician base type for findFirst actions
+   */
+  export type WashExpressTechnicianFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter, which WashExpressTechnician to fetch.
+     */
+    where?: WashExpressTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTechnicians to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTechnicianOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressTechnicians.
+     */
+    cursor?: WashExpressTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressTechnicians.
+     */
+    distinct?: Enumerable<WashExpressTechnicianScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressTechnician findFirst
+   */
+  export interface WashExpressTechnicianFindFirstArgs extends WashExpressTechnicianFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressTechnician findFirstOrThrow
+   */
+  export type WashExpressTechnicianFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter, which WashExpressTechnician to fetch.
+     */
+    where?: WashExpressTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTechnicians to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTechnicianOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressTechnicians.
+     */
+    cursor?: WashExpressTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTechnicians.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressTechnicians.
+     */
+    distinct?: Enumerable<WashExpressTechnicianScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressTechnician findMany
+   */
+  export type WashExpressTechnicianFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter, which WashExpressTechnicians to fetch.
+     */
+    where?: WashExpressTechnicianWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressTechnicians to fetch.
+     */
+    orderBy?: Enumerable<WashExpressTechnicianOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressTechnicians.
+     */
+    cursor?: WashExpressTechnicianWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressTechnicians from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressTechnicians.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressTechnicianScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressTechnician create
+   */
+  export type WashExpressTechnicianCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * The data needed to create a WashExpressTechnician.
+     */
+    data: XOR<WashExpressTechnicianCreateInput, WashExpressTechnicianUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressTechnician createMany
+   */
+  export type WashExpressTechnicianCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressTechnicians.
+     */
+    data: Enumerable<WashExpressTechnicianCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressTechnician update
+   */
+  export type WashExpressTechnicianUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * The data needed to update a WashExpressTechnician.
+     */
+    data: XOR<WashExpressTechnicianUpdateInput, WashExpressTechnicianUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressTechnician to update.
+     */
+    where: WashExpressTechnicianWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTechnician updateMany
+   */
+  export type WashExpressTechnicianUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressTechnicians.
+     */
+    data: XOR<WashExpressTechnicianUpdateManyMutationInput, WashExpressTechnicianUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressTechnicians to update
+     */
+    where?: WashExpressTechnicianWhereInput
+  }
+
+
+  /**
+   * WashExpressTechnician upsert
+   */
+  export type WashExpressTechnicianUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * The filter to search for the WashExpressTechnician to update in case it exists.
+     */
+    where: WashExpressTechnicianWhereUniqueInput
+    /**
+     * In case the WashExpressTechnician found by the `where` argument doesn't exist, create a new WashExpressTechnician with this data.
+     */
+    create: XOR<WashExpressTechnicianCreateInput, WashExpressTechnicianUncheckedCreateInput>
+    /**
+     * In case the WashExpressTechnician was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressTechnicianUpdateInput, WashExpressTechnicianUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressTechnician delete
+   */
+  export type WashExpressTechnicianDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+    /**
+     * Filter which WashExpressTechnician to delete.
+     */
+    where: WashExpressTechnicianWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressTechnician deleteMany
+   */
+  export type WashExpressTechnicianDeleteManyArgs = {
+    /**
+     * Filter which WashExpressTechnicians to delete
+     */
+    where?: WashExpressTechnicianWhereInput
+  }
+
+
+  /**
+   * WashExpressTechnician.maintenanceHistories
+   */
+  export type WashExpressTechnician$maintenanceHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    where?: WashExpressMaintenanceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMaintenanceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressTechnician without action
+   */
+  export type WashExpressTechnicianArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressTechnician
+     */
+    select?: WashExpressTechnicianSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressTechnicianInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressBranch
+   */
+
+
+  export type AggregateWashExpressBranch = {
+    _count: WashExpressBranchCountAggregateOutputType | null
+    _avg: WashExpressBranchAvgAggregateOutputType | null
+    _sum: WashExpressBranchSumAggregateOutputType | null
+    _min: WashExpressBranchMinAggregateOutputType | null
+    _max: WashExpressBranchMaxAggregateOutputType | null
+  }
+
+  export type WashExpressBranchAvgAggregateOutputType = {
+    id: number | null
+    ownerId: number | null
+  }
+
+  export type WashExpressBranchSumAggregateOutputType = {
+    id: number | null
+    ownerId: number | null
+  }
+
+  export type WashExpressBranchMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    ownerId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressBranchMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    ownerId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressBranchCountAggregateOutputType = {
+    id: number
+    name: number
+    ownerId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressBranchAvgAggregateInputType = {
+    id?: true
+    ownerId?: true
+  }
+
+  export type WashExpressBranchSumAggregateInputType = {
+    id?: true
+    ownerId?: true
+  }
+
+  export type WashExpressBranchMinAggregateInputType = {
+    id?: true
+    name?: true
+    ownerId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressBranchMaxAggregateInputType = {
+    id?: true
+    name?: true
+    ownerId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressBranchCountAggregateInputType = {
+    id?: true
+    name?: true
+    ownerId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressBranchAggregateArgs = {
+    /**
+     * Filter which WashExpressBranch to aggregate.
+     */
+    where?: WashExpressBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressBranches to fetch.
+     */
+    orderBy?: Enumerable<WashExpressBranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressBranches
+    **/
+    _count?: true | WashExpressBranchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressBranchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressBranchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressBranchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressBranchMaxAggregateInputType
+  }
+
+  export type GetWashExpressBranchAggregateType<T extends WashExpressBranchAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressBranch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressBranch[P]>
+      : GetScalarType<T[P], AggregateWashExpressBranch[P]>
+  }
+
+
+
+
+  export type WashExpressBranchGroupByArgs = {
+    where?: WashExpressBranchWhereInput
+    orderBy?: Enumerable<WashExpressBranchOrderByWithAggregationInput>
+    by: WashExpressBranchScalarFieldEnum[]
+    having?: WashExpressBranchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressBranchCountAggregateInputType | true
+    _avg?: WashExpressBranchAvgAggregateInputType
+    _sum?: WashExpressBranchSumAggregateInputType
+    _min?: WashExpressBranchMinAggregateInputType
+    _max?: WashExpressBranchMaxAggregateInputType
+  }
+
+
+  export type WashExpressBranchGroupByOutputType = {
+    id: number
+    name: string
+    ownerId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressBranchCountAggregateOutputType | null
+    _avg: WashExpressBranchAvgAggregateOutputType | null
+    _sum: WashExpressBranchSumAggregateOutputType | null
+    _min: WashExpressBranchMinAggregateOutputType | null
+    _max: WashExpressBranchMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressBranchGroupByPayload<T extends WashExpressBranchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressBranchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressBranchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressBranchGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressBranchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressBranchSelect = {
+    id?: boolean
+    name?: boolean
+    owner?: boolean | WashExpressOwnerArgs
+    ownerId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    machineLists?: boolean | WashExpressBranch$machineListsArgs
+    serviceHistories?: boolean | WashExpressBranch$serviceHistoriesArgs
+    _count?: boolean | WashExpressBranchCountOutputTypeArgs
+  }
+
+
+  export type WashExpressBranchInclude = {
+    owner?: boolean | WashExpressOwnerArgs
+    machineLists?: boolean | WashExpressBranch$machineListsArgs
+    serviceHistories?: boolean | WashExpressBranch$serviceHistoriesArgs
+    _count?: boolean | WashExpressBranchCountOutputTypeArgs
+  }
+
+  export type WashExpressBranchGetPayload<S extends boolean | null | undefined | WashExpressBranchArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressBranch :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressBranchArgs | WashExpressBranchFindManyArgs)
+    ? WashExpressBranch  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'owner' ? WashExpressOwnerGetPayload<S['include'][P]> :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['include'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressBranchCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressBranchArgs | WashExpressBranchFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'owner' ? WashExpressOwnerGetPayload<S['select'][P]> :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['select'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressBranchCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressBranch ? WashExpressBranch[P] : never
+  } 
+      : WashExpressBranch
+
+
+  type WashExpressBranchCountArgs = 
+    Omit<WashExpressBranchFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressBranchCountAggregateInputType | true
+    }
+
+  export interface WashExpressBranchDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressBranch that matches the filter.
+     * @param {WashExpressBranchFindUniqueArgs} args - Arguments to find a WashExpressBranch
+     * @example
+     * // Get one WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressBranchFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressBranchFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressBranch'> extends True ? Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>> : Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressBranch that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressBranchFindUniqueOrThrowArgs} args - Arguments to find a WashExpressBranch
+     * @example
+     * // Get one WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressBranchFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressBranchFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Find the first WashExpressBranch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchFindFirstArgs} args - Arguments to find a WashExpressBranch
+     * @example
+     * // Get one WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressBranchFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressBranchFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressBranch'> extends True ? Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>> : Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressBranch that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchFindFirstOrThrowArgs} args - Arguments to find a WashExpressBranch
+     * @example
+     * // Get one WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressBranchFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressBranchFindFirstOrThrowArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressBranches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressBranches
+     * const washExpressBranches = await prisma.washExpressBranch.findMany()
+     * 
+     * // Get first 10 WashExpressBranches
+     * const washExpressBranches = await prisma.washExpressBranch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressBranchWithIdOnly = await prisma.washExpressBranch.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressBranchFindManyArgs>(
+      args?: SelectSubset<T, WashExpressBranchFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressBranchGetPayload<T>>>
+
+    /**
+     * Create a WashExpressBranch.
+     * @param {WashExpressBranchCreateArgs} args - Arguments to create a WashExpressBranch.
+     * @example
+     * // Create one WashExpressBranch
+     * const WashExpressBranch = await prisma.washExpressBranch.create({
+     *   data: {
+     *     // ... data to create a WashExpressBranch
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressBranchCreateArgs>(
+      args: SelectSubset<T, WashExpressBranchCreateArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Create many WashExpressBranches.
+     *     @param {WashExpressBranchCreateManyArgs} args - Arguments to create many WashExpressBranches.
+     *     @example
+     *     // Create many WashExpressBranches
+     *     const washExpressBranch = await prisma.washExpressBranch.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressBranchCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressBranchCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressBranch.
+     * @param {WashExpressBranchDeleteArgs} args - Arguments to delete one WashExpressBranch.
+     * @example
+     * // Delete one WashExpressBranch
+     * const WashExpressBranch = await prisma.washExpressBranch.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressBranch
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressBranchDeleteArgs>(
+      args: SelectSubset<T, WashExpressBranchDeleteArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Update one WashExpressBranch.
+     * @param {WashExpressBranchUpdateArgs} args - Arguments to update one WashExpressBranch.
+     * @example
+     * // Update one WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressBranchUpdateArgs>(
+      args: SelectSubset<T, WashExpressBranchUpdateArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressBranches.
+     * @param {WashExpressBranchDeleteManyArgs} args - Arguments to filter WashExpressBranches to delete.
+     * @example
+     * // Delete a few WashExpressBranches
+     * const { count } = await prisma.washExpressBranch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressBranchDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressBranchDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressBranches
+     * const washExpressBranch = await prisma.washExpressBranch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressBranchUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressBranchUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressBranch.
+     * @param {WashExpressBranchUpsertArgs} args - Arguments to update or create a WashExpressBranch.
+     * @example
+     * // Update or create a WashExpressBranch
+     * const washExpressBranch = await prisma.washExpressBranch.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressBranch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressBranch we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressBranchUpsertArgs>(
+      args: SelectSubset<T, WashExpressBranchUpsertArgs>
+    ): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressBranches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchCountArgs} args - Arguments to filter WashExpressBranches to count.
+     * @example
+     * // Count the number of WashExpressBranches
+     * const count = await prisma.washExpressBranch.count({
+     *   where: {
+     *     // ... the filter for the WashExpressBranches we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressBranchCountArgs>(
+      args?: Subset<T, WashExpressBranchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressBranchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressBranchAggregateArgs>(args: Subset<T, WashExpressBranchAggregateArgs>): Prisma.PrismaPromise<GetWashExpressBranchAggregateType<T>>
+
+    /**
+     * Group by WashExpressBranch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressBranchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressBranchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressBranchGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressBranchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressBranchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressBranchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressBranch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressBranchClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    owner<T extends WashExpressOwnerArgs= {}>(args?: Subset<T, WashExpressOwnerArgs>): Prisma__WashExpressOwnerClient<WashExpressOwnerGetPayload<T> | Null>;
+
+    machineLists<T extends WashExpressBranch$machineListsArgs= {}>(args?: Subset<T, WashExpressBranch$machineListsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineListGetPayload<T>>| Null>;
+
+    serviceHistories<T extends WashExpressBranch$serviceHistoriesArgs= {}>(args?: Subset<T, WashExpressBranch$serviceHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressServiceHistoryGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressBranch base type for findUnique actions
+   */
+  export type WashExpressBranchFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter, which WashExpressBranch to fetch.
+     */
+    where: WashExpressBranchWhereUniqueInput
+  }
+
+  /**
+   * WashExpressBranch findUnique
+   */
+  export interface WashExpressBranchFindUniqueArgs extends WashExpressBranchFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressBranch findUniqueOrThrow
+   */
+  export type WashExpressBranchFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter, which WashExpressBranch to fetch.
+     */
+    where: WashExpressBranchWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressBranch base type for findFirst actions
+   */
+  export type WashExpressBranchFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter, which WashExpressBranch to fetch.
+     */
+    where?: WashExpressBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressBranches to fetch.
+     */
+    orderBy?: Enumerable<WashExpressBranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressBranches.
+     */
+    cursor?: WashExpressBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressBranches.
+     */
+    distinct?: Enumerable<WashExpressBranchScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressBranch findFirst
+   */
+  export interface WashExpressBranchFindFirstArgs extends WashExpressBranchFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressBranch findFirstOrThrow
+   */
+  export type WashExpressBranchFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter, which WashExpressBranch to fetch.
+     */
+    where?: WashExpressBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressBranches to fetch.
+     */
+    orderBy?: Enumerable<WashExpressBranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressBranches.
+     */
+    cursor?: WashExpressBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressBranches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressBranches.
+     */
+    distinct?: Enumerable<WashExpressBranchScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressBranch findMany
+   */
+  export type WashExpressBranchFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter, which WashExpressBranches to fetch.
+     */
+    where?: WashExpressBranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressBranches to fetch.
+     */
+    orderBy?: Enumerable<WashExpressBranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressBranches.
+     */
+    cursor?: WashExpressBranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressBranches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressBranches.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressBranchScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressBranch create
+   */
+  export type WashExpressBranchCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * The data needed to create a WashExpressBranch.
+     */
+    data: XOR<WashExpressBranchCreateInput, WashExpressBranchUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressBranch createMany
+   */
+  export type WashExpressBranchCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressBranches.
+     */
+    data: Enumerable<WashExpressBranchCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressBranch update
+   */
+  export type WashExpressBranchUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * The data needed to update a WashExpressBranch.
+     */
+    data: XOR<WashExpressBranchUpdateInput, WashExpressBranchUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressBranch to update.
+     */
+    where: WashExpressBranchWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressBranch updateMany
+   */
+  export type WashExpressBranchUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressBranches.
+     */
+    data: XOR<WashExpressBranchUpdateManyMutationInput, WashExpressBranchUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressBranches to update
+     */
+    where?: WashExpressBranchWhereInput
+  }
+
+
+  /**
+   * WashExpressBranch upsert
+   */
+  export type WashExpressBranchUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * The filter to search for the WashExpressBranch to update in case it exists.
+     */
+    where: WashExpressBranchWhereUniqueInput
+    /**
+     * In case the WashExpressBranch found by the `where` argument doesn't exist, create a new WashExpressBranch with this data.
+     */
+    create: XOR<WashExpressBranchCreateInput, WashExpressBranchUncheckedCreateInput>
+    /**
+     * In case the WashExpressBranch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressBranchUpdateInput, WashExpressBranchUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressBranch delete
+   */
+  export type WashExpressBranchDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+    /**
+     * Filter which WashExpressBranch to delete.
+     */
+    where: WashExpressBranchWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressBranch deleteMany
+   */
+  export type WashExpressBranchDeleteManyArgs = {
+    /**
+     * Filter which WashExpressBranches to delete
+     */
+    where?: WashExpressBranchWhereInput
+  }
+
+
+  /**
+   * WashExpressBranch.machineLists
+   */
+  export type WashExpressBranch$machineListsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    where?: WashExpressMachineListWhereInput
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    cursor?: WashExpressMachineListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressBranch.serviceHistories
+   */
+  export type WashExpressBranch$serviceHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    where?: WashExpressServiceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressBranch without action
+   */
+  export type WashExpressBranchArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressBranch
+     */
+    select?: WashExpressBranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressBranchInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMachineBrand
+   */
+
+
+  export type AggregateWashExpressMachineBrand = {
+    _count: WashExpressMachineBrandCountAggregateOutputType | null
+    _avg: WashExpressMachineBrandAvgAggregateOutputType | null
+    _sum: WashExpressMachineBrandSumAggregateOutputType | null
+    _min: WashExpressMachineBrandMinAggregateOutputType | null
+    _max: WashExpressMachineBrandMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMachineBrandAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMachineBrandSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMachineBrandMinAggregateOutputType = {
+    id: number | null
+    name: venderList | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineBrandMaxAggregateOutputType = {
+    id: number | null
+    name: venderList | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineBrandCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMachineBrandAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMachineBrandSumAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMachineBrandMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineBrandMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineBrandCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMachineBrandAggregateArgs = {
+    /**
+     * Filter which WashExpressMachineBrand to aggregate.
+     */
+    where?: WashExpressMachineBrandWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineBrands to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineBrandOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMachineBrandWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineBrands from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineBrands.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMachineBrands
+    **/
+    _count?: true | WashExpressMachineBrandCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMachineBrandAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMachineBrandSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMachineBrandMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMachineBrandMaxAggregateInputType
+  }
+
+  export type GetWashExpressMachineBrandAggregateType<T extends WashExpressMachineBrandAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMachineBrand]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMachineBrand[P]>
+      : GetScalarType<T[P], AggregateWashExpressMachineBrand[P]>
+  }
+
+
+
+
+  export type WashExpressMachineBrandGroupByArgs = {
+    where?: WashExpressMachineBrandWhereInput
+    orderBy?: Enumerable<WashExpressMachineBrandOrderByWithAggregationInput>
+    by: WashExpressMachineBrandScalarFieldEnum[]
+    having?: WashExpressMachineBrandScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMachineBrandCountAggregateInputType | true
+    _avg?: WashExpressMachineBrandAvgAggregateInputType
+    _sum?: WashExpressMachineBrandSumAggregateInputType
+    _min?: WashExpressMachineBrandMinAggregateInputType
+    _max?: WashExpressMachineBrandMaxAggregateInputType
+  }
+
+
+  export type WashExpressMachineBrandGroupByOutputType = {
+    id: number
+    name: venderList
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMachineBrandCountAggregateOutputType | null
+    _avg: WashExpressMachineBrandAvgAggregateOutputType | null
+    _sum: WashExpressMachineBrandSumAggregateOutputType | null
+    _min: WashExpressMachineBrandMinAggregateOutputType | null
+    _max: WashExpressMachineBrandMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMachineBrandGroupByPayload<T extends WashExpressMachineBrandGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMachineBrandGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMachineBrandGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMachineBrandGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMachineBrandGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMachineBrandSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    machineLists?: boolean | WashExpressMachineBrand$machineListsArgs
+    _count?: boolean | WashExpressMachineBrandCountOutputTypeArgs
+  }
+
+
+  export type WashExpressMachineBrandInclude = {
+    machineLists?: boolean | WashExpressMachineBrand$machineListsArgs
+    _count?: boolean | WashExpressMachineBrandCountOutputTypeArgs
+  }
+
+  export type WashExpressMachineBrandGetPayload<S extends boolean | null | undefined | WashExpressMachineBrandArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineBrand :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineBrandArgs | WashExpressMachineBrandFindManyArgs)
+    ? WashExpressMachineBrand  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressMachineBrandCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMachineBrandArgs | WashExpressMachineBrandFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressMachineBrandCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressMachineBrand ? WashExpressMachineBrand[P] : never
+  } 
+      : WashExpressMachineBrand
+
+
+  type WashExpressMachineBrandCountArgs = 
+    Omit<WashExpressMachineBrandFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMachineBrandCountAggregateInputType | true
+    }
+
+  export interface WashExpressMachineBrandDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMachineBrand that matches the filter.
+     * @param {WashExpressMachineBrandFindUniqueArgs} args - Arguments to find a WashExpressMachineBrand
+     * @example
+     * // Get one WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMachineBrandFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMachineBrandFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMachineBrand'> extends True ? Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>> : Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMachineBrand that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMachineBrandFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMachineBrand
+     * @example
+     * // Get one WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMachineBrandFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineBrandFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMachineBrand that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandFindFirstArgs} args - Arguments to find a WashExpressMachineBrand
+     * @example
+     * // Get one WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMachineBrandFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMachineBrandFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMachineBrand'> extends True ? Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>> : Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMachineBrand that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandFindFirstOrThrowArgs} args - Arguments to find a WashExpressMachineBrand
+     * @example
+     * // Get one WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMachineBrandFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineBrandFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMachineBrands that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMachineBrands
+     * const washExpressMachineBrands = await prisma.washExpressMachineBrand.findMany()
+     * 
+     * // Get first 10 WashExpressMachineBrands
+     * const washExpressMachineBrands = await prisma.washExpressMachineBrand.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMachineBrandWithIdOnly = await prisma.washExpressMachineBrand.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMachineBrandFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineBrandFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMachineBrandGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMachineBrand.
+     * @param {WashExpressMachineBrandCreateArgs} args - Arguments to create a WashExpressMachineBrand.
+     * @example
+     * // Create one WashExpressMachineBrand
+     * const WashExpressMachineBrand = await prisma.washExpressMachineBrand.create({
+     *   data: {
+     *     // ... data to create a WashExpressMachineBrand
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMachineBrandCreateArgs>(
+      args: SelectSubset<T, WashExpressMachineBrandCreateArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Create many WashExpressMachineBrands.
+     *     @param {WashExpressMachineBrandCreateManyArgs} args - Arguments to create many WashExpressMachineBrands.
+     *     @example
+     *     // Create many WashExpressMachineBrands
+     *     const washExpressMachineBrand = await prisma.washExpressMachineBrand.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMachineBrandCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineBrandCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMachineBrand.
+     * @param {WashExpressMachineBrandDeleteArgs} args - Arguments to delete one WashExpressMachineBrand.
+     * @example
+     * // Delete one WashExpressMachineBrand
+     * const WashExpressMachineBrand = await prisma.washExpressMachineBrand.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMachineBrand
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMachineBrandDeleteArgs>(
+      args: SelectSubset<T, WashExpressMachineBrandDeleteArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Update one WashExpressMachineBrand.
+     * @param {WashExpressMachineBrandUpdateArgs} args - Arguments to update one WashExpressMachineBrand.
+     * @example
+     * // Update one WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMachineBrandUpdateArgs>(
+      args: SelectSubset<T, WashExpressMachineBrandUpdateArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMachineBrands.
+     * @param {WashExpressMachineBrandDeleteManyArgs} args - Arguments to filter WashExpressMachineBrands to delete.
+     * @example
+     * // Delete a few WashExpressMachineBrands
+     * const { count } = await prisma.washExpressMachineBrand.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMachineBrandDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineBrandDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMachineBrands.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMachineBrands
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMachineBrandUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMachineBrandUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMachineBrand.
+     * @param {WashExpressMachineBrandUpsertArgs} args - Arguments to update or create a WashExpressMachineBrand.
+     * @example
+     * // Update or create a WashExpressMachineBrand
+     * const washExpressMachineBrand = await prisma.washExpressMachineBrand.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMachineBrand
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMachineBrand we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMachineBrandUpsertArgs>(
+      args: SelectSubset<T, WashExpressMachineBrandUpsertArgs>
+    ): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMachineBrands.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandCountArgs} args - Arguments to filter WashExpressMachineBrands to count.
+     * @example
+     * // Count the number of WashExpressMachineBrands
+     * const count = await prisma.washExpressMachineBrand.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMachineBrands we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMachineBrandCountArgs>(
+      args?: Subset<T, WashExpressMachineBrandCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMachineBrandCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMachineBrand.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMachineBrandAggregateArgs>(args: Subset<T, WashExpressMachineBrandAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMachineBrandAggregateType<T>>
+
+    /**
+     * Group by WashExpressMachineBrand.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineBrandGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMachineBrandGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMachineBrandGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMachineBrandGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMachineBrandGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMachineBrandGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMachineBrand.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMachineBrandClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    machineLists<T extends WashExpressMachineBrand$machineListsArgs= {}>(args?: Subset<T, WashExpressMachineBrand$machineListsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineListGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineBrand base type for findUnique actions
+   */
+  export type WashExpressMachineBrandFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter, which WashExpressMachineBrand to fetch.
+     */
+    where: WashExpressMachineBrandWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMachineBrand findUnique
+   */
+  export interface WashExpressMachineBrandFindUniqueArgs extends WashExpressMachineBrandFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineBrand findUniqueOrThrow
+   */
+  export type WashExpressMachineBrandFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter, which WashExpressMachineBrand to fetch.
+     */
+    where: WashExpressMachineBrandWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineBrand base type for findFirst actions
+   */
+  export type WashExpressMachineBrandFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter, which WashExpressMachineBrand to fetch.
+     */
+    where?: WashExpressMachineBrandWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineBrands to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineBrandOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineBrands.
+     */
+    cursor?: WashExpressMachineBrandWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineBrands from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineBrands.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineBrands.
+     */
+    distinct?: Enumerable<WashExpressMachineBrandScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMachineBrand findFirst
+   */
+  export interface WashExpressMachineBrandFindFirstArgs extends WashExpressMachineBrandFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineBrand findFirstOrThrow
+   */
+  export type WashExpressMachineBrandFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter, which WashExpressMachineBrand to fetch.
+     */
+    where?: WashExpressMachineBrandWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineBrands to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineBrandOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineBrands.
+     */
+    cursor?: WashExpressMachineBrandWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineBrands from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineBrands.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineBrands.
+     */
+    distinct?: Enumerable<WashExpressMachineBrandScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineBrand findMany
+   */
+  export type WashExpressMachineBrandFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter, which WashExpressMachineBrands to fetch.
+     */
+    where?: WashExpressMachineBrandWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineBrands to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineBrandOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMachineBrands.
+     */
+    cursor?: WashExpressMachineBrandWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineBrands from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineBrands.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineBrandScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineBrand create
+   */
+  export type WashExpressMachineBrandCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * The data needed to create a WashExpressMachineBrand.
+     */
+    data: XOR<WashExpressMachineBrandCreateInput, WashExpressMachineBrandUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMachineBrand createMany
+   */
+  export type WashExpressMachineBrandCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMachineBrands.
+     */
+    data: Enumerable<WashExpressMachineBrandCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMachineBrand update
+   */
+  export type WashExpressMachineBrandUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * The data needed to update a WashExpressMachineBrand.
+     */
+    data: XOR<WashExpressMachineBrandUpdateInput, WashExpressMachineBrandUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMachineBrand to update.
+     */
+    where: WashExpressMachineBrandWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineBrand updateMany
+   */
+  export type WashExpressMachineBrandUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMachineBrands.
+     */
+    data: XOR<WashExpressMachineBrandUpdateManyMutationInput, WashExpressMachineBrandUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMachineBrands to update
+     */
+    where?: WashExpressMachineBrandWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineBrand upsert
+   */
+  export type WashExpressMachineBrandUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * The filter to search for the WashExpressMachineBrand to update in case it exists.
+     */
+    where: WashExpressMachineBrandWhereUniqueInput
+    /**
+     * In case the WashExpressMachineBrand found by the `where` argument doesn't exist, create a new WashExpressMachineBrand with this data.
+     */
+    create: XOR<WashExpressMachineBrandCreateInput, WashExpressMachineBrandUncheckedCreateInput>
+    /**
+     * In case the WashExpressMachineBrand was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMachineBrandUpdateInput, WashExpressMachineBrandUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMachineBrand delete
+   */
+  export type WashExpressMachineBrandDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+    /**
+     * Filter which WashExpressMachineBrand to delete.
+     */
+    where: WashExpressMachineBrandWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineBrand deleteMany
+   */
+  export type WashExpressMachineBrandDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMachineBrands to delete
+     */
+    where?: WashExpressMachineBrandWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineBrand.machineLists
+   */
+  export type WashExpressMachineBrand$machineListsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    where?: WashExpressMachineListWhereInput
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    cursor?: WashExpressMachineListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineBrand without action
+   */
+  export type WashExpressMachineBrandArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineBrand
+     */
+    select?: WashExpressMachineBrandSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineBrandInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMachineType
+   */
+
+
+  export type AggregateWashExpressMachineType = {
+    _count: WashExpressMachineTypeCountAggregateOutputType | null
+    _avg: WashExpressMachineTypeAvgAggregateOutputType | null
+    _sum: WashExpressMachineTypeSumAggregateOutputType | null
+    _min: WashExpressMachineTypeMinAggregateOutputType | null
+    _max: WashExpressMachineTypeMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMachineTypeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMachineTypeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type WashExpressMachineTypeMinAggregateOutputType = {
+    id: number | null
+    name: machineType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineTypeMaxAggregateOutputType = {
+    id: number | null
+    name: machineType | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineTypeCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMachineTypeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMachineTypeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type WashExpressMachineTypeMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineTypeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineTypeCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMachineTypeAggregateArgs = {
+    /**
+     * Filter which WashExpressMachineType to aggregate.
+     */
+    where?: WashExpressMachineTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineTypes to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMachineTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMachineTypes
+    **/
+    _count?: true | WashExpressMachineTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMachineTypeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMachineTypeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMachineTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMachineTypeMaxAggregateInputType
+  }
+
+  export type GetWashExpressMachineTypeAggregateType<T extends WashExpressMachineTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMachineType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMachineType[P]>
+      : GetScalarType<T[P], AggregateWashExpressMachineType[P]>
+  }
+
+
+
+
+  export type WashExpressMachineTypeGroupByArgs = {
+    where?: WashExpressMachineTypeWhereInput
+    orderBy?: Enumerable<WashExpressMachineTypeOrderByWithAggregationInput>
+    by: WashExpressMachineTypeScalarFieldEnum[]
+    having?: WashExpressMachineTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMachineTypeCountAggregateInputType | true
+    _avg?: WashExpressMachineTypeAvgAggregateInputType
+    _sum?: WashExpressMachineTypeSumAggregateInputType
+    _min?: WashExpressMachineTypeMinAggregateInputType
+    _max?: WashExpressMachineTypeMaxAggregateInputType
+  }
+
+
+  export type WashExpressMachineTypeGroupByOutputType = {
+    id: number
+    name: machineType
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMachineTypeCountAggregateOutputType | null
+    _avg: WashExpressMachineTypeAvgAggregateOutputType | null
+    _sum: WashExpressMachineTypeSumAggregateOutputType | null
+    _min: WashExpressMachineTypeMinAggregateOutputType | null
+    _max: WashExpressMachineTypeMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMachineTypeGroupByPayload<T extends WashExpressMachineTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMachineTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMachineTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMachineTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMachineTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMachineTypeSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    machinePrograms?: boolean | WashExpressMachineType$machineProgramsArgs
+    machineLists?: boolean | WashExpressMachineType$machineListsArgs
+    _count?: boolean | WashExpressMachineTypeCountOutputTypeArgs
+  }
+
+
+  export type WashExpressMachineTypeInclude = {
+    machinePrograms?: boolean | WashExpressMachineType$machineProgramsArgs
+    machineLists?: boolean | WashExpressMachineType$machineListsArgs
+    _count?: boolean | WashExpressMachineTypeCountOutputTypeArgs
+  }
+
+  export type WashExpressMachineTypeGetPayload<S extends boolean | null | undefined | WashExpressMachineTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineTypeArgs | WashExpressMachineTypeFindManyArgs)
+    ? WashExpressMachineType  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'machinePrograms' ? Array < WashExpressMachineProgramGetPayload<S['include'][P]>>  :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressMachineTypeCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMachineTypeArgs | WashExpressMachineTypeFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'machinePrograms' ? Array < WashExpressMachineProgramGetPayload<S['select'][P]>>  :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressMachineTypeCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressMachineType ? WashExpressMachineType[P] : never
+  } 
+      : WashExpressMachineType
+
+
+  type WashExpressMachineTypeCountArgs = 
+    Omit<WashExpressMachineTypeFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMachineTypeCountAggregateInputType | true
+    }
+
+  export interface WashExpressMachineTypeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMachineType that matches the filter.
+     * @param {WashExpressMachineTypeFindUniqueArgs} args - Arguments to find a WashExpressMachineType
+     * @example
+     * // Get one WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMachineTypeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMachineTypeFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMachineType'> extends True ? Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>> : Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMachineType that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMachineTypeFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMachineType
+     * @example
+     * // Get one WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMachineTypeFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineTypeFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMachineType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeFindFirstArgs} args - Arguments to find a WashExpressMachineType
+     * @example
+     * // Get one WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMachineTypeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMachineTypeFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMachineType'> extends True ? Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>> : Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMachineType that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeFindFirstOrThrowArgs} args - Arguments to find a WashExpressMachineType
+     * @example
+     * // Get one WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMachineTypeFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineTypeFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMachineTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMachineTypes
+     * const washExpressMachineTypes = await prisma.washExpressMachineType.findMany()
+     * 
+     * // Get first 10 WashExpressMachineTypes
+     * const washExpressMachineTypes = await prisma.washExpressMachineType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMachineTypeWithIdOnly = await prisma.washExpressMachineType.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMachineTypeFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineTypeFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMachineTypeGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMachineType.
+     * @param {WashExpressMachineTypeCreateArgs} args - Arguments to create a WashExpressMachineType.
+     * @example
+     * // Create one WashExpressMachineType
+     * const WashExpressMachineType = await prisma.washExpressMachineType.create({
+     *   data: {
+     *     // ... data to create a WashExpressMachineType
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMachineTypeCreateArgs>(
+      args: SelectSubset<T, WashExpressMachineTypeCreateArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Create many WashExpressMachineTypes.
+     *     @param {WashExpressMachineTypeCreateManyArgs} args - Arguments to create many WashExpressMachineTypes.
+     *     @example
+     *     // Create many WashExpressMachineTypes
+     *     const washExpressMachineType = await prisma.washExpressMachineType.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMachineTypeCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineTypeCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMachineType.
+     * @param {WashExpressMachineTypeDeleteArgs} args - Arguments to delete one WashExpressMachineType.
+     * @example
+     * // Delete one WashExpressMachineType
+     * const WashExpressMachineType = await prisma.washExpressMachineType.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMachineType
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMachineTypeDeleteArgs>(
+      args: SelectSubset<T, WashExpressMachineTypeDeleteArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Update one WashExpressMachineType.
+     * @param {WashExpressMachineTypeUpdateArgs} args - Arguments to update one WashExpressMachineType.
+     * @example
+     * // Update one WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMachineTypeUpdateArgs>(
+      args: SelectSubset<T, WashExpressMachineTypeUpdateArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMachineTypes.
+     * @param {WashExpressMachineTypeDeleteManyArgs} args - Arguments to filter WashExpressMachineTypes to delete.
+     * @example
+     * // Delete a few WashExpressMachineTypes
+     * const { count } = await prisma.washExpressMachineType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMachineTypeDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineTypeDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMachineTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMachineTypes
+     * const washExpressMachineType = await prisma.washExpressMachineType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMachineTypeUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMachineTypeUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMachineType.
+     * @param {WashExpressMachineTypeUpsertArgs} args - Arguments to update or create a WashExpressMachineType.
+     * @example
+     * // Update or create a WashExpressMachineType
+     * const washExpressMachineType = await prisma.washExpressMachineType.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMachineType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMachineType we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMachineTypeUpsertArgs>(
+      args: SelectSubset<T, WashExpressMachineTypeUpsertArgs>
+    ): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMachineTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeCountArgs} args - Arguments to filter WashExpressMachineTypes to count.
+     * @example
+     * // Count the number of WashExpressMachineTypes
+     * const count = await prisma.washExpressMachineType.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMachineTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMachineTypeCountArgs>(
+      args?: Subset<T, WashExpressMachineTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMachineTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMachineType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMachineTypeAggregateArgs>(args: Subset<T, WashExpressMachineTypeAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMachineTypeAggregateType<T>>
+
+    /**
+     * Group by WashExpressMachineType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMachineTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMachineTypeGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMachineTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMachineTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMachineTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMachineType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMachineTypeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    machinePrograms<T extends WashExpressMachineType$machineProgramsArgs= {}>(args?: Subset<T, WashExpressMachineType$machineProgramsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineProgramGetPayload<T>>| Null>;
+
+    machineLists<T extends WashExpressMachineType$machineListsArgs= {}>(args?: Subset<T, WashExpressMachineType$machineListsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineListGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineType base type for findUnique actions
+   */
+  export type WashExpressMachineTypeFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter, which WashExpressMachineType to fetch.
+     */
+    where: WashExpressMachineTypeWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMachineType findUnique
+   */
+  export interface WashExpressMachineTypeFindUniqueArgs extends WashExpressMachineTypeFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineType findUniqueOrThrow
+   */
+  export type WashExpressMachineTypeFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter, which WashExpressMachineType to fetch.
+     */
+    where: WashExpressMachineTypeWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineType base type for findFirst actions
+   */
+  export type WashExpressMachineTypeFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter, which WashExpressMachineType to fetch.
+     */
+    where?: WashExpressMachineTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineTypes to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineTypes.
+     */
+    cursor?: WashExpressMachineTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineTypes.
+     */
+    distinct?: Enumerable<WashExpressMachineTypeScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMachineType findFirst
+   */
+  export interface WashExpressMachineTypeFindFirstArgs extends WashExpressMachineTypeFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineType findFirstOrThrow
+   */
+  export type WashExpressMachineTypeFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter, which WashExpressMachineType to fetch.
+     */
+    where?: WashExpressMachineTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineTypes to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineTypes.
+     */
+    cursor?: WashExpressMachineTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineTypes.
+     */
+    distinct?: Enumerable<WashExpressMachineTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineType findMany
+   */
+  export type WashExpressMachineTypeFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter, which WashExpressMachineTypes to fetch.
+     */
+    where?: WashExpressMachineTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineTypes to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMachineTypes.
+     */
+    cursor?: WashExpressMachineTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineTypes.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineType create
+   */
+  export type WashExpressMachineTypeCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * The data needed to create a WashExpressMachineType.
+     */
+    data: XOR<WashExpressMachineTypeCreateInput, WashExpressMachineTypeUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMachineType createMany
+   */
+  export type WashExpressMachineTypeCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMachineTypes.
+     */
+    data: Enumerable<WashExpressMachineTypeCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMachineType update
+   */
+  export type WashExpressMachineTypeUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * The data needed to update a WashExpressMachineType.
+     */
+    data: XOR<WashExpressMachineTypeUpdateInput, WashExpressMachineTypeUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMachineType to update.
+     */
+    where: WashExpressMachineTypeWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineType updateMany
+   */
+  export type WashExpressMachineTypeUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMachineTypes.
+     */
+    data: XOR<WashExpressMachineTypeUpdateManyMutationInput, WashExpressMachineTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMachineTypes to update
+     */
+    where?: WashExpressMachineTypeWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineType upsert
+   */
+  export type WashExpressMachineTypeUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * The filter to search for the WashExpressMachineType to update in case it exists.
+     */
+    where: WashExpressMachineTypeWhereUniqueInput
+    /**
+     * In case the WashExpressMachineType found by the `where` argument doesn't exist, create a new WashExpressMachineType with this data.
+     */
+    create: XOR<WashExpressMachineTypeCreateInput, WashExpressMachineTypeUncheckedCreateInput>
+    /**
+     * In case the WashExpressMachineType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMachineTypeUpdateInput, WashExpressMachineTypeUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMachineType delete
+   */
+  export type WashExpressMachineTypeDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+    /**
+     * Filter which WashExpressMachineType to delete.
+     */
+    where: WashExpressMachineTypeWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineType deleteMany
+   */
+  export type WashExpressMachineTypeDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMachineTypes to delete
+     */
+    where?: WashExpressMachineTypeWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineType.machinePrograms
+   */
+  export type WashExpressMachineType$machineProgramsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    where?: WashExpressMachineProgramWhereInput
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineType.machineLists
+   */
+  export type WashExpressMachineType$machineListsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    where?: WashExpressMachineListWhereInput
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    cursor?: WashExpressMachineListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineType without action
+   */
+  export type WashExpressMachineTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineType
+     */
+    select?: WashExpressMachineTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineTypeInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMachineProgram
+   */
+
+
+  export type AggregateWashExpressMachineProgram = {
+    _count: WashExpressMachineProgramCountAggregateOutputType | null
+    _avg: WashExpressMachineProgramAvgAggregateOutputType | null
+    _sum: WashExpressMachineProgramSumAggregateOutputType | null
+    _min: WashExpressMachineProgramMinAggregateOutputType | null
+    _max: WashExpressMachineProgramMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMachineProgramAvgAggregateOutputType = {
+    id: number | null
+    typeId: number | null
+    timeMinites: number | null
+    priceBath: number | null
+  }
+
+  export type WashExpressMachineProgramSumAggregateOutputType = {
+    id: number | null
+    typeId: number | null
+    timeMinites: number | null
+    priceBath: number | null
+  }
+
+  export type WashExpressMachineProgramMinAggregateOutputType = {
+    id: number | null
+    typeId: number | null
+    name: machineType | null
+    timeMinites: number | null
+    priceBath: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineProgramMaxAggregateOutputType = {
+    id: number | null
+    typeId: number | null
+    name: machineType | null
+    timeMinites: number | null
+    priceBath: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineProgramCountAggregateOutputType = {
+    id: number
+    typeId: number
+    name: number
+    timeMinites: number
+    priceBath: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMachineProgramAvgAggregateInputType = {
+    id?: true
+    typeId?: true
+    timeMinites?: true
+    priceBath?: true
+  }
+
+  export type WashExpressMachineProgramSumAggregateInputType = {
+    id?: true
+    typeId?: true
+    timeMinites?: true
+    priceBath?: true
+  }
+
+  export type WashExpressMachineProgramMinAggregateInputType = {
+    id?: true
+    typeId?: true
+    name?: true
+    timeMinites?: true
+    priceBath?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineProgramMaxAggregateInputType = {
+    id?: true
+    typeId?: true
+    name?: true
+    timeMinites?: true
+    priceBath?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineProgramCountAggregateInputType = {
+    id?: true
+    typeId?: true
+    name?: true
+    timeMinites?: true
+    priceBath?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMachineProgramAggregateArgs = {
+    /**
+     * Filter which WashExpressMachineProgram to aggregate.
+     */
+    where?: WashExpressMachineProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachinePrograms to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachinePrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachinePrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMachinePrograms
+    **/
+    _count?: true | WashExpressMachineProgramCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMachineProgramAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMachineProgramSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMachineProgramMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMachineProgramMaxAggregateInputType
+  }
+
+  export type GetWashExpressMachineProgramAggregateType<T extends WashExpressMachineProgramAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMachineProgram]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMachineProgram[P]>
+      : GetScalarType<T[P], AggregateWashExpressMachineProgram[P]>
+  }
+
+
+
+
+  export type WashExpressMachineProgramGroupByArgs = {
+    where?: WashExpressMachineProgramWhereInput
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithAggregationInput>
+    by: WashExpressMachineProgramScalarFieldEnum[]
+    having?: WashExpressMachineProgramScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMachineProgramCountAggregateInputType | true
+    _avg?: WashExpressMachineProgramAvgAggregateInputType
+    _sum?: WashExpressMachineProgramSumAggregateInputType
+    _min?: WashExpressMachineProgramMinAggregateInputType
+    _max?: WashExpressMachineProgramMaxAggregateInputType
+  }
+
+
+  export type WashExpressMachineProgramGroupByOutputType = {
+    id: number
+    typeId: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMachineProgramCountAggregateOutputType | null
+    _avg: WashExpressMachineProgramAvgAggregateOutputType | null
+    _sum: WashExpressMachineProgramSumAggregateOutputType | null
+    _min: WashExpressMachineProgramMinAggregateOutputType | null
+    _max: WashExpressMachineProgramMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMachineProgramGroupByPayload<T extends WashExpressMachineProgramGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMachineProgramGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMachineProgramGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMachineProgramGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMachineProgramGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMachineProgramSelect = {
+    id?: boolean
+    type?: boolean | WashExpressMachineTypeArgs
+    typeId?: boolean
+    name?: boolean
+    timeMinites?: boolean
+    priceBath?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    machineLists?: boolean | WashExpressMachineProgram$machineListsArgs
+    serviceHistories?: boolean | WashExpressMachineProgram$serviceHistoriesArgs
+    _count?: boolean | WashExpressMachineProgramCountOutputTypeArgs
+  }
+
+
+  export type WashExpressMachineProgramInclude = {
+    type?: boolean | WashExpressMachineTypeArgs
+    machineLists?: boolean | WashExpressMachineProgram$machineListsArgs
+    serviceHistories?: boolean | WashExpressMachineProgram$serviceHistoriesArgs
+    _count?: boolean | WashExpressMachineProgramCountOutputTypeArgs
+  }
+
+  export type WashExpressMachineProgramGetPayload<S extends boolean | null | undefined | WashExpressMachineProgramArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineProgram :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineProgramArgs | WashExpressMachineProgramFindManyArgs)
+    ? WashExpressMachineProgram  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'type' ? WashExpressMachineTypeGetPayload<S['include'][P]> :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['include'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressMachineProgramCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMachineProgramArgs | WashExpressMachineProgramFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'type' ? WashExpressMachineTypeGetPayload<S['select'][P]> :
+        P extends 'machineLists' ? Array < WashExpressMachineListGetPayload<S['select'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressMachineProgramCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressMachineProgram ? WashExpressMachineProgram[P] : never
+  } 
+      : WashExpressMachineProgram
+
+
+  type WashExpressMachineProgramCountArgs = 
+    Omit<WashExpressMachineProgramFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMachineProgramCountAggregateInputType | true
+    }
+
+  export interface WashExpressMachineProgramDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMachineProgram that matches the filter.
+     * @param {WashExpressMachineProgramFindUniqueArgs} args - Arguments to find a WashExpressMachineProgram
+     * @example
+     * // Get one WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMachineProgramFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMachineProgramFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMachineProgram'> extends True ? Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>> : Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMachineProgram that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMachineProgramFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMachineProgram
+     * @example
+     * // Get one WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMachineProgramFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineProgramFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMachineProgram that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramFindFirstArgs} args - Arguments to find a WashExpressMachineProgram
+     * @example
+     * // Get one WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMachineProgramFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMachineProgramFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMachineProgram'> extends True ? Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>> : Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMachineProgram that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramFindFirstOrThrowArgs} args - Arguments to find a WashExpressMachineProgram
+     * @example
+     * // Get one WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMachineProgramFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineProgramFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMachinePrograms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMachinePrograms
+     * const washExpressMachinePrograms = await prisma.washExpressMachineProgram.findMany()
+     * 
+     * // Get first 10 WashExpressMachinePrograms
+     * const washExpressMachinePrograms = await prisma.washExpressMachineProgram.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMachineProgramWithIdOnly = await prisma.washExpressMachineProgram.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMachineProgramFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineProgramFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMachineProgramGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMachineProgram.
+     * @param {WashExpressMachineProgramCreateArgs} args - Arguments to create a WashExpressMachineProgram.
+     * @example
+     * // Create one WashExpressMachineProgram
+     * const WashExpressMachineProgram = await prisma.washExpressMachineProgram.create({
+     *   data: {
+     *     // ... data to create a WashExpressMachineProgram
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMachineProgramCreateArgs>(
+      args: SelectSubset<T, WashExpressMachineProgramCreateArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Create many WashExpressMachinePrograms.
+     *     @param {WashExpressMachineProgramCreateManyArgs} args - Arguments to create many WashExpressMachinePrograms.
+     *     @example
+     *     // Create many WashExpressMachinePrograms
+     *     const washExpressMachineProgram = await prisma.washExpressMachineProgram.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMachineProgramCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineProgramCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMachineProgram.
+     * @param {WashExpressMachineProgramDeleteArgs} args - Arguments to delete one WashExpressMachineProgram.
+     * @example
+     * // Delete one WashExpressMachineProgram
+     * const WashExpressMachineProgram = await prisma.washExpressMachineProgram.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMachineProgram
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMachineProgramDeleteArgs>(
+      args: SelectSubset<T, WashExpressMachineProgramDeleteArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Update one WashExpressMachineProgram.
+     * @param {WashExpressMachineProgramUpdateArgs} args - Arguments to update one WashExpressMachineProgram.
+     * @example
+     * // Update one WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMachineProgramUpdateArgs>(
+      args: SelectSubset<T, WashExpressMachineProgramUpdateArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMachinePrograms.
+     * @param {WashExpressMachineProgramDeleteManyArgs} args - Arguments to filter WashExpressMachinePrograms to delete.
+     * @example
+     * // Delete a few WashExpressMachinePrograms
+     * const { count } = await prisma.washExpressMachineProgram.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMachineProgramDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineProgramDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMachinePrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMachinePrograms
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMachineProgramUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMachineProgramUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMachineProgram.
+     * @param {WashExpressMachineProgramUpsertArgs} args - Arguments to update or create a WashExpressMachineProgram.
+     * @example
+     * // Update or create a WashExpressMachineProgram
+     * const washExpressMachineProgram = await prisma.washExpressMachineProgram.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMachineProgram
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMachineProgram we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMachineProgramUpsertArgs>(
+      args: SelectSubset<T, WashExpressMachineProgramUpsertArgs>
+    ): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMachinePrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramCountArgs} args - Arguments to filter WashExpressMachinePrograms to count.
+     * @example
+     * // Count the number of WashExpressMachinePrograms
+     * const count = await prisma.washExpressMachineProgram.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMachinePrograms we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMachineProgramCountArgs>(
+      args?: Subset<T, WashExpressMachineProgramCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMachineProgramCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMachineProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMachineProgramAggregateArgs>(args: Subset<T, WashExpressMachineProgramAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMachineProgramAggregateType<T>>
+
+    /**
+     * Group by WashExpressMachineProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineProgramGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMachineProgramGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMachineProgramGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMachineProgramGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMachineProgramGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMachineProgramGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMachineProgram.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMachineProgramClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    type<T extends WashExpressMachineTypeArgs= {}>(args?: Subset<T, WashExpressMachineTypeArgs>): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T> | Null>;
+
+    machineLists<T extends WashExpressMachineProgram$machineListsArgs= {}>(args?: Subset<T, WashExpressMachineProgram$machineListsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineListGetPayload<T>>| Null>;
+
+    serviceHistories<T extends WashExpressMachineProgram$serviceHistoriesArgs= {}>(args?: Subset<T, WashExpressMachineProgram$serviceHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressServiceHistoryGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineProgram base type for findUnique actions
+   */
+  export type WashExpressMachineProgramFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter, which WashExpressMachineProgram to fetch.
+     */
+    where: WashExpressMachineProgramWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMachineProgram findUnique
+   */
+  export interface WashExpressMachineProgramFindUniqueArgs extends WashExpressMachineProgramFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineProgram findUniqueOrThrow
+   */
+  export type WashExpressMachineProgramFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter, which WashExpressMachineProgram to fetch.
+     */
+    where: WashExpressMachineProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineProgram base type for findFirst actions
+   */
+  export type WashExpressMachineProgramFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter, which WashExpressMachineProgram to fetch.
+     */
+    where?: WashExpressMachineProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachinePrograms to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachinePrograms.
+     */
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachinePrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachinePrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachinePrograms.
+     */
+    distinct?: Enumerable<WashExpressMachineProgramScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMachineProgram findFirst
+   */
+  export interface WashExpressMachineProgramFindFirstArgs extends WashExpressMachineProgramFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineProgram findFirstOrThrow
+   */
+  export type WashExpressMachineProgramFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter, which WashExpressMachineProgram to fetch.
+     */
+    where?: WashExpressMachineProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachinePrograms to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachinePrograms.
+     */
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachinePrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachinePrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachinePrograms.
+     */
+    distinct?: Enumerable<WashExpressMachineProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineProgram findMany
+   */
+  export type WashExpressMachineProgramFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter, which WashExpressMachinePrograms to fetch.
+     */
+    where?: WashExpressMachineProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachinePrograms to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMachinePrograms.
+     */
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachinePrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachinePrograms.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineProgram create
+   */
+  export type WashExpressMachineProgramCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * The data needed to create a WashExpressMachineProgram.
+     */
+    data: XOR<WashExpressMachineProgramCreateInput, WashExpressMachineProgramUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMachineProgram createMany
+   */
+  export type WashExpressMachineProgramCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMachinePrograms.
+     */
+    data: Enumerable<WashExpressMachineProgramCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMachineProgram update
+   */
+  export type WashExpressMachineProgramUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * The data needed to update a WashExpressMachineProgram.
+     */
+    data: XOR<WashExpressMachineProgramUpdateInput, WashExpressMachineProgramUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMachineProgram to update.
+     */
+    where: WashExpressMachineProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineProgram updateMany
+   */
+  export type WashExpressMachineProgramUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMachinePrograms.
+     */
+    data: XOR<WashExpressMachineProgramUpdateManyMutationInput, WashExpressMachineProgramUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMachinePrograms to update
+     */
+    where?: WashExpressMachineProgramWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineProgram upsert
+   */
+  export type WashExpressMachineProgramUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * The filter to search for the WashExpressMachineProgram to update in case it exists.
+     */
+    where: WashExpressMachineProgramWhereUniqueInput
+    /**
+     * In case the WashExpressMachineProgram found by the `where` argument doesn't exist, create a new WashExpressMachineProgram with this data.
+     */
+    create: XOR<WashExpressMachineProgramCreateInput, WashExpressMachineProgramUncheckedCreateInput>
+    /**
+     * In case the WashExpressMachineProgram was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMachineProgramUpdateInput, WashExpressMachineProgramUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMachineProgram delete
+   */
+  export type WashExpressMachineProgramDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    /**
+     * Filter which WashExpressMachineProgram to delete.
+     */
+    where: WashExpressMachineProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineProgram deleteMany
+   */
+  export type WashExpressMachineProgramDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMachinePrograms to delete
+     */
+    where?: WashExpressMachineProgramWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineProgram.machineLists
+   */
+  export type WashExpressMachineProgram$machineListsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    where?: WashExpressMachineListWhereInput
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    cursor?: WashExpressMachineListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineProgram.serviceHistories
+   */
+  export type WashExpressMachineProgram$serviceHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    where?: WashExpressServiceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineProgram without action
+   */
+  export type WashExpressMachineProgramArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMachineList
+   */
+
+
+  export type AggregateWashExpressMachineList = {
+    _count: WashExpressMachineListCountAggregateOutputType | null
+    _avg: WashExpressMachineListAvgAggregateOutputType | null
+    _sum: WashExpressMachineListSumAggregateOutputType | null
+    _min: WashExpressMachineListMinAggregateOutputType | null
+    _max: WashExpressMachineListMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMachineListAvgAggregateOutputType = {
+    id: number | null
+    brandId: number | null
+    typeId: number | null
+    branchId: number | null
+  }
+
+  export type WashExpressMachineListSumAggregateOutputType = {
+    id: number | null
+    brandId: number | null
+    typeId: number | null
+    branchId: number | null
+  }
+
+  export type WashExpressMachineListMinAggregateOutputType = {
+    id: number | null
+    brandId: number | null
+    typeId: number | null
+    branchId: number | null
+    installDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineListMaxAggregateOutputType = {
+    id: number | null
+    brandId: number | null
+    typeId: number | null
+    branchId: number | null
+    installDate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMachineListCountAggregateOutputType = {
+    id: number
+    brandId: number
+    typeId: number
+    branchId: number
+    installDate: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMachineListAvgAggregateInputType = {
+    id?: true
+    brandId?: true
+    typeId?: true
+    branchId?: true
+  }
+
+  export type WashExpressMachineListSumAggregateInputType = {
+    id?: true
+    brandId?: true
+    typeId?: true
+    branchId?: true
+  }
+
+  export type WashExpressMachineListMinAggregateInputType = {
+    id?: true
+    brandId?: true
+    typeId?: true
+    branchId?: true
+    installDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineListMaxAggregateInputType = {
+    id?: true
+    brandId?: true
+    typeId?: true
+    branchId?: true
+    installDate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMachineListCountAggregateInputType = {
+    id?: true
+    brandId?: true
+    typeId?: true
+    branchId?: true
+    installDate?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMachineListAggregateArgs = {
+    /**
+     * Filter which WashExpressMachineList to aggregate.
+     */
+    where?: WashExpressMachineListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineLists to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMachineListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMachineLists
+    **/
+    _count?: true | WashExpressMachineListCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMachineListAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMachineListSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMachineListMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMachineListMaxAggregateInputType
+  }
+
+  export type GetWashExpressMachineListAggregateType<T extends WashExpressMachineListAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMachineList]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMachineList[P]>
+      : GetScalarType<T[P], AggregateWashExpressMachineList[P]>
+  }
+
+
+
+
+  export type WashExpressMachineListGroupByArgs = {
+    where?: WashExpressMachineListWhereInput
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithAggregationInput>
+    by: WashExpressMachineListScalarFieldEnum[]
+    having?: WashExpressMachineListScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMachineListCountAggregateInputType | true
+    _avg?: WashExpressMachineListAvgAggregateInputType
+    _sum?: WashExpressMachineListSumAggregateInputType
+    _min?: WashExpressMachineListMinAggregateInputType
+    _max?: WashExpressMachineListMaxAggregateInputType
+  }
+
+
+  export type WashExpressMachineListGroupByOutputType = {
+    id: number
+    brandId: number
+    typeId: number
+    branchId: number
+    installDate: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMachineListCountAggregateOutputType | null
+    _avg: WashExpressMachineListAvgAggregateOutputType | null
+    _sum: WashExpressMachineListSumAggregateOutputType | null
+    _min: WashExpressMachineListMinAggregateOutputType | null
+    _max: WashExpressMachineListMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMachineListGroupByPayload<T extends WashExpressMachineListGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMachineListGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMachineListGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMachineListGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMachineListGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMachineListSelect = {
+    id?: boolean
+    brand?: boolean | WashExpressMachineBrandArgs
+    brandId?: boolean
+    type?: boolean | WashExpressMachineTypeArgs
+    typeId?: boolean
+    branch?: boolean | WashExpressBranchArgs
+    branchId?: boolean
+    programs?: boolean | WashExpressMachineList$programsArgs
+    installDate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    serviceHistories?: boolean | WashExpressMachineList$serviceHistoriesArgs
+    WashExpressMaintenanceHistory?: boolean | WashExpressMachineList$WashExpressMaintenanceHistoryArgs
+    _count?: boolean | WashExpressMachineListCountOutputTypeArgs
+  }
+
+
+  export type WashExpressMachineListInclude = {
+    brand?: boolean | WashExpressMachineBrandArgs
+    type?: boolean | WashExpressMachineTypeArgs
+    branch?: boolean | WashExpressBranchArgs
+    programs?: boolean | WashExpressMachineList$programsArgs
+    serviceHistories?: boolean | WashExpressMachineList$serviceHistoriesArgs
+    WashExpressMaintenanceHistory?: boolean | WashExpressMachineList$WashExpressMaintenanceHistoryArgs
+    _count?: boolean | WashExpressMachineListCountOutputTypeArgs
+  }
+
+  export type WashExpressMachineListGetPayload<S extends boolean | null | undefined | WashExpressMachineListArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMachineList :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMachineListArgs | WashExpressMachineListFindManyArgs)
+    ? WashExpressMachineList  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'brand' ? WashExpressMachineBrandGetPayload<S['include'][P]> :
+        P extends 'type' ? WashExpressMachineTypeGetPayload<S['include'][P]> :
+        P extends 'branch' ? WashExpressBranchGetPayload<S['include'][P]> :
+        P extends 'programs' ? Array < WashExpressMachineProgramGetPayload<S['include'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['include'][P]>>  :
+        P extends 'WashExpressMaintenanceHistory' ? Array < WashExpressMaintenanceHistoryGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashExpressMachineListCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMachineListArgs | WashExpressMachineListFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'brand' ? WashExpressMachineBrandGetPayload<S['select'][P]> :
+        P extends 'type' ? WashExpressMachineTypeGetPayload<S['select'][P]> :
+        P extends 'branch' ? WashExpressBranchGetPayload<S['select'][P]> :
+        P extends 'programs' ? Array < WashExpressMachineProgramGetPayload<S['select'][P]>>  :
+        P extends 'serviceHistories' ? Array < WashExpressServiceHistoryGetPayload<S['select'][P]>>  :
+        P extends 'WashExpressMaintenanceHistory' ? Array < WashExpressMaintenanceHistoryGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashExpressMachineListCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashExpressMachineList ? WashExpressMachineList[P] : never
+  } 
+      : WashExpressMachineList
+
+
+  type WashExpressMachineListCountArgs = 
+    Omit<WashExpressMachineListFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMachineListCountAggregateInputType | true
+    }
+
+  export interface WashExpressMachineListDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMachineList that matches the filter.
+     * @param {WashExpressMachineListFindUniqueArgs} args - Arguments to find a WashExpressMachineList
+     * @example
+     * // Get one WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMachineListFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMachineListFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMachineList'> extends True ? Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>> : Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMachineList that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMachineListFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMachineList
+     * @example
+     * // Get one WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMachineListFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineListFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMachineList that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListFindFirstArgs} args - Arguments to find a WashExpressMachineList
+     * @example
+     * // Get one WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMachineListFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMachineListFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMachineList'> extends True ? Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>> : Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMachineList that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListFindFirstOrThrowArgs} args - Arguments to find a WashExpressMachineList
+     * @example
+     * // Get one WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMachineListFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMachineListFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMachineLists that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMachineLists
+     * const washExpressMachineLists = await prisma.washExpressMachineList.findMany()
+     * 
+     * // Get first 10 WashExpressMachineLists
+     * const washExpressMachineLists = await prisma.washExpressMachineList.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMachineListWithIdOnly = await prisma.washExpressMachineList.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMachineListFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineListFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMachineListGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMachineList.
+     * @param {WashExpressMachineListCreateArgs} args - Arguments to create a WashExpressMachineList.
+     * @example
+     * // Create one WashExpressMachineList
+     * const WashExpressMachineList = await prisma.washExpressMachineList.create({
+     *   data: {
+     *     // ... data to create a WashExpressMachineList
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMachineListCreateArgs>(
+      args: SelectSubset<T, WashExpressMachineListCreateArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Create many WashExpressMachineLists.
+     *     @param {WashExpressMachineListCreateManyArgs} args - Arguments to create many WashExpressMachineLists.
+     *     @example
+     *     // Create many WashExpressMachineLists
+     *     const washExpressMachineList = await prisma.washExpressMachineList.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMachineListCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineListCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMachineList.
+     * @param {WashExpressMachineListDeleteArgs} args - Arguments to delete one WashExpressMachineList.
+     * @example
+     * // Delete one WashExpressMachineList
+     * const WashExpressMachineList = await prisma.washExpressMachineList.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMachineList
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMachineListDeleteArgs>(
+      args: SelectSubset<T, WashExpressMachineListDeleteArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Update one WashExpressMachineList.
+     * @param {WashExpressMachineListUpdateArgs} args - Arguments to update one WashExpressMachineList.
+     * @example
+     * // Update one WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMachineListUpdateArgs>(
+      args: SelectSubset<T, WashExpressMachineListUpdateArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMachineLists.
+     * @param {WashExpressMachineListDeleteManyArgs} args - Arguments to filter WashExpressMachineLists to delete.
+     * @example
+     * // Delete a few WashExpressMachineLists
+     * const { count } = await prisma.washExpressMachineList.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMachineListDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMachineListDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMachineLists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMachineLists
+     * const washExpressMachineList = await prisma.washExpressMachineList.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMachineListUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMachineListUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMachineList.
+     * @param {WashExpressMachineListUpsertArgs} args - Arguments to update or create a WashExpressMachineList.
+     * @example
+     * // Update or create a WashExpressMachineList
+     * const washExpressMachineList = await prisma.washExpressMachineList.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMachineList
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMachineList we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMachineListUpsertArgs>(
+      args: SelectSubset<T, WashExpressMachineListUpsertArgs>
+    ): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMachineLists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListCountArgs} args - Arguments to filter WashExpressMachineLists to count.
+     * @example
+     * // Count the number of WashExpressMachineLists
+     * const count = await prisma.washExpressMachineList.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMachineLists we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMachineListCountArgs>(
+      args?: Subset<T, WashExpressMachineListCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMachineListCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMachineList.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMachineListAggregateArgs>(args: Subset<T, WashExpressMachineListAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMachineListAggregateType<T>>
+
+    /**
+     * Group by WashExpressMachineList.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMachineListGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMachineListGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMachineListGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMachineListGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMachineListGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMachineListGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMachineList.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMachineListClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    brand<T extends WashExpressMachineBrandArgs= {}>(args?: Subset<T, WashExpressMachineBrandArgs>): Prisma__WashExpressMachineBrandClient<WashExpressMachineBrandGetPayload<T> | Null>;
+
+    type<T extends WashExpressMachineTypeArgs= {}>(args?: Subset<T, WashExpressMachineTypeArgs>): Prisma__WashExpressMachineTypeClient<WashExpressMachineTypeGetPayload<T> | Null>;
+
+    branch<T extends WashExpressBranchArgs= {}>(args?: Subset<T, WashExpressBranchArgs>): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T> | Null>;
+
+    programs<T extends WashExpressMachineList$programsArgs= {}>(args?: Subset<T, WashExpressMachineList$programsArgs>): Prisma.PrismaPromise<Array<WashExpressMachineProgramGetPayload<T>>| Null>;
+
+    serviceHistories<T extends WashExpressMachineList$serviceHistoriesArgs= {}>(args?: Subset<T, WashExpressMachineList$serviceHistoriesArgs>): Prisma.PrismaPromise<Array<WashExpressServiceHistoryGetPayload<T>>| Null>;
+
+    WashExpressMaintenanceHistory<T extends WashExpressMachineList$WashExpressMaintenanceHistoryArgs= {}>(args?: Subset<T, WashExpressMachineList$WashExpressMaintenanceHistoryArgs>): Prisma.PrismaPromise<Array<WashExpressMaintenanceHistoryGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMachineList base type for findUnique actions
+   */
+  export type WashExpressMachineListFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter, which WashExpressMachineList to fetch.
+     */
+    where: WashExpressMachineListWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMachineList findUnique
+   */
+  export interface WashExpressMachineListFindUniqueArgs extends WashExpressMachineListFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineList findUniqueOrThrow
+   */
+  export type WashExpressMachineListFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter, which WashExpressMachineList to fetch.
+     */
+    where: WashExpressMachineListWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineList base type for findFirst actions
+   */
+  export type WashExpressMachineListFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter, which WashExpressMachineList to fetch.
+     */
+    where?: WashExpressMachineListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineLists to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineLists.
+     */
+    cursor?: WashExpressMachineListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineLists.
+     */
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMachineList findFirst
+   */
+  export interface WashExpressMachineListFindFirstArgs extends WashExpressMachineListFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMachineList findFirstOrThrow
+   */
+  export type WashExpressMachineListFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter, which WashExpressMachineList to fetch.
+     */
+    where?: WashExpressMachineListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineLists to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMachineLists.
+     */
+    cursor?: WashExpressMachineListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMachineLists.
+     */
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineList findMany
+   */
+  export type WashExpressMachineListFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter, which WashExpressMachineLists to fetch.
+     */
+    where?: WashExpressMachineListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMachineLists to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMachineListOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMachineLists.
+     */
+    cursor?: WashExpressMachineListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMachineLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMachineLists.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineListScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineList create
+   */
+  export type WashExpressMachineListCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * The data needed to create a WashExpressMachineList.
+     */
+    data: XOR<WashExpressMachineListCreateInput, WashExpressMachineListUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMachineList createMany
+   */
+  export type WashExpressMachineListCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMachineLists.
+     */
+    data: Enumerable<WashExpressMachineListCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMachineList update
+   */
+  export type WashExpressMachineListUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * The data needed to update a WashExpressMachineList.
+     */
+    data: XOR<WashExpressMachineListUpdateInput, WashExpressMachineListUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMachineList to update.
+     */
+    where: WashExpressMachineListWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineList updateMany
+   */
+  export type WashExpressMachineListUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMachineLists.
+     */
+    data: XOR<WashExpressMachineListUpdateManyMutationInput, WashExpressMachineListUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMachineLists to update
+     */
+    where?: WashExpressMachineListWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineList upsert
+   */
+  export type WashExpressMachineListUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * The filter to search for the WashExpressMachineList to update in case it exists.
+     */
+    where: WashExpressMachineListWhereUniqueInput
+    /**
+     * In case the WashExpressMachineList found by the `where` argument doesn't exist, create a new WashExpressMachineList with this data.
+     */
+    create: XOR<WashExpressMachineListCreateInput, WashExpressMachineListUncheckedCreateInput>
+    /**
+     * In case the WashExpressMachineList was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMachineListUpdateInput, WashExpressMachineListUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMachineList delete
+   */
+  export type WashExpressMachineListDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+    /**
+     * Filter which WashExpressMachineList to delete.
+     */
+    where: WashExpressMachineListWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMachineList deleteMany
+   */
+  export type WashExpressMachineListDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMachineLists to delete
+     */
+    where?: WashExpressMachineListWhereInput
+  }
+
+
+  /**
+   * WashExpressMachineList.programs
+   */
+  export type WashExpressMachineList$programsArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineProgram
+     */
+    select?: WashExpressMachineProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineProgramInclude | null
+    where?: WashExpressMachineProgramWhereInput
+    orderBy?: Enumerable<WashExpressMachineProgramOrderByWithRelationInput>
+    cursor?: WashExpressMachineProgramWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMachineProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineList.serviceHistories
+   */
+  export type WashExpressMachineList$serviceHistoriesArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    where?: WashExpressServiceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineList.WashExpressMaintenanceHistory
+   */
+  export type WashExpressMachineList$WashExpressMaintenanceHistoryArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    where?: WashExpressMaintenanceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashExpressMaintenanceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMachineList without action
+   */
+  export type WashExpressMachineListArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMachineList
+     */
+    select?: WashExpressMachineListSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMachineListInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressServiceHistory
+   */
+
+
+  export type AggregateWashExpressServiceHistory = {
+    _count: WashExpressServiceHistoryCountAggregateOutputType | null
+    _avg: WashExpressServiceHistoryAvgAggregateOutputType | null
+    _sum: WashExpressServiceHistorySumAggregateOutputType | null
+    _min: WashExpressServiceHistoryMinAggregateOutputType | null
+    _max: WashExpressServiceHistoryMaxAggregateOutputType | null
+  }
+
+  export type WashExpressServiceHistoryAvgAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    memberId: number | null
+    branchId: number | null
+    programId: number | null
+    recordedPrice: number | null
+  }
+
+  export type WashExpressServiceHistorySumAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    memberId: number | null
+    branchId: number | null
+    programId: number | null
+    recordedPrice: number | null
+  }
+
+  export type WashExpressServiceHistoryMinAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    memberId: number | null
+    branchId: number | null
+    programId: number | null
+    recordedPrice: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressServiceHistoryMaxAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    memberId: number | null
+    branchId: number | null
+    programId: number | null
+    recordedPrice: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressServiceHistoryCountAggregateOutputType = {
+    id: number
+    machineId: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressServiceHistoryAvgAggregateInputType = {
+    id?: true
+    machineId?: true
+    memberId?: true
+    branchId?: true
+    programId?: true
+    recordedPrice?: true
+  }
+
+  export type WashExpressServiceHistorySumAggregateInputType = {
+    id?: true
+    machineId?: true
+    memberId?: true
+    branchId?: true
+    programId?: true
+    recordedPrice?: true
+  }
+
+  export type WashExpressServiceHistoryMinAggregateInputType = {
+    id?: true
+    machineId?: true
+    memberId?: true
+    branchId?: true
+    programId?: true
+    recordedPrice?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressServiceHistoryMaxAggregateInputType = {
+    id?: true
+    machineId?: true
+    memberId?: true
+    branchId?: true
+    programId?: true
+    recordedPrice?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressServiceHistoryCountAggregateInputType = {
+    id?: true
+    machineId?: true
+    memberId?: true
+    branchId?: true
+    programId?: true
+    recordedPrice?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressServiceHistoryAggregateArgs = {
+    /**
+     * Filter which WashExpressServiceHistory to aggregate.
+     */
+    where?: WashExpressServiceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressServiceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressServiceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressServiceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressServiceHistories
+    **/
+    _count?: true | WashExpressServiceHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressServiceHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressServiceHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressServiceHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressServiceHistoryMaxAggregateInputType
+  }
+
+  export type GetWashExpressServiceHistoryAggregateType<T extends WashExpressServiceHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressServiceHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressServiceHistory[P]>
+      : GetScalarType<T[P], AggregateWashExpressServiceHistory[P]>
+  }
+
+
+
+
+  export type WashExpressServiceHistoryGroupByArgs = {
+    where?: WashExpressServiceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithAggregationInput>
+    by: WashExpressServiceHistoryScalarFieldEnum[]
+    having?: WashExpressServiceHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressServiceHistoryCountAggregateInputType | true
+    _avg?: WashExpressServiceHistoryAvgAggregateInputType
+    _sum?: WashExpressServiceHistorySumAggregateInputType
+    _min?: WashExpressServiceHistoryMinAggregateInputType
+    _max?: WashExpressServiceHistoryMaxAggregateInputType
+  }
+
+
+  export type WashExpressServiceHistoryGroupByOutputType = {
+    id: number
+    machineId: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressServiceHistoryCountAggregateOutputType | null
+    _avg: WashExpressServiceHistoryAvgAggregateOutputType | null
+    _sum: WashExpressServiceHistorySumAggregateOutputType | null
+    _min: WashExpressServiceHistoryMinAggregateOutputType | null
+    _max: WashExpressServiceHistoryMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressServiceHistoryGroupByPayload<T extends WashExpressServiceHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressServiceHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressServiceHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressServiceHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressServiceHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressServiceHistorySelect = {
+    id?: boolean
+    machine?: boolean | WashExpressMachineListArgs
+    machineId?: boolean
+    member?: boolean | WashExpressMemberArgs
+    memberId?: boolean
+    branch?: boolean | WashExpressBranchArgs
+    branchId?: boolean
+    program?: boolean | WashExpressMachineProgramArgs
+    programId?: boolean
+    recordedPrice?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type WashExpressServiceHistoryInclude = {
+    machine?: boolean | WashExpressMachineListArgs
+    member?: boolean | WashExpressMemberArgs
+    branch?: boolean | WashExpressBranchArgs
+    program?: boolean | WashExpressMachineProgramArgs
+  }
+
+  export type WashExpressServiceHistoryGetPayload<S extends boolean | null | undefined | WashExpressServiceHistoryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressServiceHistory :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressServiceHistoryArgs | WashExpressServiceHistoryFindManyArgs)
+    ? WashExpressServiceHistory  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'machine' ? WashExpressMachineListGetPayload<S['include'][P]> :
+        P extends 'member' ? WashExpressMemberGetPayload<S['include'][P]> :
+        P extends 'branch' ? WashExpressBranchGetPayload<S['include'][P]> :
+        P extends 'program' ? WashExpressMachineProgramGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressServiceHistoryArgs | WashExpressServiceHistoryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'machine' ? WashExpressMachineListGetPayload<S['select'][P]> :
+        P extends 'member' ? WashExpressMemberGetPayload<S['select'][P]> :
+        P extends 'branch' ? WashExpressBranchGetPayload<S['select'][P]> :
+        P extends 'program' ? WashExpressMachineProgramGetPayload<S['select'][P]> :  P extends keyof WashExpressServiceHistory ? WashExpressServiceHistory[P] : never
+  } 
+      : WashExpressServiceHistory
+
+
+  type WashExpressServiceHistoryCountArgs = 
+    Omit<WashExpressServiceHistoryFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressServiceHistoryCountAggregateInputType | true
+    }
+
+  export interface WashExpressServiceHistoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressServiceHistory that matches the filter.
+     * @param {WashExpressServiceHistoryFindUniqueArgs} args - Arguments to find a WashExpressServiceHistory
+     * @example
+     * // Get one WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressServiceHistoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressServiceHistoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressServiceHistory'> extends True ? Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>> : Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressServiceHistory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressServiceHistoryFindUniqueOrThrowArgs} args - Arguments to find a WashExpressServiceHistory
+     * @example
+     * // Get one WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressServiceHistoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressServiceHistoryFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Find the first WashExpressServiceHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryFindFirstArgs} args - Arguments to find a WashExpressServiceHistory
+     * @example
+     * // Get one WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressServiceHistoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressServiceHistoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressServiceHistory'> extends True ? Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>> : Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressServiceHistory that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryFindFirstOrThrowArgs} args - Arguments to find a WashExpressServiceHistory
+     * @example
+     * // Get one WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressServiceHistoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressServiceHistoryFindFirstOrThrowArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressServiceHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressServiceHistories
+     * const washExpressServiceHistories = await prisma.washExpressServiceHistory.findMany()
+     * 
+     * // Get first 10 WashExpressServiceHistories
+     * const washExpressServiceHistories = await prisma.washExpressServiceHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressServiceHistoryWithIdOnly = await prisma.washExpressServiceHistory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressServiceHistoryFindManyArgs>(
+      args?: SelectSubset<T, WashExpressServiceHistoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressServiceHistoryGetPayload<T>>>
+
+    /**
+     * Create a WashExpressServiceHistory.
+     * @param {WashExpressServiceHistoryCreateArgs} args - Arguments to create a WashExpressServiceHistory.
+     * @example
+     * // Create one WashExpressServiceHistory
+     * const WashExpressServiceHistory = await prisma.washExpressServiceHistory.create({
+     *   data: {
+     *     // ... data to create a WashExpressServiceHistory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressServiceHistoryCreateArgs>(
+      args: SelectSubset<T, WashExpressServiceHistoryCreateArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Create many WashExpressServiceHistories.
+     *     @param {WashExpressServiceHistoryCreateManyArgs} args - Arguments to create many WashExpressServiceHistories.
+     *     @example
+     *     // Create many WashExpressServiceHistories
+     *     const washExpressServiceHistory = await prisma.washExpressServiceHistory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressServiceHistoryCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressServiceHistoryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressServiceHistory.
+     * @param {WashExpressServiceHistoryDeleteArgs} args - Arguments to delete one WashExpressServiceHistory.
+     * @example
+     * // Delete one WashExpressServiceHistory
+     * const WashExpressServiceHistory = await prisma.washExpressServiceHistory.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressServiceHistory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressServiceHistoryDeleteArgs>(
+      args: SelectSubset<T, WashExpressServiceHistoryDeleteArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Update one WashExpressServiceHistory.
+     * @param {WashExpressServiceHistoryUpdateArgs} args - Arguments to update one WashExpressServiceHistory.
+     * @example
+     * // Update one WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressServiceHistoryUpdateArgs>(
+      args: SelectSubset<T, WashExpressServiceHistoryUpdateArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressServiceHistories.
+     * @param {WashExpressServiceHistoryDeleteManyArgs} args - Arguments to filter WashExpressServiceHistories to delete.
+     * @example
+     * // Delete a few WashExpressServiceHistories
+     * const { count } = await prisma.washExpressServiceHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressServiceHistoryDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressServiceHistoryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressServiceHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressServiceHistories
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressServiceHistoryUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressServiceHistoryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressServiceHistory.
+     * @param {WashExpressServiceHistoryUpsertArgs} args - Arguments to update or create a WashExpressServiceHistory.
+     * @example
+     * // Update or create a WashExpressServiceHistory
+     * const washExpressServiceHistory = await prisma.washExpressServiceHistory.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressServiceHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressServiceHistory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressServiceHistoryUpsertArgs>(
+      args: SelectSubset<T, WashExpressServiceHistoryUpsertArgs>
+    ): Prisma__WashExpressServiceHistoryClient<WashExpressServiceHistoryGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressServiceHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryCountArgs} args - Arguments to filter WashExpressServiceHistories to count.
+     * @example
+     * // Count the number of WashExpressServiceHistories
+     * const count = await prisma.washExpressServiceHistory.count({
+     *   where: {
+     *     // ... the filter for the WashExpressServiceHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressServiceHistoryCountArgs>(
+      args?: Subset<T, WashExpressServiceHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressServiceHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressServiceHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressServiceHistoryAggregateArgs>(args: Subset<T, WashExpressServiceHistoryAggregateArgs>): Prisma.PrismaPromise<GetWashExpressServiceHistoryAggregateType<T>>
+
+    /**
+     * Group by WashExpressServiceHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressServiceHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressServiceHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressServiceHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressServiceHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressServiceHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressServiceHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressServiceHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressServiceHistoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    machine<T extends WashExpressMachineListArgs= {}>(args?: Subset<T, WashExpressMachineListArgs>): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T> | Null>;
+
+    member<T extends WashExpressMemberArgs= {}>(args?: Subset<T, WashExpressMemberArgs>): Prisma__WashExpressMemberClient<WashExpressMemberGetPayload<T> | Null>;
+
+    branch<T extends WashExpressBranchArgs= {}>(args?: Subset<T, WashExpressBranchArgs>): Prisma__WashExpressBranchClient<WashExpressBranchGetPayload<T> | Null>;
+
+    program<T extends WashExpressMachineProgramArgs= {}>(args?: Subset<T, WashExpressMachineProgramArgs>): Prisma__WashExpressMachineProgramClient<WashExpressMachineProgramGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressServiceHistory base type for findUnique actions
+   */
+  export type WashExpressServiceHistoryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter, which WashExpressServiceHistory to fetch.
+     */
+    where: WashExpressServiceHistoryWhereUniqueInput
+  }
+
+  /**
+   * WashExpressServiceHistory findUnique
+   */
+  export interface WashExpressServiceHistoryFindUniqueArgs extends WashExpressServiceHistoryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressServiceHistory findUniqueOrThrow
+   */
+  export type WashExpressServiceHistoryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter, which WashExpressServiceHistory to fetch.
+     */
+    where: WashExpressServiceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressServiceHistory base type for findFirst actions
+   */
+  export type WashExpressServiceHistoryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter, which WashExpressServiceHistory to fetch.
+     */
+    where?: WashExpressServiceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressServiceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressServiceHistories.
+     */
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressServiceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressServiceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressServiceHistories.
+     */
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressServiceHistory findFirst
+   */
+  export interface WashExpressServiceHistoryFindFirstArgs extends WashExpressServiceHistoryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressServiceHistory findFirstOrThrow
+   */
+  export type WashExpressServiceHistoryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter, which WashExpressServiceHistory to fetch.
+     */
+    where?: WashExpressServiceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressServiceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressServiceHistories.
+     */
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressServiceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressServiceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressServiceHistories.
+     */
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressServiceHistory findMany
+   */
+  export type WashExpressServiceHistoryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter, which WashExpressServiceHistories to fetch.
+     */
+    where?: WashExpressServiceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressServiceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressServiceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressServiceHistories.
+     */
+    cursor?: WashExpressServiceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressServiceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressServiceHistories.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressServiceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressServiceHistory create
+   */
+  export type WashExpressServiceHistoryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * The data needed to create a WashExpressServiceHistory.
+     */
+    data: XOR<WashExpressServiceHistoryCreateInput, WashExpressServiceHistoryUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressServiceHistory createMany
+   */
+  export type WashExpressServiceHistoryCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressServiceHistories.
+     */
+    data: Enumerable<WashExpressServiceHistoryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressServiceHistory update
+   */
+  export type WashExpressServiceHistoryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * The data needed to update a WashExpressServiceHistory.
+     */
+    data: XOR<WashExpressServiceHistoryUpdateInput, WashExpressServiceHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressServiceHistory to update.
+     */
+    where: WashExpressServiceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressServiceHistory updateMany
+   */
+  export type WashExpressServiceHistoryUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressServiceHistories.
+     */
+    data: XOR<WashExpressServiceHistoryUpdateManyMutationInput, WashExpressServiceHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressServiceHistories to update
+     */
+    where?: WashExpressServiceHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressServiceHistory upsert
+   */
+  export type WashExpressServiceHistoryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * The filter to search for the WashExpressServiceHistory to update in case it exists.
+     */
+    where: WashExpressServiceHistoryWhereUniqueInput
+    /**
+     * In case the WashExpressServiceHistory found by the `where` argument doesn't exist, create a new WashExpressServiceHistory with this data.
+     */
+    create: XOR<WashExpressServiceHistoryCreateInput, WashExpressServiceHistoryUncheckedCreateInput>
+    /**
+     * In case the WashExpressServiceHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressServiceHistoryUpdateInput, WashExpressServiceHistoryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressServiceHistory delete
+   */
+  export type WashExpressServiceHistoryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+    /**
+     * Filter which WashExpressServiceHistory to delete.
+     */
+    where: WashExpressServiceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressServiceHistory deleteMany
+   */
+  export type WashExpressServiceHistoryDeleteManyArgs = {
+    /**
+     * Filter which WashExpressServiceHistories to delete
+     */
+    where?: WashExpressServiceHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressServiceHistory without action
+   */
+  export type WashExpressServiceHistoryArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressServiceHistory
+     */
+    select?: WashExpressServiceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressServiceHistoryInclude | null
+  }
+
+
+
+  /**
+   * Model WashExpressMaintenanceHistory
+   */
+
+
+  export type AggregateWashExpressMaintenanceHistory = {
+    _count: WashExpressMaintenanceHistoryCountAggregateOutputType | null
+    _avg: WashExpressMaintenanceHistoryAvgAggregateOutputType | null
+    _sum: WashExpressMaintenanceHistorySumAggregateOutputType | null
+    _min: WashExpressMaintenanceHistoryMinAggregateOutputType | null
+    _max: WashExpressMaintenanceHistoryMaxAggregateOutputType | null
+  }
+
+  export type WashExpressMaintenanceHistoryAvgAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    technicianId: number | null
+  }
+
+  export type WashExpressMaintenanceHistorySumAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    technicianId: number | null
+  }
+
+  export type WashExpressMaintenanceHistoryMinAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    technicianId: number | null
+    problem: string | null
+    startdate: Date | null
+    finishdate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMaintenanceHistoryMaxAggregateOutputType = {
+    id: number | null
+    machineId: number | null
+    technicianId: number | null
+    problem: string | null
+    startdate: Date | null
+    finishdate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashExpressMaintenanceHistoryCountAggregateOutputType = {
+    id: number
+    machineId: number
+    technicianId: number
+    problem: number
+    startdate: number
+    finishdate: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashExpressMaintenanceHistoryAvgAggregateInputType = {
+    id?: true
+    machineId?: true
+    technicianId?: true
+  }
+
+  export type WashExpressMaintenanceHistorySumAggregateInputType = {
+    id?: true
+    machineId?: true
+    technicianId?: true
+  }
+
+  export type WashExpressMaintenanceHistoryMinAggregateInputType = {
+    id?: true
+    machineId?: true
+    technicianId?: true
+    problem?: true
+    startdate?: true
+    finishdate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMaintenanceHistoryMaxAggregateInputType = {
+    id?: true
+    machineId?: true
+    technicianId?: true
+    problem?: true
+    startdate?: true
+    finishdate?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashExpressMaintenanceHistoryCountAggregateInputType = {
+    id?: true
+    machineId?: true
+    technicianId?: true
+    problem?: true
+    startdate?: true
+    finishdate?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashExpressMaintenanceHistoryAggregateArgs = {
+    /**
+     * Filter which WashExpressMaintenanceHistory to aggregate.
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMaintenanceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMaintenanceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMaintenanceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashExpressMaintenanceHistories
+    **/
+    _count?: true | WashExpressMaintenanceHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashExpressMaintenanceHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashExpressMaintenanceHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashExpressMaintenanceHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashExpressMaintenanceHistoryMaxAggregateInputType
+  }
+
+  export type GetWashExpressMaintenanceHistoryAggregateType<T extends WashExpressMaintenanceHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashExpressMaintenanceHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashExpressMaintenanceHistory[P]>
+      : GetScalarType<T[P], AggregateWashExpressMaintenanceHistory[P]>
+  }
+
+
+
+
+  export type WashExpressMaintenanceHistoryGroupByArgs = {
+    where?: WashExpressMaintenanceHistoryWhereInput
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithAggregationInput>
+    by: WashExpressMaintenanceHistoryScalarFieldEnum[]
+    having?: WashExpressMaintenanceHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashExpressMaintenanceHistoryCountAggregateInputType | true
+    _avg?: WashExpressMaintenanceHistoryAvgAggregateInputType
+    _sum?: WashExpressMaintenanceHistorySumAggregateInputType
+    _min?: WashExpressMaintenanceHistoryMinAggregateInputType
+    _max?: WashExpressMaintenanceHistoryMaxAggregateInputType
+  }
+
+
+  export type WashExpressMaintenanceHistoryGroupByOutputType = {
+    id: number
+    machineId: number
+    technicianId: number
+    problem: string
+    startdate: Date
+    finishdate: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: WashExpressMaintenanceHistoryCountAggregateOutputType | null
+    _avg: WashExpressMaintenanceHistoryAvgAggregateOutputType | null
+    _sum: WashExpressMaintenanceHistorySumAggregateOutputType | null
+    _min: WashExpressMaintenanceHistoryMinAggregateOutputType | null
+    _max: WashExpressMaintenanceHistoryMaxAggregateOutputType | null
+  }
+
+  type GetWashExpressMaintenanceHistoryGroupByPayload<T extends WashExpressMaintenanceHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashExpressMaintenanceHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashExpressMaintenanceHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashExpressMaintenanceHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], WashExpressMaintenanceHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashExpressMaintenanceHistorySelect = {
+    id?: boolean
+    machine?: boolean | WashExpressMachineListArgs
+    machineId?: boolean
+    technician?: boolean | WashExpressTechnicianArgs
+    technicianId?: boolean
+    problem?: boolean
+    startdate?: boolean
+    finishdate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type WashExpressMaintenanceHistoryInclude = {
+    machine?: boolean | WashExpressMachineListArgs
+    technician?: boolean | WashExpressTechnicianArgs
+  }
+
+  export type WashExpressMaintenanceHistoryGetPayload<S extends boolean | null | undefined | WashExpressMaintenanceHistoryArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashExpressMaintenanceHistory :
+    S extends undefined ? never :
+    S extends { include: any } & (WashExpressMaintenanceHistoryArgs | WashExpressMaintenanceHistoryFindManyArgs)
+    ? WashExpressMaintenanceHistory  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'machine' ? WashExpressMachineListGetPayload<S['include'][P]> :
+        P extends 'technician' ? WashExpressTechnicianGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashExpressMaintenanceHistoryArgs | WashExpressMaintenanceHistoryFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'machine' ? WashExpressMachineListGetPayload<S['select'][P]> :
+        P extends 'technician' ? WashExpressTechnicianGetPayload<S['select'][P]> :  P extends keyof WashExpressMaintenanceHistory ? WashExpressMaintenanceHistory[P] : never
+  } 
+      : WashExpressMaintenanceHistory
+
+
+  type WashExpressMaintenanceHistoryCountArgs = 
+    Omit<WashExpressMaintenanceHistoryFindManyArgs, 'select' | 'include'> & {
+      select?: WashExpressMaintenanceHistoryCountAggregateInputType | true
+    }
+
+  export interface WashExpressMaintenanceHistoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashExpressMaintenanceHistory that matches the filter.
+     * @param {WashExpressMaintenanceHistoryFindUniqueArgs} args - Arguments to find a WashExpressMaintenanceHistory
+     * @example
+     * // Get one WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashExpressMaintenanceHistoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashExpressMaintenanceHistory'> extends True ? Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>> : Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find one WashExpressMaintenanceHistory that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashExpressMaintenanceHistoryFindUniqueOrThrowArgs} args - Arguments to find a WashExpressMaintenanceHistory
+     * @example
+     * // Get one WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashExpressMaintenanceHistoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryFindUniqueOrThrowArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Find the first WashExpressMaintenanceHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryFindFirstArgs} args - Arguments to find a WashExpressMaintenanceHistory
+     * @example
+     * // Get one WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashExpressMaintenanceHistoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashExpressMaintenanceHistory'> extends True ? Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>> : Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashExpressMaintenanceHistory that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryFindFirstOrThrowArgs} args - Arguments to find a WashExpressMaintenanceHistory
+     * @example
+     * // Get one WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashExpressMaintenanceHistoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryFindFirstOrThrowArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Find zero or more WashExpressMaintenanceHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashExpressMaintenanceHistories
+     * const washExpressMaintenanceHistories = await prisma.washExpressMaintenanceHistory.findMany()
+     * 
+     * // Get first 10 WashExpressMaintenanceHistories
+     * const washExpressMaintenanceHistories = await prisma.washExpressMaintenanceHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washExpressMaintenanceHistoryWithIdOnly = await prisma.washExpressMaintenanceHistory.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashExpressMaintenanceHistoryFindManyArgs>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashExpressMaintenanceHistoryGetPayload<T>>>
+
+    /**
+     * Create a WashExpressMaintenanceHistory.
+     * @param {WashExpressMaintenanceHistoryCreateArgs} args - Arguments to create a WashExpressMaintenanceHistory.
+     * @example
+     * // Create one WashExpressMaintenanceHistory
+     * const WashExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.create({
+     *   data: {
+     *     // ... data to create a WashExpressMaintenanceHistory
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashExpressMaintenanceHistoryCreateArgs>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryCreateArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Create many WashExpressMaintenanceHistories.
+     *     @param {WashExpressMaintenanceHistoryCreateManyArgs} args - Arguments to create many WashExpressMaintenanceHistories.
+     *     @example
+     *     // Create many WashExpressMaintenanceHistories
+     *     const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashExpressMaintenanceHistoryCreateManyArgs>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashExpressMaintenanceHistory.
+     * @param {WashExpressMaintenanceHistoryDeleteArgs} args - Arguments to delete one WashExpressMaintenanceHistory.
+     * @example
+     * // Delete one WashExpressMaintenanceHistory
+     * const WashExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.delete({
+     *   where: {
+     *     // ... filter to delete one WashExpressMaintenanceHistory
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashExpressMaintenanceHistoryDeleteArgs>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryDeleteArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Update one WashExpressMaintenanceHistory.
+     * @param {WashExpressMaintenanceHistoryUpdateArgs} args - Arguments to update one WashExpressMaintenanceHistory.
+     * @example
+     * // Update one WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashExpressMaintenanceHistoryUpdateArgs>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryUpdateArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Delete zero or more WashExpressMaintenanceHistories.
+     * @param {WashExpressMaintenanceHistoryDeleteManyArgs} args - Arguments to filter WashExpressMaintenanceHistories to delete.
+     * @example
+     * // Delete a few WashExpressMaintenanceHistories
+     * const { count } = await prisma.washExpressMaintenanceHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashExpressMaintenanceHistoryDeleteManyArgs>(
+      args?: SelectSubset<T, WashExpressMaintenanceHistoryDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashExpressMaintenanceHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashExpressMaintenanceHistories
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashExpressMaintenanceHistoryUpdateManyArgs>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashExpressMaintenanceHistory.
+     * @param {WashExpressMaintenanceHistoryUpsertArgs} args - Arguments to update or create a WashExpressMaintenanceHistory.
+     * @example
+     * // Update or create a WashExpressMaintenanceHistory
+     * const washExpressMaintenanceHistory = await prisma.washExpressMaintenanceHistory.upsert({
+     *   create: {
+     *     // ... data to create a WashExpressMaintenanceHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashExpressMaintenanceHistory we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashExpressMaintenanceHistoryUpsertArgs>(
+      args: SelectSubset<T, WashExpressMaintenanceHistoryUpsertArgs>
+    ): Prisma__WashExpressMaintenanceHistoryClient<WashExpressMaintenanceHistoryGetPayload<T>>
+
+    /**
+     * Count the number of WashExpressMaintenanceHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryCountArgs} args - Arguments to filter WashExpressMaintenanceHistories to count.
+     * @example
+     * // Count the number of WashExpressMaintenanceHistories
+     * const count = await prisma.washExpressMaintenanceHistory.count({
+     *   where: {
+     *     // ... the filter for the WashExpressMaintenanceHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashExpressMaintenanceHistoryCountArgs>(
+      args?: Subset<T, WashExpressMaintenanceHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashExpressMaintenanceHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashExpressMaintenanceHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashExpressMaintenanceHistoryAggregateArgs>(args: Subset<T, WashExpressMaintenanceHistoryAggregateArgs>): Prisma.PrismaPromise<GetWashExpressMaintenanceHistoryAggregateType<T>>
+
+    /**
+     * Group by WashExpressMaintenanceHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashExpressMaintenanceHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashExpressMaintenanceHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashExpressMaintenanceHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: WashExpressMaintenanceHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashExpressMaintenanceHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashExpressMaintenanceHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashExpressMaintenanceHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashExpressMaintenanceHistoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    machine<T extends WashExpressMachineListArgs= {}>(args?: Subset<T, WashExpressMachineListArgs>): Prisma__WashExpressMachineListClient<WashExpressMachineListGetPayload<T> | Null>;
+
+    technician<T extends WashExpressTechnicianArgs= {}>(args?: Subset<T, WashExpressTechnicianArgs>): Prisma__WashExpressTechnicianClient<WashExpressTechnicianGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashExpressMaintenanceHistory base type for findUnique actions
+   */
+  export type WashExpressMaintenanceHistoryFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter, which WashExpressMaintenanceHistory to fetch.
+     */
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+  }
+
+  /**
+   * WashExpressMaintenanceHistory findUnique
+   */
+  export interface WashExpressMaintenanceHistoryFindUniqueArgs extends WashExpressMaintenanceHistoryFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMaintenanceHistory findUniqueOrThrow
+   */
+  export type WashExpressMaintenanceHistoryFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter, which WashExpressMaintenanceHistory to fetch.
+     */
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory base type for findFirst actions
+   */
+  export type WashExpressMaintenanceHistoryFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter, which WashExpressMaintenanceHistory to fetch.
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMaintenanceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMaintenanceHistories.
+     */
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMaintenanceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMaintenanceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMaintenanceHistories.
+     */
+    distinct?: Enumerable<WashExpressMaintenanceHistoryScalarFieldEnum>
+  }
+
+  /**
+   * WashExpressMaintenanceHistory findFirst
+   */
+  export interface WashExpressMaintenanceHistoryFindFirstArgs extends WashExpressMaintenanceHistoryFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashExpressMaintenanceHistory findFirstOrThrow
+   */
+  export type WashExpressMaintenanceHistoryFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter, which WashExpressMaintenanceHistory to fetch.
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMaintenanceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashExpressMaintenanceHistories.
+     */
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMaintenanceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMaintenanceHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashExpressMaintenanceHistories.
+     */
+    distinct?: Enumerable<WashExpressMaintenanceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory findMany
+   */
+  export type WashExpressMaintenanceHistoryFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter, which WashExpressMaintenanceHistories to fetch.
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashExpressMaintenanceHistories to fetch.
+     */
+    orderBy?: Enumerable<WashExpressMaintenanceHistoryOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashExpressMaintenanceHistories.
+     */
+    cursor?: WashExpressMaintenanceHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashExpressMaintenanceHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashExpressMaintenanceHistories.
+     */
+    skip?: number
+    distinct?: Enumerable<WashExpressMaintenanceHistoryScalarFieldEnum>
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory create
+   */
+  export type WashExpressMaintenanceHistoryCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * The data needed to create a WashExpressMaintenanceHistory.
+     */
+    data: XOR<WashExpressMaintenanceHistoryCreateInput, WashExpressMaintenanceHistoryUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory createMany
+   */
+  export type WashExpressMaintenanceHistoryCreateManyArgs = {
+    /**
+     * The data used to create many WashExpressMaintenanceHistories.
+     */
+    data: Enumerable<WashExpressMaintenanceHistoryCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory update
+   */
+  export type WashExpressMaintenanceHistoryUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * The data needed to update a WashExpressMaintenanceHistory.
+     */
+    data: XOR<WashExpressMaintenanceHistoryUpdateInput, WashExpressMaintenanceHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which WashExpressMaintenanceHistory to update.
+     */
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory updateMany
+   */
+  export type WashExpressMaintenanceHistoryUpdateManyArgs = {
+    /**
+     * The data used to update WashExpressMaintenanceHistories.
+     */
+    data: XOR<WashExpressMaintenanceHistoryUpdateManyMutationInput, WashExpressMaintenanceHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which WashExpressMaintenanceHistories to update
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory upsert
+   */
+  export type WashExpressMaintenanceHistoryUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * The filter to search for the WashExpressMaintenanceHistory to update in case it exists.
+     */
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    /**
+     * In case the WashExpressMaintenanceHistory found by the `where` argument doesn't exist, create a new WashExpressMaintenanceHistory with this data.
+     */
+    create: XOR<WashExpressMaintenanceHistoryCreateInput, WashExpressMaintenanceHistoryUncheckedCreateInput>
+    /**
+     * In case the WashExpressMaintenanceHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashExpressMaintenanceHistoryUpdateInput, WashExpressMaintenanceHistoryUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory delete
+   */
+  export type WashExpressMaintenanceHistoryDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
+    /**
+     * Filter which WashExpressMaintenanceHistory to delete.
+     */
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory deleteMany
+   */
+  export type WashExpressMaintenanceHistoryDeleteManyArgs = {
+    /**
+     * Filter which WashExpressMaintenanceHistories to delete
+     */
+    where?: WashExpressMaintenanceHistoryWhereInput
+  }
+
+
+  /**
+   * WashExpressMaintenanceHistory without action
+   */
+  export type WashExpressMaintenanceHistoryArgs = {
+    /**
+     * Select specific fields to fetch from the WashExpressMaintenanceHistory
+     */
+    select?: WashExpressMaintenanceHistorySelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashExpressMaintenanceHistoryInclude | null
   }
 
 
@@ -44969,6 +56771,136 @@ export namespace Prisma {
   export type TwitterUserScalarFieldEnum = (typeof TwitterUserScalarFieldEnum)[keyof typeof TwitterUserScalarFieldEnum]
 
 
+  export const WashExpressBranchScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    ownerId: 'ownerId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressBranchScalarFieldEnum = (typeof WashExpressBranchScalarFieldEnum)[keyof typeof WashExpressBranchScalarFieldEnum]
+
+
+  export const WashExpressMachineBrandScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMachineBrandScalarFieldEnum = (typeof WashExpressMachineBrandScalarFieldEnum)[keyof typeof WashExpressMachineBrandScalarFieldEnum]
+
+
+  export const WashExpressMachineListScalarFieldEnum: {
+    id: 'id',
+    brandId: 'brandId',
+    typeId: 'typeId',
+    branchId: 'branchId',
+    installDate: 'installDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMachineListScalarFieldEnum = (typeof WashExpressMachineListScalarFieldEnum)[keyof typeof WashExpressMachineListScalarFieldEnum]
+
+
+  export const WashExpressMachineProgramScalarFieldEnum: {
+    id: 'id',
+    typeId: 'typeId',
+    name: 'name',
+    timeMinites: 'timeMinites',
+    priceBath: 'priceBath',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMachineProgramScalarFieldEnum = (typeof WashExpressMachineProgramScalarFieldEnum)[keyof typeof WashExpressMachineProgramScalarFieldEnum]
+
+
+  export const WashExpressMachineTypeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMachineTypeScalarFieldEnum = (typeof WashExpressMachineTypeScalarFieldEnum)[keyof typeof WashExpressMachineTypeScalarFieldEnum]
+
+
+  export const WashExpressMaintenanceHistoryScalarFieldEnum: {
+    id: 'id',
+    machineId: 'machineId',
+    technicianId: 'technicianId',
+    problem: 'problem',
+    startdate: 'startdate',
+    finishdate: 'finishdate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMaintenanceHistoryScalarFieldEnum = (typeof WashExpressMaintenanceHistoryScalarFieldEnum)[keyof typeof WashExpressMaintenanceHistoryScalarFieldEnum]
+
+
+  export const WashExpressMemberScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    call: 'call',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressMemberScalarFieldEnum = (typeof WashExpressMemberScalarFieldEnum)[keyof typeof WashExpressMemberScalarFieldEnum]
+
+
+  export const WashExpressOwnerScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    call: 'call',
+    location: 'location',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressOwnerScalarFieldEnum = (typeof WashExpressOwnerScalarFieldEnum)[keyof typeof WashExpressOwnerScalarFieldEnum]
+
+
+  export const WashExpressServiceHistoryScalarFieldEnum: {
+    id: 'id',
+    machineId: 'machineId',
+    memberId: 'memberId',
+    branchId: 'branchId',
+    programId: 'programId',
+    recordedPrice: 'recordedPrice',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressServiceHistoryScalarFieldEnum = (typeof WashExpressServiceHistoryScalarFieldEnum)[keyof typeof WashExpressServiceHistoryScalarFieldEnum]
+
+
+  export const WashExpressTechnicianScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    call: 'call',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressTechnicianScalarFieldEnum = (typeof WashExpressTechnicianScalarFieldEnum)[keyof typeof WashExpressTechnicianScalarFieldEnum]
+
+
+  export const WashExpressTopupHistoryScalarFieldEnum: {
+    id: 'id',
+    memberId: 'memberId',
+    topupAmount: 'topupAmount',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashExpressTopupHistoryScalarFieldEnum = (typeof WashExpressTopupHistoryScalarFieldEnum)[keyof typeof WashExpressTopupHistoryScalarFieldEnum]
+
+
   export const YoutubeChanelPermissionScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -45954,6 +57886,619 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter | string
     directFromId?: IntWithAggregatesFilter | number
     directToId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressOwnerWhereInput = {
+    AND?: Enumerable<WashExpressOwnerWhereInput>
+    OR?: Enumerable<WashExpressOwnerWhereInput>
+    NOT?: Enumerable<WashExpressOwnerWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    call?: StringFilter | string
+    location?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    branchs?: WashExpressBranchListRelationFilter
+  }
+
+  export type WashExpressOwnerOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    branchs?: WashExpressBranchOrderByRelationAggregateInput
+  }
+
+  export type WashExpressOwnerWhereUniqueInput = {
+    id?: number
+    name?: string
+    call?: string
+    location?: string
+  }
+
+  export type WashExpressOwnerOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressOwnerCountOrderByAggregateInput
+    _avg?: WashExpressOwnerAvgOrderByAggregateInput
+    _max?: WashExpressOwnerMaxOrderByAggregateInput
+    _min?: WashExpressOwnerMinOrderByAggregateInput
+    _sum?: WashExpressOwnerSumOrderByAggregateInput
+  }
+
+  export type WashExpressOwnerScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressOwnerScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressOwnerScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressOwnerScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    call?: StringWithAggregatesFilter | string
+    location?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMemberWhereInput = {
+    AND?: Enumerable<WashExpressMemberWhereInput>
+    OR?: Enumerable<WashExpressMemberWhereInput>
+    NOT?: Enumerable<WashExpressMemberWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    call?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    topupHistories?: WashExpressTopupHistoryListRelationFilter
+    serviceHistories?: WashExpressServiceHistoryListRelationFilter
+  }
+
+  export type WashExpressMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    topupHistories?: WashExpressTopupHistoryOrderByRelationAggregateInput
+    serviceHistories?: WashExpressServiceHistoryOrderByRelationAggregateInput
+  }
+
+  export type WashExpressMemberWhereUniqueInput = {
+    id?: number
+    name?: string
+    call?: string
+  }
+
+  export type WashExpressMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMemberCountOrderByAggregateInput
+    _avg?: WashExpressMemberAvgOrderByAggregateInput
+    _max?: WashExpressMemberMaxOrderByAggregateInput
+    _min?: WashExpressMemberMinOrderByAggregateInput
+    _sum?: WashExpressMemberSumOrderByAggregateInput
+  }
+
+  export type WashExpressMemberScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMemberScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMemberScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMemberScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    call?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressTopupHistoryWhereInput = {
+    AND?: Enumerable<WashExpressTopupHistoryWhereInput>
+    OR?: Enumerable<WashExpressTopupHistoryWhereInput>
+    NOT?: Enumerable<WashExpressTopupHistoryWhereInput>
+    id?: IntFilter | number
+    member?: XOR<WashExpressMemberRelationFilter, WashExpressMemberWhereInput>
+    memberId?: IntFilter | number
+    topupAmount?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressTopupHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    member?: WashExpressMemberOrderByWithRelationInput
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTopupHistoryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressTopupHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressTopupHistoryCountOrderByAggregateInput
+    _avg?: WashExpressTopupHistoryAvgOrderByAggregateInput
+    _max?: WashExpressTopupHistoryMaxOrderByAggregateInput
+    _min?: WashExpressTopupHistoryMinOrderByAggregateInput
+    _sum?: WashExpressTopupHistorySumOrderByAggregateInput
+  }
+
+  export type WashExpressTopupHistoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressTopupHistoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressTopupHistoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressTopupHistoryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    memberId?: IntWithAggregatesFilter | number
+    topupAmount?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressTechnicianWhereInput = {
+    AND?: Enumerable<WashExpressTechnicianWhereInput>
+    OR?: Enumerable<WashExpressTechnicianWhereInput>
+    NOT?: Enumerable<WashExpressTechnicianWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    call?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    maintenanceHistories?: WashExpressMaintenanceHistoryListRelationFilter
+  }
+
+  export type WashExpressTechnicianOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    maintenanceHistories?: WashExpressMaintenanceHistoryOrderByRelationAggregateInput
+  }
+
+  export type WashExpressTechnicianWhereUniqueInput = {
+    id?: number
+    name?: string
+    call?: string
+  }
+
+  export type WashExpressTechnicianOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressTechnicianCountOrderByAggregateInput
+    _avg?: WashExpressTechnicianAvgOrderByAggregateInput
+    _max?: WashExpressTechnicianMaxOrderByAggregateInput
+    _min?: WashExpressTechnicianMinOrderByAggregateInput
+    _sum?: WashExpressTechnicianSumOrderByAggregateInput
+  }
+
+  export type WashExpressTechnicianScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressTechnicianScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressTechnicianScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressTechnicianScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    call?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressBranchWhereInput = {
+    AND?: Enumerable<WashExpressBranchWhereInput>
+    OR?: Enumerable<WashExpressBranchWhereInput>
+    NOT?: Enumerable<WashExpressBranchWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    owner?: XOR<WashExpressOwnerRelationFilter, WashExpressOwnerWhereInput>
+    ownerId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    machineLists?: WashExpressMachineListListRelationFilter
+    serviceHistories?: WashExpressServiceHistoryListRelationFilter
+  }
+
+  export type WashExpressBranchOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    owner?: WashExpressOwnerOrderByWithRelationInput
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    machineLists?: WashExpressMachineListOrderByRelationAggregateInput
+    serviceHistories?: WashExpressServiceHistoryOrderByRelationAggregateInput
+  }
+
+  export type WashExpressBranchWhereUniqueInput = {
+    id?: number
+    name?: string
+  }
+
+  export type WashExpressBranchOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressBranchCountOrderByAggregateInput
+    _avg?: WashExpressBranchAvgOrderByAggregateInput
+    _max?: WashExpressBranchMaxOrderByAggregateInput
+    _min?: WashExpressBranchMinOrderByAggregateInput
+    _sum?: WashExpressBranchSumOrderByAggregateInput
+  }
+
+  export type WashExpressBranchScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressBranchScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressBranchScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressBranchScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    ownerId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMachineBrandWhereInput = {
+    AND?: Enumerable<WashExpressMachineBrandWhereInput>
+    OR?: Enumerable<WashExpressMachineBrandWhereInput>
+    NOT?: Enumerable<WashExpressMachineBrandWhereInput>
+    id?: IntFilter | number
+    name?: EnumvenderListFilter | venderList
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    machineLists?: WashExpressMachineListListRelationFilter
+  }
+
+  export type WashExpressMachineBrandOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    machineLists?: WashExpressMachineListOrderByRelationAggregateInput
+  }
+
+  export type WashExpressMachineBrandWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressMachineBrandOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMachineBrandCountOrderByAggregateInput
+    _avg?: WashExpressMachineBrandAvgOrderByAggregateInput
+    _max?: WashExpressMachineBrandMaxOrderByAggregateInput
+    _min?: WashExpressMachineBrandMinOrderByAggregateInput
+    _sum?: WashExpressMachineBrandSumOrderByAggregateInput
+  }
+
+  export type WashExpressMachineBrandScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMachineBrandScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMachineBrandScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMachineBrandScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: EnumvenderListWithAggregatesFilter | venderList
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMachineTypeWhereInput = {
+    AND?: Enumerable<WashExpressMachineTypeWhereInput>
+    OR?: Enumerable<WashExpressMachineTypeWhereInput>
+    NOT?: Enumerable<WashExpressMachineTypeWhereInput>
+    id?: IntFilter | number
+    name?: EnummachineTypeFilter | machineType
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    machinePrograms?: WashExpressMachineProgramListRelationFilter
+    machineLists?: WashExpressMachineListListRelationFilter
+  }
+
+  export type WashExpressMachineTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    machinePrograms?: WashExpressMachineProgramOrderByRelationAggregateInput
+    machineLists?: WashExpressMachineListOrderByRelationAggregateInput
+  }
+
+  export type WashExpressMachineTypeWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressMachineTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMachineTypeCountOrderByAggregateInput
+    _avg?: WashExpressMachineTypeAvgOrderByAggregateInput
+    _max?: WashExpressMachineTypeMaxOrderByAggregateInput
+    _min?: WashExpressMachineTypeMinOrderByAggregateInput
+    _sum?: WashExpressMachineTypeSumOrderByAggregateInput
+  }
+
+  export type WashExpressMachineTypeScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMachineTypeScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMachineTypeScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMachineTypeScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: EnummachineTypeWithAggregatesFilter | machineType
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMachineProgramWhereInput = {
+    AND?: Enumerable<WashExpressMachineProgramWhereInput>
+    OR?: Enumerable<WashExpressMachineProgramWhereInput>
+    NOT?: Enumerable<WashExpressMachineProgramWhereInput>
+    id?: IntFilter | number
+    type?: XOR<WashExpressMachineTypeRelationFilter, WashExpressMachineTypeWhereInput>
+    typeId?: IntFilter | number
+    name?: EnummachineTypeFilter | machineType
+    timeMinites?: IntFilter | number
+    priceBath?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    machineLists?: WashExpressMachineListListRelationFilter
+    serviceHistories?: WashExpressServiceHistoryListRelationFilter
+  }
+
+  export type WashExpressMachineProgramOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: WashExpressMachineTypeOrderByWithRelationInput
+    typeId?: SortOrder
+    name?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    machineLists?: WashExpressMachineListOrderByRelationAggregateInput
+    serviceHistories?: WashExpressServiceHistoryOrderByRelationAggregateInput
+  }
+
+  export type WashExpressMachineProgramWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressMachineProgramOrderByWithAggregationInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    name?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMachineProgramCountOrderByAggregateInput
+    _avg?: WashExpressMachineProgramAvgOrderByAggregateInput
+    _max?: WashExpressMachineProgramMaxOrderByAggregateInput
+    _min?: WashExpressMachineProgramMinOrderByAggregateInput
+    _sum?: WashExpressMachineProgramSumOrderByAggregateInput
+  }
+
+  export type WashExpressMachineProgramScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMachineProgramScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMachineProgramScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMachineProgramScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    typeId?: IntWithAggregatesFilter | number
+    name?: EnummachineTypeWithAggregatesFilter | machineType
+    timeMinites?: IntWithAggregatesFilter | number
+    priceBath?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMachineListWhereInput = {
+    AND?: Enumerable<WashExpressMachineListWhereInput>
+    OR?: Enumerable<WashExpressMachineListWhereInput>
+    NOT?: Enumerable<WashExpressMachineListWhereInput>
+    id?: IntFilter | number
+    brand?: XOR<WashExpressMachineBrandRelationFilter, WashExpressMachineBrandWhereInput>
+    brandId?: IntFilter | number
+    type?: XOR<WashExpressMachineTypeRelationFilter, WashExpressMachineTypeWhereInput>
+    typeId?: IntFilter | number
+    branch?: XOR<WashExpressBranchRelationFilter, WashExpressBranchWhereInput>
+    branchId?: IntFilter | number
+    programs?: WashExpressMachineProgramListRelationFilter
+    installDate?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    serviceHistories?: WashExpressServiceHistoryListRelationFilter
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryListRelationFilter
+  }
+
+  export type WashExpressMachineListOrderByWithRelationInput = {
+    id?: SortOrder
+    brand?: WashExpressMachineBrandOrderByWithRelationInput
+    brandId?: SortOrder
+    type?: WashExpressMachineTypeOrderByWithRelationInput
+    typeId?: SortOrder
+    branch?: WashExpressBranchOrderByWithRelationInput
+    branchId?: SortOrder
+    programs?: WashExpressMachineProgramOrderByRelationAggregateInput
+    installDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    serviceHistories?: WashExpressServiceHistoryOrderByRelationAggregateInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryOrderByRelationAggregateInput
+  }
+
+  export type WashExpressMachineListWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressMachineListOrderByWithAggregationInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+    installDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMachineListCountOrderByAggregateInput
+    _avg?: WashExpressMachineListAvgOrderByAggregateInput
+    _max?: WashExpressMachineListMaxOrderByAggregateInput
+    _min?: WashExpressMachineListMinOrderByAggregateInput
+    _sum?: WashExpressMachineListSumOrderByAggregateInput
+  }
+
+  export type WashExpressMachineListScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMachineListScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMachineListScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMachineListScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    brandId?: IntWithAggregatesFilter | number
+    typeId?: IntWithAggregatesFilter | number
+    branchId?: IntWithAggregatesFilter | number
+    installDate?: DateTimeWithAggregatesFilter | Date | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressServiceHistoryWhereInput = {
+    AND?: Enumerable<WashExpressServiceHistoryWhereInput>
+    OR?: Enumerable<WashExpressServiceHistoryWhereInput>
+    NOT?: Enumerable<WashExpressServiceHistoryWhereInput>
+    id?: IntFilter | number
+    machine?: XOR<WashExpressMachineListRelationFilter, WashExpressMachineListWhereInput>
+    machineId?: IntFilter | number
+    member?: XOR<WashExpressMemberRelationFilter, WashExpressMemberWhereInput>
+    memberId?: IntFilter | number
+    branch?: XOR<WashExpressBranchRelationFilter, WashExpressBranchWhereInput>
+    branchId?: IntFilter | number
+    program?: XOR<WashExpressMachineProgramRelationFilter, WashExpressMachineProgramWhereInput>
+    programId?: IntFilter | number
+    recordedPrice?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressServiceHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    machine?: WashExpressMachineListOrderByWithRelationInput
+    machineId?: SortOrder
+    member?: WashExpressMemberOrderByWithRelationInput
+    memberId?: SortOrder
+    branch?: WashExpressBranchOrderByWithRelationInput
+    branchId?: SortOrder
+    program?: WashExpressMachineProgramOrderByWithRelationInput
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressServiceHistoryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressServiceHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressServiceHistoryCountOrderByAggregateInput
+    _avg?: WashExpressServiceHistoryAvgOrderByAggregateInput
+    _max?: WashExpressServiceHistoryMaxOrderByAggregateInput
+    _min?: WashExpressServiceHistoryMinOrderByAggregateInput
+    _sum?: WashExpressServiceHistorySumOrderByAggregateInput
+  }
+
+  export type WashExpressServiceHistoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressServiceHistoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressServiceHistoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressServiceHistoryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    machineId?: IntWithAggregatesFilter | number
+    memberId?: IntWithAggregatesFilter | number
+    branchId?: IntWithAggregatesFilter | number
+    programId?: IntWithAggregatesFilter | number
+    recordedPrice?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryWhereInput = {
+    AND?: Enumerable<WashExpressMaintenanceHistoryWhereInput>
+    OR?: Enumerable<WashExpressMaintenanceHistoryWhereInput>
+    NOT?: Enumerable<WashExpressMaintenanceHistoryWhereInput>
+    id?: IntFilter | number
+    machine?: XOR<WashExpressMachineListRelationFilter, WashExpressMachineListWhereInput>
+    machineId?: IntFilter | number
+    technician?: XOR<WashExpressTechnicianRelationFilter, WashExpressTechnicianWhereInput>
+    technicianId?: IntFilter | number
+    problem?: StringFilter | string
+    startdate?: DateTimeFilter | Date | string
+    finishdate?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    machine?: WashExpressMachineListOrderByWithRelationInput
+    machineId?: SortOrder
+    technician?: WashExpressTechnicianOrderByWithRelationInput
+    technicianId?: SortOrder
+    problem?: SortOrder
+    startdate?: SortOrder
+    finishdate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistoryWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashExpressMaintenanceHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+    problem?: SortOrder
+    startdate?: SortOrder
+    finishdate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashExpressMaintenanceHistoryCountOrderByAggregateInput
+    _avg?: WashExpressMaintenanceHistoryAvgOrderByAggregateInput
+    _max?: WashExpressMaintenanceHistoryMaxOrderByAggregateInput
+    _min?: WashExpressMaintenanceHistoryMinOrderByAggregateInput
+    _sum?: WashExpressMaintenanceHistorySumOrderByAggregateInput
+  }
+
+  export type WashExpressMaintenanceHistoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashExpressMaintenanceHistoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashExpressMaintenanceHistoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashExpressMaintenanceHistoryScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    machineId?: IntWithAggregatesFilter | number
+    technicianId?: IntWithAggregatesFilter | number
+    problem?: StringWithAggregatesFilter | string
+    startdate?: DateTimeWithAggregatesFilter | Date | string
+    finishdate?: DateTimeWithAggregatesFilter | Date | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -48334,6 +60879,696 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     directFromId?: IntFieldUpdateOperationsInput | number
     directToId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressOwnerCreateInput = {
+    name: string
+    call: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branchs?: WashExpressBranchCreateNestedManyWithoutOwnerInput
+  }
+
+  export type WashExpressOwnerUncheckedCreateInput = {
+    id?: number
+    name: string
+    call: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branchs?: WashExpressBranchUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type WashExpressOwnerUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchs?: WashExpressBranchUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type WashExpressOwnerUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchs?: WashExpressBranchUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type WashExpressOwnerCreateManyInput = {
+    id?: number
+    name: string
+    call: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressOwnerUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressOwnerUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMemberCreateInput = {
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    topupHistories?: WashExpressTopupHistoryCreateNestedManyWithoutMemberInput
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberUncheckedCreateInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    topupHistories?: WashExpressTopupHistoryUncheckedCreateNestedManyWithoutMemberInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    topupHistories?: WashExpressTopupHistoryUpdateManyWithoutMemberNestedInput
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressMemberUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    topupHistories?: WashExpressTopupHistoryUncheckedUpdateManyWithoutMemberNestedInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressMemberCreateManyInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMemberUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMemberUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryCreateInput = {
+    member: WashExpressMemberCreateNestedOneWithoutTopupHistoriesInput
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedCreateInput = {
+    id?: number
+    memberId: number
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryUpdateInput = {
+    member?: WashExpressMemberUpdateOneRequiredWithoutTopupHistoriesNestedInput
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryCreateManyInput = {
+    id?: number
+    memberId: number
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryUpdateManyMutationInput = {
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTechnicianCreateInput = {
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    maintenanceHistories?: WashExpressMaintenanceHistoryCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type WashExpressTechnicianUncheckedCreateInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    maintenanceHistories?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutTechnicianInput
+  }
+
+  export type WashExpressTechnicianUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    maintenanceHistories?: WashExpressMaintenanceHistoryUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type WashExpressTechnicianUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    maintenanceHistories?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutTechnicianNestedInput
+  }
+
+  export type WashExpressTechnicianCreateManyInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTechnicianUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTechnicianUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressBranchCreateInput = {
+    name: string
+    owner: WashExpressOwnerCreateNestedOneWithoutBranchsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutBranchInput
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchUncheckedCreateInput = {
+    id?: number
+    name: string
+    ownerId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutBranchInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owner?: WashExpressOwnerUpdateOneRequiredWithoutBranchsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutBranchNestedInput
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutBranchNestedInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchCreateManyInput = {
+    id?: number
+    name: string
+    ownerId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressBranchUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressBranchUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineBrandCreateInput = {
+    name: venderList
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutBrandInput
+  }
+
+  export type WashExpressMachineBrandUncheckedCreateInput = {
+    id?: number
+    name: venderList
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutBrandInput
+  }
+
+  export type WashExpressMachineBrandUpdateInput = {
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutBrandNestedInput
+  }
+
+  export type WashExpressMachineBrandUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutBrandNestedInput
+  }
+
+  export type WashExpressMachineBrandCreateManyInput = {
+    id?: number
+    name: venderList
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineBrandUpdateManyMutationInput = {
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineBrandUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineTypeCreateInput = {
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machinePrograms?: WashExpressMachineProgramCreateNestedManyWithoutTypeInput
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeUncheckedCreateInput = {
+    id?: number
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machinePrograms?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutTypeInput
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeUpdateInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machinePrograms?: WashExpressMachineProgramUpdateManyWithoutTypeNestedInput
+    machineLists?: WashExpressMachineListUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressMachineTypeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machinePrograms?: WashExpressMachineProgramUncheckedUpdateManyWithoutTypeNestedInput
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressMachineTypeCreateManyInput = {
+    id?: number
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineTypeUpdateManyMutationInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineTypeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineProgramCreateInput = {
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineProgramsInput
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutProgramsInput
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateInput = {
+    id?: number
+    typeId: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutProgramsInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramUpdateInput = {
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineProgramsNestedInput
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutProgramsNestedInput
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutProgramsNestedInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramCreateManyInput = {
+    id?: number
+    typeId: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineProgramUpdateManyMutationInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListCreateInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    branchId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUpdateInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListCreateManyInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    branchId: number
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineListUpdateManyMutationInput = {
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutServiceHistoriesInput
+    member: WashExpressMemberCreateNestedOneWithoutServiceHistoriesInput
+    branch: WashExpressBranchCreateNestedOneWithoutServiceHistoriesInput
+    program: WashExpressMachineProgramCreateNestedOneWithoutServiceHistoriesInput
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUpdateInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    member?: WashExpressMemberUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    program?: WashExpressMachineProgramUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateManyInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUpdateManyMutationInput = {
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutWashExpressMaintenanceHistoryInput
+    technician: WashExpressTechnicianCreateNestedOneWithoutMaintenanceHistoriesInput
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedCreateInput = {
+    id?: number
+    machineId: number
+    technicianId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutWashExpressMaintenanceHistoryNestedInput
+    technician?: WashExpressTechnicianUpdateOneRequiredWithoutMaintenanceHistoriesNestedInput
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    technicianId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateManyInput = {
+    id?: number
+    machineId: number
+    technicianId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateManyMutationInput = {
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    technicianId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50864,6 +64099,551 @@ export namespace Prisma {
     directToId?: SortOrder
   }
 
+  export type WashExpressBranchListRelationFilter = {
+    every?: WashExpressBranchWhereInput
+    some?: WashExpressBranchWhereInput
+    none?: WashExpressBranchWhereInput
+  }
+
+  export type WashExpressBranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressOwnerCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressOwnerAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressOwnerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressOwnerMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    location?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressOwnerSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressTopupHistoryListRelationFilter = {
+    every?: WashExpressTopupHistoryWhereInput
+    some?: WashExpressTopupHistoryWhereInput
+    none?: WashExpressTopupHistoryWhereInput
+  }
+
+  export type WashExpressServiceHistoryListRelationFilter = {
+    every?: WashExpressServiceHistoryWhereInput
+    some?: WashExpressServiceHistoryWhereInput
+    none?: WashExpressServiceHistoryWhereInput
+  }
+
+  export type WashExpressTopupHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressServiceHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMemberAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMemberSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressMemberRelationFilter = {
+    is?: WashExpressMemberWhereInput
+    isNot?: WashExpressMemberWhereInput
+  }
+
+  export type WashExpressTopupHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTopupHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+  }
+
+  export type WashExpressTopupHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTopupHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTopupHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    memberId?: SortOrder
+    topupAmount?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistoryListRelationFilter = {
+    every?: WashExpressMaintenanceHistoryWhereInput
+    some?: WashExpressMaintenanceHistoryWhereInput
+    none?: WashExpressMaintenanceHistoryWhereInput
+  }
+
+  export type WashExpressMaintenanceHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressTechnicianCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTechnicianAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressTechnicianMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTechnicianMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    call?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressTechnicianSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressOwnerRelationFilter = {
+    is?: WashExpressOwnerWhereInput
+    isNot?: WashExpressOwnerWhereInput
+  }
+
+  export type WashExpressMachineListListRelationFilter = {
+    every?: WashExpressMachineListWhereInput
+    some?: WashExpressMachineListWhereInput
+    none?: WashExpressMachineListWhereInput
+  }
+
+  export type WashExpressMachineListOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressBranchCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressBranchAvgOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type WashExpressBranchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressBranchMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    ownerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressBranchSumOrderByAggregateInput = {
+    id?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type EnumvenderListFilter = {
+    equals?: venderList
+    in?: Enumerable<venderList>
+    notIn?: Enumerable<venderList>
+    not?: NestedEnumvenderListFilter | venderList
+  }
+
+  export type WashExpressMachineBrandCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineBrandAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressMachineBrandMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineBrandMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineBrandSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumvenderListWithAggregatesFilter = {
+    equals?: venderList
+    in?: Enumerable<venderList>
+    notIn?: Enumerable<venderList>
+    not?: NestedEnumvenderListWithAggregatesFilter | venderList
+    _count?: NestedIntFilter
+    _min?: NestedEnumvenderListFilter
+    _max?: NestedEnumvenderListFilter
+  }
+
+  export type EnummachineTypeFilter = {
+    equals?: machineType
+    in?: Enumerable<machineType>
+    notIn?: Enumerable<machineType>
+    not?: NestedEnummachineTypeFilter | machineType
+  }
+
+  export type WashExpressMachineProgramListRelationFilter = {
+    every?: WashExpressMachineProgramWhereInput
+    some?: WashExpressMachineProgramWhereInput
+    none?: WashExpressMachineProgramWhereInput
+  }
+
+  export type WashExpressMachineProgramOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashExpressMachineTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineTypeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type WashExpressMachineTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineTypeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnummachineTypeWithAggregatesFilter = {
+    equals?: machineType
+    in?: Enumerable<machineType>
+    notIn?: Enumerable<machineType>
+    not?: NestedEnummachineTypeWithAggregatesFilter | machineType
+    _count?: NestedIntFilter
+    _min?: NestedEnummachineTypeFilter
+    _max?: NestedEnummachineTypeFilter
+  }
+
+  export type WashExpressMachineTypeRelationFilter = {
+    is?: WashExpressMachineTypeWhereInput
+    isNot?: WashExpressMachineTypeWhereInput
+  }
+
+  export type WashExpressMachineProgramCountOrderByAggregateInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    name?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineProgramAvgOrderByAggregateInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+  }
+
+  export type WashExpressMachineProgramMaxOrderByAggregateInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    name?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineProgramMinOrderByAggregateInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    name?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineProgramSumOrderByAggregateInput = {
+    id?: SortOrder
+    typeId?: SortOrder
+    timeMinites?: SortOrder
+    priceBath?: SortOrder
+  }
+
+  export type WashExpressMachineBrandRelationFilter = {
+    is?: WashExpressMachineBrandWhereInput
+    isNot?: WashExpressMachineBrandWhereInput
+  }
+
+  export type WashExpressBranchRelationFilter = {
+    is?: WashExpressBranchWhereInput
+    isNot?: WashExpressBranchWhereInput
+  }
+
+  export type WashExpressMachineListCountOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+    installDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineListAvgOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type WashExpressMachineListMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+    installDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineListMinOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+    installDate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMachineListSumOrderByAggregateInput = {
+    id?: SortOrder
+    brandId?: SortOrder
+    typeId?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type WashExpressMachineListRelationFilter = {
+    is?: WashExpressMachineListWhereInput
+    isNot?: WashExpressMachineListWhereInput
+  }
+
+  export type WashExpressMachineProgramRelationFilter = {
+    is?: WashExpressMachineProgramWhereInput
+    isNot?: WashExpressMachineProgramWhereInput
+  }
+
+  export type WashExpressServiceHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressServiceHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+  }
+
+  export type WashExpressServiceHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressServiceHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressServiceHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    memberId?: SortOrder
+    branchId?: SortOrder
+    programId?: SortOrder
+    recordedPrice?: SortOrder
+  }
+
+  export type WashExpressTechnicianRelationFilter = {
+    is?: WashExpressTechnicianWhereInput
+    isNot?: WashExpressTechnicianWhereInput
+  }
+
+  export type WashExpressMaintenanceHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+    problem?: SortOrder
+    startdate?: SortOrder
+    finishdate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+    problem?: SortOrder
+    startdate?: SortOrder
+    finishdate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+    problem?: SortOrder
+    startdate?: SortOrder
+    finishdate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashExpressMaintenanceHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    machineId?: SortOrder
+    technicianId?: SortOrder
+  }
+
   export type YoutubeChanelToUserPermissionListRelationFilter = {
     every?: YoutubeChanelToUserPermissionWhereInput
     some?: YoutubeChanelToUserPermissionWhereInput
@@ -53109,6 +66889,762 @@ export namespace Prisma {
     upsert?: TwitterUserUpsertWithoutDirectToesInput
     connect?: TwitterUserWhereUniqueInput
     update?: XOR<TwitterUserUpdateWithoutDirectToesInput, TwitterUserUncheckedUpdateWithoutDirectToesInput>
+  }
+
+  export type WashExpressBranchCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<Enumerable<WashExpressBranchCreateWithoutOwnerInput>, Enumerable<WashExpressBranchUncheckedCreateWithoutOwnerInput>>
+    connectOrCreate?: Enumerable<WashExpressBranchCreateOrConnectWithoutOwnerInput>
+    createMany?: WashExpressBranchCreateManyOwnerInputEnvelope
+    connect?: Enumerable<WashExpressBranchWhereUniqueInput>
+  }
+
+  export type WashExpressBranchUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<Enumerable<WashExpressBranchCreateWithoutOwnerInput>, Enumerable<WashExpressBranchUncheckedCreateWithoutOwnerInput>>
+    connectOrCreate?: Enumerable<WashExpressBranchCreateOrConnectWithoutOwnerInput>
+    createMany?: WashExpressBranchCreateManyOwnerInputEnvelope
+    connect?: Enumerable<WashExpressBranchWhereUniqueInput>
+  }
+
+  export type WashExpressBranchUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<Enumerable<WashExpressBranchCreateWithoutOwnerInput>, Enumerable<WashExpressBranchUncheckedCreateWithoutOwnerInput>>
+    connectOrCreate?: Enumerable<WashExpressBranchCreateOrConnectWithoutOwnerInput>
+    upsert?: Enumerable<WashExpressBranchUpsertWithWhereUniqueWithoutOwnerInput>
+    createMany?: WashExpressBranchCreateManyOwnerInputEnvelope
+    set?: Enumerable<WashExpressBranchWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressBranchWhereUniqueInput>
+    delete?: Enumerable<WashExpressBranchWhereUniqueInput>
+    connect?: Enumerable<WashExpressBranchWhereUniqueInput>
+    update?: Enumerable<WashExpressBranchUpdateWithWhereUniqueWithoutOwnerInput>
+    updateMany?: Enumerable<WashExpressBranchUpdateManyWithWhereWithoutOwnerInput>
+    deleteMany?: Enumerable<WashExpressBranchScalarWhereInput>
+  }
+
+  export type WashExpressBranchUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<Enumerable<WashExpressBranchCreateWithoutOwnerInput>, Enumerable<WashExpressBranchUncheckedCreateWithoutOwnerInput>>
+    connectOrCreate?: Enumerable<WashExpressBranchCreateOrConnectWithoutOwnerInput>
+    upsert?: Enumerable<WashExpressBranchUpsertWithWhereUniqueWithoutOwnerInput>
+    createMany?: WashExpressBranchCreateManyOwnerInputEnvelope
+    set?: Enumerable<WashExpressBranchWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressBranchWhereUniqueInput>
+    delete?: Enumerable<WashExpressBranchWhereUniqueInput>
+    connect?: Enumerable<WashExpressBranchWhereUniqueInput>
+    update?: Enumerable<WashExpressBranchUpdateWithWhereUniqueWithoutOwnerInput>
+    updateMany?: Enumerable<WashExpressBranchUpdateManyWithWhereWithoutOwnerInput>
+    deleteMany?: Enumerable<WashExpressBranchScalarWhereInput>
+  }
+
+  export type WashExpressTopupHistoryCreateNestedManyWithoutMemberInput = {
+    create?: XOR<Enumerable<WashExpressTopupHistoryCreateWithoutMemberInput>, Enumerable<WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressTopupHistoryCreateOrConnectWithoutMemberInput>
+    createMany?: WashExpressTopupHistoryCreateManyMemberInputEnvelope
+    connect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryCreateNestedManyWithoutMemberInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMemberInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMemberInput>
+    createMany?: WashExpressServiceHistoryCreateManyMemberInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressTopupHistoryUncheckedCreateNestedManyWithoutMemberInput = {
+    create?: XOR<Enumerable<WashExpressTopupHistoryCreateWithoutMemberInput>, Enumerable<WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressTopupHistoryCreateOrConnectWithoutMemberInput>
+    createMany?: WashExpressTopupHistoryCreateManyMemberInputEnvelope
+    connect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMemberInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMemberInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMemberInput>
+    createMany?: WashExpressServiceHistoryCreateManyMemberInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressTopupHistoryUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<Enumerable<WashExpressTopupHistoryCreateWithoutMemberInput>, Enumerable<WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressTopupHistoryCreateOrConnectWithoutMemberInput>
+    upsert?: Enumerable<WashExpressTopupHistoryUpsertWithWhereUniqueWithoutMemberInput>
+    createMany?: WashExpressTopupHistoryCreateManyMemberInputEnvelope
+    set?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressTopupHistoryUpdateWithWhereUniqueWithoutMemberInput>
+    updateMany?: Enumerable<WashExpressTopupHistoryUpdateManyWithWhereWithoutMemberInput>
+    deleteMany?: Enumerable<WashExpressTopupHistoryScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMemberInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMemberInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMemberInput>
+    createMany?: WashExpressServiceHistoryCreateManyMemberInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMemberInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutMemberInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressTopupHistoryUncheckedUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<Enumerable<WashExpressTopupHistoryCreateWithoutMemberInput>, Enumerable<WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressTopupHistoryCreateOrConnectWithoutMemberInput>
+    upsert?: Enumerable<WashExpressTopupHistoryUpsertWithWhereUniqueWithoutMemberInput>
+    createMany?: WashExpressTopupHistoryCreateManyMemberInputEnvelope
+    set?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressTopupHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressTopupHistoryUpdateWithWhereUniqueWithoutMemberInput>
+    updateMany?: Enumerable<WashExpressTopupHistoryUpdateManyWithWhereWithoutMemberInput>
+    deleteMany?: Enumerable<WashExpressTopupHistoryScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyWithoutMemberNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMemberInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMemberInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMemberInput>
+    createMany?: WashExpressServiceHistoryCreateManyMemberInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMemberInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutMemberInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMemberCreateNestedOneWithoutTopupHistoriesInput = {
+    create?: XOR<WashExpressMemberCreateWithoutTopupHistoriesInput, WashExpressMemberUncheckedCreateWithoutTopupHistoriesInput>
+    connectOrCreate?: WashExpressMemberCreateOrConnectWithoutTopupHistoriesInput
+    connect?: WashExpressMemberWhereUniqueInput
+  }
+
+  export type WashExpressMemberUpdateOneRequiredWithoutTopupHistoriesNestedInput = {
+    create?: XOR<WashExpressMemberCreateWithoutTopupHistoriesInput, WashExpressMemberUncheckedCreateWithoutTopupHistoriesInput>
+    connectOrCreate?: WashExpressMemberCreateOrConnectWithoutTopupHistoriesInput
+    upsert?: WashExpressMemberUpsertWithoutTopupHistoriesInput
+    connect?: WashExpressMemberWhereUniqueInput
+    update?: XOR<WashExpressMemberUpdateWithoutTopupHistoriesInput, WashExpressMemberUncheckedUpdateWithoutTopupHistoriesInput>
+  }
+
+  export type WashExpressMaintenanceHistoryCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutTechnicianInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyTechnicianInputEnvelope
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutTechnicianInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutTechnicianInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyTechnicianInputEnvelope
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutTechnicianInput>
+    upsert?: Enumerable<WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutTechnicianInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyTechnicianInputEnvelope
+    set?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutTechnicianInput>
+    updateMany?: Enumerable<WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutTechnicianInput>
+    deleteMany?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutTechnicianNestedInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutTechnicianInput>
+    upsert?: Enumerable<WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutTechnicianInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyTechnicianInputEnvelope
+    set?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutTechnicianInput>
+    updateMany?: Enumerable<WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutTechnicianInput>
+    deleteMany?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressOwnerCreateNestedOneWithoutBranchsInput = {
+    create?: XOR<WashExpressOwnerCreateWithoutBranchsInput, WashExpressOwnerUncheckedCreateWithoutBranchsInput>
+    connectOrCreate?: WashExpressOwnerCreateOrConnectWithoutBranchsInput
+    connect?: WashExpressOwnerWhereUniqueInput
+  }
+
+  export type WashExpressMachineListCreateNestedManyWithoutBranchInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBranchInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBranchInput>
+    createMany?: WashExpressMachineListCreateManyBranchInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryCreateNestedManyWithoutBranchInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutBranchInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutBranchInput>
+    createMany?: WashExpressServiceHistoryCreateManyBranchInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMachineListUncheckedCreateNestedManyWithoutBranchInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBranchInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBranchInput>
+    createMany?: WashExpressMachineListCreateManyBranchInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateNestedManyWithoutBranchInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutBranchInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutBranchInput>
+    createMany?: WashExpressServiceHistoryCreateManyBranchInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressOwnerUpdateOneRequiredWithoutBranchsNestedInput = {
+    create?: XOR<WashExpressOwnerCreateWithoutBranchsInput, WashExpressOwnerUncheckedCreateWithoutBranchsInput>
+    connectOrCreate?: WashExpressOwnerCreateOrConnectWithoutBranchsInput
+    upsert?: WashExpressOwnerUpsertWithoutBranchsInput
+    connect?: WashExpressOwnerWhereUniqueInput
+    update?: XOR<WashExpressOwnerUpdateWithoutBranchsInput, WashExpressOwnerUncheckedUpdateWithoutBranchsInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBranchInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBranchInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutBranchInput>
+    createMany?: WashExpressMachineListCreateManyBranchInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutBranchInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutBranchInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutBranchInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutBranchInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutBranchInput>
+    createMany?: WashExpressServiceHistoryCreateManyBranchInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutBranchInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutBranchInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBranchInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBranchInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutBranchInput>
+    createMany?: WashExpressMachineListCreateManyBranchInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutBranchInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutBranchInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyWithoutBranchNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutBranchInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutBranchInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutBranchInput>
+    createMany?: WashExpressServiceHistoryCreateManyBranchInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutBranchInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutBranchInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineListCreateNestedManyWithoutBrandInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBrandInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBrandInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBrandInput>
+    createMany?: WashExpressMachineListCreateManyBrandInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressMachineListUncheckedCreateNestedManyWithoutBrandInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBrandInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBrandInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBrandInput>
+    createMany?: WashExpressMachineListCreateManyBrandInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type EnumvenderListFieldUpdateOperationsInput = {
+    set?: venderList
+  }
+
+  export type WashExpressMachineListUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBrandInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBrandInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBrandInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutBrandInput>
+    createMany?: WashExpressMachineListCreateManyBrandInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutBrandInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutBrandInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyWithoutBrandNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutBrandInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutBrandInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutBrandInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutBrandInput>
+    createMany?: WashExpressMachineListCreateManyBrandInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutBrandInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutBrandInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressMachineProgramCreateNestedManyWithoutTypeInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutTypeInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutTypeInput>
+    createMany?: WashExpressMachineProgramCreateManyTypeInputEnvelope
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+  }
+
+  export type WashExpressMachineListCreateNestedManyWithoutTypeInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutTypeInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutTypeInput>
+    createMany?: WashExpressMachineListCreateManyTypeInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateNestedManyWithoutTypeInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutTypeInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutTypeInput>
+    createMany?: WashExpressMachineProgramCreateManyTypeInputEnvelope
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+  }
+
+  export type WashExpressMachineListUncheckedCreateNestedManyWithoutTypeInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutTypeInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutTypeInput>
+    createMany?: WashExpressMachineListCreateManyTypeInputEnvelope
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type EnummachineTypeFieldUpdateOperationsInput = {
+    set?: machineType
+  }
+
+  export type WashExpressMachineProgramUpdateManyWithoutTypeNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutTypeInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutTypeInput>
+    upsert?: Enumerable<WashExpressMachineProgramUpsertWithWhereUniqueWithoutTypeInput>
+    createMany?: WashExpressMachineProgramCreateManyTypeInputEnvelope
+    set?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineProgramUpdateWithWhereUniqueWithoutTypeInput>
+    updateMany?: Enumerable<WashExpressMachineProgramUpdateManyWithWhereWithoutTypeInput>
+    deleteMany?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithoutTypeNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutTypeInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutTypeInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutTypeInput>
+    createMany?: WashExpressMachineListCreateManyTypeInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutTypeInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutTypeInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateManyWithoutTypeNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutTypeInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutTypeInput>
+    upsert?: Enumerable<WashExpressMachineProgramUpsertWithWhereUniqueWithoutTypeInput>
+    createMany?: WashExpressMachineProgramCreateManyTypeInputEnvelope
+    set?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineProgramUpdateWithWhereUniqueWithoutTypeInput>
+    updateMany?: Enumerable<WashExpressMachineProgramUpdateManyWithWhereWithoutTypeInput>
+    deleteMany?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyWithoutTypeNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutTypeInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutTypeInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutTypeInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutTypeInput>
+    createMany?: WashExpressMachineListCreateManyTypeInputEnvelope
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutTypeInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutTypeInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressMachineTypeCreateNestedOneWithoutMachineProgramsInput = {
+    create?: XOR<WashExpressMachineTypeCreateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineProgramsInput>
+    connectOrCreate?: WashExpressMachineTypeCreateOrConnectWithoutMachineProgramsInput
+    connect?: WashExpressMachineTypeWhereUniqueInput
+  }
+
+  export type WashExpressMachineListCreateNestedManyWithoutProgramsInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutProgramsInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutProgramsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutProgramsInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryCreateNestedManyWithoutProgramInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutProgramInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutProgramInput>
+    createMany?: WashExpressServiceHistoryCreateManyProgramInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMachineListUncheckedCreateNestedManyWithoutProgramsInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutProgramsInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutProgramsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutProgramsInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateNestedManyWithoutProgramInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutProgramInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutProgramInput>
+    createMany?: WashExpressServiceHistoryCreateManyProgramInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMachineTypeUpdateOneRequiredWithoutMachineProgramsNestedInput = {
+    create?: XOR<WashExpressMachineTypeCreateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineProgramsInput>
+    connectOrCreate?: WashExpressMachineTypeCreateOrConnectWithoutMachineProgramsInput
+    upsert?: WashExpressMachineTypeUpsertWithoutMachineProgramsInput
+    connect?: WashExpressMachineTypeWhereUniqueInput
+    update?: XOR<WashExpressMachineTypeUpdateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedUpdateWithoutMachineProgramsInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithoutProgramsNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutProgramsInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutProgramsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutProgramsInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutProgramsInput>
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutProgramsInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutProgramsInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutProgramInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutProgramInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutProgramInput>
+    createMany?: WashExpressServiceHistoryCreateManyProgramInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutProgramInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutProgramInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyWithoutProgramsNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineListCreateWithoutProgramsInput>, Enumerable<WashExpressMachineListUncheckedCreateWithoutProgramsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineListCreateOrConnectWithoutProgramsInput>
+    upsert?: Enumerable<WashExpressMachineListUpsertWithWhereUniqueWithoutProgramsInput>
+    set?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineListWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineListUpdateWithWhereUniqueWithoutProgramsInput>
+    updateMany?: Enumerable<WashExpressMachineListUpdateManyWithWhereWithoutProgramsInput>
+    deleteMany?: Enumerable<WashExpressMachineListScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutProgramInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutProgramInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutProgramInput>
+    createMany?: WashExpressServiceHistoryCreateManyProgramInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutProgramInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutProgramInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput = {
+    create?: XOR<WashExpressMachineBrandCreateWithoutMachineListsInput, WashExpressMachineBrandUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressMachineBrandCreateOrConnectWithoutMachineListsInput
+    connect?: WashExpressMachineBrandWhereUniqueInput
+  }
+
+  export type WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput = {
+    create?: XOR<WashExpressMachineTypeCreateWithoutMachineListsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressMachineTypeCreateOrConnectWithoutMachineListsInput
+    connect?: WashExpressMachineTypeWhereUniqueInput
+  }
+
+  export type WashExpressBranchCreateNestedOneWithoutMachineListsInput = {
+    create?: XOR<WashExpressBranchCreateWithoutMachineListsInput, WashExpressBranchUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressBranchCreateOrConnectWithoutMachineListsInput
+    connect?: WashExpressBranchWhereUniqueInput
+  }
+
+  export type WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutMachineListsInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutMachineListsInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryCreateNestedManyWithoutMachineInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMachineInput>
+    createMany?: WashExpressServiceHistoryCreateManyMachineInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutMachineInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyMachineInputEnvelope
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutMachineListsInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutMachineListsInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMachineInput>
+    createMany?: WashExpressServiceHistoryCreateManyMachineInputEnvelope
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutMachineInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyMachineInputEnvelope
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+  }
+
+  export type WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput = {
+    create?: XOR<WashExpressMachineBrandCreateWithoutMachineListsInput, WashExpressMachineBrandUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressMachineBrandCreateOrConnectWithoutMachineListsInput
+    upsert?: WashExpressMachineBrandUpsertWithoutMachineListsInput
+    connect?: WashExpressMachineBrandWhereUniqueInput
+    update?: XOR<WashExpressMachineBrandUpdateWithoutMachineListsInput, WashExpressMachineBrandUncheckedUpdateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput = {
+    create?: XOR<WashExpressMachineTypeCreateWithoutMachineListsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressMachineTypeCreateOrConnectWithoutMachineListsInput
+    upsert?: WashExpressMachineTypeUpsertWithoutMachineListsInput
+    connect?: WashExpressMachineTypeWhereUniqueInput
+    update?: XOR<WashExpressMachineTypeUpdateWithoutMachineListsInput, WashExpressMachineTypeUncheckedUpdateWithoutMachineListsInput>
+  }
+
+  export type WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput = {
+    create?: XOR<WashExpressBranchCreateWithoutMachineListsInput, WashExpressBranchUncheckedCreateWithoutMachineListsInput>
+    connectOrCreate?: WashExpressBranchCreateOrConnectWithoutMachineListsInput
+    upsert?: WashExpressBranchUpsertWithoutMachineListsInput
+    connect?: WashExpressBranchWhereUniqueInput
+    update?: XOR<WashExpressBranchUpdateWithoutMachineListsInput, WashExpressBranchUncheckedUpdateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutMachineListsInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutMachineListsInput>
+    upsert?: Enumerable<WashExpressMachineProgramUpsertWithWhereUniqueWithoutMachineListsInput>
+    set?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineProgramUpdateWithWhereUniqueWithoutMachineListsInput>
+    updateMany?: Enumerable<WashExpressMachineProgramUpdateManyWithWhereWithoutMachineListsInput>
+    deleteMany?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMachineInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMachineInput>
+    createMany?: WashExpressServiceHistoryCreateManyMachineInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMachineInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutMachineInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutMachineInput>
+    upsert?: Enumerable<WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutMachineInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyMachineInputEnvelope
+    set?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutMachineInput>
+    updateMany?: Enumerable<WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutMachineInput>
+    deleteMany?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput = {
+    create?: XOR<Enumerable<WashExpressMachineProgramCreateWithoutMachineListsInput>, Enumerable<WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>>
+    connectOrCreate?: Enumerable<WashExpressMachineProgramCreateOrConnectWithoutMachineListsInput>
+    upsert?: Enumerable<WashExpressMachineProgramUpsertWithWhereUniqueWithoutMachineListsInput>
+    set?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    delete?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    connect?: Enumerable<WashExpressMachineProgramWhereUniqueInput>
+    update?: Enumerable<WashExpressMachineProgramUpdateWithWhereUniqueWithoutMachineListsInput>
+    updateMany?: Enumerable<WashExpressMachineProgramUpdateManyWithWhereWithoutMachineListsInput>
+    deleteMany?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput = {
+    create?: XOR<Enumerable<WashExpressServiceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressServiceHistoryCreateOrConnectWithoutMachineInput>
+    upsert?: Enumerable<WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMachineInput>
+    createMany?: WashExpressServiceHistoryCreateManyMachineInputEnvelope
+    set?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressServiceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMachineInput>
+    updateMany?: Enumerable<WashExpressServiceHistoryUpdateManyWithWhereWithoutMachineInput>
+    deleteMany?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput = {
+    create?: XOR<Enumerable<WashExpressMaintenanceHistoryCreateWithoutMachineInput>, Enumerable<WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>>
+    connectOrCreate?: Enumerable<WashExpressMaintenanceHistoryCreateOrConnectWithoutMachineInput>
+    upsert?: Enumerable<WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutMachineInput>
+    createMany?: WashExpressMaintenanceHistoryCreateManyMachineInputEnvelope
+    set?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    disconnect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    delete?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    connect?: Enumerable<WashExpressMaintenanceHistoryWhereUniqueInput>
+    update?: Enumerable<WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutMachineInput>
+    updateMany?: Enumerable<WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutMachineInput>
+    deleteMany?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+  }
+
+  export type WashExpressMachineListCreateNestedOneWithoutServiceHistoriesInput = {
+    create?: XOR<WashExpressMachineListCreateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMachineListCreateOrConnectWithoutServiceHistoriesInput
+    connect?: WashExpressMachineListWhereUniqueInput
+  }
+
+  export type WashExpressMemberCreateNestedOneWithoutServiceHistoriesInput = {
+    create?: XOR<WashExpressMemberCreateWithoutServiceHistoriesInput, WashExpressMemberUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMemberCreateOrConnectWithoutServiceHistoriesInput
+    connect?: WashExpressMemberWhereUniqueInput
+  }
+
+  export type WashExpressBranchCreateNestedOneWithoutServiceHistoriesInput = {
+    create?: XOR<WashExpressBranchCreateWithoutServiceHistoriesInput, WashExpressBranchUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressBranchCreateOrConnectWithoutServiceHistoriesInput
+    connect?: WashExpressBranchWhereUniqueInput
+  }
+
+  export type WashExpressMachineProgramCreateNestedOneWithoutServiceHistoriesInput = {
+    create?: XOR<WashExpressMachineProgramCreateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMachineProgramCreateOrConnectWithoutServiceHistoriesInput
+    connect?: WashExpressMachineProgramWhereUniqueInput
+  }
+
+  export type WashExpressMachineListUpdateOneRequiredWithoutServiceHistoriesNestedInput = {
+    create?: XOR<WashExpressMachineListCreateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMachineListCreateOrConnectWithoutServiceHistoriesInput
+    upsert?: WashExpressMachineListUpsertWithoutServiceHistoriesInput
+    connect?: WashExpressMachineListWhereUniqueInput
+    update?: XOR<WashExpressMachineListUpdateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedUpdateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMemberUpdateOneRequiredWithoutServiceHistoriesNestedInput = {
+    create?: XOR<WashExpressMemberCreateWithoutServiceHistoriesInput, WashExpressMemberUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMemberCreateOrConnectWithoutServiceHistoriesInput
+    upsert?: WashExpressMemberUpsertWithoutServiceHistoriesInput
+    connect?: WashExpressMemberWhereUniqueInput
+    update?: XOR<WashExpressMemberUpdateWithoutServiceHistoriesInput, WashExpressMemberUncheckedUpdateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressBranchUpdateOneRequiredWithoutServiceHistoriesNestedInput = {
+    create?: XOR<WashExpressBranchCreateWithoutServiceHistoriesInput, WashExpressBranchUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressBranchCreateOrConnectWithoutServiceHistoriesInput
+    upsert?: WashExpressBranchUpsertWithoutServiceHistoriesInput
+    connect?: WashExpressBranchWhereUniqueInput
+    update?: XOR<WashExpressBranchUpdateWithoutServiceHistoriesInput, WashExpressBranchUncheckedUpdateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineProgramUpdateOneRequiredWithoutServiceHistoriesNestedInput = {
+    create?: XOR<WashExpressMachineProgramCreateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedCreateWithoutServiceHistoriesInput>
+    connectOrCreate?: WashExpressMachineProgramCreateOrConnectWithoutServiceHistoriesInput
+    upsert?: WashExpressMachineProgramUpsertWithoutServiceHistoriesInput
+    connect?: WashExpressMachineProgramWhereUniqueInput
+    update?: XOR<WashExpressMachineProgramUpdateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedUpdateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineListCreateNestedOneWithoutWashExpressMaintenanceHistoryInput = {
+    create?: XOR<WashExpressMachineListCreateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedCreateWithoutWashExpressMaintenanceHistoryInput>
+    connectOrCreate?: WashExpressMachineListCreateOrConnectWithoutWashExpressMaintenanceHistoryInput
+    connect?: WashExpressMachineListWhereUniqueInput
+  }
+
+  export type WashExpressTechnicianCreateNestedOneWithoutMaintenanceHistoriesInput = {
+    create?: XOR<WashExpressTechnicianCreateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedCreateWithoutMaintenanceHistoriesInput>
+    connectOrCreate?: WashExpressTechnicianCreateOrConnectWithoutMaintenanceHistoriesInput
+    connect?: WashExpressTechnicianWhereUniqueInput
+  }
+
+  export type WashExpressMachineListUpdateOneRequiredWithoutWashExpressMaintenanceHistoryNestedInput = {
+    create?: XOR<WashExpressMachineListCreateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedCreateWithoutWashExpressMaintenanceHistoryInput>
+    connectOrCreate?: WashExpressMachineListCreateOrConnectWithoutWashExpressMaintenanceHistoryInput
+    upsert?: WashExpressMachineListUpsertWithoutWashExpressMaintenanceHistoryInput
+    connect?: WashExpressMachineListWhereUniqueInput
+    update?: XOR<WashExpressMachineListUpdateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedUpdateWithoutWashExpressMaintenanceHistoryInput>
+  }
+
+  export type WashExpressTechnicianUpdateOneRequiredWithoutMaintenanceHistoriesNestedInput = {
+    create?: XOR<WashExpressTechnicianCreateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedCreateWithoutMaintenanceHistoriesInput>
+    connectOrCreate?: WashExpressTechnicianCreateOrConnectWithoutMaintenanceHistoriesInput
+    upsert?: WashExpressTechnicianUpsertWithoutMaintenanceHistoriesInput
+    connect?: WashExpressTechnicianWhereUniqueInput
+    update?: XOR<WashExpressTechnicianUpdateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedUpdateWithoutMaintenanceHistoriesInput>
   }
 
   export type YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput = {
@@ -55434,6 +69970,40 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
+  export type NestedEnumvenderListFilter = {
+    equals?: venderList
+    in?: Enumerable<venderList>
+    notIn?: Enumerable<venderList>
+    not?: NestedEnumvenderListFilter | venderList
+  }
+
+  export type NestedEnumvenderListWithAggregatesFilter = {
+    equals?: venderList
+    in?: Enumerable<venderList>
+    notIn?: Enumerable<venderList>
+    not?: NestedEnumvenderListWithAggregatesFilter | venderList
+    _count?: NestedIntFilter
+    _min?: NestedEnumvenderListFilter
+    _max?: NestedEnumvenderListFilter
+  }
+
+  export type NestedEnummachineTypeFilter = {
+    equals?: machineType
+    in?: Enumerable<machineType>
+    notIn?: Enumerable<machineType>
+    not?: NestedEnummachineTypeFilter | machineType
+  }
+
+  export type NestedEnummachineTypeWithAggregatesFilter = {
+    equals?: machineType
+    in?: Enumerable<machineType>
+    notIn?: Enumerable<machineType>
+    not?: NestedEnummachineTypeWithAggregatesFilter | machineType
+    _count?: NestedIntFilter
+    _min?: NestedEnummachineTypeFilter
+    _max?: NestedEnummachineTypeFilter
+  }
+
   export type NestedEnumYoutubePermissionEnumFilter = {
     equals?: YoutubePermissionEnum
     in?: Enumerable<YoutubePermissionEnum>
@@ -57136,6 +71706,1254 @@ export namespace Prisma {
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
+  }
+
+  export type WashExpressBranchCreateWithoutOwnerInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutBranchInput
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchUncheckedCreateWithoutOwnerInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutBranchInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchCreateOrConnectWithoutOwnerInput = {
+    where: WashExpressBranchWhereUniqueInput
+    create: XOR<WashExpressBranchCreateWithoutOwnerInput, WashExpressBranchUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type WashExpressBranchCreateManyOwnerInputEnvelope = {
+    data: Enumerable<WashExpressBranchCreateManyOwnerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressBranchUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: WashExpressBranchWhereUniqueInput
+    update: XOR<WashExpressBranchUpdateWithoutOwnerInput, WashExpressBranchUncheckedUpdateWithoutOwnerInput>
+    create: XOR<WashExpressBranchCreateWithoutOwnerInput, WashExpressBranchUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type WashExpressBranchUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: WashExpressBranchWhereUniqueInput
+    data: XOR<WashExpressBranchUpdateWithoutOwnerInput, WashExpressBranchUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type WashExpressBranchUpdateManyWithWhereWithoutOwnerInput = {
+    where: WashExpressBranchScalarWhereInput
+    data: XOR<WashExpressBranchUpdateManyMutationInput, WashExpressBranchUncheckedUpdateManyWithoutBranchsInput>
+  }
+
+  export type WashExpressBranchScalarWhereInput = {
+    AND?: Enumerable<WashExpressBranchScalarWhereInput>
+    OR?: Enumerable<WashExpressBranchScalarWhereInput>
+    NOT?: Enumerable<WashExpressBranchScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    ownerId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressTopupHistoryCreateWithoutMemberInput = {
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedCreateWithoutMemberInput = {
+    id?: number
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryCreateOrConnectWithoutMemberInput = {
+    where: WashExpressTopupHistoryWhereUniqueInput
+    create: XOR<WashExpressTopupHistoryCreateWithoutMemberInput, WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>
+  }
+
+  export type WashExpressTopupHistoryCreateManyMemberInputEnvelope = {
+    data: Enumerable<WashExpressTopupHistoryCreateManyMemberInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressServiceHistoryCreateWithoutMemberInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutServiceHistoriesInput
+    branch: WashExpressBranchCreateNestedOneWithoutServiceHistoriesInput
+    program: WashExpressMachineProgramCreateNestedOneWithoutServiceHistoriesInput
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateWithoutMemberInput = {
+    id?: number
+    machineId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateOrConnectWithoutMemberInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    create: XOR<WashExpressServiceHistoryCreateWithoutMemberInput, WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>
+  }
+
+  export type WashExpressServiceHistoryCreateManyMemberInputEnvelope = {
+    data: Enumerable<WashExpressServiceHistoryCreateManyMemberInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressTopupHistoryUpsertWithWhereUniqueWithoutMemberInput = {
+    where: WashExpressTopupHistoryWhereUniqueInput
+    update: XOR<WashExpressTopupHistoryUpdateWithoutMemberInput, WashExpressTopupHistoryUncheckedUpdateWithoutMemberInput>
+    create: XOR<WashExpressTopupHistoryCreateWithoutMemberInput, WashExpressTopupHistoryUncheckedCreateWithoutMemberInput>
+  }
+
+  export type WashExpressTopupHistoryUpdateWithWhereUniqueWithoutMemberInput = {
+    where: WashExpressTopupHistoryWhereUniqueInput
+    data: XOR<WashExpressTopupHistoryUpdateWithoutMemberInput, WashExpressTopupHistoryUncheckedUpdateWithoutMemberInput>
+  }
+
+  export type WashExpressTopupHistoryUpdateManyWithWhereWithoutMemberInput = {
+    where: WashExpressTopupHistoryScalarWhereInput
+    data: XOR<WashExpressTopupHistoryUpdateManyMutationInput, WashExpressTopupHistoryUncheckedUpdateManyWithoutTopupHistoriesInput>
+  }
+
+  export type WashExpressTopupHistoryScalarWhereInput = {
+    AND?: Enumerable<WashExpressTopupHistoryScalarWhereInput>
+    OR?: Enumerable<WashExpressTopupHistoryScalarWhereInput>
+    NOT?: Enumerable<WashExpressTopupHistoryScalarWhereInput>
+    id?: IntFilter | number
+    memberId?: IntFilter | number
+    topupAmount?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMemberInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    update: XOR<WashExpressServiceHistoryUpdateWithoutMemberInput, WashExpressServiceHistoryUncheckedUpdateWithoutMemberInput>
+    create: XOR<WashExpressServiceHistoryCreateWithoutMemberInput, WashExpressServiceHistoryUncheckedCreateWithoutMemberInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMemberInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    data: XOR<WashExpressServiceHistoryUpdateWithoutMemberInput, WashExpressServiceHistoryUncheckedUpdateWithoutMemberInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithWhereWithoutMemberInput = {
+    where: WashExpressServiceHistoryScalarWhereInput
+    data: XOR<WashExpressServiceHistoryUpdateManyMutationInput, WashExpressServiceHistoryUncheckedUpdateManyWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressServiceHistoryScalarWhereInput = {
+    AND?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+    OR?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+    NOT?: Enumerable<WashExpressServiceHistoryScalarWhereInput>
+    id?: IntFilter | number
+    machineId?: IntFilter | number
+    memberId?: IntFilter | number
+    branchId?: IntFilter | number
+    programId?: IntFilter | number
+    recordedPrice?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressMemberCreateWithoutTopupHistoriesInput = {
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberUncheckedCreateWithoutTopupHistoriesInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberCreateOrConnectWithoutTopupHistoriesInput = {
+    where: WashExpressMemberWhereUniqueInput
+    create: XOR<WashExpressMemberCreateWithoutTopupHistoriesInput, WashExpressMemberUncheckedCreateWithoutTopupHistoriesInput>
+  }
+
+  export type WashExpressMemberUpsertWithoutTopupHistoriesInput = {
+    update: XOR<WashExpressMemberUpdateWithoutTopupHistoriesInput, WashExpressMemberUncheckedUpdateWithoutTopupHistoriesInput>
+    create: XOR<WashExpressMemberCreateWithoutTopupHistoriesInput, WashExpressMemberUncheckedCreateWithoutTopupHistoriesInput>
+  }
+
+  export type WashExpressMemberUpdateWithoutTopupHistoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressMemberUncheckedUpdateWithoutTopupHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressMaintenanceHistoryCreateWithoutTechnicianInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutWashExpressMaintenanceHistoryInput
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput = {
+    id?: number
+    machineId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateOrConnectWithoutTechnicianInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    create: XOR<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput, WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type WashExpressMaintenanceHistoryCreateManyTechnicianInputEnvelope = {
+    data: Enumerable<WashExpressMaintenanceHistoryCreateManyTechnicianInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutTechnicianInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    update: XOR<WashExpressMaintenanceHistoryUpdateWithoutTechnicianInput, WashExpressMaintenanceHistoryUncheckedUpdateWithoutTechnicianInput>
+    create: XOR<WashExpressMaintenanceHistoryCreateWithoutTechnicianInput, WashExpressMaintenanceHistoryUncheckedCreateWithoutTechnicianInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutTechnicianInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    data: XOR<WashExpressMaintenanceHistoryUpdateWithoutTechnicianInput, WashExpressMaintenanceHistoryUncheckedUpdateWithoutTechnicianInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutTechnicianInput = {
+    where: WashExpressMaintenanceHistoryScalarWhereInput
+    data: XOR<WashExpressMaintenanceHistoryUpdateManyMutationInput, WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMaintenanceHistoriesInput>
+  }
+
+  export type WashExpressMaintenanceHistoryScalarWhereInput = {
+    AND?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+    OR?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+    NOT?: Enumerable<WashExpressMaintenanceHistoryScalarWhereInput>
+    id?: IntFilter | number
+    machineId?: IntFilter | number
+    technicianId?: IntFilter | number
+    problem?: StringFilter | string
+    startdate?: DateTimeFilter | Date | string
+    finishdate?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressOwnerCreateWithoutBranchsInput = {
+    name: string
+    call: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressOwnerUncheckedCreateWithoutBranchsInput = {
+    id?: number
+    name: string
+    call: string
+    location: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressOwnerCreateOrConnectWithoutBranchsInput = {
+    where: WashExpressOwnerWhereUniqueInput
+    create: XOR<WashExpressOwnerCreateWithoutBranchsInput, WashExpressOwnerUncheckedCreateWithoutBranchsInput>
+  }
+
+  export type WashExpressMachineListCreateWithoutBranchInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutBranchInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutBranchInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutBranchInput, WashExpressMachineListUncheckedCreateWithoutBranchInput>
+  }
+
+  export type WashExpressMachineListCreateManyBranchInputEnvelope = {
+    data: Enumerable<WashExpressMachineListCreateManyBranchInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressServiceHistoryCreateWithoutBranchInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutServiceHistoriesInput
+    member: WashExpressMemberCreateNestedOneWithoutServiceHistoriesInput
+    program: WashExpressMachineProgramCreateNestedOneWithoutServiceHistoriesInput
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateWithoutBranchInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateOrConnectWithoutBranchInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    create: XOR<WashExpressServiceHistoryCreateWithoutBranchInput, WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>
+  }
+
+  export type WashExpressServiceHistoryCreateManyBranchInputEnvelope = {
+    data: Enumerable<WashExpressServiceHistoryCreateManyBranchInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressOwnerUpsertWithoutBranchsInput = {
+    update: XOR<WashExpressOwnerUpdateWithoutBranchsInput, WashExpressOwnerUncheckedUpdateWithoutBranchsInput>
+    create: XOR<WashExpressOwnerCreateWithoutBranchsInput, WashExpressOwnerUncheckedCreateWithoutBranchsInput>
+  }
+
+  export type WashExpressOwnerUpdateWithoutBranchsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressOwnerUncheckedUpdateWithoutBranchsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListUpsertWithWhereUniqueWithoutBranchInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    update: XOR<WashExpressMachineListUpdateWithoutBranchInput, WashExpressMachineListUncheckedUpdateWithoutBranchInput>
+    create: XOR<WashExpressMachineListCreateWithoutBranchInput, WashExpressMachineListUncheckedCreateWithoutBranchInput>
+  }
+
+  export type WashExpressMachineListUpdateWithWhereUniqueWithoutBranchInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    data: XOR<WashExpressMachineListUpdateWithoutBranchInput, WashExpressMachineListUncheckedUpdateWithoutBranchInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithWhereWithoutBranchInput = {
+    where: WashExpressMachineListScalarWhereInput
+    data: XOR<WashExpressMachineListUpdateManyMutationInput, WashExpressMachineListUncheckedUpdateManyWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineListScalarWhereInput = {
+    AND?: Enumerable<WashExpressMachineListScalarWhereInput>
+    OR?: Enumerable<WashExpressMachineListScalarWhereInput>
+    NOT?: Enumerable<WashExpressMachineListScalarWhereInput>
+    id?: IntFilter | number
+    brandId?: IntFilter | number
+    typeId?: IntFilter | number
+    branchId?: IntFilter | number
+    installDate?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressServiceHistoryUpsertWithWhereUniqueWithoutBranchInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    update: XOR<WashExpressServiceHistoryUpdateWithoutBranchInput, WashExpressServiceHistoryUncheckedUpdateWithoutBranchInput>
+    create: XOR<WashExpressServiceHistoryCreateWithoutBranchInput, WashExpressServiceHistoryUncheckedCreateWithoutBranchInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateWithWhereUniqueWithoutBranchInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    data: XOR<WashExpressServiceHistoryUpdateWithoutBranchInput, WashExpressServiceHistoryUncheckedUpdateWithoutBranchInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithWhereWithoutBranchInput = {
+    where: WashExpressServiceHistoryScalarWhereInput
+    data: XOR<WashExpressServiceHistoryUpdateManyMutationInput, WashExpressServiceHistoryUncheckedUpdateManyWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineListCreateWithoutBrandInput = {
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutBrandInput = {
+    id?: number
+    typeId: number
+    branchId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutBrandInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutBrandInput, WashExpressMachineListUncheckedCreateWithoutBrandInput>
+  }
+
+  export type WashExpressMachineListCreateManyBrandInputEnvelope = {
+    data: Enumerable<WashExpressMachineListCreateManyBrandInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMachineListUpsertWithWhereUniqueWithoutBrandInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    update: XOR<WashExpressMachineListUpdateWithoutBrandInput, WashExpressMachineListUncheckedUpdateWithoutBrandInput>
+    create: XOR<WashExpressMachineListCreateWithoutBrandInput, WashExpressMachineListUncheckedCreateWithoutBrandInput>
+  }
+
+  export type WashExpressMachineListUpdateWithWhereUniqueWithoutBrandInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    data: XOR<WashExpressMachineListUpdateWithoutBrandInput, WashExpressMachineListUncheckedUpdateWithoutBrandInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithWhereWithoutBrandInput = {
+    where: WashExpressMachineListScalarWhereInput
+    data: XOR<WashExpressMachineListUpdateManyMutationInput, WashExpressMachineListUncheckedUpdateManyWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineProgramCreateWithoutTypeInput = {
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutProgramsInput
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateWithoutTypeInput = {
+    id?: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutProgramsInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramCreateOrConnectWithoutTypeInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    create: XOR<WashExpressMachineProgramCreateWithoutTypeInput, WashExpressMachineProgramUncheckedCreateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineProgramCreateManyTypeInputEnvelope = {
+    data: Enumerable<WashExpressMachineProgramCreateManyTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMachineListCreateWithoutTypeInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutTypeInput = {
+    id?: number
+    brandId: number
+    branchId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutTypeInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutTypeInput, WashExpressMachineListUncheckedCreateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineListCreateManyTypeInputEnvelope = {
+    data: Enumerable<WashExpressMachineListCreateManyTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMachineProgramUpsertWithWhereUniqueWithoutTypeInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    update: XOR<WashExpressMachineProgramUpdateWithoutTypeInput, WashExpressMachineProgramUncheckedUpdateWithoutTypeInput>
+    create: XOR<WashExpressMachineProgramCreateWithoutTypeInput, WashExpressMachineProgramUncheckedCreateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineProgramUpdateWithWhereUniqueWithoutTypeInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    data: XOR<WashExpressMachineProgramUpdateWithoutTypeInput, WashExpressMachineProgramUncheckedUpdateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineProgramUpdateManyWithWhereWithoutTypeInput = {
+    where: WashExpressMachineProgramScalarWhereInput
+    data: XOR<WashExpressMachineProgramUpdateManyMutationInput, WashExpressMachineProgramUncheckedUpdateManyWithoutMachineProgramsInput>
+  }
+
+  export type WashExpressMachineProgramScalarWhereInput = {
+    AND?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+    OR?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+    NOT?: Enumerable<WashExpressMachineProgramScalarWhereInput>
+    id?: IntFilter | number
+    typeId?: IntFilter | number
+    name?: EnummachineTypeFilter | machineType
+    timeMinites?: IntFilter | number
+    priceBath?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashExpressMachineListUpsertWithWhereUniqueWithoutTypeInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    update: XOR<WashExpressMachineListUpdateWithoutTypeInput, WashExpressMachineListUncheckedUpdateWithoutTypeInput>
+    create: XOR<WashExpressMachineListCreateWithoutTypeInput, WashExpressMachineListUncheckedCreateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineListUpdateWithWhereUniqueWithoutTypeInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    data: XOR<WashExpressMachineListUpdateWithoutTypeInput, WashExpressMachineListUncheckedUpdateWithoutTypeInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithWhereWithoutTypeInput = {
+    where: WashExpressMachineListScalarWhereInput
+    data: XOR<WashExpressMachineListUpdateManyMutationInput, WashExpressMachineListUncheckedUpdateManyWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineTypeCreateWithoutMachineProgramsInput = {
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeUncheckedCreateWithoutMachineProgramsInput = {
+    id?: number
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeCreateOrConnectWithoutMachineProgramsInput = {
+    where: WashExpressMachineTypeWhereUniqueInput
+    create: XOR<WashExpressMachineTypeCreateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineProgramsInput>
+  }
+
+  export type WashExpressMachineListCreateWithoutProgramsInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutProgramsInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    branchId: number
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutProgramsInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutProgramsInput, WashExpressMachineListUncheckedCreateWithoutProgramsInput>
+  }
+
+  export type WashExpressServiceHistoryCreateWithoutProgramInput = {
+    machine: WashExpressMachineListCreateNestedOneWithoutServiceHistoriesInput
+    member: WashExpressMemberCreateNestedOneWithoutServiceHistoriesInput
+    branch: WashExpressBranchCreateNestedOneWithoutServiceHistoriesInput
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateWithoutProgramInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    branchId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateOrConnectWithoutProgramInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    create: XOR<WashExpressServiceHistoryCreateWithoutProgramInput, WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>
+  }
+
+  export type WashExpressServiceHistoryCreateManyProgramInputEnvelope = {
+    data: Enumerable<WashExpressServiceHistoryCreateManyProgramInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMachineTypeUpsertWithoutMachineProgramsInput = {
+    update: XOR<WashExpressMachineTypeUpdateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedUpdateWithoutMachineProgramsInput>
+    create: XOR<WashExpressMachineTypeCreateWithoutMachineProgramsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineProgramsInput>
+  }
+
+  export type WashExpressMachineTypeUpdateWithoutMachineProgramsInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressMachineTypeUncheckedUpdateWithoutMachineProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressMachineListUpsertWithWhereUniqueWithoutProgramsInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    update: XOR<WashExpressMachineListUpdateWithoutProgramsInput, WashExpressMachineListUncheckedUpdateWithoutProgramsInput>
+    create: XOR<WashExpressMachineListCreateWithoutProgramsInput, WashExpressMachineListUncheckedCreateWithoutProgramsInput>
+  }
+
+  export type WashExpressMachineListUpdateWithWhereUniqueWithoutProgramsInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    data: XOR<WashExpressMachineListUpdateWithoutProgramsInput, WashExpressMachineListUncheckedUpdateWithoutProgramsInput>
+  }
+
+  export type WashExpressMachineListUpdateManyWithWhereWithoutProgramsInput = {
+    where: WashExpressMachineListScalarWhereInput
+    data: XOR<WashExpressMachineListUpdateManyMutationInput, WashExpressMachineListUncheckedUpdateManyWithoutMachineListsInput>
+  }
+
+  export type WashExpressServiceHistoryUpsertWithWhereUniqueWithoutProgramInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    update: XOR<WashExpressServiceHistoryUpdateWithoutProgramInput, WashExpressServiceHistoryUncheckedUpdateWithoutProgramInput>
+    create: XOR<WashExpressServiceHistoryCreateWithoutProgramInput, WashExpressServiceHistoryUncheckedCreateWithoutProgramInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateWithWhereUniqueWithoutProgramInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    data: XOR<WashExpressServiceHistoryUpdateWithoutProgramInput, WashExpressServiceHistoryUncheckedUpdateWithoutProgramInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithWhereWithoutProgramInput = {
+    where: WashExpressServiceHistoryScalarWhereInput
+    data: XOR<WashExpressServiceHistoryUpdateManyMutationInput, WashExpressServiceHistoryUncheckedUpdateManyWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineBrandCreateWithoutMachineListsInput = {
+    name: venderList
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineBrandUncheckedCreateWithoutMachineListsInput = {
+    id?: number
+    name: venderList
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineBrandCreateOrConnectWithoutMachineListsInput = {
+    where: WashExpressMachineBrandWhereUniqueInput
+    create: XOR<WashExpressMachineBrandCreateWithoutMachineListsInput, WashExpressMachineBrandUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineTypeCreateWithoutMachineListsInput = {
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machinePrograms?: WashExpressMachineProgramCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeUncheckedCreateWithoutMachineListsInput = {
+    id?: number
+    name: machineType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machinePrograms?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutTypeInput
+  }
+
+  export type WashExpressMachineTypeCreateOrConnectWithoutMachineListsInput = {
+    where: WashExpressMachineTypeWhereUniqueInput
+    create: XOR<WashExpressMachineTypeCreateWithoutMachineListsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressBranchCreateWithoutMachineListsInput = {
+    name: string
+    owner: WashExpressOwnerCreateNestedOneWithoutBranchsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchUncheckedCreateWithoutMachineListsInput = {
+    id?: number
+    name: string
+    ownerId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchCreateOrConnectWithoutMachineListsInput = {
+    where: WashExpressBranchWhereUniqueInput
+    create: XOR<WashExpressBranchCreateWithoutMachineListsInput, WashExpressBranchUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineProgramCreateWithoutMachineListsInput = {
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineProgramsInput
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput = {
+    id?: number
+    typeId: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutProgramInput
+  }
+
+  export type WashExpressMachineProgramCreateOrConnectWithoutMachineListsInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    create: XOR<WashExpressMachineProgramCreateWithoutMachineListsInput, WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressServiceHistoryCreateWithoutMachineInput = {
+    member: WashExpressMemberCreateNestedOneWithoutServiceHistoriesInput
+    branch: WashExpressBranchCreateNestedOneWithoutServiceHistoriesInput
+    program: WashExpressMachineProgramCreateNestedOneWithoutServiceHistoriesInput
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedCreateWithoutMachineInput = {
+    id?: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateOrConnectWithoutMachineInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    create: XOR<WashExpressServiceHistoryCreateWithoutMachineInput, WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>
+  }
+
+  export type WashExpressServiceHistoryCreateManyMachineInputEnvelope = {
+    data: Enumerable<WashExpressServiceHistoryCreateManyMachineInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMaintenanceHistoryCreateWithoutMachineInput = {
+    technician: WashExpressTechnicianCreateNestedOneWithoutMaintenanceHistoriesInput
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput = {
+    id?: number
+    technicianId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateOrConnectWithoutMachineInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    create: XOR<WashExpressMaintenanceHistoryCreateWithoutMachineInput, WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>
+  }
+
+  export type WashExpressMaintenanceHistoryCreateManyMachineInputEnvelope = {
+    data: Enumerable<WashExpressMaintenanceHistoryCreateManyMachineInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashExpressMachineBrandUpsertWithoutMachineListsInput = {
+    update: XOR<WashExpressMachineBrandUpdateWithoutMachineListsInput, WashExpressMachineBrandUncheckedUpdateWithoutMachineListsInput>
+    create: XOR<WashExpressMachineBrandCreateWithoutMachineListsInput, WashExpressMachineBrandUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineBrandUpdateWithoutMachineListsInput = {
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineBrandUncheckedUpdateWithoutMachineListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumvenderListFieldUpdateOperationsInput | venderList
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineTypeUpsertWithoutMachineListsInput = {
+    update: XOR<WashExpressMachineTypeUpdateWithoutMachineListsInput, WashExpressMachineTypeUncheckedUpdateWithoutMachineListsInput>
+    create: XOR<WashExpressMachineTypeCreateWithoutMachineListsInput, WashExpressMachineTypeUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineTypeUpdateWithoutMachineListsInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machinePrograms?: WashExpressMachineProgramUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressMachineTypeUncheckedUpdateWithoutMachineListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machinePrograms?: WashExpressMachineProgramUncheckedUpdateManyWithoutTypeNestedInput
+  }
+
+  export type WashExpressBranchUpsertWithoutMachineListsInput = {
+    update: XOR<WashExpressBranchUpdateWithoutMachineListsInput, WashExpressBranchUncheckedUpdateWithoutMachineListsInput>
+    create: XOR<WashExpressBranchCreateWithoutMachineListsInput, WashExpressBranchUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressBranchUpdateWithoutMachineListsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owner?: WashExpressOwnerUpdateOneRequiredWithoutBranchsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchUncheckedUpdateWithoutMachineListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressMachineProgramUpsertWithWhereUniqueWithoutMachineListsInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    update: XOR<WashExpressMachineProgramUpdateWithoutMachineListsInput, WashExpressMachineProgramUncheckedUpdateWithoutMachineListsInput>
+    create: XOR<WashExpressMachineProgramCreateWithoutMachineListsInput, WashExpressMachineProgramUncheckedCreateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineProgramUpdateWithWhereUniqueWithoutMachineListsInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    data: XOR<WashExpressMachineProgramUpdateWithoutMachineListsInput, WashExpressMachineProgramUncheckedUpdateWithoutMachineListsInput>
+  }
+
+  export type WashExpressMachineProgramUpdateManyWithWhereWithoutMachineListsInput = {
+    where: WashExpressMachineProgramScalarWhereInput
+    data: XOR<WashExpressMachineProgramUpdateManyMutationInput, WashExpressMachineProgramUncheckedUpdateManyWithoutProgramsInput>
+  }
+
+  export type WashExpressServiceHistoryUpsertWithWhereUniqueWithoutMachineInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    update: XOR<WashExpressServiceHistoryUpdateWithoutMachineInput, WashExpressServiceHistoryUncheckedUpdateWithoutMachineInput>
+    create: XOR<WashExpressServiceHistoryCreateWithoutMachineInput, WashExpressServiceHistoryUncheckedCreateWithoutMachineInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateWithWhereUniqueWithoutMachineInput = {
+    where: WashExpressServiceHistoryWhereUniqueInput
+    data: XOR<WashExpressServiceHistoryUpdateWithoutMachineInput, WashExpressServiceHistoryUncheckedUpdateWithoutMachineInput>
+  }
+
+  export type WashExpressServiceHistoryUpdateManyWithWhereWithoutMachineInput = {
+    where: WashExpressServiceHistoryScalarWhereInput
+    data: XOR<WashExpressServiceHistoryUpdateManyMutationInput, WashExpressServiceHistoryUncheckedUpdateManyWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpsertWithWhereUniqueWithoutMachineInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    update: XOR<WashExpressMaintenanceHistoryUpdateWithoutMachineInput, WashExpressMaintenanceHistoryUncheckedUpdateWithoutMachineInput>
+    create: XOR<WashExpressMaintenanceHistoryCreateWithoutMachineInput, WashExpressMaintenanceHistoryUncheckedCreateWithoutMachineInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateWithWhereUniqueWithoutMachineInput = {
+    where: WashExpressMaintenanceHistoryWhereUniqueInput
+    data: XOR<WashExpressMaintenanceHistoryUpdateWithoutMachineInput, WashExpressMaintenanceHistoryUncheckedUpdateWithoutMachineInput>
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateManyWithWhereWithoutMachineInput = {
+    where: WashExpressMaintenanceHistoryScalarWhereInput
+    data: XOR<WashExpressMaintenanceHistoryUpdateManyMutationInput, WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutWashExpressMaintenanceHistoryInput>
+  }
+
+  export type WashExpressMachineListCreateWithoutServiceHistoriesInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutServiceHistoriesInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    branchId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutServiceHistoriesInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMemberCreateWithoutServiceHistoriesInput = {
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    topupHistories?: WashExpressTopupHistoryCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberUncheckedCreateWithoutServiceHistoriesInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    topupHistories?: WashExpressTopupHistoryUncheckedCreateNestedManyWithoutMemberInput
+  }
+
+  export type WashExpressMemberCreateOrConnectWithoutServiceHistoriesInput = {
+    where: WashExpressMemberWhereUniqueInput
+    create: XOR<WashExpressMemberCreateWithoutServiceHistoriesInput, WashExpressMemberUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressBranchCreateWithoutServiceHistoriesInput = {
+    name: string
+    owner: WashExpressOwnerCreateNestedOneWithoutBranchsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchUncheckedCreateWithoutServiceHistoriesInput = {
+    id?: number
+    name: string
+    ownerId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutBranchInput
+  }
+
+  export type WashExpressBranchCreateOrConnectWithoutServiceHistoriesInput = {
+    where: WashExpressBranchWhereUniqueInput
+    create: XOR<WashExpressBranchCreateWithoutServiceHistoriesInput, WashExpressBranchUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineProgramCreateWithoutServiceHistoriesInput = {
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineProgramsInput
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListCreateNestedManyWithoutProgramsInput
+  }
+
+  export type WashExpressMachineProgramUncheckedCreateWithoutServiceHistoriesInput = {
+    id?: number
+    typeId: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    machineLists?: WashExpressMachineListUncheckedCreateNestedManyWithoutProgramsInput
+  }
+
+  export type WashExpressMachineProgramCreateOrConnectWithoutServiceHistoriesInput = {
+    where: WashExpressMachineProgramWhereUniqueInput
+    create: XOR<WashExpressMachineProgramCreateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineListUpsertWithoutServiceHistoriesInput = {
+    update: XOR<WashExpressMachineListUpdateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedUpdateWithoutServiceHistoriesInput>
+    create: XOR<WashExpressMachineListCreateWithoutServiceHistoriesInput, WashExpressMachineListUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineListUpdateWithoutServiceHistoriesInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutServiceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMemberUpsertWithoutServiceHistoriesInput = {
+    update: XOR<WashExpressMemberUpdateWithoutServiceHistoriesInput, WashExpressMemberUncheckedUpdateWithoutServiceHistoriesInput>
+    create: XOR<WashExpressMemberCreateWithoutServiceHistoriesInput, WashExpressMemberUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMemberUpdateWithoutServiceHistoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    topupHistories?: WashExpressTopupHistoryUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressMemberUncheckedUpdateWithoutServiceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    topupHistories?: WashExpressTopupHistoryUncheckedUpdateManyWithoutMemberNestedInput
+  }
+
+  export type WashExpressBranchUpsertWithoutServiceHistoriesInput = {
+    update: XOR<WashExpressBranchUpdateWithoutServiceHistoriesInput, WashExpressBranchUncheckedUpdateWithoutServiceHistoriesInput>
+    create: XOR<WashExpressBranchCreateWithoutServiceHistoriesInput, WashExpressBranchUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressBranchUpdateWithoutServiceHistoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owner?: WashExpressOwnerUpdateOneRequiredWithoutBranchsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchUncheckedUpdateWithoutServiceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    ownerId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressMachineProgramUpsertWithoutServiceHistoriesInput = {
+    update: XOR<WashExpressMachineProgramUpdateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedUpdateWithoutServiceHistoriesInput>
+    create: XOR<WashExpressMachineProgramCreateWithoutServiceHistoriesInput, WashExpressMachineProgramUncheckedCreateWithoutServiceHistoriesInput>
+  }
+
+  export type WashExpressMachineProgramUpdateWithoutServiceHistoriesInput = {
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineProgramsNestedInput
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutProgramsNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateWithoutServiceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutProgramsNestedInput
+  }
+
+  export type WashExpressMachineListCreateWithoutWashExpressMaintenanceHistoryInput = {
+    brand: WashExpressMachineBrandCreateNestedOneWithoutMachineListsInput
+    type: WashExpressMachineTypeCreateNestedOneWithoutMachineListsInput
+    branch: WashExpressBranchCreateNestedOneWithoutMachineListsInput
+    programs?: WashExpressMachineProgramCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListUncheckedCreateWithoutWashExpressMaintenanceHistoryInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    branchId: number
+    programs?: WashExpressMachineProgramUncheckedCreateNestedManyWithoutMachineListsInput
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedCreateNestedManyWithoutMachineInput
+  }
+
+  export type WashExpressMachineListCreateOrConnectWithoutWashExpressMaintenanceHistoryInput = {
+    where: WashExpressMachineListWhereUniqueInput
+    create: XOR<WashExpressMachineListCreateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedCreateWithoutWashExpressMaintenanceHistoryInput>
+  }
+
+  export type WashExpressTechnicianCreateWithoutMaintenanceHistoriesInput = {
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTechnicianUncheckedCreateWithoutMaintenanceHistoriesInput = {
+    id?: number
+    name: string
+    call: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTechnicianCreateOrConnectWithoutMaintenanceHistoriesInput = {
+    where: WashExpressTechnicianWhereUniqueInput
+    create: XOR<WashExpressTechnicianCreateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedCreateWithoutMaintenanceHistoriesInput>
+  }
+
+  export type WashExpressMachineListUpsertWithoutWashExpressMaintenanceHistoryInput = {
+    update: XOR<WashExpressMachineListUpdateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedUpdateWithoutWashExpressMaintenanceHistoryInput>
+    create: XOR<WashExpressMachineListCreateWithoutWashExpressMaintenanceHistoryInput, WashExpressMachineListUncheckedCreateWithoutWashExpressMaintenanceHistoryInput>
+  }
+
+  export type WashExpressMachineListUpdateWithoutWashExpressMaintenanceHistoryInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutWashExpressMaintenanceHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressTechnicianUpsertWithoutMaintenanceHistoriesInput = {
+    update: XOR<WashExpressTechnicianUpdateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedUpdateWithoutMaintenanceHistoriesInput>
+    create: XOR<WashExpressTechnicianCreateWithoutMaintenanceHistoriesInput, WashExpressTechnicianUncheckedCreateWithoutMaintenanceHistoriesInput>
+  }
+
+  export type WashExpressTechnicianUpdateWithoutMaintenanceHistoriesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTechnicianUncheckedUpdateWithoutMaintenanceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    call?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type YoutubeChanelToUserPermissionCreateWithoutUserInput = {
@@ -61937,6 +77755,466 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postByUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressBranchCreateManyOwnerInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressBranchUpdateWithoutOwnerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutBranchNestedInput
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchUncheckedUpdateWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutBranchNestedInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutBranchNestedInput
+  }
+
+  export type WashExpressBranchUncheckedUpdateManyWithoutBranchsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryCreateManyMemberInput = {
+    id?: number
+    topupAmount: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateManyMemberInput = {
+    id?: number
+    machineId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressTopupHistoryUpdateWithoutMemberInput = {
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedUpdateWithoutMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressTopupHistoryUncheckedUpdateManyWithoutTopupHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    topupAmount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUpdateWithoutMemberInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    program?: WashExpressMachineProgramUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateWithoutMemberInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateManyWithoutServiceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateManyTechnicianInput = {
+    id?: number
+    machineId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateWithoutTechnicianInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutWashExpressMaintenanceHistoryNestedInput
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateWithoutTechnicianInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMaintenanceHistoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListCreateManyBranchInput = {
+    id?: number
+    brandId: number
+    typeId: number
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateManyBranchInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineListUpdateWithoutBranchInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutBranchInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateManyWithoutMachineListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUpdateWithoutBranchInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    member?: WashExpressMemberUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    program?: WashExpressMachineProgramUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateWithoutBranchInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListCreateManyBrandInput = {
+    id?: number
+    typeId: number
+    branchId: number
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineListUpdateWithoutBrandInput = {
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutBrandInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineProgramCreateManyTypeInput = {
+    id?: number
+    name: machineType
+    timeMinites: number
+    priceBath: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineListCreateManyTypeInput = {
+    id?: number
+    brandId: number
+    branchId: number
+    installDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineProgramUpdateWithoutTypeInput = {
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUpdateManyWithoutProgramsNestedInput
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateWithoutTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    machineLists?: WashExpressMachineListUncheckedUpdateManyWithoutProgramsNestedInput
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateManyWithoutMachineProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMachineListUpdateWithoutTypeInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    programs?: WashExpressMachineProgramUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programs?: WashExpressMachineProgramUncheckedUpdateManyWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressServiceHistoryCreateManyProgramInput = {
+    id?: number
+    machineId: number
+    memberId: number
+    branchId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineListUpdateWithoutProgramsInput = {
+    brand?: WashExpressMachineBrandUpdateOneRequiredWithoutMachineListsNestedInput
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineListsNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutMachineListsNestedInput
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressMachineListUncheckedUpdateWithoutProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brandId?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    installDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+    WashExpressMaintenanceHistory?: WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutMachineNestedInput
+  }
+
+  export type WashExpressServiceHistoryUpdateWithoutProgramInput = {
+    machine?: WashExpressMachineListUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    member?: WashExpressMemberUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateWithoutProgramInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    machineId?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryCreateManyMachineInput = {
+    id?: number
+    memberId: number
+    branchId: number
+    programId: number
+    recordedPrice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryCreateManyMachineInput = {
+    id?: number
+    technicianId: number
+    problem: string
+    startdate: Date | string
+    finishdate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashExpressMachineProgramUpdateWithoutMachineListsInput = {
+    type?: WashExpressMachineTypeUpdateOneRequiredWithoutMachineProgramsNestedInput
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateWithoutMachineListsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    serviceHistories?: WashExpressServiceHistoryUncheckedUpdateManyWithoutProgramNestedInput
+  }
+
+  export type WashExpressMachineProgramUncheckedUpdateManyWithoutProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    typeId?: IntFieldUpdateOperationsInput | number
+    name?: EnummachineTypeFieldUpdateOperationsInput | machineType
+    timeMinites?: IntFieldUpdateOperationsInput | number
+    priceBath?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUpdateWithoutMachineInput = {
+    member?: WashExpressMemberUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    branch?: WashExpressBranchUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    program?: WashExpressMachineProgramUpdateOneRequiredWithoutServiceHistoriesNestedInput
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressServiceHistoryUncheckedUpdateWithoutMachineInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    memberId?: IntFieldUpdateOperationsInput | number
+    branchId?: IntFieldUpdateOperationsInput | number
+    programId?: IntFieldUpdateOperationsInput | number
+    recordedPrice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUpdateWithoutMachineInput = {
+    technician?: WashExpressTechnicianUpdateOneRequiredWithoutMaintenanceHistoriesNestedInput
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateWithoutMachineInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    technicianId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashExpressMaintenanceHistoryUncheckedUpdateManyWithoutWashExpressMaintenanceHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    technicianId?: IntFieldUpdateOperationsInput | number
+    problem?: StringFieldUpdateOperationsInput | string
+    startdate?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishdate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -1,0 +1,133 @@
+model WashExpressOwner {
+  id        Int                 @id @default(autoincrement())
+  name      String              @unique
+  call      String              @unique
+  location  String              @unique
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  branchs   WashExpressBranch[]
+}
+
+model WashExpressMember {
+  id               Int                         @id @default(autoincrement())
+  name             String                      @unique
+  call             String                      @unique
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+  topupHistories   WashExpressTopupHistory[]
+  serviceHistories WashExpressServiceHistory[]
+}
+
+model WashExpressTopupHistory {
+  id          Int               @id @default(autoincrement())
+  member      WashExpressMember @relation(fields: [memberId], references: [id])
+  memberId    Int
+  topupAmount Int
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model WashExpressTechnician {
+  id                   Int                             @id @default(autoincrement())
+  name                 String                          @unique
+  call                 String                          @unique
+  createdAt            DateTime                        @default(now())
+  updatedAt            DateTime                        @updatedAt
+  maintenanceHistories WashExpressMaintenanceHistory[]
+}
+
+model WashExpressBranch {
+  id               Int                         @id @default(autoincrement())
+  name             String                      @unique
+  owner            WashExpressOwner            @relation(fields: [ownerId], references: [id])
+  ownerId          Int
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+  machineLists     WashExpressMachineList[]
+  serviceHistories WashExpressServiceHistory[]
+}
+
+enum venderList {
+  TOSHIBA
+  SAMSUNG
+  HITACHI
+}
+
+model WashExpressMachineBrand {
+  id           Int                      @id @default(autoincrement())
+  name         venderList
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+  machineLists WashExpressMachineList[]
+}
+
+enum machineType {
+  WASHER
+  DRYER
+}
+
+model WashExpressMachineType {
+  id              Int                         @id @default(autoincrement())
+  name            machineType
+  createdAt       DateTime                    @default(now())
+  updatedAt       DateTime                    @updatedAt
+  machinePrograms WashExpressMachineProgram[]
+  machineLists    WashExpressMachineList[]
+}
+
+model WashExpressMachineProgram {
+  id               Int                         @id @default(autoincrement())
+  type             WashExpressMachineType      @relation(fields: [typeId], references: [id])
+  typeId           Int
+  name             machineType
+  timeMinites      Int
+  priceBath        Int
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+  machineLists     WashExpressMachineList[]
+  serviceHistories WashExpressServiceHistory[]
+}
+
+model WashExpressMachineList {
+  id                            Int                             @id @default(autoincrement())
+  brand                         WashExpressMachineBrand         @relation(fields: [brandId], references: [id])
+  brandId                       Int
+  type                          WashExpressMachineType          @relation(fields: [typeId], references: [id])
+  typeId                        Int
+  branch                        WashExpressBranch               @relation(fields: [branchId], references: [id])
+  branchId                      Int
+  programs                      WashExpressMachineProgram[]
+  installDate                   DateTime
+  createdAt                     DateTime                        @default(now())
+  updatedAt                     DateTime                        @updatedAt
+  serviceHistories              WashExpressServiceHistory[]
+  WashExpressMaintenanceHistory WashExpressMaintenanceHistory[]
+}
+
+model WashExpressServiceHistory {
+  id            Int                       @id @default(autoincrement())
+  machine       WashExpressMachineList    @relation(fields: [machineId], references: [id])
+  machineId     Int
+  member        WashExpressMember         @relation(fields: [memberId], references: [id])
+  memberId      Int
+  branch        WashExpressBranch         @relation(fields: [branchId], references: [id])
+  branchId      Int
+  program       WashExpressMachineProgram @relation(fields: [programId], references: [id])
+  programId     Int
+  recordedPrice Int
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+}
+
+model WashExpressMaintenanceHistory {
+  id           Int                    @id @default(autoincrement())
+  machine      WashExpressMachineList @relation(fields: [machineId], references: [id])
+  machineId    Int
+  technician   WashExpressTechnician  @relation(fields: [technicianId], references: [id])
+  technicianId Int
+  problem      String
+  startdate    DateTime
+  finishdate   DateTime
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}

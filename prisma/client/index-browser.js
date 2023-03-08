@@ -367,6 +367,103 @@ exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.WashExpressBranchScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMachineBrandScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMachineListScalarFieldEnum = makeEnum({
+  id: 'id',
+  brandId: 'brandId',
+  typeId: 'typeId',
+  branchId: 'branchId',
+  installDate: 'installDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMachineProgramScalarFieldEnum = makeEnum({
+  id: 'id',
+  typeId: 'typeId',
+  name: 'name',
+  timeMinites: 'timeMinites',
+  priceBath: 'priceBath',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMachineTypeScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMaintenanceHistoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  machineId: 'machineId',
+  technicianId: 'technicianId',
+  problem: 'problem',
+  startdate: 'startdate',
+  finishdate: 'finishdate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressMemberScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  call: 'call',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressOwnerScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  call: 'call',
+  location: 'location',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressServiceHistoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  machineId: 'machineId',
+  memberId: 'memberId',
+  branchId: 'branchId',
+  programId: 'programId',
+  recordedPrice: 'recordedPrice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressTechnicianScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  call: 'call',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashExpressTopupHistoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  memberId: 'memberId',
+  topupAmount: 'topupAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.YoutubeChanelPermissionScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -476,6 +573,17 @@ exports.YoutubePermissionEnum = makeEnum({
   ADMIN: 'ADMIN'
 });
 
+exports.machineType = makeEnum({
+  WASHER: 'WASHER',
+  DRYER: 'DRYER'
+});
+
+exports.venderList = makeEnum({
+  TOSHIBA: 'TOSHIBA',
+  SAMSUNG: 'SAMSUNG',
+  HITACHI: 'HITACHI'
+});
+
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
   BinKitchenMenu: 'BinKitchenMenu',
@@ -493,6 +601,17 @@ exports.Prisma.ModelName = makeEnum({
   TwitterHashTag: 'TwitterHashTag',
   TwitterReply: 'TwitterReply',
   TwitterDM: 'TwitterDM',
+  WashExpressOwner: 'WashExpressOwner',
+  WashExpressMember: 'WashExpressMember',
+  WashExpressTopupHistory: 'WashExpressTopupHistory',
+  WashExpressTechnician: 'WashExpressTechnician',
+  WashExpressBranch: 'WashExpressBranch',
+  WashExpressMachineBrand: 'WashExpressMachineBrand',
+  WashExpressMachineType: 'WashExpressMachineType',
+  WashExpressMachineProgram: 'WashExpressMachineProgram',
+  WashExpressMachineList: 'WashExpressMachineList',
+  WashExpressServiceHistory: 'WashExpressServiceHistory',
+  WashExpressMaintenanceHistory: 'WashExpressMaintenanceHistory',
   YoutubeUser: 'YoutubeUser',
   YoutubeChanelPermission: 'YoutubeChanelPermission',
   YoutubeChanel: 'YoutubeChanel',
