@@ -210,6 +210,149 @@ export type TwitterDM = {
 }
 
 /**
+ * Model YoutubeUser
+ * 
+ */
+export type YoutubeUser = {
+  id: number
+  profileImage: string
+  email: string
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeChanelPermission
+ * 
+ */
+export type YoutubeChanelPermission = {
+  id: number
+  name: YoutubePermissionEnum
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeChanel
+ * 
+ */
+export type YoutubeChanel = {
+  id: number
+  ChanelImage: string
+  coverImage: string
+  name: string
+  description: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeChanelToUserPermission
+ * 
+ */
+export type YoutubeChanelToUserPermission = {
+  id: number
+  chanelId: number
+  UserId: number
+  permissionId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeHashtag
+ * 
+ */
+export type YoutubeHashtag = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubePost
+ * 
+ */
+export type YoutubePost = {
+  id: number
+  video: string
+  name: string
+  description: string
+  posterUserId: number
+  chanelId: number
+  isShared: boolean
+  shareFromPostId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeComment
+ * 
+ */
+export type YoutubeComment = {
+  id: number
+  message: string
+  commentByUserId: number
+  postId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeLikeType
+ * 
+ */
+export type YoutubeLikeType = {
+  id: number
+  emoji: string
+  name: YoutubeLikeTypeEnum
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeLikePost
+ * 
+ */
+export type YoutubeLikePost = {
+  id: number
+  postId: number
+  likeByUserId: number
+  likeTypeId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeLikeComment
+ * 
+ */
+export type YoutubeLikeComment = {
+  id: number
+  commentId: number
+  likeByUserId: number
+  likeTypeId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model YoutubeSubcriber
+ * 
+ */
+export type YoutubeSubcriber = {
+  id: number
+  fromUserId: number
+  toChanelId: number
+  isSupported: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model FacebookUser
  * 
  */
@@ -390,6 +533,30 @@ export type FacebookMessenger = {
   createdAt: Date
   updatedAt: Date
 }
+
+
+/**
+ * Enums
+ */
+
+// Based on
+// https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
+
+export const YoutubeLikeTypeEnum: {
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+};
+
+export type YoutubeLikeTypeEnum = (typeof YoutubeLikeTypeEnum)[keyof typeof YoutubeLikeTypeEnum]
+
+
+export const YoutubePermissionEnum: {
+  OWNER: 'OWNER',
+  EDITOR: 'EDITOR',
+  ADMIN: 'ADMIN'
+};
+
+export type YoutubePermissionEnum = (typeof YoutubePermissionEnum)[keyof typeof YoutubePermissionEnum]
 
 
 /**
@@ -668,6 +835,116 @@ export class PrismaClient<
     * ```
     */
   get twitterDM(): Prisma.TwitterDMDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeUser`: Exposes CRUD operations for the **YoutubeUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeUsers
+    * const youtubeUsers = await prisma.youtubeUser.findMany()
+    * ```
+    */
+  get youtubeUser(): Prisma.YoutubeUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeChanelPermission`: Exposes CRUD operations for the **YoutubeChanelPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeChanelPermissions
+    * const youtubeChanelPermissions = await prisma.youtubeChanelPermission.findMany()
+    * ```
+    */
+  get youtubeChanelPermission(): Prisma.YoutubeChanelPermissionDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeChanel`: Exposes CRUD operations for the **YoutubeChanel** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeChanels
+    * const youtubeChanels = await prisma.youtubeChanel.findMany()
+    * ```
+    */
+  get youtubeChanel(): Prisma.YoutubeChanelDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeChanelToUserPermission`: Exposes CRUD operations for the **YoutubeChanelToUserPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeChanelToUserPermissions
+    * const youtubeChanelToUserPermissions = await prisma.youtubeChanelToUserPermission.findMany()
+    * ```
+    */
+  get youtubeChanelToUserPermission(): Prisma.YoutubeChanelToUserPermissionDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeHashtag`: Exposes CRUD operations for the **YoutubeHashtag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeHashtags
+    * const youtubeHashtags = await prisma.youtubeHashtag.findMany()
+    * ```
+    */
+  get youtubeHashtag(): Prisma.YoutubeHashtagDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubePost`: Exposes CRUD operations for the **YoutubePost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubePosts
+    * const youtubePosts = await prisma.youtubePost.findMany()
+    * ```
+    */
+  get youtubePost(): Prisma.YoutubePostDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeComment`: Exposes CRUD operations for the **YoutubeComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeComments
+    * const youtubeComments = await prisma.youtubeComment.findMany()
+    * ```
+    */
+  get youtubeComment(): Prisma.YoutubeCommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeLikeType`: Exposes CRUD operations for the **YoutubeLikeType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeLikeTypes
+    * const youtubeLikeTypes = await prisma.youtubeLikeType.findMany()
+    * ```
+    */
+  get youtubeLikeType(): Prisma.YoutubeLikeTypeDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeLikePost`: Exposes CRUD operations for the **YoutubeLikePost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeLikePosts
+    * const youtubeLikePosts = await prisma.youtubeLikePost.findMany()
+    * ```
+    */
+  get youtubeLikePost(): Prisma.YoutubeLikePostDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeLikeComment`: Exposes CRUD operations for the **YoutubeLikeComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeLikeComments
+    * const youtubeLikeComments = await prisma.youtubeLikeComment.findMany()
+    * ```
+    */
+  get youtubeLikeComment(): Prisma.YoutubeLikeCommentDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youtubeSubcriber`: Exposes CRUD operations for the **YoutubeSubcriber** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubeSubcribers
+    * const youtubeSubcribers = await prisma.youtubeSubcriber.findMany()
+    * ```
+    */
+  get youtubeSubcriber(): Prisma.YoutubeSubcriberDelegate<GlobalReject>;
 
   /**
    * `prisma.facebookUser`: Exposes CRUD operations for the **FacebookUser** model.
@@ -1293,6 +1570,17 @@ export namespace Prisma {
     TwitterHashTag: 'TwitterHashTag',
     TwitterReply: 'TwitterReply',
     TwitterDM: 'TwitterDM',
+    YoutubeUser: 'YoutubeUser',
+    YoutubeChanelPermission: 'YoutubeChanelPermission',
+    YoutubeChanel: 'YoutubeChanel',
+    YoutubeChanelToUserPermission: 'YoutubeChanelToUserPermission',
+    YoutubeHashtag: 'YoutubeHashtag',
+    YoutubePost: 'YoutubePost',
+    YoutubeComment: 'YoutubeComment',
+    YoutubeLikeType: 'YoutubeLikeType',
+    YoutubeLikePost: 'YoutubeLikePost',
+    YoutubeLikeComment: 'YoutubeLikeComment',
+    YoutubeSubcriber: 'YoutubeSubcriber',
     FacebookUser: 'FacebookUser',
     FacebookGroup: 'FacebookGroup',
     FacebookPostDestination: 'FacebookPostDestination',
@@ -1914,6 +2202,286 @@ export namespace Prisma {
 
 
   /**
+   * Count Type YoutubeUserCountOutputType
+   */
+
+
+  export type YoutubeUserCountOutputType = {
+    chanelToUserPermissions: number
+    posts: number
+    comments: number
+    likePosts: number
+    likeComments: number
+    subcribers: number
+  }
+
+  export type YoutubeUserCountOutputTypeSelect = {
+    chanelToUserPermissions?: boolean
+    posts?: boolean
+    comments?: boolean
+    likePosts?: boolean
+    likeComments?: boolean
+    subcribers?: boolean
+  }
+
+  export type YoutubeUserCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubeUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeUserCountOutputTypeArgs)
+    ? YoutubeUserCountOutputType 
+    : S extends { select: any } & (YoutubeUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubeUserCountOutputType ? YoutubeUserCountOutputType[P] : never
+  } 
+      : YoutubeUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeUserCountOutputType without action
+   */
+  export type YoutubeUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUserCountOutputType
+     */
+    select?: YoutubeUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YoutubeChanelPermissionCountOutputType
+   */
+
+
+  export type YoutubeChanelPermissionCountOutputType = {
+    chanelToUserPermissions: number
+  }
+
+  export type YoutubeChanelPermissionCountOutputTypeSelect = {
+    chanelToUserPermissions?: boolean
+  }
+
+  export type YoutubeChanelPermissionCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubeChanelPermissionCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeChanelPermissionCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeChanelPermissionCountOutputTypeArgs)
+    ? YoutubeChanelPermissionCountOutputType 
+    : S extends { select: any } & (YoutubeChanelPermissionCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubeChanelPermissionCountOutputType ? YoutubeChanelPermissionCountOutputType[P] : never
+  } 
+      : YoutubeChanelPermissionCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeChanelPermissionCountOutputType without action
+   */
+  export type YoutubeChanelPermissionCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermissionCountOutputType
+     */
+    select?: YoutubeChanelPermissionCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YoutubeChanelCountOutputType
+   */
+
+
+  export type YoutubeChanelCountOutputType = {
+    chanelToUserPermissions: number
+    posts: number
+    subcribers: number
+  }
+
+  export type YoutubeChanelCountOutputTypeSelect = {
+    chanelToUserPermissions?: boolean
+    posts?: boolean
+    subcribers?: boolean
+  }
+
+  export type YoutubeChanelCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubeChanelCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeChanelCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeChanelCountOutputTypeArgs)
+    ? YoutubeChanelCountOutputType 
+    : S extends { select: any } & (YoutubeChanelCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubeChanelCountOutputType ? YoutubeChanelCountOutputType[P] : never
+  } 
+      : YoutubeChanelCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeChanelCountOutputType without action
+   */
+  export type YoutubeChanelCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelCountOutputType
+     */
+    select?: YoutubeChanelCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YoutubeHashtagCountOutputType
+   */
+
+
+  export type YoutubeHashtagCountOutputType = {
+    posts: number
+  }
+
+  export type YoutubeHashtagCountOutputTypeSelect = {
+    posts?: boolean
+  }
+
+  export type YoutubeHashtagCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubeHashtagCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeHashtagCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeHashtagCountOutputTypeArgs)
+    ? YoutubeHashtagCountOutputType 
+    : S extends { select: any } & (YoutubeHashtagCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubeHashtagCountOutputType ? YoutubeHashtagCountOutputType[P] : never
+  } 
+      : YoutubeHashtagCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeHashtagCountOutputType without action
+   */
+  export type YoutubeHashtagCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtagCountOutputType
+     */
+    select?: YoutubeHashtagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YoutubePostCountOutputType
+   */
+
+
+  export type YoutubePostCountOutputType = {
+    hashtags: number
+    comments: number
+    likePosts: number
+    likeComments: number
+  }
+
+  export type YoutubePostCountOutputTypeSelect = {
+    hashtags?: boolean
+    comments?: boolean
+    likePosts?: boolean
+    likeComments?: boolean
+  }
+
+  export type YoutubePostCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubePostCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubePostCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubePostCountOutputTypeArgs)
+    ? YoutubePostCountOutputType 
+    : S extends { select: any } & (YoutubePostCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubePostCountOutputType ? YoutubePostCountOutputType[P] : never
+  } 
+      : YoutubePostCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubePostCountOutputType without action
+   */
+  export type YoutubePostCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePostCountOutputType
+     */
+    select?: YoutubePostCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YoutubeLikeTypeCountOutputType
+   */
+
+
+  export type YoutubeLikeTypeCountOutputType = {
+    likePosts: number
+    likeComments: number
+  }
+
+  export type YoutubeLikeTypeCountOutputTypeSelect = {
+    likePosts?: boolean
+    likeComments?: boolean
+  }
+
+  export type YoutubeLikeTypeCountOutputTypeGetPayload<S extends boolean | null | undefined | YoutubeLikeTypeCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeLikeTypeCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeLikeTypeCountOutputTypeArgs)
+    ? YoutubeLikeTypeCountOutputType 
+    : S extends { select: any } & (YoutubeLikeTypeCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YoutubeLikeTypeCountOutputType ? YoutubeLikeTypeCountOutputType[P] : never
+  } 
+      : YoutubeLikeTypeCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeLikeTypeCountOutputType without action
+   */
+  export type YoutubeLikeTypeCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeTypeCountOutputType
+     */
+    select?: YoutubeLikeTypeCountOutputTypeSelect | null
+  }
+
+
+
+  /**
    * Count Type FacebookUserCountOutputType
    */
 
@@ -1984,11 +2552,11 @@ export namespace Prisma {
 
 
   export type FacebookGroupCountOutputType = {
-    memberUser: number
+    memberUsers: number
   }
 
   export type FacebookGroupCountOutputTypeSelect = {
-    memberUser?: boolean
+    memberUsers?: boolean
   }
 
   export type FacebookGroupCountOutputTypeGetPayload<S extends boolean | null | undefined | FacebookGroupCountOutputTypeArgs> =
@@ -18351,6 +18919,11280 @@ export namespace Prisma {
 
 
   /**
+   * Model YoutubeUser
+   */
+
+
+  export type AggregateYoutubeUser = {
+    _count: YoutubeUserCountAggregateOutputType | null
+    _avg: YoutubeUserAvgAggregateOutputType | null
+    _sum: YoutubeUserSumAggregateOutputType | null
+    _min: YoutubeUserMinAggregateOutputType | null
+    _max: YoutubeUserMaxAggregateOutputType | null
+  }
+
+  export type YoutubeUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeUserMinAggregateOutputType = {
+    id: number | null
+    profileImage: string | null
+    email: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeUserMaxAggregateOutputType = {
+    id: number | null
+    profileImage: string | null
+    email: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeUserCountAggregateOutputType = {
+    id: number
+    profileImage: number
+    email: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeUserMinAggregateInputType = {
+    id?: true
+    profileImage?: true
+    email?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeUserMaxAggregateInputType = {
+    id?: true
+    profileImage?: true
+    email?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeUserCountAggregateInputType = {
+    id?: true
+    profileImage?: true
+    email?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeUserAggregateArgs = {
+    /**
+     * Filter which YoutubeUser to aggregate.
+     */
+    where?: YoutubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeUsers
+    **/
+    _count?: true | YoutubeUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeUserMaxAggregateInputType
+  }
+
+  export type GetYoutubeUserAggregateType<T extends YoutubeUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeUser[P]>
+      : GetScalarType<T[P], AggregateYoutubeUser[P]>
+  }
+
+
+
+
+  export type YoutubeUserGroupByArgs = {
+    where?: YoutubeUserWhereInput
+    orderBy?: Enumerable<YoutubeUserOrderByWithAggregationInput>
+    by: YoutubeUserScalarFieldEnum[]
+    having?: YoutubeUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeUserCountAggregateInputType | true
+    _avg?: YoutubeUserAvgAggregateInputType
+    _sum?: YoutubeUserSumAggregateInputType
+    _min?: YoutubeUserMinAggregateInputType
+    _max?: YoutubeUserMaxAggregateInputType
+  }
+
+
+  export type YoutubeUserGroupByOutputType = {
+    id: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeUserCountAggregateOutputType | null
+    _avg: YoutubeUserAvgAggregateOutputType | null
+    _sum: YoutubeUserSumAggregateOutputType | null
+    _min: YoutubeUserMinAggregateOutputType | null
+    _max: YoutubeUserMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeUserGroupByPayload<T extends YoutubeUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeUserGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeUserSelect = {
+    id?: boolean
+    profileImage?: boolean
+    email?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chanelToUserPermissions?: boolean | YoutubeUser$chanelToUserPermissionsArgs
+    posts?: boolean | YoutubeUser$postsArgs
+    comments?: boolean | YoutubeUser$commentsArgs
+    likePosts?: boolean | YoutubeUser$likePostsArgs
+    likeComments?: boolean | YoutubeUser$likeCommentsArgs
+    subcribers?: boolean | YoutubeUser$subcribersArgs
+    _count?: boolean | YoutubeUserCountOutputTypeArgs
+  }
+
+
+  export type YoutubeUserInclude = {
+    chanelToUserPermissions?: boolean | YoutubeUser$chanelToUserPermissionsArgs
+    posts?: boolean | YoutubeUser$postsArgs
+    comments?: boolean | YoutubeUser$commentsArgs
+    likePosts?: boolean | YoutubeUser$likePostsArgs
+    likeComments?: boolean | YoutubeUser$likeCommentsArgs
+    subcribers?: boolean | YoutubeUser$subcribersArgs
+    _count?: boolean | YoutubeUserCountOutputTypeArgs
+  }
+
+  export type YoutubeUserGetPayload<S extends boolean | null | undefined | YoutubeUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeUser :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeUserArgs | YoutubeUserFindManyArgs)
+    ? YoutubeUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['include'][P]>>  :
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['include'][P]>>  :
+        P extends 'comments' ? Array < YoutubeCommentGetPayload<S['include'][P]>>  :
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['include'][P]>>  :
+        P extends 'subcribers' ? Array < YoutubeSubcriberGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubeUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeUserArgs | YoutubeUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['select'][P]>>  :
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['select'][P]>>  :
+        P extends 'comments' ? Array < YoutubeCommentGetPayload<S['select'][P]>>  :
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['select'][P]>>  :
+        P extends 'subcribers' ? Array < YoutubeSubcriberGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubeUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeUser ? YoutubeUser[P] : never
+  } 
+      : YoutubeUser
+
+
+  type YoutubeUserCountArgs = 
+    Omit<YoutubeUserFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeUserCountAggregateInputType | true
+    }
+
+  export interface YoutubeUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeUser that matches the filter.
+     * @param {YoutubeUserFindUniqueArgs} args - Arguments to find a YoutubeUser
+     * @example
+     * // Get one YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeUser'> extends True ? Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>> : Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeUserFindUniqueOrThrowArgs} args - Arguments to find a YoutubeUser
+     * @example
+     * // Get one YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeUserFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Find the first YoutubeUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserFindFirstArgs} args - Arguments to find a YoutubeUser
+     * @example
+     * // Get one YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeUser'> extends True ? Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>> : Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserFindFirstOrThrowArgs} args - Arguments to find a YoutubeUser
+     * @example
+     * // Get one YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeUserFindFirstOrThrowArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeUsers
+     * const youtubeUsers = await prisma.youtubeUser.findMany()
+     * 
+     * // Get first 10 YoutubeUsers
+     * const youtubeUsers = await prisma.youtubeUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeUserWithIdOnly = await prisma.youtubeUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeUserFindManyArgs>(
+      args?: SelectSubset<T, YoutubeUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeUserGetPayload<T>>>
+
+    /**
+     * Create a YoutubeUser.
+     * @param {YoutubeUserCreateArgs} args - Arguments to create a YoutubeUser.
+     * @example
+     * // Create one YoutubeUser
+     * const YoutubeUser = await prisma.youtubeUser.create({
+     *   data: {
+     *     // ... data to create a YoutubeUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeUserCreateArgs>(
+      args: SelectSubset<T, YoutubeUserCreateArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Create many YoutubeUsers.
+     *     @param {YoutubeUserCreateManyArgs} args - Arguments to create many YoutubeUsers.
+     *     @example
+     *     // Create many YoutubeUsers
+     *     const youtubeUser = await prisma.youtubeUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeUserCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeUser.
+     * @param {YoutubeUserDeleteArgs} args - Arguments to delete one YoutubeUser.
+     * @example
+     * // Delete one YoutubeUser
+     * const YoutubeUser = await prisma.youtubeUser.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeUserDeleteArgs>(
+      args: SelectSubset<T, YoutubeUserDeleteArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Update one YoutubeUser.
+     * @param {YoutubeUserUpdateArgs} args - Arguments to update one YoutubeUser.
+     * @example
+     * // Update one YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeUserUpdateArgs>(
+      args: SelectSubset<T, YoutubeUserUpdateArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeUsers.
+     * @param {YoutubeUserDeleteManyArgs} args - Arguments to filter YoutubeUsers to delete.
+     * @example
+     * // Delete a few YoutubeUsers
+     * const { count } = await prisma.youtubeUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeUserDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeUsers
+     * const youtubeUser = await prisma.youtubeUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeUserUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeUser.
+     * @param {YoutubeUserUpsertArgs} args - Arguments to update or create a YoutubeUser.
+     * @example
+     * // Update or create a YoutubeUser
+     * const youtubeUser = await prisma.youtubeUser.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeUserUpsertArgs>(
+      args: SelectSubset<T, YoutubeUserUpsertArgs>
+    ): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserCountArgs} args - Arguments to filter YoutubeUsers to count.
+     * @example
+     * // Count the number of YoutubeUsers
+     * const count = await prisma.youtubeUser.count({
+     *   where: {
+     *     // ... the filter for the YoutubeUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeUserCountArgs>(
+      args?: Subset<T, YoutubeUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeUserAggregateArgs>(args: Subset<T, YoutubeUserAggregateArgs>): Prisma.PrismaPromise<GetYoutubeUserAggregateType<T>>
+
+    /**
+     * Group by YoutubeUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeUserGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    chanelToUserPermissions<T extends YoutubeUser$chanelToUserPermissionsArgs= {}>(args?: Subset<T, YoutubeUser$chanelToUserPermissionsArgs>): Prisma.PrismaPromise<Array<YoutubeChanelToUserPermissionGetPayload<T>>| Null>;
+
+    posts<T extends YoutubeUser$postsArgs= {}>(args?: Subset<T, YoutubeUser$postsArgs>): Prisma.PrismaPromise<Array<YoutubePostGetPayload<T>>| Null>;
+
+    comments<T extends YoutubeUser$commentsArgs= {}>(args?: Subset<T, YoutubeUser$commentsArgs>): Prisma.PrismaPromise<Array<YoutubeCommentGetPayload<T>>| Null>;
+
+    likePosts<T extends YoutubeUser$likePostsArgs= {}>(args?: Subset<T, YoutubeUser$likePostsArgs>): Prisma.PrismaPromise<Array<YoutubeLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends YoutubeUser$likeCommentsArgs= {}>(args?: Subset<T, YoutubeUser$likeCommentsArgs>): Prisma.PrismaPromise<Array<YoutubeLikeCommentGetPayload<T>>| Null>;
+
+    subcribers<T extends YoutubeUser$subcribersArgs= {}>(args?: Subset<T, YoutubeUser$subcribersArgs>): Prisma.PrismaPromise<Array<YoutubeSubcriberGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeUser base type for findUnique actions
+   */
+  export type YoutubeUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter, which YoutubeUser to fetch.
+     */
+    where: YoutubeUserWhereUniqueInput
+  }
+
+  /**
+   * YoutubeUser findUnique
+   */
+  export interface YoutubeUserFindUniqueArgs extends YoutubeUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeUser findUniqueOrThrow
+   */
+  export type YoutubeUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter, which YoutubeUser to fetch.
+     */
+    where: YoutubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeUser base type for findFirst actions
+   */
+  export type YoutubeUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter, which YoutubeUser to fetch.
+     */
+    where?: YoutubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeUsers.
+     */
+    cursor?: YoutubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeUsers.
+     */
+    distinct?: Enumerable<YoutubeUserScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeUser findFirst
+   */
+  export interface YoutubeUserFindFirstArgs extends YoutubeUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeUser findFirstOrThrow
+   */
+  export type YoutubeUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter, which YoutubeUser to fetch.
+     */
+    where?: YoutubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeUsers.
+     */
+    cursor?: YoutubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeUsers.
+     */
+    distinct?: Enumerable<YoutubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser findMany
+   */
+  export type YoutubeUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter, which YoutubeUsers to fetch.
+     */
+    where?: YoutubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeUsers.
+     */
+    cursor?: YoutubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser create
+   */
+  export type YoutubeUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * The data needed to create a YoutubeUser.
+     */
+    data: XOR<YoutubeUserCreateInput, YoutubeUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeUser createMany
+   */
+  export type YoutubeUserCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeUsers.
+     */
+    data: Enumerable<YoutubeUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeUser update
+   */
+  export type YoutubeUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * The data needed to update a YoutubeUser.
+     */
+    data: XOR<YoutubeUserUpdateInput, YoutubeUserUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeUser to update.
+     */
+    where: YoutubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeUser updateMany
+   */
+  export type YoutubeUserUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeUsers.
+     */
+    data: XOR<YoutubeUserUpdateManyMutationInput, YoutubeUserUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeUsers to update
+     */
+    where?: YoutubeUserWhereInput
+  }
+
+
+  /**
+   * YoutubeUser upsert
+   */
+  export type YoutubeUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * The filter to search for the YoutubeUser to update in case it exists.
+     */
+    where: YoutubeUserWhereUniqueInput
+    /**
+     * In case the YoutubeUser found by the `where` argument doesn't exist, create a new YoutubeUser with this data.
+     */
+    create: XOR<YoutubeUserCreateInput, YoutubeUserUncheckedCreateInput>
+    /**
+     * In case the YoutubeUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeUserUpdateInput, YoutubeUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeUser delete
+   */
+  export type YoutubeUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+    /**
+     * Filter which YoutubeUser to delete.
+     */
+    where: YoutubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeUser deleteMany
+   */
+  export type YoutubeUserDeleteManyArgs = {
+    /**
+     * Filter which YoutubeUsers to delete
+     */
+    where?: YoutubeUserWhereInput
+  }
+
+
+  /**
+   * YoutubeUser.chanelToUserPermissions
+   */
+  export type YoutubeUser$chanelToUserPermissionsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    where?: YoutubeChanelToUserPermissionWhereInput
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser.posts
+   */
+  export type YoutubeUser$postsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    where?: YoutubePostWhereInput
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    cursor?: YoutubePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser.comments
+   */
+  export type YoutubeUser$commentsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    where?: YoutubeCommentWhereInput
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    cursor?: YoutubeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser.likePosts
+   */
+  export type YoutubeUser$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    where?: YoutubeLikePostWhereInput
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    cursor?: YoutubeLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser.likeComments
+   */
+  export type YoutubeUser$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    where?: YoutubeLikeCommentWhereInput
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser.subcribers
+   */
+  export type YoutubeUser$subcribersArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    where?: YoutubeSubcriberWhereInput
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeSubcriberScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeUser without action
+   */
+  export type YoutubeUserArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeUser
+     */
+    select?: YoutubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeUserInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeChanelPermission
+   */
+
+
+  export type AggregateYoutubeChanelPermission = {
+    _count: YoutubeChanelPermissionCountAggregateOutputType | null
+    _avg: YoutubeChanelPermissionAvgAggregateOutputType | null
+    _sum: YoutubeChanelPermissionSumAggregateOutputType | null
+    _min: YoutubeChanelPermissionMinAggregateOutputType | null
+    _max: YoutubeChanelPermissionMaxAggregateOutputType | null
+  }
+
+  export type YoutubeChanelPermissionAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeChanelPermissionSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeChanelPermissionMinAggregateOutputType = {
+    id: number | null
+    name: YoutubePermissionEnum | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelPermissionMaxAggregateOutputType = {
+    id: number | null
+    name: YoutubePermissionEnum | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelPermissionCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeChanelPermissionAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeChanelPermissionSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeChanelPermissionMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelPermissionMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelPermissionCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeChanelPermissionAggregateArgs = {
+    /**
+     * Filter which YoutubeChanelPermission to aggregate.
+     */
+    where?: YoutubeChanelPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeChanelPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeChanelPermissions
+    **/
+    _count?: true | YoutubeChanelPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeChanelPermissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeChanelPermissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeChanelPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeChanelPermissionMaxAggregateInputType
+  }
+
+  export type GetYoutubeChanelPermissionAggregateType<T extends YoutubeChanelPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeChanelPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeChanelPermission[P]>
+      : GetScalarType<T[P], AggregateYoutubeChanelPermission[P]>
+  }
+
+
+
+
+  export type YoutubeChanelPermissionGroupByArgs = {
+    where?: YoutubeChanelPermissionWhereInput
+    orderBy?: Enumerable<YoutubeChanelPermissionOrderByWithAggregationInput>
+    by: YoutubeChanelPermissionScalarFieldEnum[]
+    having?: YoutubeChanelPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeChanelPermissionCountAggregateInputType | true
+    _avg?: YoutubeChanelPermissionAvgAggregateInputType
+    _sum?: YoutubeChanelPermissionSumAggregateInputType
+    _min?: YoutubeChanelPermissionMinAggregateInputType
+    _max?: YoutubeChanelPermissionMaxAggregateInputType
+  }
+
+
+  export type YoutubeChanelPermissionGroupByOutputType = {
+    id: number
+    name: YoutubePermissionEnum
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeChanelPermissionCountAggregateOutputType | null
+    _avg: YoutubeChanelPermissionAvgAggregateOutputType | null
+    _sum: YoutubeChanelPermissionSumAggregateOutputType | null
+    _min: YoutubeChanelPermissionMinAggregateOutputType | null
+    _max: YoutubeChanelPermissionMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeChanelPermissionGroupByPayload<T extends YoutubeChanelPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeChanelPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeChanelPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeChanelPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeChanelPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeChanelPermissionSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chanelToUserPermissions?: boolean | YoutubeChanelPermission$chanelToUserPermissionsArgs
+    _count?: boolean | YoutubeChanelPermissionCountOutputTypeArgs
+  }
+
+
+  export type YoutubeChanelPermissionInclude = {
+    chanelToUserPermissions?: boolean | YoutubeChanelPermission$chanelToUserPermissionsArgs
+    _count?: boolean | YoutubeChanelPermissionCountOutputTypeArgs
+  }
+
+  export type YoutubeChanelPermissionGetPayload<S extends boolean | null | undefined | YoutubeChanelPermissionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeChanelPermission :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeChanelPermissionArgs | YoutubeChanelPermissionFindManyArgs)
+    ? YoutubeChanelPermission  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubeChanelPermissionCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeChanelPermissionArgs | YoutubeChanelPermissionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubeChanelPermissionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeChanelPermission ? YoutubeChanelPermission[P] : never
+  } 
+      : YoutubeChanelPermission
+
+
+  type YoutubeChanelPermissionCountArgs = 
+    Omit<YoutubeChanelPermissionFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeChanelPermissionCountAggregateInputType | true
+    }
+
+  export interface YoutubeChanelPermissionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeChanelPermission that matches the filter.
+     * @param {YoutubeChanelPermissionFindUniqueArgs} args - Arguments to find a YoutubeChanelPermission
+     * @example
+     * // Get one YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeChanelPermissionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeChanelPermissionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeChanelPermission'> extends True ? Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>> : Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeChanelPermission that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeChanelPermissionFindUniqueOrThrowArgs} args - Arguments to find a YoutubeChanelPermission
+     * @example
+     * // Get one YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeChanelPermissionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelPermissionFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Find the first YoutubeChanelPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionFindFirstArgs} args - Arguments to find a YoutubeChanelPermission
+     * @example
+     * // Get one YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeChanelPermissionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeChanelPermissionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeChanelPermission'> extends True ? Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>> : Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeChanelPermission that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionFindFirstOrThrowArgs} args - Arguments to find a YoutubeChanelPermission
+     * @example
+     * // Get one YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeChanelPermissionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelPermissionFindFirstOrThrowArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeChanelPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeChanelPermissions
+     * const youtubeChanelPermissions = await prisma.youtubeChanelPermission.findMany()
+     * 
+     * // Get first 10 YoutubeChanelPermissions
+     * const youtubeChanelPermissions = await prisma.youtubeChanelPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeChanelPermissionWithIdOnly = await prisma.youtubeChanelPermission.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeChanelPermissionFindManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelPermissionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeChanelPermissionGetPayload<T>>>
+
+    /**
+     * Create a YoutubeChanelPermission.
+     * @param {YoutubeChanelPermissionCreateArgs} args - Arguments to create a YoutubeChanelPermission.
+     * @example
+     * // Create one YoutubeChanelPermission
+     * const YoutubeChanelPermission = await prisma.youtubeChanelPermission.create({
+     *   data: {
+     *     // ... data to create a YoutubeChanelPermission
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeChanelPermissionCreateArgs>(
+      args: SelectSubset<T, YoutubeChanelPermissionCreateArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Create many YoutubeChanelPermissions.
+     *     @param {YoutubeChanelPermissionCreateManyArgs} args - Arguments to create many YoutubeChanelPermissions.
+     *     @example
+     *     // Create many YoutubeChanelPermissions
+     *     const youtubeChanelPermission = await prisma.youtubeChanelPermission.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeChanelPermissionCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelPermissionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeChanelPermission.
+     * @param {YoutubeChanelPermissionDeleteArgs} args - Arguments to delete one YoutubeChanelPermission.
+     * @example
+     * // Delete one YoutubeChanelPermission
+     * const YoutubeChanelPermission = await prisma.youtubeChanelPermission.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeChanelPermission
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeChanelPermissionDeleteArgs>(
+      args: SelectSubset<T, YoutubeChanelPermissionDeleteArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Update one YoutubeChanelPermission.
+     * @param {YoutubeChanelPermissionUpdateArgs} args - Arguments to update one YoutubeChanelPermission.
+     * @example
+     * // Update one YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeChanelPermissionUpdateArgs>(
+      args: SelectSubset<T, YoutubeChanelPermissionUpdateArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeChanelPermissions.
+     * @param {YoutubeChanelPermissionDeleteManyArgs} args - Arguments to filter YoutubeChanelPermissions to delete.
+     * @example
+     * // Delete a few YoutubeChanelPermissions
+     * const { count } = await prisma.youtubeChanelPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeChanelPermissionDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelPermissionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeChanelPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeChanelPermissions
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeChanelPermissionUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeChanelPermissionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeChanelPermission.
+     * @param {YoutubeChanelPermissionUpsertArgs} args - Arguments to update or create a YoutubeChanelPermission.
+     * @example
+     * // Update or create a YoutubeChanelPermission
+     * const youtubeChanelPermission = await prisma.youtubeChanelPermission.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeChanelPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeChanelPermission we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeChanelPermissionUpsertArgs>(
+      args: SelectSubset<T, YoutubeChanelPermissionUpsertArgs>
+    ): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeChanelPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionCountArgs} args - Arguments to filter YoutubeChanelPermissions to count.
+     * @example
+     * // Count the number of YoutubeChanelPermissions
+     * const count = await prisma.youtubeChanelPermission.count({
+     *   where: {
+     *     // ... the filter for the YoutubeChanelPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeChanelPermissionCountArgs>(
+      args?: Subset<T, YoutubeChanelPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeChanelPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeChanelPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeChanelPermissionAggregateArgs>(args: Subset<T, YoutubeChanelPermissionAggregateArgs>): Prisma.PrismaPromise<GetYoutubeChanelPermissionAggregateType<T>>
+
+    /**
+     * Group by YoutubeChanelPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeChanelPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeChanelPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeChanelPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeChanelPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeChanelPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeChanelPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeChanelPermissionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    chanelToUserPermissions<T extends YoutubeChanelPermission$chanelToUserPermissionsArgs= {}>(args?: Subset<T, YoutubeChanelPermission$chanelToUserPermissionsArgs>): Prisma.PrismaPromise<Array<YoutubeChanelToUserPermissionGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeChanelPermission base type for findUnique actions
+   */
+  export type YoutubeChanelPermissionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelPermission to fetch.
+     */
+    where: YoutubeChanelPermissionWhereUniqueInput
+  }
+
+  /**
+   * YoutubeChanelPermission findUnique
+   */
+  export interface YoutubeChanelPermissionFindUniqueArgs extends YoutubeChanelPermissionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanelPermission findUniqueOrThrow
+   */
+  export type YoutubeChanelPermissionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelPermission to fetch.
+     */
+    where: YoutubeChanelPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelPermission base type for findFirst actions
+   */
+  export type YoutubeChanelPermissionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelPermission to fetch.
+     */
+    where?: YoutubeChanelPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanelPermissions.
+     */
+    cursor?: YoutubeChanelPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanelPermissions.
+     */
+    distinct?: Enumerable<YoutubeChanelPermissionScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeChanelPermission findFirst
+   */
+  export interface YoutubeChanelPermissionFindFirstArgs extends YoutubeChanelPermissionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanelPermission findFirstOrThrow
+   */
+  export type YoutubeChanelPermissionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelPermission to fetch.
+     */
+    where?: YoutubeChanelPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanelPermissions.
+     */
+    cursor?: YoutubeChanelPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanelPermissions.
+     */
+    distinct?: Enumerable<YoutubeChanelPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanelPermission findMany
+   */
+  export type YoutubeChanelPermissionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelPermissions to fetch.
+     */
+    where?: YoutubeChanelPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeChanelPermissions.
+     */
+    cursor?: YoutubeChanelPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelPermissions.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanelPermission create
+   */
+  export type YoutubeChanelPermissionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * The data needed to create a YoutubeChanelPermission.
+     */
+    data: XOR<YoutubeChanelPermissionCreateInput, YoutubeChanelPermissionUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeChanelPermission createMany
+   */
+  export type YoutubeChanelPermissionCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeChanelPermissions.
+     */
+    data: Enumerable<YoutubeChanelPermissionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeChanelPermission update
+   */
+  export type YoutubeChanelPermissionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * The data needed to update a YoutubeChanelPermission.
+     */
+    data: XOR<YoutubeChanelPermissionUpdateInput, YoutubeChanelPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeChanelPermission to update.
+     */
+    where: YoutubeChanelPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelPermission updateMany
+   */
+  export type YoutubeChanelPermissionUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeChanelPermissions.
+     */
+    data: XOR<YoutubeChanelPermissionUpdateManyMutationInput, YoutubeChanelPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeChanelPermissions to update
+     */
+    where?: YoutubeChanelPermissionWhereInput
+  }
+
+
+  /**
+   * YoutubeChanelPermission upsert
+   */
+  export type YoutubeChanelPermissionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * The filter to search for the YoutubeChanelPermission to update in case it exists.
+     */
+    where: YoutubeChanelPermissionWhereUniqueInput
+    /**
+     * In case the YoutubeChanelPermission found by the `where` argument doesn't exist, create a new YoutubeChanelPermission with this data.
+     */
+    create: XOR<YoutubeChanelPermissionCreateInput, YoutubeChanelPermissionUncheckedCreateInput>
+    /**
+     * In case the YoutubeChanelPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeChanelPermissionUpdateInput, YoutubeChanelPermissionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeChanelPermission delete
+   */
+  export type YoutubeChanelPermissionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+    /**
+     * Filter which YoutubeChanelPermission to delete.
+     */
+    where: YoutubeChanelPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelPermission deleteMany
+   */
+  export type YoutubeChanelPermissionDeleteManyArgs = {
+    /**
+     * Filter which YoutubeChanelPermissions to delete
+     */
+    where?: YoutubeChanelPermissionWhereInput
+  }
+
+
+  /**
+   * YoutubeChanelPermission.chanelToUserPermissions
+   */
+  export type YoutubeChanelPermission$chanelToUserPermissionsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    where?: YoutubeChanelToUserPermissionWhereInput
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanelPermission without action
+   */
+  export type YoutubeChanelPermissionArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelPermission
+     */
+    select?: YoutubeChanelPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelPermissionInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeChanel
+   */
+
+
+  export type AggregateYoutubeChanel = {
+    _count: YoutubeChanelCountAggregateOutputType | null
+    _avg: YoutubeChanelAvgAggregateOutputType | null
+    _sum: YoutubeChanelSumAggregateOutputType | null
+    _min: YoutubeChanelMinAggregateOutputType | null
+    _max: YoutubeChanelMaxAggregateOutputType | null
+  }
+
+  export type YoutubeChanelAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeChanelSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeChanelMinAggregateOutputType = {
+    id: number | null
+    ChanelImage: string | null
+    coverImage: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelMaxAggregateOutputType = {
+    id: number | null
+    ChanelImage: string | null
+    coverImage: string | null
+    name: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelCountAggregateOutputType = {
+    id: number
+    ChanelImage: number
+    coverImage: number
+    name: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeChanelAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeChanelSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeChanelMinAggregateInputType = {
+    id?: true
+    ChanelImage?: true
+    coverImage?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelMaxAggregateInputType = {
+    id?: true
+    ChanelImage?: true
+    coverImage?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelCountAggregateInputType = {
+    id?: true
+    ChanelImage?: true
+    coverImage?: true
+    name?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeChanelAggregateArgs = {
+    /**
+     * Filter which YoutubeChanel to aggregate.
+     */
+    where?: YoutubeChanelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanels to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeChanelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeChanels
+    **/
+    _count?: true | YoutubeChanelCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeChanelAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeChanelSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeChanelMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeChanelMaxAggregateInputType
+  }
+
+  export type GetYoutubeChanelAggregateType<T extends YoutubeChanelAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeChanel]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeChanel[P]>
+      : GetScalarType<T[P], AggregateYoutubeChanel[P]>
+  }
+
+
+
+
+  export type YoutubeChanelGroupByArgs = {
+    where?: YoutubeChanelWhereInput
+    orderBy?: Enumerable<YoutubeChanelOrderByWithAggregationInput>
+    by: YoutubeChanelScalarFieldEnum[]
+    having?: YoutubeChanelScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeChanelCountAggregateInputType | true
+    _avg?: YoutubeChanelAvgAggregateInputType
+    _sum?: YoutubeChanelSumAggregateInputType
+    _min?: YoutubeChanelMinAggregateInputType
+    _max?: YoutubeChanelMaxAggregateInputType
+  }
+
+
+  export type YoutubeChanelGroupByOutputType = {
+    id: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeChanelCountAggregateOutputType | null
+    _avg: YoutubeChanelAvgAggregateOutputType | null
+    _sum: YoutubeChanelSumAggregateOutputType | null
+    _min: YoutubeChanelMinAggregateOutputType | null
+    _max: YoutubeChanelMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeChanelGroupByPayload<T extends YoutubeChanelGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeChanelGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeChanelGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeChanelGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeChanelGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeChanelSelect = {
+    id?: boolean
+    ChanelImage?: boolean
+    coverImage?: boolean
+    name?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chanelToUserPermissions?: boolean | YoutubeChanel$chanelToUserPermissionsArgs
+    posts?: boolean | YoutubeChanel$postsArgs
+    subcribers?: boolean | YoutubeChanel$subcribersArgs
+    _count?: boolean | YoutubeChanelCountOutputTypeArgs
+  }
+
+
+  export type YoutubeChanelInclude = {
+    chanelToUserPermissions?: boolean | YoutubeChanel$chanelToUserPermissionsArgs
+    posts?: boolean | YoutubeChanel$postsArgs
+    subcribers?: boolean | YoutubeChanel$subcribersArgs
+    _count?: boolean | YoutubeChanelCountOutputTypeArgs
+  }
+
+  export type YoutubeChanelGetPayload<S extends boolean | null | undefined | YoutubeChanelArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeChanel :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeChanelArgs | YoutubeChanelFindManyArgs)
+    ? YoutubeChanel  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['include'][P]>>  :
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['include'][P]>>  :
+        P extends 'subcribers' ? Array < YoutubeSubcriberGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubeChanelCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeChanelArgs | YoutubeChanelFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'chanelToUserPermissions' ? Array < YoutubeChanelToUserPermissionGetPayload<S['select'][P]>>  :
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['select'][P]>>  :
+        P extends 'subcribers' ? Array < YoutubeSubcriberGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubeChanelCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeChanel ? YoutubeChanel[P] : never
+  } 
+      : YoutubeChanel
+
+
+  type YoutubeChanelCountArgs = 
+    Omit<YoutubeChanelFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeChanelCountAggregateInputType | true
+    }
+
+  export interface YoutubeChanelDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeChanel that matches the filter.
+     * @param {YoutubeChanelFindUniqueArgs} args - Arguments to find a YoutubeChanel
+     * @example
+     * // Get one YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeChanelFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeChanelFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeChanel'> extends True ? Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>> : Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeChanel that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeChanelFindUniqueOrThrowArgs} args - Arguments to find a YoutubeChanel
+     * @example
+     * // Get one YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeChanelFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Find the first YoutubeChanel that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelFindFirstArgs} args - Arguments to find a YoutubeChanel
+     * @example
+     * // Get one YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeChanelFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeChanelFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeChanel'> extends True ? Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>> : Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeChanel that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelFindFirstOrThrowArgs} args - Arguments to find a YoutubeChanel
+     * @example
+     * // Get one YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeChanelFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelFindFirstOrThrowArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeChanels that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeChanels
+     * const youtubeChanels = await prisma.youtubeChanel.findMany()
+     * 
+     * // Get first 10 YoutubeChanels
+     * const youtubeChanels = await prisma.youtubeChanel.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeChanelWithIdOnly = await prisma.youtubeChanel.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeChanelFindManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeChanelGetPayload<T>>>
+
+    /**
+     * Create a YoutubeChanel.
+     * @param {YoutubeChanelCreateArgs} args - Arguments to create a YoutubeChanel.
+     * @example
+     * // Create one YoutubeChanel
+     * const YoutubeChanel = await prisma.youtubeChanel.create({
+     *   data: {
+     *     // ... data to create a YoutubeChanel
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeChanelCreateArgs>(
+      args: SelectSubset<T, YoutubeChanelCreateArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Create many YoutubeChanels.
+     *     @param {YoutubeChanelCreateManyArgs} args - Arguments to create many YoutubeChanels.
+     *     @example
+     *     // Create many YoutubeChanels
+     *     const youtubeChanel = await prisma.youtubeChanel.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeChanelCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeChanel.
+     * @param {YoutubeChanelDeleteArgs} args - Arguments to delete one YoutubeChanel.
+     * @example
+     * // Delete one YoutubeChanel
+     * const YoutubeChanel = await prisma.youtubeChanel.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeChanel
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeChanelDeleteArgs>(
+      args: SelectSubset<T, YoutubeChanelDeleteArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Update one YoutubeChanel.
+     * @param {YoutubeChanelUpdateArgs} args - Arguments to update one YoutubeChanel.
+     * @example
+     * // Update one YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeChanelUpdateArgs>(
+      args: SelectSubset<T, YoutubeChanelUpdateArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeChanels.
+     * @param {YoutubeChanelDeleteManyArgs} args - Arguments to filter YoutubeChanels to delete.
+     * @example
+     * // Delete a few YoutubeChanels
+     * const { count } = await prisma.youtubeChanel.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeChanelDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeChanels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeChanels
+     * const youtubeChanel = await prisma.youtubeChanel.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeChanelUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeChanelUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeChanel.
+     * @param {YoutubeChanelUpsertArgs} args - Arguments to update or create a YoutubeChanel.
+     * @example
+     * // Update or create a YoutubeChanel
+     * const youtubeChanel = await prisma.youtubeChanel.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeChanel
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeChanel we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeChanelUpsertArgs>(
+      args: SelectSubset<T, YoutubeChanelUpsertArgs>
+    ): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeChanels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelCountArgs} args - Arguments to filter YoutubeChanels to count.
+     * @example
+     * // Count the number of YoutubeChanels
+     * const count = await prisma.youtubeChanel.count({
+     *   where: {
+     *     // ... the filter for the YoutubeChanels we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeChanelCountArgs>(
+      args?: Subset<T, YoutubeChanelCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeChanelCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeChanel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeChanelAggregateArgs>(args: Subset<T, YoutubeChanelAggregateArgs>): Prisma.PrismaPromise<GetYoutubeChanelAggregateType<T>>
+
+    /**
+     * Group by YoutubeChanel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeChanelGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeChanelGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeChanelGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeChanelGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeChanelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeChanel.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeChanelClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    chanelToUserPermissions<T extends YoutubeChanel$chanelToUserPermissionsArgs= {}>(args?: Subset<T, YoutubeChanel$chanelToUserPermissionsArgs>): Prisma.PrismaPromise<Array<YoutubeChanelToUserPermissionGetPayload<T>>| Null>;
+
+    posts<T extends YoutubeChanel$postsArgs= {}>(args?: Subset<T, YoutubeChanel$postsArgs>): Prisma.PrismaPromise<Array<YoutubePostGetPayload<T>>| Null>;
+
+    subcribers<T extends YoutubeChanel$subcribersArgs= {}>(args?: Subset<T, YoutubeChanel$subcribersArgs>): Prisma.PrismaPromise<Array<YoutubeSubcriberGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeChanel base type for findUnique actions
+   */
+  export type YoutubeChanelFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter, which YoutubeChanel to fetch.
+     */
+    where: YoutubeChanelWhereUniqueInput
+  }
+
+  /**
+   * YoutubeChanel findUnique
+   */
+  export interface YoutubeChanelFindUniqueArgs extends YoutubeChanelFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanel findUniqueOrThrow
+   */
+  export type YoutubeChanelFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter, which YoutubeChanel to fetch.
+     */
+    where: YoutubeChanelWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanel base type for findFirst actions
+   */
+  export type YoutubeChanelFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter, which YoutubeChanel to fetch.
+     */
+    where?: YoutubeChanelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanels to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanels.
+     */
+    cursor?: YoutubeChanelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanels.
+     */
+    distinct?: Enumerable<YoutubeChanelScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeChanel findFirst
+   */
+  export interface YoutubeChanelFindFirstArgs extends YoutubeChanelFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanel findFirstOrThrow
+   */
+  export type YoutubeChanelFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter, which YoutubeChanel to fetch.
+     */
+    where?: YoutubeChanelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanels to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanels.
+     */
+    cursor?: YoutubeChanelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanels.
+     */
+    distinct?: Enumerable<YoutubeChanelScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanel findMany
+   */
+  export type YoutubeChanelFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter, which YoutubeChanels to fetch.
+     */
+    where?: YoutubeChanelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanels to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeChanels.
+     */
+    cursor?: YoutubeChanelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanels.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanel create
+   */
+  export type YoutubeChanelCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * The data needed to create a YoutubeChanel.
+     */
+    data: XOR<YoutubeChanelCreateInput, YoutubeChanelUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeChanel createMany
+   */
+  export type YoutubeChanelCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeChanels.
+     */
+    data: Enumerable<YoutubeChanelCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeChanel update
+   */
+  export type YoutubeChanelUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * The data needed to update a YoutubeChanel.
+     */
+    data: XOR<YoutubeChanelUpdateInput, YoutubeChanelUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeChanel to update.
+     */
+    where: YoutubeChanelWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanel updateMany
+   */
+  export type YoutubeChanelUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeChanels.
+     */
+    data: XOR<YoutubeChanelUpdateManyMutationInput, YoutubeChanelUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeChanels to update
+     */
+    where?: YoutubeChanelWhereInput
+  }
+
+
+  /**
+   * YoutubeChanel upsert
+   */
+  export type YoutubeChanelUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * The filter to search for the YoutubeChanel to update in case it exists.
+     */
+    where: YoutubeChanelWhereUniqueInput
+    /**
+     * In case the YoutubeChanel found by the `where` argument doesn't exist, create a new YoutubeChanel with this data.
+     */
+    create: XOR<YoutubeChanelCreateInput, YoutubeChanelUncheckedCreateInput>
+    /**
+     * In case the YoutubeChanel was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeChanelUpdateInput, YoutubeChanelUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeChanel delete
+   */
+  export type YoutubeChanelDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+    /**
+     * Filter which YoutubeChanel to delete.
+     */
+    where: YoutubeChanelWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanel deleteMany
+   */
+  export type YoutubeChanelDeleteManyArgs = {
+    /**
+     * Filter which YoutubeChanels to delete
+     */
+    where?: YoutubeChanelWhereInput
+  }
+
+
+  /**
+   * YoutubeChanel.chanelToUserPermissions
+   */
+  export type YoutubeChanel$chanelToUserPermissionsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    where?: YoutubeChanelToUserPermissionWhereInput
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanel.posts
+   */
+  export type YoutubeChanel$postsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    where?: YoutubePostWhereInput
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    cursor?: YoutubePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanel.subcribers
+   */
+  export type YoutubeChanel$subcribersArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    where?: YoutubeSubcriberWhereInput
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeSubcriberScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanel without action
+   */
+  export type YoutubeChanelArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanel
+     */
+    select?: YoutubeChanelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeChanelToUserPermission
+   */
+
+
+  export type AggregateYoutubeChanelToUserPermission = {
+    _count: YoutubeChanelToUserPermissionCountAggregateOutputType | null
+    _avg: YoutubeChanelToUserPermissionAvgAggregateOutputType | null
+    _sum: YoutubeChanelToUserPermissionSumAggregateOutputType | null
+    _min: YoutubeChanelToUserPermissionMinAggregateOutputType | null
+    _max: YoutubeChanelToUserPermissionMaxAggregateOutputType | null
+  }
+
+  export type YoutubeChanelToUserPermissionAvgAggregateOutputType = {
+    id: number | null
+    chanelId: number | null
+    UserId: number | null
+    permissionId: number | null
+  }
+
+  export type YoutubeChanelToUserPermissionSumAggregateOutputType = {
+    id: number | null
+    chanelId: number | null
+    UserId: number | null
+    permissionId: number | null
+  }
+
+  export type YoutubeChanelToUserPermissionMinAggregateOutputType = {
+    id: number | null
+    chanelId: number | null
+    UserId: number | null
+    permissionId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelToUserPermissionMaxAggregateOutputType = {
+    id: number | null
+    chanelId: number | null
+    UserId: number | null
+    permissionId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeChanelToUserPermissionCountAggregateOutputType = {
+    id: number
+    chanelId: number
+    UserId: number
+    permissionId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeChanelToUserPermissionAvgAggregateInputType = {
+    id?: true
+    chanelId?: true
+    UserId?: true
+    permissionId?: true
+  }
+
+  export type YoutubeChanelToUserPermissionSumAggregateInputType = {
+    id?: true
+    chanelId?: true
+    UserId?: true
+    permissionId?: true
+  }
+
+  export type YoutubeChanelToUserPermissionMinAggregateInputType = {
+    id?: true
+    chanelId?: true
+    UserId?: true
+    permissionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelToUserPermissionMaxAggregateInputType = {
+    id?: true
+    chanelId?: true
+    UserId?: true
+    permissionId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeChanelToUserPermissionCountAggregateInputType = {
+    id?: true
+    chanelId?: true
+    UserId?: true
+    permissionId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeChanelToUserPermissionAggregateArgs = {
+    /**
+     * Filter which YoutubeChanelToUserPermission to aggregate.
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelToUserPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelToUserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelToUserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeChanelToUserPermissions
+    **/
+    _count?: true | YoutubeChanelToUserPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeChanelToUserPermissionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeChanelToUserPermissionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeChanelToUserPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeChanelToUserPermissionMaxAggregateInputType
+  }
+
+  export type GetYoutubeChanelToUserPermissionAggregateType<T extends YoutubeChanelToUserPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeChanelToUserPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeChanelToUserPermission[P]>
+      : GetScalarType<T[P], AggregateYoutubeChanelToUserPermission[P]>
+  }
+
+
+
+
+  export type YoutubeChanelToUserPermissionGroupByArgs = {
+    where?: YoutubeChanelToUserPermissionWhereInput
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithAggregationInput>
+    by: YoutubeChanelToUserPermissionScalarFieldEnum[]
+    having?: YoutubeChanelToUserPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeChanelToUserPermissionCountAggregateInputType | true
+    _avg?: YoutubeChanelToUserPermissionAvgAggregateInputType
+    _sum?: YoutubeChanelToUserPermissionSumAggregateInputType
+    _min?: YoutubeChanelToUserPermissionMinAggregateInputType
+    _max?: YoutubeChanelToUserPermissionMaxAggregateInputType
+  }
+
+
+  export type YoutubeChanelToUserPermissionGroupByOutputType = {
+    id: number
+    chanelId: number
+    UserId: number
+    permissionId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeChanelToUserPermissionCountAggregateOutputType | null
+    _avg: YoutubeChanelToUserPermissionAvgAggregateOutputType | null
+    _sum: YoutubeChanelToUserPermissionSumAggregateOutputType | null
+    _min: YoutubeChanelToUserPermissionMinAggregateOutputType | null
+    _max: YoutubeChanelToUserPermissionMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeChanelToUserPermissionGroupByPayload<T extends YoutubeChanelToUserPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeChanelToUserPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeChanelToUserPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeChanelToUserPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeChanelToUserPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeChanelToUserPermissionSelect = {
+    id?: boolean
+    chanel?: boolean | YoutubeChanelArgs
+    chanelId?: boolean
+    User?: boolean | YoutubeUserArgs
+    UserId?: boolean
+    permission?: boolean | YoutubeChanelPermissionArgs
+    permissionId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type YoutubeChanelToUserPermissionInclude = {
+    chanel?: boolean | YoutubeChanelArgs
+    User?: boolean | YoutubeUserArgs
+    permission?: boolean | YoutubeChanelPermissionArgs
+  }
+
+  export type YoutubeChanelToUserPermissionGetPayload<S extends boolean | null | undefined | YoutubeChanelToUserPermissionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeChanelToUserPermission :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeChanelToUserPermissionArgs | YoutubeChanelToUserPermissionFindManyArgs)
+    ? YoutubeChanelToUserPermission  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'chanel' ? YoutubeChanelGetPayload<S['include'][P]> :
+        P extends 'User' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'permission' ? YoutubeChanelPermissionGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeChanelToUserPermissionArgs | YoutubeChanelToUserPermissionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'chanel' ? YoutubeChanelGetPayload<S['select'][P]> :
+        P extends 'User' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'permission' ? YoutubeChanelPermissionGetPayload<S['select'][P]> :  P extends keyof YoutubeChanelToUserPermission ? YoutubeChanelToUserPermission[P] : never
+  } 
+      : YoutubeChanelToUserPermission
+
+
+  type YoutubeChanelToUserPermissionCountArgs = 
+    Omit<YoutubeChanelToUserPermissionFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeChanelToUserPermissionCountAggregateInputType | true
+    }
+
+  export interface YoutubeChanelToUserPermissionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeChanelToUserPermission that matches the filter.
+     * @param {YoutubeChanelToUserPermissionFindUniqueArgs} args - Arguments to find a YoutubeChanelToUserPermission
+     * @example
+     * // Get one YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeChanelToUserPermissionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeChanelToUserPermission'> extends True ? Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>> : Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeChanelToUserPermission that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeChanelToUserPermissionFindUniqueOrThrowArgs} args - Arguments to find a YoutubeChanelToUserPermission
+     * @example
+     * // Get one YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeChanelToUserPermissionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Find the first YoutubeChanelToUserPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionFindFirstArgs} args - Arguments to find a YoutubeChanelToUserPermission
+     * @example
+     * // Get one YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeChanelToUserPermissionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeChanelToUserPermission'> extends True ? Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>> : Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeChanelToUserPermission that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionFindFirstOrThrowArgs} args - Arguments to find a YoutubeChanelToUserPermission
+     * @example
+     * // Get one YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeChanelToUserPermissionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionFindFirstOrThrowArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeChanelToUserPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeChanelToUserPermissions
+     * const youtubeChanelToUserPermissions = await prisma.youtubeChanelToUserPermission.findMany()
+     * 
+     * // Get first 10 YoutubeChanelToUserPermissions
+     * const youtubeChanelToUserPermissions = await prisma.youtubeChanelToUserPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeChanelToUserPermissionWithIdOnly = await prisma.youtubeChanelToUserPermission.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeChanelToUserPermissionFindManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeChanelToUserPermissionGetPayload<T>>>
+
+    /**
+     * Create a YoutubeChanelToUserPermission.
+     * @param {YoutubeChanelToUserPermissionCreateArgs} args - Arguments to create a YoutubeChanelToUserPermission.
+     * @example
+     * // Create one YoutubeChanelToUserPermission
+     * const YoutubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.create({
+     *   data: {
+     *     // ... data to create a YoutubeChanelToUserPermission
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeChanelToUserPermissionCreateArgs>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionCreateArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Create many YoutubeChanelToUserPermissions.
+     *     @param {YoutubeChanelToUserPermissionCreateManyArgs} args - Arguments to create many YoutubeChanelToUserPermissions.
+     *     @example
+     *     // Create many YoutubeChanelToUserPermissions
+     *     const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeChanelToUserPermissionCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeChanelToUserPermission.
+     * @param {YoutubeChanelToUserPermissionDeleteArgs} args - Arguments to delete one YoutubeChanelToUserPermission.
+     * @example
+     * // Delete one YoutubeChanelToUserPermission
+     * const YoutubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeChanelToUserPermission
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeChanelToUserPermissionDeleteArgs>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionDeleteArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Update one YoutubeChanelToUserPermission.
+     * @param {YoutubeChanelToUserPermissionUpdateArgs} args - Arguments to update one YoutubeChanelToUserPermission.
+     * @example
+     * // Update one YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeChanelToUserPermissionUpdateArgs>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionUpdateArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeChanelToUserPermissions.
+     * @param {YoutubeChanelToUserPermissionDeleteManyArgs} args - Arguments to filter YoutubeChanelToUserPermissions to delete.
+     * @example
+     * // Delete a few YoutubeChanelToUserPermissions
+     * const { count } = await prisma.youtubeChanelToUserPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeChanelToUserPermissionDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeChanelToUserPermissionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeChanelToUserPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeChanelToUserPermissions
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeChanelToUserPermissionUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeChanelToUserPermission.
+     * @param {YoutubeChanelToUserPermissionUpsertArgs} args - Arguments to update or create a YoutubeChanelToUserPermission.
+     * @example
+     * // Update or create a YoutubeChanelToUserPermission
+     * const youtubeChanelToUserPermission = await prisma.youtubeChanelToUserPermission.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeChanelToUserPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeChanelToUserPermission we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeChanelToUserPermissionUpsertArgs>(
+      args: SelectSubset<T, YoutubeChanelToUserPermissionUpsertArgs>
+    ): Prisma__YoutubeChanelToUserPermissionClient<YoutubeChanelToUserPermissionGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeChanelToUserPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionCountArgs} args - Arguments to filter YoutubeChanelToUserPermissions to count.
+     * @example
+     * // Count the number of YoutubeChanelToUserPermissions
+     * const count = await prisma.youtubeChanelToUserPermission.count({
+     *   where: {
+     *     // ... the filter for the YoutubeChanelToUserPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeChanelToUserPermissionCountArgs>(
+      args?: Subset<T, YoutubeChanelToUserPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeChanelToUserPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeChanelToUserPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeChanelToUserPermissionAggregateArgs>(args: Subset<T, YoutubeChanelToUserPermissionAggregateArgs>): Prisma.PrismaPromise<GetYoutubeChanelToUserPermissionAggregateType<T>>
+
+    /**
+     * Group by YoutubeChanelToUserPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeChanelToUserPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeChanelToUserPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeChanelToUserPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeChanelToUserPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeChanelToUserPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeChanelToUserPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeChanelToUserPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeChanelToUserPermissionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    chanel<T extends YoutubeChanelArgs= {}>(args?: Subset<T, YoutubeChanelArgs>): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T> | Null>;
+
+    User<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    permission<T extends YoutubeChanelPermissionArgs= {}>(args?: Subset<T, YoutubeChanelPermissionArgs>): Prisma__YoutubeChanelPermissionClient<YoutubeChanelPermissionGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeChanelToUserPermission base type for findUnique actions
+   */
+  export type YoutubeChanelToUserPermissionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelToUserPermission to fetch.
+     */
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+  }
+
+  /**
+   * YoutubeChanelToUserPermission findUnique
+   */
+  export interface YoutubeChanelToUserPermissionFindUniqueArgs extends YoutubeChanelToUserPermissionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanelToUserPermission findUniqueOrThrow
+   */
+  export type YoutubeChanelToUserPermissionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelToUserPermission to fetch.
+     */
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission base type for findFirst actions
+   */
+  export type YoutubeChanelToUserPermissionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelToUserPermission to fetch.
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelToUserPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanelToUserPermissions.
+     */
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelToUserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelToUserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanelToUserPermissions.
+     */
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeChanelToUserPermission findFirst
+   */
+  export interface YoutubeChanelToUserPermissionFindFirstArgs extends YoutubeChanelToUserPermissionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeChanelToUserPermission findFirstOrThrow
+   */
+  export type YoutubeChanelToUserPermissionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelToUserPermission to fetch.
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelToUserPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeChanelToUserPermissions.
+     */
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelToUserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelToUserPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeChanelToUserPermissions.
+     */
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission findMany
+   */
+  export type YoutubeChanelToUserPermissionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter, which YoutubeChanelToUserPermissions to fetch.
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeChanelToUserPermissions to fetch.
+     */
+    orderBy?: Enumerable<YoutubeChanelToUserPermissionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeChanelToUserPermissions.
+     */
+    cursor?: YoutubeChanelToUserPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeChanelToUserPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeChanelToUserPermissions.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeChanelToUserPermissionScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission create
+   */
+  export type YoutubeChanelToUserPermissionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * The data needed to create a YoutubeChanelToUserPermission.
+     */
+    data: XOR<YoutubeChanelToUserPermissionCreateInput, YoutubeChanelToUserPermissionUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission createMany
+   */
+  export type YoutubeChanelToUserPermissionCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeChanelToUserPermissions.
+     */
+    data: Enumerable<YoutubeChanelToUserPermissionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission update
+   */
+  export type YoutubeChanelToUserPermissionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * The data needed to update a YoutubeChanelToUserPermission.
+     */
+    data: XOR<YoutubeChanelToUserPermissionUpdateInput, YoutubeChanelToUserPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeChanelToUserPermission to update.
+     */
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission updateMany
+   */
+  export type YoutubeChanelToUserPermissionUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeChanelToUserPermissions.
+     */
+    data: XOR<YoutubeChanelToUserPermissionUpdateManyMutationInput, YoutubeChanelToUserPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeChanelToUserPermissions to update
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission upsert
+   */
+  export type YoutubeChanelToUserPermissionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * The filter to search for the YoutubeChanelToUserPermission to update in case it exists.
+     */
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    /**
+     * In case the YoutubeChanelToUserPermission found by the `where` argument doesn't exist, create a new YoutubeChanelToUserPermission with this data.
+     */
+    create: XOR<YoutubeChanelToUserPermissionCreateInput, YoutubeChanelToUserPermissionUncheckedCreateInput>
+    /**
+     * In case the YoutubeChanelToUserPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeChanelToUserPermissionUpdateInput, YoutubeChanelToUserPermissionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission delete
+   */
+  export type YoutubeChanelToUserPermissionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+    /**
+     * Filter which YoutubeChanelToUserPermission to delete.
+     */
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission deleteMany
+   */
+  export type YoutubeChanelToUserPermissionDeleteManyArgs = {
+    /**
+     * Filter which YoutubeChanelToUserPermissions to delete
+     */
+    where?: YoutubeChanelToUserPermissionWhereInput
+  }
+
+
+  /**
+   * YoutubeChanelToUserPermission without action
+   */
+  export type YoutubeChanelToUserPermissionArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeChanelToUserPermission
+     */
+    select?: YoutubeChanelToUserPermissionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeChanelToUserPermissionInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeHashtag
+   */
+
+
+  export type AggregateYoutubeHashtag = {
+    _count: YoutubeHashtagCountAggregateOutputType | null
+    _avg: YoutubeHashtagAvgAggregateOutputType | null
+    _sum: YoutubeHashtagSumAggregateOutputType | null
+    _min: YoutubeHashtagMinAggregateOutputType | null
+    _max: YoutubeHashtagMaxAggregateOutputType | null
+  }
+
+  export type YoutubeHashtagAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeHashtagSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeHashtagMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeHashtagMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeHashtagCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeHashtagAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeHashtagSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeHashtagMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeHashtagMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeHashtagCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeHashtagAggregateArgs = {
+    /**
+     * Filter which YoutubeHashtag to aggregate.
+     */
+    where?: YoutubeHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeHashtags to fetch.
+     */
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeHashtags
+    **/
+    _count?: true | YoutubeHashtagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeHashtagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeHashtagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeHashtagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeHashtagMaxAggregateInputType
+  }
+
+  export type GetYoutubeHashtagAggregateType<T extends YoutubeHashtagAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeHashtag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeHashtag[P]>
+      : GetScalarType<T[P], AggregateYoutubeHashtag[P]>
+  }
+
+
+
+
+  export type YoutubeHashtagGroupByArgs = {
+    where?: YoutubeHashtagWhereInput
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithAggregationInput>
+    by: YoutubeHashtagScalarFieldEnum[]
+    having?: YoutubeHashtagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeHashtagCountAggregateInputType | true
+    _avg?: YoutubeHashtagAvgAggregateInputType
+    _sum?: YoutubeHashtagSumAggregateInputType
+    _min?: YoutubeHashtagMinAggregateInputType
+    _max?: YoutubeHashtagMaxAggregateInputType
+  }
+
+
+  export type YoutubeHashtagGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeHashtagCountAggregateOutputType | null
+    _avg: YoutubeHashtagAvgAggregateOutputType | null
+    _sum: YoutubeHashtagSumAggregateOutputType | null
+    _min: YoutubeHashtagMinAggregateOutputType | null
+    _max: YoutubeHashtagMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeHashtagGroupByPayload<T extends YoutubeHashtagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeHashtagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeHashtagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeHashtagGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeHashtagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeHashtagSelect = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    posts?: boolean | YoutubeHashtag$postsArgs
+    _count?: boolean | YoutubeHashtagCountOutputTypeArgs
+  }
+
+
+  export type YoutubeHashtagInclude = {
+    posts?: boolean | YoutubeHashtag$postsArgs
+    _count?: boolean | YoutubeHashtagCountOutputTypeArgs
+  }
+
+  export type YoutubeHashtagGetPayload<S extends boolean | null | undefined | YoutubeHashtagArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeHashtag :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeHashtagArgs | YoutubeHashtagFindManyArgs)
+    ? YoutubeHashtag  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubeHashtagCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeHashtagArgs | YoutubeHashtagFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posts' ? Array < YoutubePostGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubeHashtagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeHashtag ? YoutubeHashtag[P] : never
+  } 
+      : YoutubeHashtag
+
+
+  type YoutubeHashtagCountArgs = 
+    Omit<YoutubeHashtagFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeHashtagCountAggregateInputType | true
+    }
+
+  export interface YoutubeHashtagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeHashtag that matches the filter.
+     * @param {YoutubeHashtagFindUniqueArgs} args - Arguments to find a YoutubeHashtag
+     * @example
+     * // Get one YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeHashtagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeHashtagFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeHashtag'> extends True ? Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>> : Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeHashtag that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeHashtagFindUniqueOrThrowArgs} args - Arguments to find a YoutubeHashtag
+     * @example
+     * // Get one YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeHashtagFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeHashtagFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Find the first YoutubeHashtag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagFindFirstArgs} args - Arguments to find a YoutubeHashtag
+     * @example
+     * // Get one YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeHashtagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeHashtagFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeHashtag'> extends True ? Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>> : Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeHashtag that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagFindFirstOrThrowArgs} args - Arguments to find a YoutubeHashtag
+     * @example
+     * // Get one YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeHashtagFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeHashtagFindFirstOrThrowArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeHashtags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeHashtags
+     * const youtubeHashtags = await prisma.youtubeHashtag.findMany()
+     * 
+     * // Get first 10 YoutubeHashtags
+     * const youtubeHashtags = await prisma.youtubeHashtag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeHashtagWithIdOnly = await prisma.youtubeHashtag.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeHashtagFindManyArgs>(
+      args?: SelectSubset<T, YoutubeHashtagFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeHashtagGetPayload<T>>>
+
+    /**
+     * Create a YoutubeHashtag.
+     * @param {YoutubeHashtagCreateArgs} args - Arguments to create a YoutubeHashtag.
+     * @example
+     * // Create one YoutubeHashtag
+     * const YoutubeHashtag = await prisma.youtubeHashtag.create({
+     *   data: {
+     *     // ... data to create a YoutubeHashtag
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeHashtagCreateArgs>(
+      args: SelectSubset<T, YoutubeHashtagCreateArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Create many YoutubeHashtags.
+     *     @param {YoutubeHashtagCreateManyArgs} args - Arguments to create many YoutubeHashtags.
+     *     @example
+     *     // Create many YoutubeHashtags
+     *     const youtubeHashtag = await prisma.youtubeHashtag.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeHashtagCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeHashtagCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeHashtag.
+     * @param {YoutubeHashtagDeleteArgs} args - Arguments to delete one YoutubeHashtag.
+     * @example
+     * // Delete one YoutubeHashtag
+     * const YoutubeHashtag = await prisma.youtubeHashtag.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeHashtag
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeHashtagDeleteArgs>(
+      args: SelectSubset<T, YoutubeHashtagDeleteArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Update one YoutubeHashtag.
+     * @param {YoutubeHashtagUpdateArgs} args - Arguments to update one YoutubeHashtag.
+     * @example
+     * // Update one YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeHashtagUpdateArgs>(
+      args: SelectSubset<T, YoutubeHashtagUpdateArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeHashtags.
+     * @param {YoutubeHashtagDeleteManyArgs} args - Arguments to filter YoutubeHashtags to delete.
+     * @example
+     * // Delete a few YoutubeHashtags
+     * const { count } = await prisma.youtubeHashtag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeHashtagDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeHashtagDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeHashtags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeHashtags
+     * const youtubeHashtag = await prisma.youtubeHashtag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeHashtagUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeHashtagUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeHashtag.
+     * @param {YoutubeHashtagUpsertArgs} args - Arguments to update or create a YoutubeHashtag.
+     * @example
+     * // Update or create a YoutubeHashtag
+     * const youtubeHashtag = await prisma.youtubeHashtag.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeHashtag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeHashtag we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeHashtagUpsertArgs>(
+      args: SelectSubset<T, YoutubeHashtagUpsertArgs>
+    ): Prisma__YoutubeHashtagClient<YoutubeHashtagGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeHashtags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagCountArgs} args - Arguments to filter YoutubeHashtags to count.
+     * @example
+     * // Count the number of YoutubeHashtags
+     * const count = await prisma.youtubeHashtag.count({
+     *   where: {
+     *     // ... the filter for the YoutubeHashtags we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeHashtagCountArgs>(
+      args?: Subset<T, YoutubeHashtagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeHashtagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeHashtag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeHashtagAggregateArgs>(args: Subset<T, YoutubeHashtagAggregateArgs>): Prisma.PrismaPromise<GetYoutubeHashtagAggregateType<T>>
+
+    /**
+     * Group by YoutubeHashtag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeHashtagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeHashtagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeHashtagGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeHashtagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeHashtagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeHashtagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeHashtag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeHashtagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posts<T extends YoutubeHashtag$postsArgs= {}>(args?: Subset<T, YoutubeHashtag$postsArgs>): Prisma.PrismaPromise<Array<YoutubePostGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeHashtag base type for findUnique actions
+   */
+  export type YoutubeHashtagFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter, which YoutubeHashtag to fetch.
+     */
+    where: YoutubeHashtagWhereUniqueInput
+  }
+
+  /**
+   * YoutubeHashtag findUnique
+   */
+  export interface YoutubeHashtagFindUniqueArgs extends YoutubeHashtagFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeHashtag findUniqueOrThrow
+   */
+  export type YoutubeHashtagFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter, which YoutubeHashtag to fetch.
+     */
+    where: YoutubeHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeHashtag base type for findFirst actions
+   */
+  export type YoutubeHashtagFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter, which YoutubeHashtag to fetch.
+     */
+    where?: YoutubeHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeHashtags to fetch.
+     */
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeHashtags.
+     */
+    cursor?: YoutubeHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeHashtags.
+     */
+    distinct?: Enumerable<YoutubeHashtagScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeHashtag findFirst
+   */
+  export interface YoutubeHashtagFindFirstArgs extends YoutubeHashtagFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeHashtag findFirstOrThrow
+   */
+  export type YoutubeHashtagFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter, which YoutubeHashtag to fetch.
+     */
+    where?: YoutubeHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeHashtags to fetch.
+     */
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeHashtags.
+     */
+    cursor?: YoutubeHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeHashtags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeHashtags.
+     */
+    distinct?: Enumerable<YoutubeHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeHashtag findMany
+   */
+  export type YoutubeHashtagFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter, which YoutubeHashtags to fetch.
+     */
+    where?: YoutubeHashtagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeHashtags to fetch.
+     */
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeHashtags.
+     */
+    cursor?: YoutubeHashtagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeHashtags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeHashtags.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeHashtag create
+   */
+  export type YoutubeHashtagCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * The data needed to create a YoutubeHashtag.
+     */
+    data: XOR<YoutubeHashtagCreateInput, YoutubeHashtagUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeHashtag createMany
+   */
+  export type YoutubeHashtagCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeHashtags.
+     */
+    data: Enumerable<YoutubeHashtagCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeHashtag update
+   */
+  export type YoutubeHashtagUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * The data needed to update a YoutubeHashtag.
+     */
+    data: XOR<YoutubeHashtagUpdateInput, YoutubeHashtagUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeHashtag to update.
+     */
+    where: YoutubeHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeHashtag updateMany
+   */
+  export type YoutubeHashtagUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeHashtags.
+     */
+    data: XOR<YoutubeHashtagUpdateManyMutationInput, YoutubeHashtagUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeHashtags to update
+     */
+    where?: YoutubeHashtagWhereInput
+  }
+
+
+  /**
+   * YoutubeHashtag upsert
+   */
+  export type YoutubeHashtagUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * The filter to search for the YoutubeHashtag to update in case it exists.
+     */
+    where: YoutubeHashtagWhereUniqueInput
+    /**
+     * In case the YoutubeHashtag found by the `where` argument doesn't exist, create a new YoutubeHashtag with this data.
+     */
+    create: XOR<YoutubeHashtagCreateInput, YoutubeHashtagUncheckedCreateInput>
+    /**
+     * In case the YoutubeHashtag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeHashtagUpdateInput, YoutubeHashtagUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeHashtag delete
+   */
+  export type YoutubeHashtagDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    /**
+     * Filter which YoutubeHashtag to delete.
+     */
+    where: YoutubeHashtagWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeHashtag deleteMany
+   */
+  export type YoutubeHashtagDeleteManyArgs = {
+    /**
+     * Filter which YoutubeHashtags to delete
+     */
+    where?: YoutubeHashtagWhereInput
+  }
+
+
+  /**
+   * YoutubeHashtag.posts
+   */
+  export type YoutubeHashtag$postsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    where?: YoutubePostWhereInput
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    cursor?: YoutubePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeHashtag without action
+   */
+  export type YoutubeHashtagArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubePost
+   */
+
+
+  export type AggregateYoutubePost = {
+    _count: YoutubePostCountAggregateOutputType | null
+    _avg: YoutubePostAvgAggregateOutputType | null
+    _sum: YoutubePostSumAggregateOutputType | null
+    _min: YoutubePostMinAggregateOutputType | null
+    _max: YoutubePostMaxAggregateOutputType | null
+  }
+
+  export type YoutubePostAvgAggregateOutputType = {
+    id: number | null
+    posterUserId: number | null
+    chanelId: number | null
+    shareFromPostId: number | null
+  }
+
+  export type YoutubePostSumAggregateOutputType = {
+    id: number | null
+    posterUserId: number | null
+    chanelId: number | null
+    shareFromPostId: number | null
+  }
+
+  export type YoutubePostMinAggregateOutputType = {
+    id: number | null
+    video: string | null
+    name: string | null
+    description: string | null
+    posterUserId: number | null
+    chanelId: number | null
+    isShared: boolean | null
+    shareFromPostId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubePostMaxAggregateOutputType = {
+    id: number | null
+    video: string | null
+    name: string | null
+    description: string | null
+    posterUserId: number | null
+    chanelId: number | null
+    isShared: boolean | null
+    shareFromPostId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubePostCountAggregateOutputType = {
+    id: number
+    video: number
+    name: number
+    description: number
+    posterUserId: number
+    chanelId: number
+    isShared: number
+    shareFromPostId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubePostAvgAggregateInputType = {
+    id?: true
+    posterUserId?: true
+    chanelId?: true
+    shareFromPostId?: true
+  }
+
+  export type YoutubePostSumAggregateInputType = {
+    id?: true
+    posterUserId?: true
+    chanelId?: true
+    shareFromPostId?: true
+  }
+
+  export type YoutubePostMinAggregateInputType = {
+    id?: true
+    video?: true
+    name?: true
+    description?: true
+    posterUserId?: true
+    chanelId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubePostMaxAggregateInputType = {
+    id?: true
+    video?: true
+    name?: true
+    description?: true
+    posterUserId?: true
+    chanelId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubePostCountAggregateInputType = {
+    id?: true
+    video?: true
+    name?: true
+    description?: true
+    posterUserId?: true
+    chanelId?: true
+    isShared?: true
+    shareFromPostId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubePostAggregateArgs = {
+    /**
+     * Filter which YoutubePost to aggregate.
+     */
+    where?: YoutubePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubePosts
+    **/
+    _count?: true | YoutubePostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubePostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubePostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubePostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubePostMaxAggregateInputType
+  }
+
+  export type GetYoutubePostAggregateType<T extends YoutubePostAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubePost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubePost[P]>
+      : GetScalarType<T[P], AggregateYoutubePost[P]>
+  }
+
+
+
+
+  export type YoutubePostGroupByArgs = {
+    where?: YoutubePostWhereInput
+    orderBy?: Enumerable<YoutubePostOrderByWithAggregationInput>
+    by: YoutubePostScalarFieldEnum[]
+    having?: YoutubePostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubePostCountAggregateInputType | true
+    _avg?: YoutubePostAvgAggregateInputType
+    _sum?: YoutubePostSumAggregateInputType
+    _min?: YoutubePostMinAggregateInputType
+    _max?: YoutubePostMaxAggregateInputType
+  }
+
+
+  export type YoutubePostGroupByOutputType = {
+    id: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubePostCountAggregateOutputType | null
+    _avg: YoutubePostAvgAggregateOutputType | null
+    _sum: YoutubePostSumAggregateOutputType | null
+    _min: YoutubePostMinAggregateOutputType | null
+    _max: YoutubePostMaxAggregateOutputType | null
+  }
+
+  type GetYoutubePostGroupByPayload<T extends YoutubePostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubePostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubePostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubePostGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubePostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubePostSelect = {
+    id?: boolean
+    video?: boolean
+    name?: boolean
+    description?: boolean
+    posterUser?: boolean | YoutubeUserArgs
+    posterUserId?: boolean
+    chanel?: boolean | YoutubeChanelArgs
+    chanelId?: boolean
+    isShared?: boolean
+    shareFromPostId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    hashtags?: boolean | YoutubePost$hashtagsArgs
+    comments?: boolean | YoutubePost$commentsArgs
+    likePosts?: boolean | YoutubePost$likePostsArgs
+    likeComments?: boolean | YoutubePost$likeCommentsArgs
+    _count?: boolean | YoutubePostCountOutputTypeArgs
+  }
+
+
+  export type YoutubePostInclude = {
+    posterUser?: boolean | YoutubeUserArgs
+    chanel?: boolean | YoutubeChanelArgs
+    hashtags?: boolean | YoutubePost$hashtagsArgs
+    comments?: boolean | YoutubePost$commentsArgs
+    likePosts?: boolean | YoutubePost$likePostsArgs
+    likeComments?: boolean | YoutubePost$likeCommentsArgs
+    _count?: boolean | YoutubePostCountOutputTypeArgs
+  }
+
+  export type YoutubePostGetPayload<S extends boolean | null | undefined | YoutubePostArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubePost :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubePostArgs | YoutubePostFindManyArgs)
+    ? YoutubePost  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'posterUser' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'chanel' ? YoutubeChanelGetPayload<S['include'][P]> :
+        P extends 'hashtags' ? Array < YoutubeHashtagGetPayload<S['include'][P]>>  :
+        P extends 'comments' ? Array < YoutubeCommentGetPayload<S['include'][P]>>  :
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubePostCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubePostArgs | YoutubePostFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'posterUser' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'chanel' ? YoutubeChanelGetPayload<S['select'][P]> :
+        P extends 'hashtags' ? Array < YoutubeHashtagGetPayload<S['select'][P]>>  :
+        P extends 'comments' ? Array < YoutubeCommentGetPayload<S['select'][P]>>  :
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubePostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubePost ? YoutubePost[P] : never
+  } 
+      : YoutubePost
+
+
+  type YoutubePostCountArgs = 
+    Omit<YoutubePostFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubePostCountAggregateInputType | true
+    }
+
+  export interface YoutubePostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubePost that matches the filter.
+     * @param {YoutubePostFindUniqueArgs} args - Arguments to find a YoutubePost
+     * @example
+     * // Get one YoutubePost
+     * const youtubePost = await prisma.youtubePost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubePostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubePostFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubePost'> extends True ? Prisma__YoutubePostClient<YoutubePostGetPayload<T>> : Prisma__YoutubePostClient<YoutubePostGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubePost that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubePostFindUniqueOrThrowArgs} args - Arguments to find a YoutubePost
+     * @example
+     * // Get one YoutubePost
+     * const youtubePost = await prisma.youtubePost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubePostFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubePostFindUniqueOrThrowArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Find the first YoutubePost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostFindFirstArgs} args - Arguments to find a YoutubePost
+     * @example
+     * // Get one YoutubePost
+     * const youtubePost = await prisma.youtubePost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubePostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubePostFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubePost'> extends True ? Prisma__YoutubePostClient<YoutubePostGetPayload<T>> : Prisma__YoutubePostClient<YoutubePostGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubePost that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostFindFirstOrThrowArgs} args - Arguments to find a YoutubePost
+     * @example
+     * // Get one YoutubePost
+     * const youtubePost = await prisma.youtubePost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubePostFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubePostFindFirstOrThrowArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubePosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubePosts
+     * const youtubePosts = await prisma.youtubePost.findMany()
+     * 
+     * // Get first 10 YoutubePosts
+     * const youtubePosts = await prisma.youtubePost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubePostWithIdOnly = await prisma.youtubePost.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubePostFindManyArgs>(
+      args?: SelectSubset<T, YoutubePostFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubePostGetPayload<T>>>
+
+    /**
+     * Create a YoutubePost.
+     * @param {YoutubePostCreateArgs} args - Arguments to create a YoutubePost.
+     * @example
+     * // Create one YoutubePost
+     * const YoutubePost = await prisma.youtubePost.create({
+     *   data: {
+     *     // ... data to create a YoutubePost
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubePostCreateArgs>(
+      args: SelectSubset<T, YoutubePostCreateArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Create many YoutubePosts.
+     *     @param {YoutubePostCreateManyArgs} args - Arguments to create many YoutubePosts.
+     *     @example
+     *     // Create many YoutubePosts
+     *     const youtubePost = await prisma.youtubePost.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubePostCreateManyArgs>(
+      args?: SelectSubset<T, YoutubePostCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubePost.
+     * @param {YoutubePostDeleteArgs} args - Arguments to delete one YoutubePost.
+     * @example
+     * // Delete one YoutubePost
+     * const YoutubePost = await prisma.youtubePost.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubePost
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubePostDeleteArgs>(
+      args: SelectSubset<T, YoutubePostDeleteArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Update one YoutubePost.
+     * @param {YoutubePostUpdateArgs} args - Arguments to update one YoutubePost.
+     * @example
+     * // Update one YoutubePost
+     * const youtubePost = await prisma.youtubePost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubePostUpdateArgs>(
+      args: SelectSubset<T, YoutubePostUpdateArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubePosts.
+     * @param {YoutubePostDeleteManyArgs} args - Arguments to filter YoutubePosts to delete.
+     * @example
+     * // Delete a few YoutubePosts
+     * const { count } = await prisma.youtubePost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubePostDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubePostDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubePosts
+     * const youtubePost = await prisma.youtubePost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubePostUpdateManyArgs>(
+      args: SelectSubset<T, YoutubePostUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubePost.
+     * @param {YoutubePostUpsertArgs} args - Arguments to update or create a YoutubePost.
+     * @example
+     * // Update or create a YoutubePost
+     * const youtubePost = await prisma.youtubePost.upsert({
+     *   create: {
+     *     // ... data to create a YoutubePost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubePost we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubePostUpsertArgs>(
+      args: SelectSubset<T, YoutubePostUpsertArgs>
+    ): Prisma__YoutubePostClient<YoutubePostGetPayload<T>>
+
+    /**
+     * Count the number of YoutubePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostCountArgs} args - Arguments to filter YoutubePosts to count.
+     * @example
+     * // Count the number of YoutubePosts
+     * const count = await prisma.youtubePost.count({
+     *   where: {
+     *     // ... the filter for the YoutubePosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubePostCountArgs>(
+      args?: Subset<T, YoutubePostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubePostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubePostAggregateArgs>(args: Subset<T, YoutubePostAggregateArgs>): Prisma.PrismaPromise<GetYoutubePostAggregateType<T>>
+
+    /**
+     * Group by YoutubePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubePostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubePostGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubePostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubePostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubePostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubePost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubePostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    posterUser<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    chanel<T extends YoutubeChanelArgs= {}>(args?: Subset<T, YoutubeChanelArgs>): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T> | Null>;
+
+    hashtags<T extends YoutubePost$hashtagsArgs= {}>(args?: Subset<T, YoutubePost$hashtagsArgs>): Prisma.PrismaPromise<Array<YoutubeHashtagGetPayload<T>>| Null>;
+
+    comments<T extends YoutubePost$commentsArgs= {}>(args?: Subset<T, YoutubePost$commentsArgs>): Prisma.PrismaPromise<Array<YoutubeCommentGetPayload<T>>| Null>;
+
+    likePosts<T extends YoutubePost$likePostsArgs= {}>(args?: Subset<T, YoutubePost$likePostsArgs>): Prisma.PrismaPromise<Array<YoutubeLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends YoutubePost$likeCommentsArgs= {}>(args?: Subset<T, YoutubePost$likeCommentsArgs>): Prisma.PrismaPromise<Array<YoutubeLikeCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubePost base type for findUnique actions
+   */
+  export type YoutubePostFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter, which YoutubePost to fetch.
+     */
+    where: YoutubePostWhereUniqueInput
+  }
+
+  /**
+   * YoutubePost findUnique
+   */
+  export interface YoutubePostFindUniqueArgs extends YoutubePostFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubePost findUniqueOrThrow
+   */
+  export type YoutubePostFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter, which YoutubePost to fetch.
+     */
+    where: YoutubePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubePost base type for findFirst actions
+   */
+  export type YoutubePostFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter, which YoutubePost to fetch.
+     */
+    where?: YoutubePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubePosts.
+     */
+    cursor?: YoutubePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubePosts.
+     */
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+  /**
+   * YoutubePost findFirst
+   */
+  export interface YoutubePostFindFirstArgs extends YoutubePostFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubePost findFirstOrThrow
+   */
+  export type YoutubePostFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter, which YoutubePost to fetch.
+     */
+    where?: YoutubePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubePosts.
+     */
+    cursor?: YoutubePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubePosts.
+     */
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost findMany
+   */
+  export type YoutubePostFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter, which YoutubePosts to fetch.
+     */
+    where?: YoutubePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubePosts.
+     */
+    cursor?: YoutubePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePosts.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost create
+   */
+  export type YoutubePostCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * The data needed to create a YoutubePost.
+     */
+    data: XOR<YoutubePostCreateInput, YoutubePostUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubePost createMany
+   */
+  export type YoutubePostCreateManyArgs = {
+    /**
+     * The data used to create many YoutubePosts.
+     */
+    data: Enumerable<YoutubePostCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubePost update
+   */
+  export type YoutubePostUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * The data needed to update a YoutubePost.
+     */
+    data: XOR<YoutubePostUpdateInput, YoutubePostUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubePost to update.
+     */
+    where: YoutubePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubePost updateMany
+   */
+  export type YoutubePostUpdateManyArgs = {
+    /**
+     * The data used to update YoutubePosts.
+     */
+    data: XOR<YoutubePostUpdateManyMutationInput, YoutubePostUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubePosts to update
+     */
+    where?: YoutubePostWhereInput
+  }
+
+
+  /**
+   * YoutubePost upsert
+   */
+  export type YoutubePostUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * The filter to search for the YoutubePost to update in case it exists.
+     */
+    where: YoutubePostWhereUniqueInput
+    /**
+     * In case the YoutubePost found by the `where` argument doesn't exist, create a new YoutubePost with this data.
+     */
+    create: XOR<YoutubePostCreateInput, YoutubePostUncheckedCreateInput>
+    /**
+     * In case the YoutubePost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubePostUpdateInput, YoutubePostUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubePost delete
+   */
+  export type YoutubePostDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+    /**
+     * Filter which YoutubePost to delete.
+     */
+    where: YoutubePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubePost deleteMany
+   */
+  export type YoutubePostDeleteManyArgs = {
+    /**
+     * Filter which YoutubePosts to delete
+     */
+    where?: YoutubePostWhereInput
+  }
+
+
+  /**
+   * YoutubePost.hashtags
+   */
+  export type YoutubePost$hashtagsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeHashtag
+     */
+    select?: YoutubeHashtagSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeHashtagInclude | null
+    where?: YoutubeHashtagWhereInput
+    orderBy?: Enumerable<YoutubeHashtagOrderByWithRelationInput>
+    cursor?: YoutubeHashtagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeHashtagScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost.comments
+   */
+  export type YoutubePost$commentsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    where?: YoutubeCommentWhereInput
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    cursor?: YoutubeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost.likePosts
+   */
+  export type YoutubePost$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    where?: YoutubeLikePostWhereInput
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    cursor?: YoutubeLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost.likeComments
+   */
+  export type YoutubePost$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    where?: YoutubeLikeCommentWhereInput
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubePost without action
+   */
+  export type YoutubePostArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubePost
+     */
+    select?: YoutubePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubePostInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeComment
+   */
+
+
+  export type AggregateYoutubeComment = {
+    _count: YoutubeCommentCountAggregateOutputType | null
+    _avg: YoutubeCommentAvgAggregateOutputType | null
+    _sum: YoutubeCommentSumAggregateOutputType | null
+    _min: YoutubeCommentMinAggregateOutputType | null
+    _max: YoutubeCommentMaxAggregateOutputType | null
+  }
+
+  export type YoutubeCommentAvgAggregateOutputType = {
+    id: number | null
+    commentByUserId: number | null
+    postId: number | null
+  }
+
+  export type YoutubeCommentSumAggregateOutputType = {
+    id: number | null
+    commentByUserId: number | null
+    postId: number | null
+  }
+
+  export type YoutubeCommentMinAggregateOutputType = {
+    id: number | null
+    message: string | null
+    commentByUserId: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeCommentMaxAggregateOutputType = {
+    id: number | null
+    message: string | null
+    commentByUserId: number | null
+    postId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeCommentCountAggregateOutputType = {
+    id: number
+    message: number
+    commentByUserId: number
+    postId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeCommentAvgAggregateInputType = {
+    id?: true
+    commentByUserId?: true
+    postId?: true
+  }
+
+  export type YoutubeCommentSumAggregateInputType = {
+    id?: true
+    commentByUserId?: true
+    postId?: true
+  }
+
+  export type YoutubeCommentMinAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeCommentMaxAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeCommentCountAggregateInputType = {
+    id?: true
+    message?: true
+    commentByUserId?: true
+    postId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeCommentAggregateArgs = {
+    /**
+     * Filter which YoutubeComment to aggregate.
+     */
+    where?: YoutubeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeComments
+    **/
+    _count?: true | YoutubeCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeCommentMaxAggregateInputType
+  }
+
+  export type GetYoutubeCommentAggregateType<T extends YoutubeCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeComment[P]>
+      : GetScalarType<T[P], AggregateYoutubeComment[P]>
+  }
+
+
+
+
+  export type YoutubeCommentGroupByArgs = {
+    where?: YoutubeCommentWhereInput
+    orderBy?: Enumerable<YoutubeCommentOrderByWithAggregationInput>
+    by: YoutubeCommentScalarFieldEnum[]
+    having?: YoutubeCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeCommentCountAggregateInputType | true
+    _avg?: YoutubeCommentAvgAggregateInputType
+    _sum?: YoutubeCommentSumAggregateInputType
+    _min?: YoutubeCommentMinAggregateInputType
+    _max?: YoutubeCommentMaxAggregateInputType
+  }
+
+
+  export type YoutubeCommentGroupByOutputType = {
+    id: number
+    message: string
+    commentByUserId: number
+    postId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeCommentCountAggregateOutputType | null
+    _avg: YoutubeCommentAvgAggregateOutputType | null
+    _sum: YoutubeCommentSumAggregateOutputType | null
+    _min: YoutubeCommentMinAggregateOutputType | null
+    _max: YoutubeCommentMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeCommentGroupByPayload<T extends YoutubeCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeCommentSelect = {
+    id?: boolean
+    message?: boolean
+    commentByUser?: boolean | YoutubeUserArgs
+    commentByUserId?: boolean
+    post?: boolean | YoutubePostArgs
+    postId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type YoutubeCommentInclude = {
+    commentByUser?: boolean | YoutubeUserArgs
+    post?: boolean | YoutubePostArgs
+  }
+
+  export type YoutubeCommentGetPayload<S extends boolean | null | undefined | YoutubeCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeComment :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeCommentArgs | YoutubeCommentFindManyArgs)
+    ? YoutubeComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'commentByUser' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'post' ? YoutubePostGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeCommentArgs | YoutubeCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'commentByUser' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'post' ? YoutubePostGetPayload<S['select'][P]> :  P extends keyof YoutubeComment ? YoutubeComment[P] : never
+  } 
+      : YoutubeComment
+
+
+  type YoutubeCommentCountArgs = 
+    Omit<YoutubeCommentFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeCommentCountAggregateInputType | true
+    }
+
+  export interface YoutubeCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeComment that matches the filter.
+     * @param {YoutubeCommentFindUniqueArgs} args - Arguments to find a YoutubeComment
+     * @example
+     * // Get one YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeComment'> extends True ? Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>> : Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeCommentFindUniqueOrThrowArgs} args - Arguments to find a YoutubeComment
+     * @example
+     * // Get one YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeCommentFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Find the first YoutubeComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentFindFirstArgs} args - Arguments to find a YoutubeComment
+     * @example
+     * // Get one YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeComment'> extends True ? Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>> : Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentFindFirstOrThrowArgs} args - Arguments to find a YoutubeComment
+     * @example
+     * // Get one YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeCommentFindFirstOrThrowArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeComments
+     * const youtubeComments = await prisma.youtubeComment.findMany()
+     * 
+     * // Get first 10 YoutubeComments
+     * const youtubeComments = await prisma.youtubeComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeCommentWithIdOnly = await prisma.youtubeComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeCommentFindManyArgs>(
+      args?: SelectSubset<T, YoutubeCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeCommentGetPayload<T>>>
+
+    /**
+     * Create a YoutubeComment.
+     * @param {YoutubeCommentCreateArgs} args - Arguments to create a YoutubeComment.
+     * @example
+     * // Create one YoutubeComment
+     * const YoutubeComment = await prisma.youtubeComment.create({
+     *   data: {
+     *     // ... data to create a YoutubeComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeCommentCreateArgs>(
+      args: SelectSubset<T, YoutubeCommentCreateArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Create many YoutubeComments.
+     *     @param {YoutubeCommentCreateManyArgs} args - Arguments to create many YoutubeComments.
+     *     @example
+     *     // Create many YoutubeComments
+     *     const youtubeComment = await prisma.youtubeComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeCommentCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeComment.
+     * @param {YoutubeCommentDeleteArgs} args - Arguments to delete one YoutubeComment.
+     * @example
+     * // Delete one YoutubeComment
+     * const YoutubeComment = await prisma.youtubeComment.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeCommentDeleteArgs>(
+      args: SelectSubset<T, YoutubeCommentDeleteArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Update one YoutubeComment.
+     * @param {YoutubeCommentUpdateArgs} args - Arguments to update one YoutubeComment.
+     * @example
+     * // Update one YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeCommentUpdateArgs>(
+      args: SelectSubset<T, YoutubeCommentUpdateArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeComments.
+     * @param {YoutubeCommentDeleteManyArgs} args - Arguments to filter YoutubeComments to delete.
+     * @example
+     * // Delete a few YoutubeComments
+     * const { count } = await prisma.youtubeComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeCommentDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeComments
+     * const youtubeComment = await prisma.youtubeComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeCommentUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeComment.
+     * @param {YoutubeCommentUpsertArgs} args - Arguments to update or create a YoutubeComment.
+     * @example
+     * // Update or create a YoutubeComment
+     * const youtubeComment = await prisma.youtubeComment.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeCommentUpsertArgs>(
+      args: SelectSubset<T, YoutubeCommentUpsertArgs>
+    ): Prisma__YoutubeCommentClient<YoutubeCommentGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentCountArgs} args - Arguments to filter YoutubeComments to count.
+     * @example
+     * // Count the number of YoutubeComments
+     * const count = await prisma.youtubeComment.count({
+     *   where: {
+     *     // ... the filter for the YoutubeComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeCommentCountArgs>(
+      args?: Subset<T, YoutubeCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeCommentAggregateArgs>(args: Subset<T, YoutubeCommentAggregateArgs>): Prisma.PrismaPromise<GetYoutubeCommentAggregateType<T>>
+
+    /**
+     * Group by YoutubeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeCommentGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    commentByUser<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    post<T extends YoutubePostArgs= {}>(args?: Subset<T, YoutubePostArgs>): Prisma__YoutubePostClient<YoutubePostGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeComment base type for findUnique actions
+   */
+  export type YoutubeCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter, which YoutubeComment to fetch.
+     */
+    where: YoutubeCommentWhereUniqueInput
+  }
+
+  /**
+   * YoutubeComment findUnique
+   */
+  export interface YoutubeCommentFindUniqueArgs extends YoutubeCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeComment findUniqueOrThrow
+   */
+  export type YoutubeCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter, which YoutubeComment to fetch.
+     */
+    where: YoutubeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeComment base type for findFirst actions
+   */
+  export type YoutubeCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter, which YoutubeComment to fetch.
+     */
+    where?: YoutubeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeComments.
+     */
+    cursor?: YoutubeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeComments.
+     */
+    distinct?: Enumerable<YoutubeCommentScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeComment findFirst
+   */
+  export interface YoutubeCommentFindFirstArgs extends YoutubeCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeComment findFirstOrThrow
+   */
+  export type YoutubeCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter, which YoutubeComment to fetch.
+     */
+    where?: YoutubeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeComments.
+     */
+    cursor?: YoutubeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeComments.
+     */
+    distinct?: Enumerable<YoutubeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeComment findMany
+   */
+  export type YoutubeCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter, which YoutubeComments to fetch.
+     */
+    where?: YoutubeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeComments.
+     */
+    cursor?: YoutubeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeComments.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeComment create
+   */
+  export type YoutubeCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * The data needed to create a YoutubeComment.
+     */
+    data: XOR<YoutubeCommentCreateInput, YoutubeCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeComment createMany
+   */
+  export type YoutubeCommentCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeComments.
+     */
+    data: Enumerable<YoutubeCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeComment update
+   */
+  export type YoutubeCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * The data needed to update a YoutubeComment.
+     */
+    data: XOR<YoutubeCommentUpdateInput, YoutubeCommentUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeComment to update.
+     */
+    where: YoutubeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeComment updateMany
+   */
+  export type YoutubeCommentUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeComments.
+     */
+    data: XOR<YoutubeCommentUpdateManyMutationInput, YoutubeCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeComments to update
+     */
+    where?: YoutubeCommentWhereInput
+  }
+
+
+  /**
+   * YoutubeComment upsert
+   */
+  export type YoutubeCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * The filter to search for the YoutubeComment to update in case it exists.
+     */
+    where: YoutubeCommentWhereUniqueInput
+    /**
+     * In case the YoutubeComment found by the `where` argument doesn't exist, create a new YoutubeComment with this data.
+     */
+    create: XOR<YoutubeCommentCreateInput, YoutubeCommentUncheckedCreateInput>
+    /**
+     * In case the YoutubeComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeCommentUpdateInput, YoutubeCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeComment delete
+   */
+  export type YoutubeCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+    /**
+     * Filter which YoutubeComment to delete.
+     */
+    where: YoutubeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeComment deleteMany
+   */
+  export type YoutubeCommentDeleteManyArgs = {
+    /**
+     * Filter which YoutubeComments to delete
+     */
+    where?: YoutubeCommentWhereInput
+  }
+
+
+  /**
+   * YoutubeComment without action
+   */
+  export type YoutubeCommentArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeComment
+     */
+    select?: YoutubeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeCommentInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeLikeType
+   */
+
+
+  export type AggregateYoutubeLikeType = {
+    _count: YoutubeLikeTypeCountAggregateOutputType | null
+    _avg: YoutubeLikeTypeAvgAggregateOutputType | null
+    _sum: YoutubeLikeTypeSumAggregateOutputType | null
+    _min: YoutubeLikeTypeMinAggregateOutputType | null
+    _max: YoutubeLikeTypeMaxAggregateOutputType | null
+  }
+
+  export type YoutubeLikeTypeAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeLikeTypeSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YoutubeLikeTypeMinAggregateOutputType = {
+    id: number | null
+    emoji: string | null
+    name: YoutubeLikeTypeEnum | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikeTypeMaxAggregateOutputType = {
+    id: number | null
+    emoji: string | null
+    name: YoutubeLikeTypeEnum | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikeTypeCountAggregateOutputType = {
+    id: number
+    emoji: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeLikeTypeAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeLikeTypeSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YoutubeLikeTypeMinAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikeTypeMaxAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikeTypeCountAggregateInputType = {
+    id?: true
+    emoji?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeLikeTypeAggregateArgs = {
+    /**
+     * Filter which YoutubeLikeType to aggregate.
+     */
+    where?: YoutubeLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeLikeTypes
+    **/
+    _count?: true | YoutubeLikeTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeLikeTypeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeLikeTypeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeLikeTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeLikeTypeMaxAggregateInputType
+  }
+
+  export type GetYoutubeLikeTypeAggregateType<T extends YoutubeLikeTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeLikeType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeLikeType[P]>
+      : GetScalarType<T[P], AggregateYoutubeLikeType[P]>
+  }
+
+
+
+
+  export type YoutubeLikeTypeGroupByArgs = {
+    where?: YoutubeLikeTypeWhereInput
+    orderBy?: Enumerable<YoutubeLikeTypeOrderByWithAggregationInput>
+    by: YoutubeLikeTypeScalarFieldEnum[]
+    having?: YoutubeLikeTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeLikeTypeCountAggregateInputType | true
+    _avg?: YoutubeLikeTypeAvgAggregateInputType
+    _sum?: YoutubeLikeTypeSumAggregateInputType
+    _min?: YoutubeLikeTypeMinAggregateInputType
+    _max?: YoutubeLikeTypeMaxAggregateInputType
+  }
+
+
+  export type YoutubeLikeTypeGroupByOutputType = {
+    id: number
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeLikeTypeCountAggregateOutputType | null
+    _avg: YoutubeLikeTypeAvgAggregateOutputType | null
+    _sum: YoutubeLikeTypeSumAggregateOutputType | null
+    _min: YoutubeLikeTypeMinAggregateOutputType | null
+    _max: YoutubeLikeTypeMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeLikeTypeGroupByPayload<T extends YoutubeLikeTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeLikeTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeLikeTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeLikeTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeLikeTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeLikeTypeSelect = {
+    id?: boolean
+    emoji?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    likePosts?: boolean | YoutubeLikeType$likePostsArgs
+    likeComments?: boolean | YoutubeLikeType$likeCommentsArgs
+    _count?: boolean | YoutubeLikeTypeCountOutputTypeArgs
+  }
+
+
+  export type YoutubeLikeTypeInclude = {
+    likePosts?: boolean | YoutubeLikeType$likePostsArgs
+    likeComments?: boolean | YoutubeLikeType$likeCommentsArgs
+    _count?: boolean | YoutubeLikeTypeCountOutputTypeArgs
+  }
+
+  export type YoutubeLikeTypeGetPayload<S extends boolean | null | undefined | YoutubeLikeTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeLikeType :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeLikeTypeArgs | YoutubeLikeTypeFindManyArgs)
+    ? YoutubeLikeType  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['include'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YoutubeLikeTypeCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeLikeTypeArgs | YoutubeLikeTypeFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'likePosts' ? Array < YoutubeLikePostGetPayload<S['select'][P]>>  :
+        P extends 'likeComments' ? Array < YoutubeLikeCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YoutubeLikeTypeCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeLikeType ? YoutubeLikeType[P] : never
+  } 
+      : YoutubeLikeType
+
+
+  type YoutubeLikeTypeCountArgs = 
+    Omit<YoutubeLikeTypeFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeLikeTypeCountAggregateInputType | true
+    }
+
+  export interface YoutubeLikeTypeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeLikeType that matches the filter.
+     * @param {YoutubeLikeTypeFindUniqueArgs} args - Arguments to find a YoutubeLikeType
+     * @example
+     * // Get one YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeLikeTypeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeLikeTypeFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeLikeType'> extends True ? Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>> : Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeLikeType that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeLikeTypeFindUniqueOrThrowArgs} args - Arguments to find a YoutubeLikeType
+     * @example
+     * // Get one YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeLikeTypeFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikeTypeFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Find the first YoutubeLikeType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeFindFirstArgs} args - Arguments to find a YoutubeLikeType
+     * @example
+     * // Get one YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeLikeTypeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeLikeTypeFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeLikeType'> extends True ? Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>> : Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeLikeType that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeFindFirstOrThrowArgs} args - Arguments to find a YoutubeLikeType
+     * @example
+     * // Get one YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeLikeTypeFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikeTypeFindFirstOrThrowArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeLikeTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeLikeTypes
+     * const youtubeLikeTypes = await prisma.youtubeLikeType.findMany()
+     * 
+     * // Get first 10 YoutubeLikeTypes
+     * const youtubeLikeTypes = await prisma.youtubeLikeType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeLikeTypeWithIdOnly = await prisma.youtubeLikeType.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeLikeTypeFindManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeTypeFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeLikeTypeGetPayload<T>>>
+
+    /**
+     * Create a YoutubeLikeType.
+     * @param {YoutubeLikeTypeCreateArgs} args - Arguments to create a YoutubeLikeType.
+     * @example
+     * // Create one YoutubeLikeType
+     * const YoutubeLikeType = await prisma.youtubeLikeType.create({
+     *   data: {
+     *     // ... data to create a YoutubeLikeType
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeLikeTypeCreateArgs>(
+      args: SelectSubset<T, YoutubeLikeTypeCreateArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Create many YoutubeLikeTypes.
+     *     @param {YoutubeLikeTypeCreateManyArgs} args - Arguments to create many YoutubeLikeTypes.
+     *     @example
+     *     // Create many YoutubeLikeTypes
+     *     const youtubeLikeType = await prisma.youtubeLikeType.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeLikeTypeCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeTypeCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeLikeType.
+     * @param {YoutubeLikeTypeDeleteArgs} args - Arguments to delete one YoutubeLikeType.
+     * @example
+     * // Delete one YoutubeLikeType
+     * const YoutubeLikeType = await prisma.youtubeLikeType.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeLikeType
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeLikeTypeDeleteArgs>(
+      args: SelectSubset<T, YoutubeLikeTypeDeleteArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Update one YoutubeLikeType.
+     * @param {YoutubeLikeTypeUpdateArgs} args - Arguments to update one YoutubeLikeType.
+     * @example
+     * // Update one YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeLikeTypeUpdateArgs>(
+      args: SelectSubset<T, YoutubeLikeTypeUpdateArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeLikeTypes.
+     * @param {YoutubeLikeTypeDeleteManyArgs} args - Arguments to filter YoutubeLikeTypes to delete.
+     * @example
+     * // Delete a few YoutubeLikeTypes
+     * const { count } = await prisma.youtubeLikeType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeLikeTypeDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeTypeDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeLikeTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeLikeTypes
+     * const youtubeLikeType = await prisma.youtubeLikeType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeLikeTypeUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeLikeTypeUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeLikeType.
+     * @param {YoutubeLikeTypeUpsertArgs} args - Arguments to update or create a YoutubeLikeType.
+     * @example
+     * // Update or create a YoutubeLikeType
+     * const youtubeLikeType = await prisma.youtubeLikeType.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeLikeType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeLikeType we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeLikeTypeUpsertArgs>(
+      args: SelectSubset<T, YoutubeLikeTypeUpsertArgs>
+    ): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeLikeTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeCountArgs} args - Arguments to filter YoutubeLikeTypes to count.
+     * @example
+     * // Count the number of YoutubeLikeTypes
+     * const count = await prisma.youtubeLikeType.count({
+     *   where: {
+     *     // ... the filter for the YoutubeLikeTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeLikeTypeCountArgs>(
+      args?: Subset<T, YoutubeLikeTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeLikeTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeLikeType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeLikeTypeAggregateArgs>(args: Subset<T, YoutubeLikeTypeAggregateArgs>): Prisma.PrismaPromise<GetYoutubeLikeTypeAggregateType<T>>
+
+    /**
+     * Group by YoutubeLikeType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeLikeTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeLikeTypeGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeLikeTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeLikeTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeLikeTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeLikeType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeLikeTypeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    likePosts<T extends YoutubeLikeType$likePostsArgs= {}>(args?: Subset<T, YoutubeLikeType$likePostsArgs>): Prisma.PrismaPromise<Array<YoutubeLikePostGetPayload<T>>| Null>;
+
+    likeComments<T extends YoutubeLikeType$likeCommentsArgs= {}>(args?: Subset<T, YoutubeLikeType$likeCommentsArgs>): Prisma.PrismaPromise<Array<YoutubeLikeCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeLikeType base type for findUnique actions
+   */
+  export type YoutubeLikeTypeFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter, which YoutubeLikeType to fetch.
+     */
+    where: YoutubeLikeTypeWhereUniqueInput
+  }
+
+  /**
+   * YoutubeLikeType findUnique
+   */
+  export interface YoutubeLikeTypeFindUniqueArgs extends YoutubeLikeTypeFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikeType findUniqueOrThrow
+   */
+  export type YoutubeLikeTypeFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter, which YoutubeLikeType to fetch.
+     */
+    where: YoutubeLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeType base type for findFirst actions
+   */
+  export type YoutubeLikeTypeFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter, which YoutubeLikeType to fetch.
+     */
+    where?: YoutubeLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikeTypes.
+     */
+    cursor?: YoutubeLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikeTypes.
+     */
+    distinct?: Enumerable<YoutubeLikeTypeScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeLikeType findFirst
+   */
+  export interface YoutubeLikeTypeFindFirstArgs extends YoutubeLikeTypeFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikeType findFirstOrThrow
+   */
+  export type YoutubeLikeTypeFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter, which YoutubeLikeType to fetch.
+     */
+    where?: YoutubeLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikeTypes.
+     */
+    cursor?: YoutubeLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikeTypes.
+     */
+    distinct?: Enumerable<YoutubeLikeTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeType findMany
+   */
+  export type YoutubeLikeTypeFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter, which YoutubeLikeTypes to fetch.
+     */
+    where?: YoutubeLikeTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeTypes to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeTypeOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeLikeTypes.
+     */
+    cursor?: YoutubeLikeTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeTypes.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeLikeTypeScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeType create
+   */
+  export type YoutubeLikeTypeCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * The data needed to create a YoutubeLikeType.
+     */
+    data: XOR<YoutubeLikeTypeCreateInput, YoutubeLikeTypeUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeLikeType createMany
+   */
+  export type YoutubeLikeTypeCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeLikeTypes.
+     */
+    data: Enumerable<YoutubeLikeTypeCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeLikeType update
+   */
+  export type YoutubeLikeTypeUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * The data needed to update a YoutubeLikeType.
+     */
+    data: XOR<YoutubeLikeTypeUpdateInput, YoutubeLikeTypeUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeLikeType to update.
+     */
+    where: YoutubeLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeType updateMany
+   */
+  export type YoutubeLikeTypeUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeLikeTypes.
+     */
+    data: XOR<YoutubeLikeTypeUpdateManyMutationInput, YoutubeLikeTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeLikeTypes to update
+     */
+    where?: YoutubeLikeTypeWhereInput
+  }
+
+
+  /**
+   * YoutubeLikeType upsert
+   */
+  export type YoutubeLikeTypeUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * The filter to search for the YoutubeLikeType to update in case it exists.
+     */
+    where: YoutubeLikeTypeWhereUniqueInput
+    /**
+     * In case the YoutubeLikeType found by the `where` argument doesn't exist, create a new YoutubeLikeType with this data.
+     */
+    create: XOR<YoutubeLikeTypeCreateInput, YoutubeLikeTypeUncheckedCreateInput>
+    /**
+     * In case the YoutubeLikeType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeLikeTypeUpdateInput, YoutubeLikeTypeUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeLikeType delete
+   */
+  export type YoutubeLikeTypeDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+    /**
+     * Filter which YoutubeLikeType to delete.
+     */
+    where: YoutubeLikeTypeWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeType deleteMany
+   */
+  export type YoutubeLikeTypeDeleteManyArgs = {
+    /**
+     * Filter which YoutubeLikeTypes to delete
+     */
+    where?: YoutubeLikeTypeWhereInput
+  }
+
+
+  /**
+   * YoutubeLikeType.likePosts
+   */
+  export type YoutubeLikeType$likePostsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    where?: YoutubeLikePostWhereInput
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    cursor?: YoutubeLikePostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeType.likeComments
+   */
+  export type YoutubeLikeType$likeCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    where?: YoutubeLikeCommentWhereInput
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeType without action
+   */
+  export type YoutubeLikeTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeType
+     */
+    select?: YoutubeLikeTypeSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeTypeInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeLikePost
+   */
+
+
+  export type AggregateYoutubeLikePost = {
+    _count: YoutubeLikePostCountAggregateOutputType | null
+    _avg: YoutubeLikePostAvgAggregateOutputType | null
+    _sum: YoutubeLikePostSumAggregateOutputType | null
+    _min: YoutubeLikePostMinAggregateOutputType | null
+    _max: YoutubeLikePostMaxAggregateOutputType | null
+  }
+
+  export type YoutubeLikePostAvgAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type YoutubeLikePostSumAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type YoutubeLikePostMinAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikePostMaxAggregateOutputType = {
+    id: number | null
+    postId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikePostCountAggregateOutputType = {
+    id: number
+    postId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeLikePostAvgAggregateInputType = {
+    id?: true
+    postId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+  }
+
+  export type YoutubeLikePostSumAggregateInputType = {
+    id?: true
+    postId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+  }
+
+  export type YoutubeLikePostMinAggregateInputType = {
+    id?: true
+    postId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikePostMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikePostCountAggregateInputType = {
+    id?: true
+    postId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeLikePostAggregateArgs = {
+    /**
+     * Filter which YoutubeLikePost to aggregate.
+     */
+    where?: YoutubeLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeLikePosts
+    **/
+    _count?: true | YoutubeLikePostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeLikePostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeLikePostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeLikePostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeLikePostMaxAggregateInputType
+  }
+
+  export type GetYoutubeLikePostAggregateType<T extends YoutubeLikePostAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeLikePost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeLikePost[P]>
+      : GetScalarType<T[P], AggregateYoutubeLikePost[P]>
+  }
+
+
+
+
+  export type YoutubeLikePostGroupByArgs = {
+    where?: YoutubeLikePostWhereInput
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithAggregationInput>
+    by: YoutubeLikePostScalarFieldEnum[]
+    having?: YoutubeLikePostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeLikePostCountAggregateInputType | true
+    _avg?: YoutubeLikePostAvgAggregateInputType
+    _sum?: YoutubeLikePostSumAggregateInputType
+    _min?: YoutubeLikePostMinAggregateInputType
+    _max?: YoutubeLikePostMaxAggregateInputType
+  }
+
+
+  export type YoutubeLikePostGroupByOutputType = {
+    id: number
+    postId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeLikePostCountAggregateOutputType | null
+    _avg: YoutubeLikePostAvgAggregateOutputType | null
+    _sum: YoutubeLikePostSumAggregateOutputType | null
+    _min: YoutubeLikePostMinAggregateOutputType | null
+    _max: YoutubeLikePostMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeLikePostGroupByPayload<T extends YoutubeLikePostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeLikePostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeLikePostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeLikePostGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeLikePostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeLikePostSelect = {
+    id?: boolean
+    post?: boolean | YoutubePostArgs
+    postId?: boolean
+    likeByUser?: boolean | YoutubeUserArgs
+    likeByUserId?: boolean
+    likeType?: boolean | YoutubeLikeTypeArgs
+    likeTypeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type YoutubeLikePostInclude = {
+    post?: boolean | YoutubePostArgs
+    likeByUser?: boolean | YoutubeUserArgs
+    likeType?: boolean | YoutubeLikeTypeArgs
+  }
+
+  export type YoutubeLikePostGetPayload<S extends boolean | null | undefined | YoutubeLikePostArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeLikePost :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeLikePostArgs | YoutubeLikePostFindManyArgs)
+    ? YoutubeLikePost  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'post' ? YoutubePostGetPayload<S['include'][P]> :
+        P extends 'likeByUser' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'likeType' ? YoutubeLikeTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeLikePostArgs | YoutubeLikePostFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'post' ? YoutubePostGetPayload<S['select'][P]> :
+        P extends 'likeByUser' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'likeType' ? YoutubeLikeTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeLikePost ? YoutubeLikePost[P] : never
+  } 
+      : YoutubeLikePost
+
+
+  type YoutubeLikePostCountArgs = 
+    Omit<YoutubeLikePostFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeLikePostCountAggregateInputType | true
+    }
+
+  export interface YoutubeLikePostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeLikePost that matches the filter.
+     * @param {YoutubeLikePostFindUniqueArgs} args - Arguments to find a YoutubeLikePost
+     * @example
+     * // Get one YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeLikePostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeLikePostFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeLikePost'> extends True ? Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>> : Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeLikePost that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeLikePostFindUniqueOrThrowArgs} args - Arguments to find a YoutubeLikePost
+     * @example
+     * // Get one YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeLikePostFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikePostFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Find the first YoutubeLikePost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostFindFirstArgs} args - Arguments to find a YoutubeLikePost
+     * @example
+     * // Get one YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeLikePostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeLikePostFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeLikePost'> extends True ? Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>> : Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeLikePost that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostFindFirstOrThrowArgs} args - Arguments to find a YoutubeLikePost
+     * @example
+     * // Get one YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeLikePostFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikePostFindFirstOrThrowArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeLikePosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeLikePosts
+     * const youtubeLikePosts = await prisma.youtubeLikePost.findMany()
+     * 
+     * // Get first 10 YoutubeLikePosts
+     * const youtubeLikePosts = await prisma.youtubeLikePost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeLikePostWithIdOnly = await prisma.youtubeLikePost.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeLikePostFindManyArgs>(
+      args?: SelectSubset<T, YoutubeLikePostFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeLikePostGetPayload<T>>>
+
+    /**
+     * Create a YoutubeLikePost.
+     * @param {YoutubeLikePostCreateArgs} args - Arguments to create a YoutubeLikePost.
+     * @example
+     * // Create one YoutubeLikePost
+     * const YoutubeLikePost = await prisma.youtubeLikePost.create({
+     *   data: {
+     *     // ... data to create a YoutubeLikePost
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeLikePostCreateArgs>(
+      args: SelectSubset<T, YoutubeLikePostCreateArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Create many YoutubeLikePosts.
+     *     @param {YoutubeLikePostCreateManyArgs} args - Arguments to create many YoutubeLikePosts.
+     *     @example
+     *     // Create many YoutubeLikePosts
+     *     const youtubeLikePost = await prisma.youtubeLikePost.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeLikePostCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeLikePostCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeLikePost.
+     * @param {YoutubeLikePostDeleteArgs} args - Arguments to delete one YoutubeLikePost.
+     * @example
+     * // Delete one YoutubeLikePost
+     * const YoutubeLikePost = await prisma.youtubeLikePost.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeLikePost
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeLikePostDeleteArgs>(
+      args: SelectSubset<T, YoutubeLikePostDeleteArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Update one YoutubeLikePost.
+     * @param {YoutubeLikePostUpdateArgs} args - Arguments to update one YoutubeLikePost.
+     * @example
+     * // Update one YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeLikePostUpdateArgs>(
+      args: SelectSubset<T, YoutubeLikePostUpdateArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeLikePosts.
+     * @param {YoutubeLikePostDeleteManyArgs} args - Arguments to filter YoutubeLikePosts to delete.
+     * @example
+     * // Delete a few YoutubeLikePosts
+     * const { count } = await prisma.youtubeLikePost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeLikePostDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeLikePostDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeLikePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeLikePosts
+     * const youtubeLikePost = await prisma.youtubeLikePost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeLikePostUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeLikePostUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeLikePost.
+     * @param {YoutubeLikePostUpsertArgs} args - Arguments to update or create a YoutubeLikePost.
+     * @example
+     * // Update or create a YoutubeLikePost
+     * const youtubeLikePost = await prisma.youtubeLikePost.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeLikePost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeLikePost we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeLikePostUpsertArgs>(
+      args: SelectSubset<T, YoutubeLikePostUpsertArgs>
+    ): Prisma__YoutubeLikePostClient<YoutubeLikePostGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeLikePosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostCountArgs} args - Arguments to filter YoutubeLikePosts to count.
+     * @example
+     * // Count the number of YoutubeLikePosts
+     * const count = await prisma.youtubeLikePost.count({
+     *   where: {
+     *     // ... the filter for the YoutubeLikePosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeLikePostCountArgs>(
+      args?: Subset<T, YoutubeLikePostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeLikePostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeLikePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeLikePostAggregateArgs>(args: Subset<T, YoutubeLikePostAggregateArgs>): Prisma.PrismaPromise<GetYoutubeLikePostAggregateType<T>>
+
+    /**
+     * Group by YoutubeLikePost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikePostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeLikePostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeLikePostGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeLikePostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeLikePostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeLikePostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeLikePost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeLikePostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    post<T extends YoutubePostArgs= {}>(args?: Subset<T, YoutubePostArgs>): Prisma__YoutubePostClient<YoutubePostGetPayload<T> | Null>;
+
+    likeByUser<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    likeType<T extends YoutubeLikeTypeArgs= {}>(args?: Subset<T, YoutubeLikeTypeArgs>): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeLikePost base type for findUnique actions
+   */
+  export type YoutubeLikePostFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter, which YoutubeLikePost to fetch.
+     */
+    where: YoutubeLikePostWhereUniqueInput
+  }
+
+  /**
+   * YoutubeLikePost findUnique
+   */
+  export interface YoutubeLikePostFindUniqueArgs extends YoutubeLikePostFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikePost findUniqueOrThrow
+   */
+  export type YoutubeLikePostFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter, which YoutubeLikePost to fetch.
+     */
+    where: YoutubeLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikePost base type for findFirst actions
+   */
+  export type YoutubeLikePostFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter, which YoutubeLikePost to fetch.
+     */
+    where?: YoutubeLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikePosts.
+     */
+    cursor?: YoutubeLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikePosts.
+     */
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeLikePost findFirst
+   */
+  export interface YoutubeLikePostFindFirstArgs extends YoutubeLikePostFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikePost findFirstOrThrow
+   */
+  export type YoutubeLikePostFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter, which YoutubeLikePost to fetch.
+     */
+    where?: YoutubeLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikePosts.
+     */
+    cursor?: YoutubeLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikePosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikePosts.
+     */
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikePost findMany
+   */
+  export type YoutubeLikePostFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter, which YoutubeLikePosts to fetch.
+     */
+    where?: YoutubeLikePostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikePosts to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikePostOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeLikePosts.
+     */
+    cursor?: YoutubeLikePostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikePosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikePosts.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeLikePostScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikePost create
+   */
+  export type YoutubeLikePostCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * The data needed to create a YoutubeLikePost.
+     */
+    data: XOR<YoutubeLikePostCreateInput, YoutubeLikePostUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeLikePost createMany
+   */
+  export type YoutubeLikePostCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeLikePosts.
+     */
+    data: Enumerable<YoutubeLikePostCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeLikePost update
+   */
+  export type YoutubeLikePostUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * The data needed to update a YoutubeLikePost.
+     */
+    data: XOR<YoutubeLikePostUpdateInput, YoutubeLikePostUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeLikePost to update.
+     */
+    where: YoutubeLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikePost updateMany
+   */
+  export type YoutubeLikePostUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeLikePosts.
+     */
+    data: XOR<YoutubeLikePostUpdateManyMutationInput, YoutubeLikePostUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeLikePosts to update
+     */
+    where?: YoutubeLikePostWhereInput
+  }
+
+
+  /**
+   * YoutubeLikePost upsert
+   */
+  export type YoutubeLikePostUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * The filter to search for the YoutubeLikePost to update in case it exists.
+     */
+    where: YoutubeLikePostWhereUniqueInput
+    /**
+     * In case the YoutubeLikePost found by the `where` argument doesn't exist, create a new YoutubeLikePost with this data.
+     */
+    create: XOR<YoutubeLikePostCreateInput, YoutubeLikePostUncheckedCreateInput>
+    /**
+     * In case the YoutubeLikePost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeLikePostUpdateInput, YoutubeLikePostUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeLikePost delete
+   */
+  export type YoutubeLikePostDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+    /**
+     * Filter which YoutubeLikePost to delete.
+     */
+    where: YoutubeLikePostWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikePost deleteMany
+   */
+  export type YoutubeLikePostDeleteManyArgs = {
+    /**
+     * Filter which YoutubeLikePosts to delete
+     */
+    where?: YoutubeLikePostWhereInput
+  }
+
+
+  /**
+   * YoutubeLikePost without action
+   */
+  export type YoutubeLikePostArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikePost
+     */
+    select?: YoutubeLikePostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikePostInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeLikeComment
+   */
+
+
+  export type AggregateYoutubeLikeComment = {
+    _count: YoutubeLikeCommentCountAggregateOutputType | null
+    _avg: YoutubeLikeCommentAvgAggregateOutputType | null
+    _sum: YoutubeLikeCommentSumAggregateOutputType | null
+    _min: YoutubeLikeCommentMinAggregateOutputType | null
+    _max: YoutubeLikeCommentMaxAggregateOutputType | null
+  }
+
+  export type YoutubeLikeCommentAvgAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type YoutubeLikeCommentSumAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+  }
+
+  export type YoutubeLikeCommentMinAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikeCommentMaxAggregateOutputType = {
+    id: number | null
+    commentId: number | null
+    likeByUserId: number | null
+    likeTypeId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeLikeCommentCountAggregateOutputType = {
+    id: number
+    commentId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeLikeCommentAvgAggregateInputType = {
+    id?: true
+    commentId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+  }
+
+  export type YoutubeLikeCommentSumAggregateInputType = {
+    id?: true
+    commentId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+  }
+
+  export type YoutubeLikeCommentMinAggregateInputType = {
+    id?: true
+    commentId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikeCommentMaxAggregateInputType = {
+    id?: true
+    commentId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeLikeCommentCountAggregateInputType = {
+    id?: true
+    commentId?: true
+    likeByUserId?: true
+    likeTypeId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeLikeCommentAggregateArgs = {
+    /**
+     * Filter which YoutubeLikeComment to aggregate.
+     */
+    where?: YoutubeLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeLikeComments
+    **/
+    _count?: true | YoutubeLikeCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeLikeCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeLikeCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeLikeCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeLikeCommentMaxAggregateInputType
+  }
+
+  export type GetYoutubeLikeCommentAggregateType<T extends YoutubeLikeCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeLikeComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeLikeComment[P]>
+      : GetScalarType<T[P], AggregateYoutubeLikeComment[P]>
+  }
+
+
+
+
+  export type YoutubeLikeCommentGroupByArgs = {
+    where?: YoutubeLikeCommentWhereInput
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithAggregationInput>
+    by: YoutubeLikeCommentScalarFieldEnum[]
+    having?: YoutubeLikeCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeLikeCommentCountAggregateInputType | true
+    _avg?: YoutubeLikeCommentAvgAggregateInputType
+    _sum?: YoutubeLikeCommentSumAggregateInputType
+    _min?: YoutubeLikeCommentMinAggregateInputType
+    _max?: YoutubeLikeCommentMaxAggregateInputType
+  }
+
+
+  export type YoutubeLikeCommentGroupByOutputType = {
+    id: number
+    commentId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeLikeCommentCountAggregateOutputType | null
+    _avg: YoutubeLikeCommentAvgAggregateOutputType | null
+    _sum: YoutubeLikeCommentSumAggregateOutputType | null
+    _min: YoutubeLikeCommentMinAggregateOutputType | null
+    _max: YoutubeLikeCommentMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeLikeCommentGroupByPayload<T extends YoutubeLikeCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeLikeCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeLikeCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeLikeCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeLikeCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeLikeCommentSelect = {
+    id?: boolean
+    comment?: boolean | YoutubePostArgs
+    commentId?: boolean
+    likeByUser?: boolean | YoutubeUserArgs
+    likeByUserId?: boolean
+    likeType?: boolean | YoutubeLikeTypeArgs
+    likeTypeId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type YoutubeLikeCommentInclude = {
+    comment?: boolean | YoutubePostArgs
+    likeByUser?: boolean | YoutubeUserArgs
+    likeType?: boolean | YoutubeLikeTypeArgs
+  }
+
+  export type YoutubeLikeCommentGetPayload<S extends boolean | null | undefined | YoutubeLikeCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeLikeComment :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeLikeCommentArgs | YoutubeLikeCommentFindManyArgs)
+    ? YoutubeLikeComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'comment' ? YoutubePostGetPayload<S['include'][P]> :
+        P extends 'likeByUser' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'likeType' ? YoutubeLikeTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeLikeCommentArgs | YoutubeLikeCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'comment' ? YoutubePostGetPayload<S['select'][P]> :
+        P extends 'likeByUser' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'likeType' ? YoutubeLikeTypeGetPayload<S['select'][P]> :  P extends keyof YoutubeLikeComment ? YoutubeLikeComment[P] : never
+  } 
+      : YoutubeLikeComment
+
+
+  type YoutubeLikeCommentCountArgs = 
+    Omit<YoutubeLikeCommentFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeLikeCommentCountAggregateInputType | true
+    }
+
+  export interface YoutubeLikeCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeLikeComment that matches the filter.
+     * @param {YoutubeLikeCommentFindUniqueArgs} args - Arguments to find a YoutubeLikeComment
+     * @example
+     * // Get one YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeLikeCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeLikeCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeLikeComment'> extends True ? Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>> : Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeLikeComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeLikeCommentFindUniqueOrThrowArgs} args - Arguments to find a YoutubeLikeComment
+     * @example
+     * // Get one YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeLikeCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikeCommentFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Find the first YoutubeLikeComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentFindFirstArgs} args - Arguments to find a YoutubeLikeComment
+     * @example
+     * // Get one YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeLikeCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeLikeCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeLikeComment'> extends True ? Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>> : Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeLikeComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentFindFirstOrThrowArgs} args - Arguments to find a YoutubeLikeComment
+     * @example
+     * // Get one YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeLikeCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeLikeCommentFindFirstOrThrowArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeLikeComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeLikeComments
+     * const youtubeLikeComments = await prisma.youtubeLikeComment.findMany()
+     * 
+     * // Get first 10 YoutubeLikeComments
+     * const youtubeLikeComments = await prisma.youtubeLikeComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeLikeCommentWithIdOnly = await prisma.youtubeLikeComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeLikeCommentFindManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeLikeCommentGetPayload<T>>>
+
+    /**
+     * Create a YoutubeLikeComment.
+     * @param {YoutubeLikeCommentCreateArgs} args - Arguments to create a YoutubeLikeComment.
+     * @example
+     * // Create one YoutubeLikeComment
+     * const YoutubeLikeComment = await prisma.youtubeLikeComment.create({
+     *   data: {
+     *     // ... data to create a YoutubeLikeComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeLikeCommentCreateArgs>(
+      args: SelectSubset<T, YoutubeLikeCommentCreateArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Create many YoutubeLikeComments.
+     *     @param {YoutubeLikeCommentCreateManyArgs} args - Arguments to create many YoutubeLikeComments.
+     *     @example
+     *     // Create many YoutubeLikeComments
+     *     const youtubeLikeComment = await prisma.youtubeLikeComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeLikeCommentCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeLikeComment.
+     * @param {YoutubeLikeCommentDeleteArgs} args - Arguments to delete one YoutubeLikeComment.
+     * @example
+     * // Delete one YoutubeLikeComment
+     * const YoutubeLikeComment = await prisma.youtubeLikeComment.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeLikeComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeLikeCommentDeleteArgs>(
+      args: SelectSubset<T, YoutubeLikeCommentDeleteArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Update one YoutubeLikeComment.
+     * @param {YoutubeLikeCommentUpdateArgs} args - Arguments to update one YoutubeLikeComment.
+     * @example
+     * // Update one YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeLikeCommentUpdateArgs>(
+      args: SelectSubset<T, YoutubeLikeCommentUpdateArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeLikeComments.
+     * @param {YoutubeLikeCommentDeleteManyArgs} args - Arguments to filter YoutubeLikeComments to delete.
+     * @example
+     * // Delete a few YoutubeLikeComments
+     * const { count } = await prisma.youtubeLikeComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeLikeCommentDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeLikeCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeLikeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeLikeComments
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeLikeCommentUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeLikeCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeLikeComment.
+     * @param {YoutubeLikeCommentUpsertArgs} args - Arguments to update or create a YoutubeLikeComment.
+     * @example
+     * // Update or create a YoutubeLikeComment
+     * const youtubeLikeComment = await prisma.youtubeLikeComment.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeLikeComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeLikeComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeLikeCommentUpsertArgs>(
+      args: SelectSubset<T, YoutubeLikeCommentUpsertArgs>
+    ): Prisma__YoutubeLikeCommentClient<YoutubeLikeCommentGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeLikeComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentCountArgs} args - Arguments to filter YoutubeLikeComments to count.
+     * @example
+     * // Count the number of YoutubeLikeComments
+     * const count = await prisma.youtubeLikeComment.count({
+     *   where: {
+     *     // ... the filter for the YoutubeLikeComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeLikeCommentCountArgs>(
+      args?: Subset<T, YoutubeLikeCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeLikeCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeLikeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeLikeCommentAggregateArgs>(args: Subset<T, YoutubeLikeCommentAggregateArgs>): Prisma.PrismaPromise<GetYoutubeLikeCommentAggregateType<T>>
+
+    /**
+     * Group by YoutubeLikeComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeLikeCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeLikeCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeLikeCommentGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeLikeCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeLikeCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeLikeCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeLikeComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeLikeCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    comment<T extends YoutubePostArgs= {}>(args?: Subset<T, YoutubePostArgs>): Prisma__YoutubePostClient<YoutubePostGetPayload<T> | Null>;
+
+    likeByUser<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    likeType<T extends YoutubeLikeTypeArgs= {}>(args?: Subset<T, YoutubeLikeTypeArgs>): Prisma__YoutubeLikeTypeClient<YoutubeLikeTypeGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeLikeComment base type for findUnique actions
+   */
+  export type YoutubeLikeCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter, which YoutubeLikeComment to fetch.
+     */
+    where: YoutubeLikeCommentWhereUniqueInput
+  }
+
+  /**
+   * YoutubeLikeComment findUnique
+   */
+  export interface YoutubeLikeCommentFindUniqueArgs extends YoutubeLikeCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikeComment findUniqueOrThrow
+   */
+  export type YoutubeLikeCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter, which YoutubeLikeComment to fetch.
+     */
+    where: YoutubeLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeComment base type for findFirst actions
+   */
+  export type YoutubeLikeCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter, which YoutubeLikeComment to fetch.
+     */
+    where?: YoutubeLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikeComments.
+     */
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikeComments.
+     */
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeLikeComment findFirst
+   */
+  export interface YoutubeLikeCommentFindFirstArgs extends YoutubeLikeCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeLikeComment findFirstOrThrow
+   */
+  export type YoutubeLikeCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter, which YoutubeLikeComment to fetch.
+     */
+    where?: YoutubeLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeLikeComments.
+     */
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeLikeComments.
+     */
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeComment findMany
+   */
+  export type YoutubeLikeCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter, which YoutubeLikeComments to fetch.
+     */
+    where?: YoutubeLikeCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeLikeComments to fetch.
+     */
+    orderBy?: Enumerable<YoutubeLikeCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeLikeComments.
+     */
+    cursor?: YoutubeLikeCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeLikeComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeLikeComments.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeLikeCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeLikeComment create
+   */
+  export type YoutubeLikeCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * The data needed to create a YoutubeLikeComment.
+     */
+    data: XOR<YoutubeLikeCommentCreateInput, YoutubeLikeCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeLikeComment createMany
+   */
+  export type YoutubeLikeCommentCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeLikeComments.
+     */
+    data: Enumerable<YoutubeLikeCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeLikeComment update
+   */
+  export type YoutubeLikeCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * The data needed to update a YoutubeLikeComment.
+     */
+    data: XOR<YoutubeLikeCommentUpdateInput, YoutubeLikeCommentUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeLikeComment to update.
+     */
+    where: YoutubeLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeComment updateMany
+   */
+  export type YoutubeLikeCommentUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeLikeComments.
+     */
+    data: XOR<YoutubeLikeCommentUpdateManyMutationInput, YoutubeLikeCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeLikeComments to update
+     */
+    where?: YoutubeLikeCommentWhereInput
+  }
+
+
+  /**
+   * YoutubeLikeComment upsert
+   */
+  export type YoutubeLikeCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * The filter to search for the YoutubeLikeComment to update in case it exists.
+     */
+    where: YoutubeLikeCommentWhereUniqueInput
+    /**
+     * In case the YoutubeLikeComment found by the `where` argument doesn't exist, create a new YoutubeLikeComment with this data.
+     */
+    create: XOR<YoutubeLikeCommentCreateInput, YoutubeLikeCommentUncheckedCreateInput>
+    /**
+     * In case the YoutubeLikeComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeLikeCommentUpdateInput, YoutubeLikeCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeLikeComment delete
+   */
+  export type YoutubeLikeCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+    /**
+     * Filter which YoutubeLikeComment to delete.
+     */
+    where: YoutubeLikeCommentWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeLikeComment deleteMany
+   */
+  export type YoutubeLikeCommentDeleteManyArgs = {
+    /**
+     * Filter which YoutubeLikeComments to delete
+     */
+    where?: YoutubeLikeCommentWhereInput
+  }
+
+
+  /**
+   * YoutubeLikeComment without action
+   */
+  export type YoutubeLikeCommentArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeLikeComment
+     */
+    select?: YoutubeLikeCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeLikeCommentInclude | null
+  }
+
+
+
+  /**
+   * Model YoutubeSubcriber
+   */
+
+
+  export type AggregateYoutubeSubcriber = {
+    _count: YoutubeSubcriberCountAggregateOutputType | null
+    _avg: YoutubeSubcriberAvgAggregateOutputType | null
+    _sum: YoutubeSubcriberSumAggregateOutputType | null
+    _min: YoutubeSubcriberMinAggregateOutputType | null
+    _max: YoutubeSubcriberMaxAggregateOutputType | null
+  }
+
+  export type YoutubeSubcriberAvgAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toChanelId: number | null
+  }
+
+  export type YoutubeSubcriberSumAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toChanelId: number | null
+  }
+
+  export type YoutubeSubcriberMinAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toChanelId: number | null
+    isSupported: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeSubcriberMaxAggregateOutputType = {
+    id: number | null
+    fromUserId: number | null
+    toChanelId: number | null
+    isSupported: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YoutubeSubcriberCountAggregateOutputType = {
+    id: number
+    fromUserId: number
+    toChanelId: number
+    isSupported: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YoutubeSubcriberAvgAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toChanelId?: true
+  }
+
+  export type YoutubeSubcriberSumAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toChanelId?: true
+  }
+
+  export type YoutubeSubcriberMinAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toChanelId?: true
+    isSupported?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeSubcriberMaxAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toChanelId?: true
+    isSupported?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YoutubeSubcriberCountAggregateInputType = {
+    id?: true
+    fromUserId?: true
+    toChanelId?: true
+    isSupported?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YoutubeSubcriberAggregateArgs = {
+    /**
+     * Filter which YoutubeSubcriber to aggregate.
+     */
+    where?: YoutubeSubcriberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeSubcribers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeSubcribers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeSubcribers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubeSubcribers
+    **/
+    _count?: true | YoutubeSubcriberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YoutubeSubcriberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YoutubeSubcriberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubeSubcriberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubeSubcriberMaxAggregateInputType
+  }
+
+  export type GetYoutubeSubcriberAggregateType<T extends YoutubeSubcriberAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubeSubcriber]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubeSubcriber[P]>
+      : GetScalarType<T[P], AggregateYoutubeSubcriber[P]>
+  }
+
+
+
+
+  export type YoutubeSubcriberGroupByArgs = {
+    where?: YoutubeSubcriberWhereInput
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithAggregationInput>
+    by: YoutubeSubcriberScalarFieldEnum[]
+    having?: YoutubeSubcriberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubeSubcriberCountAggregateInputType | true
+    _avg?: YoutubeSubcriberAvgAggregateInputType
+    _sum?: YoutubeSubcriberSumAggregateInputType
+    _min?: YoutubeSubcriberMinAggregateInputType
+    _max?: YoutubeSubcriberMaxAggregateInputType
+  }
+
+
+  export type YoutubeSubcriberGroupByOutputType = {
+    id: number
+    fromUserId: number
+    toChanelId: number
+    isSupported: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: YoutubeSubcriberCountAggregateOutputType | null
+    _avg: YoutubeSubcriberAvgAggregateOutputType | null
+    _sum: YoutubeSubcriberSumAggregateOutputType | null
+    _min: YoutubeSubcriberMinAggregateOutputType | null
+    _max: YoutubeSubcriberMaxAggregateOutputType | null
+  }
+
+  type GetYoutubeSubcriberGroupByPayload<T extends YoutubeSubcriberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YoutubeSubcriberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubeSubcriberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubeSubcriberGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubeSubcriberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubeSubcriberSelect = {
+    id?: boolean
+    fromUser?: boolean | YoutubeUserArgs
+    fromUserId?: boolean
+    toChanel?: boolean | YoutubeChanelArgs
+    toChanelId?: boolean
+    isSupported?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type YoutubeSubcriberInclude = {
+    fromUser?: boolean | YoutubeUserArgs
+    toChanel?: boolean | YoutubeChanelArgs
+  }
+
+  export type YoutubeSubcriberGetPayload<S extends boolean | null | undefined | YoutubeSubcriberArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YoutubeSubcriber :
+    S extends undefined ? never :
+    S extends { include: any } & (YoutubeSubcriberArgs | YoutubeSubcriberFindManyArgs)
+    ? YoutubeSubcriber  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'fromUser' ? YoutubeUserGetPayload<S['include'][P]> :
+        P extends 'toChanel' ? YoutubeChanelGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YoutubeSubcriberArgs | YoutubeSubcriberFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'fromUser' ? YoutubeUserGetPayload<S['select'][P]> :
+        P extends 'toChanel' ? YoutubeChanelGetPayload<S['select'][P]> :  P extends keyof YoutubeSubcriber ? YoutubeSubcriber[P] : never
+  } 
+      : YoutubeSubcriber
+
+
+  type YoutubeSubcriberCountArgs = 
+    Omit<YoutubeSubcriberFindManyArgs, 'select' | 'include'> & {
+      select?: YoutubeSubcriberCountAggregateInputType | true
+    }
+
+  export interface YoutubeSubcriberDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YoutubeSubcriber that matches the filter.
+     * @param {YoutubeSubcriberFindUniqueArgs} args - Arguments to find a YoutubeSubcriber
+     * @example
+     * // Get one YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YoutubeSubcriberFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YoutubeSubcriberFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YoutubeSubcriber'> extends True ? Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>> : Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T> | null, null>
+
+    /**
+     * Find one YoutubeSubcriber that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YoutubeSubcriberFindUniqueOrThrowArgs} args - Arguments to find a YoutubeSubcriber
+     * @example
+     * // Get one YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YoutubeSubcriberFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeSubcriberFindUniqueOrThrowArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Find the first YoutubeSubcriber that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberFindFirstArgs} args - Arguments to find a YoutubeSubcriber
+     * @example
+     * // Get one YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YoutubeSubcriberFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YoutubeSubcriberFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YoutubeSubcriber'> extends True ? Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>> : Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T> | null, null>
+
+    /**
+     * Find the first YoutubeSubcriber that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberFindFirstOrThrowArgs} args - Arguments to find a YoutubeSubcriber
+     * @example
+     * // Get one YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YoutubeSubcriberFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YoutubeSubcriberFindFirstOrThrowArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Find zero or more YoutubeSubcribers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubeSubcribers
+     * const youtubeSubcribers = await prisma.youtubeSubcriber.findMany()
+     * 
+     * // Get first 10 YoutubeSubcribers
+     * const youtubeSubcribers = await prisma.youtubeSubcriber.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubeSubcriberWithIdOnly = await prisma.youtubeSubcriber.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YoutubeSubcriberFindManyArgs>(
+      args?: SelectSubset<T, YoutubeSubcriberFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YoutubeSubcriberGetPayload<T>>>
+
+    /**
+     * Create a YoutubeSubcriber.
+     * @param {YoutubeSubcriberCreateArgs} args - Arguments to create a YoutubeSubcriber.
+     * @example
+     * // Create one YoutubeSubcriber
+     * const YoutubeSubcriber = await prisma.youtubeSubcriber.create({
+     *   data: {
+     *     // ... data to create a YoutubeSubcriber
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YoutubeSubcriberCreateArgs>(
+      args: SelectSubset<T, YoutubeSubcriberCreateArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Create many YoutubeSubcribers.
+     *     @param {YoutubeSubcriberCreateManyArgs} args - Arguments to create many YoutubeSubcribers.
+     *     @example
+     *     // Create many YoutubeSubcribers
+     *     const youtubeSubcriber = await prisma.youtubeSubcriber.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YoutubeSubcriberCreateManyArgs>(
+      args?: SelectSubset<T, YoutubeSubcriberCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YoutubeSubcriber.
+     * @param {YoutubeSubcriberDeleteArgs} args - Arguments to delete one YoutubeSubcriber.
+     * @example
+     * // Delete one YoutubeSubcriber
+     * const YoutubeSubcriber = await prisma.youtubeSubcriber.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubeSubcriber
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YoutubeSubcriberDeleteArgs>(
+      args: SelectSubset<T, YoutubeSubcriberDeleteArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Update one YoutubeSubcriber.
+     * @param {YoutubeSubcriberUpdateArgs} args - Arguments to update one YoutubeSubcriber.
+     * @example
+     * // Update one YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YoutubeSubcriberUpdateArgs>(
+      args: SelectSubset<T, YoutubeSubcriberUpdateArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Delete zero or more YoutubeSubcribers.
+     * @param {YoutubeSubcriberDeleteManyArgs} args - Arguments to filter YoutubeSubcribers to delete.
+     * @example
+     * // Delete a few YoutubeSubcribers
+     * const { count } = await prisma.youtubeSubcriber.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YoutubeSubcriberDeleteManyArgs>(
+      args?: SelectSubset<T, YoutubeSubcriberDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubeSubcribers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubeSubcribers
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YoutubeSubcriberUpdateManyArgs>(
+      args: SelectSubset<T, YoutubeSubcriberUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YoutubeSubcriber.
+     * @param {YoutubeSubcriberUpsertArgs} args - Arguments to update or create a YoutubeSubcriber.
+     * @example
+     * // Update or create a YoutubeSubcriber
+     * const youtubeSubcriber = await prisma.youtubeSubcriber.upsert({
+     *   create: {
+     *     // ... data to create a YoutubeSubcriber
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubeSubcriber we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YoutubeSubcriberUpsertArgs>(
+      args: SelectSubset<T, YoutubeSubcriberUpsertArgs>
+    ): Prisma__YoutubeSubcriberClient<YoutubeSubcriberGetPayload<T>>
+
+    /**
+     * Count the number of YoutubeSubcribers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberCountArgs} args - Arguments to filter YoutubeSubcribers to count.
+     * @example
+     * // Count the number of YoutubeSubcribers
+     * const count = await prisma.youtubeSubcriber.count({
+     *   where: {
+     *     // ... the filter for the YoutubeSubcribers we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubeSubcriberCountArgs>(
+      args?: Subset<T, YoutubeSubcriberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubeSubcriberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubeSubcriber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubeSubcriberAggregateArgs>(args: Subset<T, YoutubeSubcriberAggregateArgs>): Prisma.PrismaPromise<GetYoutubeSubcriberAggregateType<T>>
+
+    /**
+     * Group by YoutubeSubcriber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubeSubcriberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubeSubcriberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubeSubcriberGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubeSubcriberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubeSubcriberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubeSubcriberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubeSubcriber.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YoutubeSubcriberClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    fromUser<T extends YoutubeUserArgs= {}>(args?: Subset<T, YoutubeUserArgs>): Prisma__YoutubeUserClient<YoutubeUserGetPayload<T> | Null>;
+
+    toChanel<T extends YoutubeChanelArgs= {}>(args?: Subset<T, YoutubeChanelArgs>): Prisma__YoutubeChanelClient<YoutubeChanelGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YoutubeSubcriber base type for findUnique actions
+   */
+  export type YoutubeSubcriberFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter, which YoutubeSubcriber to fetch.
+     */
+    where: YoutubeSubcriberWhereUniqueInput
+  }
+
+  /**
+   * YoutubeSubcriber findUnique
+   */
+  export interface YoutubeSubcriberFindUniqueArgs extends YoutubeSubcriberFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeSubcriber findUniqueOrThrow
+   */
+  export type YoutubeSubcriberFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter, which YoutubeSubcriber to fetch.
+     */
+    where: YoutubeSubcriberWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeSubcriber base type for findFirst actions
+   */
+  export type YoutubeSubcriberFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter, which YoutubeSubcriber to fetch.
+     */
+    where?: YoutubeSubcriberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeSubcribers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeSubcribers.
+     */
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeSubcribers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeSubcribers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeSubcribers.
+     */
+    distinct?: Enumerable<YoutubeSubcriberScalarFieldEnum>
+  }
+
+  /**
+   * YoutubeSubcriber findFirst
+   */
+  export interface YoutubeSubcriberFindFirstArgs extends YoutubeSubcriberFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YoutubeSubcriber findFirstOrThrow
+   */
+  export type YoutubeSubcriberFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter, which YoutubeSubcriber to fetch.
+     */
+    where?: YoutubeSubcriberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeSubcribers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubeSubcribers.
+     */
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeSubcribers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeSubcribers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubeSubcribers.
+     */
+    distinct?: Enumerable<YoutubeSubcriberScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeSubcriber findMany
+   */
+  export type YoutubeSubcriberFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter, which YoutubeSubcribers to fetch.
+     */
+    where?: YoutubeSubcriberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubeSubcribers to fetch.
+     */
+    orderBy?: Enumerable<YoutubeSubcriberOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubeSubcribers.
+     */
+    cursor?: YoutubeSubcriberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubeSubcribers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubeSubcribers.
+     */
+    skip?: number
+    distinct?: Enumerable<YoutubeSubcriberScalarFieldEnum>
+  }
+
+
+  /**
+   * YoutubeSubcriber create
+   */
+  export type YoutubeSubcriberCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * The data needed to create a YoutubeSubcriber.
+     */
+    data: XOR<YoutubeSubcriberCreateInput, YoutubeSubcriberUncheckedCreateInput>
+  }
+
+
+  /**
+   * YoutubeSubcriber createMany
+   */
+  export type YoutubeSubcriberCreateManyArgs = {
+    /**
+     * The data used to create many YoutubeSubcribers.
+     */
+    data: Enumerable<YoutubeSubcriberCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YoutubeSubcriber update
+   */
+  export type YoutubeSubcriberUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * The data needed to update a YoutubeSubcriber.
+     */
+    data: XOR<YoutubeSubcriberUpdateInput, YoutubeSubcriberUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubeSubcriber to update.
+     */
+    where: YoutubeSubcriberWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeSubcriber updateMany
+   */
+  export type YoutubeSubcriberUpdateManyArgs = {
+    /**
+     * The data used to update YoutubeSubcribers.
+     */
+    data: XOR<YoutubeSubcriberUpdateManyMutationInput, YoutubeSubcriberUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubeSubcribers to update
+     */
+    where?: YoutubeSubcriberWhereInput
+  }
+
+
+  /**
+   * YoutubeSubcriber upsert
+   */
+  export type YoutubeSubcriberUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * The filter to search for the YoutubeSubcriber to update in case it exists.
+     */
+    where: YoutubeSubcriberWhereUniqueInput
+    /**
+     * In case the YoutubeSubcriber found by the `where` argument doesn't exist, create a new YoutubeSubcriber with this data.
+     */
+    create: XOR<YoutubeSubcriberCreateInput, YoutubeSubcriberUncheckedCreateInput>
+    /**
+     * In case the YoutubeSubcriber was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubeSubcriberUpdateInput, YoutubeSubcriberUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YoutubeSubcriber delete
+   */
+  export type YoutubeSubcriberDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+    /**
+     * Filter which YoutubeSubcriber to delete.
+     */
+    where: YoutubeSubcriberWhereUniqueInput
+  }
+
+
+  /**
+   * YoutubeSubcriber deleteMany
+   */
+  export type YoutubeSubcriberDeleteManyArgs = {
+    /**
+     * Filter which YoutubeSubcribers to delete
+     */
+    where?: YoutubeSubcriberWhereInput
+  }
+
+
+  /**
+   * YoutubeSubcriber without action
+   */
+  export type YoutubeSubcriberArgs = {
+    /**
+     * Select specific fields to fetch from the YoutubeSubcriber
+     */
+    select?: YoutubeSubcriberSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YoutubeSubcriberInclude | null
+  }
+
+
+
+  /**
    * Model FacebookUser
    */
 
@@ -19864,7 +31706,7 @@ export namespace Prisma {
     name?: boolean
     createrUser?: boolean | FacebookUserArgs
     createrUserId?: boolean
-    memberUser?: boolean | FacebookGroup$memberUserArgs
+    memberUsers?: boolean | FacebookGroup$memberUsersArgs
     createdAt?: boolean
     updatedAt?: boolean
     _count?: boolean | FacebookGroupCountOutputTypeArgs
@@ -19873,7 +31715,7 @@ export namespace Prisma {
 
   export type FacebookGroupInclude = {
     createrUser?: boolean | FacebookUserArgs
-    memberUser?: boolean | FacebookGroup$memberUserArgs
+    memberUsers?: boolean | FacebookGroup$memberUsersArgs
     _count?: boolean | FacebookGroupCountOutputTypeArgs
   }
 
@@ -19885,14 +31727,14 @@ export namespace Prisma {
     ? FacebookGroup  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'createrUser' ? FacebookUserGetPayload<S['include'][P]> :
-        P extends 'memberUser' ? Array < FacebookUserGetPayload<S['include'][P]>>  :
+        P extends 'memberUsers' ? Array < FacebookUserGetPayload<S['include'][P]>>  :
         P extends '_count' ? FacebookGroupCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (FacebookGroupArgs | FacebookGroupFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'createrUser' ? FacebookUserGetPayload<S['select'][P]> :
-        P extends 'memberUser' ? Array < FacebookUserGetPayload<S['select'][P]>>  :
+        P extends 'memberUsers' ? Array < FacebookUserGetPayload<S['select'][P]>>  :
         P extends '_count' ? FacebookGroupCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FacebookGroup ? FacebookGroup[P] : never
   } 
       : FacebookGroup
@@ -20267,7 +32109,7 @@ export namespace Prisma {
 
     createrUser<T extends FacebookUserArgs= {}>(args?: Subset<T, FacebookUserArgs>): Prisma__FacebookUserClient<FacebookUserGetPayload<T> | Null>;
 
-    memberUser<T extends FacebookGroup$memberUserArgs= {}>(args?: Subset<T, FacebookGroup$memberUserArgs>): Prisma.PrismaPromise<Array<FacebookUserGetPayload<T>>| Null>;
+    memberUsers<T extends FacebookGroup$memberUsersArgs= {}>(args?: Subset<T, FacebookGroup$memberUsersArgs>): Prisma.PrismaPromise<Array<FacebookUserGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -20625,9 +32467,9 @@ export namespace Prisma {
 
 
   /**
-   * FacebookGroup.memberUser
+   * FacebookGroup.memberUsers
    */
-  export type FacebookGroup$memberUserArgs = {
+  export type FacebookGroup$memberUsersArgs = {
     /**
      * Select specific fields to fetch from the FacebookUser
      */
@@ -33127,6 +44969,138 @@ export namespace Prisma {
   export type TwitterUserScalarFieldEnum = (typeof TwitterUserScalarFieldEnum)[keyof typeof TwitterUserScalarFieldEnum]
 
 
+  export const YoutubeChanelPermissionScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeChanelPermissionScalarFieldEnum = (typeof YoutubeChanelPermissionScalarFieldEnum)[keyof typeof YoutubeChanelPermissionScalarFieldEnum]
+
+
+  export const YoutubeChanelScalarFieldEnum: {
+    id: 'id',
+    ChanelImage: 'ChanelImage',
+    coverImage: 'coverImage',
+    name: 'name',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeChanelScalarFieldEnum = (typeof YoutubeChanelScalarFieldEnum)[keyof typeof YoutubeChanelScalarFieldEnum]
+
+
+  export const YoutubeChanelToUserPermissionScalarFieldEnum: {
+    id: 'id',
+    chanelId: 'chanelId',
+    UserId: 'UserId',
+    permissionId: 'permissionId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeChanelToUserPermissionScalarFieldEnum = (typeof YoutubeChanelToUserPermissionScalarFieldEnum)[keyof typeof YoutubeChanelToUserPermissionScalarFieldEnum]
+
+
+  export const YoutubeCommentScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    commentByUserId: 'commentByUserId',
+    postId: 'postId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeCommentScalarFieldEnum = (typeof YoutubeCommentScalarFieldEnum)[keyof typeof YoutubeCommentScalarFieldEnum]
+
+
+  export const YoutubeHashtagScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeHashtagScalarFieldEnum = (typeof YoutubeHashtagScalarFieldEnum)[keyof typeof YoutubeHashtagScalarFieldEnum]
+
+
+  export const YoutubeLikeCommentScalarFieldEnum: {
+    id: 'id',
+    commentId: 'commentId',
+    likeByUserId: 'likeByUserId',
+    likeTypeId: 'likeTypeId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeLikeCommentScalarFieldEnum = (typeof YoutubeLikeCommentScalarFieldEnum)[keyof typeof YoutubeLikeCommentScalarFieldEnum]
+
+
+  export const YoutubeLikePostScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    likeByUserId: 'likeByUserId',
+    likeTypeId: 'likeTypeId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeLikePostScalarFieldEnum = (typeof YoutubeLikePostScalarFieldEnum)[keyof typeof YoutubeLikePostScalarFieldEnum]
+
+
+  export const YoutubeLikeTypeScalarFieldEnum: {
+    id: 'id',
+    emoji: 'emoji',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeLikeTypeScalarFieldEnum = (typeof YoutubeLikeTypeScalarFieldEnum)[keyof typeof YoutubeLikeTypeScalarFieldEnum]
+
+
+  export const YoutubePostScalarFieldEnum: {
+    id: 'id',
+    video: 'video',
+    name: 'name',
+    description: 'description',
+    posterUserId: 'posterUserId',
+    chanelId: 'chanelId',
+    isShared: 'isShared',
+    shareFromPostId: 'shareFromPostId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubePostScalarFieldEnum = (typeof YoutubePostScalarFieldEnum)[keyof typeof YoutubePostScalarFieldEnum]
+
+
+  export const YoutubeSubcriberScalarFieldEnum: {
+    id: 'id',
+    fromUserId: 'fromUserId',
+    toChanelId: 'toChanelId',
+    isSupported: 'isSupported',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeSubcriberScalarFieldEnum = (typeof YoutubeSubcriberScalarFieldEnum)[keyof typeof YoutubeSubcriberScalarFieldEnum]
+
+
+  export const YoutubeUserScalarFieldEnum: {
+    id: 'id',
+    profileImage: 'profileImage',
+    email: 'email',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YoutubeUserScalarFieldEnum = (typeof YoutubeUserScalarFieldEnum)[keyof typeof YoutubeUserScalarFieldEnum]
+
+
   /**
    * Deep Input Types
    */
@@ -33984,6 +45958,633 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
+  export type YoutubeUserWhereInput = {
+    AND?: Enumerable<YoutubeUserWhereInput>
+    OR?: Enumerable<YoutubeUserWhereInput>
+    NOT?: Enumerable<YoutubeUserWhereInput>
+    id?: IntFilter | number
+    profileImage?: StringFilter | string
+    email?: StringFilter | string
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionListRelationFilter
+    posts?: YoutubePostListRelationFilter
+    comments?: YoutubeCommentListRelationFilter
+    likePosts?: YoutubeLikePostListRelationFilter
+    likeComments?: YoutubeLikeCommentListRelationFilter
+    subcribers?: YoutubeSubcriberListRelationFilter
+  }
+
+  export type YoutubeUserOrderByWithRelationInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionOrderByRelationAggregateInput
+    posts?: YoutubePostOrderByRelationAggregateInput
+    comments?: YoutubeCommentOrderByRelationAggregateInput
+    likePosts?: YoutubeLikePostOrderByRelationAggregateInput
+    likeComments?: YoutubeLikeCommentOrderByRelationAggregateInput
+    subcribers?: YoutubeSubcriberOrderByRelationAggregateInput
+  }
+
+  export type YoutubeUserWhereUniqueInput = {
+    id?: number
+    name?: string
+  }
+
+  export type YoutubeUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeUserCountOrderByAggregateInput
+    _avg?: YoutubeUserAvgOrderByAggregateInput
+    _max?: YoutubeUserMaxOrderByAggregateInput
+    _min?: YoutubeUserMinOrderByAggregateInput
+    _sum?: YoutubeUserSumOrderByAggregateInput
+  }
+
+  export type YoutubeUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    profileImage?: StringWithAggregatesFilter | string
+    email?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeChanelPermissionWhereInput = {
+    AND?: Enumerable<YoutubeChanelPermissionWhereInput>
+    OR?: Enumerable<YoutubeChanelPermissionWhereInput>
+    NOT?: Enumerable<YoutubeChanelPermissionWhereInput>
+    id?: IntFilter | number
+    name?: EnumYoutubePermissionEnumFilter | YoutubePermissionEnum
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionListRelationFilter
+  }
+
+  export type YoutubeChanelPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionOrderByRelationAggregateInput
+  }
+
+  export type YoutubeChanelPermissionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeChanelPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeChanelPermissionCountOrderByAggregateInput
+    _avg?: YoutubeChanelPermissionAvgOrderByAggregateInput
+    _max?: YoutubeChanelPermissionMaxOrderByAggregateInput
+    _min?: YoutubeChanelPermissionMinOrderByAggregateInput
+    _sum?: YoutubeChanelPermissionSumOrderByAggregateInput
+  }
+
+  export type YoutubeChanelPermissionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeChanelPermissionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeChanelPermissionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeChanelPermissionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: EnumYoutubePermissionEnumWithAggregatesFilter | YoutubePermissionEnum
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeChanelWhereInput = {
+    AND?: Enumerable<YoutubeChanelWhereInput>
+    OR?: Enumerable<YoutubeChanelWhereInput>
+    NOT?: Enumerable<YoutubeChanelWhereInput>
+    id?: IntFilter | number
+    ChanelImage?: StringFilter | string
+    coverImage?: StringFilter | string
+    name?: StringFilter | string
+    description?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionListRelationFilter
+    posts?: YoutubePostListRelationFilter
+    subcribers?: YoutubeSubcriberListRelationFilter
+  }
+
+  export type YoutubeChanelOrderByWithRelationInput = {
+    id?: SortOrder
+    ChanelImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionOrderByRelationAggregateInput
+    posts?: YoutubePostOrderByRelationAggregateInput
+    subcribers?: YoutubeSubcriberOrderByRelationAggregateInput
+  }
+
+  export type YoutubeChanelWhereUniqueInput = {
+    id?: number
+    name?: string
+  }
+
+  export type YoutubeChanelOrderByWithAggregationInput = {
+    id?: SortOrder
+    ChanelImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeChanelCountOrderByAggregateInput
+    _avg?: YoutubeChanelAvgOrderByAggregateInput
+    _max?: YoutubeChanelMaxOrderByAggregateInput
+    _min?: YoutubeChanelMinOrderByAggregateInput
+    _sum?: YoutubeChanelSumOrderByAggregateInput
+  }
+
+  export type YoutubeChanelScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeChanelScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeChanelScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeChanelScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    ChanelImage?: StringWithAggregatesFilter | string
+    coverImage?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    description?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionWhereInput = {
+    AND?: Enumerable<YoutubeChanelToUserPermissionWhereInput>
+    OR?: Enumerable<YoutubeChanelToUserPermissionWhereInput>
+    NOT?: Enumerable<YoutubeChanelToUserPermissionWhereInput>
+    id?: IntFilter | number
+    chanel?: XOR<YoutubeChanelRelationFilter, YoutubeChanelWhereInput>
+    chanelId?: IntFilter | number
+    User?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    UserId?: IntFilter | number
+    permission?: XOR<YoutubeChanelPermissionRelationFilter, YoutubeChanelPermissionWhereInput>
+    permissionId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    chanel?: YoutubeChanelOrderByWithRelationInput
+    chanelId?: SortOrder
+    User?: YoutubeUserOrderByWithRelationInput
+    UserId?: SortOrder
+    permission?: YoutubeChanelPermissionOrderByWithRelationInput
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelToUserPermissionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeChanelToUserPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeChanelToUserPermissionCountOrderByAggregateInput
+    _avg?: YoutubeChanelToUserPermissionAvgOrderByAggregateInput
+    _max?: YoutubeChanelToUserPermissionMaxOrderByAggregateInput
+    _min?: YoutubeChanelToUserPermissionMinOrderByAggregateInput
+    _sum?: YoutubeChanelToUserPermissionSumOrderByAggregateInput
+  }
+
+  export type YoutubeChanelToUserPermissionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeChanelToUserPermissionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeChanelToUserPermissionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeChanelToUserPermissionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    chanelId?: IntWithAggregatesFilter | number
+    UserId?: IntWithAggregatesFilter | number
+    permissionId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeHashtagWhereInput = {
+    AND?: Enumerable<YoutubeHashtagWhereInput>
+    OR?: Enumerable<YoutubeHashtagWhereInput>
+    NOT?: Enumerable<YoutubeHashtagWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    posts?: YoutubePostListRelationFilter
+  }
+
+  export type YoutubeHashtagOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    posts?: YoutubePostOrderByRelationAggregateInput
+  }
+
+  export type YoutubeHashtagWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeHashtagOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeHashtagCountOrderByAggregateInput
+    _avg?: YoutubeHashtagAvgOrderByAggregateInput
+    _max?: YoutubeHashtagMaxOrderByAggregateInput
+    _min?: YoutubeHashtagMinOrderByAggregateInput
+    _sum?: YoutubeHashtagSumOrderByAggregateInput
+  }
+
+  export type YoutubeHashtagScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeHashtagScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeHashtagScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeHashtagScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubePostWhereInput = {
+    AND?: Enumerable<YoutubePostWhereInput>
+    OR?: Enumerable<YoutubePostWhereInput>
+    NOT?: Enumerable<YoutubePostWhereInput>
+    id?: IntFilter | number
+    video?: StringFilter | string
+    name?: StringFilter | string
+    description?: StringFilter | string
+    posterUser?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    posterUserId?: IntFilter | number
+    chanel?: XOR<YoutubeChanelRelationFilter, YoutubeChanelWhereInput>
+    chanelId?: IntFilter | number
+    isShared?: BoolFilter | boolean
+    shareFromPostId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    hashtags?: YoutubeHashtagListRelationFilter
+    comments?: YoutubeCommentListRelationFilter
+    likePosts?: YoutubeLikePostListRelationFilter
+    likeComments?: YoutubeLikeCommentListRelationFilter
+  }
+
+  export type YoutubePostOrderByWithRelationInput = {
+    id?: SortOrder
+    video?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    posterUser?: YoutubeUserOrderByWithRelationInput
+    posterUserId?: SortOrder
+    chanel?: YoutubeChanelOrderByWithRelationInput
+    chanelId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    hashtags?: YoutubeHashtagOrderByRelationAggregateInput
+    comments?: YoutubeCommentOrderByRelationAggregateInput
+    likePosts?: YoutubeLikePostOrderByRelationAggregateInput
+    likeComments?: YoutubeLikeCommentOrderByRelationAggregateInput
+  }
+
+  export type YoutubePostWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubePostOrderByWithAggregationInput = {
+    id?: SortOrder
+    video?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubePostCountOrderByAggregateInput
+    _avg?: YoutubePostAvgOrderByAggregateInput
+    _max?: YoutubePostMaxOrderByAggregateInput
+    _min?: YoutubePostMinOrderByAggregateInput
+    _sum?: YoutubePostSumOrderByAggregateInput
+  }
+
+  export type YoutubePostScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubePostScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubePostScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubePostScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    video?: StringWithAggregatesFilter | string
+    name?: StringWithAggregatesFilter | string
+    description?: StringWithAggregatesFilter | string
+    posterUserId?: IntWithAggregatesFilter | number
+    chanelId?: IntWithAggregatesFilter | number
+    isShared?: BoolWithAggregatesFilter | boolean
+    shareFromPostId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeCommentWhereInput = {
+    AND?: Enumerable<YoutubeCommentWhereInput>
+    OR?: Enumerable<YoutubeCommentWhereInput>
+    NOT?: Enumerable<YoutubeCommentWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    commentByUser?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    commentByUserId?: IntFilter | number
+    post?: XOR<YoutubePostRelationFilter, YoutubePostWhereInput>
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUser?: YoutubeUserOrderByWithRelationInput
+    commentByUserId?: SortOrder
+    post?: YoutubePostOrderByWithRelationInput
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeCommentCountOrderByAggregateInput
+    _avg?: YoutubeCommentAvgOrderByAggregateInput
+    _max?: YoutubeCommentMaxOrderByAggregateInput
+    _min?: YoutubeCommentMinOrderByAggregateInput
+    _sum?: YoutubeCommentSumOrderByAggregateInput
+  }
+
+  export type YoutubeCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    message?: StringWithAggregatesFilter | string
+    commentByUserId?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeLikeTypeWhereInput = {
+    AND?: Enumerable<YoutubeLikeTypeWhereInput>
+    OR?: Enumerable<YoutubeLikeTypeWhereInput>
+    NOT?: Enumerable<YoutubeLikeTypeWhereInput>
+    id?: IntFilter | number
+    emoji?: StringFilter | string
+    name?: EnumYoutubeLikeTypeEnumFilter | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    likePosts?: YoutubeLikePostListRelationFilter
+    likeComments?: YoutubeLikeCommentListRelationFilter
+  }
+
+  export type YoutubeLikeTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    likePosts?: YoutubeLikePostOrderByRelationAggregateInput
+    likeComments?: YoutubeLikeCommentOrderByRelationAggregateInput
+  }
+
+  export type YoutubeLikeTypeWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeLikeTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeLikeTypeCountOrderByAggregateInput
+    _avg?: YoutubeLikeTypeAvgOrderByAggregateInput
+    _max?: YoutubeLikeTypeMaxOrderByAggregateInput
+    _min?: YoutubeLikeTypeMinOrderByAggregateInput
+    _sum?: YoutubeLikeTypeSumOrderByAggregateInput
+  }
+
+  export type YoutubeLikeTypeScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeLikeTypeScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeLikeTypeScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeLikeTypeScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    emoji?: StringWithAggregatesFilter | string
+    name?: EnumYoutubeLikeTypeEnumWithAggregatesFilter | YoutubeLikeTypeEnum
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeLikePostWhereInput = {
+    AND?: Enumerable<YoutubeLikePostWhereInput>
+    OR?: Enumerable<YoutubeLikePostWhereInput>
+    NOT?: Enumerable<YoutubeLikePostWhereInput>
+    id?: IntFilter | number
+    post?: XOR<YoutubePostRelationFilter, YoutubePostWhereInput>
+    postId?: IntFilter | number
+    likeByUser?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    likeByUserId?: IntFilter | number
+    likeType?: XOR<YoutubeLikeTypeRelationFilter, YoutubeLikeTypeWhereInput>
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeLikePostOrderByWithRelationInput = {
+    id?: SortOrder
+    post?: YoutubePostOrderByWithRelationInput
+    postId?: SortOrder
+    likeByUser?: YoutubeUserOrderByWithRelationInput
+    likeByUserId?: SortOrder
+    likeType?: YoutubeLikeTypeOrderByWithRelationInput
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikePostWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeLikePostOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeLikePostCountOrderByAggregateInput
+    _avg?: YoutubeLikePostAvgOrderByAggregateInput
+    _max?: YoutubeLikePostMaxOrderByAggregateInput
+    _min?: YoutubeLikePostMinOrderByAggregateInput
+    _sum?: YoutubeLikePostSumOrderByAggregateInput
+  }
+
+  export type YoutubeLikePostScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeLikePostScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeLikePostScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeLikePostScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    postId?: IntWithAggregatesFilter | number
+    likeByUserId?: IntWithAggregatesFilter | number
+    likeTypeId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeLikeCommentWhereInput = {
+    AND?: Enumerable<YoutubeLikeCommentWhereInput>
+    OR?: Enumerable<YoutubeLikeCommentWhereInput>
+    NOT?: Enumerable<YoutubeLikeCommentWhereInput>
+    id?: IntFilter | number
+    comment?: XOR<YoutubePostRelationFilter, YoutubePostWhereInput>
+    commentId?: IntFilter | number
+    likeByUser?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    likeByUserId?: IntFilter | number
+    likeType?: XOR<YoutubeLikeTypeRelationFilter, YoutubeLikeTypeWhereInput>
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeLikeCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    comment?: YoutubePostOrderByWithRelationInput
+    commentId?: SortOrder
+    likeByUser?: YoutubeUserOrderByWithRelationInput
+    likeByUserId?: SortOrder
+    likeType?: YoutubeLikeTypeOrderByWithRelationInput
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeLikeCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeLikeCommentCountOrderByAggregateInput
+    _avg?: YoutubeLikeCommentAvgOrderByAggregateInput
+    _max?: YoutubeLikeCommentMaxOrderByAggregateInput
+    _min?: YoutubeLikeCommentMinOrderByAggregateInput
+    _sum?: YoutubeLikeCommentSumOrderByAggregateInput
+  }
+
+  export type YoutubeLikeCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeLikeCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeLikeCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeLikeCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    commentId?: IntWithAggregatesFilter | number
+    likeByUserId?: IntWithAggregatesFilter | number
+    likeTypeId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YoutubeSubcriberWhereInput = {
+    AND?: Enumerable<YoutubeSubcriberWhereInput>
+    OR?: Enumerable<YoutubeSubcriberWhereInput>
+    NOT?: Enumerable<YoutubeSubcriberWhereInput>
+    id?: IntFilter | number
+    fromUser?: XOR<YoutubeUserRelationFilter, YoutubeUserWhereInput>
+    fromUserId?: IntFilter | number
+    toChanel?: XOR<YoutubeChanelRelationFilter, YoutubeChanelWhereInput>
+    toChanelId?: IntFilter | number
+    isSupported?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeSubcriberOrderByWithRelationInput = {
+    id?: SortOrder
+    fromUser?: YoutubeUserOrderByWithRelationInput
+    fromUserId?: SortOrder
+    toChanel?: YoutubeChanelOrderByWithRelationInput
+    toChanelId?: SortOrder
+    isSupported?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeSubcriberWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YoutubeSubcriberOrderByWithAggregationInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+    isSupported?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YoutubeSubcriberCountOrderByAggregateInput
+    _avg?: YoutubeSubcriberAvgOrderByAggregateInput
+    _max?: YoutubeSubcriberMaxOrderByAggregateInput
+    _min?: YoutubeSubcriberMinOrderByAggregateInput
+    _sum?: YoutubeSubcriberSumOrderByAggregateInput
+  }
+
+  export type YoutubeSubcriberScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YoutubeSubcriberScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YoutubeSubcriberScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YoutubeSubcriberScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    fromUserId?: IntWithAggregatesFilter | number
+    toChanelId?: IntWithAggregatesFilter | number
+    isSupported?: BoolWithAggregatesFilter | boolean
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
   export type FacebookUserWhereInput = {
     AND?: Enumerable<FacebookUserWhereInput>
     OR?: Enumerable<FacebookUserWhereInput>
@@ -34070,7 +46671,7 @@ export namespace Prisma {
     name?: StringFilter | string
     createrUser?: XOR<FacebookUserRelationFilter, FacebookUserWhereInput>
     createrUserId?: IntFilter | number
-    memberUser?: FacebookUserListRelationFilter
+    memberUsers?: FacebookUserListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -34082,7 +46683,7 @@ export namespace Prisma {
     name?: SortOrder
     createrUser?: FacebookUserOrderByWithRelationInput
     createrUserId?: SortOrder
-    memberUser?: FacebookUserOrderByRelationAggregateInput
+    memberUsers?: FacebookUserOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -35737,6 +48338,719 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type YoutubeUserCreateInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUpdateInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserCreateManyInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeUserUpdateManyMutationInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelPermissionCreateInput = {
+    name: YoutubePermissionEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutPermissionInput
+  }
+
+  export type YoutubeChanelPermissionUncheckedCreateInput = {
+    id?: number
+    name: YoutubePermissionEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutPermissionInput
+  }
+
+  export type YoutubeChanelPermissionUpdateInput = {
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutPermissionNestedInput
+  }
+
+  export type YoutubeChanelPermissionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutPermissionNestedInput
+  }
+
+  export type YoutubeChanelPermissionCreateManyInput = {
+    id?: number
+    name: YoutubePermissionEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelPermissionUpdateManyMutationInput = {
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelPermissionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelCreateInput = {
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutChanelInput
+    posts?: YoutubePostCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelUncheckedCreateInput = {
+    id?: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutChanelInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelUpdateInput = {
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutChanelNestedInput
+    posts?: YoutubePostUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeChanelUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeChanelCreateManyInput = {
+    id?: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelUpdateManyMutationInput = {
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateInput = {
+    chanel: YoutubeChanelCreateNestedOneWithoutChanelToUserPermissionsInput
+    User: YoutubeUserCreateNestedOneWithoutChanelToUserPermissionsInput
+    permission: YoutubeChanelPermissionCreateNestedOneWithoutChanelToUserPermissionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateInput = {
+    id?: number
+    chanelId: number
+    UserId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateInput = {
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    User?: YoutubeUserUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    permission?: YoutubeChanelPermissionUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    UserId?: IntFieldUpdateOperationsInput | number
+    permissionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyInput = {
+    id?: number
+    chanelId: number
+    UserId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    UserId?: IntFieldUpdateOperationsInput | number
+    permissionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeHashtagCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostCreateNestedManyWithoutHashtagsInput
+  }
+
+  export type YoutubeHashtagUncheckedCreateInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutHashtagsInput
+  }
+
+  export type YoutubeHashtagUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUpdateManyWithoutHashtagsNestedInput
+  }
+
+  export type YoutubeHashtagUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUncheckedUpdateManyWithoutHashtagsNestedInput
+  }
+
+  export type YoutubeHashtagCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeHashtagUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeHashtagUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostCreateInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUpdateInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostCreateManyInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubePostUpdateManyMutationInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentCreateInput = {
+    message: string
+    commentByUser: YoutubeUserCreateNestedOneWithoutCommentsInput
+    post: YoutubePostCreateNestedOneWithoutCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentUncheckedCreateInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentUpdateInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUser?: YoutubeUserUpdateOneRequiredWithoutCommentsNestedInput
+    post?: YoutubePostUpdateOneRequiredWithoutCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentCreateManyInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentUpdateManyMutationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeTypeCreateInput = {
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeTypeInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeUncheckedCreateInput = {
+    id?: number
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeTypeInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeUpdateInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeTypeNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubeLikeTypeUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubeLikeTypeCreateManyInput = {
+    id?: number
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeTypeUpdateManyMutationInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeTypeUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostCreateInput = {
+    post: YoutubePostCreateNestedOneWithoutLikePostsInput
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikePostsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUncheckedCreateInput = {
+    id?: number
+    postId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUpdateInput = {
+    post?: YoutubePostUpdateOneRequiredWithoutLikePostsNestedInput
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostCreateManyInput = {
+    id?: number
+    postId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentCreateInput = {
+    comment: YoutubePostCreateNestedOneWithoutLikeCommentsInput
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikeCommentsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateInput = {
+    id?: number
+    commentId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUpdateInput = {
+    comment?: YoutubePostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentCreateManyInput = {
+    id?: number
+    commentId: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberCreateInput = {
+    fromUser: YoutubeUserCreateNestedOneWithoutSubcribersInput
+    toChanel: YoutubeChanelCreateNestedOneWithoutSubcribersInput
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedCreateInput = {
+    id?: number
+    fromUserId: number
+    toChanelId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberUpdateInput = {
+    fromUser?: YoutubeUserUpdateOneRequiredWithoutSubcribersNestedInput
+    toChanel?: YoutubeChanelUpdateOneRequiredWithoutSubcribersNestedInput
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toChanelId?: IntFieldUpdateOperationsInput | number
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberCreateManyInput = {
+    id?: number
+    fromUserId: number
+    toChanelId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberUpdateManyMutationInput = {
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toChanelId?: IntFieldUpdateOperationsInput | number
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FacebookUserCreateInput = {
     profileImage: string
     coverImage: string
@@ -35745,7 +49059,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -35766,7 +49080,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -35786,7 +49100,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -35807,7 +49121,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -35850,7 +49164,7 @@ export namespace Prisma {
     coverImage: string
     name: string
     createrUser: FacebookUserCreateNestedOneWithoutGroupcreaterInput
-    memberUser?: FacebookUserCreateNestedManyWithoutGroupMemberInput
+    memberUsers?: FacebookUserCreateNestedManyWithoutGroupMemberInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -35861,7 +49175,7 @@ export namespace Prisma {
     coverImage: string
     name: string
     createrUserId: number
-    memberUser?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
+    memberUsers?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -35871,7 +49185,7 @@ export namespace Prisma {
     coverImage?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createrUser?: FacebookUserUpdateOneRequiredWithoutGroupcreaterNestedInput
-    memberUser?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
+    memberUsers?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35882,7 +49196,7 @@ export namespace Prisma {
     coverImage?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     createrUserId?: IntFieldUpdateOperationsInput | number
-    memberUser?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
+    memberUsers?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -37550,6 +50864,565 @@ export namespace Prisma {
     directToId?: SortOrder
   }
 
+  export type YoutubeChanelToUserPermissionListRelationFilter = {
+    every?: YoutubeChanelToUserPermissionWhereInput
+    some?: YoutubeChanelToUserPermissionWhereInput
+    none?: YoutubeChanelToUserPermissionWhereInput
+  }
+
+  export type YoutubePostListRelationFilter = {
+    every?: YoutubePostWhereInput
+    some?: YoutubePostWhereInput
+    none?: YoutubePostWhereInput
+  }
+
+  export type YoutubeCommentListRelationFilter = {
+    every?: YoutubeCommentWhereInput
+    some?: YoutubeCommentWhereInput
+    none?: YoutubeCommentWhereInput
+  }
+
+  export type YoutubeLikePostListRelationFilter = {
+    every?: YoutubeLikePostWhereInput
+    some?: YoutubeLikePostWhereInput
+    none?: YoutubeLikePostWhereInput
+  }
+
+  export type YoutubeLikeCommentListRelationFilter = {
+    every?: YoutubeLikeCommentWhereInput
+    some?: YoutubeLikeCommentWhereInput
+    none?: YoutubeLikeCommentWhereInput
+  }
+
+  export type YoutubeSubcriberListRelationFilter = {
+    every?: YoutubeSubcriberWhereInput
+    some?: YoutubeSubcriberWhereInput
+    none?: YoutubeSubcriberWhereInput
+  }
+
+  export type YoutubeChanelToUserPermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubePostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubeCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubeLikePostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubeLikeCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubeSubcriberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubeUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    profileImage?: SortOrder
+    email?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumYoutubePermissionEnumFilter = {
+    equals?: YoutubePermissionEnum
+    in?: Enumerable<YoutubePermissionEnum>
+    notIn?: Enumerable<YoutubePermissionEnum>
+    not?: NestedEnumYoutubePermissionEnumFilter | YoutubePermissionEnum
+  }
+
+  export type YoutubeChanelPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelPermissionAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeChanelPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelPermissionSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumYoutubePermissionEnumWithAggregatesFilter = {
+    equals?: YoutubePermissionEnum
+    in?: Enumerable<YoutubePermissionEnum>
+    notIn?: Enumerable<YoutubePermissionEnum>
+    not?: NestedEnumYoutubePermissionEnumWithAggregatesFilter | YoutubePermissionEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumYoutubePermissionEnumFilter
+    _max?: NestedEnumYoutubePermissionEnumFilter
+  }
+
+  export type YoutubeChanelCountOrderByAggregateInput = {
+    id?: SortOrder
+    ChanelImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeChanelMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ChanelImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelMinOrderByAggregateInput = {
+    id?: SortOrder
+    ChanelImage?: SortOrder
+    coverImage?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeChanelRelationFilter = {
+    is?: YoutubeChanelWhereInput
+    isNot?: YoutubeChanelWhereInput
+  }
+
+  export type YoutubeUserRelationFilter = {
+    is?: YoutubeUserWhereInput
+    isNot?: YoutubeUserWhereInput
+  }
+
+  export type YoutubeChanelPermissionRelationFilter = {
+    is?: YoutubeChanelPermissionWhereInput
+    isNot?: YoutubeChanelPermissionWhereInput
+  }
+
+  export type YoutubeChanelToUserPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelToUserPermissionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+  }
+
+  export type YoutubeChanelToUserPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelToUserPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeChanelToUserPermissionSumOrderByAggregateInput = {
+    id?: SortOrder
+    chanelId?: SortOrder
+    UserId?: SortOrder
+    permissionId?: SortOrder
+  }
+
+  export type YoutubeHashtagCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeHashtagAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeHashtagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeHashtagMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeHashtagSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BoolFilter = {
+    equals?: boolean
+    not?: NestedBoolFilter | boolean
+  }
+
+  export type YoutubeHashtagListRelationFilter = {
+    every?: YoutubeHashtagWhereInput
+    some?: YoutubeHashtagWhereInput
+    none?: YoutubeHashtagWhereInput
+  }
+
+  export type YoutubeHashtagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubePostCountOrderByAggregateInput = {
+    id?: SortOrder
+    video?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubePostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    shareFromPostId?: SortOrder
+  }
+
+  export type YoutubePostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    video?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubePostMinOrderByAggregateInput = {
+    id?: SortOrder
+    video?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    isShared?: SortOrder
+    shareFromPostId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubePostSumOrderByAggregateInput = {
+    id?: SortOrder
+    posterUserId?: SortOrder
+    chanelId?: SortOrder
+    shareFromPostId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter = {
+    equals?: boolean
+    not?: NestedBoolWithAggregatesFilter | boolean
+    _count?: NestedIntFilter
+    _min?: NestedBoolFilter
+    _max?: NestedBoolFilter
+  }
+
+  export type YoutubePostRelationFilter = {
+    is?: YoutubePostWhereInput
+    isNot?: YoutubePostWhereInput
+  }
+
+  export type YoutubeCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type YoutubeCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    commentByUserId?: SortOrder
+    postId?: SortOrder
+  }
+
+  export type EnumYoutubeLikeTypeEnumFilter = {
+    equals?: YoutubeLikeTypeEnum
+    in?: Enumerable<YoutubeLikeTypeEnum>
+    notIn?: Enumerable<YoutubeLikeTypeEnum>
+    not?: NestedEnumYoutubeLikeTypeEnumFilter | YoutubeLikeTypeEnum
+  }
+
+  export type YoutubeLikeTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeTypeAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YoutubeLikeTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    emoji?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeTypeSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type EnumYoutubeLikeTypeEnumWithAggregatesFilter = {
+    equals?: YoutubeLikeTypeEnum
+    in?: Enumerable<YoutubeLikeTypeEnum>
+    notIn?: Enumerable<YoutubeLikeTypeEnum>
+    not?: NestedEnumYoutubeLikeTypeEnumWithAggregatesFilter | YoutubeLikeTypeEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumYoutubeLikeTypeEnumFilter
+    _max?: NestedEnumYoutubeLikeTypeEnumFilter
+  }
+
+  export type YoutubeLikeTypeRelationFilter = {
+    is?: YoutubeLikeTypeWhereInput
+    isNot?: YoutubeLikeTypeWhereInput
+  }
+
+  export type YoutubeLikePostCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikePostAvgOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type YoutubeLikePostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikePostMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikePostSumOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type YoutubeLikeCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type YoutubeLikeCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeLikeCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    commentId?: SortOrder
+    likeByUserId?: SortOrder
+    likeTypeId?: SortOrder
+  }
+
+  export type YoutubeSubcriberCountOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+    isSupported?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeSubcriberAvgOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+  }
+
+  export type YoutubeSubcriberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+    isSupported?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeSubcriberMinOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+    isSupported?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YoutubeSubcriberSumOrderByAggregateInput = {
+    id?: SortOrder
+    fromUserId?: SortOrder
+    toChanelId?: SortOrder
+  }
+
   export type FacebookPostListRelationFilter = {
     every?: FacebookPostWhereInput
     some?: FacebookPostWhereInput
@@ -37851,11 +51724,6 @@ export namespace Prisma {
     isNot?: FacebookPostDestinationWhereInput
   }
 
-  export type BoolFilter = {
-    equals?: boolean
-    not?: NestedBoolFilter | boolean
-  }
-
   export type FacebookHashtagListRelationFilter = {
     every?: FacebookHashtagWhereInput
     some?: FacebookHashtagWhereInput
@@ -37926,14 +51794,6 @@ export namespace Prisma {
     destinationId?: SortOrder
     destinationRelateId?: SortOrder
     shareFromPostId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter = {
-    equals?: boolean
-    not?: NestedBoolWithAggregatesFilter | boolean
-    _count?: NestedIntFilter
-    _min?: NestedBoolFilter
-    _max?: NestedBoolFilter
   }
 
   export type FacebookPostRelationFilter = {
@@ -39251,6 +53111,934 @@ export namespace Prisma {
     update?: XOR<TwitterUserUpdateWithoutDirectToesInput, TwitterUserUncheckedUpdateWithoutDirectToesInput>
   }
 
+  export type YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutUserInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutUserInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyUserInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type YoutubePostCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutPosterUserInput>, Enumerable<YoutubePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutPosterUserInput>
+    createMany?: YoutubePostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubeCommentCreateNestedManyWithoutCommentByUserInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutCommentByUserInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutCommentByUserInput>
+    createMany?: YoutubeCommentCreateManyCommentByUserInputEnvelope
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeLikePostCreateNestedManyWithoutLikeByUserInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeByUserInput>
+    createMany?: YoutubeLikePostCreateManyLikeByUserInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeByUserInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeByUserInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeSubcriberCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutFromUserInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutFromUserInput>
+    createMany?: YoutubeSubcriberCreateManyFromUserInputEnvelope
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutUserInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutUserInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyUserInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutPosterUserInput>, Enumerable<YoutubePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutPosterUserInput>
+    createMany?: YoutubePostCreateManyPosterUserInputEnvelope
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutCommentByUserInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutCommentByUserInput>
+    createMany?: YoutubeCommentCreateManyCommentByUserInputEnvelope
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeByUserInput>
+    createMany?: YoutubeLikePostCreateManyLikeByUserInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeByUserInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeByUserInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutFromUserInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutFromUserInput>
+    createMany?: YoutubeSubcriberCreateManyFromUserInputEnvelope
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutUserInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyUserInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubePostUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutPosterUserInput>, Enumerable<YoutubePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: YoutubePostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubeCommentUpdateManyWithoutCommentByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutCommentByUserInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutCommentByUserInput>
+    upsert?: Enumerable<YoutubeCommentUpsertWithWhereUniqueWithoutCommentByUserInput>
+    createMany?: YoutubeCommentCreateManyCommentByUserInputEnvelope
+    set?: Enumerable<YoutubeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeCommentUpdateWithWhereUniqueWithoutCommentByUserInput>
+    updateMany?: Enumerable<YoutubeCommentUpdateManyWithWhereWithoutCommentByUserInput>
+    deleteMany?: Enumerable<YoutubeCommentScalarWhereInput>
+  }
+
+  export type YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeByUserInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutLikeByUserInput>
+    createMany?: YoutubeLikePostCreateManyLikeByUserInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutLikeByUserInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutLikeByUserInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeByUserInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeByUserInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeByUserInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeByUserInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutLikeByUserInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubeSubcriberUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutFromUserInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutFromUserInput>
+    upsert?: Enumerable<YoutubeSubcriberUpsertWithWhereUniqueWithoutFromUserInput>
+    createMany?: YoutubeSubcriberCreateManyFromUserInputEnvelope
+    set?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    delete?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    update?: Enumerable<YoutubeSubcriberUpdateWithWhereUniqueWithoutFromUserInput>
+    updateMany?: Enumerable<YoutubeSubcriberUpdateManyWithWhereWithoutFromUserInput>
+    deleteMany?: Enumerable<YoutubeSubcriberScalarWhereInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutUserInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyUserInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutPosterUserInput>, Enumerable<YoutubePostUncheckedCreateWithoutPosterUserInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutPosterUserInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutPosterUserInput>
+    createMany?: YoutubePostCreateManyPosterUserInputEnvelope
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutPosterUserInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutPosterUserInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutCommentByUserInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutCommentByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutCommentByUserInput>
+    upsert?: Enumerable<YoutubeCommentUpsertWithWhereUniqueWithoutCommentByUserInput>
+    createMany?: YoutubeCommentCreateManyCommentByUserInputEnvelope
+    set?: Enumerable<YoutubeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeCommentUpdateWithWhereUniqueWithoutCommentByUserInput>
+    updateMany?: Enumerable<YoutubeCommentUpdateManyWithWhereWithoutCommentByUserInput>
+    deleteMany?: Enumerable<YoutubeCommentScalarWhereInput>
+  }
+
+  export type YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeByUserInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutLikeByUserInput>
+    createMany?: YoutubeLikePostCreateManyLikeByUserInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutLikeByUserInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutLikeByUserInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeByUserInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeByUserInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeByUserInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeByUserInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeByUserInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutLikeByUserInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutFromUserInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutFromUserInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutFromUserInput>
+    upsert?: Enumerable<YoutubeSubcriberUpsertWithWhereUniqueWithoutFromUserInput>
+    createMany?: YoutubeSubcriberCreateManyFromUserInputEnvelope
+    set?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    delete?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    update?: Enumerable<YoutubeSubcriberUpdateWithWhereUniqueWithoutFromUserInput>
+    updateMany?: Enumerable<YoutubeSubcriberUpdateManyWithWhereWithoutFromUserInput>
+    deleteMany?: Enumerable<YoutubeSubcriberScalarWhereInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateNestedManyWithoutPermissionInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutPermissionInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutPermissionInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyPermissionInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutPermissionInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutPermissionInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutPermissionInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyPermissionInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type EnumYoutubePermissionEnumFieldUpdateOperationsInput = {
+    set?: YoutubePermissionEnum
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithoutPermissionNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutPermissionInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutPermissionInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutPermissionInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyPermissionInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutPermissionInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutPermissionInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutPermissionNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutPermissionInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutPermissionInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutPermissionInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyPermissionInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutPermissionInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutPermissionInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateNestedManyWithoutChanelInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutChanelInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutChanelInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyChanelInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type YoutubePostCreateNestedManyWithoutChanelInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutChanelInput>, Enumerable<YoutubePostUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutChanelInput>
+    createMany?: YoutubePostCreateManyChanelInputEnvelope
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubeSubcriberCreateNestedManyWithoutToChanelInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutToChanelInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutToChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutToChanelInput>
+    createMany?: YoutubeSubcriberCreateManyToChanelInputEnvelope
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutChanelInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutChanelInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutChanelInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyChanelInputEnvelope
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+  }
+
+  export type YoutubePostUncheckedCreateNestedManyWithoutChanelInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutChanelInput>, Enumerable<YoutubePostUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutChanelInput>
+    createMany?: YoutubePostCreateManyChanelInputEnvelope
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubeSubcriberUncheckedCreateNestedManyWithoutToChanelInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutToChanelInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutToChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutToChanelInput>
+    createMany?: YoutubeSubcriberCreateManyToChanelInputEnvelope
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithoutChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutChanelInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutChanelInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutChanelInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyChanelInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutChanelInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutChanelInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubePostUpdateManyWithoutChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutChanelInput>, Enumerable<YoutubePostUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutChanelInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutChanelInput>
+    createMany?: YoutubePostCreateManyChanelInputEnvelope
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutChanelInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutChanelInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubeSubcriberUpdateManyWithoutToChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutToChanelInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutToChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutToChanelInput>
+    upsert?: Enumerable<YoutubeSubcriberUpsertWithWhereUniqueWithoutToChanelInput>
+    createMany?: YoutubeSubcriberCreateManyToChanelInputEnvelope
+    set?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    delete?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    update?: Enumerable<YoutubeSubcriberUpdateWithWhereUniqueWithoutToChanelInput>
+    updateMany?: Enumerable<YoutubeSubcriberUpdateManyWithWhereWithoutToChanelInput>
+    deleteMany?: Enumerable<YoutubeSubcriberScalarWhereInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubeChanelToUserPermissionCreateWithoutChanelInput>, Enumerable<YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeChanelToUserPermissionCreateOrConnectWithoutChanelInput>
+    upsert?: Enumerable<YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutChanelInput>
+    createMany?: YoutubeChanelToUserPermissionCreateManyChanelInputEnvelope
+    set?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    delete?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    connect?: Enumerable<YoutubeChanelToUserPermissionWhereUniqueInput>
+    update?: Enumerable<YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutChanelInput>
+    updateMany?: Enumerable<YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutChanelInput>
+    deleteMany?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+  }
+
+  export type YoutubePostUncheckedUpdateManyWithoutChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutChanelInput>, Enumerable<YoutubePostUncheckedCreateWithoutChanelInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutChanelInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutChanelInput>
+    createMany?: YoutubePostCreateManyChanelInputEnvelope
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutChanelInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutChanelInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateManyWithoutToChanelNestedInput = {
+    create?: XOR<Enumerable<YoutubeSubcriberCreateWithoutToChanelInput>, Enumerable<YoutubeSubcriberUncheckedCreateWithoutToChanelInput>>
+    connectOrCreate?: Enumerable<YoutubeSubcriberCreateOrConnectWithoutToChanelInput>
+    upsert?: Enumerable<YoutubeSubcriberUpsertWithWhereUniqueWithoutToChanelInput>
+    createMany?: YoutubeSubcriberCreateManyToChanelInputEnvelope
+    set?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    delete?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    connect?: Enumerable<YoutubeSubcriberWhereUniqueInput>
+    update?: Enumerable<YoutubeSubcriberUpdateWithWhereUniqueWithoutToChanelInput>
+    updateMany?: Enumerable<YoutubeSubcriberUpdateManyWithWhereWithoutToChanelInput>
+    deleteMany?: Enumerable<YoutubeSubcriberScalarWhereInput>
+  }
+
+  export type YoutubeChanelCreateNestedOneWithoutChanelToUserPermissionsInput = {
+    create?: XOR<YoutubeChanelCreateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutChanelToUserPermissionsInput
+    connect?: YoutubeChanelWhereUniqueInput
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutChanelToUserPermissionsInput = {
+    create?: XOR<YoutubeUserCreateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutChanelToUserPermissionsInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubeChanelPermissionCreateNestedOneWithoutChanelToUserPermissionsInput = {
+    create?: XOR<YoutubeChanelPermissionCreateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeChanelPermissionCreateOrConnectWithoutChanelToUserPermissionsInput
+    connect?: YoutubeChanelPermissionWhereUniqueInput
+  }
+
+  export type YoutubeChanelUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput = {
+    create?: XOR<YoutubeChanelCreateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutChanelToUserPermissionsInput
+    upsert?: YoutubeChanelUpsertWithoutChanelToUserPermissionsInput
+    connect?: YoutubeChanelWhereUniqueInput
+    update?: XOR<YoutubeChanelUpdateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedUpdateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutChanelToUserPermissionsInput
+    upsert?: YoutubeUserUpsertWithoutChanelToUserPermissionsInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedUpdateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelPermissionUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput = {
+    create?: XOR<YoutubeChanelPermissionCreateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedCreateWithoutChanelToUserPermissionsInput>
+    connectOrCreate?: YoutubeChanelPermissionCreateOrConnectWithoutChanelToUserPermissionsInput
+    upsert?: YoutubeChanelPermissionUpsertWithoutChanelToUserPermissionsInput
+    connect?: YoutubeChanelPermissionWhereUniqueInput
+    update?: XOR<YoutubeChanelPermissionUpdateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedUpdateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubePostCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutHashtagsInput>, Enumerable<YoutubePostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubePostUncheckedCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutHashtagsInput>, Enumerable<YoutubePostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+  }
+
+  export type YoutubePostUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutHashtagsInput>, Enumerable<YoutubePostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubePostUncheckedUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<YoutubePostCreateWithoutHashtagsInput>, Enumerable<YoutubePostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<YoutubePostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<YoutubePostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<YoutubePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubePostWhereUniqueInput>
+    delete?: Enumerable<YoutubePostWhereUniqueInput>
+    connect?: Enumerable<YoutubePostWhereUniqueInput>
+    update?: Enumerable<YoutubePostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<YoutubePostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<YoutubePostScalarWhereInput>
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutPostsInput = {
+    create?: XOR<YoutubeUserCreateWithoutPostsInput, YoutubeUserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutPostsInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubeChanelCreateNestedOneWithoutPostsInput = {
+    create?: XOR<YoutubeChanelCreateWithoutPostsInput, YoutubeChanelUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutPostsInput
+    connect?: YoutubeChanelWhereUniqueInput
+  }
+
+  export type YoutubeHashtagCreateNestedManyWithoutPostsInput = {
+    create?: XOR<Enumerable<YoutubeHashtagCreateWithoutPostsInput>, Enumerable<YoutubeHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<YoutubeHashtagCreateOrConnectWithoutPostsInput>
+    connect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+  }
+
+  export type YoutubeCommentCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutPostInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutPostInput>
+    createMany?: YoutubeCommentCreateManyPostInputEnvelope
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeLikePostCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutPostInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutPostInput>
+    createMany?: YoutubeLikePostCreateManyPostInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutCommentInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutCommentInput>
+    createMany?: YoutubeLikeCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput = {
+    create?: XOR<Enumerable<YoutubeHashtagCreateWithoutPostsInput>, Enumerable<YoutubeHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<YoutubeHashtagCreateOrConnectWithoutPostsInput>
+    connect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+  }
+
+  export type YoutubeCommentUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutPostInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutPostInput>
+    createMany?: YoutubeCommentCreateManyPostInputEnvelope
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutPostInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutPostInput>
+    createMany?: YoutubeLikePostCreateManyPostInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutCommentInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutCommentInput>
+    createMany?: YoutubeLikeCommentCreateManyCommentInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutPostsInput, YoutubeUserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutPostsInput
+    upsert?: YoutubeUserUpsertWithoutPostsInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutPostsInput, YoutubeUserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<YoutubeChanelCreateWithoutPostsInput, YoutubeChanelUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutPostsInput
+    upsert?: YoutubeChanelUpsertWithoutPostsInput
+    connect?: YoutubeChanelWhereUniqueInput
+    update?: XOR<YoutubeChanelUpdateWithoutPostsInput, YoutubeChanelUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type YoutubeHashtagUpdateManyWithoutPostsNestedInput = {
+    create?: XOR<Enumerable<YoutubeHashtagCreateWithoutPostsInput>, Enumerable<YoutubeHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<YoutubeHashtagCreateOrConnectWithoutPostsInput>
+    upsert?: Enumerable<YoutubeHashtagUpsertWithWhereUniqueWithoutPostsInput>
+    set?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    delete?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    connect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    update?: Enumerable<YoutubeHashtagUpdateWithWhereUniqueWithoutPostsInput>
+    updateMany?: Enumerable<YoutubeHashtagUpdateManyWithWhereWithoutPostsInput>
+    deleteMany?: Enumerable<YoutubeHashtagScalarWhereInput>
+  }
+
+  export type YoutubeCommentUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutPostInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<YoutubeCommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: YoutubeCommentCreateManyPostInputEnvelope
+    set?: Enumerable<YoutubeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeCommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<YoutubeCommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<YoutubeCommentScalarWhereInput>
+  }
+
+  export type YoutubeLikePostUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutPostInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: YoutubeLikePostCreateManyPostInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutCommentInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: YoutubeLikeCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput = {
+    create?: XOR<Enumerable<YoutubeHashtagCreateWithoutPostsInput>, Enumerable<YoutubeHashtagUncheckedCreateWithoutPostsInput>>
+    connectOrCreate?: Enumerable<YoutubeHashtagCreateOrConnectWithoutPostsInput>
+    upsert?: Enumerable<YoutubeHashtagUpsertWithWhereUniqueWithoutPostsInput>
+    set?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    delete?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    connect?: Enumerable<YoutubeHashtagWhereUniqueInput>
+    update?: Enumerable<YoutubeHashtagUpdateWithWhereUniqueWithoutPostsInput>
+    updateMany?: Enumerable<YoutubeHashtagUpdateManyWithWhereWithoutPostsInput>
+    deleteMany?: Enumerable<YoutubeHashtagScalarWhereInput>
+  }
+
+  export type YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<YoutubeCommentCreateWithoutPostInput>, Enumerable<YoutubeCommentUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeCommentCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<YoutubeCommentUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: YoutubeCommentCreateManyPostInputEnvelope
+    set?: Enumerable<YoutubeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeCommentUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<YoutubeCommentUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<YoutubeCommentScalarWhereInput>
+  }
+
+  export type YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutPostInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: YoutubeLikePostCreateManyPostInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutCommentInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutCommentInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutCommentInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutCommentInput>
+    createMany?: YoutubeLikeCommentCreateManyCommentInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutCommentInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutCommentInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<YoutubeUserCreateWithoutCommentsInput, YoutubeUserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutCommentsInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubePostCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<YoutubePostCreateWithoutCommentsInput, YoutubePostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutCommentsInput
+    connect?: YoutubePostWhereUniqueInput
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutCommentsInput, YoutubeUserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutCommentsInput
+    upsert?: YoutubeUserUpsertWithoutCommentsInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutCommentsInput, YoutubeUserUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type YoutubePostUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<YoutubePostCreateWithoutCommentsInput, YoutubePostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutCommentsInput
+    upsert?: YoutubePostUpsertWithoutCommentsInput
+    connect?: YoutubePostWhereUniqueInput
+    update?: XOR<YoutubePostUpdateWithoutCommentsInput, YoutubePostUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type YoutubeLikePostCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeTypeInput>
+    createMany?: YoutubeLikePostCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type YoutubeLikePostUncheckedCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeTypeInput>
+    createMany?: YoutubeLikePostCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeTypeInputEnvelope
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+  }
+
+  export type EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput = {
+    set?: YoutubeLikeTypeEnum
+  }
+
+  export type YoutubeLikePostUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: YoutubeLikePostCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubeLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikePostCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikePostCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<YoutubeLikePostUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: YoutubeLikePostCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikePostWhereUniqueInput>
+    update?: Enumerable<YoutubeLikePostUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<YoutubeLikePostUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<YoutubeLikePostScalarWhereInput>
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput = {
+    create?: XOR<Enumerable<YoutubeLikeCommentCreateWithoutLikeTypeInput>, Enumerable<YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>>
+    connectOrCreate?: Enumerable<YoutubeLikeCommentCreateOrConnectWithoutLikeTypeInput>
+    upsert?: Enumerable<YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput>
+    createMany?: YoutubeLikeCommentCreateManyLikeTypeInputEnvelope
+    set?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    disconnect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    delete?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    connect?: Enumerable<YoutubeLikeCommentWhereUniqueInput>
+    update?: Enumerable<YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput>
+    updateMany?: Enumerable<YoutubeLikeCommentUpdateManyWithWhereWithoutLikeTypeInput>
+    deleteMany?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+  }
+
+  export type YoutubePostCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<YoutubePostCreateWithoutLikePostsInput, YoutubePostUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutLikePostsInput
+    connect?: YoutubePostWhereUniqueInput
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<YoutubeUserCreateWithoutLikePostsInput, YoutubeUserUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutLikePostsInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubeLikeTypeCreateNestedOneWithoutLikePostsInput = {
+    create?: XOR<YoutubeLikeTypeCreateWithoutLikePostsInput, YoutubeLikeTypeUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubeLikeTypeCreateOrConnectWithoutLikePostsInput
+    connect?: YoutubeLikeTypeWhereUniqueInput
+  }
+
+  export type YoutubePostUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<YoutubePostCreateWithoutLikePostsInput, YoutubePostUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutLikePostsInput
+    upsert?: YoutubePostUpsertWithoutLikePostsInput
+    connect?: YoutubePostWhereUniqueInput
+    update?: XOR<YoutubePostUpdateWithoutLikePostsInput, YoutubePostUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutLikePostsInput, YoutubeUserUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutLikePostsInput
+    upsert?: YoutubeUserUpsertWithoutLikePostsInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutLikePostsInput, YoutubeUserUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput = {
+    create?: XOR<YoutubeLikeTypeCreateWithoutLikePostsInput, YoutubeLikeTypeUncheckedCreateWithoutLikePostsInput>
+    connectOrCreate?: YoutubeLikeTypeCreateOrConnectWithoutLikePostsInput
+    upsert?: YoutubeLikeTypeUpsertWithoutLikePostsInput
+    connect?: YoutubeLikeTypeWhereUniqueInput
+    update?: XOR<YoutubeLikeTypeUpdateWithoutLikePostsInput, YoutubeLikeTypeUncheckedUpdateWithoutLikePostsInput>
+  }
+
+  export type YoutubePostCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<YoutubePostCreateWithoutLikeCommentsInput, YoutubePostUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutLikeCommentsInput
+    connect?: YoutubePostWhereUniqueInput
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<YoutubeUserCreateWithoutLikeCommentsInput, YoutubeUserUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutLikeCommentsInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubeLikeTypeCreateNestedOneWithoutLikeCommentsInput = {
+    create?: XOR<YoutubeLikeTypeCreateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubeLikeTypeCreateOrConnectWithoutLikeCommentsInput
+    connect?: YoutubeLikeTypeWhereUniqueInput
+  }
+
+  export type YoutubePostUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<YoutubePostCreateWithoutLikeCommentsInput, YoutubePostUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubePostCreateOrConnectWithoutLikeCommentsInput
+    upsert?: YoutubePostUpsertWithoutLikeCommentsInput
+    connect?: YoutubePostWhereUniqueInput
+    update?: XOR<YoutubePostUpdateWithoutLikeCommentsInput, YoutubePostUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutLikeCommentsInput, YoutubeUserUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutLikeCommentsInput
+    upsert?: YoutubeUserUpsertWithoutLikeCommentsInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutLikeCommentsInput, YoutubeUserUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput = {
+    create?: XOR<YoutubeLikeTypeCreateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+    connectOrCreate?: YoutubeLikeTypeCreateOrConnectWithoutLikeCommentsInput
+    upsert?: YoutubeLikeTypeUpsertWithoutLikeCommentsInput
+    connect?: YoutubeLikeTypeWhereUniqueInput
+    update?: XOR<YoutubeLikeTypeUpdateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedUpdateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeUserCreateNestedOneWithoutSubcribersInput = {
+    create?: XOR<YoutubeUserCreateWithoutSubcribersInput, YoutubeUserUncheckedCreateWithoutSubcribersInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutSubcribersInput
+    connect?: YoutubeUserWhereUniqueInput
+  }
+
+  export type YoutubeChanelCreateNestedOneWithoutSubcribersInput = {
+    create?: XOR<YoutubeChanelCreateWithoutSubcribersInput, YoutubeChanelUncheckedCreateWithoutSubcribersInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutSubcribersInput
+    connect?: YoutubeChanelWhereUniqueInput
+  }
+
+  export type YoutubeUserUpdateOneRequiredWithoutSubcribersNestedInput = {
+    create?: XOR<YoutubeUserCreateWithoutSubcribersInput, YoutubeUserUncheckedCreateWithoutSubcribersInput>
+    connectOrCreate?: YoutubeUserCreateOrConnectWithoutSubcribersInput
+    upsert?: YoutubeUserUpsertWithoutSubcribersInput
+    connect?: YoutubeUserWhereUniqueInput
+    update?: XOR<YoutubeUserUpdateWithoutSubcribersInput, YoutubeUserUncheckedUpdateWithoutSubcribersInput>
+  }
+
+  export type YoutubeChanelUpdateOneRequiredWithoutSubcribersNestedInput = {
+    create?: XOR<YoutubeChanelCreateWithoutSubcribersInput, YoutubeChanelUncheckedCreateWithoutSubcribersInput>
+    connectOrCreate?: YoutubeChanelCreateOrConnectWithoutSubcribersInput
+    upsert?: YoutubeChanelUpsertWithoutSubcribersInput
+    connect?: YoutubeChanelWhereUniqueInput
+    update?: XOR<YoutubeChanelUpdateWithoutSubcribersInput, YoutubeChanelUncheckedUpdateWithoutSubcribersInput>
+  }
+
   export type FacebookPostCreateNestedManyWithoutPosterUserInput = {
     create?: XOR<Enumerable<FacebookPostCreateWithoutPosterUserInput>, Enumerable<FacebookPostUncheckedCreateWithoutPosterUserInput>>
     connectOrCreate?: Enumerable<FacebookPostCreateOrConnectWithoutPosterUserInput>
@@ -39265,9 +54053,9 @@ export namespace Prisma {
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
   }
 
-  export type FacebookGroupCreateNestedManyWithoutMemberUserInput = {
-    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
-    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+  export type FacebookGroupCreateNestedManyWithoutMemberUsersInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUsersInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUsersInput>
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
   }
 
@@ -39348,9 +54136,9 @@ export namespace Prisma {
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
   }
 
-  export type FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput = {
-    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
-    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
+  export type FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUsersInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUsersInput>
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
   }
 
@@ -39445,16 +54233,16 @@ export namespace Prisma {
     deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
   }
 
-  export type FacebookGroupUpdateManyWithoutMemberUserNestedInput = {
-    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
-    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
-    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput>
+  export type FacebookGroupUpdateManyWithoutMemberUsersNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUsersInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUsersInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUsersInput>
     set?: Enumerable<FacebookGroupWhereUniqueInput>
     disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
     delete?: Enumerable<FacebookGroupWhereUniqueInput>
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
-    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput>
-    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUserInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUsersInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUsersInput>
     deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
   }
 
@@ -39612,16 +54400,16 @@ export namespace Prisma {
     deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
   }
 
-  export type FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput = {
-    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUserInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUserInput>>
-    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUserInput>
-    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput>
+  export type FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput = {
+    create?: XOR<Enumerable<FacebookGroupCreateWithoutMemberUsersInput>, Enumerable<FacebookGroupUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<FacebookGroupCreateOrConnectWithoutMemberUsersInput>
+    upsert?: Enumerable<FacebookGroupUpsertWithWhereUniqueWithoutMemberUsersInput>
     set?: Enumerable<FacebookGroupWhereUniqueInput>
     disconnect?: Enumerable<FacebookGroupWhereUniqueInput>
     delete?: Enumerable<FacebookGroupWhereUniqueInput>
     connect?: Enumerable<FacebookGroupWhereUniqueInput>
-    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput>
-    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUserInput>
+    update?: Enumerable<FacebookGroupUpdateWithWhereUniqueWithoutMemberUsersInput>
+    updateMany?: Enumerable<FacebookGroupUpdateManyWithWhereWithoutMemberUsersInput>
     deleteMany?: Enumerable<FacebookGroupScalarWhereInput>
   }
 
@@ -40075,10 +54863,6 @@ export namespace Prisma {
     upsert?: FacebookPostDestinationUpsertWithoutPostsInput
     connect?: FacebookPostDestinationWhereUniqueInput
     update?: XOR<FacebookPostDestinationUpdateWithoutPostsInput, FacebookPostDestinationUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type FacebookHashtagUpdateManyWithoutPostsNestedInput = {
@@ -40650,6 +55434,23 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
+  export type NestedEnumYoutubePermissionEnumFilter = {
+    equals?: YoutubePermissionEnum
+    in?: Enumerable<YoutubePermissionEnum>
+    notIn?: Enumerable<YoutubePermissionEnum>
+    not?: NestedEnumYoutubePermissionEnumFilter | YoutubePermissionEnum
+  }
+
+  export type NestedEnumYoutubePermissionEnumWithAggregatesFilter = {
+    equals?: YoutubePermissionEnum
+    in?: Enumerable<YoutubePermissionEnum>
+    notIn?: Enumerable<YoutubePermissionEnum>
+    not?: NestedEnumYoutubePermissionEnumWithAggregatesFilter | YoutubePermissionEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumYoutubePermissionEnumFilter
+    _max?: NestedEnumYoutubePermissionEnumFilter
+  }
+
   export type NestedBoolFilter = {
     equals?: boolean
     not?: NestedBoolFilter | boolean
@@ -40661,6 +55462,23 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedBoolFilter
     _max?: NestedBoolFilter
+  }
+
+  export type NestedEnumYoutubeLikeTypeEnumFilter = {
+    equals?: YoutubeLikeTypeEnum
+    in?: Enumerable<YoutubeLikeTypeEnum>
+    notIn?: Enumerable<YoutubeLikeTypeEnum>
+    not?: NestedEnumYoutubeLikeTypeEnumFilter | YoutubeLikeTypeEnum
+  }
+
+  export type NestedEnumYoutubeLikeTypeEnumWithAggregatesFilter = {
+    equals?: YoutubeLikeTypeEnum
+    in?: Enumerable<YoutubeLikeTypeEnum>
+    notIn?: Enumerable<YoutubeLikeTypeEnum>
+    not?: NestedEnumYoutubeLikeTypeEnumWithAggregatesFilter | YoutubeLikeTypeEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumYoutubeLikeTypeEnumFilter
+    _max?: NestedEnumYoutubeLikeTypeEnumFilter
   }
 
   export type BinKitchenMenuCreateWithoutCategoryInput = {
@@ -42320,6 +57138,1717 @@ export namespace Prisma {
     directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
   }
 
+  export type YoutubeChanelToUserPermissionCreateWithoutUserInput = {
+    chanel: YoutubeChanelCreateNestedOneWithoutChanelToUserPermissionsInput
+    permission: YoutubeChanelPermissionCreateNestedOneWithoutChanelToUserPermissionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput = {
+    id?: number
+    chanelId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateOrConnectWithoutUserInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutUserInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyUserInputEnvelope = {
+    data: Enumerable<YoutubeChanelToUserPermissionCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubePostCreateWithoutPosterUserInput = {
+    video: string
+    name: string
+    description: string
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutPosterUserInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutPosterUserInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutPosterUserInput, YoutubePostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type YoutubePostCreateManyPosterUserInputEnvelope = {
+    data: Enumerable<YoutubePostCreateManyPosterUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeCommentCreateWithoutCommentByUserInput = {
+    message: string
+    post: YoutubePostCreateNestedOneWithoutCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentUncheckedCreateWithoutCommentByUserInput = {
+    id?: number
+    message: string
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentCreateOrConnectWithoutCommentByUserInput = {
+    where: YoutubeCommentWhereUniqueInput
+    create: XOR<YoutubeCommentCreateWithoutCommentByUserInput, YoutubeCommentUncheckedCreateWithoutCommentByUserInput>
+  }
+
+  export type YoutubeCommentCreateManyCommentByUserInputEnvelope = {
+    data: Enumerable<YoutubeCommentCreateManyCommentByUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikePostCreateWithoutLikeByUserInput = {
+    post: YoutubePostCreateNestedOneWithoutLikePostsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUncheckedCreateWithoutLikeByUserInput = {
+    id?: number
+    postId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostCreateOrConnectWithoutLikeByUserInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    create: XOR<YoutubeLikePostCreateWithoutLikeByUserInput, YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikePostCreateManyLikeByUserInputEnvelope = {
+    data: Enumerable<YoutubeLikePostCreateManyLikeByUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikeCommentCreateWithoutLikeByUserInput = {
+    comment: YoutubePostCreateNestedOneWithoutLikeCommentsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput = {
+    id?: number
+    commentId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateOrConnectWithoutLikeByUserInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    create: XOR<YoutubeLikeCommentCreateWithoutLikeByUserInput, YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikeCommentCreateManyLikeByUserInputEnvelope = {
+    data: Enumerable<YoutubeLikeCommentCreateManyLikeByUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeSubcriberCreateWithoutFromUserInput = {
+    toChanel: YoutubeChanelCreateNestedOneWithoutSubcribersInput
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedCreateWithoutFromUserInput = {
+    id?: number
+    toChanelId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberCreateOrConnectWithoutFromUserInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    create: XOR<YoutubeSubcriberCreateWithoutFromUserInput, YoutubeSubcriberUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type YoutubeSubcriberCreateManyFromUserInputEnvelope = {
+    data: Enumerable<YoutubeSubcriberCreateManyFromUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutUserInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    update: XOR<YoutubeChanelToUserPermissionUpdateWithoutUserInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutUserInput>
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutUserInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutUserInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutUserInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateWithoutUserInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutUserInput = {
+    where: YoutubeChanelToUserPermissionScalarWhereInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateManyMutationInput, YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelToUserPermissionScalarWhereInput = {
+    AND?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+    OR?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+    NOT?: Enumerable<YoutubeChanelToUserPermissionScalarWhereInput>
+    id?: IntFilter | number
+    chanelId?: IntFilter | number
+    UserId?: IntFilter | number
+    permissionId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubePostUpsertWithWhereUniqueWithoutPosterUserInput = {
+    where: YoutubePostWhereUniqueInput
+    update: XOR<YoutubePostUpdateWithoutPosterUserInput, YoutubePostUncheckedUpdateWithoutPosterUserInput>
+    create: XOR<YoutubePostCreateWithoutPosterUserInput, YoutubePostUncheckedCreateWithoutPosterUserInput>
+  }
+
+  export type YoutubePostUpdateWithWhereUniqueWithoutPosterUserInput = {
+    where: YoutubePostWhereUniqueInput
+    data: XOR<YoutubePostUpdateWithoutPosterUserInput, YoutubePostUncheckedUpdateWithoutPosterUserInput>
+  }
+
+  export type YoutubePostUpdateManyWithWhereWithoutPosterUserInput = {
+    where: YoutubePostScalarWhereInput
+    data: XOR<YoutubePostUpdateManyMutationInput, YoutubePostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type YoutubePostScalarWhereInput = {
+    AND?: Enumerable<YoutubePostScalarWhereInput>
+    OR?: Enumerable<YoutubePostScalarWhereInput>
+    NOT?: Enumerable<YoutubePostScalarWhereInput>
+    id?: IntFilter | number
+    video?: StringFilter | string
+    name?: StringFilter | string
+    description?: StringFilter | string
+    posterUserId?: IntFilter | number
+    chanelId?: IntFilter | number
+    isShared?: BoolFilter | boolean
+    shareFromPostId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeCommentUpsertWithWhereUniqueWithoutCommentByUserInput = {
+    where: YoutubeCommentWhereUniqueInput
+    update: XOR<YoutubeCommentUpdateWithoutCommentByUserInput, YoutubeCommentUncheckedUpdateWithoutCommentByUserInput>
+    create: XOR<YoutubeCommentCreateWithoutCommentByUserInput, YoutubeCommentUncheckedCreateWithoutCommentByUserInput>
+  }
+
+  export type YoutubeCommentUpdateWithWhereUniqueWithoutCommentByUserInput = {
+    where: YoutubeCommentWhereUniqueInput
+    data: XOR<YoutubeCommentUpdateWithoutCommentByUserInput, YoutubeCommentUncheckedUpdateWithoutCommentByUserInput>
+  }
+
+  export type YoutubeCommentUpdateManyWithWhereWithoutCommentByUserInput = {
+    where: YoutubeCommentScalarWhereInput
+    data: XOR<YoutubeCommentUpdateManyMutationInput, YoutubeCommentUncheckedUpdateManyWithoutCommentsInput>
+  }
+
+  export type YoutubeCommentScalarWhereInput = {
+    AND?: Enumerable<YoutubeCommentScalarWhereInput>
+    OR?: Enumerable<YoutubeCommentScalarWhereInput>
+    NOT?: Enumerable<YoutubeCommentScalarWhereInput>
+    id?: IntFilter | number
+    message?: StringFilter | string
+    commentByUserId?: IntFilter | number
+    postId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeLikePostUpsertWithWhereUniqueWithoutLikeByUserInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    update: XOR<YoutubeLikePostUpdateWithoutLikeByUserInput, YoutubeLikePostUncheckedUpdateWithoutLikeByUserInput>
+    create: XOR<YoutubeLikePostCreateWithoutLikeByUserInput, YoutubeLikePostUncheckedCreateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikePostUpdateWithWhereUniqueWithoutLikeByUserInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    data: XOR<YoutubeLikePostUpdateWithoutLikeByUserInput, YoutubeLikePostUncheckedUpdateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikePostUpdateManyWithWhereWithoutLikeByUserInput = {
+    where: YoutubeLikePostScalarWhereInput
+    data: XOR<YoutubeLikePostUpdateManyMutationInput, YoutubeLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikePostScalarWhereInput = {
+    AND?: Enumerable<YoutubeLikePostScalarWhereInput>
+    OR?: Enumerable<YoutubeLikePostScalarWhereInput>
+    NOT?: Enumerable<YoutubeLikePostScalarWhereInput>
+    id?: IntFilter | number
+    postId?: IntFilter | number
+    likeByUserId?: IntFilter | number
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeByUserInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    update: XOR<YoutubeLikeCommentUpdateWithoutLikeByUserInput, YoutubeLikeCommentUncheckedUpdateWithoutLikeByUserInput>
+    create: XOR<YoutubeLikeCommentCreateWithoutLikeByUserInput, YoutubeLikeCommentUncheckedCreateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeByUserInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    data: XOR<YoutubeLikeCommentUpdateWithoutLikeByUserInput, YoutubeLikeCommentUncheckedUpdateWithoutLikeByUserInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithWhereWithoutLikeByUserInput = {
+    where: YoutubeLikeCommentScalarWhereInput
+    data: XOR<YoutubeLikeCommentUpdateManyMutationInput, YoutubeLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeLikeCommentScalarWhereInput = {
+    AND?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+    OR?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+    NOT?: Enumerable<YoutubeLikeCommentScalarWhereInput>
+    id?: IntFilter | number
+    commentId?: IntFilter | number
+    likeByUserId?: IntFilter | number
+    likeTypeId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeSubcriberUpsertWithWhereUniqueWithoutFromUserInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    update: XOR<YoutubeSubcriberUpdateWithoutFromUserInput, YoutubeSubcriberUncheckedUpdateWithoutFromUserInput>
+    create: XOR<YoutubeSubcriberCreateWithoutFromUserInput, YoutubeSubcriberUncheckedCreateWithoutFromUserInput>
+  }
+
+  export type YoutubeSubcriberUpdateWithWhereUniqueWithoutFromUserInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    data: XOR<YoutubeSubcriberUpdateWithoutFromUserInput, YoutubeSubcriberUncheckedUpdateWithoutFromUserInput>
+  }
+
+  export type YoutubeSubcriberUpdateManyWithWhereWithoutFromUserInput = {
+    where: YoutubeSubcriberScalarWhereInput
+    data: XOR<YoutubeSubcriberUpdateManyMutationInput, YoutubeSubcriberUncheckedUpdateManyWithoutSubcribersInput>
+  }
+
+  export type YoutubeSubcriberScalarWhereInput = {
+    AND?: Enumerable<YoutubeSubcriberScalarWhereInput>
+    OR?: Enumerable<YoutubeSubcriberScalarWhereInput>
+    NOT?: Enumerable<YoutubeSubcriberScalarWhereInput>
+    id?: IntFilter | number
+    fromUserId?: IntFilter | number
+    toChanelId?: IntFilter | number
+    isSupported?: BoolFilter | boolean
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateWithoutPermissionInput = {
+    chanel: YoutubeChanelCreateNestedOneWithoutChanelToUserPermissionsInput
+    User: YoutubeUserCreateNestedOneWithoutChanelToUserPermissionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput = {
+    id?: number
+    chanelId: number
+    UserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateOrConnectWithoutPermissionInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutPermissionInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyPermissionInputEnvelope = {
+    data: Enumerable<YoutubeChanelToUserPermissionCreateManyPermissionInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutPermissionInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    update: XOR<YoutubeChanelToUserPermissionUpdateWithoutPermissionInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutPermissionInput>
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutPermissionInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutPermissionInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutPermissionInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateWithoutPermissionInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutPermissionInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutPermissionInput = {
+    where: YoutubeChanelToUserPermissionScalarWhereInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateManyMutationInput, YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateWithoutChanelInput = {
+    User: YoutubeUserCreateNestedOneWithoutChanelToUserPermissionsInput
+    permission: YoutubeChanelPermissionCreateNestedOneWithoutChanelToUserPermissionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput = {
+    id?: number
+    UserId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateOrConnectWithoutChanelInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutChanelInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyChanelInputEnvelope = {
+    data: Enumerable<YoutubeChanelToUserPermissionCreateManyChanelInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubePostCreateWithoutChanelInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutChanelInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutChanelInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutChanelInput, YoutubePostUncheckedCreateWithoutChanelInput>
+  }
+
+  export type YoutubePostCreateManyChanelInputEnvelope = {
+    data: Enumerable<YoutubePostCreateManyChanelInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeSubcriberCreateWithoutToChanelInput = {
+    fromUser: YoutubeUserCreateNestedOneWithoutSubcribersInput
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedCreateWithoutToChanelInput = {
+    id?: number
+    fromUserId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberCreateOrConnectWithoutToChanelInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    create: XOR<YoutubeSubcriberCreateWithoutToChanelInput, YoutubeSubcriberUncheckedCreateWithoutToChanelInput>
+  }
+
+  export type YoutubeSubcriberCreateManyToChanelInputEnvelope = {
+    data: Enumerable<YoutubeSubcriberCreateManyToChanelInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeChanelToUserPermissionUpsertWithWhereUniqueWithoutChanelInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    update: XOR<YoutubeChanelToUserPermissionUpdateWithoutChanelInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutChanelInput>
+    create: XOR<YoutubeChanelToUserPermissionCreateWithoutChanelInput, YoutubeChanelToUserPermissionUncheckedCreateWithoutChanelInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithWhereUniqueWithoutChanelInput = {
+    where: YoutubeChanelToUserPermissionWhereUniqueInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateWithoutChanelInput, YoutubeChanelToUserPermissionUncheckedUpdateWithoutChanelInput>
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateManyWithWhereWithoutChanelInput = {
+    where: YoutubeChanelToUserPermissionScalarWhereInput
+    data: XOR<YoutubeChanelToUserPermissionUpdateManyMutationInput, YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubePostUpsertWithWhereUniqueWithoutChanelInput = {
+    where: YoutubePostWhereUniqueInput
+    update: XOR<YoutubePostUpdateWithoutChanelInput, YoutubePostUncheckedUpdateWithoutChanelInput>
+    create: XOR<YoutubePostCreateWithoutChanelInput, YoutubePostUncheckedCreateWithoutChanelInput>
+  }
+
+  export type YoutubePostUpdateWithWhereUniqueWithoutChanelInput = {
+    where: YoutubePostWhereUniqueInput
+    data: XOR<YoutubePostUpdateWithoutChanelInput, YoutubePostUncheckedUpdateWithoutChanelInput>
+  }
+
+  export type YoutubePostUpdateManyWithWhereWithoutChanelInput = {
+    where: YoutubePostScalarWhereInput
+    data: XOR<YoutubePostUpdateManyMutationInput, YoutubePostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type YoutubeSubcriberUpsertWithWhereUniqueWithoutToChanelInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    update: XOR<YoutubeSubcriberUpdateWithoutToChanelInput, YoutubeSubcriberUncheckedUpdateWithoutToChanelInput>
+    create: XOR<YoutubeSubcriberCreateWithoutToChanelInput, YoutubeSubcriberUncheckedCreateWithoutToChanelInput>
+  }
+
+  export type YoutubeSubcriberUpdateWithWhereUniqueWithoutToChanelInput = {
+    where: YoutubeSubcriberWhereUniqueInput
+    data: XOR<YoutubeSubcriberUpdateWithoutToChanelInput, YoutubeSubcriberUncheckedUpdateWithoutToChanelInput>
+  }
+
+  export type YoutubeSubcriberUpdateManyWithWhereWithoutToChanelInput = {
+    where: YoutubeSubcriberScalarWhereInput
+    data: XOR<YoutubeSubcriberUpdateManyMutationInput, YoutubeSubcriberUncheckedUpdateManyWithoutSubcribersInput>
+  }
+
+  export type YoutubeChanelCreateWithoutChanelToUserPermissionsInput = {
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelUncheckedCreateWithoutChanelToUserPermissionsInput = {
+    id?: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelCreateOrConnectWithoutChanelToUserPermissionsInput = {
+    where: YoutubeChanelWhereUniqueInput
+    create: XOR<YoutubeChanelCreateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeUserCreateWithoutChanelToUserPermissionsInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutChanelToUserPermissionsInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutChanelToUserPermissionsInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelPermissionCreateWithoutChanelToUserPermissionsInput = {
+    name: YoutubePermissionEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelPermissionUncheckedCreateWithoutChanelToUserPermissionsInput = {
+    id?: number
+    name: YoutubePermissionEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelPermissionCreateOrConnectWithoutChanelToUserPermissionsInput = {
+    where: YoutubeChanelPermissionWhereUniqueInput
+    create: XOR<YoutubeChanelPermissionCreateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelUpsertWithoutChanelToUserPermissionsInput = {
+    update: XOR<YoutubeChanelUpdateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedUpdateWithoutChanelToUserPermissionsInput>
+    create: XOR<YoutubeChanelCreateWithoutChanelToUserPermissionsInput, YoutubeChanelUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelUpdateWithoutChanelToUserPermissionsInput = {
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeChanelUncheckedUpdateWithoutChanelToUserPermissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUncheckedUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeUserUpsertWithoutChanelToUserPermissionsInput = {
+    update: XOR<YoutubeUserUpdateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedUpdateWithoutChanelToUserPermissionsInput>
+    create: XOR<YoutubeUserCreateWithoutChanelToUserPermissionsInput, YoutubeUserUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeUserUpdateWithoutChanelToUserPermissionsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutChanelToUserPermissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeChanelPermissionUpsertWithoutChanelToUserPermissionsInput = {
+    update: XOR<YoutubeChanelPermissionUpdateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedUpdateWithoutChanelToUserPermissionsInput>
+    create: XOR<YoutubeChanelPermissionCreateWithoutChanelToUserPermissionsInput, YoutubeChanelPermissionUncheckedCreateWithoutChanelToUserPermissionsInput>
+  }
+
+  export type YoutubeChanelPermissionUpdateWithoutChanelToUserPermissionsInput = {
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelPermissionUncheckedUpdateWithoutChanelToUserPermissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: EnumYoutubePermissionEnumFieldUpdateOperationsInput | YoutubePermissionEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostCreateWithoutHashtagsInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutHashtagsInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutHashtagsInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutHashtagsInput, YoutubePostUncheckedCreateWithoutHashtagsInput>
+  }
+
+  export type YoutubePostUpsertWithWhereUniqueWithoutHashtagsInput = {
+    where: YoutubePostWhereUniqueInput
+    update: XOR<YoutubePostUpdateWithoutHashtagsInput, YoutubePostUncheckedUpdateWithoutHashtagsInput>
+    create: XOR<YoutubePostCreateWithoutHashtagsInput, YoutubePostUncheckedCreateWithoutHashtagsInput>
+  }
+
+  export type YoutubePostUpdateWithWhereUniqueWithoutHashtagsInput = {
+    where: YoutubePostWhereUniqueInput
+    data: XOR<YoutubePostUpdateWithoutHashtagsInput, YoutubePostUncheckedUpdateWithoutHashtagsInput>
+  }
+
+  export type YoutubePostUpdateManyWithWhereWithoutHashtagsInput = {
+    where: YoutubePostScalarWhereInput
+    data: XOR<YoutubePostUpdateManyMutationInput, YoutubePostUncheckedUpdateManyWithoutPostsInput>
+  }
+
+  export type YoutubeUserCreateWithoutPostsInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutPostsInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutPostsInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutPostsInput, YoutubeUserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeChanelCreateWithoutPostsInput = {
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelUncheckedCreateWithoutPostsInput = {
+    id?: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutChanelInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutToChanelInput
+  }
+
+  export type YoutubeChanelCreateOrConnectWithoutPostsInput = {
+    where: YoutubeChanelWhereUniqueInput
+    create: XOR<YoutubeChanelCreateWithoutPostsInput, YoutubeChanelUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeHashtagCreateWithoutPostsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeHashtagUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeHashtagCreateOrConnectWithoutPostsInput = {
+    where: YoutubeHashtagWhereUniqueInput
+    create: XOR<YoutubeHashtagCreateWithoutPostsInput, YoutubeHashtagUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeCommentCreateWithoutPostInput = {
+    message: string
+    commentByUser: YoutubeUserCreateNestedOneWithoutCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentUncheckedCreateWithoutPostInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentCreateOrConnectWithoutPostInput = {
+    where: YoutubeCommentWhereUniqueInput
+    create: XOR<YoutubeCommentCreateWithoutPostInput, YoutubeCommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type YoutubeCommentCreateManyPostInputEnvelope = {
+    data: Enumerable<YoutubeCommentCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikePostCreateWithoutPostInput = {
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikePostsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUncheckedCreateWithoutPostInput = {
+    id?: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostCreateOrConnectWithoutPostInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    create: XOR<YoutubeLikePostCreateWithoutPostInput, YoutubeLikePostUncheckedCreateWithoutPostInput>
+  }
+
+  export type YoutubeLikePostCreateManyPostInputEnvelope = {
+    data: Enumerable<YoutubeLikePostCreateManyPostInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikeCommentCreateWithoutCommentInput = {
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikeCommentsInput
+    likeType: YoutubeLikeTypeCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateWithoutCommentInput = {
+    id?: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateOrConnectWithoutCommentInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    create: XOR<YoutubeLikeCommentCreateWithoutCommentInput, YoutubeLikeCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type YoutubeLikeCommentCreateManyCommentInputEnvelope = {
+    data: Enumerable<YoutubeLikeCommentCreateManyCommentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeUserUpsertWithoutPostsInput = {
+    update: XOR<YoutubeUserUpdateWithoutPostsInput, YoutubeUserUncheckedUpdateWithoutPostsInput>
+    create: XOR<YoutubeUserCreateWithoutPostsInput, YoutubeUserUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeUserUpdateWithoutPostsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeChanelUpsertWithoutPostsInput = {
+    update: XOR<YoutubeChanelUpdateWithoutPostsInput, YoutubeChanelUncheckedUpdateWithoutPostsInput>
+    create: XOR<YoutubeChanelCreateWithoutPostsInput, YoutubeChanelUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeChanelUpdateWithoutPostsInput = {
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeChanelUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutToChanelNestedInput
+  }
+
+  export type YoutubeHashtagUpsertWithWhereUniqueWithoutPostsInput = {
+    where: YoutubeHashtagWhereUniqueInput
+    update: XOR<YoutubeHashtagUpdateWithoutPostsInput, YoutubeHashtagUncheckedUpdateWithoutPostsInput>
+    create: XOR<YoutubeHashtagCreateWithoutPostsInput, YoutubeHashtagUncheckedCreateWithoutPostsInput>
+  }
+
+  export type YoutubeHashtagUpdateWithWhereUniqueWithoutPostsInput = {
+    where: YoutubeHashtagWhereUniqueInput
+    data: XOR<YoutubeHashtagUpdateWithoutPostsInput, YoutubeHashtagUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type YoutubeHashtagUpdateManyWithWhereWithoutPostsInput = {
+    where: YoutubeHashtagScalarWhereInput
+    data: XOR<YoutubeHashtagUpdateManyMutationInput, YoutubeHashtagUncheckedUpdateManyWithoutHashtagsInput>
+  }
+
+  export type YoutubeHashtagScalarWhereInput = {
+    AND?: Enumerable<YoutubeHashtagScalarWhereInput>
+    OR?: Enumerable<YoutubeHashtagScalarWhereInput>
+    NOT?: Enumerable<YoutubeHashtagScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YoutubeCommentUpsertWithWhereUniqueWithoutPostInput = {
+    where: YoutubeCommentWhereUniqueInput
+    update: XOR<YoutubeCommentUpdateWithoutPostInput, YoutubeCommentUncheckedUpdateWithoutPostInput>
+    create: XOR<YoutubeCommentCreateWithoutPostInput, YoutubeCommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type YoutubeCommentUpdateWithWhereUniqueWithoutPostInput = {
+    where: YoutubeCommentWhereUniqueInput
+    data: XOR<YoutubeCommentUpdateWithoutPostInput, YoutubeCommentUncheckedUpdateWithoutPostInput>
+  }
+
+  export type YoutubeCommentUpdateManyWithWhereWithoutPostInput = {
+    where: YoutubeCommentScalarWhereInput
+    data: XOR<YoutubeCommentUpdateManyMutationInput, YoutubeCommentUncheckedUpdateManyWithoutCommentsInput>
+  }
+
+  export type YoutubeLikePostUpsertWithWhereUniqueWithoutPostInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    update: XOR<YoutubeLikePostUpdateWithoutPostInput, YoutubeLikePostUncheckedUpdateWithoutPostInput>
+    create: XOR<YoutubeLikePostCreateWithoutPostInput, YoutubeLikePostUncheckedCreateWithoutPostInput>
+  }
+
+  export type YoutubeLikePostUpdateWithWhereUniqueWithoutPostInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    data: XOR<YoutubeLikePostUpdateWithoutPostInput, YoutubeLikePostUncheckedUpdateWithoutPostInput>
+  }
+
+  export type YoutubeLikePostUpdateManyWithWhereWithoutPostInput = {
+    where: YoutubeLikePostScalarWhereInput
+    data: XOR<YoutubeLikePostUpdateManyMutationInput, YoutubeLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikeCommentUpsertWithWhereUniqueWithoutCommentInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    update: XOR<YoutubeLikeCommentUpdateWithoutCommentInput, YoutubeLikeCommentUncheckedUpdateWithoutCommentInput>
+    create: XOR<YoutubeLikeCommentCreateWithoutCommentInput, YoutubeLikeCommentUncheckedCreateWithoutCommentInput>
+  }
+
+  export type YoutubeLikeCommentUpdateWithWhereUniqueWithoutCommentInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    data: XOR<YoutubeLikeCommentUpdateWithoutCommentInput, YoutubeLikeCommentUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithWhereWithoutCommentInput = {
+    where: YoutubeLikeCommentScalarWhereInput
+    data: XOR<YoutubeLikeCommentUpdateManyMutationInput, YoutubeLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeUserCreateWithoutCommentsInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutCommentsInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutCommentsInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutCommentsInput, YoutubeUserUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type YoutubePostCreateWithoutCommentsInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutCommentsInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutCommentsInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutCommentsInput, YoutubePostUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type YoutubeUserUpsertWithoutCommentsInput = {
+    update: XOR<YoutubeUserUpdateWithoutCommentsInput, YoutubeUserUncheckedUpdateWithoutCommentsInput>
+    create: XOR<YoutubeUserCreateWithoutCommentsInput, YoutubeUserUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type YoutubeUserUpdateWithoutCommentsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubePostUpsertWithoutCommentsInput = {
+    update: XOR<YoutubePostUpdateWithoutCommentsInput, YoutubePostUncheckedUpdateWithoutCommentsInput>
+    create: XOR<YoutubePostCreateWithoutCommentsInput, YoutubePostUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type YoutubePostUpdateWithoutCommentsInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubeLikePostCreateWithoutLikeTypeInput = {
+    post: YoutubePostCreateNestedOneWithoutLikePostsInput
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikePostsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUncheckedCreateWithoutLikeTypeInput = {
+    id?: number
+    postId: number
+    likeByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostCreateOrConnectWithoutLikeTypeInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    create: XOR<YoutubeLikePostCreateWithoutLikeTypeInput, YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikePostCreateManyLikeTypeInputEnvelope = {
+    data: Enumerable<YoutubeLikePostCreateManyLikeTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikeCommentCreateWithoutLikeTypeInput = {
+    comment: YoutubePostCreateNestedOneWithoutLikeCommentsInput
+    likeByUser: YoutubeUserCreateNestedOneWithoutLikeCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput = {
+    id?: number
+    commentId: number
+    likeByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateOrConnectWithoutLikeTypeInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    create: XOR<YoutubeLikeCommentCreateWithoutLikeTypeInput, YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikeCommentCreateManyLikeTypeInputEnvelope = {
+    data: Enumerable<YoutubeLikeCommentCreateManyLikeTypeInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubeLikePostUpsertWithWhereUniqueWithoutLikeTypeInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    update: XOR<YoutubeLikePostUpdateWithoutLikeTypeInput, YoutubeLikePostUncheckedUpdateWithoutLikeTypeInput>
+    create: XOR<YoutubeLikePostCreateWithoutLikeTypeInput, YoutubeLikePostUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikePostUpdateWithWhereUniqueWithoutLikeTypeInput = {
+    where: YoutubeLikePostWhereUniqueInput
+    data: XOR<YoutubeLikePostUpdateWithoutLikeTypeInput, YoutubeLikePostUncheckedUpdateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikePostUpdateManyWithWhereWithoutLikeTypeInput = {
+    where: YoutubeLikePostScalarWhereInput
+    data: XOR<YoutubeLikePostUpdateManyMutationInput, YoutubeLikePostUncheckedUpdateManyWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikeCommentUpsertWithWhereUniqueWithoutLikeTypeInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    update: XOR<YoutubeLikeCommentUpdateWithoutLikeTypeInput, YoutubeLikeCommentUncheckedUpdateWithoutLikeTypeInput>
+    create: XOR<YoutubeLikeCommentCreateWithoutLikeTypeInput, YoutubeLikeCommentUncheckedCreateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikeCommentUpdateWithWhereUniqueWithoutLikeTypeInput = {
+    where: YoutubeLikeCommentWhereUniqueInput
+    data: XOR<YoutubeLikeCommentUpdateWithoutLikeTypeInput, YoutubeLikeCommentUncheckedUpdateWithoutLikeTypeInput>
+  }
+
+  export type YoutubeLikeCommentUpdateManyWithWhereWithoutLikeTypeInput = {
+    where: YoutubeLikeCommentScalarWhereInput
+    data: XOR<YoutubeLikeCommentUpdateManyMutationInput, YoutubeLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput>
+  }
+
+  export type YoutubePostCreateWithoutLikePostsInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutCommentInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutLikePostsInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutLikePostsInput, YoutubePostUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubeUserCreateWithoutLikePostsInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutLikePostsInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutLikePostsInput, YoutubeUserUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikeTypeCreateWithoutLikePostsInput = {
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeUncheckedCreateWithoutLikePostsInput = {
+    id?: number
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeCreateOrConnectWithoutLikePostsInput = {
+    where: YoutubeLikeTypeWhereUniqueInput
+    create: XOR<YoutubeLikeTypeCreateWithoutLikePostsInput, YoutubeLikeTypeUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubePostUpsertWithoutLikePostsInput = {
+    update: XOR<YoutubePostUpdateWithoutLikePostsInput, YoutubePostUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<YoutubePostCreateWithoutLikePostsInput, YoutubePostUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubePostUpdateWithoutLikePostsInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubeUserUpsertWithoutLikePostsInput = {
+    update: XOR<YoutubeUserUpdateWithoutLikePostsInput, YoutubeUserUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<YoutubeUserCreateWithoutLikePostsInput, YoutubeUserUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubeUserUpdateWithoutLikePostsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeLikeTypeUpsertWithoutLikePostsInput = {
+    update: XOR<YoutubeLikeTypeUpdateWithoutLikePostsInput, YoutubeLikeTypeUncheckedUpdateWithoutLikePostsInput>
+    create: XOR<YoutubeLikeTypeCreateWithoutLikePostsInput, YoutubeLikeTypeUncheckedCreateWithoutLikePostsInput>
+  }
+
+  export type YoutubeLikeTypeUpdateWithoutLikePostsInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubeLikeTypeUncheckedUpdateWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubePostCreateWithoutLikeCommentsInput = {
+    video: string
+    name: string
+    description: string
+    posterUser: YoutubeUserCreateNestedOneWithoutPostsInput
+    chanel: YoutubeChanelCreateNestedOneWithoutPostsInput
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutPostInput
+  }
+
+  export type YoutubePostUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtags?: YoutubeHashtagUncheckedCreateNestedManyWithoutPostsInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutPostInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type YoutubePostCreateOrConnectWithoutLikeCommentsInput = {
+    where: YoutubePostWhereUniqueInput
+    create: XOR<YoutubePostCreateWithoutLikeCommentsInput, YoutubePostUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeUserCreateWithoutLikeCommentsInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    subcribers?: YoutubeSubcriberUncheckedCreateNestedManyWithoutFromUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutLikeCommentsInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutLikeCommentsInput, YoutubeUserUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeLikeTypeCreateWithoutLikeCommentsInput = {
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeUncheckedCreateWithoutLikeCommentsInput = {
+    id?: number
+    emoji: string
+    name: YoutubeLikeTypeEnum
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeTypeInput
+  }
+
+  export type YoutubeLikeTypeCreateOrConnectWithoutLikeCommentsInput = {
+    where: YoutubeLikeTypeWhereUniqueInput
+    create: XOR<YoutubeLikeTypeCreateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubePostUpsertWithoutLikeCommentsInput = {
+    update: XOR<YoutubePostUpdateWithoutLikeCommentsInput, YoutubePostUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<YoutubePostCreateWithoutLikeCommentsInput, YoutubePostUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubePostUpdateWithoutLikeCommentsInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type YoutubeUserUpsertWithoutLikeCommentsInput = {
+    update: XOR<YoutubeUserUpdateWithoutLikeCommentsInput, YoutubeUserUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<YoutubeUserCreateWithoutLikeCommentsInput, YoutubeUserUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeUserUpdateWithoutLikeCommentsInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    subcribers?: YoutubeSubcriberUncheckedUpdateManyWithoutFromUserNestedInput
+  }
+
+  export type YoutubeLikeTypeUpsertWithoutLikeCommentsInput = {
+    update: XOR<YoutubeLikeTypeUpdateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedUpdateWithoutLikeCommentsInput>
+    create: XOR<YoutubeLikeTypeCreateWithoutLikeCommentsInput, YoutubeLikeTypeUncheckedCreateWithoutLikeCommentsInput>
+  }
+
+  export type YoutubeLikeTypeUpdateWithoutLikeCommentsInput = {
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubeLikeTypeUncheckedUpdateWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    emoji?: StringFieldUpdateOperationsInput | string
+    name?: EnumYoutubeLikeTypeEnumFieldUpdateOperationsInput | YoutubeLikeTypeEnum
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeTypeNestedInput
+  }
+
+  export type YoutubeUserCreateWithoutSubcribersInput = {
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutUserInput
+    posts?: YoutubePostCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentCreateNestedManyWithoutLikeByUserInput
+  }
+
+  export type YoutubeUserUncheckedCreateWithoutSubcribersInput = {
+    id?: number
+    profileImage: string
+    email: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutUserInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutPosterUserInput
+    comments?: YoutubeCommentUncheckedCreateNestedManyWithoutCommentByUserInput
+    likePosts?: YoutubeLikePostUncheckedCreateNestedManyWithoutLikeByUserInput
+    likeComments?: YoutubeLikeCommentUncheckedCreateNestedManyWithoutLikeByUserInput
+  }
+
+  export type YoutubeUserCreateOrConnectWithoutSubcribersInput = {
+    where: YoutubeUserWhereUniqueInput
+    create: XOR<YoutubeUserCreateWithoutSubcribersInput, YoutubeUserUncheckedCreateWithoutSubcribersInput>
+  }
+
+  export type YoutubeChanelCreateWithoutSubcribersInput = {
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionCreateNestedManyWithoutChanelInput
+    posts?: YoutubePostCreateNestedManyWithoutChanelInput
+  }
+
+  export type YoutubeChanelUncheckedCreateWithoutSubcribersInput = {
+    id?: number
+    ChanelImage: string
+    coverImage: string
+    name: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedCreateNestedManyWithoutChanelInput
+    posts?: YoutubePostUncheckedCreateNestedManyWithoutChanelInput
+  }
+
+  export type YoutubeChanelCreateOrConnectWithoutSubcribersInput = {
+    where: YoutubeChanelWhereUniqueInput
+    create: XOR<YoutubeChanelCreateWithoutSubcribersInput, YoutubeChanelUncheckedCreateWithoutSubcribersInput>
+  }
+
+  export type YoutubeUserUpsertWithoutSubcribersInput = {
+    update: XOR<YoutubeUserUpdateWithoutSubcribersInput, YoutubeUserUncheckedUpdateWithoutSubcribersInput>
+    create: XOR<YoutubeUserCreateWithoutSubcribersInput, YoutubeUserUncheckedCreateWithoutSubcribersInput>
+  }
+
+  export type YoutubeUserUpdateWithoutSubcribersInput = {
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutLikeByUserNestedInput
+  }
+
+  export type YoutubeUserUncheckedUpdateWithoutSubcribersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    profileImage?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutPosterUserNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutLikeByUserNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutLikeByUserNestedInput
+  }
+
+  export type YoutubeChanelUpsertWithoutSubcribersInput = {
+    update: XOR<YoutubeChanelUpdateWithoutSubcribersInput, YoutubeChanelUncheckedUpdateWithoutSubcribersInput>
+    create: XOR<YoutubeChanelCreateWithoutSubcribersInput, YoutubeChanelUncheckedCreateWithoutSubcribersInput>
+  }
+
+  export type YoutubeChanelUpdateWithoutSubcribersInput = {
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUpdateManyWithoutChanelNestedInput
+    posts?: YoutubePostUpdateManyWithoutChanelNestedInput
+  }
+
+  export type YoutubeChanelUncheckedUpdateWithoutSubcribersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ChanelImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chanelToUserPermissions?: YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelNestedInput
+    posts?: YoutubePostUncheckedUpdateManyWithoutChanelNestedInput
+  }
+
   export type FacebookPostCreateWithoutPosterUserInput = {
     message: string
     postType: FacebookPostTypeCreateNestedOneWithoutPostsInput
@@ -42367,7 +58896,7 @@ export namespace Prisma {
     GroupImage: string
     coverImage: string
     name: string
-    memberUser?: FacebookUserCreateNestedManyWithoutGroupMemberInput
+    memberUsers?: FacebookUserCreateNestedManyWithoutGroupMemberInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -42377,7 +58906,7 @@ export namespace Prisma {
     GroupImage: string
     coverImage: string
     name: string
-    memberUser?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
+    memberUsers?: FacebookUserUncheckedCreateNestedManyWithoutGroupMemberInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -42392,7 +58921,7 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type FacebookGroupCreateWithoutMemberUserInput = {
+  export type FacebookGroupCreateWithoutMemberUsersInput = {
     GroupImage: string
     coverImage: string
     name: string
@@ -42401,7 +58930,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type FacebookGroupUncheckedCreateWithoutMemberUserInput = {
+  export type FacebookGroupUncheckedCreateWithoutMemberUsersInput = {
     id?: number
     GroupImage: string
     coverImage: string
@@ -42411,9 +58940,9 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type FacebookGroupCreateOrConnectWithoutMemberUserInput = {
+  export type FacebookGroupCreateOrConnectWithoutMemberUsersInput = {
     where: FacebookGroupWhereUniqueInput
-    create: XOR<FacebookGroupCreateWithoutMemberUserInput, FacebookGroupUncheckedCreateWithoutMemberUserInput>
+    create: XOR<FacebookGroupCreateWithoutMemberUsersInput, FacebookGroupUncheckedCreateWithoutMemberUsersInput>
   }
 
   export type FacebookCommentCreateWithoutCommentByUserInput = {
@@ -42711,18 +59240,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type FacebookGroupUpsertWithWhereUniqueWithoutMemberUserInput = {
+  export type FacebookGroupUpsertWithWhereUniqueWithoutMemberUsersInput = {
     where: FacebookGroupWhereUniqueInput
-    update: XOR<FacebookGroupUpdateWithoutMemberUserInput, FacebookGroupUncheckedUpdateWithoutMemberUserInput>
-    create: XOR<FacebookGroupCreateWithoutMemberUserInput, FacebookGroupUncheckedCreateWithoutMemberUserInput>
+    update: XOR<FacebookGroupUpdateWithoutMemberUsersInput, FacebookGroupUncheckedUpdateWithoutMemberUsersInput>
+    create: XOR<FacebookGroupCreateWithoutMemberUsersInput, FacebookGroupUncheckedCreateWithoutMemberUsersInput>
   }
 
-  export type FacebookGroupUpdateWithWhereUniqueWithoutMemberUserInput = {
+  export type FacebookGroupUpdateWithWhereUniqueWithoutMemberUsersInput = {
     where: FacebookGroupWhereUniqueInput
-    data: XOR<FacebookGroupUpdateWithoutMemberUserInput, FacebookGroupUncheckedUpdateWithoutMemberUserInput>
+    data: XOR<FacebookGroupUpdateWithoutMemberUsersInput, FacebookGroupUncheckedUpdateWithoutMemberUsersInput>
   }
 
-  export type FacebookGroupUpdateManyWithWhereWithoutMemberUserInput = {
+  export type FacebookGroupUpdateManyWithWhereWithoutMemberUsersInput = {
     where: FacebookGroupScalarWhereInput
     data: XOR<FacebookGroupUpdateManyMutationInput, FacebookGroupUncheckedUpdateManyWithoutGroupMemberInput>
   }
@@ -42953,7 +59482,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -42973,7 +59502,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -43046,7 +59575,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -43066,7 +59595,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -43091,7 +59620,7 @@ export namespace Prisma {
 
   export type FacebookUserUpdateManyWithWhereWithoutGroupMemberInput = {
     where: FacebookUserScalarWhereInput
-    data: XOR<FacebookUserUpdateManyMutationInput, FacebookUserUncheckedUpdateManyWithoutMemberUserInput>
+    data: XOR<FacebookUserUpdateManyMutationInput, FacebookUserUncheckedUpdateManyWithoutMemberUsersInput>
   }
 
   export type FacebookUserScalarWhereInput = {
@@ -43362,7 +59891,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -43382,7 +59911,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -43562,7 +60091,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -43582,7 +60111,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -43712,7 +60241,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
@@ -43732,7 +60261,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
@@ -43799,7 +60328,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
@@ -43819,7 +60348,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
@@ -43996,7 +60525,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
@@ -44016,7 +60545,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
@@ -44105,7 +60634,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
@@ -44125,7 +60654,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
@@ -44204,7 +60733,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestCreateNestedManyWithoutRequestFromUserInput
@@ -44224,7 +60753,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     friendRequestFroms?: FacebookFriendRequestUncheckedCreateNestedManyWithoutRequestFromUserInput
@@ -44313,7 +60842,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUpdateManyWithoutRequestFromUserNestedInput
@@ -44333,7 +60862,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     friendRequestFroms?: FacebookFriendRequestUncheckedUpdateManyWithoutRequestFromUserNestedInput
@@ -44374,7 +60903,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44394,7 +60923,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44418,7 +60947,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44438,7 +60967,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44467,7 +60996,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44487,7 +61016,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -44511,7 +61040,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44531,7 +61060,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -44550,7 +61079,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44570,7 +61099,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44594,7 +61123,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44614,7 +61143,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44643,7 +61172,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44663,7 +61192,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -44687,7 +61216,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44707,7 +61236,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -44726,7 +61255,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44746,7 +61275,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44770,7 +61299,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentCreateNestedManyWithoutPosterUserInput
@@ -44790,7 +61319,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     posts?: FacebookPostUncheckedCreateNestedManyWithoutPosterUserInput
     groupcreater?: FacebookGroupUncheckedCreateNestedManyWithoutCreaterUserInput
-    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUserInput
+    groupMember?: FacebookGroupUncheckedCreateNestedManyWithoutMemberUsersInput
     comments?: FacebookCommentUncheckedCreateNestedManyWithoutCommentByUserInput
     likePosts?: FacebookLikePostUncheckedCreateNestedManyWithoutPosterUserInput
     likeComments?: FacebookLikeCommentUncheckedCreateNestedManyWithoutPosterUserInput
@@ -44819,7 +61348,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44839,7 +61368,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -44863,7 +61392,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUpdateManyWithoutPosterUserNestedInput
@@ -44883,7 +61412,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: FacebookPostUncheckedUpdateManyWithoutPosterUserNestedInput
     groupcreater?: FacebookGroupUncheckedUpdateManyWithoutCreaterUserNestedInput
-    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUserNestedInput
+    groupMember?: FacebookGroupUncheckedUpdateManyWithoutMemberUsersNestedInput
     comments?: FacebookCommentUncheckedUpdateManyWithoutCommentByUserNestedInput
     likePosts?: FacebookLikePostUncheckedUpdateManyWithoutPosterUserNestedInput
     likeComments?: FacebookLikeCommentUncheckedUpdateManyWithoutPosterUserNestedInput
@@ -45412,6 +61941,494 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type YoutubeChanelToUserPermissionCreateManyUserInput = {
+    id?: number
+    chanelId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubePostCreateManyPosterUserInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    chanelId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeCommentCreateManyCommentByUserInput = {
+    id?: number
+    message: string
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostCreateManyLikeByUserInput = {
+    id?: number
+    postId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateManyLikeByUserInput = {
+    id?: number
+    commentId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberCreateManyFromUserInput = {
+    id?: number
+    toChanelId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithoutUserInput = {
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    permission?: YoutubeChanelPermissionUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    permissionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateManyWithoutChanelToUserPermissionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    permissionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostUpdateWithoutPosterUserInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutPosterUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateManyWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUpdateWithoutCommentByUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    post?: YoutubePostUpdateOneRequiredWithoutCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUncheckedUpdateWithoutCommentByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUncheckedUpdateManyWithoutCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUpdateWithoutLikeByUserInput = {
+    post?: YoutubePostUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateWithoutLikeByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateManyWithoutLikePostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUpdateWithoutLikeByUserInput = {
+    comment?: YoutubePostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateWithoutLikeByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateManyWithoutLikeCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUpdateWithoutFromUserInput = {
+    toChanel?: YoutubeChanelUpdateOneRequiredWithoutSubcribersNestedInput
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateWithoutFromUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    toChanelId?: IntFieldUpdateOperationsInput | number
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateManyWithoutSubcribersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    toChanelId?: IntFieldUpdateOperationsInput | number
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyPermissionInput = {
+    id?: number
+    chanelId: number
+    UserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithoutPermissionInput = {
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    User?: YoutubeUserUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateWithoutPermissionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    UserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionCreateManyChanelInput = {
+    id?: number
+    UserId: number
+    permissionId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubePostCreateManyChanelInput = {
+    id?: number
+    video: string
+    name: string
+    description: string
+    posterUserId: number
+    isShared: boolean
+    shareFromPostId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeSubcriberCreateManyToChanelInput = {
+    id?: number
+    fromUserId: number
+    isSupported: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUpdateWithoutChanelInput = {
+    User?: YoutubeUserUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    permission?: YoutubeChanelPermissionUpdateOneRequiredWithoutChanelToUserPermissionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeChanelToUserPermissionUncheckedUpdateWithoutChanelInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    UserId?: IntFieldUpdateOperationsInput | number
+    permissionId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostUpdateWithoutChanelInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutChanelInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtags?: YoutubeHashtagUncheckedUpdateManyWithoutPostsNestedInput
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubeSubcriberUpdateWithoutToChanelInput = {
+    fromUser?: YoutubeUserUpdateOneRequiredWithoutSubcribersNestedInput
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeSubcriberUncheckedUpdateWithoutToChanelInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    isSupported?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePostUpdateWithoutHashtagsInput = {
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUser?: YoutubeUserUpdateOneRequiredWithoutPostsNestedInput
+    chanel?: YoutubeChanelUpdateOneRequiredWithoutPostsNestedInput
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: YoutubeCommentUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubePostUncheckedUpdateWithoutHashtagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    video?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    posterUserId?: IntFieldUpdateOperationsInput | number
+    chanelId?: IntFieldUpdateOperationsInput | number
+    isShared?: BoolFieldUpdateOperationsInput | boolean
+    shareFromPostId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: YoutubeCommentUncheckedUpdateManyWithoutPostNestedInput
+    likePosts?: YoutubeLikePostUncheckedUpdateManyWithoutPostNestedInput
+    likeComments?: YoutubeLikeCommentUncheckedUpdateManyWithoutCommentNestedInput
+  }
+
+  export type YoutubeCommentCreateManyPostInput = {
+    id?: number
+    message: string
+    commentByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostCreateManyPostInput = {
+    id?: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateManyCommentInput = {
+    id?: number
+    likeByUserId: number
+    likeTypeId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeHashtagUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeHashtagUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeHashtagUncheckedUpdateManyWithoutHashtagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUpdateWithoutPostInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUser?: YoutubeUserUpdateOneRequiredWithoutCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeCommentUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    commentByUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUpdateWithoutPostInput = {
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikePostsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateWithoutPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUpdateWithoutCommentInput = {
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeType?: YoutubeLikeTypeUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateWithoutCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    likeTypeId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostCreateManyLikeTypeInput = {
+    id?: number
+    postId: number
+    likeByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikeCommentCreateManyLikeTypeInput = {
+    id?: number
+    commentId: number
+    likeByUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YoutubeLikePostUpdateWithoutLikeTypeInput = {
+    post?: YoutubePostUpdateOneRequiredWithoutLikePostsNestedInput
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikePostsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikePostUncheckedUpdateWithoutLikeTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUpdateWithoutLikeTypeInput = {
+    comment?: YoutubePostUpdateOneRequiredWithoutLikeCommentsNestedInput
+    likeByUser?: YoutubeUserUpdateOneRequiredWithoutLikeCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubeLikeCommentUncheckedUpdateWithoutLikeTypeInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentId?: IntFieldUpdateOperationsInput | number
+    likeByUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type FacebookPostCreateManyPosterUserInput = {
     id?: number
     message: string
@@ -45560,7 +62577,7 @@ export namespace Prisma {
     GroupImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    memberUser?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
+    memberUsers?: FacebookUserUpdateManyWithoutGroupMemberNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45570,7 +62587,7 @@ export namespace Prisma {
     GroupImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    memberUser?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
+    memberUsers?: FacebookUserUncheckedUpdateManyWithoutGroupMemberNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -45584,7 +62601,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type FacebookGroupUpdateWithoutMemberUserInput = {
+  export type FacebookGroupUpdateWithoutMemberUsersInput = {
     GroupImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -45593,7 +62610,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type FacebookGroupUncheckedUpdateWithoutMemberUserInput = {
+  export type FacebookGroupUncheckedUpdateWithoutMemberUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     GroupImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string
@@ -45871,7 +62888,7 @@ export namespace Prisma {
     messengeToes?: FacebookMessengerUncheckedUpdateManyWithoutMessageToUserNestedInput
   }
 
-  export type FacebookUserUncheckedUpdateManyWithoutMemberUserInput = {
+  export type FacebookUserUncheckedUpdateManyWithoutMemberUsersInput = {
     id?: IntFieldUpdateOperationsInput | number
     profileImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string

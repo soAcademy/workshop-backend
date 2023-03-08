@@ -186,6 +186,147 @@ model TwitterDM {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
+model YoutubeUser {
+  id                      Int                      @id @default(autoincrement())
+  profileImage            String
+  email                   String
+  name                    String                   @unique
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  chanelToUserPermissions YoutubeChanelToUserPermission[]
+  posts                   YoutubePost[]
+  comments                YoutubeComment[]
+  likePosts               YoutubeLikePost[]
+  likeComments            YoutubeLikeComment[]
+  subcribers              YoutubeSubcriber[]
+}
+
+enum YoutubePermissionEnum {
+  OWNER
+  EDITOR
+  ADMIN
+}
+
+model YoutubeChanelPermission {
+  id                      Int                      @id @default(autoincrement())
+  name                    YoutubePermissionEnum
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  chanelToUserPermissions YoutubeChanelToUserPermission[]
+}
+
+model YoutubeChanel {
+  id                      Int                      @id @default(autoincrement())
+  ChanelImage             String
+  coverImage              String
+  name                    String                   @unique
+  description             String
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  chanelToUserPermissions YoutubeChanelToUserPermission[]
+  posts                   YoutubePost[]
+  subcribers              YoutubeSubcriber[]
+}
+
+model YoutubeChanelToUserPermission {
+  id           Int              @id @default(autoincrement())
+  chanel       YoutubeChanel           @relation(fields: [chanelId], references: [id])
+  chanelId     Int
+  User         YoutubeUser             @relation(fields: [UserId], references: [id])
+  UserId       Int
+  permission   YoutubeChanelPermission @relation(fields: [permissionId], references: [id])
+  permissionId Int
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model YoutubeHashtag {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     YoutubePost[]
+}
+
+model YoutubePost {
+  id              Int           @id @default(autoincrement())
+  video           String
+  name            String
+  description     String
+  posterUser      YoutubeUser          @relation(fields: [posterUserId], references: [id])
+  posterUserId    Int
+  chanel          YoutubeChanel        @relation(fields: [chanelId], references: [id])
+  chanelId        Int
+  isShared        Boolean
+  shareFromPostId Int
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  hashtags        YoutubeHashtag[]
+  comments        YoutubeComment[]
+  likePosts       YoutubeLikePost[]
+  likeComments    YoutubeLikeComment[]
+}
+
+model YoutubeComment {
+  id              Int      @id @default(autoincrement())
+  message         String
+  commentByUser   YoutubeUser     @relation(fields: [commentByUserId], references: [id])
+  commentByUserId Int
+  post            YoutubePost     @relation(fields: [postId], references: [id])
+  postId          Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum YoutubeLikeTypeEnum {
+  LIKE
+  DISLIKE
+}
+
+model YoutubeLikeType {
+  id           Int           @id @default(autoincrement())
+  emoji        String
+  name         YoutubeLikeTypeEnum
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  likePosts    YoutubeLikePost[]
+  likeComments YoutubeLikeComment[]
+}
+
+model YoutubeLikePost {
+  id           Int      @id @default(autoincrement())
+  post         YoutubePost     @relation(fields: [postId], references: [id])
+  postId       Int
+  likeByUser   YoutubeUser     @relation(fields: [likeByUserId], references: [id])
+  likeByUserId Int
+  likeType     YoutubeLikeType @relation(fields: [likeTypeId], references: [id])
+  likeTypeId   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model YoutubeLikeComment {
+  id           Int      @id @default(autoincrement())
+  comment      YoutubePost     @relation(fields: [commentId], references: [id])
+  commentId    Int
+  likeByUser   YoutubeUser     @relation(fields: [likeByUserId], references: [id])
+  likeByUserId Int
+  likeType     YoutubeLikeType @relation(fields: [likeTypeId], references: [id])
+  likeTypeId   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model YoutubeSubcriber {
+  id          Int      @id @default(autoincrement())
+  fromUser    YoutubeUser     @relation(fields: [fromUserId], references: [id])
+  fromUserId  Int
+  toChanel    YoutubeChanel   @relation(fields: [toChanelId], references: [id])
+  toChanelId  Int
+  isSupported Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 model FacebookUser {
   id                  Int                     @id @default(autoincrement())
   profileImage        String
@@ -214,7 +355,7 @@ model FacebookGroup {
   name          String         @unique
   createrUser   FacebookUser   @relation("creater", fields: [createrUserId], references: [id])
   createrUserId Int
-  memberUser    FacebookUser[]
+  memberUsers    FacebookUser[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }

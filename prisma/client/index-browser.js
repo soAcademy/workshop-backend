@@ -367,6 +367,114 @@ exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.YoutubeChanelPermissionScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeChanelScalarFieldEnum = makeEnum({
+  id: 'id',
+  ChanelImage: 'ChanelImage',
+  coverImage: 'coverImage',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeChanelToUserPermissionScalarFieldEnum = makeEnum({
+  id: 'id',
+  chanelId: 'chanelId',
+  UserId: 'UserId',
+  permissionId: 'permissionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  commentByUserId: 'commentByUserId',
+  postId: 'postId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeLikeCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentId: 'commentId',
+  likeByUserId: 'likeByUserId',
+  likeTypeId: 'likeTypeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeLikePostScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  likeByUserId: 'likeByUserId',
+  likeTypeId: 'likeTypeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeLikeTypeScalarFieldEnum = makeEnum({
+  id: 'id',
+  emoji: 'emoji',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubePostScalarFieldEnum = makeEnum({
+  id: 'id',
+  video: 'video',
+  name: 'name',
+  description: 'description',
+  posterUserId: 'posterUserId',
+  chanelId: 'chanelId',
+  isShared: 'isShared',
+  shareFromPostId: 'shareFromPostId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeSubcriberScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toChanelId: 'toChanelId',
+  isSupported: 'isSupported',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YoutubeUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  profileImage: 'profileImage',
+  email: 'email',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+exports.YoutubeLikeTypeEnum = makeEnum({
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+});
+
+exports.YoutubePermissionEnum = makeEnum({
+  OWNER: 'OWNER',
+  EDITOR: 'EDITOR',
+  ADMIN: 'ADMIN'
+});
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
@@ -385,6 +493,17 @@ exports.Prisma.ModelName = makeEnum({
   TwitterHashTag: 'TwitterHashTag',
   TwitterReply: 'TwitterReply',
   TwitterDM: 'TwitterDM',
+  YoutubeUser: 'YoutubeUser',
+  YoutubeChanelPermission: 'YoutubeChanelPermission',
+  YoutubeChanel: 'YoutubeChanel',
+  YoutubeChanelToUserPermission: 'YoutubeChanelToUserPermission',
+  YoutubeHashtag: 'YoutubeHashtag',
+  YoutubePost: 'YoutubePost',
+  YoutubeComment: 'YoutubeComment',
+  YoutubeLikeType: 'YoutubeLikeType',
+  YoutubeLikePost: 'YoutubeLikePost',
+  YoutubeLikeComment: 'YoutubeLikeComment',
+  YoutubeSubcriber: 'YoutubeSubcriber',
   FacebookUser: 'FacebookUser',
   FacebookGroup: 'FacebookGroup',
   FacebookPostDestination: 'FacebookPostDestination',
