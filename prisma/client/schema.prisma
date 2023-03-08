@@ -1,3 +1,305 @@
+model BKReserveUser {
+  id                 Int                  @id @default(autoincrement())
+  university         BKUniversity         @relation(fields: [universityId], references: [id])
+  universityId       Int
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  requests           BKRequest[]
+  BKBorrowingHistory BKBorrowingHistory[]
+  BKCopy             BKCopy[]
+}
+
+model BKRequest {
+  id               Int               @id @default(autoincrement())
+  user             BKReserveUser     @relation(fields: [reserveUserId], references: [id])
+  reserveUserId    Int
+  copy             BKCopy            @relation(fields: [copyId], references: [id])
+  copyId           Int
+  from             BKUniversity      @relation("FromRequest", fields: [fromUniversityId], references: [id])
+  fromUniversityId Int
+  to               BKUniversity      @relation("ToRequest", fields: [toUniversityId], references: [id])
+  toUniversityId   Int
+  requestDate      DateTime
+  status           RequestStatusEnum
+  planRecievedDate DateTime
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+enum RequestStatusEnum {
+  PENDING
+  COMPLETED
+}
+
+model BKBorrowingHistory {
+  id               Int           @id @default(autoincrement())
+  user             BKReserveUser @relation(fields: [reserveUserId], references: [id])
+  reserveUserId    Int
+  copy             BKCopy        @relation(fields: [copyId], references: [id])
+  copyId           Int
+  from             BKUniversity  @relation(fields: [fromUniversityId], references: [id])
+  fromUniversityId Int
+  borrowDate       DateTime
+  returnDate       DateTime
+  actualReturnDate DateTime
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+enum CopyStatusEnum {
+  INSTOCK
+  RESERVED
+}
+
+model BKCopy {
+  id                 Int                  @id @default(autoincrement())
+  status             CopyStatusEnum
+  title              BKTitle              @relation(fields: [titleId], references: [id])
+  titleId            Int
+  user               BKReserveUser?       @relation(fields: [reserveUserId], references: [id])
+  reserveUserId      Int?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  requests           BKRequest[]
+  BKBorrowingHistory BKBorrowingHistory[]
+}
+
+model BKUniversity {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  universityToTitles UniversityToTitle[]
+  reserveUsers       BKReserveUser[]
+  fromRequest        BKRequest[]          @relation("FromRequest")
+  toRequest          BKRequest[]          @relation("ToRequest")
+  BKBorrowingHistory BKBorrowingHistory[]
+}
+
+model BKTitle {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  ISBN               Int
+  copyQty            Int
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  titleToCategories  TitleToCategory[]
+  titleToAuthors     TitleToAuthor[]
+  universityToTitles UniversityToTitle[]
+  copies             BKCopy[]
+}
+
+model UniversityToTitle {
+  id           Int          @id @default(autoincrement())
+  university   BKUniversity @relation(fields: [universityId], references: [id])
+  universityId Int
+  title        BKTitle      @relation(fields: [titleId], references: [id])
+  titleId      Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model BKCategory {
+  id                Int               @id @default(autoincrement())
+  name              String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  titleToCategories TitleToCategory[]
+}
+
+model TitleToCategory {
+  id         Int        @id @default(autoincrement())
+  title      BKTitle    @relation(fields: [titleId], references: [id])
+  titleId    Int
+  category   BKCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model BKAuthor {
+  id             Int             @id @default(autoincrement())
+  name           String
+  titleToAuthors TitleToAuthor[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model TitleToAuthor {
+  id        Int      @id @default(autoincrement())
+  title     BKTitle  @relation(fields: [titleId], references: [id])
+  titleId   Int
+  author    BKAuthor @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbUser {
+  id               Int           @id @default(autoincrement())
+  name             String
+  image            String
+  location         String
+  posts            FbPost[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  acceptFbFriends  Fbfriend[]    @relation("AcceptFbFriend")
+  requestFbFriends Fbfriend[]    @relation("RequestFbFriend")
+  likes            FbLike[]
+  fromMessengers   FbMessenger[] @relation("FromMessenger")
+  toMessengers     FbMessenger[] @relation("ToMessenger")
+  shares           FbShare[]
+  comments         FbComment[]
+  groupToUsers     GroupToUser[]
+}
+
+model FbPost {
+  id             Int               @id @default(autoincrement())
+  caption        String
+  user           FbUser            @relation(fields: [userId], references: [id])
+  userId         Int
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  postImages     FbPostImage[]
+  postVideoes    FbPostVideo[]
+  postOnHashtags FbPostOnHashtag[]
+  shares         FbShare[]
+  likes          FbLike[]
+  wall           FbWall            @relation(fields: [wallId], references: [id])
+  wallId         Int
+}
+
+model FbPostImage {
+  id        Int      @id @default(autoincrement())
+  image     String
+  post      FbPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbPostVideo {
+  id        Int      @id @default(autoincrement())
+  video     String
+  post      FbPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbHashtag {
+  id             Int               @id @default(autoincrement())
+  hashtag        String
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  postOnHashtags FbPostOnHashtag[]
+}
+
+model FbPostOnHashtag {
+  id        Int       @id @default(autoincrement())
+  post      FbPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   FbHashtag @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model FbLike {
+  id        Int       @id @default(autoincrement())
+  user      FbUser    @relation(fields: [userId], references: [id])
+  userId    Int
+  post      FbPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  comment   FbComment @relation(fields: [commentId], references: [id])
+  commentId Int
+  share     FbShare   @relation(fields: [shareId], references: [id])
+  shareId   Int
+  likeType  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model FbShare {
+  id               Int                 @id @default(autoincrement())
+  user             FbUser              @relation(fields: [userId], references: [id])
+  userId           Int
+  post             FbPost              @relation(fields: [postId], references: [id])
+  postId           Int
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  likes            FbLike[]
+  destinationUsers FbDestinationUser[]
+}
+
+model Fbfriend {
+  id            Int      @id @default(autoincrement())
+  acceptFriend  FbUser   @relation("AcceptFbFriend", fields: [acceptId], references: [id])
+  acceptId      Int
+  requestFriend FbUser   @relation("RequestFbFriend", fields: [requestId], references: [id])
+  requestId     Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model FbMessenger {
+  id         Int      @id @default(autoincrement())
+  from       FbUser   @relation("FromMessenger", fields: [fromuserId], references: [id])
+  fromuserId Int
+  to         FbUser   @relation("ToMessenger", fields: [toUserId], references: [id])
+  toUserId   Int
+  text       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model FbComment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      FbUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  likes     FbLike[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbGroup {
+  id               Int                 @id @default(autoincrement())
+  name             String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  groupToUsers     GroupToUser[]
+  destinationUsers FbDestinationUser[]
+}
+
+model GroupToUser {
+  id        Int      @id @default(autoincrement())
+  user      FbUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  group     FbGroup  @relation(fields: [groupId], references: [id])
+  groupId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbWall {
+  id               Int                 @id @default(autoincrement())
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  posts            FbPost[]
+  destinationUsers FbDestinationUser[]
+}
+
+model FbDestinationUser {
+  id       Int     @id @default(autoincrement())
+  wall     FbWall  @relation(fields: [fbWallId], references: [id])
+  fbWallId Int
+  share    FbShare @relation(fields: [shareId], references: [id])
+  shareId  Int
+  group    FbGroup @relation(fields: [groupId], references: [id])
+  groupId  Int
+}
+
 model KorKitchenCategory {
   id       Int              @id @default(autoincrement())
   name     String           @unique
@@ -101,6 +403,291 @@ model TriviaRound {
   createAt    DateTime              @default(now())
 }
 
+model TwitterUser {
+  id                Int                    @id @default(autoincrement())
+  name              String
+  Image             String
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  fromFollowing     TwitterFollow[]        @relation("FromFollowing")
+  toFollowing       TwitterFollow[]        @relation("ToFollowing")
+  posts             TwitterPost[]
+  fromDirectMessage TwitterDirectMessage[] @relation("FromDirectMessage")
+  toDirectMessage   TwitterDirectMessage[] @relation("ToDirectMessage")
+  comments          TwitterComment[]
+}
+
+model TwitterFollow {
+  id         Int         @id @default(autoincrement())
+  from       TwitterUser @relation("FromFollowing", fields: [fromUserId], references: [id])
+  fromUserId Int
+  to         TwitterUser @relation("ToFollowing", fields: [toUserId], references: [id])
+  toUserId   Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model TwitterPost {
+  id             Int                    @id @default(autoincrement())
+  caption        String
+  user           TwitterUser            @relation(fields: [userId], references: [id])
+  userId         Int
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  comments       TwitterComment[]
+  postOnHashtags TwitterPostOnHashtag[]
+}
+
+model TwitterDirectMessage {
+  id         Int         @id @default(autoincrement())
+  from       TwitterUser @relation("FromDirectMessage", fields: [fromUserId], references: [id])
+  fromUserId Int
+  to         TwitterUser @relation("ToDirectMessage", fields: [toUserId], references: [id])
+  toUserId   Int
+  text       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model TwitterHashtag {
+  id            Int                    @id @default(autoincrement())
+  hashtag       String
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  postOnHashtag TwitterPostOnHashtag[]
+}
+
+model TwitterComment {
+  id        Int         @id @default(autoincrement())
+  text      String
+  user      TwitterUser @relation(fields: [userId], references: [id])
+  userId    Int
+  post      TwitterPost @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model TwitterPostOnHashtag {
+  id        Int            @id @default(autoincrement())
+  post      TwitterPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   TwitterHashtag @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+}
+
+model WSUser {
+  id             Int              @id @default(autoincrement())
+  name           String
+  tel            Int
+  myWallet       Int
+  createdAt      DateTime         @default(now())
+  updateAt       DateTime         @updatedAt
+  topupHistories WSTopupHistory[]
+  usingHistories WSUsingHistory[]
+}
+
+model WSTopupHistory {
+  id        Int      @id @default(autoincrement())
+  user      WSUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  topup     Int
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model WSUsingHistory {
+  id           Int       @id @default(autoincrement())
+  user         WSUser    @relation(fields: [userId], references: [id])
+  userId       Int
+  price        Int
+  createdAt    DateTime  @default(now())
+  updateAt     DateTime  @updatedAt
+  // shops     WSShop[]
+  // machines  WSMachine[]
+  // programs  WSProgram[]
+  machine      WSMachine @relation(fields: [wSMachineId], references: [id])
+  program      WSProgram @relation(fields: [wSProgramId], references: [id])
+  usingStartAt DateTime
+  finishingAt  DateTime
+  wSMachineId  Int
+  wSProgramId  Int
+}
+
+model WSShop {
+  id        Int         @id @default(autoincrement())
+  branch    String
+  owner     String
+  tel       Int
+  location  String
+  area      String
+  machines  WSMachine[]
+  createdAt DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+}
+
+model WSMachine {
+  id                   Int                @id @default(autoincrement())
+  shop                 WSShop             @relation(fields: [shopId], references: [id])
+  shopId               Int
+  brandname            String
+  size                 String
+  type                 String
+  model                String
+  producedDate         String
+  insuranceExpiredDate String
+  createdAt            DateTime           @default(now())
+  updateAt             DateTime           @updatedAt
+  machineToPrograms    MachineToProgram[]
+  maintains            WSMaintain[]
+  usingHistories       WSUsingHistory[]
+}
+
+model WSProgram {
+  id                Int                @id @default(autoincrement())
+  name              String
+  createdAt         DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+  machineToPrograms MachineToProgram[]
+  programLists      WSProgramDetail[]  @relation("ProgramLists")
+  activeProgram     WSProgramDetail    @relation(fields: [activeProgramId], references: [id])
+  usingHistories    WSUsingHistory[]
+  activeProgramId   Int
+}
+
+model MachineToProgram {
+  id        Int       @id @default(autoincrement())
+  maching   WSMachine @relation(fields: [machineId], references: [id])
+  machineId Int
+  program   WSProgram @relation(fields: [programId], references: [id])
+  programId Int
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+}
+
+model WSProgramDetail {
+  id        Int         @id @default(autoincrement())
+  program   WSProgram   @relation("ProgramLists", fields: [programId], references: [id])
+  programId Int
+  price     Int
+  duration  Int
+  weight    Int
+  createdAt DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  programs  WSProgram[]
+}
+
+model WSMaintain {
+  id        Int       @id @default(autoincrement())
+  checker   String
+  item      String
+  status    String
+  machine   WSMachine @relation(fields: [machineId], references: [id])
+  machineId Int
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+}
+
+model YTUser {
+  id             Int             @id @default(autoincrement())
+  user           String          @unique
+  email          String          @unique
+  avatar         String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  userToChannels UserToChannel[]
+  comments       YTComment[]
+  subscribes     YTSubscribe[]
+  shares         YTShare[]
+}
+
+model YTChannel {
+  id             Int             @id @default(autoincrement())
+  channelName    String
+  description    String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  userToChannels UserToChannel[]
+  videos         YTVideo[]
+  subscribes     YTSubscribe[]
+}
+
+enum YTRoleEnum {
+  ADMIN
+  EDITOR
+  CREATOR
+}
+
+model UserToChannel {
+  id        Int        @id @default(autoincrement())
+  user      YTUser     @relation(fields: [userId], references: [id])
+  userId    Int
+  channel   YTChannel  @relation(fields: [channelId], references: [id])
+  channelId Int
+  role      YTRoleEnum
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model YTVideo {
+  id        Int         @id @default(autoincrement())
+  name      String
+  file      String
+  logo      String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  channel   YTChannel   @relation(fields: [channelId], references: [id])
+  channelId Int
+  likes     YTLike[]
+  comments  YTComment[]
+  shares    YTShare[]
+}
+
+model YTLike {
+  id        Int       @id @default(autoincrement())
+  type      String
+  video     YTVideo   @relation(fields: [videoId], references: [id])
+  videoId   Int
+  comment   YTComment @relation(fields: [commentId], references: [id])
+  commentId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model YTComment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      YTUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  commentTo Int?
+  video     YTVideo  @relation(fields: [videoId], references: [id])
+  videoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  likes     YTLike[]
+}
+
+model YTSubscribe {
+  id        Int       @id @default(autoincrement())
+  user      YTUser    @relation(fields: [userId], references: [id])
+  userId    Int
+  channel   YTChannel @relation(fields: [channelId], references: [id])
+  channelId Int
+  member    Boolean
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model YTShare {
+  id        Int      @id @default(autoincrement())
+  user      YTUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  video     YTVideo  @relation(fields: [videoId], references: [id])
+  videoId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -110,61 +697,4 @@ generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
   output        = "../prisma/client"
-}
-model TwitterUser {
-  id               Int                  @id @default(autoincrement())
-  name             String
-  image            String
-  directMessage    TwitterDirectMessage @relation(fields: [directMessageId], references: [id])
-  directMessageId  Int
-  userRelate       TwitterUserRelation  @relation(fields: [userRelationId], references: [id])
-  userRelationId   Int
-  TwitterPostReply TwitterPostReply[]
-}
-
-model TwitterPost {
-  id               Int                @id @default(autoincrement())
-  message          String
-  TwitterPostReply TwitterPostReply[]
-  PostOnHashtag    PostOnHashtag[]
-}
-
-model TwitterHashtag {
-  id            Int             @id @default(autoincrement())
-  message       String
-  PostOnHashtag PostOnHashtag[]
-}
-
-model TwitterDirectMessage {
-  id          Int           @id @default(autoincrement())
-  from        String
-  to          String
-  message     String
-  createAt    DateTime      @default(now())
-  TwitterUser TwitterUser[]
-}
-
-model TwitterUserRelation {
-  id          Int           @id @default(autoincrement())
-  follower    String
-  following   String
-  TwitterUser TwitterUser[]
-}
-
-model TwitterPostReply {
-  id       Int         @id @default(autoincrement())
-  message  String
-  post     TwitterPost @relation(fields: [postId], references: [id])
-  postId   Int
-  user     TwitterUser @relation(fields: [userId], references: [id])
-  userId   Int
-  createAt DateTime    @default(now())
-}
-
-model PostOnHashtag {
-  id        Int            @id @default(autoincrement())
-  post      TwitterPost    @relation(fields: [postId], references: [id])
-  postId    Int
-  hashtag   TwitterHashtag @relation(fields: [hashtagId], references: [id])
-  hashtagId Int
 }

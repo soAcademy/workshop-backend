@@ -1,0 +1,164 @@
+model FbUser {
+  id               Int           @id @default(autoincrement())
+  name             String
+  image            String
+  location         String
+  posts            FbPost[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  acceptFbFriends  Fbfriend[]    @relation("AcceptFbFriend")
+  requestFbFriends Fbfriend[]    @relation("RequestFbFriend")
+  likes            FbLike[]
+  fromMessengers   FbMessenger[] @relation("FromMessenger")
+  toMessengers     FbMessenger[] @relation("ToMessenger")
+  shares           FbShare[]
+  comments         FbComment[]
+  groupToUsers     GroupToUser[]
+}
+
+model FbPost {
+  id             Int               @id @default(autoincrement())
+  caption        String
+  user           FbUser            @relation(fields: [userId], references: [id])
+  userId         Int
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  postImages     FbPostImage[]
+  postVideoes    FbPostVideo[]
+  postOnHashtags FbPostOnHashtag[]
+  shares         FbShare[]
+  likes          FbLike[]
+  wall           FbWall            @relation(fields: [wallId], references: [id])
+  wallId         Int
+}
+
+model FbPostImage {
+  id        Int      @id @default(autoincrement())
+  image     String
+  post      FbPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbPostVideo {
+  id        Int      @id @default(autoincrement())
+  video     String
+  post      FbPost   @relation(fields: [postId], references: [id])
+  postId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbHashtag {
+  id             Int               @id @default(autoincrement())
+  hashtag        String
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  postOnHashtags FbPostOnHashtag[]
+}
+
+model FbPostOnHashtag {
+  id        Int       @id @default(autoincrement())
+  post      FbPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   FbHashtag @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model FbLike {
+  id        Int       @id @default(autoincrement())
+  user      FbUser    @relation(fields: [userId], references: [id])
+  userId    Int
+  post      FbPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  comment   FbComment @relation(fields: [commentId], references: [id])
+  commentId Int
+  share     FbShare   @relation(fields: [shareId], references: [id])
+  shareId   Int
+  likeType  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model FbShare {
+  id               Int                 @id @default(autoincrement())
+  user             FbUser              @relation(fields: [userId], references: [id])
+  userId           Int
+  post             FbPost              @relation(fields: [postId], references: [id])
+  postId           Int
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  likes            FbLike[]
+  destinationUsers FbDestinationUser[]
+}
+
+model Fbfriend {
+  id            Int      @id @default(autoincrement())
+  acceptFriend  FbUser   @relation("AcceptFbFriend", fields: [acceptId], references: [id])
+  acceptId      Int
+  requestFriend FbUser   @relation("RequestFbFriend", fields: [requestId], references: [id])
+  requestId     Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model FbMessenger {
+  id         Int      @id @default(autoincrement())
+  from       FbUser   @relation("FromMessenger", fields: [fromuserId], references: [id])
+  fromuserId Int
+  to         FbUser   @relation("ToMessenger", fields: [toUserId], references: [id])
+  toUserId     Int
+  text       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model FbComment {
+  id        Int      @id @default(autoincrement())
+  text      String
+  user      FbUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  likes     FbLike[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbGroup {
+  id               Int                 @id @default(autoincrement())
+  name             String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  groupToUsers     GroupToUser[]
+  destinationUsers FbDestinationUser[]
+}
+
+model GroupToUser {
+  id        Int      @id @default(autoincrement())
+  user      FbUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  group     FbGroup  @relation(fields: [groupId], references: [id])
+  groupId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FbWall {
+  id               Int                 @id @default(autoincrement())
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  posts            FbPost[]
+  destinationUsers FbDestinationUser[]
+}
+
+model FbDestinationUser {
+  id       Int     @id @default(autoincrement())
+  wall     FbWall  @relation(fields: [fbWallId], references: [id])
+  fbWallId Int
+  share    FbShare @relation(fields: [shareId], references: [id])
+  shareId  Int
+  group    FbGroup @relation(fields: [groupId], references: [id])
+  groupId  Int
+}
