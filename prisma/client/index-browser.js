@@ -89,6 +89,24 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.BinWashUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BranchScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  location: 'location',
+  telephoneNo: 'telephoneNo',
+  area: 'area',
+  binWashUserId: 'binWashUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -249,6 +267,15 @@ exports.Prisma.TodoListScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.TopUpRecordScalarFieldEnum = makeEnum({
+  id: 'id',
+  dateTime: 'dateTime',
+  binWashUserId: 'binWashUserId',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
@@ -261,6 +288,17 @@ exports.Prisma.TweetScalarFieldEnum = makeEnum({
   tweetText: 'tweetText',
   parentTweetId: 'parentTweetId',
   userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UsageRecordScalarFieldEnum = makeEnum({
+  id: 'id',
+  dateTime: 'dateTime',
+  binWashUserId: 'binWashUserId',
+  washingMachineId: 'washingMachineId',
+  wMProgramId: 'wMProgramId',
+  price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -321,6 +359,40 @@ exports.Prisma.VideoScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.WMMaintenanceRecordScalarFieldEnum = makeEnum({
+  id: 'id',
+  washingMachineId: 'washingMachineId',
+  maintenanceDateTime: 'maintenanceDateTime',
+  level: 'level',
+  details: 'details',
+  binWashUserId: 'binWashUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WMProgramScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  maxCapacity: 'maxCapacity',
+  duration: 'duration',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingMachineScalarFieldEnum = makeEnum({
+  id: 'id',
+  brand: 'brand',
+  model: 'model',
+  type: 'type',
+  capacity: 'capacity',
+  manufacturedYear: 'manufacturedYear',
+  warrantyEndDate: 'warrantyEndDate',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.YouTubeUserScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
@@ -340,6 +412,11 @@ exports.RoleEnum = makeEnum({
   VIEWER: 'VIEWER'
 });
 
+exports.WMTypeEnum = makeEnum({
+  FRONT_LOAD: 'FRONT_LOAD',
+  TOP_LOAD: 'TOP_LOAD'
+});
+
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
   Menu: 'Menu',
@@ -349,6 +426,13 @@ exports.Prisma.ModelName = makeEnum({
   Choice: 'Choice',
   Quiz: 'Quiz',
   Round: 'Round',
+  BinWashUser: 'BinWashUser',
+  Branch: 'Branch',
+  WashingMachine: 'WashingMachine',
+  WMProgram: 'WMProgram',
+  WMMaintenanceRecord: 'WMMaintenanceRecord',
+  UsageRecord: 'UsageRecord',
+  TopUpRecord: 'TopUpRecord',
   FacebookUser: 'FacebookUser',
   FacebookUserRelation: 'FacebookUserRelation',
   Post: 'Post',

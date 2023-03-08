@@ -108,6 +108,106 @@ export type Round = {
 }
 
 /**
+ * Model BinWashUser
+ * 
+ */
+export type BinWashUser = {
+  id: number
+  name: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Branch
+ * 
+ */
+export type Branch = {
+  id: number
+  name: string
+  location: string
+  telephoneNo: string
+  area: number
+  binWashUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WashingMachine
+ * 
+ */
+export type WashingMachine = {
+  id: number
+  brand: string
+  model: string
+  type: WMTypeEnum
+  capacity: number
+  manufacturedYear: Date
+  warrantyEndDate: Date
+  branchId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WMProgram
+ * 
+ */
+export type WMProgram = {
+  id: number
+  name: string
+  maxCapacity: number
+  duration: number
+  price: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model WMMaintenanceRecord
+ * 
+ */
+export type WMMaintenanceRecord = {
+  id: number
+  washingMachineId: number
+  maintenanceDateTime: Date
+  level: number
+  details: string
+  binWashUserId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model UsageRecord
+ * 
+ */
+export type UsageRecord = {
+  id: number
+  dateTime: Date
+  binWashUserId: number
+  washingMachineId: number
+  wMProgramId: number
+  price: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model TopUpRecord
+ * 
+ */
+export type TopUpRecord = {
+  id: number
+  dateTime: Date
+  binWashUserId: number
+  price: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model FacebookUser
  * 
  */
@@ -363,6 +463,14 @@ export const RoleEnum: {
 export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
 
 
+export const WMTypeEnum: {
+  FRONT_LOAD: 'FRONT_LOAD',
+  TOP_LOAD: 'TOP_LOAD'
+};
+
+export type WMTypeEnum = (typeof WMTypeEnum)[keyof typeof WMTypeEnum]
+
+
 /**
  * ##  Prisma Client ʲˢ
  * 
@@ -559,6 +667,76 @@ export class PrismaClient<
     * ```
     */
   get round(): Prisma.RoundDelegate<GlobalReject>;
+
+  /**
+   * `prisma.binWashUser`: Exposes CRUD operations for the **BinWashUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BinWashUsers
+    * const binWashUsers = await prisma.binWashUser.findMany()
+    * ```
+    */
+  get binWashUser(): Prisma.BinWashUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.branch`: Exposes CRUD operations for the **Branch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Branches
+    * const branches = await prisma.branch.findMany()
+    * ```
+    */
+  get branch(): Prisma.BranchDelegate<GlobalReject>;
+
+  /**
+   * `prisma.washingMachine`: Exposes CRUD operations for the **WashingMachine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WashingMachines
+    * const washingMachines = await prisma.washingMachine.findMany()
+    * ```
+    */
+  get washingMachine(): Prisma.WashingMachineDelegate<GlobalReject>;
+
+  /**
+   * `prisma.wMProgram`: Exposes CRUD operations for the **WMProgram** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WMPrograms
+    * const wMPrograms = await prisma.wMProgram.findMany()
+    * ```
+    */
+  get wMProgram(): Prisma.WMProgramDelegate<GlobalReject>;
+
+  /**
+   * `prisma.wMMaintenanceRecord`: Exposes CRUD operations for the **WMMaintenanceRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WMMaintenanceRecords
+    * const wMMaintenanceRecords = await prisma.wMMaintenanceRecord.findMany()
+    * ```
+    */
+  get wMMaintenanceRecord(): Prisma.WMMaintenanceRecordDelegate<GlobalReject>;
+
+  /**
+   * `prisma.usageRecord`: Exposes CRUD operations for the **UsageRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UsageRecords
+    * const usageRecords = await prisma.usageRecord.findMany()
+    * ```
+    */
+  get usageRecord(): Prisma.UsageRecordDelegate<GlobalReject>;
+
+  /**
+   * `prisma.topUpRecord`: Exposes CRUD operations for the **TopUpRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TopUpRecords
+    * const topUpRecords = await prisma.topUpRecord.findMany()
+    * ```
+    */
+  get topUpRecord(): Prisma.TopUpRecordDelegate<GlobalReject>;
 
   /**
    * `prisma.facebookUser`: Exposes CRUD operations for the **FacebookUser** model.
@@ -1216,6 +1394,13 @@ export namespace Prisma {
     Choice: 'Choice',
     Quiz: 'Quiz',
     Round: 'Round',
+    BinWashUser: 'BinWashUser',
+    Branch: 'Branch',
+    WashingMachine: 'WashingMachine',
+    WMProgram: 'WMProgram',
+    WMMaintenanceRecord: 'WMMaintenanceRecord',
+    UsageRecord: 'UsageRecord',
+    TopUpRecord: 'TopUpRecord',
     FacebookUser: 'FacebookUser',
     FacebookUserRelation: 'FacebookUserRelation',
     Post: 'Post',
@@ -1697,6 +1882,190 @@ export namespace Prisma {
      * Select specific fields to fetch from the RoundCountOutputType
      */
     select?: RoundCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type BinWashUserCountOutputType
+   */
+
+
+  export type BinWashUserCountOutputType = {
+    owningBranches: number
+    wMMaintenanceRecords: number
+    usageRecords: number
+    topUpRecords: number
+  }
+
+  export type BinWashUserCountOutputTypeSelect = {
+    owningBranches?: boolean
+    wMMaintenanceRecords?: boolean
+    usageRecords?: boolean
+    topUpRecords?: boolean
+  }
+
+  export type BinWashUserCountOutputTypeGetPayload<S extends boolean | null | undefined | BinWashUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BinWashUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (BinWashUserCountOutputTypeArgs)
+    ? BinWashUserCountOutputType 
+    : S extends { select: any } & (BinWashUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof BinWashUserCountOutputType ? BinWashUserCountOutputType[P] : never
+  } 
+      : BinWashUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BinWashUserCountOutputType without action
+   */
+  export type BinWashUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUserCountOutputType
+     */
+    select?: BinWashUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type BranchCountOutputType
+   */
+
+
+  export type BranchCountOutputType = {
+    washingMachines: number
+  }
+
+  export type BranchCountOutputTypeSelect = {
+    washingMachines?: boolean
+  }
+
+  export type BranchCountOutputTypeGetPayload<S extends boolean | null | undefined | BranchCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BranchCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (BranchCountOutputTypeArgs)
+    ? BranchCountOutputType 
+    : S extends { select: any } & (BranchCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof BranchCountOutputType ? BranchCountOutputType[P] : never
+  } 
+      : BranchCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BranchCountOutputType without action
+   */
+  export type BranchCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the BranchCountOutputType
+     */
+    select?: BranchCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WashingMachineCountOutputType
+   */
+
+
+  export type WashingMachineCountOutputType = {
+    equippedPrograms: number
+    usageRecords: number
+    wMMaintenanceRecords: number
+  }
+
+  export type WashingMachineCountOutputTypeSelect = {
+    equippedPrograms?: boolean
+    usageRecords?: boolean
+    wMMaintenanceRecords?: boolean
+  }
+
+  export type WashingMachineCountOutputTypeGetPayload<S extends boolean | null | undefined | WashingMachineCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashingMachineCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WashingMachineCountOutputTypeArgs)
+    ? WashingMachineCountOutputType 
+    : S extends { select: any } & (WashingMachineCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WashingMachineCountOutputType ? WashingMachineCountOutputType[P] : never
+  } 
+      : WashingMachineCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashingMachineCountOutputType without action
+   */
+  export type WashingMachineCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachineCountOutputType
+     */
+    select?: WashingMachineCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type WMProgramCountOutputType
+   */
+
+
+  export type WMProgramCountOutputType = {
+    equippingWMs: number
+    usageRecords: number
+  }
+
+  export type WMProgramCountOutputTypeSelect = {
+    equippingWMs?: boolean
+    usageRecords?: boolean
+  }
+
+  export type WMProgramCountOutputTypeGetPayload<S extends boolean | null | undefined | WMProgramCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WMProgramCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (WMProgramCountOutputTypeArgs)
+    ? WMProgramCountOutputType 
+    : S extends { select: any } & (WMProgramCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof WMProgramCountOutputType ? WMProgramCountOutputType[P] : never
+  } 
+      : WMProgramCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WMProgramCountOutputType without action
+   */
+  export type WMProgramCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgramCountOutputType
+     */
+    select?: WMProgramCountOutputTypeSelect | null
   }
 
 
@@ -10270,6 +10639,7245 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: RoundInclude | null
+  }
+
+
+
+  /**
+   * Model BinWashUser
+   */
+
+
+  export type AggregateBinWashUser = {
+    _count: BinWashUserCountAggregateOutputType | null
+    _avg: BinWashUserAvgAggregateOutputType | null
+    _sum: BinWashUserSumAggregateOutputType | null
+    _min: BinWashUserMinAggregateOutputType | null
+    _max: BinWashUserMaxAggregateOutputType | null
+  }
+
+  export type BinWashUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BinWashUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type BinWashUserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BinWashUserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BinWashUserCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BinWashUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type BinWashUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type BinWashUserMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BinWashUserMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BinWashUserCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BinWashUserAggregateArgs = {
+    /**
+     * Filter which BinWashUser to aggregate.
+     */
+    where?: BinWashUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BinWashUsers to fetch.
+     */
+    orderBy?: Enumerable<BinWashUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BinWashUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BinWashUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BinWashUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BinWashUsers
+    **/
+    _count?: true | BinWashUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BinWashUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BinWashUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BinWashUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BinWashUserMaxAggregateInputType
+  }
+
+  export type GetBinWashUserAggregateType<T extends BinWashUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateBinWashUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBinWashUser[P]>
+      : GetScalarType<T[P], AggregateBinWashUser[P]>
+  }
+
+
+
+
+  export type BinWashUserGroupByArgs = {
+    where?: BinWashUserWhereInput
+    orderBy?: Enumerable<BinWashUserOrderByWithAggregationInput>
+    by: BinWashUserScalarFieldEnum[]
+    having?: BinWashUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BinWashUserCountAggregateInputType | true
+    _avg?: BinWashUserAvgAggregateInputType
+    _sum?: BinWashUserSumAggregateInputType
+    _min?: BinWashUserMinAggregateInputType
+    _max?: BinWashUserMaxAggregateInputType
+  }
+
+
+  export type BinWashUserGroupByOutputType = {
+    id: number
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: BinWashUserCountAggregateOutputType | null
+    _avg: BinWashUserAvgAggregateOutputType | null
+    _sum: BinWashUserSumAggregateOutputType | null
+    _min: BinWashUserMinAggregateOutputType | null
+    _max: BinWashUserMaxAggregateOutputType | null
+  }
+
+  type GetBinWashUserGroupByPayload<T extends BinWashUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BinWashUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BinWashUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BinWashUserGroupByOutputType[P]>
+            : GetScalarType<T[P], BinWashUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BinWashUserSelect = {
+    id?: boolean
+    name?: boolean
+    owningBranches?: boolean | BinWashUser$owningBranchesArgs
+    wMMaintenanceRecords?: boolean | BinWashUser$wMMaintenanceRecordsArgs
+    usageRecords?: boolean | BinWashUser$usageRecordsArgs
+    topUpRecords?: boolean | BinWashUser$topUpRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | BinWashUserCountOutputTypeArgs
+  }
+
+
+  export type BinWashUserInclude = {
+    owningBranches?: boolean | BinWashUser$owningBranchesArgs
+    wMMaintenanceRecords?: boolean | BinWashUser$wMMaintenanceRecordsArgs
+    usageRecords?: boolean | BinWashUser$usageRecordsArgs
+    topUpRecords?: boolean | BinWashUser$topUpRecordsArgs
+    _count?: boolean | BinWashUserCountOutputTypeArgs
+  }
+
+  export type BinWashUserGetPayload<S extends boolean | null | undefined | BinWashUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? BinWashUser :
+    S extends undefined ? never :
+    S extends { include: any } & (BinWashUserArgs | BinWashUserFindManyArgs)
+    ? BinWashUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'owningBranches' ? Array < BranchGetPayload<S['include'][P]>>  :
+        P extends 'wMMaintenanceRecords' ? Array < WMMaintenanceRecordGetPayload<S['include'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['include'][P]>>  :
+        P extends 'topUpRecords' ? Array < TopUpRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? BinWashUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BinWashUserArgs | BinWashUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'owningBranches' ? Array < BranchGetPayload<S['select'][P]>>  :
+        P extends 'wMMaintenanceRecords' ? Array < WMMaintenanceRecordGetPayload<S['select'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['select'][P]>>  :
+        P extends 'topUpRecords' ? Array < TopUpRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? BinWashUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BinWashUser ? BinWashUser[P] : never
+  } 
+      : BinWashUser
+
+
+  type BinWashUserCountArgs = 
+    Omit<BinWashUserFindManyArgs, 'select' | 'include'> & {
+      select?: BinWashUserCountAggregateInputType | true
+    }
+
+  export interface BinWashUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one BinWashUser that matches the filter.
+     * @param {BinWashUserFindUniqueArgs} args - Arguments to find a BinWashUser
+     * @example
+     * // Get one BinWashUser
+     * const binWashUser = await prisma.binWashUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BinWashUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BinWashUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BinWashUser'> extends True ? Prisma__BinWashUserClient<BinWashUserGetPayload<T>> : Prisma__BinWashUserClient<BinWashUserGetPayload<T> | null, null>
+
+    /**
+     * Find one BinWashUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BinWashUserFindUniqueOrThrowArgs} args - Arguments to find a BinWashUser
+     * @example
+     * // Get one BinWashUser
+     * const binWashUser = await prisma.binWashUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BinWashUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BinWashUserFindUniqueOrThrowArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Find the first BinWashUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserFindFirstArgs} args - Arguments to find a BinWashUser
+     * @example
+     * // Get one BinWashUser
+     * const binWashUser = await prisma.binWashUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BinWashUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BinWashUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BinWashUser'> extends True ? Prisma__BinWashUserClient<BinWashUserGetPayload<T>> : Prisma__BinWashUserClient<BinWashUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first BinWashUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserFindFirstOrThrowArgs} args - Arguments to find a BinWashUser
+     * @example
+     * // Get one BinWashUser
+     * const binWashUser = await prisma.binWashUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BinWashUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BinWashUserFindFirstOrThrowArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Find zero or more BinWashUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BinWashUsers
+     * const binWashUsers = await prisma.binWashUser.findMany()
+     * 
+     * // Get first 10 BinWashUsers
+     * const binWashUsers = await prisma.binWashUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const binWashUserWithIdOnly = await prisma.binWashUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BinWashUserFindManyArgs>(
+      args?: SelectSubset<T, BinWashUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BinWashUserGetPayload<T>>>
+
+    /**
+     * Create a BinWashUser.
+     * @param {BinWashUserCreateArgs} args - Arguments to create a BinWashUser.
+     * @example
+     * // Create one BinWashUser
+     * const BinWashUser = await prisma.binWashUser.create({
+     *   data: {
+     *     // ... data to create a BinWashUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BinWashUserCreateArgs>(
+      args: SelectSubset<T, BinWashUserCreateArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Create many BinWashUsers.
+     *     @param {BinWashUserCreateManyArgs} args - Arguments to create many BinWashUsers.
+     *     @example
+     *     // Create many BinWashUsers
+     *     const binWashUser = await prisma.binWashUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BinWashUserCreateManyArgs>(
+      args?: SelectSubset<T, BinWashUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BinWashUser.
+     * @param {BinWashUserDeleteArgs} args - Arguments to delete one BinWashUser.
+     * @example
+     * // Delete one BinWashUser
+     * const BinWashUser = await prisma.binWashUser.delete({
+     *   where: {
+     *     // ... filter to delete one BinWashUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BinWashUserDeleteArgs>(
+      args: SelectSubset<T, BinWashUserDeleteArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Update one BinWashUser.
+     * @param {BinWashUserUpdateArgs} args - Arguments to update one BinWashUser.
+     * @example
+     * // Update one BinWashUser
+     * const binWashUser = await prisma.binWashUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BinWashUserUpdateArgs>(
+      args: SelectSubset<T, BinWashUserUpdateArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Delete zero or more BinWashUsers.
+     * @param {BinWashUserDeleteManyArgs} args - Arguments to filter BinWashUsers to delete.
+     * @example
+     * // Delete a few BinWashUsers
+     * const { count } = await prisma.binWashUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BinWashUserDeleteManyArgs>(
+      args?: SelectSubset<T, BinWashUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BinWashUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BinWashUsers
+     * const binWashUser = await prisma.binWashUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BinWashUserUpdateManyArgs>(
+      args: SelectSubset<T, BinWashUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BinWashUser.
+     * @param {BinWashUserUpsertArgs} args - Arguments to update or create a BinWashUser.
+     * @example
+     * // Update or create a BinWashUser
+     * const binWashUser = await prisma.binWashUser.upsert({
+     *   create: {
+     *     // ... data to create a BinWashUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BinWashUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BinWashUserUpsertArgs>(
+      args: SelectSubset<T, BinWashUserUpsertArgs>
+    ): Prisma__BinWashUserClient<BinWashUserGetPayload<T>>
+
+    /**
+     * Count the number of BinWashUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserCountArgs} args - Arguments to filter BinWashUsers to count.
+     * @example
+     * // Count the number of BinWashUsers
+     * const count = await prisma.binWashUser.count({
+     *   where: {
+     *     // ... the filter for the BinWashUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends BinWashUserCountArgs>(
+      args?: Subset<T, BinWashUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BinWashUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BinWashUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BinWashUserAggregateArgs>(args: Subset<T, BinWashUserAggregateArgs>): Prisma.PrismaPromise<GetBinWashUserAggregateType<T>>
+
+    /**
+     * Group by BinWashUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BinWashUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BinWashUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BinWashUserGroupByArgs['orderBy'] }
+        : { orderBy?: BinWashUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BinWashUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBinWashUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BinWashUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BinWashUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    owningBranches<T extends BinWashUser$owningBranchesArgs= {}>(args?: Subset<T, BinWashUser$owningBranchesArgs>): Prisma.PrismaPromise<Array<BranchGetPayload<T>>| Null>;
+
+    wMMaintenanceRecords<T extends BinWashUser$wMMaintenanceRecordsArgs= {}>(args?: Subset<T, BinWashUser$wMMaintenanceRecordsArgs>): Prisma.PrismaPromise<Array<WMMaintenanceRecordGetPayload<T>>| Null>;
+
+    usageRecords<T extends BinWashUser$usageRecordsArgs= {}>(args?: Subset<T, BinWashUser$usageRecordsArgs>): Prisma.PrismaPromise<Array<UsageRecordGetPayload<T>>| Null>;
+
+    topUpRecords<T extends BinWashUser$topUpRecordsArgs= {}>(args?: Subset<T, BinWashUser$topUpRecordsArgs>): Prisma.PrismaPromise<Array<TopUpRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * BinWashUser base type for findUnique actions
+   */
+  export type BinWashUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter, which BinWashUser to fetch.
+     */
+    where: BinWashUserWhereUniqueInput
+  }
+
+  /**
+   * BinWashUser findUnique
+   */
+  export interface BinWashUserFindUniqueArgs extends BinWashUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BinWashUser findUniqueOrThrow
+   */
+  export type BinWashUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter, which BinWashUser to fetch.
+     */
+    where: BinWashUserWhereUniqueInput
+  }
+
+
+  /**
+   * BinWashUser base type for findFirst actions
+   */
+  export type BinWashUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter, which BinWashUser to fetch.
+     */
+    where?: BinWashUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BinWashUsers to fetch.
+     */
+    orderBy?: Enumerable<BinWashUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BinWashUsers.
+     */
+    cursor?: BinWashUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BinWashUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BinWashUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BinWashUsers.
+     */
+    distinct?: Enumerable<BinWashUserScalarFieldEnum>
+  }
+
+  /**
+   * BinWashUser findFirst
+   */
+  export interface BinWashUserFindFirstArgs extends BinWashUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * BinWashUser findFirstOrThrow
+   */
+  export type BinWashUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter, which BinWashUser to fetch.
+     */
+    where?: BinWashUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BinWashUsers to fetch.
+     */
+    orderBy?: Enumerable<BinWashUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BinWashUsers.
+     */
+    cursor?: BinWashUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BinWashUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BinWashUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BinWashUsers.
+     */
+    distinct?: Enumerable<BinWashUserScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser findMany
+   */
+  export type BinWashUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter, which BinWashUsers to fetch.
+     */
+    where?: BinWashUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BinWashUsers to fetch.
+     */
+    orderBy?: Enumerable<BinWashUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BinWashUsers.
+     */
+    cursor?: BinWashUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BinWashUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BinWashUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<BinWashUserScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser create
+   */
+  export type BinWashUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * The data needed to create a BinWashUser.
+     */
+    data: XOR<BinWashUserCreateInput, BinWashUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * BinWashUser createMany
+   */
+  export type BinWashUserCreateManyArgs = {
+    /**
+     * The data used to create many BinWashUsers.
+     */
+    data: Enumerable<BinWashUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * BinWashUser update
+   */
+  export type BinWashUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * The data needed to update a BinWashUser.
+     */
+    data: XOR<BinWashUserUpdateInput, BinWashUserUncheckedUpdateInput>
+    /**
+     * Choose, which BinWashUser to update.
+     */
+    where: BinWashUserWhereUniqueInput
+  }
+
+
+  /**
+   * BinWashUser updateMany
+   */
+  export type BinWashUserUpdateManyArgs = {
+    /**
+     * The data used to update BinWashUsers.
+     */
+    data: XOR<BinWashUserUpdateManyMutationInput, BinWashUserUncheckedUpdateManyInput>
+    /**
+     * Filter which BinWashUsers to update
+     */
+    where?: BinWashUserWhereInput
+  }
+
+
+  /**
+   * BinWashUser upsert
+   */
+  export type BinWashUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * The filter to search for the BinWashUser to update in case it exists.
+     */
+    where: BinWashUserWhereUniqueInput
+    /**
+     * In case the BinWashUser found by the `where` argument doesn't exist, create a new BinWashUser with this data.
+     */
+    create: XOR<BinWashUserCreateInput, BinWashUserUncheckedCreateInput>
+    /**
+     * In case the BinWashUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BinWashUserUpdateInput, BinWashUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * BinWashUser delete
+   */
+  export type BinWashUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+    /**
+     * Filter which BinWashUser to delete.
+     */
+    where: BinWashUserWhereUniqueInput
+  }
+
+
+  /**
+   * BinWashUser deleteMany
+   */
+  export type BinWashUserDeleteManyArgs = {
+    /**
+     * Filter which BinWashUsers to delete
+     */
+    where?: BinWashUserWhereInput
+  }
+
+
+  /**
+   * BinWashUser.owningBranches
+   */
+  export type BinWashUser$owningBranchesArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    where?: BranchWhereInput
+    orderBy?: Enumerable<BranchOrderByWithRelationInput>
+    cursor?: BranchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<BranchScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser.wMMaintenanceRecords
+   */
+  export type BinWashUser$wMMaintenanceRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    where?: WMMaintenanceRecordWhereInput
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WMMaintenanceRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser.usageRecords
+   */
+  export type BinWashUser$usageRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    where?: UsageRecordWhereInput
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    cursor?: UsageRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser.topUpRecords
+   */
+  export type BinWashUser$topUpRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    where?: TopUpRecordWhereInput
+    orderBy?: Enumerable<TopUpRecordOrderByWithRelationInput>
+    cursor?: TopUpRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TopUpRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * BinWashUser without action
+   */
+  export type BinWashUserArgs = {
+    /**
+     * Select specific fields to fetch from the BinWashUser
+     */
+    select?: BinWashUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BinWashUserInclude | null
+  }
+
+
+
+  /**
+   * Model Branch
+   */
+
+
+  export type AggregateBranch = {
+    _count: BranchCountAggregateOutputType | null
+    _avg: BranchAvgAggregateOutputType | null
+    _sum: BranchSumAggregateOutputType | null
+    _min: BranchMinAggregateOutputType | null
+    _max: BranchMaxAggregateOutputType | null
+  }
+
+  export type BranchAvgAggregateOutputType = {
+    id: number | null
+    area: number | null
+    binWashUserId: number | null
+  }
+
+  export type BranchSumAggregateOutputType = {
+    id: number | null
+    area: number | null
+    binWashUserId: number | null
+  }
+
+  export type BranchMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    telephoneNo: string | null
+    area: number | null
+    binWashUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BranchMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    location: string | null
+    telephoneNo: string | null
+    area: number | null
+    binWashUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BranchCountAggregateOutputType = {
+    id: number
+    name: number
+    location: number
+    telephoneNo: number
+    area: number
+    binWashUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BranchAvgAggregateInputType = {
+    id?: true
+    area?: true
+    binWashUserId?: true
+  }
+
+  export type BranchSumAggregateInputType = {
+    id?: true
+    area?: true
+    binWashUserId?: true
+  }
+
+  export type BranchMinAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    telephoneNo?: true
+    area?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BranchMaxAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    telephoneNo?: true
+    area?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BranchCountAggregateInputType = {
+    id?: true
+    name?: true
+    location?: true
+    telephoneNo?: true
+    area?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BranchAggregateArgs = {
+    /**
+     * Filter which Branch to aggregate.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: Enumerable<BranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Branches
+    **/
+    _count?: true | BranchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BranchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BranchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BranchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BranchMaxAggregateInputType
+  }
+
+  export type GetBranchAggregateType<T extends BranchAggregateArgs> = {
+        [P in keyof T & keyof AggregateBranch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBranch[P]>
+      : GetScalarType<T[P], AggregateBranch[P]>
+  }
+
+
+
+
+  export type BranchGroupByArgs = {
+    where?: BranchWhereInput
+    orderBy?: Enumerable<BranchOrderByWithAggregationInput>
+    by: BranchScalarFieldEnum[]
+    having?: BranchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BranchCountAggregateInputType | true
+    _avg?: BranchAvgAggregateInputType
+    _sum?: BranchSumAggregateInputType
+    _min?: BranchMinAggregateInputType
+    _max?: BranchMaxAggregateInputType
+  }
+
+
+  export type BranchGroupByOutputType = {
+    id: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    binWashUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: BranchCountAggregateOutputType | null
+    _avg: BranchAvgAggregateOutputType | null
+    _sum: BranchSumAggregateOutputType | null
+    _min: BranchMinAggregateOutputType | null
+    _max: BranchMaxAggregateOutputType | null
+  }
+
+  type GetBranchGroupByPayload<T extends BranchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<BranchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BranchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BranchGroupByOutputType[P]>
+            : GetScalarType<T[P], BranchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BranchSelect = {
+    id?: boolean
+    name?: boolean
+    location?: boolean
+    telephoneNo?: boolean
+    area?: boolean
+    branchOwner?: boolean | BinWashUserArgs
+    binWashUserId?: boolean
+    washingMachines?: boolean | Branch$washingMachinesArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | BranchCountOutputTypeArgs
+  }
+
+
+  export type BranchInclude = {
+    branchOwner?: boolean | BinWashUserArgs
+    washingMachines?: boolean | Branch$washingMachinesArgs
+    _count?: boolean | BranchCountOutputTypeArgs
+  }
+
+  export type BranchGetPayload<S extends boolean | null | undefined | BranchArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Branch :
+    S extends undefined ? never :
+    S extends { include: any } & (BranchArgs | BranchFindManyArgs)
+    ? Branch  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'branchOwner' ? BinWashUserGetPayload<S['include'][P]> :
+        P extends 'washingMachines' ? Array < WashingMachineGetPayload<S['include'][P]>>  :
+        P extends '_count' ? BranchCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (BranchArgs | BranchFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'branchOwner' ? BinWashUserGetPayload<S['select'][P]> :
+        P extends 'washingMachines' ? Array < WashingMachineGetPayload<S['select'][P]>>  :
+        P extends '_count' ? BranchCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Branch ? Branch[P] : never
+  } 
+      : Branch
+
+
+  type BranchCountArgs = 
+    Omit<BranchFindManyArgs, 'select' | 'include'> & {
+      select?: BranchCountAggregateInputType | true
+    }
+
+  export interface BranchDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Branch that matches the filter.
+     * @param {BranchFindUniqueArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends BranchFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, BranchFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Branch'> extends True ? Prisma__BranchClient<BranchGetPayload<T>> : Prisma__BranchClient<BranchGetPayload<T> | null, null>
+
+    /**
+     * Find one Branch that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {BranchFindUniqueOrThrowArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends BranchFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, BranchFindUniqueOrThrowArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Find the first Branch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindFirstArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends BranchFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, BranchFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Branch'> extends True ? Prisma__BranchClient<BranchGetPayload<T>> : Prisma__BranchClient<BranchGetPayload<T> | null, null>
+
+    /**
+     * Find the first Branch that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindFirstOrThrowArgs} args - Arguments to find a Branch
+     * @example
+     * // Get one Branch
+     * const branch = await prisma.branch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends BranchFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, BranchFindFirstOrThrowArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Find zero or more Branches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Branches
+     * const branches = await prisma.branch.findMany()
+     * 
+     * // Get first 10 Branches
+     * const branches = await prisma.branch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const branchWithIdOnly = await prisma.branch.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends BranchFindManyArgs>(
+      args?: SelectSubset<T, BranchFindManyArgs>
+    ): Prisma.PrismaPromise<Array<BranchGetPayload<T>>>
+
+    /**
+     * Create a Branch.
+     * @param {BranchCreateArgs} args - Arguments to create a Branch.
+     * @example
+     * // Create one Branch
+     * const Branch = await prisma.branch.create({
+     *   data: {
+     *     // ... data to create a Branch
+     *   }
+     * })
+     * 
+    **/
+    create<T extends BranchCreateArgs>(
+      args: SelectSubset<T, BranchCreateArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Create many Branches.
+     *     @param {BranchCreateManyArgs} args - Arguments to create many Branches.
+     *     @example
+     *     // Create many Branches
+     *     const branch = await prisma.branch.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends BranchCreateManyArgs>(
+      args?: SelectSubset<T, BranchCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Branch.
+     * @param {BranchDeleteArgs} args - Arguments to delete one Branch.
+     * @example
+     * // Delete one Branch
+     * const Branch = await prisma.branch.delete({
+     *   where: {
+     *     // ... filter to delete one Branch
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends BranchDeleteArgs>(
+      args: SelectSubset<T, BranchDeleteArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Update one Branch.
+     * @param {BranchUpdateArgs} args - Arguments to update one Branch.
+     * @example
+     * // Update one Branch
+     * const branch = await prisma.branch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends BranchUpdateArgs>(
+      args: SelectSubset<T, BranchUpdateArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Delete zero or more Branches.
+     * @param {BranchDeleteManyArgs} args - Arguments to filter Branches to delete.
+     * @example
+     * // Delete a few Branches
+     * const { count } = await prisma.branch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends BranchDeleteManyArgs>(
+      args?: SelectSubset<T, BranchDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Branches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Branches
+     * const branch = await prisma.branch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends BranchUpdateManyArgs>(
+      args: SelectSubset<T, BranchUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Branch.
+     * @param {BranchUpsertArgs} args - Arguments to update or create a Branch.
+     * @example
+     * // Update or create a Branch
+     * const branch = await prisma.branch.upsert({
+     *   create: {
+     *     // ... data to create a Branch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Branch we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends BranchUpsertArgs>(
+      args: SelectSubset<T, BranchUpsertArgs>
+    ): Prisma__BranchClient<BranchGetPayload<T>>
+
+    /**
+     * Count the number of Branches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchCountArgs} args - Arguments to filter Branches to count.
+     * @example
+     * // Count the number of Branches
+     * const count = await prisma.branch.count({
+     *   where: {
+     *     // ... the filter for the Branches we want to count
+     *   }
+     * })
+    **/
+    count<T extends BranchCountArgs>(
+      args?: Subset<T, BranchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BranchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Branch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BranchAggregateArgs>(args: Subset<T, BranchAggregateArgs>): Prisma.PrismaPromise<GetBranchAggregateType<T>>
+
+    /**
+     * Group by Branch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BranchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BranchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BranchGroupByArgs['orderBy'] }
+        : { orderBy?: BranchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BranchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBranchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Branch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__BranchClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    branchOwner<T extends BinWashUserArgs= {}>(args?: Subset<T, BinWashUserArgs>): Prisma__BinWashUserClient<BinWashUserGetPayload<T> | Null>;
+
+    washingMachines<T extends Branch$washingMachinesArgs= {}>(args?: Subset<T, Branch$washingMachinesArgs>): Prisma.PrismaPromise<Array<WashingMachineGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Branch base type for findUnique actions
+   */
+  export type BranchFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+  /**
+   * Branch findUnique
+   */
+  export interface BranchFindUniqueArgs extends BranchFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Branch findUniqueOrThrow
+   */
+  export type BranchFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+
+  /**
+   * Branch base type for findFirst actions
+   */
+  export type BranchFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: Enumerable<BranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Branches.
+     */
+    distinct?: Enumerable<BranchScalarFieldEnum>
+  }
+
+  /**
+   * Branch findFirst
+   */
+  export interface BranchFindFirstArgs extends BranchFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Branch findFirstOrThrow
+   */
+  export type BranchFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter, which Branch to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: Enumerable<BranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Branches.
+     */
+    distinct?: Enumerable<BranchScalarFieldEnum>
+  }
+
+
+  /**
+   * Branch findMany
+   */
+  export type BranchFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter, which Branches to fetch.
+     */
+    where?: BranchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Branches to fetch.
+     */
+    orderBy?: Enumerable<BranchOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Branches.
+     */
+    cursor?: BranchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Branches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Branches.
+     */
+    skip?: number
+    distinct?: Enumerable<BranchScalarFieldEnum>
+  }
+
+
+  /**
+   * Branch create
+   */
+  export type BranchCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * The data needed to create a Branch.
+     */
+    data: XOR<BranchCreateInput, BranchUncheckedCreateInput>
+  }
+
+
+  /**
+   * Branch createMany
+   */
+  export type BranchCreateManyArgs = {
+    /**
+     * The data used to create many Branches.
+     */
+    data: Enumerable<BranchCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Branch update
+   */
+  export type BranchUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * The data needed to update a Branch.
+     */
+    data: XOR<BranchUpdateInput, BranchUncheckedUpdateInput>
+    /**
+     * Choose, which Branch to update.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+
+  /**
+   * Branch updateMany
+   */
+  export type BranchUpdateManyArgs = {
+    /**
+     * The data used to update Branches.
+     */
+    data: XOR<BranchUpdateManyMutationInput, BranchUncheckedUpdateManyInput>
+    /**
+     * Filter which Branches to update
+     */
+    where?: BranchWhereInput
+  }
+
+
+  /**
+   * Branch upsert
+   */
+  export type BranchUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * The filter to search for the Branch to update in case it exists.
+     */
+    where: BranchWhereUniqueInput
+    /**
+     * In case the Branch found by the `where` argument doesn't exist, create a new Branch with this data.
+     */
+    create: XOR<BranchCreateInput, BranchUncheckedCreateInput>
+    /**
+     * In case the Branch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BranchUpdateInput, BranchUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Branch delete
+   */
+  export type BranchDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+    /**
+     * Filter which Branch to delete.
+     */
+    where: BranchWhereUniqueInput
+  }
+
+
+  /**
+   * Branch deleteMany
+   */
+  export type BranchDeleteManyArgs = {
+    /**
+     * Filter which Branches to delete
+     */
+    where?: BranchWhereInput
+  }
+
+
+  /**
+   * Branch.washingMachines
+   */
+  export type Branch$washingMachinesArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    where?: WashingMachineWhereInput
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    cursor?: WashingMachineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashingMachineScalarFieldEnum>
+  }
+
+
+  /**
+   * Branch without action
+   */
+  export type BranchArgs = {
+    /**
+     * Select specific fields to fetch from the Branch
+     */
+    select?: BranchSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: BranchInclude | null
+  }
+
+
+
+  /**
+   * Model WashingMachine
+   */
+
+
+  export type AggregateWashingMachine = {
+    _count: WashingMachineCountAggregateOutputType | null
+    _avg: WashingMachineAvgAggregateOutputType | null
+    _sum: WashingMachineSumAggregateOutputType | null
+    _min: WashingMachineMinAggregateOutputType | null
+    _max: WashingMachineMaxAggregateOutputType | null
+  }
+
+  export type WashingMachineAvgAggregateOutputType = {
+    id: number | null
+    capacity: number | null
+    branchId: number | null
+  }
+
+  export type WashingMachineSumAggregateOutputType = {
+    id: number | null
+    capacity: number | null
+    branchId: number | null
+  }
+
+  export type WashingMachineMinAggregateOutputType = {
+    id: number | null
+    brand: string | null
+    model: string | null
+    type: WMTypeEnum | null
+    capacity: number | null
+    manufacturedYear: Date | null
+    warrantyEndDate: Date | null
+    branchId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashingMachineMaxAggregateOutputType = {
+    id: number | null
+    brand: string | null
+    model: string | null
+    type: WMTypeEnum | null
+    capacity: number | null
+    manufacturedYear: Date | null
+    warrantyEndDate: Date | null
+    branchId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WashingMachineCountAggregateOutputType = {
+    id: number
+    brand: number
+    model: number
+    type: number
+    capacity: number
+    manufacturedYear: number
+    warrantyEndDate: number
+    branchId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WashingMachineAvgAggregateInputType = {
+    id?: true
+    capacity?: true
+    branchId?: true
+  }
+
+  export type WashingMachineSumAggregateInputType = {
+    id?: true
+    capacity?: true
+    branchId?: true
+  }
+
+  export type WashingMachineMinAggregateInputType = {
+    id?: true
+    brand?: true
+    model?: true
+    type?: true
+    capacity?: true
+    manufacturedYear?: true
+    warrantyEndDate?: true
+    branchId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashingMachineMaxAggregateInputType = {
+    id?: true
+    brand?: true
+    model?: true
+    type?: true
+    capacity?: true
+    manufacturedYear?: true
+    warrantyEndDate?: true
+    branchId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WashingMachineCountAggregateInputType = {
+    id?: true
+    brand?: true
+    model?: true
+    type?: true
+    capacity?: true
+    manufacturedYear?: true
+    warrantyEndDate?: true
+    branchId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WashingMachineAggregateArgs = {
+    /**
+     * Filter which WashingMachine to aggregate.
+     */
+    where?: WashingMachineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashingMachines to fetch.
+     */
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WashingMachineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashingMachines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashingMachines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WashingMachines
+    **/
+    _count?: true | WashingMachineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WashingMachineAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WashingMachineSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WashingMachineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WashingMachineMaxAggregateInputType
+  }
+
+  export type GetWashingMachineAggregateType<T extends WashingMachineAggregateArgs> = {
+        [P in keyof T & keyof AggregateWashingMachine]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWashingMachine[P]>
+      : GetScalarType<T[P], AggregateWashingMachine[P]>
+  }
+
+
+
+
+  export type WashingMachineGroupByArgs = {
+    where?: WashingMachineWhereInput
+    orderBy?: Enumerable<WashingMachineOrderByWithAggregationInput>
+    by: WashingMachineScalarFieldEnum[]
+    having?: WashingMachineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WashingMachineCountAggregateInputType | true
+    _avg?: WashingMachineAvgAggregateInputType
+    _sum?: WashingMachineSumAggregateInputType
+    _min?: WashingMachineMinAggregateInputType
+    _max?: WashingMachineMaxAggregateInputType
+  }
+
+
+  export type WashingMachineGroupByOutputType = {
+    id: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date
+    warrantyEndDate: Date
+    branchId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WashingMachineCountAggregateOutputType | null
+    _avg: WashingMachineAvgAggregateOutputType | null
+    _sum: WashingMachineSumAggregateOutputType | null
+    _min: WashingMachineMinAggregateOutputType | null
+    _max: WashingMachineMaxAggregateOutputType | null
+  }
+
+  type GetWashingMachineGroupByPayload<T extends WashingMachineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WashingMachineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WashingMachineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WashingMachineGroupByOutputType[P]>
+            : GetScalarType<T[P], WashingMachineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WashingMachineSelect = {
+    id?: boolean
+    brand?: boolean
+    model?: boolean
+    type?: boolean
+    capacity?: boolean
+    manufacturedYear?: boolean
+    warrantyEndDate?: boolean
+    locatedBranch?: boolean | BranchArgs
+    branchId?: boolean
+    equippedPrograms?: boolean | WashingMachine$equippedProgramsArgs
+    usageRecords?: boolean | WashingMachine$usageRecordsArgs
+    wMMaintenanceRecords?: boolean | WashingMachine$wMMaintenanceRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | WashingMachineCountOutputTypeArgs
+  }
+
+
+  export type WashingMachineInclude = {
+    locatedBranch?: boolean | BranchArgs
+    equippedPrograms?: boolean | WashingMachine$equippedProgramsArgs
+    usageRecords?: boolean | WashingMachine$usageRecordsArgs
+    wMMaintenanceRecords?: boolean | WashingMachine$wMMaintenanceRecordsArgs
+    _count?: boolean | WashingMachineCountOutputTypeArgs
+  }
+
+  export type WashingMachineGetPayload<S extends boolean | null | undefined | WashingMachineArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WashingMachine :
+    S extends undefined ? never :
+    S extends { include: any } & (WashingMachineArgs | WashingMachineFindManyArgs)
+    ? WashingMachine  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'locatedBranch' ? BranchGetPayload<S['include'][P]> :
+        P extends 'equippedPrograms' ? Array < WMProgramGetPayload<S['include'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['include'][P]>>  :
+        P extends 'wMMaintenanceRecords' ? Array < WMMaintenanceRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WashingMachineCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WashingMachineArgs | WashingMachineFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'locatedBranch' ? BranchGetPayload<S['select'][P]> :
+        P extends 'equippedPrograms' ? Array < WMProgramGetPayload<S['select'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['select'][P]>>  :
+        P extends 'wMMaintenanceRecords' ? Array < WMMaintenanceRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WashingMachineCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WashingMachine ? WashingMachine[P] : never
+  } 
+      : WashingMachine
+
+
+  type WashingMachineCountArgs = 
+    Omit<WashingMachineFindManyArgs, 'select' | 'include'> & {
+      select?: WashingMachineCountAggregateInputType | true
+    }
+
+  export interface WashingMachineDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WashingMachine that matches the filter.
+     * @param {WashingMachineFindUniqueArgs} args - Arguments to find a WashingMachine
+     * @example
+     * // Get one WashingMachine
+     * const washingMachine = await prisma.washingMachine.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WashingMachineFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WashingMachineFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WashingMachine'> extends True ? Prisma__WashingMachineClient<WashingMachineGetPayload<T>> : Prisma__WashingMachineClient<WashingMachineGetPayload<T> | null, null>
+
+    /**
+     * Find one WashingMachine that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WashingMachineFindUniqueOrThrowArgs} args - Arguments to find a WashingMachine
+     * @example
+     * // Get one WashingMachine
+     * const washingMachine = await prisma.washingMachine.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WashingMachineFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WashingMachineFindUniqueOrThrowArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Find the first WashingMachine that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineFindFirstArgs} args - Arguments to find a WashingMachine
+     * @example
+     * // Get one WashingMachine
+     * const washingMachine = await prisma.washingMachine.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WashingMachineFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WashingMachineFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WashingMachine'> extends True ? Prisma__WashingMachineClient<WashingMachineGetPayload<T>> : Prisma__WashingMachineClient<WashingMachineGetPayload<T> | null, null>
+
+    /**
+     * Find the first WashingMachine that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineFindFirstOrThrowArgs} args - Arguments to find a WashingMachine
+     * @example
+     * // Get one WashingMachine
+     * const washingMachine = await prisma.washingMachine.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WashingMachineFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WashingMachineFindFirstOrThrowArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Find zero or more WashingMachines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WashingMachines
+     * const washingMachines = await prisma.washingMachine.findMany()
+     * 
+     * // Get first 10 WashingMachines
+     * const washingMachines = await prisma.washingMachine.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const washingMachineWithIdOnly = await prisma.washingMachine.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WashingMachineFindManyArgs>(
+      args?: SelectSubset<T, WashingMachineFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WashingMachineGetPayload<T>>>
+
+    /**
+     * Create a WashingMachine.
+     * @param {WashingMachineCreateArgs} args - Arguments to create a WashingMachine.
+     * @example
+     * // Create one WashingMachine
+     * const WashingMachine = await prisma.washingMachine.create({
+     *   data: {
+     *     // ... data to create a WashingMachine
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WashingMachineCreateArgs>(
+      args: SelectSubset<T, WashingMachineCreateArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Create many WashingMachines.
+     *     @param {WashingMachineCreateManyArgs} args - Arguments to create many WashingMachines.
+     *     @example
+     *     // Create many WashingMachines
+     *     const washingMachine = await prisma.washingMachine.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WashingMachineCreateManyArgs>(
+      args?: SelectSubset<T, WashingMachineCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WashingMachine.
+     * @param {WashingMachineDeleteArgs} args - Arguments to delete one WashingMachine.
+     * @example
+     * // Delete one WashingMachine
+     * const WashingMachine = await prisma.washingMachine.delete({
+     *   where: {
+     *     // ... filter to delete one WashingMachine
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WashingMachineDeleteArgs>(
+      args: SelectSubset<T, WashingMachineDeleteArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Update one WashingMachine.
+     * @param {WashingMachineUpdateArgs} args - Arguments to update one WashingMachine.
+     * @example
+     * // Update one WashingMachine
+     * const washingMachine = await prisma.washingMachine.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WashingMachineUpdateArgs>(
+      args: SelectSubset<T, WashingMachineUpdateArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Delete zero or more WashingMachines.
+     * @param {WashingMachineDeleteManyArgs} args - Arguments to filter WashingMachines to delete.
+     * @example
+     * // Delete a few WashingMachines
+     * const { count } = await prisma.washingMachine.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WashingMachineDeleteManyArgs>(
+      args?: SelectSubset<T, WashingMachineDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WashingMachines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WashingMachines
+     * const washingMachine = await prisma.washingMachine.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WashingMachineUpdateManyArgs>(
+      args: SelectSubset<T, WashingMachineUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WashingMachine.
+     * @param {WashingMachineUpsertArgs} args - Arguments to update or create a WashingMachine.
+     * @example
+     * // Update or create a WashingMachine
+     * const washingMachine = await prisma.washingMachine.upsert({
+     *   create: {
+     *     // ... data to create a WashingMachine
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WashingMachine we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WashingMachineUpsertArgs>(
+      args: SelectSubset<T, WashingMachineUpsertArgs>
+    ): Prisma__WashingMachineClient<WashingMachineGetPayload<T>>
+
+    /**
+     * Count the number of WashingMachines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineCountArgs} args - Arguments to filter WashingMachines to count.
+     * @example
+     * // Count the number of WashingMachines
+     * const count = await prisma.washingMachine.count({
+     *   where: {
+     *     // ... the filter for the WashingMachines we want to count
+     *   }
+     * })
+    **/
+    count<T extends WashingMachineCountArgs>(
+      args?: Subset<T, WashingMachineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WashingMachineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WashingMachine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WashingMachineAggregateArgs>(args: Subset<T, WashingMachineAggregateArgs>): Prisma.PrismaPromise<GetWashingMachineAggregateType<T>>
+
+    /**
+     * Group by WashingMachine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WashingMachineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WashingMachineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WashingMachineGroupByArgs['orderBy'] }
+        : { orderBy?: WashingMachineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WashingMachineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWashingMachineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WashingMachine.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WashingMachineClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    locatedBranch<T extends BranchArgs= {}>(args?: Subset<T, BranchArgs>): Prisma__BranchClient<BranchGetPayload<T> | Null>;
+
+    equippedPrograms<T extends WashingMachine$equippedProgramsArgs= {}>(args?: Subset<T, WashingMachine$equippedProgramsArgs>): Prisma.PrismaPromise<Array<WMProgramGetPayload<T>>| Null>;
+
+    usageRecords<T extends WashingMachine$usageRecordsArgs= {}>(args?: Subset<T, WashingMachine$usageRecordsArgs>): Prisma.PrismaPromise<Array<UsageRecordGetPayload<T>>| Null>;
+
+    wMMaintenanceRecords<T extends WashingMachine$wMMaintenanceRecordsArgs= {}>(args?: Subset<T, WashingMachine$wMMaintenanceRecordsArgs>): Prisma.PrismaPromise<Array<WMMaintenanceRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WashingMachine base type for findUnique actions
+   */
+  export type WashingMachineFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter, which WashingMachine to fetch.
+     */
+    where: WashingMachineWhereUniqueInput
+  }
+
+  /**
+   * WashingMachine findUnique
+   */
+  export interface WashingMachineFindUniqueArgs extends WashingMachineFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashingMachine findUniqueOrThrow
+   */
+  export type WashingMachineFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter, which WashingMachine to fetch.
+     */
+    where: WashingMachineWhereUniqueInput
+  }
+
+
+  /**
+   * WashingMachine base type for findFirst actions
+   */
+  export type WashingMachineFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter, which WashingMachine to fetch.
+     */
+    where?: WashingMachineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashingMachines to fetch.
+     */
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashingMachines.
+     */
+    cursor?: WashingMachineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashingMachines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashingMachines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashingMachines.
+     */
+    distinct?: Enumerable<WashingMachineScalarFieldEnum>
+  }
+
+  /**
+   * WashingMachine findFirst
+   */
+  export interface WashingMachineFindFirstArgs extends WashingMachineFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WashingMachine findFirstOrThrow
+   */
+  export type WashingMachineFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter, which WashingMachine to fetch.
+     */
+    where?: WashingMachineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashingMachines to fetch.
+     */
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WashingMachines.
+     */
+    cursor?: WashingMachineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashingMachines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashingMachines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WashingMachines.
+     */
+    distinct?: Enumerable<WashingMachineScalarFieldEnum>
+  }
+
+
+  /**
+   * WashingMachine findMany
+   */
+  export type WashingMachineFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter, which WashingMachines to fetch.
+     */
+    where?: WashingMachineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WashingMachines to fetch.
+     */
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WashingMachines.
+     */
+    cursor?: WashingMachineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WashingMachines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WashingMachines.
+     */
+    skip?: number
+    distinct?: Enumerable<WashingMachineScalarFieldEnum>
+  }
+
+
+  /**
+   * WashingMachine create
+   */
+  export type WashingMachineCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * The data needed to create a WashingMachine.
+     */
+    data: XOR<WashingMachineCreateInput, WashingMachineUncheckedCreateInput>
+  }
+
+
+  /**
+   * WashingMachine createMany
+   */
+  export type WashingMachineCreateManyArgs = {
+    /**
+     * The data used to create many WashingMachines.
+     */
+    data: Enumerable<WashingMachineCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WashingMachine update
+   */
+  export type WashingMachineUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * The data needed to update a WashingMachine.
+     */
+    data: XOR<WashingMachineUpdateInput, WashingMachineUncheckedUpdateInput>
+    /**
+     * Choose, which WashingMachine to update.
+     */
+    where: WashingMachineWhereUniqueInput
+  }
+
+
+  /**
+   * WashingMachine updateMany
+   */
+  export type WashingMachineUpdateManyArgs = {
+    /**
+     * The data used to update WashingMachines.
+     */
+    data: XOR<WashingMachineUpdateManyMutationInput, WashingMachineUncheckedUpdateManyInput>
+    /**
+     * Filter which WashingMachines to update
+     */
+    where?: WashingMachineWhereInput
+  }
+
+
+  /**
+   * WashingMachine upsert
+   */
+  export type WashingMachineUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * The filter to search for the WashingMachine to update in case it exists.
+     */
+    where: WashingMachineWhereUniqueInput
+    /**
+     * In case the WashingMachine found by the `where` argument doesn't exist, create a new WashingMachine with this data.
+     */
+    create: XOR<WashingMachineCreateInput, WashingMachineUncheckedCreateInput>
+    /**
+     * In case the WashingMachine was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WashingMachineUpdateInput, WashingMachineUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WashingMachine delete
+   */
+  export type WashingMachineDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    /**
+     * Filter which WashingMachine to delete.
+     */
+    where: WashingMachineWhereUniqueInput
+  }
+
+
+  /**
+   * WashingMachine deleteMany
+   */
+  export type WashingMachineDeleteManyArgs = {
+    /**
+     * Filter which WashingMachines to delete
+     */
+    where?: WashingMachineWhereInput
+  }
+
+
+  /**
+   * WashingMachine.equippedPrograms
+   */
+  export type WashingMachine$equippedProgramsArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    where?: WMProgramWhereInput
+    orderBy?: Enumerable<WMProgramOrderByWithRelationInput>
+    cursor?: WMProgramWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WMProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WashingMachine.usageRecords
+   */
+  export type WashingMachine$usageRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    where?: UsageRecordWhereInput
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    cursor?: UsageRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * WashingMachine.wMMaintenanceRecords
+   */
+  export type WashingMachine$wMMaintenanceRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    where?: WMMaintenanceRecordWhereInput
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WMMaintenanceRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * WashingMachine without action
+   */
+  export type WashingMachineArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+  }
+
+
+
+  /**
+   * Model WMProgram
+   */
+
+
+  export type AggregateWMProgram = {
+    _count: WMProgramCountAggregateOutputType | null
+    _avg: WMProgramAvgAggregateOutputType | null
+    _sum: WMProgramSumAggregateOutputType | null
+    _min: WMProgramMinAggregateOutputType | null
+    _max: WMProgramMaxAggregateOutputType | null
+  }
+
+  export type WMProgramAvgAggregateOutputType = {
+    id: number | null
+    maxCapacity: number | null
+    duration: number | null
+    price: number | null
+  }
+
+  export type WMProgramSumAggregateOutputType = {
+    id: number | null
+    maxCapacity: number | null
+    duration: number | null
+    price: number | null
+  }
+
+  export type WMProgramMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    maxCapacity: number | null
+    duration: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WMProgramMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    maxCapacity: number | null
+    duration: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WMProgramCountAggregateOutputType = {
+    id: number
+    name: number
+    maxCapacity: number
+    duration: number
+    price: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WMProgramAvgAggregateInputType = {
+    id?: true
+    maxCapacity?: true
+    duration?: true
+    price?: true
+  }
+
+  export type WMProgramSumAggregateInputType = {
+    id?: true
+    maxCapacity?: true
+    duration?: true
+    price?: true
+  }
+
+  export type WMProgramMinAggregateInputType = {
+    id?: true
+    name?: true
+    maxCapacity?: true
+    duration?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WMProgramMaxAggregateInputType = {
+    id?: true
+    name?: true
+    maxCapacity?: true
+    duration?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WMProgramCountAggregateInputType = {
+    id?: true
+    name?: true
+    maxCapacity?: true
+    duration?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WMProgramAggregateArgs = {
+    /**
+     * Filter which WMProgram to aggregate.
+     */
+    where?: WMProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMPrograms to fetch.
+     */
+    orderBy?: Enumerable<WMProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WMProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WMPrograms
+    **/
+    _count?: true | WMProgramCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WMProgramAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WMProgramSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WMProgramMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WMProgramMaxAggregateInputType
+  }
+
+  export type GetWMProgramAggregateType<T extends WMProgramAggregateArgs> = {
+        [P in keyof T & keyof AggregateWMProgram]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWMProgram[P]>
+      : GetScalarType<T[P], AggregateWMProgram[P]>
+  }
+
+
+
+
+  export type WMProgramGroupByArgs = {
+    where?: WMProgramWhereInput
+    orderBy?: Enumerable<WMProgramOrderByWithAggregationInput>
+    by: WMProgramScalarFieldEnum[]
+    having?: WMProgramScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WMProgramCountAggregateInputType | true
+    _avg?: WMProgramAvgAggregateInputType
+    _sum?: WMProgramSumAggregateInputType
+    _min?: WMProgramMinAggregateInputType
+    _max?: WMProgramMaxAggregateInputType
+  }
+
+
+  export type WMProgramGroupByOutputType = {
+    id: number
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WMProgramCountAggregateOutputType | null
+    _avg: WMProgramAvgAggregateOutputType | null
+    _sum: WMProgramSumAggregateOutputType | null
+    _min: WMProgramMinAggregateOutputType | null
+    _max: WMProgramMaxAggregateOutputType | null
+  }
+
+  type GetWMProgramGroupByPayload<T extends WMProgramGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WMProgramGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WMProgramGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WMProgramGroupByOutputType[P]>
+            : GetScalarType<T[P], WMProgramGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WMProgramSelect = {
+    id?: boolean
+    name?: boolean
+    maxCapacity?: boolean
+    duration?: boolean
+    price?: boolean
+    equippingWMs?: boolean | WMProgram$equippingWMsArgs
+    usageRecords?: boolean | WMProgram$usageRecordsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | WMProgramCountOutputTypeArgs
+  }
+
+
+  export type WMProgramInclude = {
+    equippingWMs?: boolean | WMProgram$equippingWMsArgs
+    usageRecords?: boolean | WMProgram$usageRecordsArgs
+    _count?: boolean | WMProgramCountOutputTypeArgs
+  }
+
+  export type WMProgramGetPayload<S extends boolean | null | undefined | WMProgramArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WMProgram :
+    S extends undefined ? never :
+    S extends { include: any } & (WMProgramArgs | WMProgramFindManyArgs)
+    ? WMProgram  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'equippingWMs' ? Array < WashingMachineGetPayload<S['include'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['include'][P]>>  :
+        P extends '_count' ? WMProgramCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WMProgramArgs | WMProgramFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'equippingWMs' ? Array < WashingMachineGetPayload<S['select'][P]>>  :
+        P extends 'usageRecords' ? Array < UsageRecordGetPayload<S['select'][P]>>  :
+        P extends '_count' ? WMProgramCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof WMProgram ? WMProgram[P] : never
+  } 
+      : WMProgram
+
+
+  type WMProgramCountArgs = 
+    Omit<WMProgramFindManyArgs, 'select' | 'include'> & {
+      select?: WMProgramCountAggregateInputType | true
+    }
+
+  export interface WMProgramDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WMProgram that matches the filter.
+     * @param {WMProgramFindUniqueArgs} args - Arguments to find a WMProgram
+     * @example
+     * // Get one WMProgram
+     * const wMProgram = await prisma.wMProgram.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WMProgramFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WMProgramFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WMProgram'> extends True ? Prisma__WMProgramClient<WMProgramGetPayload<T>> : Prisma__WMProgramClient<WMProgramGetPayload<T> | null, null>
+
+    /**
+     * Find one WMProgram that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WMProgramFindUniqueOrThrowArgs} args - Arguments to find a WMProgram
+     * @example
+     * // Get one WMProgram
+     * const wMProgram = await prisma.wMProgram.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WMProgramFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WMProgramFindUniqueOrThrowArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Find the first WMProgram that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramFindFirstArgs} args - Arguments to find a WMProgram
+     * @example
+     * // Get one WMProgram
+     * const wMProgram = await prisma.wMProgram.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WMProgramFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WMProgramFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WMProgram'> extends True ? Prisma__WMProgramClient<WMProgramGetPayload<T>> : Prisma__WMProgramClient<WMProgramGetPayload<T> | null, null>
+
+    /**
+     * Find the first WMProgram that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramFindFirstOrThrowArgs} args - Arguments to find a WMProgram
+     * @example
+     * // Get one WMProgram
+     * const wMProgram = await prisma.wMProgram.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WMProgramFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WMProgramFindFirstOrThrowArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Find zero or more WMPrograms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WMPrograms
+     * const wMPrograms = await prisma.wMProgram.findMany()
+     * 
+     * // Get first 10 WMPrograms
+     * const wMPrograms = await prisma.wMProgram.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wMProgramWithIdOnly = await prisma.wMProgram.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WMProgramFindManyArgs>(
+      args?: SelectSubset<T, WMProgramFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WMProgramGetPayload<T>>>
+
+    /**
+     * Create a WMProgram.
+     * @param {WMProgramCreateArgs} args - Arguments to create a WMProgram.
+     * @example
+     * // Create one WMProgram
+     * const WMProgram = await prisma.wMProgram.create({
+     *   data: {
+     *     // ... data to create a WMProgram
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WMProgramCreateArgs>(
+      args: SelectSubset<T, WMProgramCreateArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Create many WMPrograms.
+     *     @param {WMProgramCreateManyArgs} args - Arguments to create many WMPrograms.
+     *     @example
+     *     // Create many WMPrograms
+     *     const wMProgram = await prisma.wMProgram.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WMProgramCreateManyArgs>(
+      args?: SelectSubset<T, WMProgramCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WMProgram.
+     * @param {WMProgramDeleteArgs} args - Arguments to delete one WMProgram.
+     * @example
+     * // Delete one WMProgram
+     * const WMProgram = await prisma.wMProgram.delete({
+     *   where: {
+     *     // ... filter to delete one WMProgram
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WMProgramDeleteArgs>(
+      args: SelectSubset<T, WMProgramDeleteArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Update one WMProgram.
+     * @param {WMProgramUpdateArgs} args - Arguments to update one WMProgram.
+     * @example
+     * // Update one WMProgram
+     * const wMProgram = await prisma.wMProgram.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WMProgramUpdateArgs>(
+      args: SelectSubset<T, WMProgramUpdateArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Delete zero or more WMPrograms.
+     * @param {WMProgramDeleteManyArgs} args - Arguments to filter WMPrograms to delete.
+     * @example
+     * // Delete a few WMPrograms
+     * const { count } = await prisma.wMProgram.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WMProgramDeleteManyArgs>(
+      args?: SelectSubset<T, WMProgramDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WMPrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WMPrograms
+     * const wMProgram = await prisma.wMProgram.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WMProgramUpdateManyArgs>(
+      args: SelectSubset<T, WMProgramUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WMProgram.
+     * @param {WMProgramUpsertArgs} args - Arguments to update or create a WMProgram.
+     * @example
+     * // Update or create a WMProgram
+     * const wMProgram = await prisma.wMProgram.upsert({
+     *   create: {
+     *     // ... data to create a WMProgram
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WMProgram we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WMProgramUpsertArgs>(
+      args: SelectSubset<T, WMProgramUpsertArgs>
+    ): Prisma__WMProgramClient<WMProgramGetPayload<T>>
+
+    /**
+     * Count the number of WMPrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramCountArgs} args - Arguments to filter WMPrograms to count.
+     * @example
+     * // Count the number of WMPrograms
+     * const count = await prisma.wMProgram.count({
+     *   where: {
+     *     // ... the filter for the WMPrograms we want to count
+     *   }
+     * })
+    **/
+    count<T extends WMProgramCountArgs>(
+      args?: Subset<T, WMProgramCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WMProgramCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WMProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WMProgramAggregateArgs>(args: Subset<T, WMProgramAggregateArgs>): Prisma.PrismaPromise<GetWMProgramAggregateType<T>>
+
+    /**
+     * Group by WMProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMProgramGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WMProgramGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WMProgramGroupByArgs['orderBy'] }
+        : { orderBy?: WMProgramGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WMProgramGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWMProgramGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WMProgram.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WMProgramClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    equippingWMs<T extends WMProgram$equippingWMsArgs= {}>(args?: Subset<T, WMProgram$equippingWMsArgs>): Prisma.PrismaPromise<Array<WashingMachineGetPayload<T>>| Null>;
+
+    usageRecords<T extends WMProgram$usageRecordsArgs= {}>(args?: Subset<T, WMProgram$usageRecordsArgs>): Prisma.PrismaPromise<Array<UsageRecordGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WMProgram base type for findUnique actions
+   */
+  export type WMProgramFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter, which WMProgram to fetch.
+     */
+    where: WMProgramWhereUniqueInput
+  }
+
+  /**
+   * WMProgram findUnique
+   */
+  export interface WMProgramFindUniqueArgs extends WMProgramFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WMProgram findUniqueOrThrow
+   */
+  export type WMProgramFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter, which WMProgram to fetch.
+     */
+    where: WMProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WMProgram base type for findFirst actions
+   */
+  export type WMProgramFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter, which WMProgram to fetch.
+     */
+    where?: WMProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMPrograms to fetch.
+     */
+    orderBy?: Enumerable<WMProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WMPrograms.
+     */
+    cursor?: WMProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WMPrograms.
+     */
+    distinct?: Enumerable<WMProgramScalarFieldEnum>
+  }
+
+  /**
+   * WMProgram findFirst
+   */
+  export interface WMProgramFindFirstArgs extends WMProgramFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WMProgram findFirstOrThrow
+   */
+  export type WMProgramFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter, which WMProgram to fetch.
+     */
+    where?: WMProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMPrograms to fetch.
+     */
+    orderBy?: Enumerable<WMProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WMPrograms.
+     */
+    cursor?: WMProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WMPrograms.
+     */
+    distinct?: Enumerable<WMProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WMProgram findMany
+   */
+  export type WMProgramFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter, which WMPrograms to fetch.
+     */
+    where?: WMProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMPrograms to fetch.
+     */
+    orderBy?: Enumerable<WMProgramOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WMPrograms.
+     */
+    cursor?: WMProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMPrograms.
+     */
+    skip?: number
+    distinct?: Enumerable<WMProgramScalarFieldEnum>
+  }
+
+
+  /**
+   * WMProgram create
+   */
+  export type WMProgramCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * The data needed to create a WMProgram.
+     */
+    data: XOR<WMProgramCreateInput, WMProgramUncheckedCreateInput>
+  }
+
+
+  /**
+   * WMProgram createMany
+   */
+  export type WMProgramCreateManyArgs = {
+    /**
+     * The data used to create many WMPrograms.
+     */
+    data: Enumerable<WMProgramCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WMProgram update
+   */
+  export type WMProgramUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * The data needed to update a WMProgram.
+     */
+    data: XOR<WMProgramUpdateInput, WMProgramUncheckedUpdateInput>
+    /**
+     * Choose, which WMProgram to update.
+     */
+    where: WMProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WMProgram updateMany
+   */
+  export type WMProgramUpdateManyArgs = {
+    /**
+     * The data used to update WMPrograms.
+     */
+    data: XOR<WMProgramUpdateManyMutationInput, WMProgramUncheckedUpdateManyInput>
+    /**
+     * Filter which WMPrograms to update
+     */
+    where?: WMProgramWhereInput
+  }
+
+
+  /**
+   * WMProgram upsert
+   */
+  export type WMProgramUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * The filter to search for the WMProgram to update in case it exists.
+     */
+    where: WMProgramWhereUniqueInput
+    /**
+     * In case the WMProgram found by the `where` argument doesn't exist, create a new WMProgram with this data.
+     */
+    create: XOR<WMProgramCreateInput, WMProgramUncheckedCreateInput>
+    /**
+     * In case the WMProgram was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WMProgramUpdateInput, WMProgramUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WMProgram delete
+   */
+  export type WMProgramDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+    /**
+     * Filter which WMProgram to delete.
+     */
+    where: WMProgramWhereUniqueInput
+  }
+
+
+  /**
+   * WMProgram deleteMany
+   */
+  export type WMProgramDeleteManyArgs = {
+    /**
+     * Filter which WMPrograms to delete
+     */
+    where?: WMProgramWhereInput
+  }
+
+
+  /**
+   * WMProgram.equippingWMs
+   */
+  export type WMProgram$equippingWMsArgs = {
+    /**
+     * Select specific fields to fetch from the WashingMachine
+     */
+    select?: WashingMachineSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WashingMachineInclude | null
+    where?: WashingMachineWhereInput
+    orderBy?: Enumerable<WashingMachineOrderByWithRelationInput>
+    cursor?: WashingMachineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<WashingMachineScalarFieldEnum>
+  }
+
+
+  /**
+   * WMProgram.usageRecords
+   */
+  export type WMProgram$usageRecordsArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    where?: UsageRecordWhereInput
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    cursor?: UsageRecordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * WMProgram without action
+   */
+  export type WMProgramArgs = {
+    /**
+     * Select specific fields to fetch from the WMProgram
+     */
+    select?: WMProgramSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMProgramInclude | null
+  }
+
+
+
+  /**
+   * Model WMMaintenanceRecord
+   */
+
+
+  export type AggregateWMMaintenanceRecord = {
+    _count: WMMaintenanceRecordCountAggregateOutputType | null
+    _avg: WMMaintenanceRecordAvgAggregateOutputType | null
+    _sum: WMMaintenanceRecordSumAggregateOutputType | null
+    _min: WMMaintenanceRecordMinAggregateOutputType | null
+    _max: WMMaintenanceRecordMaxAggregateOutputType | null
+  }
+
+  export type WMMaintenanceRecordAvgAggregateOutputType = {
+    id: number | null
+    washingMachineId: number | null
+    level: number | null
+    binWashUserId: number | null
+  }
+
+  export type WMMaintenanceRecordSumAggregateOutputType = {
+    id: number | null
+    washingMachineId: number | null
+    level: number | null
+    binWashUserId: number | null
+  }
+
+  export type WMMaintenanceRecordMinAggregateOutputType = {
+    id: number | null
+    washingMachineId: number | null
+    maintenanceDateTime: Date | null
+    level: number | null
+    details: string | null
+    binWashUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WMMaintenanceRecordMaxAggregateOutputType = {
+    id: number | null
+    washingMachineId: number | null
+    maintenanceDateTime: Date | null
+    level: number | null
+    details: string | null
+    binWashUserId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WMMaintenanceRecordCountAggregateOutputType = {
+    id: number
+    washingMachineId: number
+    maintenanceDateTime: number
+    level: number
+    details: number
+    binWashUserId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WMMaintenanceRecordAvgAggregateInputType = {
+    id?: true
+    washingMachineId?: true
+    level?: true
+    binWashUserId?: true
+  }
+
+  export type WMMaintenanceRecordSumAggregateInputType = {
+    id?: true
+    washingMachineId?: true
+    level?: true
+    binWashUserId?: true
+  }
+
+  export type WMMaintenanceRecordMinAggregateInputType = {
+    id?: true
+    washingMachineId?: true
+    maintenanceDateTime?: true
+    level?: true
+    details?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WMMaintenanceRecordMaxAggregateInputType = {
+    id?: true
+    washingMachineId?: true
+    maintenanceDateTime?: true
+    level?: true
+    details?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WMMaintenanceRecordCountAggregateInputType = {
+    id?: true
+    washingMachineId?: true
+    maintenanceDateTime?: true
+    level?: true
+    details?: true
+    binWashUserId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WMMaintenanceRecordAggregateArgs = {
+    /**
+     * Filter which WMMaintenanceRecord to aggregate.
+     */
+    where?: WMMaintenanceRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMMaintenanceRecords to fetch.
+     */
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMMaintenanceRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMMaintenanceRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WMMaintenanceRecords
+    **/
+    _count?: true | WMMaintenanceRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WMMaintenanceRecordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WMMaintenanceRecordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WMMaintenanceRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WMMaintenanceRecordMaxAggregateInputType
+  }
+
+  export type GetWMMaintenanceRecordAggregateType<T extends WMMaintenanceRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateWMMaintenanceRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWMMaintenanceRecord[P]>
+      : GetScalarType<T[P], AggregateWMMaintenanceRecord[P]>
+  }
+
+
+
+
+  export type WMMaintenanceRecordGroupByArgs = {
+    where?: WMMaintenanceRecordWhereInput
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithAggregationInput>
+    by: WMMaintenanceRecordScalarFieldEnum[]
+    having?: WMMaintenanceRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WMMaintenanceRecordCountAggregateInputType | true
+    _avg?: WMMaintenanceRecordAvgAggregateInputType
+    _sum?: WMMaintenanceRecordSumAggregateInputType
+    _min?: WMMaintenanceRecordMinAggregateInputType
+    _max?: WMMaintenanceRecordMaxAggregateInputType
+  }
+
+
+  export type WMMaintenanceRecordGroupByOutputType = {
+    id: number
+    washingMachineId: number
+    maintenanceDateTime: Date
+    level: number
+    details: string
+    binWashUserId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WMMaintenanceRecordCountAggregateOutputType | null
+    _avg: WMMaintenanceRecordAvgAggregateOutputType | null
+    _sum: WMMaintenanceRecordSumAggregateOutputType | null
+    _min: WMMaintenanceRecordMinAggregateOutputType | null
+    _max: WMMaintenanceRecordMaxAggregateOutputType | null
+  }
+
+  type GetWMMaintenanceRecordGroupByPayload<T extends WMMaintenanceRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<WMMaintenanceRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WMMaintenanceRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WMMaintenanceRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], WMMaintenanceRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WMMaintenanceRecordSelect = {
+    id?: boolean
+    maintainedWM?: boolean | WashingMachineArgs
+    washingMachineId?: boolean
+    maintenanceDateTime?: boolean
+    level?: boolean
+    details?: boolean
+    maintainer?: boolean | BinWashUserArgs
+    binWashUserId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type WMMaintenanceRecordInclude = {
+    maintainedWM?: boolean | WashingMachineArgs
+    maintainer?: boolean | BinWashUserArgs
+  }
+
+  export type WMMaintenanceRecordGetPayload<S extends boolean | null | undefined | WMMaintenanceRecordArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? WMMaintenanceRecord :
+    S extends undefined ? never :
+    S extends { include: any } & (WMMaintenanceRecordArgs | WMMaintenanceRecordFindManyArgs)
+    ? WMMaintenanceRecord  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'maintainedWM' ? WashingMachineGetPayload<S['include'][P]> :
+        P extends 'maintainer' ? BinWashUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (WMMaintenanceRecordArgs | WMMaintenanceRecordFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'maintainedWM' ? WashingMachineGetPayload<S['select'][P]> :
+        P extends 'maintainer' ? BinWashUserGetPayload<S['select'][P]> :  P extends keyof WMMaintenanceRecord ? WMMaintenanceRecord[P] : never
+  } 
+      : WMMaintenanceRecord
+
+
+  type WMMaintenanceRecordCountArgs = 
+    Omit<WMMaintenanceRecordFindManyArgs, 'select' | 'include'> & {
+      select?: WMMaintenanceRecordCountAggregateInputType | true
+    }
+
+  export interface WMMaintenanceRecordDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one WMMaintenanceRecord that matches the filter.
+     * @param {WMMaintenanceRecordFindUniqueArgs} args - Arguments to find a WMMaintenanceRecord
+     * @example
+     * // Get one WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends WMMaintenanceRecordFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, WMMaintenanceRecordFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'WMMaintenanceRecord'> extends True ? Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>> : Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T> | null, null>
+
+    /**
+     * Find one WMMaintenanceRecord that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {WMMaintenanceRecordFindUniqueOrThrowArgs} args - Arguments to find a WMMaintenanceRecord
+     * @example
+     * // Get one WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends WMMaintenanceRecordFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, WMMaintenanceRecordFindUniqueOrThrowArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Find the first WMMaintenanceRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordFindFirstArgs} args - Arguments to find a WMMaintenanceRecord
+     * @example
+     * // Get one WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends WMMaintenanceRecordFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, WMMaintenanceRecordFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'WMMaintenanceRecord'> extends True ? Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>> : Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T> | null, null>
+
+    /**
+     * Find the first WMMaintenanceRecord that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordFindFirstOrThrowArgs} args - Arguments to find a WMMaintenanceRecord
+     * @example
+     * // Get one WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends WMMaintenanceRecordFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, WMMaintenanceRecordFindFirstOrThrowArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Find zero or more WMMaintenanceRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WMMaintenanceRecords
+     * const wMMaintenanceRecords = await prisma.wMMaintenanceRecord.findMany()
+     * 
+     * // Get first 10 WMMaintenanceRecords
+     * const wMMaintenanceRecords = await prisma.wMMaintenanceRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wMMaintenanceRecordWithIdOnly = await prisma.wMMaintenanceRecord.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends WMMaintenanceRecordFindManyArgs>(
+      args?: SelectSubset<T, WMMaintenanceRecordFindManyArgs>
+    ): Prisma.PrismaPromise<Array<WMMaintenanceRecordGetPayload<T>>>
+
+    /**
+     * Create a WMMaintenanceRecord.
+     * @param {WMMaintenanceRecordCreateArgs} args - Arguments to create a WMMaintenanceRecord.
+     * @example
+     * // Create one WMMaintenanceRecord
+     * const WMMaintenanceRecord = await prisma.wMMaintenanceRecord.create({
+     *   data: {
+     *     // ... data to create a WMMaintenanceRecord
+     *   }
+     * })
+     * 
+    **/
+    create<T extends WMMaintenanceRecordCreateArgs>(
+      args: SelectSubset<T, WMMaintenanceRecordCreateArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Create many WMMaintenanceRecords.
+     *     @param {WMMaintenanceRecordCreateManyArgs} args - Arguments to create many WMMaintenanceRecords.
+     *     @example
+     *     // Create many WMMaintenanceRecords
+     *     const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends WMMaintenanceRecordCreateManyArgs>(
+      args?: SelectSubset<T, WMMaintenanceRecordCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a WMMaintenanceRecord.
+     * @param {WMMaintenanceRecordDeleteArgs} args - Arguments to delete one WMMaintenanceRecord.
+     * @example
+     * // Delete one WMMaintenanceRecord
+     * const WMMaintenanceRecord = await prisma.wMMaintenanceRecord.delete({
+     *   where: {
+     *     // ... filter to delete one WMMaintenanceRecord
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends WMMaintenanceRecordDeleteArgs>(
+      args: SelectSubset<T, WMMaintenanceRecordDeleteArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Update one WMMaintenanceRecord.
+     * @param {WMMaintenanceRecordUpdateArgs} args - Arguments to update one WMMaintenanceRecord.
+     * @example
+     * // Update one WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends WMMaintenanceRecordUpdateArgs>(
+      args: SelectSubset<T, WMMaintenanceRecordUpdateArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Delete zero or more WMMaintenanceRecords.
+     * @param {WMMaintenanceRecordDeleteManyArgs} args - Arguments to filter WMMaintenanceRecords to delete.
+     * @example
+     * // Delete a few WMMaintenanceRecords
+     * const { count } = await prisma.wMMaintenanceRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends WMMaintenanceRecordDeleteManyArgs>(
+      args?: SelectSubset<T, WMMaintenanceRecordDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WMMaintenanceRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WMMaintenanceRecords
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends WMMaintenanceRecordUpdateManyArgs>(
+      args: SelectSubset<T, WMMaintenanceRecordUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one WMMaintenanceRecord.
+     * @param {WMMaintenanceRecordUpsertArgs} args - Arguments to update or create a WMMaintenanceRecord.
+     * @example
+     * // Update or create a WMMaintenanceRecord
+     * const wMMaintenanceRecord = await prisma.wMMaintenanceRecord.upsert({
+     *   create: {
+     *     // ... data to create a WMMaintenanceRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WMMaintenanceRecord we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends WMMaintenanceRecordUpsertArgs>(
+      args: SelectSubset<T, WMMaintenanceRecordUpsertArgs>
+    ): Prisma__WMMaintenanceRecordClient<WMMaintenanceRecordGetPayload<T>>
+
+    /**
+     * Count the number of WMMaintenanceRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordCountArgs} args - Arguments to filter WMMaintenanceRecords to count.
+     * @example
+     * // Count the number of WMMaintenanceRecords
+     * const count = await prisma.wMMaintenanceRecord.count({
+     *   where: {
+     *     // ... the filter for the WMMaintenanceRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends WMMaintenanceRecordCountArgs>(
+      args?: Subset<T, WMMaintenanceRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WMMaintenanceRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WMMaintenanceRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WMMaintenanceRecordAggregateArgs>(args: Subset<T, WMMaintenanceRecordAggregateArgs>): Prisma.PrismaPromise<GetWMMaintenanceRecordAggregateType<T>>
+
+    /**
+     * Group by WMMaintenanceRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WMMaintenanceRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WMMaintenanceRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WMMaintenanceRecordGroupByArgs['orderBy'] }
+        : { orderBy?: WMMaintenanceRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WMMaintenanceRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWMMaintenanceRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WMMaintenanceRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__WMMaintenanceRecordClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    maintainedWM<T extends WashingMachineArgs= {}>(args?: Subset<T, WashingMachineArgs>): Prisma__WashingMachineClient<WashingMachineGetPayload<T> | Null>;
+
+    maintainer<T extends BinWashUserArgs= {}>(args?: Subset<T, BinWashUserArgs>): Prisma__BinWashUserClient<BinWashUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * WMMaintenanceRecord base type for findUnique actions
+   */
+  export type WMMaintenanceRecordFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter, which WMMaintenanceRecord to fetch.
+     */
+    where: WMMaintenanceRecordWhereUniqueInput
+  }
+
+  /**
+   * WMMaintenanceRecord findUnique
+   */
+  export interface WMMaintenanceRecordFindUniqueArgs extends WMMaintenanceRecordFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WMMaintenanceRecord findUniqueOrThrow
+   */
+  export type WMMaintenanceRecordFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter, which WMMaintenanceRecord to fetch.
+     */
+    where: WMMaintenanceRecordWhereUniqueInput
+  }
+
+
+  /**
+   * WMMaintenanceRecord base type for findFirst actions
+   */
+  export type WMMaintenanceRecordFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter, which WMMaintenanceRecord to fetch.
+     */
+    where?: WMMaintenanceRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMMaintenanceRecords to fetch.
+     */
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WMMaintenanceRecords.
+     */
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMMaintenanceRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMMaintenanceRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WMMaintenanceRecords.
+     */
+    distinct?: Enumerable<WMMaintenanceRecordScalarFieldEnum>
+  }
+
+  /**
+   * WMMaintenanceRecord findFirst
+   */
+  export interface WMMaintenanceRecordFindFirstArgs extends WMMaintenanceRecordFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * WMMaintenanceRecord findFirstOrThrow
+   */
+  export type WMMaintenanceRecordFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter, which WMMaintenanceRecord to fetch.
+     */
+    where?: WMMaintenanceRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMMaintenanceRecords to fetch.
+     */
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WMMaintenanceRecords.
+     */
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMMaintenanceRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMMaintenanceRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WMMaintenanceRecords.
+     */
+    distinct?: Enumerable<WMMaintenanceRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * WMMaintenanceRecord findMany
+   */
+  export type WMMaintenanceRecordFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter, which WMMaintenanceRecords to fetch.
+     */
+    where?: WMMaintenanceRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WMMaintenanceRecords to fetch.
+     */
+    orderBy?: Enumerable<WMMaintenanceRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WMMaintenanceRecords.
+     */
+    cursor?: WMMaintenanceRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WMMaintenanceRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WMMaintenanceRecords.
+     */
+    skip?: number
+    distinct?: Enumerable<WMMaintenanceRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * WMMaintenanceRecord create
+   */
+  export type WMMaintenanceRecordCreateArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * The data needed to create a WMMaintenanceRecord.
+     */
+    data: XOR<WMMaintenanceRecordCreateInput, WMMaintenanceRecordUncheckedCreateInput>
+  }
+
+
+  /**
+   * WMMaintenanceRecord createMany
+   */
+  export type WMMaintenanceRecordCreateManyArgs = {
+    /**
+     * The data used to create many WMMaintenanceRecords.
+     */
+    data: Enumerable<WMMaintenanceRecordCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * WMMaintenanceRecord update
+   */
+  export type WMMaintenanceRecordUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * The data needed to update a WMMaintenanceRecord.
+     */
+    data: XOR<WMMaintenanceRecordUpdateInput, WMMaintenanceRecordUncheckedUpdateInput>
+    /**
+     * Choose, which WMMaintenanceRecord to update.
+     */
+    where: WMMaintenanceRecordWhereUniqueInput
+  }
+
+
+  /**
+   * WMMaintenanceRecord updateMany
+   */
+  export type WMMaintenanceRecordUpdateManyArgs = {
+    /**
+     * The data used to update WMMaintenanceRecords.
+     */
+    data: XOR<WMMaintenanceRecordUpdateManyMutationInput, WMMaintenanceRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which WMMaintenanceRecords to update
+     */
+    where?: WMMaintenanceRecordWhereInput
+  }
+
+
+  /**
+   * WMMaintenanceRecord upsert
+   */
+  export type WMMaintenanceRecordUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * The filter to search for the WMMaintenanceRecord to update in case it exists.
+     */
+    where: WMMaintenanceRecordWhereUniqueInput
+    /**
+     * In case the WMMaintenanceRecord found by the `where` argument doesn't exist, create a new WMMaintenanceRecord with this data.
+     */
+    create: XOR<WMMaintenanceRecordCreateInput, WMMaintenanceRecordUncheckedCreateInput>
+    /**
+     * In case the WMMaintenanceRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WMMaintenanceRecordUpdateInput, WMMaintenanceRecordUncheckedUpdateInput>
+  }
+
+
+  /**
+   * WMMaintenanceRecord delete
+   */
+  export type WMMaintenanceRecordDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+    /**
+     * Filter which WMMaintenanceRecord to delete.
+     */
+    where: WMMaintenanceRecordWhereUniqueInput
+  }
+
+
+  /**
+   * WMMaintenanceRecord deleteMany
+   */
+  export type WMMaintenanceRecordDeleteManyArgs = {
+    /**
+     * Filter which WMMaintenanceRecords to delete
+     */
+    where?: WMMaintenanceRecordWhereInput
+  }
+
+
+  /**
+   * WMMaintenanceRecord without action
+   */
+  export type WMMaintenanceRecordArgs = {
+    /**
+     * Select specific fields to fetch from the WMMaintenanceRecord
+     */
+    select?: WMMaintenanceRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: WMMaintenanceRecordInclude | null
+  }
+
+
+
+  /**
+   * Model UsageRecord
+   */
+
+
+  export type AggregateUsageRecord = {
+    _count: UsageRecordCountAggregateOutputType | null
+    _avg: UsageRecordAvgAggregateOutputType | null
+    _sum: UsageRecordSumAggregateOutputType | null
+    _min: UsageRecordMinAggregateOutputType | null
+    _max: UsageRecordMaxAggregateOutputType | null
+  }
+
+  export type UsageRecordAvgAggregateOutputType = {
+    id: number | null
+    binWashUserId: number | null
+    washingMachineId: number | null
+    wMProgramId: number | null
+    price: number | null
+  }
+
+  export type UsageRecordSumAggregateOutputType = {
+    id: number | null
+    binWashUserId: number | null
+    washingMachineId: number | null
+    wMProgramId: number | null
+    price: number | null
+  }
+
+  export type UsageRecordMinAggregateOutputType = {
+    id: number | null
+    dateTime: Date | null
+    binWashUserId: number | null
+    washingMachineId: number | null
+    wMProgramId: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UsageRecordMaxAggregateOutputType = {
+    id: number | null
+    dateTime: Date | null
+    binWashUserId: number | null
+    washingMachineId: number | null
+    wMProgramId: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UsageRecordCountAggregateOutputType = {
+    id: number
+    dateTime: number
+    binWashUserId: number
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UsageRecordAvgAggregateInputType = {
+    id?: true
+    binWashUserId?: true
+    washingMachineId?: true
+    wMProgramId?: true
+    price?: true
+  }
+
+  export type UsageRecordSumAggregateInputType = {
+    id?: true
+    binWashUserId?: true
+    washingMachineId?: true
+    wMProgramId?: true
+    price?: true
+  }
+
+  export type UsageRecordMinAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    washingMachineId?: true
+    wMProgramId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UsageRecordMaxAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    washingMachineId?: true
+    wMProgramId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UsageRecordCountAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    washingMachineId?: true
+    wMProgramId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UsageRecordAggregateArgs = {
+    /**
+     * Filter which UsageRecord to aggregate.
+     */
+    where?: UsageRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageRecords to fetch.
+     */
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UsageRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UsageRecords
+    **/
+    _count?: true | UsageRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UsageRecordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UsageRecordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UsageRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UsageRecordMaxAggregateInputType
+  }
+
+  export type GetUsageRecordAggregateType<T extends UsageRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateUsageRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUsageRecord[P]>
+      : GetScalarType<T[P], AggregateUsageRecord[P]>
+  }
+
+
+
+
+  export type UsageRecordGroupByArgs = {
+    where?: UsageRecordWhereInput
+    orderBy?: Enumerable<UsageRecordOrderByWithAggregationInput>
+    by: UsageRecordScalarFieldEnum[]
+    having?: UsageRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UsageRecordCountAggregateInputType | true
+    _avg?: UsageRecordAvgAggregateInputType
+    _sum?: UsageRecordSumAggregateInputType
+    _min?: UsageRecordMinAggregateInputType
+    _max?: UsageRecordMaxAggregateInputType
+  }
+
+
+  export type UsageRecordGroupByOutputType = {
+    id: number
+    dateTime: Date
+    binWashUserId: number
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt: Date
+    updatedAt: Date
+    _count: UsageRecordCountAggregateOutputType | null
+    _avg: UsageRecordAvgAggregateOutputType | null
+    _sum: UsageRecordSumAggregateOutputType | null
+    _min: UsageRecordMinAggregateOutputType | null
+    _max: UsageRecordMaxAggregateOutputType | null
+  }
+
+  type GetUsageRecordGroupByPayload<T extends UsageRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UsageRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UsageRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UsageRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], UsageRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UsageRecordSelect = {
+    id?: boolean
+    dateTime?: boolean
+    user?: boolean | BinWashUserArgs
+    binWashUserId?: boolean
+    washingMachine?: boolean | WashingMachineArgs
+    washingMachineId?: boolean
+    program?: boolean | WMProgramArgs
+    wMProgramId?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type UsageRecordInclude = {
+    user?: boolean | BinWashUserArgs
+    washingMachine?: boolean | WashingMachineArgs
+    program?: boolean | WMProgramArgs
+  }
+
+  export type UsageRecordGetPayload<S extends boolean | null | undefined | UsageRecordArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UsageRecord :
+    S extends undefined ? never :
+    S extends { include: any } & (UsageRecordArgs | UsageRecordFindManyArgs)
+    ? UsageRecord  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? BinWashUserGetPayload<S['include'][P]> :
+        P extends 'washingMachine' ? WashingMachineGetPayload<S['include'][P]> :
+        P extends 'program' ? WMProgramGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UsageRecordArgs | UsageRecordFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? BinWashUserGetPayload<S['select'][P]> :
+        P extends 'washingMachine' ? WashingMachineGetPayload<S['select'][P]> :
+        P extends 'program' ? WMProgramGetPayload<S['select'][P]> :  P extends keyof UsageRecord ? UsageRecord[P] : never
+  } 
+      : UsageRecord
+
+
+  type UsageRecordCountArgs = 
+    Omit<UsageRecordFindManyArgs, 'select' | 'include'> & {
+      select?: UsageRecordCountAggregateInputType | true
+    }
+
+  export interface UsageRecordDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one UsageRecord that matches the filter.
+     * @param {UsageRecordFindUniqueArgs} args - Arguments to find a UsageRecord
+     * @example
+     * // Get one UsageRecord
+     * const usageRecord = await prisma.usageRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UsageRecordFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UsageRecordFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UsageRecord'> extends True ? Prisma__UsageRecordClient<UsageRecordGetPayload<T>> : Prisma__UsageRecordClient<UsageRecordGetPayload<T> | null, null>
+
+    /**
+     * Find one UsageRecord that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UsageRecordFindUniqueOrThrowArgs} args - Arguments to find a UsageRecord
+     * @example
+     * // Get one UsageRecord
+     * const usageRecord = await prisma.usageRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UsageRecordFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UsageRecordFindUniqueOrThrowArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Find the first UsageRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordFindFirstArgs} args - Arguments to find a UsageRecord
+     * @example
+     * // Get one UsageRecord
+     * const usageRecord = await prisma.usageRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UsageRecordFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UsageRecordFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UsageRecord'> extends True ? Prisma__UsageRecordClient<UsageRecordGetPayload<T>> : Prisma__UsageRecordClient<UsageRecordGetPayload<T> | null, null>
+
+    /**
+     * Find the first UsageRecord that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordFindFirstOrThrowArgs} args - Arguments to find a UsageRecord
+     * @example
+     * // Get one UsageRecord
+     * const usageRecord = await prisma.usageRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UsageRecordFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UsageRecordFindFirstOrThrowArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Find zero or more UsageRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UsageRecords
+     * const usageRecords = await prisma.usageRecord.findMany()
+     * 
+     * // Get first 10 UsageRecords
+     * const usageRecords = await prisma.usageRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const usageRecordWithIdOnly = await prisma.usageRecord.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UsageRecordFindManyArgs>(
+      args?: SelectSubset<T, UsageRecordFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UsageRecordGetPayload<T>>>
+
+    /**
+     * Create a UsageRecord.
+     * @param {UsageRecordCreateArgs} args - Arguments to create a UsageRecord.
+     * @example
+     * // Create one UsageRecord
+     * const UsageRecord = await prisma.usageRecord.create({
+     *   data: {
+     *     // ... data to create a UsageRecord
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UsageRecordCreateArgs>(
+      args: SelectSubset<T, UsageRecordCreateArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Create many UsageRecords.
+     *     @param {UsageRecordCreateManyArgs} args - Arguments to create many UsageRecords.
+     *     @example
+     *     // Create many UsageRecords
+     *     const usageRecord = await prisma.usageRecord.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UsageRecordCreateManyArgs>(
+      args?: SelectSubset<T, UsageRecordCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UsageRecord.
+     * @param {UsageRecordDeleteArgs} args - Arguments to delete one UsageRecord.
+     * @example
+     * // Delete one UsageRecord
+     * const UsageRecord = await prisma.usageRecord.delete({
+     *   where: {
+     *     // ... filter to delete one UsageRecord
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UsageRecordDeleteArgs>(
+      args: SelectSubset<T, UsageRecordDeleteArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Update one UsageRecord.
+     * @param {UsageRecordUpdateArgs} args - Arguments to update one UsageRecord.
+     * @example
+     * // Update one UsageRecord
+     * const usageRecord = await prisma.usageRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UsageRecordUpdateArgs>(
+      args: SelectSubset<T, UsageRecordUpdateArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Delete zero or more UsageRecords.
+     * @param {UsageRecordDeleteManyArgs} args - Arguments to filter UsageRecords to delete.
+     * @example
+     * // Delete a few UsageRecords
+     * const { count } = await prisma.usageRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UsageRecordDeleteManyArgs>(
+      args?: SelectSubset<T, UsageRecordDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UsageRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UsageRecords
+     * const usageRecord = await prisma.usageRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UsageRecordUpdateManyArgs>(
+      args: SelectSubset<T, UsageRecordUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UsageRecord.
+     * @param {UsageRecordUpsertArgs} args - Arguments to update or create a UsageRecord.
+     * @example
+     * // Update or create a UsageRecord
+     * const usageRecord = await prisma.usageRecord.upsert({
+     *   create: {
+     *     // ... data to create a UsageRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UsageRecord we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UsageRecordUpsertArgs>(
+      args: SelectSubset<T, UsageRecordUpsertArgs>
+    ): Prisma__UsageRecordClient<UsageRecordGetPayload<T>>
+
+    /**
+     * Count the number of UsageRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordCountArgs} args - Arguments to filter UsageRecords to count.
+     * @example
+     * // Count the number of UsageRecords
+     * const count = await prisma.usageRecord.count({
+     *   where: {
+     *     // ... the filter for the UsageRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends UsageRecordCountArgs>(
+      args?: Subset<T, UsageRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UsageRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UsageRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UsageRecordAggregateArgs>(args: Subset<T, UsageRecordAggregateArgs>): Prisma.PrismaPromise<GetUsageRecordAggregateType<T>>
+
+    /**
+     * Group by UsageRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UsageRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UsageRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UsageRecordGroupByArgs['orderBy'] }
+        : { orderBy?: UsageRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UsageRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUsageRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UsageRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UsageRecordClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends BinWashUserArgs= {}>(args?: Subset<T, BinWashUserArgs>): Prisma__BinWashUserClient<BinWashUserGetPayload<T> | Null>;
+
+    washingMachine<T extends WashingMachineArgs= {}>(args?: Subset<T, WashingMachineArgs>): Prisma__WashingMachineClient<WashingMachineGetPayload<T> | Null>;
+
+    program<T extends WMProgramArgs= {}>(args?: Subset<T, WMProgramArgs>): Prisma__WMProgramClient<WMProgramGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UsageRecord base type for findUnique actions
+   */
+  export type UsageRecordFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter, which UsageRecord to fetch.
+     */
+    where: UsageRecordWhereUniqueInput
+  }
+
+  /**
+   * UsageRecord findUnique
+   */
+  export interface UsageRecordFindUniqueArgs extends UsageRecordFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UsageRecord findUniqueOrThrow
+   */
+  export type UsageRecordFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter, which UsageRecord to fetch.
+     */
+    where: UsageRecordWhereUniqueInput
+  }
+
+
+  /**
+   * UsageRecord base type for findFirst actions
+   */
+  export type UsageRecordFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter, which UsageRecord to fetch.
+     */
+    where?: UsageRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageRecords to fetch.
+     */
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsageRecords.
+     */
+    cursor?: UsageRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsageRecords.
+     */
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+  /**
+   * UsageRecord findFirst
+   */
+  export interface UsageRecordFindFirstArgs extends UsageRecordFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UsageRecord findFirstOrThrow
+   */
+  export type UsageRecordFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter, which UsageRecord to fetch.
+     */
+    where?: UsageRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageRecords to fetch.
+     */
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UsageRecords.
+     */
+    cursor?: UsageRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UsageRecords.
+     */
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * UsageRecord findMany
+   */
+  export type UsageRecordFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter, which UsageRecords to fetch.
+     */
+    where?: UsageRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UsageRecords to fetch.
+     */
+    orderBy?: Enumerable<UsageRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UsageRecords.
+     */
+    cursor?: UsageRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UsageRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UsageRecords.
+     */
+    skip?: number
+    distinct?: Enumerable<UsageRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * UsageRecord create
+   */
+  export type UsageRecordCreateArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * The data needed to create a UsageRecord.
+     */
+    data: XOR<UsageRecordCreateInput, UsageRecordUncheckedCreateInput>
+  }
+
+
+  /**
+   * UsageRecord createMany
+   */
+  export type UsageRecordCreateManyArgs = {
+    /**
+     * The data used to create many UsageRecords.
+     */
+    data: Enumerable<UsageRecordCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * UsageRecord update
+   */
+  export type UsageRecordUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * The data needed to update a UsageRecord.
+     */
+    data: XOR<UsageRecordUpdateInput, UsageRecordUncheckedUpdateInput>
+    /**
+     * Choose, which UsageRecord to update.
+     */
+    where: UsageRecordWhereUniqueInput
+  }
+
+
+  /**
+   * UsageRecord updateMany
+   */
+  export type UsageRecordUpdateManyArgs = {
+    /**
+     * The data used to update UsageRecords.
+     */
+    data: XOR<UsageRecordUpdateManyMutationInput, UsageRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which UsageRecords to update
+     */
+    where?: UsageRecordWhereInput
+  }
+
+
+  /**
+   * UsageRecord upsert
+   */
+  export type UsageRecordUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * The filter to search for the UsageRecord to update in case it exists.
+     */
+    where: UsageRecordWhereUniqueInput
+    /**
+     * In case the UsageRecord found by the `where` argument doesn't exist, create a new UsageRecord with this data.
+     */
+    create: XOR<UsageRecordCreateInput, UsageRecordUncheckedCreateInput>
+    /**
+     * In case the UsageRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UsageRecordUpdateInput, UsageRecordUncheckedUpdateInput>
+  }
+
+
+  /**
+   * UsageRecord delete
+   */
+  export type UsageRecordDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+    /**
+     * Filter which UsageRecord to delete.
+     */
+    where: UsageRecordWhereUniqueInput
+  }
+
+
+  /**
+   * UsageRecord deleteMany
+   */
+  export type UsageRecordDeleteManyArgs = {
+    /**
+     * Filter which UsageRecords to delete
+     */
+    where?: UsageRecordWhereInput
+  }
+
+
+  /**
+   * UsageRecord without action
+   */
+  export type UsageRecordArgs = {
+    /**
+     * Select specific fields to fetch from the UsageRecord
+     */
+    select?: UsageRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UsageRecordInclude | null
+  }
+
+
+
+  /**
+   * Model TopUpRecord
+   */
+
+
+  export type AggregateTopUpRecord = {
+    _count: TopUpRecordCountAggregateOutputType | null
+    _avg: TopUpRecordAvgAggregateOutputType | null
+    _sum: TopUpRecordSumAggregateOutputType | null
+    _min: TopUpRecordMinAggregateOutputType | null
+    _max: TopUpRecordMaxAggregateOutputType | null
+  }
+
+  export type TopUpRecordAvgAggregateOutputType = {
+    id: number | null
+    binWashUserId: number | null
+    price: number | null
+  }
+
+  export type TopUpRecordSumAggregateOutputType = {
+    id: number | null
+    binWashUserId: number | null
+    price: number | null
+  }
+
+  export type TopUpRecordMinAggregateOutputType = {
+    id: number | null
+    dateTime: Date | null
+    binWashUserId: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TopUpRecordMaxAggregateOutputType = {
+    id: number | null
+    dateTime: Date | null
+    binWashUserId: number | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TopUpRecordCountAggregateOutputType = {
+    id: number
+    dateTime: number
+    binWashUserId: number
+    price: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TopUpRecordAvgAggregateInputType = {
+    id?: true
+    binWashUserId?: true
+    price?: true
+  }
+
+  export type TopUpRecordSumAggregateInputType = {
+    id?: true
+    binWashUserId?: true
+    price?: true
+  }
+
+  export type TopUpRecordMinAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TopUpRecordMaxAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TopUpRecordCountAggregateInputType = {
+    id?: true
+    dateTime?: true
+    binWashUserId?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TopUpRecordAggregateArgs = {
+    /**
+     * Filter which TopUpRecord to aggregate.
+     */
+    where?: TopUpRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TopUpRecords to fetch.
+     */
+    orderBy?: Enumerable<TopUpRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TopUpRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TopUpRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TopUpRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TopUpRecords
+    **/
+    _count?: true | TopUpRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TopUpRecordAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TopUpRecordSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TopUpRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TopUpRecordMaxAggregateInputType
+  }
+
+  export type GetTopUpRecordAggregateType<T extends TopUpRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateTopUpRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTopUpRecord[P]>
+      : GetScalarType<T[P], AggregateTopUpRecord[P]>
+  }
+
+
+
+
+  export type TopUpRecordGroupByArgs = {
+    where?: TopUpRecordWhereInput
+    orderBy?: Enumerable<TopUpRecordOrderByWithAggregationInput>
+    by: TopUpRecordScalarFieldEnum[]
+    having?: TopUpRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TopUpRecordCountAggregateInputType | true
+    _avg?: TopUpRecordAvgAggregateInputType
+    _sum?: TopUpRecordSumAggregateInputType
+    _min?: TopUpRecordMinAggregateInputType
+    _max?: TopUpRecordMaxAggregateInputType
+  }
+
+
+  export type TopUpRecordGroupByOutputType = {
+    id: number
+    dateTime: Date
+    binWashUserId: number
+    price: number
+    createdAt: Date
+    updatedAt: Date
+    _count: TopUpRecordCountAggregateOutputType | null
+    _avg: TopUpRecordAvgAggregateOutputType | null
+    _sum: TopUpRecordSumAggregateOutputType | null
+    _min: TopUpRecordMinAggregateOutputType | null
+    _max: TopUpRecordMaxAggregateOutputType | null
+  }
+
+  type GetTopUpRecordGroupByPayload<T extends TopUpRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TopUpRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TopUpRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TopUpRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], TopUpRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TopUpRecordSelect = {
+    id?: boolean
+    dateTime?: boolean
+    user?: boolean | BinWashUserArgs
+    binWashUserId?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type TopUpRecordInclude = {
+    user?: boolean | BinWashUserArgs
+  }
+
+  export type TopUpRecordGetPayload<S extends boolean | null | undefined | TopUpRecordArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TopUpRecord :
+    S extends undefined ? never :
+    S extends { include: any } & (TopUpRecordArgs | TopUpRecordFindManyArgs)
+    ? TopUpRecord  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? BinWashUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TopUpRecordArgs | TopUpRecordFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? BinWashUserGetPayload<S['select'][P]> :  P extends keyof TopUpRecord ? TopUpRecord[P] : never
+  } 
+      : TopUpRecord
+
+
+  type TopUpRecordCountArgs = 
+    Omit<TopUpRecordFindManyArgs, 'select' | 'include'> & {
+      select?: TopUpRecordCountAggregateInputType | true
+    }
+
+  export interface TopUpRecordDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one TopUpRecord that matches the filter.
+     * @param {TopUpRecordFindUniqueArgs} args - Arguments to find a TopUpRecord
+     * @example
+     * // Get one TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TopUpRecordFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TopUpRecordFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TopUpRecord'> extends True ? Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>> : Prisma__TopUpRecordClient<TopUpRecordGetPayload<T> | null, null>
+
+    /**
+     * Find one TopUpRecord that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TopUpRecordFindUniqueOrThrowArgs} args - Arguments to find a TopUpRecord
+     * @example
+     * // Get one TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TopUpRecordFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TopUpRecordFindUniqueOrThrowArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Find the first TopUpRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordFindFirstArgs} args - Arguments to find a TopUpRecord
+     * @example
+     * // Get one TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TopUpRecordFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TopUpRecordFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TopUpRecord'> extends True ? Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>> : Prisma__TopUpRecordClient<TopUpRecordGetPayload<T> | null, null>
+
+    /**
+     * Find the first TopUpRecord that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordFindFirstOrThrowArgs} args - Arguments to find a TopUpRecord
+     * @example
+     * // Get one TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TopUpRecordFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TopUpRecordFindFirstOrThrowArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Find zero or more TopUpRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TopUpRecords
+     * const topUpRecords = await prisma.topUpRecord.findMany()
+     * 
+     * // Get first 10 TopUpRecords
+     * const topUpRecords = await prisma.topUpRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const topUpRecordWithIdOnly = await prisma.topUpRecord.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TopUpRecordFindManyArgs>(
+      args?: SelectSubset<T, TopUpRecordFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TopUpRecordGetPayload<T>>>
+
+    /**
+     * Create a TopUpRecord.
+     * @param {TopUpRecordCreateArgs} args - Arguments to create a TopUpRecord.
+     * @example
+     * // Create one TopUpRecord
+     * const TopUpRecord = await prisma.topUpRecord.create({
+     *   data: {
+     *     // ... data to create a TopUpRecord
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TopUpRecordCreateArgs>(
+      args: SelectSubset<T, TopUpRecordCreateArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Create many TopUpRecords.
+     *     @param {TopUpRecordCreateManyArgs} args - Arguments to create many TopUpRecords.
+     *     @example
+     *     // Create many TopUpRecords
+     *     const topUpRecord = await prisma.topUpRecord.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TopUpRecordCreateManyArgs>(
+      args?: SelectSubset<T, TopUpRecordCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TopUpRecord.
+     * @param {TopUpRecordDeleteArgs} args - Arguments to delete one TopUpRecord.
+     * @example
+     * // Delete one TopUpRecord
+     * const TopUpRecord = await prisma.topUpRecord.delete({
+     *   where: {
+     *     // ... filter to delete one TopUpRecord
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TopUpRecordDeleteArgs>(
+      args: SelectSubset<T, TopUpRecordDeleteArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Update one TopUpRecord.
+     * @param {TopUpRecordUpdateArgs} args - Arguments to update one TopUpRecord.
+     * @example
+     * // Update one TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TopUpRecordUpdateArgs>(
+      args: SelectSubset<T, TopUpRecordUpdateArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Delete zero or more TopUpRecords.
+     * @param {TopUpRecordDeleteManyArgs} args - Arguments to filter TopUpRecords to delete.
+     * @example
+     * // Delete a few TopUpRecords
+     * const { count } = await prisma.topUpRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TopUpRecordDeleteManyArgs>(
+      args?: SelectSubset<T, TopUpRecordDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TopUpRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TopUpRecords
+     * const topUpRecord = await prisma.topUpRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TopUpRecordUpdateManyArgs>(
+      args: SelectSubset<T, TopUpRecordUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TopUpRecord.
+     * @param {TopUpRecordUpsertArgs} args - Arguments to update or create a TopUpRecord.
+     * @example
+     * // Update or create a TopUpRecord
+     * const topUpRecord = await prisma.topUpRecord.upsert({
+     *   create: {
+     *     // ... data to create a TopUpRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TopUpRecord we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TopUpRecordUpsertArgs>(
+      args: SelectSubset<T, TopUpRecordUpsertArgs>
+    ): Prisma__TopUpRecordClient<TopUpRecordGetPayload<T>>
+
+    /**
+     * Count the number of TopUpRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordCountArgs} args - Arguments to filter TopUpRecords to count.
+     * @example
+     * // Count the number of TopUpRecords
+     * const count = await prisma.topUpRecord.count({
+     *   where: {
+     *     // ... the filter for the TopUpRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends TopUpRecordCountArgs>(
+      args?: Subset<T, TopUpRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TopUpRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TopUpRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TopUpRecordAggregateArgs>(args: Subset<T, TopUpRecordAggregateArgs>): Prisma.PrismaPromise<GetTopUpRecordAggregateType<T>>
+
+    /**
+     * Group by TopUpRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TopUpRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TopUpRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TopUpRecordGroupByArgs['orderBy'] }
+        : { orderBy?: TopUpRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TopUpRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTopUpRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TopUpRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TopUpRecordClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends BinWashUserArgs= {}>(args?: Subset<T, BinWashUserArgs>): Prisma__BinWashUserClient<BinWashUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TopUpRecord base type for findUnique actions
+   */
+  export type TopUpRecordFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter, which TopUpRecord to fetch.
+     */
+    where: TopUpRecordWhereUniqueInput
+  }
+
+  /**
+   * TopUpRecord findUnique
+   */
+  export interface TopUpRecordFindUniqueArgs extends TopUpRecordFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TopUpRecord findUniqueOrThrow
+   */
+  export type TopUpRecordFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter, which TopUpRecord to fetch.
+     */
+    where: TopUpRecordWhereUniqueInput
+  }
+
+
+  /**
+   * TopUpRecord base type for findFirst actions
+   */
+  export type TopUpRecordFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter, which TopUpRecord to fetch.
+     */
+    where?: TopUpRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TopUpRecords to fetch.
+     */
+    orderBy?: Enumerable<TopUpRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TopUpRecords.
+     */
+    cursor?: TopUpRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TopUpRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TopUpRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TopUpRecords.
+     */
+    distinct?: Enumerable<TopUpRecordScalarFieldEnum>
+  }
+
+  /**
+   * TopUpRecord findFirst
+   */
+  export interface TopUpRecordFindFirstArgs extends TopUpRecordFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TopUpRecord findFirstOrThrow
+   */
+  export type TopUpRecordFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter, which TopUpRecord to fetch.
+     */
+    where?: TopUpRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TopUpRecords to fetch.
+     */
+    orderBy?: Enumerable<TopUpRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TopUpRecords.
+     */
+    cursor?: TopUpRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TopUpRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TopUpRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TopUpRecords.
+     */
+    distinct?: Enumerable<TopUpRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * TopUpRecord findMany
+   */
+  export type TopUpRecordFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter, which TopUpRecords to fetch.
+     */
+    where?: TopUpRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TopUpRecords to fetch.
+     */
+    orderBy?: Enumerable<TopUpRecordOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TopUpRecords.
+     */
+    cursor?: TopUpRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TopUpRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TopUpRecords.
+     */
+    skip?: number
+    distinct?: Enumerable<TopUpRecordScalarFieldEnum>
+  }
+
+
+  /**
+   * TopUpRecord create
+   */
+  export type TopUpRecordCreateArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * The data needed to create a TopUpRecord.
+     */
+    data: XOR<TopUpRecordCreateInput, TopUpRecordUncheckedCreateInput>
+  }
+
+
+  /**
+   * TopUpRecord createMany
+   */
+  export type TopUpRecordCreateManyArgs = {
+    /**
+     * The data used to create many TopUpRecords.
+     */
+    data: Enumerable<TopUpRecordCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * TopUpRecord update
+   */
+  export type TopUpRecordUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * The data needed to update a TopUpRecord.
+     */
+    data: XOR<TopUpRecordUpdateInput, TopUpRecordUncheckedUpdateInput>
+    /**
+     * Choose, which TopUpRecord to update.
+     */
+    where: TopUpRecordWhereUniqueInput
+  }
+
+
+  /**
+   * TopUpRecord updateMany
+   */
+  export type TopUpRecordUpdateManyArgs = {
+    /**
+     * The data used to update TopUpRecords.
+     */
+    data: XOR<TopUpRecordUpdateManyMutationInput, TopUpRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which TopUpRecords to update
+     */
+    where?: TopUpRecordWhereInput
+  }
+
+
+  /**
+   * TopUpRecord upsert
+   */
+  export type TopUpRecordUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * The filter to search for the TopUpRecord to update in case it exists.
+     */
+    where: TopUpRecordWhereUniqueInput
+    /**
+     * In case the TopUpRecord found by the `where` argument doesn't exist, create a new TopUpRecord with this data.
+     */
+    create: XOR<TopUpRecordCreateInput, TopUpRecordUncheckedCreateInput>
+    /**
+     * In case the TopUpRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TopUpRecordUpdateInput, TopUpRecordUncheckedUpdateInput>
+  }
+
+
+  /**
+   * TopUpRecord delete
+   */
+  export type TopUpRecordDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
+    /**
+     * Filter which TopUpRecord to delete.
+     */
+    where: TopUpRecordWhereUniqueInput
+  }
+
+
+  /**
+   * TopUpRecord deleteMany
+   */
+  export type TopUpRecordDeleteManyArgs = {
+    /**
+     * Filter which TopUpRecords to delete
+     */
+    where?: TopUpRecordWhereInput
+  }
+
+
+  /**
+   * TopUpRecord without action
+   */
+  export type TopUpRecordArgs = {
+    /**
+     * Select specific fields to fetch from the TopUpRecord
+     */
+    select?: TopUpRecordSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TopUpRecordInclude | null
   }
 
 
@@ -28748,6 +36356,30 @@ export namespace Prisma {
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
+  export const BinWashUserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BinWashUserScalarFieldEnum = (typeof BinWashUserScalarFieldEnum)[keyof typeof BinWashUserScalarFieldEnum]
+
+
+  export const BranchScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    location: 'location',
+    telephoneNo: 'telephoneNo',
+    area: 'area',
+    binWashUserId: 'binWashUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
+
+
   export const CategoryScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -28968,6 +36600,18 @@ export namespace Prisma {
   export type TodoListScalarFieldEnum = (typeof TodoListScalarFieldEnum)[keyof typeof TodoListScalarFieldEnum]
 
 
+  export const TopUpRecordScalarFieldEnum: {
+    id: 'id',
+    dateTime: 'dateTime',
+    binWashUserId: 'binWashUserId',
+    price: 'price',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TopUpRecordScalarFieldEnum = (typeof TopUpRecordScalarFieldEnum)[keyof typeof TopUpRecordScalarFieldEnum]
+
+
   export const TransactionIsolationLevel: {
     ReadUncommitted: 'ReadUncommitted',
     ReadCommitted: 'ReadCommitted',
@@ -28988,6 +36632,20 @@ export namespace Prisma {
   };
 
   export type TweetScalarFieldEnum = (typeof TweetScalarFieldEnum)[keyof typeof TweetScalarFieldEnum]
+
+
+  export const UsageRecordScalarFieldEnum: {
+    id: 'id',
+    dateTime: 'dateTime',
+    binWashUserId: 'binWashUserId',
+    washingMachineId: 'washingMachineId',
+    wMProgramId: 'wMProgramId',
+    price: 'price',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UsageRecordScalarFieldEnum = (typeof UsageRecordScalarFieldEnum)[keyof typeof UsageRecordScalarFieldEnum]
 
 
   export const UserRelationScalarFieldEnum: {
@@ -29062,6 +36720,49 @@ export namespace Prisma {
   };
 
   export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
+
+
+  export const WMMaintenanceRecordScalarFieldEnum: {
+    id: 'id',
+    washingMachineId: 'washingMachineId',
+    maintenanceDateTime: 'maintenanceDateTime',
+    level: 'level',
+    details: 'details',
+    binWashUserId: 'binWashUserId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WMMaintenanceRecordScalarFieldEnum = (typeof WMMaintenanceRecordScalarFieldEnum)[keyof typeof WMMaintenanceRecordScalarFieldEnum]
+
+
+  export const WMProgramScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    maxCapacity: 'maxCapacity',
+    duration: 'duration',
+    price: 'price',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WMProgramScalarFieldEnum = (typeof WMProgramScalarFieldEnum)[keyof typeof WMProgramScalarFieldEnum]
+
+
+  export const WashingMachineScalarFieldEnum: {
+    id: 'id',
+    brand: 'brand',
+    model: 'model',
+    type: 'type',
+    capacity: 'capacity',
+    manufacturedYear: 'manufacturedYear',
+    warrantyEndDate: 'warrantyEndDate',
+    branchId: 'branchId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WashingMachineScalarFieldEnum = (typeof WashingMachineScalarFieldEnum)[keyof typeof WashingMachineScalarFieldEnum]
 
 
   export const YouTubeUserScalarFieldEnum: {
@@ -29489,6 +37190,435 @@ export namespace Prisma {
     OR?: Enumerable<RoundScalarWhereWithAggregatesInput>
     NOT?: Enumerable<RoundScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BinWashUserWhereInput = {
+    AND?: Enumerable<BinWashUserWhereInput>
+    OR?: Enumerable<BinWashUserWhereInput>
+    NOT?: Enumerable<BinWashUserWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    owningBranches?: BranchListRelationFilter
+    wMMaintenanceRecords?: WMMaintenanceRecordListRelationFilter
+    usageRecords?: UsageRecordListRelationFilter
+    topUpRecords?: TopUpRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BinWashUserOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    owningBranches?: BranchOrderByRelationAggregateInput
+    wMMaintenanceRecords?: WMMaintenanceRecordOrderByRelationAggregateInput
+    usageRecords?: UsageRecordOrderByRelationAggregateInput
+    topUpRecords?: TopUpRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BinWashUserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BinWashUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BinWashUserCountOrderByAggregateInput
+    _avg?: BinWashUserAvgOrderByAggregateInput
+    _max?: BinWashUserMaxOrderByAggregateInput
+    _min?: BinWashUserMinOrderByAggregateInput
+    _sum?: BinWashUserSumOrderByAggregateInput
+  }
+
+  export type BinWashUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BinWashUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BinWashUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BinWashUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type BranchWhereInput = {
+    AND?: Enumerable<BranchWhereInput>
+    OR?: Enumerable<BranchWhereInput>
+    NOT?: Enumerable<BranchWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    location?: StringFilter | string
+    telephoneNo?: StringFilter | string
+    area?: FloatFilter | number
+    branchOwner?: XOR<BinWashUserRelationFilter, BinWashUserWhereInput>
+    binWashUserId?: IntFilter | number
+    washingMachines?: WashingMachineListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BranchOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    telephoneNo?: SortOrder
+    area?: SortOrder
+    branchOwner?: BinWashUserOrderByWithRelationInput
+    binWashUserId?: SortOrder
+    washingMachines?: WashingMachineOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchWhereUniqueInput = {
+    id?: number
+  }
+
+  export type BranchOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    telephoneNo?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BranchCountOrderByAggregateInput
+    _avg?: BranchAvgOrderByAggregateInput
+    _max?: BranchMaxOrderByAggregateInput
+    _min?: BranchMinOrderByAggregateInput
+    _sum?: BranchSumOrderByAggregateInput
+  }
+
+  export type BranchScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<BranchScalarWhereWithAggregatesInput>
+    OR?: Enumerable<BranchScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<BranchScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    location?: StringWithAggregatesFilter | string
+    telephoneNo?: StringWithAggregatesFilter | string
+    area?: FloatWithAggregatesFilter | number
+    binWashUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WashingMachineWhereInput = {
+    AND?: Enumerable<WashingMachineWhereInput>
+    OR?: Enumerable<WashingMachineWhereInput>
+    NOT?: Enumerable<WashingMachineWhereInput>
+    id?: IntFilter | number
+    brand?: StringFilter | string
+    model?: StringFilter | string
+    type?: EnumWMTypeEnumFilter | WMTypeEnum
+    capacity?: FloatFilter | number
+    manufacturedYear?: DateTimeFilter | Date | string
+    warrantyEndDate?: DateTimeFilter | Date | string
+    locatedBranch?: XOR<BranchRelationFilter, BranchWhereInput>
+    branchId?: IntFilter | number
+    equippedPrograms?: WMProgramListRelationFilter
+    usageRecords?: UsageRecordListRelationFilter
+    wMMaintenanceRecords?: WMMaintenanceRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WashingMachineOrderByWithRelationInput = {
+    id?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    type?: SortOrder
+    capacity?: SortOrder
+    manufacturedYear?: SortOrder
+    warrantyEndDate?: SortOrder
+    locatedBranch?: BranchOrderByWithRelationInput
+    branchId?: SortOrder
+    equippedPrograms?: WMProgramOrderByRelationAggregateInput
+    usageRecords?: UsageRecordOrderByRelationAggregateInput
+    wMMaintenanceRecords?: WMMaintenanceRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashingMachineWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WashingMachineOrderByWithAggregationInput = {
+    id?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    type?: SortOrder
+    capacity?: SortOrder
+    manufacturedYear?: SortOrder
+    warrantyEndDate?: SortOrder
+    branchId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WashingMachineCountOrderByAggregateInput
+    _avg?: WashingMachineAvgOrderByAggregateInput
+    _max?: WashingMachineMaxOrderByAggregateInput
+    _min?: WashingMachineMinOrderByAggregateInput
+    _sum?: WashingMachineSumOrderByAggregateInput
+  }
+
+  export type WashingMachineScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WashingMachineScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WashingMachineScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WashingMachineScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    brand?: StringWithAggregatesFilter | string
+    model?: StringWithAggregatesFilter | string
+    type?: EnumWMTypeEnumWithAggregatesFilter | WMTypeEnum
+    capacity?: FloatWithAggregatesFilter | number
+    manufacturedYear?: DateTimeWithAggregatesFilter | Date | string
+    warrantyEndDate?: DateTimeWithAggregatesFilter | Date | string
+    branchId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WMProgramWhereInput = {
+    AND?: Enumerable<WMProgramWhereInput>
+    OR?: Enumerable<WMProgramWhereInput>
+    NOT?: Enumerable<WMProgramWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    maxCapacity?: FloatFilter | number
+    duration?: IntFilter | number
+    price?: FloatFilter | number
+    equippingWMs?: WashingMachineListRelationFilter
+    usageRecords?: UsageRecordListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WMProgramOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+    equippingWMs?: WashingMachineOrderByRelationAggregateInput
+    usageRecords?: UsageRecordOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMProgramWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WMProgramOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WMProgramCountOrderByAggregateInput
+    _avg?: WMProgramAvgOrderByAggregateInput
+    _max?: WMProgramMaxOrderByAggregateInput
+    _min?: WMProgramMinOrderByAggregateInput
+    _sum?: WMProgramSumOrderByAggregateInput
+  }
+
+  export type WMProgramScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WMProgramScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WMProgramScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WMProgramScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    maxCapacity?: FloatWithAggregatesFilter | number
+    duration?: IntWithAggregatesFilter | number
+    price?: FloatWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type WMMaintenanceRecordWhereInput = {
+    AND?: Enumerable<WMMaintenanceRecordWhereInput>
+    OR?: Enumerable<WMMaintenanceRecordWhereInput>
+    NOT?: Enumerable<WMMaintenanceRecordWhereInput>
+    id?: IntFilter | number
+    maintainedWM?: XOR<WashingMachineRelationFilter, WashingMachineWhereInput>
+    washingMachineId?: IntFilter | number
+    maintenanceDateTime?: DateTimeFilter | Date | string
+    level?: IntFilter | number
+    details?: StringFilter | string
+    maintainer?: XOR<BinWashUserRelationFilter, BinWashUserWhereInput>
+    binWashUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WMMaintenanceRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    maintainedWM?: WashingMachineOrderByWithRelationInput
+    washingMachineId?: SortOrder
+    maintenanceDateTime?: SortOrder
+    level?: SortOrder
+    details?: SortOrder
+    maintainer?: BinWashUserOrderByWithRelationInput
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMMaintenanceRecordWhereUniqueInput = {
+    id?: number
+  }
+
+  export type WMMaintenanceRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    maintenanceDateTime?: SortOrder
+    level?: SortOrder
+    details?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WMMaintenanceRecordCountOrderByAggregateInput
+    _avg?: WMMaintenanceRecordAvgOrderByAggregateInput
+    _max?: WMMaintenanceRecordMaxOrderByAggregateInput
+    _min?: WMMaintenanceRecordMinOrderByAggregateInput
+    _sum?: WMMaintenanceRecordSumOrderByAggregateInput
+  }
+
+  export type WMMaintenanceRecordScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<WMMaintenanceRecordScalarWhereWithAggregatesInput>
+    OR?: Enumerable<WMMaintenanceRecordScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<WMMaintenanceRecordScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    washingMachineId?: IntWithAggregatesFilter | number
+    maintenanceDateTime?: DateTimeWithAggregatesFilter | Date | string
+    level?: IntWithAggregatesFilter | number
+    details?: StringWithAggregatesFilter | string
+    binWashUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UsageRecordWhereInput = {
+    AND?: Enumerable<UsageRecordWhereInput>
+    OR?: Enumerable<UsageRecordWhereInput>
+    NOT?: Enumerable<UsageRecordWhereInput>
+    id?: IntFilter | number
+    dateTime?: DateTimeFilter | Date | string
+    user?: XOR<BinWashUserRelationFilter, BinWashUserWhereInput>
+    binWashUserId?: IntFilter | number
+    washingMachine?: XOR<WashingMachineRelationFilter, WashingMachineWhereInput>
+    washingMachineId?: IntFilter | number
+    program?: XOR<WMProgramRelationFilter, WMProgramWhereInput>
+    wMProgramId?: IntFilter | number
+    price?: FloatFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UsageRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    user?: BinWashUserOrderByWithRelationInput
+    binWashUserId?: SortOrder
+    washingMachine?: WashingMachineOrderByWithRelationInput
+    washingMachineId?: SortOrder
+    program?: WMProgramOrderByWithRelationInput
+    wMProgramId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UsageRecordWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UsageRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UsageRecordCountOrderByAggregateInput
+    _avg?: UsageRecordAvgOrderByAggregateInput
+    _max?: UsageRecordMaxOrderByAggregateInput
+    _min?: UsageRecordMinOrderByAggregateInput
+    _sum?: UsageRecordSumOrderByAggregateInput
+  }
+
+  export type UsageRecordScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UsageRecordScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UsageRecordScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UsageRecordScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    dateTime?: DateTimeWithAggregatesFilter | Date | string
+    binWashUserId?: IntWithAggregatesFilter | number
+    washingMachineId?: IntWithAggregatesFilter | number
+    wMProgramId?: IntWithAggregatesFilter | number
+    price?: FloatWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type TopUpRecordWhereInput = {
+    AND?: Enumerable<TopUpRecordWhereInput>
+    OR?: Enumerable<TopUpRecordWhereInput>
+    NOT?: Enumerable<TopUpRecordWhereInput>
+    id?: IntFilter | number
+    dateTime?: DateTimeFilter | Date | string
+    user?: XOR<BinWashUserRelationFilter, BinWashUserWhereInput>
+    binWashUserId?: IntFilter | number
+    price?: FloatFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TopUpRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    user?: BinWashUserOrderByWithRelationInput
+    binWashUserId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TopUpRecordWhereUniqueInput = {
+    id?: number
+  }
+
+  export type TopUpRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TopUpRecordCountOrderByAggregateInput
+    _avg?: TopUpRecordAvgOrderByAggregateInput
+    _max?: TopUpRecordMaxOrderByAggregateInput
+    _min?: TopUpRecordMinOrderByAggregateInput
+    _sum?: TopUpRecordSumOrderByAggregateInput
+  }
+
+  export type TopUpRecordScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TopUpRecordScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TopUpRecordScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TopUpRecordScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    dateTime?: DateTimeWithAggregatesFilter | Date | string
+    binWashUserId?: IntWithAggregatesFilter | number
+    price?: FloatWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -30968,6 +39098,521 @@ export namespace Prisma {
 
   export type RoundUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserCreateInput = {
+    name: string
+    owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUncheckedCreateInput = {
+    id?: number
+    name: string
+    owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserCreateManyInput = {
+    id?: number
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchCreateInput = {
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    branchOwner: BinWashUserCreateNestedOneWithoutOwningBranchesInput
+    washingMachines?: WashingMachineCreateNestedManyWithoutLocatedBranchInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUncheckedCreateInput = {
+    id?: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    binWashUserId: number
+    washingMachines?: WashingMachineUncheckedCreateNestedManyWithoutLocatedBranchInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    branchOwner?: BinWashUserUpdateOneRequiredWithoutOwningBranchesNestedInput
+    washingMachines?: WashingMachineUpdateManyWithoutLocatedBranchNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    washingMachines?: WashingMachineUncheckedUpdateManyWithoutLocatedBranchNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchCreateManyInput = {
+    id?: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineCreateInput = {
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    locatedBranch: BranchCreateNestedOneWithoutWashingMachinesInput
+    equippedPrograms?: WMProgramCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUncheckedCreateInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    branchId: number
+    equippedPrograms?: WMProgramUncheckedCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUpdateInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    locatedBranch?: BranchUpdateOneRequiredWithoutWashingMachinesNestedInput
+    equippedPrograms?: WMProgramUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    equippedPrograms?: WMProgramUncheckedUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineCreateManyInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    branchId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUpdateManyMutationInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramCreateInput = {
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    equippingWMs?: WashingMachineCreateNestedManyWithoutEquippedProgramsInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutProgramInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUncheckedCreateInput = {
+    id?: number
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    equippingWMs?: WashingMachineUncheckedCreateNestedManyWithoutEquippedProgramsInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutProgramInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    equippingWMs?: WashingMachineUpdateManyWithoutEquippedProgramsNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutProgramNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    equippingWMs?: WashingMachineUncheckedUpdateManyWithoutEquippedProgramsNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutProgramNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramCreateManyInput = {
+    id?: number
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordCreateInput = {
+    maintainedWM: WashingMachineCreateNestedOneWithoutWMMaintenanceRecordsInput
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    maintainer: BinWashUserCreateNestedOneWithoutWMMaintenanceRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedCreateInput = {
+    id?: number
+    washingMachineId: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordUpdateInput = {
+    maintainedWM?: WashingMachineUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    maintainer?: BinWashUserUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordCreateManyInput = {
+    id?: number
+    washingMachineId: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordUpdateManyMutationInput = {
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordCreateInput = {
+    dateTime: Date | string
+    user: BinWashUserCreateNestedOneWithoutUsageRecordsInput
+    washingMachine: WashingMachineCreateNestedOneWithoutUsageRecordsInput
+    program: WMProgramCreateNestedOneWithoutUsageRecordsInput
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUncheckedCreateInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUpdateInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: BinWashUserUpdateOneRequiredWithoutUsageRecordsNestedInput
+    washingMachine?: WashingMachineUpdateOneRequiredWithoutUsageRecordsNestedInput
+    program?: WMProgramUpdateOneRequiredWithoutUsageRecordsNestedInput
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    wMProgramId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordCreateManyInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUpdateManyMutationInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    wMProgramId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordCreateInput = {
+    dateTime: Date | string
+    user: BinWashUserCreateNestedOneWithoutTopUpRecordsInput
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordUncheckedCreateInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordUpdateInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: BinWashUserUpdateOneRequiredWithoutTopUpRecordsNestedInput
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordCreateManyInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordUpdateManyMutationInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32635,6 +41280,407 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type BranchListRelationFilter = {
+    every?: BranchWhereInput
+    some?: BranchWhereInput
+    none?: BranchWhereInput
+  }
+
+  export type WMMaintenanceRecordListRelationFilter = {
+    every?: WMMaintenanceRecordWhereInput
+    some?: WMMaintenanceRecordWhereInput
+    none?: WMMaintenanceRecordWhereInput
+  }
+
+  export type UsageRecordListRelationFilter = {
+    every?: UsageRecordWhereInput
+    some?: UsageRecordWhereInput
+    none?: UsageRecordWhereInput
+  }
+
+  export type TopUpRecordListRelationFilter = {
+    every?: TopUpRecordWhereInput
+    some?: TopUpRecordWhereInput
+    none?: TopUpRecordWhereInput
+  }
+
+  export type BranchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WMMaintenanceRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UsageRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TopUpRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BinWashUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BinWashUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BinWashUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BinWashUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BinWashUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type BinWashUserRelationFilter = {
+    is?: BinWashUserWhereInput
+    isNot?: BinWashUserWhereInput
+  }
+
+  export type WashingMachineListRelationFilter = {
+    every?: WashingMachineWhereInput
+    some?: WashingMachineWhereInput
+    none?: WashingMachineWhereInput
+  }
+
+  export type WashingMachineOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BranchCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    telephoneNo?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchAvgOrderByAggregateInput = {
+    id?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+  }
+
+  export type BranchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    telephoneNo?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    location?: SortOrder
+    telephoneNo?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BranchSumOrderByAggregateInput = {
+    id?: SortOrder
+    area?: SortOrder
+    binWashUserId?: SortOrder
+  }
+
+  export type EnumWMTypeEnumFilter = {
+    equals?: WMTypeEnum
+    in?: Enumerable<WMTypeEnum>
+    notIn?: Enumerable<WMTypeEnum>
+    not?: NestedEnumWMTypeEnumFilter | WMTypeEnum
+  }
+
+  export type BranchRelationFilter = {
+    is?: BranchWhereInput
+    isNot?: BranchWhereInput
+  }
+
+  export type WMProgramListRelationFilter = {
+    every?: WMProgramWhereInput
+    some?: WMProgramWhereInput
+    none?: WMProgramWhereInput
+  }
+
+  export type WMProgramOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WashingMachineCountOrderByAggregateInput = {
+    id?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    type?: SortOrder
+    capacity?: SortOrder
+    manufacturedYear?: SortOrder
+    warrantyEndDate?: SortOrder
+    branchId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashingMachineAvgOrderByAggregateInput = {
+    id?: SortOrder
+    capacity?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type WashingMachineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    type?: SortOrder
+    capacity?: SortOrder
+    manufacturedYear?: SortOrder
+    warrantyEndDate?: SortOrder
+    branchId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashingMachineMinOrderByAggregateInput = {
+    id?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    type?: SortOrder
+    capacity?: SortOrder
+    manufacturedYear?: SortOrder
+    warrantyEndDate?: SortOrder
+    branchId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WashingMachineSumOrderByAggregateInput = {
+    id?: SortOrder
+    capacity?: SortOrder
+    branchId?: SortOrder
+  }
+
+  export type EnumWMTypeEnumWithAggregatesFilter = {
+    equals?: WMTypeEnum
+    in?: Enumerable<WMTypeEnum>
+    notIn?: Enumerable<WMTypeEnum>
+    not?: NestedEnumWMTypeEnumWithAggregatesFilter | WMTypeEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumWMTypeEnumFilter
+    _max?: NestedEnumWMTypeEnumFilter
+  }
+
+  export type WMProgramCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMProgramAvgOrderByAggregateInput = {
+    id?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+  }
+
+  export type WMProgramMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMProgramMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMProgramSumOrderByAggregateInput = {
+    id?: SortOrder
+    maxCapacity?: SortOrder
+    duration?: SortOrder
+    price?: SortOrder
+  }
+
+  export type WashingMachineRelationFilter = {
+    is?: WashingMachineWhereInput
+    isNot?: WashingMachineWhereInput
+  }
+
+  export type WMMaintenanceRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    maintenanceDateTime?: SortOrder
+    level?: SortOrder
+    details?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMMaintenanceRecordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    level?: SortOrder
+    binWashUserId?: SortOrder
+  }
+
+  export type WMMaintenanceRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    maintenanceDateTime?: SortOrder
+    level?: SortOrder
+    details?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMMaintenanceRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    maintenanceDateTime?: SortOrder
+    level?: SortOrder
+    details?: SortOrder
+    binWashUserId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WMMaintenanceRecordSumOrderByAggregateInput = {
+    id?: SortOrder
+    washingMachineId?: SortOrder
+    level?: SortOrder
+    binWashUserId?: SortOrder
+  }
+
+  export type WMProgramRelationFilter = {
+    is?: WMProgramWhereInput
+    isNot?: WMProgramWhereInput
+  }
+
+  export type UsageRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UsageRecordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+  }
+
+  export type UsageRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UsageRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UsageRecordSumOrderByAggregateInput = {
+    id?: SortOrder
+    binWashUserId?: SortOrder
+    washingMachineId?: SortOrder
+    wMProgramId?: SortOrder
+    price?: SortOrder
+  }
+
+  export type TopUpRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TopUpRecordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+  }
+
+  export type TopUpRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TopUpRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    dateTime?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TopUpRecordSumOrderByAggregateInput = {
+    id?: SortOrder
+    binWashUserId?: SortOrder
+    price?: SortOrder
+  }
+
   export type FacebookUserRelationListRelationFilter = {
     every?: FacebookUserRelationWhereInput
     some?: FacebookUserRelationWhereInput
@@ -34086,6 +43132,534 @@ export namespace Prisma {
     update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutRoundsInput>
     updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutRoundsInput>
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
+  }
+
+  export type BranchCreateNestedManyWithoutBranchOwnerInput = {
+    create?: XOR<Enumerable<BranchCreateWithoutBranchOwnerInput>, Enumerable<BranchUncheckedCreateWithoutBranchOwnerInput>>
+    connectOrCreate?: Enumerable<BranchCreateOrConnectWithoutBranchOwnerInput>
+    createMany?: BranchCreateManyBranchOwnerInputEnvelope
+    connect?: Enumerable<BranchWhereUniqueInput>
+  }
+
+  export type WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainerInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainerInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainerInputEnvelope
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+  }
+
+  export type UsageRecordCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutUserInput>, Enumerable<UsageRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutUserInput>
+    createMany?: UsageRecordCreateManyUserInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type TopUpRecordCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<TopUpRecordCreateWithoutUserInput>, Enumerable<TopUpRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TopUpRecordCreateOrConnectWithoutUserInput>
+    createMany?: TopUpRecordCreateManyUserInputEnvelope
+    connect?: Enumerable<TopUpRecordWhereUniqueInput>
+  }
+
+  export type BranchUncheckedCreateNestedManyWithoutBranchOwnerInput = {
+    create?: XOR<Enumerable<BranchCreateWithoutBranchOwnerInput>, Enumerable<BranchUncheckedCreateWithoutBranchOwnerInput>>
+    connectOrCreate?: Enumerable<BranchCreateOrConnectWithoutBranchOwnerInput>
+    createMany?: BranchCreateManyBranchOwnerInputEnvelope
+    connect?: Enumerable<BranchWhereUniqueInput>
+  }
+
+  export type WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainerInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainerInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainerInputEnvelope
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+  }
+
+  export type UsageRecordUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutUserInput>, Enumerable<UsageRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutUserInput>
+    createMany?: UsageRecordCreateManyUserInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type TopUpRecordUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<TopUpRecordCreateWithoutUserInput>, Enumerable<TopUpRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TopUpRecordCreateOrConnectWithoutUserInput>
+    createMany?: TopUpRecordCreateManyUserInputEnvelope
+    connect?: Enumerable<TopUpRecordWhereUniqueInput>
+  }
+
+  export type BranchUpdateManyWithoutBranchOwnerNestedInput = {
+    create?: XOR<Enumerable<BranchCreateWithoutBranchOwnerInput>, Enumerable<BranchUncheckedCreateWithoutBranchOwnerInput>>
+    connectOrCreate?: Enumerable<BranchCreateOrConnectWithoutBranchOwnerInput>
+    upsert?: Enumerable<BranchUpsertWithWhereUniqueWithoutBranchOwnerInput>
+    createMany?: BranchCreateManyBranchOwnerInputEnvelope
+    set?: Enumerable<BranchWhereUniqueInput>
+    disconnect?: Enumerable<BranchWhereUniqueInput>
+    delete?: Enumerable<BranchWhereUniqueInput>
+    connect?: Enumerable<BranchWhereUniqueInput>
+    update?: Enumerable<BranchUpdateWithWhereUniqueWithoutBranchOwnerInput>
+    updateMany?: Enumerable<BranchUpdateManyWithWhereWithoutBranchOwnerInput>
+    deleteMany?: Enumerable<BranchScalarWhereInput>
+  }
+
+  export type WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainerInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainerInput>
+    upsert?: Enumerable<WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainerInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainerInputEnvelope
+    set?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    disconnect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    delete?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    update?: Enumerable<WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainerInput>
+    updateMany?: Enumerable<WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainerInput>
+    deleteMany?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+  }
+
+  export type UsageRecordUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutUserInput>, Enumerable<UsageRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UsageRecordCreateManyUserInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type TopUpRecordUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<TopUpRecordCreateWithoutUserInput>, Enumerable<TopUpRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TopUpRecordCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<TopUpRecordUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: TopUpRecordCreateManyUserInputEnvelope
+    set?: Enumerable<TopUpRecordWhereUniqueInput>
+    disconnect?: Enumerable<TopUpRecordWhereUniqueInput>
+    delete?: Enumerable<TopUpRecordWhereUniqueInput>
+    connect?: Enumerable<TopUpRecordWhereUniqueInput>
+    update?: Enumerable<TopUpRecordUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<TopUpRecordUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<TopUpRecordScalarWhereInput>
+  }
+
+  export type BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput = {
+    create?: XOR<Enumerable<BranchCreateWithoutBranchOwnerInput>, Enumerable<BranchUncheckedCreateWithoutBranchOwnerInput>>
+    connectOrCreate?: Enumerable<BranchCreateOrConnectWithoutBranchOwnerInput>
+    upsert?: Enumerable<BranchUpsertWithWhereUniqueWithoutBranchOwnerInput>
+    createMany?: BranchCreateManyBranchOwnerInputEnvelope
+    set?: Enumerable<BranchWhereUniqueInput>
+    disconnect?: Enumerable<BranchWhereUniqueInput>
+    delete?: Enumerable<BranchWhereUniqueInput>
+    connect?: Enumerable<BranchWhereUniqueInput>
+    update?: Enumerable<BranchUpdateWithWhereUniqueWithoutBranchOwnerInput>
+    updateMany?: Enumerable<BranchUpdateManyWithWhereWithoutBranchOwnerInput>
+    deleteMany?: Enumerable<BranchScalarWhereInput>
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainerInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainerInput>
+    upsert?: Enumerable<WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainerInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainerInputEnvelope
+    set?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    disconnect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    delete?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    update?: Enumerable<WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainerInput>
+    updateMany?: Enumerable<WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainerInput>
+    deleteMany?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+  }
+
+  export type UsageRecordUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutUserInput>, Enumerable<UsageRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UsageRecordCreateManyUserInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type TopUpRecordUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<TopUpRecordCreateWithoutUserInput>, Enumerable<TopUpRecordUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TopUpRecordCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<TopUpRecordUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: TopUpRecordCreateManyUserInputEnvelope
+    set?: Enumerable<TopUpRecordWhereUniqueInput>
+    disconnect?: Enumerable<TopUpRecordWhereUniqueInput>
+    delete?: Enumerable<TopUpRecordWhereUniqueInput>
+    connect?: Enumerable<TopUpRecordWhereUniqueInput>
+    update?: Enumerable<TopUpRecordUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<TopUpRecordUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<TopUpRecordScalarWhereInput>
+  }
+
+  export type BinWashUserCreateNestedOneWithoutOwningBranchesInput = {
+    create?: XOR<BinWashUserCreateWithoutOwningBranchesInput, BinWashUserUncheckedCreateWithoutOwningBranchesInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutOwningBranchesInput
+    connect?: BinWashUserWhereUniqueInput
+  }
+
+  export type WashingMachineCreateNestedManyWithoutLocatedBranchInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutLocatedBranchInput>, Enumerable<WashingMachineUncheckedCreateWithoutLocatedBranchInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutLocatedBranchInput>
+    createMany?: WashingMachineCreateManyLocatedBranchInputEnvelope
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+  }
+
+  export type WashingMachineUncheckedCreateNestedManyWithoutLocatedBranchInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutLocatedBranchInput>, Enumerable<WashingMachineUncheckedCreateWithoutLocatedBranchInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutLocatedBranchInput>
+    createMany?: WashingMachineCreateManyLocatedBranchInputEnvelope
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+  }
+
+  export type BinWashUserUpdateOneRequiredWithoutOwningBranchesNestedInput = {
+    create?: XOR<BinWashUserCreateWithoutOwningBranchesInput, BinWashUserUncheckedCreateWithoutOwningBranchesInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutOwningBranchesInput
+    upsert?: BinWashUserUpsertWithoutOwningBranchesInput
+    connect?: BinWashUserWhereUniqueInput
+    update?: XOR<BinWashUserUpdateWithoutOwningBranchesInput, BinWashUserUncheckedUpdateWithoutOwningBranchesInput>
+  }
+
+  export type WashingMachineUpdateManyWithoutLocatedBranchNestedInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutLocatedBranchInput>, Enumerable<WashingMachineUncheckedCreateWithoutLocatedBranchInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutLocatedBranchInput>
+    upsert?: Enumerable<WashingMachineUpsertWithWhereUniqueWithoutLocatedBranchInput>
+    createMany?: WashingMachineCreateManyLocatedBranchInputEnvelope
+    set?: Enumerable<WashingMachineWhereUniqueInput>
+    disconnect?: Enumerable<WashingMachineWhereUniqueInput>
+    delete?: Enumerable<WashingMachineWhereUniqueInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+    update?: Enumerable<WashingMachineUpdateWithWhereUniqueWithoutLocatedBranchInput>
+    updateMany?: Enumerable<WashingMachineUpdateManyWithWhereWithoutLocatedBranchInput>
+    deleteMany?: Enumerable<WashingMachineScalarWhereInput>
+  }
+
+  export type WashingMachineUncheckedUpdateManyWithoutLocatedBranchNestedInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutLocatedBranchInput>, Enumerable<WashingMachineUncheckedCreateWithoutLocatedBranchInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutLocatedBranchInput>
+    upsert?: Enumerable<WashingMachineUpsertWithWhereUniqueWithoutLocatedBranchInput>
+    createMany?: WashingMachineCreateManyLocatedBranchInputEnvelope
+    set?: Enumerable<WashingMachineWhereUniqueInput>
+    disconnect?: Enumerable<WashingMachineWhereUniqueInput>
+    delete?: Enumerable<WashingMachineWhereUniqueInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+    update?: Enumerable<WashingMachineUpdateWithWhereUniqueWithoutLocatedBranchInput>
+    updateMany?: Enumerable<WashingMachineUpdateManyWithWhereWithoutLocatedBranchInput>
+    deleteMany?: Enumerable<WashingMachineScalarWhereInput>
+  }
+
+  export type BranchCreateNestedOneWithoutWashingMachinesInput = {
+    create?: XOR<BranchCreateWithoutWashingMachinesInput, BranchUncheckedCreateWithoutWashingMachinesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutWashingMachinesInput
+    connect?: BranchWhereUniqueInput
+  }
+
+  export type WMProgramCreateNestedManyWithoutEquippingWMsInput = {
+    create?: XOR<Enumerable<WMProgramCreateWithoutEquippingWMsInput>, Enumerable<WMProgramUncheckedCreateWithoutEquippingWMsInput>>
+    connectOrCreate?: Enumerable<WMProgramCreateOrConnectWithoutEquippingWMsInput>
+    connect?: Enumerable<WMProgramWhereUniqueInput>
+  }
+
+  export type UsageRecordCreateNestedManyWithoutWashingMachineInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutWashingMachineInput>, Enumerable<UsageRecordUncheckedCreateWithoutWashingMachineInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutWashingMachineInput>
+    createMany?: UsageRecordCreateManyWashingMachineInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type WMMaintenanceRecordCreateNestedManyWithoutMaintainedWMInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainedWMInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainedWMInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainedWMInputEnvelope
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+  }
+
+  export type WMProgramUncheckedCreateNestedManyWithoutEquippingWMsInput = {
+    create?: XOR<Enumerable<WMProgramCreateWithoutEquippingWMsInput>, Enumerable<WMProgramUncheckedCreateWithoutEquippingWMsInput>>
+    connectOrCreate?: Enumerable<WMProgramCreateOrConnectWithoutEquippingWMsInput>
+    connect?: Enumerable<WMProgramWhereUniqueInput>
+  }
+
+  export type UsageRecordUncheckedCreateNestedManyWithoutWashingMachineInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutWashingMachineInput>, Enumerable<UsageRecordUncheckedCreateWithoutWashingMachineInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutWashingMachineInput>
+    createMany?: UsageRecordCreateManyWashingMachineInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainedWMInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainedWMInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainedWMInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainedWMInputEnvelope
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+  }
+
+  export type EnumWMTypeEnumFieldUpdateOperationsInput = {
+    set?: WMTypeEnum
+  }
+
+  export type BranchUpdateOneRequiredWithoutWashingMachinesNestedInput = {
+    create?: XOR<BranchCreateWithoutWashingMachinesInput, BranchUncheckedCreateWithoutWashingMachinesInput>
+    connectOrCreate?: BranchCreateOrConnectWithoutWashingMachinesInput
+    upsert?: BranchUpsertWithoutWashingMachinesInput
+    connect?: BranchWhereUniqueInput
+    update?: XOR<BranchUpdateWithoutWashingMachinesInput, BranchUncheckedUpdateWithoutWashingMachinesInput>
+  }
+
+  export type WMProgramUpdateManyWithoutEquippingWMsNestedInput = {
+    create?: XOR<Enumerable<WMProgramCreateWithoutEquippingWMsInput>, Enumerable<WMProgramUncheckedCreateWithoutEquippingWMsInput>>
+    connectOrCreate?: Enumerable<WMProgramCreateOrConnectWithoutEquippingWMsInput>
+    upsert?: Enumerable<WMProgramUpsertWithWhereUniqueWithoutEquippingWMsInput>
+    set?: Enumerable<WMProgramWhereUniqueInput>
+    disconnect?: Enumerable<WMProgramWhereUniqueInput>
+    delete?: Enumerable<WMProgramWhereUniqueInput>
+    connect?: Enumerable<WMProgramWhereUniqueInput>
+    update?: Enumerable<WMProgramUpdateWithWhereUniqueWithoutEquippingWMsInput>
+    updateMany?: Enumerable<WMProgramUpdateManyWithWhereWithoutEquippingWMsInput>
+    deleteMany?: Enumerable<WMProgramScalarWhereInput>
+  }
+
+  export type UsageRecordUpdateManyWithoutWashingMachineNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutWashingMachineInput>, Enumerable<UsageRecordUncheckedCreateWithoutWashingMachineInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutWashingMachineInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutWashingMachineInput>
+    createMany?: UsageRecordCreateManyWashingMachineInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutWashingMachineInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutWashingMachineInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type WMMaintenanceRecordUpdateManyWithoutMaintainedWMNestedInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainedWMInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainedWMInput>
+    upsert?: Enumerable<WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainedWMInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainedWMInputEnvelope
+    set?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    disconnect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    delete?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    update?: Enumerable<WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainedWMInput>
+    updateMany?: Enumerable<WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainedWMInput>
+    deleteMany?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+  }
+
+  export type WMProgramUncheckedUpdateManyWithoutEquippingWMsNestedInput = {
+    create?: XOR<Enumerable<WMProgramCreateWithoutEquippingWMsInput>, Enumerable<WMProgramUncheckedCreateWithoutEquippingWMsInput>>
+    connectOrCreate?: Enumerable<WMProgramCreateOrConnectWithoutEquippingWMsInput>
+    upsert?: Enumerable<WMProgramUpsertWithWhereUniqueWithoutEquippingWMsInput>
+    set?: Enumerable<WMProgramWhereUniqueInput>
+    disconnect?: Enumerable<WMProgramWhereUniqueInput>
+    delete?: Enumerable<WMProgramWhereUniqueInput>
+    connect?: Enumerable<WMProgramWhereUniqueInput>
+    update?: Enumerable<WMProgramUpdateWithWhereUniqueWithoutEquippingWMsInput>
+    updateMany?: Enumerable<WMProgramUpdateManyWithWhereWithoutEquippingWMsInput>
+    deleteMany?: Enumerable<WMProgramScalarWhereInput>
+  }
+
+  export type UsageRecordUncheckedUpdateManyWithoutWashingMachineNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutWashingMachineInput>, Enumerable<UsageRecordUncheckedCreateWithoutWashingMachineInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutWashingMachineInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutWashingMachineInput>
+    createMany?: UsageRecordCreateManyWashingMachineInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutWashingMachineInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutWashingMachineInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainedWMNestedInput = {
+    create?: XOR<Enumerable<WMMaintenanceRecordCreateWithoutMaintainedWMInput>, Enumerable<WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>>
+    connectOrCreate?: Enumerable<WMMaintenanceRecordCreateOrConnectWithoutMaintainedWMInput>
+    upsert?: Enumerable<WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainedWMInput>
+    createMany?: WMMaintenanceRecordCreateManyMaintainedWMInputEnvelope
+    set?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    disconnect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    delete?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    connect?: Enumerable<WMMaintenanceRecordWhereUniqueInput>
+    update?: Enumerable<WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainedWMInput>
+    updateMany?: Enumerable<WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainedWMInput>
+    deleteMany?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+  }
+
+  export type WashingMachineCreateNestedManyWithoutEquippedProgramsInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutEquippedProgramsInput>, Enumerable<WashingMachineUncheckedCreateWithoutEquippedProgramsInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutEquippedProgramsInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+  }
+
+  export type UsageRecordCreateNestedManyWithoutProgramInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutProgramInput>, Enumerable<UsageRecordUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutProgramInput>
+    createMany?: UsageRecordCreateManyProgramInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type WashingMachineUncheckedCreateNestedManyWithoutEquippedProgramsInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutEquippedProgramsInput>, Enumerable<WashingMachineUncheckedCreateWithoutEquippedProgramsInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutEquippedProgramsInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+  }
+
+  export type UsageRecordUncheckedCreateNestedManyWithoutProgramInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutProgramInput>, Enumerable<UsageRecordUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutProgramInput>
+    createMany?: UsageRecordCreateManyProgramInputEnvelope
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+  }
+
+  export type WashingMachineUpdateManyWithoutEquippedProgramsNestedInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutEquippedProgramsInput>, Enumerable<WashingMachineUncheckedCreateWithoutEquippedProgramsInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutEquippedProgramsInput>
+    upsert?: Enumerable<WashingMachineUpsertWithWhereUniqueWithoutEquippedProgramsInput>
+    set?: Enumerable<WashingMachineWhereUniqueInput>
+    disconnect?: Enumerable<WashingMachineWhereUniqueInput>
+    delete?: Enumerable<WashingMachineWhereUniqueInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+    update?: Enumerable<WashingMachineUpdateWithWhereUniqueWithoutEquippedProgramsInput>
+    updateMany?: Enumerable<WashingMachineUpdateManyWithWhereWithoutEquippedProgramsInput>
+    deleteMany?: Enumerable<WashingMachineScalarWhereInput>
+  }
+
+  export type UsageRecordUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutProgramInput>, Enumerable<UsageRecordUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutProgramInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutProgramInput>
+    createMany?: UsageRecordCreateManyProgramInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutProgramInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutProgramInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type WashingMachineUncheckedUpdateManyWithoutEquippedProgramsNestedInput = {
+    create?: XOR<Enumerable<WashingMachineCreateWithoutEquippedProgramsInput>, Enumerable<WashingMachineUncheckedCreateWithoutEquippedProgramsInput>>
+    connectOrCreate?: Enumerable<WashingMachineCreateOrConnectWithoutEquippedProgramsInput>
+    upsert?: Enumerable<WashingMachineUpsertWithWhereUniqueWithoutEquippedProgramsInput>
+    set?: Enumerable<WashingMachineWhereUniqueInput>
+    disconnect?: Enumerable<WashingMachineWhereUniqueInput>
+    delete?: Enumerable<WashingMachineWhereUniqueInput>
+    connect?: Enumerable<WashingMachineWhereUniqueInput>
+    update?: Enumerable<WashingMachineUpdateWithWhereUniqueWithoutEquippedProgramsInput>
+    updateMany?: Enumerable<WashingMachineUpdateManyWithWhereWithoutEquippedProgramsInput>
+    deleteMany?: Enumerable<WashingMachineScalarWhereInput>
+  }
+
+  export type UsageRecordUncheckedUpdateManyWithoutProgramNestedInput = {
+    create?: XOR<Enumerable<UsageRecordCreateWithoutProgramInput>, Enumerable<UsageRecordUncheckedCreateWithoutProgramInput>>
+    connectOrCreate?: Enumerable<UsageRecordCreateOrConnectWithoutProgramInput>
+    upsert?: Enumerable<UsageRecordUpsertWithWhereUniqueWithoutProgramInput>
+    createMany?: UsageRecordCreateManyProgramInputEnvelope
+    set?: Enumerable<UsageRecordWhereUniqueInput>
+    disconnect?: Enumerable<UsageRecordWhereUniqueInput>
+    delete?: Enumerable<UsageRecordWhereUniqueInput>
+    connect?: Enumerable<UsageRecordWhereUniqueInput>
+    update?: Enumerable<UsageRecordUpdateWithWhereUniqueWithoutProgramInput>
+    updateMany?: Enumerable<UsageRecordUpdateManyWithWhereWithoutProgramInput>
+    deleteMany?: Enumerable<UsageRecordScalarWhereInput>
+  }
+
+  export type WashingMachineCreateNestedOneWithoutWMMaintenanceRecordsInput = {
+    create?: XOR<WashingMachineCreateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedCreateWithoutWMMaintenanceRecordsInput>
+    connectOrCreate?: WashingMachineCreateOrConnectWithoutWMMaintenanceRecordsInput
+    connect?: WashingMachineWhereUniqueInput
+  }
+
+  export type BinWashUserCreateNestedOneWithoutWMMaintenanceRecordsInput = {
+    create?: XOR<BinWashUserCreateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutWMMaintenanceRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+  }
+
+  export type WashingMachineUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput = {
+    create?: XOR<WashingMachineCreateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedCreateWithoutWMMaintenanceRecordsInput>
+    connectOrCreate?: WashingMachineCreateOrConnectWithoutWMMaintenanceRecordsInput
+    upsert?: WashingMachineUpsertWithoutWMMaintenanceRecordsInput
+    connect?: WashingMachineWhereUniqueInput
+    update?: XOR<WashingMachineUpdateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedUpdateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type BinWashUserUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput = {
+    create?: XOR<BinWashUserCreateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutWMMaintenanceRecordsInput
+    upsert?: BinWashUserUpsertWithoutWMMaintenanceRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+    update?: XOR<BinWashUserUpdateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedUpdateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type BinWashUserCreateNestedOneWithoutUsageRecordsInput = {
+    create?: XOR<BinWashUserCreateWithoutUsageRecordsInput, BinWashUserUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutUsageRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+  }
+
+  export type WashingMachineCreateNestedOneWithoutUsageRecordsInput = {
+    create?: XOR<WashingMachineCreateWithoutUsageRecordsInput, WashingMachineUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: WashingMachineCreateOrConnectWithoutUsageRecordsInput
+    connect?: WashingMachineWhereUniqueInput
+  }
+
+  export type WMProgramCreateNestedOneWithoutUsageRecordsInput = {
+    create?: XOR<WMProgramCreateWithoutUsageRecordsInput, WMProgramUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: WMProgramCreateOrConnectWithoutUsageRecordsInput
+    connect?: WMProgramWhereUniqueInput
+  }
+
+  export type BinWashUserUpdateOneRequiredWithoutUsageRecordsNestedInput = {
+    create?: XOR<BinWashUserCreateWithoutUsageRecordsInput, BinWashUserUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutUsageRecordsInput
+    upsert?: BinWashUserUpsertWithoutUsageRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+    update?: XOR<BinWashUserUpdateWithoutUsageRecordsInput, BinWashUserUncheckedUpdateWithoutUsageRecordsInput>
+  }
+
+  export type WashingMachineUpdateOneRequiredWithoutUsageRecordsNestedInput = {
+    create?: XOR<WashingMachineCreateWithoutUsageRecordsInput, WashingMachineUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: WashingMachineCreateOrConnectWithoutUsageRecordsInput
+    upsert?: WashingMachineUpsertWithoutUsageRecordsInput
+    connect?: WashingMachineWhereUniqueInput
+    update?: XOR<WashingMachineUpdateWithoutUsageRecordsInput, WashingMachineUncheckedUpdateWithoutUsageRecordsInput>
+  }
+
+  export type WMProgramUpdateOneRequiredWithoutUsageRecordsNestedInput = {
+    create?: XOR<WMProgramCreateWithoutUsageRecordsInput, WMProgramUncheckedCreateWithoutUsageRecordsInput>
+    connectOrCreate?: WMProgramCreateOrConnectWithoutUsageRecordsInput
+    upsert?: WMProgramUpsertWithoutUsageRecordsInput
+    connect?: WMProgramWhereUniqueInput
+    update?: XOR<WMProgramUpdateWithoutUsageRecordsInput, WMProgramUncheckedUpdateWithoutUsageRecordsInput>
+  }
+
+  export type BinWashUserCreateNestedOneWithoutTopUpRecordsInput = {
+    create?: XOR<BinWashUserCreateWithoutTopUpRecordsInput, BinWashUserUncheckedCreateWithoutTopUpRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutTopUpRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+  }
+
+  export type BinWashUserUpdateOneRequiredWithoutTopUpRecordsNestedInput = {
+    create?: XOR<BinWashUserCreateWithoutTopUpRecordsInput, BinWashUserUncheckedCreateWithoutTopUpRecordsInput>
+    connectOrCreate?: BinWashUserCreateOrConnectWithoutTopUpRecordsInput
+    upsert?: BinWashUserUpsertWithoutTopUpRecordsInput
+    connect?: BinWashUserWhereUniqueInput
+    update?: XOR<BinWashUserUpdateWithoutTopUpRecordsInput, BinWashUserUncheckedUpdateWithoutTopUpRecordsInput>
   }
 
   export type FacebookUserRelationCreateNestedManyWithoutFollowingUserInput = {
@@ -35866,6 +45440,23 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
+  export type NestedEnumWMTypeEnumFilter = {
+    equals?: WMTypeEnum
+    in?: Enumerable<WMTypeEnum>
+    notIn?: Enumerable<WMTypeEnum>
+    not?: NestedEnumWMTypeEnumFilter | WMTypeEnum
+  }
+
+  export type NestedEnumWMTypeEnumWithAggregatesFilter = {
+    equals?: WMTypeEnum
+    in?: Enumerable<WMTypeEnum>
+    notIn?: Enumerable<WMTypeEnum>
+    not?: NestedEnumWMTypeEnumWithAggregatesFilter | WMTypeEnum
+    _count?: NestedIntFilter
+    _min?: NestedEnumWMTypeEnumFilter
+    _max?: NestedEnumWMTypeEnumFilter
+  }
+
   export type NestedStringNullableFilter = {
     equals?: string | null
     in?: Enumerable<string> | null
@@ -36649,6 +46240,981 @@ export namespace Prisma {
   export type ChoiceUpdateManyWithWhereWithoutRoundsInput = {
     where: ChoiceScalarWhereInput
     data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutSelectedChoicesInput>
+  }
+
+  export type BranchCreateWithoutBranchOwnerInput = {
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    washingMachines?: WashingMachineCreateNestedManyWithoutLocatedBranchInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUncheckedCreateWithoutBranchOwnerInput = {
+    id?: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    washingMachines?: WashingMachineUncheckedCreateNestedManyWithoutLocatedBranchInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchCreateOrConnectWithoutBranchOwnerInput = {
+    where: BranchWhereUniqueInput
+    create: XOR<BranchCreateWithoutBranchOwnerInput, BranchUncheckedCreateWithoutBranchOwnerInput>
+  }
+
+  export type BranchCreateManyBranchOwnerInputEnvelope = {
+    data: Enumerable<BranchCreateManyBranchOwnerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WMMaintenanceRecordCreateWithoutMaintainerInput = {
+    maintainedWM: WashingMachineCreateNestedOneWithoutWMMaintenanceRecordsInput
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput = {
+    id?: number
+    washingMachineId: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordCreateOrConnectWithoutMaintainerInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    create: XOR<WMMaintenanceRecordCreateWithoutMaintainerInput, WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>
+  }
+
+  export type WMMaintenanceRecordCreateManyMaintainerInputEnvelope = {
+    data: Enumerable<WMMaintenanceRecordCreateManyMaintainerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type UsageRecordCreateWithoutUserInput = {
+    dateTime: Date | string
+    washingMachine: WashingMachineCreateNestedOneWithoutUsageRecordsInput
+    program: WMProgramCreateNestedOneWithoutUsageRecordsInput
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUncheckedCreateWithoutUserInput = {
+    id?: number
+    dateTime: Date | string
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordCreateOrConnectWithoutUserInput = {
+    where: UsageRecordWhereUniqueInput
+    create: XOR<UsageRecordCreateWithoutUserInput, UsageRecordUncheckedCreateWithoutUserInput>
+  }
+
+  export type UsageRecordCreateManyUserInputEnvelope = {
+    data: Enumerable<UsageRecordCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TopUpRecordCreateWithoutUserInput = {
+    dateTime: Date | string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordUncheckedCreateWithoutUserInput = {
+    id?: number
+    dateTime: Date | string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordCreateOrConnectWithoutUserInput = {
+    where: TopUpRecordWhereUniqueInput
+    create: XOR<TopUpRecordCreateWithoutUserInput, TopUpRecordUncheckedCreateWithoutUserInput>
+  }
+
+  export type TopUpRecordCreateManyUserInputEnvelope = {
+    data: Enumerable<TopUpRecordCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type BranchUpsertWithWhereUniqueWithoutBranchOwnerInput = {
+    where: BranchWhereUniqueInput
+    update: XOR<BranchUpdateWithoutBranchOwnerInput, BranchUncheckedUpdateWithoutBranchOwnerInput>
+    create: XOR<BranchCreateWithoutBranchOwnerInput, BranchUncheckedCreateWithoutBranchOwnerInput>
+  }
+
+  export type BranchUpdateWithWhereUniqueWithoutBranchOwnerInput = {
+    where: BranchWhereUniqueInput
+    data: XOR<BranchUpdateWithoutBranchOwnerInput, BranchUncheckedUpdateWithoutBranchOwnerInput>
+  }
+
+  export type BranchUpdateManyWithWhereWithoutBranchOwnerInput = {
+    where: BranchScalarWhereInput
+    data: XOR<BranchUpdateManyMutationInput, BranchUncheckedUpdateManyWithoutOwningBranchesInput>
+  }
+
+  export type BranchScalarWhereInput = {
+    AND?: Enumerable<BranchScalarWhereInput>
+    OR?: Enumerable<BranchScalarWhereInput>
+    NOT?: Enumerable<BranchScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    location?: StringFilter | string
+    telephoneNo?: StringFilter | string
+    area?: FloatFilter | number
+    binWashUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainerInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    update: XOR<WMMaintenanceRecordUpdateWithoutMaintainerInput, WMMaintenanceRecordUncheckedUpdateWithoutMaintainerInput>
+    create: XOR<WMMaintenanceRecordCreateWithoutMaintainerInput, WMMaintenanceRecordUncheckedCreateWithoutMaintainerInput>
+  }
+
+  export type WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainerInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    data: XOR<WMMaintenanceRecordUpdateWithoutMaintainerInput, WMMaintenanceRecordUncheckedUpdateWithoutMaintainerInput>
+  }
+
+  export type WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainerInput = {
+    where: WMMaintenanceRecordScalarWhereInput
+    data: XOR<WMMaintenanceRecordUpdateManyMutationInput, WMMaintenanceRecordUncheckedUpdateManyWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type WMMaintenanceRecordScalarWhereInput = {
+    AND?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+    OR?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+    NOT?: Enumerable<WMMaintenanceRecordScalarWhereInput>
+    id?: IntFilter | number
+    washingMachineId?: IntFilter | number
+    maintenanceDateTime?: DateTimeFilter | Date | string
+    level?: IntFilter | number
+    details?: StringFilter | string
+    binWashUserId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UsageRecordUpsertWithWhereUniqueWithoutUserInput = {
+    where: UsageRecordWhereUniqueInput
+    update: XOR<UsageRecordUpdateWithoutUserInput, UsageRecordUncheckedUpdateWithoutUserInput>
+    create: XOR<UsageRecordCreateWithoutUserInput, UsageRecordUncheckedCreateWithoutUserInput>
+  }
+
+  export type UsageRecordUpdateWithWhereUniqueWithoutUserInput = {
+    where: UsageRecordWhereUniqueInput
+    data: XOR<UsageRecordUpdateWithoutUserInput, UsageRecordUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UsageRecordUpdateManyWithWhereWithoutUserInput = {
+    where: UsageRecordScalarWhereInput
+    data: XOR<UsageRecordUpdateManyMutationInput, UsageRecordUncheckedUpdateManyWithoutUsageRecordsInput>
+  }
+
+  export type UsageRecordScalarWhereInput = {
+    AND?: Enumerable<UsageRecordScalarWhereInput>
+    OR?: Enumerable<UsageRecordScalarWhereInput>
+    NOT?: Enumerable<UsageRecordScalarWhereInput>
+    id?: IntFilter | number
+    dateTime?: DateTimeFilter | Date | string
+    binWashUserId?: IntFilter | number
+    washingMachineId?: IntFilter | number
+    wMProgramId?: IntFilter | number
+    price?: FloatFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TopUpRecordUpsertWithWhereUniqueWithoutUserInput = {
+    where: TopUpRecordWhereUniqueInput
+    update: XOR<TopUpRecordUpdateWithoutUserInput, TopUpRecordUncheckedUpdateWithoutUserInput>
+    create: XOR<TopUpRecordCreateWithoutUserInput, TopUpRecordUncheckedCreateWithoutUserInput>
+  }
+
+  export type TopUpRecordUpdateWithWhereUniqueWithoutUserInput = {
+    where: TopUpRecordWhereUniqueInput
+    data: XOR<TopUpRecordUpdateWithoutUserInput, TopUpRecordUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TopUpRecordUpdateManyWithWhereWithoutUserInput = {
+    where: TopUpRecordScalarWhereInput
+    data: XOR<TopUpRecordUpdateManyMutationInput, TopUpRecordUncheckedUpdateManyWithoutTopUpRecordsInput>
+  }
+
+  export type TopUpRecordScalarWhereInput = {
+    AND?: Enumerable<TopUpRecordScalarWhereInput>
+    OR?: Enumerable<TopUpRecordScalarWhereInput>
+    NOT?: Enumerable<TopUpRecordScalarWhereInput>
+    id?: IntFilter | number
+    dateTime?: DateTimeFilter | Date | string
+    binWashUserId?: IntFilter | number
+    price?: FloatFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BinWashUserCreateWithoutOwningBranchesInput = {
+    name: string
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUncheckedCreateWithoutOwningBranchesInput = {
+    id?: number
+    name: string
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserCreateOrConnectWithoutOwningBranchesInput = {
+    where: BinWashUserWhereUniqueInput
+    create: XOR<BinWashUserCreateWithoutOwningBranchesInput, BinWashUserUncheckedCreateWithoutOwningBranchesInput>
+  }
+
+  export type WashingMachineCreateWithoutLocatedBranchInput = {
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    equippedPrograms?: WMProgramCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUncheckedCreateWithoutLocatedBranchInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    equippedPrograms?: WMProgramUncheckedCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineCreateOrConnectWithoutLocatedBranchInput = {
+    where: WashingMachineWhereUniqueInput
+    create: XOR<WashingMachineCreateWithoutLocatedBranchInput, WashingMachineUncheckedCreateWithoutLocatedBranchInput>
+  }
+
+  export type WashingMachineCreateManyLocatedBranchInputEnvelope = {
+    data: Enumerable<WashingMachineCreateManyLocatedBranchInput>
+    skipDuplicates?: boolean
+  }
+
+  export type BinWashUserUpsertWithoutOwningBranchesInput = {
+    update: XOR<BinWashUserUpdateWithoutOwningBranchesInput, BinWashUserUncheckedUpdateWithoutOwningBranchesInput>
+    create: XOR<BinWashUserCreateWithoutOwningBranchesInput, BinWashUserUncheckedCreateWithoutOwningBranchesInput>
+  }
+
+  export type BinWashUserUpdateWithoutOwningBranchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateWithoutOwningBranchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUpsertWithWhereUniqueWithoutLocatedBranchInput = {
+    where: WashingMachineWhereUniqueInput
+    update: XOR<WashingMachineUpdateWithoutLocatedBranchInput, WashingMachineUncheckedUpdateWithoutLocatedBranchInput>
+    create: XOR<WashingMachineCreateWithoutLocatedBranchInput, WashingMachineUncheckedCreateWithoutLocatedBranchInput>
+  }
+
+  export type WashingMachineUpdateWithWhereUniqueWithoutLocatedBranchInput = {
+    where: WashingMachineWhereUniqueInput
+    data: XOR<WashingMachineUpdateWithoutLocatedBranchInput, WashingMachineUncheckedUpdateWithoutLocatedBranchInput>
+  }
+
+  export type WashingMachineUpdateManyWithWhereWithoutLocatedBranchInput = {
+    where: WashingMachineScalarWhereInput
+    data: XOR<WashingMachineUpdateManyMutationInput, WashingMachineUncheckedUpdateManyWithoutWashingMachinesInput>
+  }
+
+  export type WashingMachineScalarWhereInput = {
+    AND?: Enumerable<WashingMachineScalarWhereInput>
+    OR?: Enumerable<WashingMachineScalarWhereInput>
+    NOT?: Enumerable<WashingMachineScalarWhereInput>
+    id?: IntFilter | number
+    brand?: StringFilter | string
+    model?: StringFilter | string
+    type?: EnumWMTypeEnumFilter | WMTypeEnum
+    capacity?: FloatFilter | number
+    manufacturedYear?: DateTimeFilter | Date | string
+    warrantyEndDate?: DateTimeFilter | Date | string
+    branchId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type BranchCreateWithoutWashingMachinesInput = {
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    branchOwner: BinWashUserCreateNestedOneWithoutOwningBranchesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUncheckedCreateWithoutWashingMachinesInput = {
+    id?: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchCreateOrConnectWithoutWashingMachinesInput = {
+    where: BranchWhereUniqueInput
+    create: XOR<BranchCreateWithoutWashingMachinesInput, BranchUncheckedCreateWithoutWashingMachinesInput>
+  }
+
+  export type WMProgramCreateWithoutEquippingWMsInput = {
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    usageRecords?: UsageRecordCreateNestedManyWithoutProgramInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUncheckedCreateWithoutEquippingWMsInput = {
+    id?: number
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutProgramInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramCreateOrConnectWithoutEquippingWMsInput = {
+    where: WMProgramWhereUniqueInput
+    create: XOR<WMProgramCreateWithoutEquippingWMsInput, WMProgramUncheckedCreateWithoutEquippingWMsInput>
+  }
+
+  export type UsageRecordCreateWithoutWashingMachineInput = {
+    dateTime: Date | string
+    user: BinWashUserCreateNestedOneWithoutUsageRecordsInput
+    program: WMProgramCreateNestedOneWithoutUsageRecordsInput
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUncheckedCreateWithoutWashingMachineInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordCreateOrConnectWithoutWashingMachineInput = {
+    where: UsageRecordWhereUniqueInput
+    create: XOR<UsageRecordCreateWithoutWashingMachineInput, UsageRecordUncheckedCreateWithoutWashingMachineInput>
+  }
+
+  export type UsageRecordCreateManyWashingMachineInputEnvelope = {
+    data: Enumerable<UsageRecordCreateManyWashingMachineInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WMMaintenanceRecordCreateWithoutMaintainedWMInput = {
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    maintainer: BinWashUserCreateNestedOneWithoutWMMaintenanceRecordsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput = {
+    id?: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordCreateOrConnectWithoutMaintainedWMInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    create: XOR<WMMaintenanceRecordCreateWithoutMaintainedWMInput, WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>
+  }
+
+  export type WMMaintenanceRecordCreateManyMaintainedWMInputEnvelope = {
+    data: Enumerable<WMMaintenanceRecordCreateManyMaintainedWMInput>
+    skipDuplicates?: boolean
+  }
+
+  export type BranchUpsertWithoutWashingMachinesInput = {
+    update: XOR<BranchUpdateWithoutWashingMachinesInput, BranchUncheckedUpdateWithoutWashingMachinesInput>
+    create: XOR<BranchCreateWithoutWashingMachinesInput, BranchUncheckedCreateWithoutWashingMachinesInput>
+  }
+
+  export type BranchUpdateWithoutWashingMachinesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    branchOwner?: BinWashUserUpdateOneRequiredWithoutOwningBranchesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchUncheckedUpdateWithoutWashingMachinesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUpsertWithWhereUniqueWithoutEquippingWMsInput = {
+    where: WMProgramWhereUniqueInput
+    update: XOR<WMProgramUpdateWithoutEquippingWMsInput, WMProgramUncheckedUpdateWithoutEquippingWMsInput>
+    create: XOR<WMProgramCreateWithoutEquippingWMsInput, WMProgramUncheckedCreateWithoutEquippingWMsInput>
+  }
+
+  export type WMProgramUpdateWithWhereUniqueWithoutEquippingWMsInput = {
+    where: WMProgramWhereUniqueInput
+    data: XOR<WMProgramUpdateWithoutEquippingWMsInput, WMProgramUncheckedUpdateWithoutEquippingWMsInput>
+  }
+
+  export type WMProgramUpdateManyWithWhereWithoutEquippingWMsInput = {
+    where: WMProgramScalarWhereInput
+    data: XOR<WMProgramUpdateManyMutationInput, WMProgramUncheckedUpdateManyWithoutEquippedProgramsInput>
+  }
+
+  export type WMProgramScalarWhereInput = {
+    AND?: Enumerable<WMProgramScalarWhereInput>
+    OR?: Enumerable<WMProgramScalarWhereInput>
+    NOT?: Enumerable<WMProgramScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    maxCapacity?: FloatFilter | number
+    duration?: IntFilter | number
+    price?: FloatFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UsageRecordUpsertWithWhereUniqueWithoutWashingMachineInput = {
+    where: UsageRecordWhereUniqueInput
+    update: XOR<UsageRecordUpdateWithoutWashingMachineInput, UsageRecordUncheckedUpdateWithoutWashingMachineInput>
+    create: XOR<UsageRecordCreateWithoutWashingMachineInput, UsageRecordUncheckedCreateWithoutWashingMachineInput>
+  }
+
+  export type UsageRecordUpdateWithWhereUniqueWithoutWashingMachineInput = {
+    where: UsageRecordWhereUniqueInput
+    data: XOR<UsageRecordUpdateWithoutWashingMachineInput, UsageRecordUncheckedUpdateWithoutWashingMachineInput>
+  }
+
+  export type UsageRecordUpdateManyWithWhereWithoutWashingMachineInput = {
+    where: UsageRecordScalarWhereInput
+    data: XOR<UsageRecordUpdateManyMutationInput, UsageRecordUncheckedUpdateManyWithoutUsageRecordsInput>
+  }
+
+  export type WMMaintenanceRecordUpsertWithWhereUniqueWithoutMaintainedWMInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    update: XOR<WMMaintenanceRecordUpdateWithoutMaintainedWMInput, WMMaintenanceRecordUncheckedUpdateWithoutMaintainedWMInput>
+    create: XOR<WMMaintenanceRecordCreateWithoutMaintainedWMInput, WMMaintenanceRecordUncheckedCreateWithoutMaintainedWMInput>
+  }
+
+  export type WMMaintenanceRecordUpdateWithWhereUniqueWithoutMaintainedWMInput = {
+    where: WMMaintenanceRecordWhereUniqueInput
+    data: XOR<WMMaintenanceRecordUpdateWithoutMaintainedWMInput, WMMaintenanceRecordUncheckedUpdateWithoutMaintainedWMInput>
+  }
+
+  export type WMMaintenanceRecordUpdateManyWithWhereWithoutMaintainedWMInput = {
+    where: WMMaintenanceRecordScalarWhereInput
+    data: XOR<WMMaintenanceRecordUpdateManyMutationInput, WMMaintenanceRecordUncheckedUpdateManyWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type WashingMachineCreateWithoutEquippedProgramsInput = {
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    locatedBranch: BranchCreateNestedOneWithoutWashingMachinesInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUncheckedCreateWithoutEquippedProgramsInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    branchId: number
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutWashingMachineInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineCreateOrConnectWithoutEquippedProgramsInput = {
+    where: WashingMachineWhereUniqueInput
+    create: XOR<WashingMachineCreateWithoutEquippedProgramsInput, WashingMachineUncheckedCreateWithoutEquippedProgramsInput>
+  }
+
+  export type UsageRecordCreateWithoutProgramInput = {
+    dateTime: Date | string
+    user: BinWashUserCreateNestedOneWithoutUsageRecordsInput
+    washingMachine: WashingMachineCreateNestedOneWithoutUsageRecordsInput
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordUncheckedCreateWithoutProgramInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    washingMachineId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordCreateOrConnectWithoutProgramInput = {
+    where: UsageRecordWhereUniqueInput
+    create: XOR<UsageRecordCreateWithoutProgramInput, UsageRecordUncheckedCreateWithoutProgramInput>
+  }
+
+  export type UsageRecordCreateManyProgramInputEnvelope = {
+    data: Enumerable<UsageRecordCreateManyProgramInput>
+    skipDuplicates?: boolean
+  }
+
+  export type WashingMachineUpsertWithWhereUniqueWithoutEquippedProgramsInput = {
+    where: WashingMachineWhereUniqueInput
+    update: XOR<WashingMachineUpdateWithoutEquippedProgramsInput, WashingMachineUncheckedUpdateWithoutEquippedProgramsInput>
+    create: XOR<WashingMachineCreateWithoutEquippedProgramsInput, WashingMachineUncheckedCreateWithoutEquippedProgramsInput>
+  }
+
+  export type WashingMachineUpdateWithWhereUniqueWithoutEquippedProgramsInput = {
+    where: WashingMachineWhereUniqueInput
+    data: XOR<WashingMachineUpdateWithoutEquippedProgramsInput, WashingMachineUncheckedUpdateWithoutEquippedProgramsInput>
+  }
+
+  export type WashingMachineUpdateManyWithWhereWithoutEquippedProgramsInput = {
+    where: WashingMachineScalarWhereInput
+    data: XOR<WashingMachineUpdateManyMutationInput, WashingMachineUncheckedUpdateManyWithoutEquippingWMsInput>
+  }
+
+  export type UsageRecordUpsertWithWhereUniqueWithoutProgramInput = {
+    where: UsageRecordWhereUniqueInput
+    update: XOR<UsageRecordUpdateWithoutProgramInput, UsageRecordUncheckedUpdateWithoutProgramInput>
+    create: XOR<UsageRecordCreateWithoutProgramInput, UsageRecordUncheckedCreateWithoutProgramInput>
+  }
+
+  export type UsageRecordUpdateWithWhereUniqueWithoutProgramInput = {
+    where: UsageRecordWhereUniqueInput
+    data: XOR<UsageRecordUpdateWithoutProgramInput, UsageRecordUncheckedUpdateWithoutProgramInput>
+  }
+
+  export type UsageRecordUpdateManyWithWhereWithoutProgramInput = {
+    where: UsageRecordScalarWhereInput
+    data: XOR<UsageRecordUpdateManyMutationInput, UsageRecordUncheckedUpdateManyWithoutUsageRecordsInput>
+  }
+
+  export type WashingMachineCreateWithoutWMMaintenanceRecordsInput = {
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    locatedBranch: BranchCreateNestedOneWithoutWashingMachinesInput
+    equippedPrograms?: WMProgramCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutWashingMachineInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUncheckedCreateWithoutWMMaintenanceRecordsInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    branchId: number
+    equippedPrograms?: WMProgramUncheckedCreateNestedManyWithoutEquippingWMsInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutWashingMachineInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineCreateOrConnectWithoutWMMaintenanceRecordsInput = {
+    where: WashingMachineWhereUniqueInput
+    create: XOR<WashingMachineCreateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedCreateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type BinWashUserCreateWithoutWMMaintenanceRecordsInput = {
+    name: string
+    owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput = {
+    id?: number
+    name: string
+    owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
+    topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserCreateOrConnectWithoutWMMaintenanceRecordsInput = {
+    where: BinWashUserWhereUniqueInput
+    create: XOR<BinWashUserCreateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type WashingMachineUpsertWithoutWMMaintenanceRecordsInput = {
+    update: XOR<WashingMachineUpdateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedUpdateWithoutWMMaintenanceRecordsInput>
+    create: XOR<WashingMachineCreateWithoutWMMaintenanceRecordsInput, WashingMachineUncheckedCreateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type WashingMachineUpdateWithoutWMMaintenanceRecordsInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    locatedBranch?: BranchUpdateOneRequiredWithoutWashingMachinesNestedInput
+    equippedPrograms?: WMProgramUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutWashingMachineNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateWithoutWMMaintenanceRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    equippedPrograms?: WMProgramUncheckedUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutWashingMachineNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUpsertWithoutWMMaintenanceRecordsInput = {
+    update: XOR<BinWashUserUpdateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedUpdateWithoutWMMaintenanceRecordsInput>
+    create: XOR<BinWashUserCreateWithoutWMMaintenanceRecordsInput, BinWashUserUncheckedCreateWithoutWMMaintenanceRecordsInput>
+  }
+
+  export type BinWashUserUpdateWithoutWMMaintenanceRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateWithoutWMMaintenanceRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
+    topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserCreateWithoutUsageRecordsInput = {
+    name: string
+    owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
+    topUpRecords?: TopUpRecordCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUncheckedCreateWithoutUsageRecordsInput = {
+    id?: number
+    name: string
+    owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
+    topUpRecords?: TopUpRecordUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserCreateOrConnectWithoutUsageRecordsInput = {
+    where: BinWashUserWhereUniqueInput
+    create: XOR<BinWashUserCreateWithoutUsageRecordsInput, BinWashUserUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type WashingMachineCreateWithoutUsageRecordsInput = {
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    locatedBranch: BranchCreateNestedOneWithoutWashingMachinesInput
+    equippedPrograms?: WMProgramCreateNestedManyWithoutEquippingWMsInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUncheckedCreateWithoutUsageRecordsInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    branchId: number
+    equippedPrograms?: WMProgramUncheckedCreateNestedManyWithoutEquippingWMsInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainedWMInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineCreateOrConnectWithoutUsageRecordsInput = {
+    where: WashingMachineWhereUniqueInput
+    create: XOR<WashingMachineCreateWithoutUsageRecordsInput, WashingMachineUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type WMProgramCreateWithoutUsageRecordsInput = {
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    equippingWMs?: WashingMachineCreateNestedManyWithoutEquippedProgramsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUncheckedCreateWithoutUsageRecordsInput = {
+    id?: number
+    name: string
+    maxCapacity: number
+    duration: number
+    price: number
+    equippingWMs?: WashingMachineUncheckedCreateNestedManyWithoutEquippedProgramsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramCreateOrConnectWithoutUsageRecordsInput = {
+    where: WMProgramWhereUniqueInput
+    create: XOR<WMProgramCreateWithoutUsageRecordsInput, WMProgramUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type BinWashUserUpsertWithoutUsageRecordsInput = {
+    update: XOR<BinWashUserUpdateWithoutUsageRecordsInput, BinWashUserUncheckedUpdateWithoutUsageRecordsInput>
+    create: XOR<BinWashUserCreateWithoutUsageRecordsInput, BinWashUserUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type BinWashUserUpdateWithoutUsageRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
+    topUpRecords?: TopUpRecordUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateWithoutUsageRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
+    topUpRecords?: TopUpRecordUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUpsertWithoutUsageRecordsInput = {
+    update: XOR<WashingMachineUpdateWithoutUsageRecordsInput, WashingMachineUncheckedUpdateWithoutUsageRecordsInput>
+    create: XOR<WashingMachineCreateWithoutUsageRecordsInput, WashingMachineUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type WashingMachineUpdateWithoutUsageRecordsInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    locatedBranch?: BranchUpdateOneRequiredWithoutWashingMachinesNestedInput
+    equippedPrograms?: WMProgramUpdateManyWithoutEquippingWMsNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateWithoutUsageRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    equippedPrograms?: WMProgramUncheckedUpdateManyWithoutEquippingWMsNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUpsertWithoutUsageRecordsInput = {
+    update: XOR<WMProgramUpdateWithoutUsageRecordsInput, WMProgramUncheckedUpdateWithoutUsageRecordsInput>
+    create: XOR<WMProgramCreateWithoutUsageRecordsInput, WMProgramUncheckedCreateWithoutUsageRecordsInput>
+  }
+
+  export type WMProgramUpdateWithoutUsageRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    equippingWMs?: WashingMachineUpdateManyWithoutEquippedProgramsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUncheckedUpdateWithoutUsageRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    equippingWMs?: WashingMachineUncheckedUpdateManyWithoutEquippedProgramsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserCreateWithoutTopUpRecordsInput = {
+    name: string
+    owningBranches?: BranchCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserUncheckedCreateWithoutTopUpRecordsInput = {
+    id?: number
+    name: string
+    owningBranches?: BranchUncheckedCreateNestedManyWithoutBranchOwnerInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedCreateNestedManyWithoutMaintainerInput
+    usageRecords?: UsageRecordUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BinWashUserCreateOrConnectWithoutTopUpRecordsInput = {
+    where: BinWashUserWhereUniqueInput
+    create: XOR<BinWashUserCreateWithoutTopUpRecordsInput, BinWashUserUncheckedCreateWithoutTopUpRecordsInput>
+  }
+
+  export type BinWashUserUpsertWithoutTopUpRecordsInput = {
+    update: XOR<BinWashUserUpdateWithoutTopUpRecordsInput, BinWashUserUncheckedUpdateWithoutTopUpRecordsInput>
+    create: XOR<BinWashUserCreateWithoutTopUpRecordsInput, BinWashUserUncheckedCreateWithoutTopUpRecordsInput>
+  }
+
+  export type BinWashUserUpdateWithoutTopUpRecordsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BinWashUserUncheckedUpdateWithoutTopUpRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    owningBranches?: BranchUncheckedUpdateManyWithoutBranchOwnerNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainerNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FacebookUserRelationCreateWithoutFollowingUserInput = {
@@ -39766,6 +50332,369 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchCreateManyBranchOwnerInput = {
+    id?: number
+    name: string
+    location: string
+    telephoneNo: string
+    area: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordCreateManyMaintainerInput = {
+    id?: number
+    washingMachineId: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UsageRecordCreateManyUserInput = {
+    id?: number
+    dateTime: Date | string
+    washingMachineId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TopUpRecordCreateManyUserInput = {
+    id?: number
+    dateTime: Date | string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BranchUpdateWithoutBranchOwnerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    washingMachines?: WashingMachineUpdateManyWithoutLocatedBranchNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchUncheckedUpdateWithoutBranchOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    washingMachines?: WashingMachineUncheckedUpdateManyWithoutLocatedBranchNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BranchUncheckedUpdateManyWithoutOwningBranchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    telephoneNo?: StringFieldUpdateOperationsInput | string
+    area?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUpdateWithoutMaintainerInput = {
+    maintainedWM?: WashingMachineUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateWithoutMaintainerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateManyWithoutWMMaintenanceRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUpdateWithoutUserInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    washingMachine?: WashingMachineUpdateOneRequiredWithoutUsageRecordsNestedInput
+    program?: WMProgramUpdateOneRequiredWithoutUsageRecordsNestedInput
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    wMProgramId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateManyWithoutUsageRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    wMProgramId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordUpdateWithoutUserInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TopUpRecordUncheckedUpdateManyWithoutTopUpRecordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineCreateManyLocatedBranchInput = {
+    id?: number
+    brand: string
+    model: string
+    type: WMTypeEnum
+    capacity: number
+    manufacturedYear: Date | string
+    warrantyEndDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUpdateWithoutLocatedBranchInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    equippedPrograms?: WMProgramUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateWithoutLocatedBranchInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    equippedPrograms?: WMProgramUncheckedUpdateManyWithoutEquippingWMsNestedInput
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateManyWithoutWashingMachinesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordCreateManyWashingMachineInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    wMProgramId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMMaintenanceRecordCreateManyMaintainedWMInput = {
+    id?: number
+    maintenanceDateTime: Date | string
+    level: number
+    details: string
+    binWashUserId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WMProgramUpdateWithoutEquippingWMsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    usageRecords?: UsageRecordUpdateManyWithoutProgramNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUncheckedUpdateWithoutEquippingWMsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutProgramNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMProgramUncheckedUpdateManyWithoutEquippedProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxCapacity?: FloatFieldUpdateOperationsInput | number
+    duration?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUpdateWithoutWashingMachineInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: BinWashUserUpdateOneRequiredWithoutUsageRecordsNestedInput
+    program?: WMProgramUpdateOneRequiredWithoutUsageRecordsNestedInput
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateWithoutWashingMachineInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    wMProgramId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUpdateWithoutMaintainedWMInput = {
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    maintainer?: BinWashUserUpdateOneRequiredWithoutWMMaintenanceRecordsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WMMaintenanceRecordUncheckedUpdateWithoutMaintainedWMInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    maintenanceDateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    level?: IntFieldUpdateOperationsInput | number
+    details?: StringFieldUpdateOperationsInput | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordCreateManyProgramInput = {
+    id?: number
+    dateTime: Date | string
+    binWashUserId: number
+    washingMachineId: number
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WashingMachineUpdateWithoutEquippedProgramsInput = {
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    locatedBranch?: BranchUpdateOneRequiredWithoutWashingMachinesNestedInput
+    usageRecords?: UsageRecordUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateWithoutEquippedProgramsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    usageRecords?: UsageRecordUncheckedUpdateManyWithoutWashingMachineNestedInput
+    wMMaintenanceRecords?: WMMaintenanceRecordUncheckedUpdateManyWithoutMaintainedWMNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WashingMachineUncheckedUpdateManyWithoutEquippingWMsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    type?: EnumWMTypeEnumFieldUpdateOperationsInput | WMTypeEnum
+    capacity?: FloatFieldUpdateOperationsInput | number
+    manufacturedYear?: DateTimeFieldUpdateOperationsInput | Date | string
+    warrantyEndDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    branchId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUpdateWithoutProgramInput = {
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: BinWashUserUpdateOneRequiredWithoutUsageRecordsNestedInput
+    washingMachine?: WashingMachineUpdateOneRequiredWithoutUsageRecordsNestedInput
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsageRecordUncheckedUpdateWithoutProgramInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    binWashUserId?: IntFieldUpdateOperationsInput | number
+    washingMachineId?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

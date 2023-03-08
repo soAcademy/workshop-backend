@@ -1,0 +1,111 @@
+model BinWashUser {
+  id                   Int                   @id @default(autoincrement())
+  name                 String
+  owningBranches       Branch[]
+  wMMaintenanceRecords WMMaintenanceRecord[]
+  usageRecords         UsageRecord[]
+  topUpRecords         TopUpRecord[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@map("user")
+  @@schema("binwash")
+}
+
+model Branch {
+  id              Int              @id @default(autoincrement())
+  name            String
+  location        String
+  telephoneNo     String
+  area            Float
+  branchOwner     BinWashUser      @relation(fields: [binWashUserId], references: [id])
+  binWashUserId   Int
+  washingMachines WashingMachine[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@schema("binwash")
+}
+
+enum WMTypeEnum {
+  FRONT_LOAD
+  TOP_LOAD
+
+  @@schema("binwash")
+}
+
+model WashingMachine {
+  id                   Int                   @id @default(autoincrement())
+  brand                String
+  model                String
+  type                 WMTypeEnum
+  capacity             Float
+  manufacturedYear     DateTime
+  warrantyEndDate      DateTime
+  locatedBranch        Branch                @relation(fields: [branchId], references: [id])
+  branchId             Int
+  equippedPrograms     WMProgram[]
+  usageRecords         UsageRecord[]
+  wMMaintenanceRecords WMMaintenanceRecord[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  @@schema("binwash")
+}
+
+model WMProgram {
+  id           Int              @id @default(autoincrement())
+  name         String
+  maxCapacity  Float
+  duration     Int
+  price        Float
+  equippingWMs WashingMachine[]
+  usageRecords UsageRecord[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@schema("binwash")
+}
+
+model WMMaintenanceRecord {
+  id                  Int            @id @default(autoincrement())
+  maintainedWM        WashingMachine @relation(fields: [washingMachineId], references: [id])
+  washingMachineId    Int
+  maintenanceDateTime DateTime
+  level               Int
+  details             String
+  maintainer          BinWashUser    @relation(fields: [binWashUserId], references: [id])
+  binWashUserId       Int
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@schema("binwash")
+}
+
+model UsageRecord {
+  id               Int            @id @default(autoincrement())
+  dateTime         DateTime
+  user             BinWashUser    @relation(fields: [binWashUserId], references: [id])
+  binWashUserId    Int
+  washingMachine   WashingMachine @relation(fields: [washingMachineId], references: [id])
+  washingMachineId Int
+  program          WMProgram      @relation(fields: [wMProgramId], references: [id])
+  wMProgramId      Int
+  price            Float
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@schema("binwash")
+}
+
+model TopUpRecord {
+  id            Int         @id @default(autoincrement())
+  dateTime      DateTime
+  user          BinWashUser @relation(fields: [binWashUserId], references: [id])
+  binWashUserId Int
+  price         Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@schema("binwash")
+}
