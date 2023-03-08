@@ -124,6 +124,30 @@ exports.Prisma.BinKitchenOrderScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.BookOnAuthorScalarFieldEnum = makeEnum({
+  id: 'id',
+  bookId: 'bookId',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.BookOnCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  bookId: 'bookId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.ChanelOnUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  chanelId: 'chanelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.CommentScalarFieldEnum = makeEnum({
   id: 'id',
   postId: 'postId',
@@ -138,6 +162,30 @@ exports.Prisma.DirectMsgScalarFieldEnum = makeEnum({
   fromUserId: 'fromUserId',
   toUserId: 'toUserId',
   msgDetail: 'msgDetail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FBDirectMsgScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  msgDetail: 'msgDetail',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FBHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  hashtag: 'hashtag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.FBPostOnHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  hashtagId: 'hashtagId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -200,11 +248,97 @@ exports.Prisma.HashtagScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.LibraryAuthorScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryBookCopyScalarFieldEnum = makeEnum({
+  id: 'id',
+  bookId: 'bookId',
+  atUniversityId: 'atUniversityId',
+  currentBorrowBytudentId: 'currentBorrowBytudentId',
+  status: 'status',
+  isbn: 'isbn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryBookScalarFieldEnum = makeEnum({
+  id: 'id',
+  universityId: 'universityId',
+  name: 'name',
+  isbn: 'isbn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryHistoryOfBookCopyScalarFieldEnum = makeEnum({
+  id: 'id',
+  copyId: 'copyId',
+  oncetBorrowBytudentId: 'oncetBorrowBytudentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryStudentBorrowingScalarFieldEnum = makeEnum({
+  id: 'id',
+  studentId: 'studentId',
+  bookCopyId: 'bookCopyId',
+  borrowingDate: 'borrowingDate',
+  targetReturnDate: 'targetReturnDate',
+  actualReturnDate: 'actualReturnDate',
+  borrowFromUniversityId: 'borrowFromUniversityId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryStudentRequestScalarFieldEnum = makeEnum({
+  id: 'id',
+  studentId: 'studentId',
+  bookCopyId: 'bookCopyId',
+  fromUniversityId: 'fromUniversityId',
+  toUniversityId: 'toUniversityId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryStudentScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LibraryUniversityScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.LikeScalarFieldEnum = makeEnum({
   id: 'id',
   postId: 'postId',
   userId: 'userId',
-  likeType: 'likeType',
+  likeTypeId: 'likeTypeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.LikeTypeScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -258,7 +392,14 @@ exports.Prisma.ShareScalarFieldEnum = makeEnum({
   id: 'id',
   postId: 'postId',
   userId: 'userId',
-  shareStatus: 'shareStatus',
+  shareStatusId: 'shareStatusId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.ShareStatusScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -350,6 +491,165 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.WashingBranchScalarFieldEnum = makeEnum({
+  id: 'id',
+  branchName: 'branchName',
+  address: 'address',
+  tel: 'tel',
+  area: 'area',
+  ownerName: 'ownerName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingMachineMaintenanceScalarFieldEnum = makeEnum({
+  id: 'id',
+  machineId: 'machineId',
+  symptom: 'symptom',
+  failureLevel: 'failureLevel',
+  mechanicName: 'mechanicName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingMachineOnProgramScalarFieldEnum = makeEnum({
+  id: 'id',
+  machineId: 'machineId',
+  programId: 'programId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingMachineProgramScalarFieldEnum = makeEnum({
+  id: 'id',
+  programName: 'programName',
+  price: 'price',
+  time: 'time',
+  maxWeight: 'maxWeight',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingMachineScalarFieldEnum = makeEnum({
+  id: 'id',
+  branchId: 'branchId',
+  brand: 'brand',
+  weight: 'weight',
+  type: 'type',
+  productionYear: 'productionYear',
+  warrantyEnd: 'warrantyEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingTopUpScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  topUpAmount: 'topUpAmount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingUseHistoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  branchId: 'branchId',
+  machineId: 'machineId',
+  programId: 'programId',
+  price: 'price',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.WashingUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  userName: 'userName',
+  tel: 'tel',
+  remainCoupon: 'remainCoupon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTAdminScalarFieldEnum = makeEnum({
+  id: 'id',
+  chanelId: 'chanelId',
+  adminUserId: 'adminUserId',
+  roleId: 'roleId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTChanelScalarFieldEnum = makeEnum({
+  id: 'id',
+  chaneName: 'chaneName',
+  image: 'image',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  videoId: 'videoId',
+  commentDetail: 'commentDetail',
+  commentFromUserId: 'commentFromUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTRolePermissionScalarFieldEnum = makeEnum({
+  id: 'id',
+  roleId: 'roleId',
+  permissionName: 'permissionName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTRoleScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTSubCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentId: 'commentId',
+  subCommentDetail: 'subCommentDetail',
+  subCommentFromUserId: 'subCommentFromUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTSubscribeScalarFieldEnum = makeEnum({
+  id: 'id',
+  chanelId: 'chanelId',
+  subscribeUserId: 'subscribeUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  userName: 'userName',
+  profileImage: 'profileImage',
+  email: 'email',
+  bio: 'bio',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YTVideoScalarFieldEnum = makeEnum({
+  id: 'id',
+  chanelId: 'chanelId',
+  videoLink: 'videoLink',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
@@ -367,6 +667,22 @@ exports.Prisma.ModelName = makeEnum({
   GroupOnUser: 'GroupOnUser',
   PostinGroup: 'PostinGroup',
   PostinProfile: 'PostinProfile',
+  LikeType: 'LikeType',
+  ShareStatus: 'ShareStatus',
+  FBDirectMsg: 'FBDirectMsg',
+  FBHashtag: 'FBHashtag',
+  FBPostOnHashtag: 'FBPostOnHashtag',
+  LibraryUniversity: 'LibraryUniversity',
+  LibraryStudent: 'LibraryStudent',
+  LibraryBook: 'LibraryBook',
+  LibraryBookCopy: 'LibraryBookCopy',
+  LibraryHistoryOfBookCopy: 'LibraryHistoryOfBookCopy',
+  LibraryCategory: 'LibraryCategory',
+  LibraryAuthor: 'LibraryAuthor',
+  BookOnAuthor: 'BookOnAuthor',
+  BookOnCategory: 'BookOnCategory',
+  LibraryStudentRequest: 'LibraryStudentRequest',
+  LibraryStudentBorrowing: 'LibraryStudentBorrowing',
   TodoList: 'TodoList',
   TriviaCategory: 'TriviaCategory',
   TriviaQuiz: 'TriviaQuiz',
@@ -380,7 +696,25 @@ exports.Prisma.ModelName = makeEnum({
   DirectMsg: 'DirectMsg',
   Hashtag: 'Hashtag',
   Reply: 'Reply',
-  PostOnHashtag: 'PostOnHashtag'
+  PostOnHashtag: 'PostOnHashtag',
+  WashingBranch: 'WashingBranch',
+  WashingMachine: 'WashingMachine',
+  WashingMachineMaintenance: 'WashingMachineMaintenance',
+  WashingMachineProgram: 'WashingMachineProgram',
+  WashingMachineOnProgram: 'WashingMachineOnProgram',
+  WashingUser: 'WashingUser',
+  WashingTopUp: 'WashingTopUp',
+  WashingUseHistory: 'WashingUseHistory',
+  YTUser: 'YTUser',
+  YTChanel: 'YTChanel',
+  ChanelOnUser: 'ChanelOnUser',
+  YTAdmin: 'YTAdmin',
+  YTRole: 'YTRole',
+  YTRolePermission: 'YTRolePermission',
+  YTSubscribe: 'YTSubscribe',
+  YTVideo: 'YTVideo',
+  YTComment: 'YTComment',
+  YTSubComment: 'YTSubComment'
 });
 
 /**

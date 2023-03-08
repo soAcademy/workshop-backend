@@ -1,0 +1,128 @@
+model LibraryUniversity {
+  id                      Int                       @id @default(autoincrement())
+  name                    String
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  libraryBook             LibraryBook[]
+  libraryBookCopy         LibraryBookCopy[]
+  fromUniversity          LibraryStudentRequest[]   @relation("FromUniversity")
+  toUniversity            LibraryStudentRequest[]   @relation("ToUniversity")
+  libraryStudentBorrowing LibraryStudentBorrowing[]
+}
+
+model LibraryStudent {
+  id                               Int                        @id @default(autoincrement())
+  name                             String
+  createdAt                        DateTime                   @default(now())
+  updatedAt                        DateTime                   @updatedAt
+  libraryBookCopy                  LibraryBookCopy[]
+  historyOfBookCopy                LibraryHistoryOfBookCopy[]
+  libraryHistoryOfStudentBorrowing LibraryStudentRequest[]
+  libraryStudentBorrowing          LibraryStudentBorrowing[]
+}
+
+model LibraryBook {
+  id              Int               @id @default(autoincrement())
+  university      LibraryUniversity @relation(fields: [universityId], references: [id])
+  universityId    Int
+  name            String
+  isbn            String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  libraryBookCopy LibraryBookCopy[]
+  bookOnAuthor    BookOnAuthor[]
+  bookOnCategory  BookOnCategory[]
+}
+
+model LibraryBookCopy {
+  id                               Int                        @id @default(autoincrement())
+  book                             LibraryBook                @relation(fields: [bookId], references: [id])
+  bookId                           Int
+  atUniversity                     LibraryUniversity?         @relation(fields: [atUniversityId], references: [id])
+  atUniversityId                   Int?
+  currentBorrowByStudent           LibraryStudent?            @relation(fields: [currentBorrowBytudentId], references: [id])
+  currentBorrowBytudentId          Int?
+  status                           String
+  isbn                             String
+  createdAt                        DateTime                   @default(now())
+  updatedAt                        DateTime                   @updatedAt
+  historyOfBookCopy                LibraryHistoryOfBookCopy[]
+  libraryHistoryOfStudentBorrowing LibraryStudentRequest[]
+  libraryStudentBorrowing          LibraryStudentBorrowing[]
+}
+
+model LibraryHistoryOfBookCopy {
+  id                    Int             @id @default(autoincrement())
+  copy                  LibraryBookCopy @relation(fields: [copyId], references: [id])
+  copyId                Int
+  onceBorrowByStudent   LibraryStudent? @relation(fields: [oncetBorrowBytudentId], references: [id])
+  oncetBorrowBytudentId Int?
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+}
+
+model LibraryCategory {
+  id             Int              @id @default(autoincrement())
+  name           String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  bookOnCategory BookOnCategory[]
+}
+
+model LibraryAuthor {
+  id           Int            @id @default(autoincrement())
+  name         String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  bookOnAuthor BookOnAuthor[]
+}
+
+model BookOnAuthor {
+  id        Int           @id @default(autoincrement())
+  book      LibraryBook   @relation(fields: [bookId], references: [id])
+  bookId    Int
+  author    LibraryAuthor @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model BookOnCategory {
+  id         Int             @id @default(autoincrement())
+  book       LibraryBook     @relation(fields: [bookId], references: [id])
+  bookId     Int
+  category   LibraryCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+}
+
+model LibraryStudentRequest {
+  id               Int               @id @default(autoincrement())
+  student          LibraryStudent    @relation(fields: [studentId], references: [id])
+  studentId        Int
+  bookCopy         LibraryBookCopy   @relation(fields: [bookCopyId], references: [id])
+  bookCopyId       Int
+  fromUniversity   LibraryUniversity @relation("FromUniversity", fields: [fromUniversityId], references: [id])
+  fromUniversityId Int
+  toUniversity     LibraryUniversity @relation("ToUniversity", fields: [toUniversityId], references: [id])
+  toUniversityId   Int
+  status           String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model LibraryStudentBorrowing {
+  id                     Int               @id @default(autoincrement())
+  stident                LibraryStudent    @relation(fields: [studentId], references: [id])
+  studentId              Int
+  bookCopy               LibraryBookCopy   @relation(fields: [bookCopyId], references: [id])
+  bookCopyId             Int
+  borrowingDate          DateTime
+  targetReturnDate       DateTime
+  actualReturnDate       DateTime?
+  borrowFromUniversity   LibraryUniversity @relation(fields: [borrowFromUniversityId], references: [id])
+  borrowFromUniversityId Int
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+}

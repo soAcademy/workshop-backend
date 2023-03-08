@@ -1,0 +1,111 @@
+model YTUser {
+  id           Int            @id @default(autoincrement())
+  userName     String
+  profileImage String
+  email        String
+  bio          String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ChanelOnUser ChanelOnUser[]
+  YTAdmin      YTAdmin[]
+  YTComment    YTComment[]
+  YTSubComment YTSubComment[]
+  YTSubscribe  YTSubscribe[]
+}
+
+model YTChanel {
+  id           Int            @id @default(autoincrement())
+  chaneName    String
+  image        String?
+  description  String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ChanelOnUser ChanelOnUser[]
+  YTAdmin      YTAdmin[]
+  YTVideo      YTVideo[]
+  YTSubscribe  YTSubscribe[]
+}
+
+model ChanelOnUser {
+  id        Int      @id @default(autoincrement())
+  user      YTUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  chanel    YTChanel @relation(fields: [chanelId], references: [id])
+  chanelId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model YTAdmin {
+  id          Int      @id @default(autoincrement())
+  chanel      YTChanel @relation(fields: [chanelId], references: [id])
+  chanelId    Int
+  adminUser   YTUser   @relation(fields: [adminUserId], references: [id])
+  adminUserId Int
+  role        YTRole   @relation(fields: [roleId], references: [id])
+  roleId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model YTRole {
+  id               Int                @id @default(autoincrement())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  YTAdmin          YTAdmin[]
+  YTRolePermission YTRolePermission[]
+}
+
+model YTRolePermission {
+  id             Int      @id @default(autoincrement())
+  roldid         YTRole   @relation(fields: [roleId], references: [id])
+  roleId         Int
+  permissionName String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model YTSubscribe {
+  id              Int      @id @default(autoincrement())
+  chanel          YTChanel @relation(fields: [chanelId], references: [id])
+  chanelId        Int
+  subscribeUser   YTUser   @relation(fields: [subscribeUserId], references: [id])
+  subscribeUserId Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model YTVideo {
+  id          Int         @id @default(autoincrement())
+  chanel      YTChanel    @relation(fields: [chanelId], references: [id])
+  chanelId    Int
+  videoLink   String
+  description String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  YTComment   YTComment[]
+}
+
+model YTComment {
+  id                Int            @id @default(autoincrement())
+  video             YTVideo        @relation(fields: [videoId], references: [id])
+  videoId           Int
+  commentDetail     String
+  commentFromUser   YTUser         @relation(fields: [commentFromUserId], references: [id])
+  commentFromUserId Int
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  YTSubComment      YTSubComment[]
+}
+
+model YTSubComment {
+  id                   Int       @id @default(autoincrement())
+  comment              YTComment @relation(fields: [commentId], references: [id])
+  commentId            Int
+  subCommentDetail     String
+  subCommentFromUser   YTUser    @relation(fields: [subCommentFromUserId], references: [id])
+  subCommentFromUserId Int
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+}
