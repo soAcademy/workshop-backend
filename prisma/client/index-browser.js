@@ -109,7 +109,7 @@ exports.Prisma.CommentScalarFieldEnum = makeEnum({
   commentText: 'commentText',
   userId: 'userId',
   postId: 'postId',
-  replyToCommentId: 'replyToCommentId',
+  parentCommentId: 'parentCommentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -250,7 +250,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.TweetScalarFieldEnum = makeEnum({
   id: 'id',
   tweetText: 'tweetText',
-  replyToTweetId: 'replyToTweetId',
+  parentTweetId: 'parentTweetId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

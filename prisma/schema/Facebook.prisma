@@ -45,17 +45,17 @@ model Post {
 }
 
 model Comment {
-  id               Int          @id @default(autoincrement())
-  commentText      String
-  commentingUser   FacebookUser @relation(fields: [userId], references: [id])
-  userId           Int
-  parentPost       Post         @relation(fields: [postId], references: [id])
-  postId           Int
-  replyToComment   Comment?     @relation("replyToComment", fields: [replyToCommentId], references: [id])
-  replyToCommentId Int?         @unique
-  repliedComment   Comment?     @relation("replyToComment")
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  id              Int          @id @default(autoincrement())
+  commentText     String
+  commentingUser  FacebookUser @relation(fields: [userId], references: [id])
+  userId          Int
+  parentPost      Post         @relation(fields: [postId], references: [id])
+  postId          Int
+  parentComment   Comment?     @relation("parentComment", fields: [parentCommentId], references: [id])
+  parentCommentId Int?
+  childComments   Comment[]    @relation("parentComment")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@schema("facebook")
 }

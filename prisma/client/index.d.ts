@@ -153,7 +153,7 @@ export type Comment = {
   commentText: string
   userId: number
   postId: number
-  replyToCommentId: number | null
+  parentCommentId: number | null
   createdAt: Date
   updatedAt: Date
 }
@@ -227,7 +227,7 @@ export type UserRelation = {
 export type Tweet = {
   id: number
   tweetText: string
-  replyToTweetId: number | null
+  parentTweetId: number | null
   userId: number
   createdAt: Date
   updatedAt: Date
@@ -1629,6 +1629,49 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CommentCountOutputType
+   */
+
+
+  export type CommentCountOutputType = {
+    childComments: number
+  }
+
+  export type CommentCountOutputTypeSelect = {
+    childComments?: boolean
+  }
+
+  export type CommentCountOutputTypeGetPayload<S extends boolean | null | undefined | CommentCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? CommentCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (CommentCountOutputTypeArgs)
+    ? CommentCountOutputType 
+    : S extends { select: any } & (CommentCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof CommentCountOutputType ? CommentCountOutputType[P] : never
+  } 
+      : CommentCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the CommentCountOutputType
+     */
+    select?: CommentCountOutputTypeSelect | null
+  }
+
+
+
+  /**
    * Count Type FacebookHashTagCountOutputType
    */
 
@@ -1728,10 +1771,12 @@ export namespace Prisma {
 
 
   export type TweetCountOutputType = {
+    childTweets: number
     hashTags: number
   }
 
   export type TweetCountOutputTypeSelect = {
+    childTweets?: boolean
     hashTags?: boolean
   }
 
@@ -13022,14 +13067,14 @@ export namespace Prisma {
     id: number | null
     userId: number | null
     postId: number | null
-    replyToCommentId: number | null
+    parentCommentId: number | null
   }
 
   export type CommentSumAggregateOutputType = {
     id: number | null
     userId: number | null
     postId: number | null
-    replyToCommentId: number | null
+    parentCommentId: number | null
   }
 
   export type CommentMinAggregateOutputType = {
@@ -13037,7 +13082,7 @@ export namespace Prisma {
     commentText: string | null
     userId: number | null
     postId: number | null
-    replyToCommentId: number | null
+    parentCommentId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13047,7 +13092,7 @@ export namespace Prisma {
     commentText: string | null
     userId: number | null
     postId: number | null
-    replyToCommentId: number | null
+    parentCommentId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13057,7 +13102,7 @@ export namespace Prisma {
     commentText: number
     userId: number
     postId: number
-    replyToCommentId: number
+    parentCommentId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -13068,14 +13113,14 @@ export namespace Prisma {
     id?: true
     userId?: true
     postId?: true
-    replyToCommentId?: true
+    parentCommentId?: true
   }
 
   export type CommentSumAggregateInputType = {
     id?: true
     userId?: true
     postId?: true
-    replyToCommentId?: true
+    parentCommentId?: true
   }
 
   export type CommentMinAggregateInputType = {
@@ -13083,7 +13128,7 @@ export namespace Prisma {
     commentText?: true
     userId?: true
     postId?: true
-    replyToCommentId?: true
+    parentCommentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13093,7 +13138,7 @@ export namespace Prisma {
     commentText?: true
     userId?: true
     postId?: true
-    replyToCommentId?: true
+    parentCommentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13103,7 +13148,7 @@ export namespace Prisma {
     commentText?: true
     userId?: true
     postId?: true
-    replyToCommentId?: true
+    parentCommentId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -13201,7 +13246,7 @@ export namespace Prisma {
     commentText: string
     userId: number
     postId: number
-    replyToCommentId: number | null
+    parentCommentId: number | null
     createdAt: Date
     updatedAt: Date
     _count: CommentCountAggregateOutputType | null
@@ -13232,19 +13277,21 @@ export namespace Prisma {
     userId?: boolean
     parentPost?: boolean | PostArgs
     postId?: boolean
-    replyToComment?: boolean | CommentArgs
-    replyToCommentId?: boolean
-    repliedComment?: boolean | CommentArgs
+    parentComment?: boolean | CommentArgs
+    parentCommentId?: boolean
+    childComments?: boolean | Comment$childCommentsArgs
     createdAt?: boolean
     updatedAt?: boolean
+    _count?: boolean | CommentCountOutputTypeArgs
   }
 
 
   export type CommentInclude = {
     commentingUser?: boolean | FacebookUserArgs
     parentPost?: boolean | PostArgs
-    replyToComment?: boolean | CommentArgs
-    repliedComment?: boolean | CommentArgs
+    parentComment?: boolean | CommentArgs
+    childComments?: boolean | Comment$childCommentsArgs
+    _count?: boolean | CommentCountOutputTypeArgs
   }
 
   export type CommentGetPayload<S extends boolean | null | undefined | CommentArgs> =
@@ -13256,16 +13303,18 @@ export namespace Prisma {
     [P in TruthyKeys<S['include']>]:
         P extends 'commentingUser' ? FacebookUserGetPayload<S['include'][P]> :
         P extends 'parentPost' ? PostGetPayload<S['include'][P]> :
-        P extends 'replyToComment' ? CommentGetPayload<S['include'][P]> | null :
-        P extends 'repliedComment' ? CommentGetPayload<S['include'][P]> | null :  never
+        P extends 'parentComment' ? CommentGetPayload<S['include'][P]> | null :
+        P extends 'childComments' ? Array < CommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? CommentCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (CommentArgs | CommentFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'commentingUser' ? FacebookUserGetPayload<S['select'][P]> :
         P extends 'parentPost' ? PostGetPayload<S['select'][P]> :
-        P extends 'replyToComment' ? CommentGetPayload<S['select'][P]> | null :
-        P extends 'repliedComment' ? CommentGetPayload<S['select'][P]> | null :  P extends keyof Comment ? Comment[P] : never
+        P extends 'parentComment' ? CommentGetPayload<S['select'][P]> | null :
+        P extends 'childComments' ? Array < CommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? CommentCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Comment ? Comment[P] : never
   } 
       : Comment
 
@@ -13641,9 +13690,9 @@ export namespace Prisma {
 
     parentPost<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
 
-    replyToComment<T extends CommentArgs= {}>(args?: Subset<T, CommentArgs>): Prisma__CommentClient<CommentGetPayload<T> | Null>;
+    parentComment<T extends CommentArgs= {}>(args?: Subset<T, CommentArgs>): Prisma__CommentClient<CommentGetPayload<T> | Null>;
 
-    repliedComment<T extends CommentArgs= {}>(args?: Subset<T, CommentArgs>): Prisma__CommentClient<CommentGetPayload<T> | Null>;
+    childComments<T extends Comment$childCommentsArgs= {}>(args?: Subset<T, Comment$childCommentsArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -13997,6 +14046,27 @@ export namespace Prisma {
      * Filter which Comments to delete
      */
     where?: CommentWhereInput
+  }
+
+
+  /**
+   * Comment.childComments
+   */
+  export type Comment$childCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CommentInclude | null
+    where?: CommentWhereInput
+    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<CommentScalarFieldEnum>
   }
 
 
@@ -19009,20 +19079,20 @@ export namespace Prisma {
 
   export type TweetAvgAggregateOutputType = {
     id: number | null
-    replyToTweetId: number | null
+    parentTweetId: number | null
     userId: number | null
   }
 
   export type TweetSumAggregateOutputType = {
     id: number | null
-    replyToTweetId: number | null
+    parentTweetId: number | null
     userId: number | null
   }
 
   export type TweetMinAggregateOutputType = {
     id: number | null
     tweetText: string | null
-    replyToTweetId: number | null
+    parentTweetId: number | null
     userId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -19031,7 +19101,7 @@ export namespace Prisma {
   export type TweetMaxAggregateOutputType = {
     id: number | null
     tweetText: string | null
-    replyToTweetId: number | null
+    parentTweetId: number | null
     userId: number | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -19040,7 +19110,7 @@ export namespace Prisma {
   export type TweetCountAggregateOutputType = {
     id: number
     tweetText: number
-    replyToTweetId: number
+    parentTweetId: number
     userId: number
     createdAt: number
     updatedAt: number
@@ -19050,20 +19120,20 @@ export namespace Prisma {
 
   export type TweetAvgAggregateInputType = {
     id?: true
-    replyToTweetId?: true
+    parentTweetId?: true
     userId?: true
   }
 
   export type TweetSumAggregateInputType = {
     id?: true
-    replyToTweetId?: true
+    parentTweetId?: true
     userId?: true
   }
 
   export type TweetMinAggregateInputType = {
     id?: true
     tweetText?: true
-    replyToTweetId?: true
+    parentTweetId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -19072,7 +19142,7 @@ export namespace Prisma {
   export type TweetMaxAggregateInputType = {
     id?: true
     tweetText?: true
-    replyToTweetId?: true
+    parentTweetId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -19081,7 +19151,7 @@ export namespace Prisma {
   export type TweetCountAggregateInputType = {
     id?: true
     tweetText?: true
-    replyToTweetId?: true
+    parentTweetId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -19178,7 +19248,7 @@ export namespace Prisma {
   export type TweetGroupByOutputType = {
     id: number
     tweetText: string
-    replyToTweetId: number | null
+    parentTweetId: number | null
     userId: number
     createdAt: Date
     updatedAt: Date
@@ -19207,9 +19277,9 @@ export namespace Prisma {
     id?: boolean
     tweetText?: boolean
     tweetingUser?: boolean | UserArgs
-    replyToTweet?: boolean | TweetArgs
-    replyToTweetId?: boolean
-    repliedTweet?: boolean | TweetArgs
+    parentTweet?: boolean | TweetArgs
+    parentTweetId?: boolean
+    childTweets?: boolean | Tweet$childTweetsArgs
     userId?: boolean
     hashTags?: boolean | Tweet$hashTagsArgs
     createdAt?: boolean
@@ -19220,8 +19290,8 @@ export namespace Prisma {
 
   export type TweetInclude = {
     tweetingUser?: boolean | UserArgs
-    replyToTweet?: boolean | TweetArgs
-    repliedTweet?: boolean | TweetArgs
+    parentTweet?: boolean | TweetArgs
+    childTweets?: boolean | Tweet$childTweetsArgs
     hashTags?: boolean | Tweet$hashTagsArgs
     _count?: boolean | TweetCountOutputTypeArgs
   }
@@ -19234,8 +19304,8 @@ export namespace Prisma {
     ? Tweet  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'tweetingUser' ? UserGetPayload<S['include'][P]> :
-        P extends 'replyToTweet' ? TweetGetPayload<S['include'][P]> | null :
-        P extends 'repliedTweet' ? TweetGetPayload<S['include'][P]> | null :
+        P extends 'parentTweet' ? TweetGetPayload<S['include'][P]> | null :
+        P extends 'childTweets' ? Array < TweetGetPayload<S['include'][P]>>  :
         P extends 'hashTags' ? Array < HashTagGetPayload<S['include'][P]>>  :
         P extends '_count' ? TweetCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -19243,8 +19313,8 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'tweetingUser' ? UserGetPayload<S['select'][P]> :
-        P extends 'replyToTweet' ? TweetGetPayload<S['select'][P]> | null :
-        P extends 'repliedTweet' ? TweetGetPayload<S['select'][P]> | null :
+        P extends 'parentTweet' ? TweetGetPayload<S['select'][P]> | null :
+        P extends 'childTweets' ? Array < TweetGetPayload<S['select'][P]>>  :
         P extends 'hashTags' ? Array < HashTagGetPayload<S['select'][P]>>  :
         P extends '_count' ? TweetCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Tweet ? Tweet[P] : never
   } 
@@ -19620,9 +19690,9 @@ export namespace Prisma {
 
     tweetingUser<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
 
-    replyToTweet<T extends TweetArgs= {}>(args?: Subset<T, TweetArgs>): Prisma__TweetClient<TweetGetPayload<T> | Null>;
+    parentTweet<T extends TweetArgs= {}>(args?: Subset<T, TweetArgs>): Prisma__TweetClient<TweetGetPayload<T> | Null>;
 
-    repliedTweet<T extends TweetArgs= {}>(args?: Subset<T, TweetArgs>): Prisma__TweetClient<TweetGetPayload<T> | Null>;
+    childTweets<T extends Tweet$childTweetsArgs= {}>(args?: Subset<T, Tweet$childTweetsArgs>): Prisma.PrismaPromise<Array<TweetGetPayload<T>>| Null>;
 
     hashTags<T extends Tweet$hashTagsArgs= {}>(args?: Subset<T, Tweet$hashTagsArgs>): Prisma.PrismaPromise<Array<HashTagGetPayload<T>>| Null>;
 
@@ -19978,6 +20048,27 @@ export namespace Prisma {
      * Filter which Tweets to delete
      */
     where?: TweetWhereInput
+  }
+
+
+  /**
+   * Tweet.childTweets
+   */
+  export type Tweet$childTweetsArgs = {
+    /**
+     * Select specific fields to fetch from the Tweet
+     */
+    select?: TweetSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TweetInclude | null
+    where?: TweetWhereInput
+    orderBy?: Enumerable<TweetOrderByWithRelationInput>
+    cursor?: TweetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TweetScalarFieldEnum>
   }
 
 
@@ -22020,7 +22111,7 @@ export namespace Prisma {
     commentText: 'commentText',
     userId: 'userId',
     postId: 'postId',
-    replyToCommentId: 'replyToCommentId',
+    parentCommentId: 'parentCommentId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -22215,7 +22306,7 @@ export namespace Prisma {
   export const TweetScalarFieldEnum: {
     id: 'id',
     tweetText: 'tweetText',
-    replyToTweetId: 'replyToTweetId',
+    parentTweetId: 'parentTweetId',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -22841,9 +22932,9 @@ export namespace Prisma {
     userId?: IntFilter | number
     parentPost?: XOR<PostRelationFilter, PostWhereInput>
     postId?: IntFilter | number
-    replyToComment?: XOR<CommentRelationFilter, CommentWhereInput> | null
-    replyToCommentId?: IntNullableFilter | number | null
-    repliedComment?: XOR<CommentRelationFilter, CommentWhereInput> | null
+    parentComment?: XOR<CommentRelationFilter, CommentWhereInput> | null
+    parentCommentId?: IntNullableFilter | number | null
+    childComments?: CommentListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -22855,16 +22946,15 @@ export namespace Prisma {
     userId?: SortOrder
     parentPost?: PostOrderByWithRelationInput
     postId?: SortOrder
-    replyToComment?: CommentOrderByWithRelationInput
-    replyToCommentId?: SortOrder
-    repliedComment?: CommentOrderByWithRelationInput
+    parentComment?: CommentOrderByWithRelationInput
+    parentCommentId?: SortOrder
+    childComments?: CommentOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type CommentWhereUniqueInput = {
     id?: number
-    replyToCommentId?: number
   }
 
   export type CommentOrderByWithAggregationInput = {
@@ -22872,7 +22962,7 @@ export namespace Prisma {
     commentText?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CommentCountOrderByAggregateInput
@@ -22890,7 +22980,7 @@ export namespace Prisma {
     commentText?: StringWithAggregatesFilter | string
     userId?: IntWithAggregatesFilter | number
     postId?: IntWithAggregatesFilter | number
-    replyToCommentId?: IntNullableWithAggregatesFilter | number | null
+    parentCommentId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -23165,9 +23255,9 @@ export namespace Prisma {
     id?: IntFilter | number
     tweetText?: StringFilter | string
     tweetingUser?: XOR<UserRelationFilter, UserWhereInput>
-    replyToTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
-    replyToTweetId?: IntNullableFilter | number | null
-    repliedTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
+    parentTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
+    parentTweetId?: IntNullableFilter | number | null
+    childTweets?: TweetListRelationFilter
     userId?: IntFilter | number
     hashTags?: HashTagListRelationFilter
     createdAt?: DateTimeFilter | Date | string
@@ -23178,9 +23268,9 @@ export namespace Prisma {
     id?: SortOrder
     tweetText?: SortOrder
     tweetingUser?: UserOrderByWithRelationInput
-    replyToTweet?: TweetOrderByWithRelationInput
-    replyToTweetId?: SortOrder
-    repliedTweet?: TweetOrderByWithRelationInput
+    parentTweet?: TweetOrderByWithRelationInput
+    parentTweetId?: SortOrder
+    childTweets?: TweetOrderByRelationAggregateInput
     userId?: SortOrder
     hashTags?: HashTagOrderByRelationAggregateInput
     createdAt?: SortOrder
@@ -23189,13 +23279,12 @@ export namespace Prisma {
 
   export type TweetWhereUniqueInput = {
     id?: number
-    replyToTweetId?: number
   }
 
   export type TweetOrderByWithAggregationInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23212,7 +23301,7 @@ export namespace Prisma {
     NOT?: Enumerable<TweetScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     tweetText?: StringWithAggregatesFilter | string
-    replyToTweetId?: IntNullableWithAggregatesFilter | number | null
+    parentTweetId?: IntNullableWithAggregatesFilter | number | null
     userId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
@@ -23982,8 +24071,8 @@ export namespace Prisma {
     commentText: string
     commentingUser: FacebookUserCreateNestedOneWithoutCommentsInput
     parentPost: PostCreateNestedOneWithoutCommentsInput
-    replyToComment?: CommentCreateNestedOneWithoutRepliedCommentInput
-    repliedComment?: CommentCreateNestedOneWithoutReplyToCommentInput
+    parentComment?: CommentCreateNestedOneWithoutChildCommentsInput
+    childComments?: CommentCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23993,8 +24082,8 @@ export namespace Prisma {
     commentText: string
     userId: number
     postId: number
-    replyToCommentId?: number | null
-    repliedComment?: CommentUncheckedCreateNestedOneWithoutReplyToCommentInput
+    parentCommentId?: number | null
+    childComments?: CommentUncheckedCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -24003,8 +24092,8 @@ export namespace Prisma {
     commentText?: StringFieldUpdateOperationsInput | string
     commentingUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
     parentPost?: PostUpdateOneRequiredWithoutCommentsNestedInput
-    replyToComment?: CommentUpdateOneWithoutRepliedCommentNestedInput
-    repliedComment?: CommentUpdateOneWithoutReplyToCommentNestedInput
+    parentComment?: CommentUpdateOneWithoutChildCommentsNestedInput
+    childComments?: CommentUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24014,8 +24103,8 @@ export namespace Prisma {
     commentText?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedComment?: CommentUncheckedUpdateOneWithoutReplyToCommentNestedInput
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childComments?: CommentUncheckedUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24025,7 +24114,7 @@ export namespace Prisma {
     commentText: string
     userId: number
     postId: number
-    replyToCommentId?: number | null
+    parentCommentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -24041,7 +24130,7 @@ export namespace Prisma {
     commentText?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24348,8 +24437,8 @@ export namespace Prisma {
   export type TweetCreateInput = {
     tweetText: string
     tweetingUser: UserCreateNestedOneWithoutTweetsInput
-    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
-    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    parentTweet?: TweetCreateNestedOneWithoutChildTweetsInput
+    childTweets?: TweetCreateNestedManyWithoutParentTweetInput
     hashTags?: HashTagCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24358,8 +24447,8 @@ export namespace Prisma {
   export type TweetUncheckedCreateInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
-    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    parentTweetId?: number | null
+    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     userId: number
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
@@ -24369,8 +24458,8 @@ export namespace Prisma {
   export type TweetUpdateInput = {
     tweetText?: StringFieldUpdateOperationsInput | string
     tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
-    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
-    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    parentTweet?: TweetUpdateOneWithoutChildTweetsNestedInput
+    childTweets?: TweetUpdateManyWithoutParentTweetNestedInput
     hashTags?: HashTagUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24379,8 +24468,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
     userId?: IntFieldUpdateOperationsInput | number
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24390,7 +24479,7 @@ export namespace Prisma {
   export type TweetCreateManyInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
+    parentTweetId?: number | null
     userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24405,7 +24494,7 @@ export namespace Prisma {
   export type TweetUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25192,7 +25281,7 @@ export namespace Prisma {
     commentText?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25201,7 +25290,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
   }
 
   export type CommentMaxOrderByAggregateInput = {
@@ -25209,7 +25298,7 @@ export namespace Prisma {
     commentText?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25219,7 +25308,7 @@ export namespace Prisma {
     commentText?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25228,7 +25317,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     postId?: SortOrder
-    replyToCommentId?: SortOrder
+    parentCommentId?: SortOrder
   }
 
   export type FacebookHashTagCountOrderByAggregateInput = {
@@ -25458,7 +25547,7 @@ export namespace Prisma {
   export type TweetCountOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25466,14 +25555,14 @@ export namespace Prisma {
 
   export type TweetAvgOrderByAggregateInput = {
     id?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
   }
 
   export type TweetMaxOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25482,7 +25571,7 @@ export namespace Prisma {
   export type TweetMinOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -25490,7 +25579,7 @@ export namespace Prisma {
 
   export type TweetSumOrderByAggregateInput = {
     id?: SortOrder
-    replyToTweetId?: SortOrder
+    parentTweetId?: SortOrder
     userId?: SortOrder
   }
 
@@ -26474,22 +26563,24 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput
   }
 
-  export type CommentCreateNestedOneWithoutRepliedCommentInput = {
-    create?: XOR<CommentCreateWithoutRepliedCommentInput, CommentUncheckedCreateWithoutRepliedCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutRepliedCommentInput
+  export type CommentCreateNestedOneWithoutChildCommentsInput = {
+    create?: XOR<CommentCreateWithoutChildCommentsInput, CommentUncheckedCreateWithoutChildCommentsInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutChildCommentsInput
     connect?: CommentWhereUniqueInput
   }
 
-  export type CommentCreateNestedOneWithoutReplyToCommentInput = {
-    create?: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutReplyToCommentInput
-    connect?: CommentWhereUniqueInput
+  export type CommentCreateNestedManyWithoutParentCommentInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutParentCommentInput>, Enumerable<CommentUncheckedCreateWithoutParentCommentInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutParentCommentInput>
+    createMany?: CommentCreateManyParentCommentInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
   }
 
-  export type CommentUncheckedCreateNestedOneWithoutReplyToCommentInput = {
-    create?: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutReplyToCommentInput
-    connect?: CommentWhereUniqueInput
+  export type CommentUncheckedCreateNestedManyWithoutParentCommentInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutParentCommentInput>, Enumerable<CommentUncheckedCreateWithoutParentCommentInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutParentCommentInput>
+    createMany?: CommentCreateManyParentCommentInputEnvelope
+    connect?: Enumerable<CommentWhereUniqueInput>
   }
 
   export type FacebookUserUpdateOneRequiredWithoutCommentsNestedInput = {
@@ -26508,34 +26599,42 @@ export namespace Prisma {
     update?: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type CommentUpdateOneWithoutRepliedCommentNestedInput = {
-    create?: XOR<CommentCreateWithoutRepliedCommentInput, CommentUncheckedCreateWithoutRepliedCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutRepliedCommentInput
-    upsert?: CommentUpsertWithoutRepliedCommentInput
+  export type CommentUpdateOneWithoutChildCommentsNestedInput = {
+    create?: XOR<CommentCreateWithoutChildCommentsInput, CommentUncheckedCreateWithoutChildCommentsInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutChildCommentsInput
+    upsert?: CommentUpsertWithoutChildCommentsInput
     disconnect?: boolean
     delete?: boolean
     connect?: CommentWhereUniqueInput
-    update?: XOR<CommentUpdateWithoutRepliedCommentInput, CommentUncheckedUpdateWithoutRepliedCommentInput>
+    update?: XOR<CommentUpdateWithoutChildCommentsInput, CommentUncheckedUpdateWithoutChildCommentsInput>
   }
 
-  export type CommentUpdateOneWithoutReplyToCommentNestedInput = {
-    create?: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutReplyToCommentInput
-    upsert?: CommentUpsertWithoutReplyToCommentInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: CommentWhereUniqueInput
-    update?: XOR<CommentUpdateWithoutReplyToCommentInput, CommentUncheckedUpdateWithoutReplyToCommentInput>
+  export type CommentUpdateManyWithoutParentCommentNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutParentCommentInput>, Enumerable<CommentUncheckedCreateWithoutParentCommentInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutParentCommentInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutParentCommentInput>
+    createMany?: CommentCreateManyParentCommentInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutParentCommentInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutParentCommentInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
   }
 
-  export type CommentUncheckedUpdateOneWithoutReplyToCommentNestedInput = {
-    create?: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
-    connectOrCreate?: CommentCreateOrConnectWithoutReplyToCommentInput
-    upsert?: CommentUpsertWithoutReplyToCommentInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: CommentWhereUniqueInput
-    update?: XOR<CommentUpdateWithoutReplyToCommentInput, CommentUncheckedUpdateWithoutReplyToCommentInput>
+  export type CommentUncheckedUpdateManyWithoutParentCommentNestedInput = {
+    create?: XOR<Enumerable<CommentCreateWithoutParentCommentInput>, Enumerable<CommentUncheckedCreateWithoutParentCommentInput>>
+    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutParentCommentInput>
+    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutParentCommentInput>
+    createMany?: CommentCreateManyParentCommentInputEnvelope
+    set?: Enumerable<CommentWhereUniqueInput>
+    disconnect?: Enumerable<CommentWhereUniqueInput>
+    delete?: Enumerable<CommentWhereUniqueInput>
+    connect?: Enumerable<CommentWhereUniqueInput>
+    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutParentCommentInput>
+    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutParentCommentInput>
+    deleteMany?: Enumerable<CommentScalarWhereInput>
   }
 
   export type PostCreateNestedManyWithoutHashTagsInput = {
@@ -26848,16 +26947,17 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type TweetCreateNestedOneWithoutRepliedTweetInput = {
-    create?: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutRepliedTweetInput
+  export type TweetCreateNestedOneWithoutChildTweetsInput = {
+    create?: XOR<TweetCreateWithoutChildTweetsInput, TweetUncheckedCreateWithoutChildTweetsInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutChildTweetsInput
     connect?: TweetWhereUniqueInput
   }
 
-  export type TweetCreateNestedOneWithoutReplyToTweetInput = {
-    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
-    connect?: TweetWhereUniqueInput
+  export type TweetCreateNestedManyWithoutParentTweetInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutParentTweetInput>, Enumerable<TweetUncheckedCreateWithoutParentTweetInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutParentTweetInput>
+    createMany?: TweetCreateManyParentTweetInputEnvelope
+    connect?: Enumerable<TweetWhereUniqueInput>
   }
 
   export type HashTagCreateNestedManyWithoutIsInTweetsInput = {
@@ -26866,10 +26966,11 @@ export namespace Prisma {
     connect?: Enumerable<HashTagWhereUniqueInput>
   }
 
-  export type TweetUncheckedCreateNestedOneWithoutReplyToTweetInput = {
-    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
-    connect?: TweetWhereUniqueInput
+  export type TweetUncheckedCreateNestedManyWithoutParentTweetInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutParentTweetInput>, Enumerable<TweetUncheckedCreateWithoutParentTweetInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutParentTweetInput>
+    createMany?: TweetCreateManyParentTweetInputEnvelope
+    connect?: Enumerable<TweetWhereUniqueInput>
   }
 
   export type HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput = {
@@ -26886,24 +26987,28 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutTweetsInput, UserUncheckedUpdateWithoutTweetsInput>
   }
 
-  export type TweetUpdateOneWithoutRepliedTweetNestedInput = {
-    create?: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutRepliedTweetInput
-    upsert?: TweetUpsertWithoutRepliedTweetInput
+  export type TweetUpdateOneWithoutChildTweetsNestedInput = {
+    create?: XOR<TweetCreateWithoutChildTweetsInput, TweetUncheckedCreateWithoutChildTweetsInput>
+    connectOrCreate?: TweetCreateOrConnectWithoutChildTweetsInput
+    upsert?: TweetUpsertWithoutChildTweetsInput
     disconnect?: boolean
     delete?: boolean
     connect?: TweetWhereUniqueInput
-    update?: XOR<TweetUpdateWithoutRepliedTweetInput, TweetUncheckedUpdateWithoutRepliedTweetInput>
+    update?: XOR<TweetUpdateWithoutChildTweetsInput, TweetUncheckedUpdateWithoutChildTweetsInput>
   }
 
-  export type TweetUpdateOneWithoutReplyToTweetNestedInput = {
-    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
-    upsert?: TweetUpsertWithoutReplyToTweetInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: TweetWhereUniqueInput
-    update?: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
+  export type TweetUpdateManyWithoutParentTweetNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutParentTweetInput>, Enumerable<TweetUncheckedCreateWithoutParentTweetInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutParentTweetInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutParentTweetInput>
+    createMany?: TweetCreateManyParentTweetInputEnvelope
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutParentTweetInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutParentTweetInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
   }
 
   export type HashTagUpdateManyWithoutIsInTweetsNestedInput = {
@@ -26919,14 +27024,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<HashTagScalarWhereInput>
   }
 
-  export type TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput = {
-    create?: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
-    connectOrCreate?: TweetCreateOrConnectWithoutReplyToTweetInput
-    upsert?: TweetUpsertWithoutReplyToTweetInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: TweetWhereUniqueInput
-    update?: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
+  export type TweetUncheckedUpdateManyWithoutParentTweetNestedInput = {
+    create?: XOR<Enumerable<TweetCreateWithoutParentTweetInput>, Enumerable<TweetUncheckedCreateWithoutParentTweetInput>>
+    connectOrCreate?: Enumerable<TweetCreateOrConnectWithoutParentTweetInput>
+    upsert?: Enumerable<TweetUpsertWithWhereUniqueWithoutParentTweetInput>
+    createMany?: TweetCreateManyParentTweetInputEnvelope
+    set?: Enumerable<TweetWhereUniqueInput>
+    disconnect?: Enumerable<TweetWhereUniqueInput>
+    delete?: Enumerable<TweetWhereUniqueInput>
+    connect?: Enumerable<TweetWhereUniqueInput>
+    update?: Enumerable<TweetUpdateWithWhereUniqueWithoutParentTweetInput>
+    updateMany?: Enumerable<TweetUpdateManyWithWhereWithoutParentTweetInput>
+    deleteMany?: Enumerable<TweetScalarWhereInput>
   }
 
   export type HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput = {
@@ -27952,8 +28061,8 @@ export namespace Prisma {
   export type CommentCreateWithoutCommentingUserInput = {
     commentText: string
     parentPost: PostCreateNestedOneWithoutCommentsInput
-    replyToComment?: CommentCreateNestedOneWithoutRepliedCommentInput
-    repliedComment?: CommentCreateNestedOneWithoutReplyToCommentInput
+    parentComment?: CommentCreateNestedOneWithoutChildCommentsInput
+    childComments?: CommentCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27962,8 +28071,8 @@ export namespace Prisma {
     id?: number
     commentText: string
     postId: number
-    replyToCommentId?: number | null
-    repliedComment?: CommentUncheckedCreateNestedOneWithoutReplyToCommentInput
+    parentCommentId?: number | null
+    childComments?: CommentUncheckedCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28122,7 +28231,7 @@ export namespace Prisma {
     commentText?: StringFilter | string
     userId?: IntFilter | number
     postId?: IntFilter | number
-    replyToCommentId?: IntNullableFilter | number | null
+    parentCommentId?: IntNullableFilter | number | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -28334,8 +28443,8 @@ export namespace Prisma {
   export type CommentCreateWithoutParentPostInput = {
     commentText: string
     commentingUser: FacebookUserCreateNestedOneWithoutCommentsInput
-    replyToComment?: CommentCreateNestedOneWithoutRepliedCommentInput
-    repliedComment?: CommentCreateNestedOneWithoutReplyToCommentInput
+    parentComment?: CommentCreateNestedOneWithoutChildCommentsInput
+    childComments?: CommentCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28344,8 +28453,8 @@ export namespace Prisma {
     id?: number
     commentText: string
     userId: number
-    replyToCommentId?: number | null
-    repliedComment?: CommentUncheckedCreateNestedOneWithoutReplyToCommentInput
+    parentCommentId?: number | null
+    childComments?: CommentUncheckedCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -28506,52 +28615,57 @@ export namespace Prisma {
     create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
   }
 
-  export type CommentCreateWithoutRepliedCommentInput = {
+  export type CommentCreateWithoutChildCommentsInput = {
     commentText: string
     commentingUser: FacebookUserCreateNestedOneWithoutCommentsInput
     parentPost: PostCreateNestedOneWithoutCommentsInput
-    replyToComment?: CommentCreateNestedOneWithoutRepliedCommentInput
+    parentComment?: CommentCreateNestedOneWithoutChildCommentsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CommentUncheckedCreateWithoutRepliedCommentInput = {
+  export type CommentUncheckedCreateWithoutChildCommentsInput = {
     id?: number
     commentText: string
     userId: number
     postId: number
-    replyToCommentId?: number | null
+    parentCommentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CommentCreateOrConnectWithoutRepliedCommentInput = {
+  export type CommentCreateOrConnectWithoutChildCommentsInput = {
     where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutRepliedCommentInput, CommentUncheckedCreateWithoutRepliedCommentInput>
+    create: XOR<CommentCreateWithoutChildCommentsInput, CommentUncheckedCreateWithoutChildCommentsInput>
   }
 
-  export type CommentCreateWithoutReplyToCommentInput = {
+  export type CommentCreateWithoutParentCommentInput = {
     commentText: string
     commentingUser: FacebookUserCreateNestedOneWithoutCommentsInput
     parentPost: PostCreateNestedOneWithoutCommentsInput
-    repliedComment?: CommentCreateNestedOneWithoutReplyToCommentInput
+    childComments?: CommentCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CommentUncheckedCreateWithoutReplyToCommentInput = {
+  export type CommentUncheckedCreateWithoutParentCommentInput = {
     id?: number
     commentText: string
     userId: number
     postId: number
-    repliedComment?: CommentUncheckedCreateNestedOneWithoutReplyToCommentInput
+    childComments?: CommentUncheckedCreateNestedManyWithoutParentCommentInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CommentCreateOrConnectWithoutReplyToCommentInput = {
+  export type CommentCreateOrConnectWithoutParentCommentInput = {
     where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
+    create: XOR<CommentCreateWithoutParentCommentInput, CommentUncheckedCreateWithoutParentCommentInput>
+  }
+
+  export type CommentCreateManyParentCommentInputEnvelope = {
+    data: Enumerable<CommentCreateManyParentCommentInput>
+    skipDuplicates?: boolean
   }
 
   export type FacebookUserUpsertWithoutCommentsInput = {
@@ -28608,52 +28722,44 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentUpsertWithoutRepliedCommentInput = {
-    update: XOR<CommentUpdateWithoutRepliedCommentInput, CommentUncheckedUpdateWithoutRepliedCommentInput>
-    create: XOR<CommentCreateWithoutRepliedCommentInput, CommentUncheckedCreateWithoutRepliedCommentInput>
+  export type CommentUpsertWithoutChildCommentsInput = {
+    update: XOR<CommentUpdateWithoutChildCommentsInput, CommentUncheckedUpdateWithoutChildCommentsInput>
+    create: XOR<CommentCreateWithoutChildCommentsInput, CommentUncheckedCreateWithoutChildCommentsInput>
   }
 
-  export type CommentUpdateWithoutRepliedCommentInput = {
+  export type CommentUpdateWithoutChildCommentsInput = {
     commentText?: StringFieldUpdateOperationsInput | string
     commentingUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
     parentPost?: PostUpdateOneRequiredWithoutCommentsNestedInput
-    replyToComment?: CommentUpdateOneWithoutRepliedCommentNestedInput
+    parentComment?: CommentUpdateOneWithoutChildCommentsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentUncheckedUpdateWithoutRepliedCommentInput = {
+  export type CommentUncheckedUpdateWithoutChildCommentsInput = {
     id?: IntFieldUpdateOperationsInput | number
     commentText?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentUpsertWithoutReplyToCommentInput = {
-    update: XOR<CommentUpdateWithoutReplyToCommentInput, CommentUncheckedUpdateWithoutReplyToCommentInput>
-    create: XOR<CommentCreateWithoutReplyToCommentInput, CommentUncheckedCreateWithoutReplyToCommentInput>
+  export type CommentUpsertWithWhereUniqueWithoutParentCommentInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutParentCommentInput, CommentUncheckedUpdateWithoutParentCommentInput>
+    create: XOR<CommentCreateWithoutParentCommentInput, CommentUncheckedCreateWithoutParentCommentInput>
   }
 
-  export type CommentUpdateWithoutReplyToCommentInput = {
-    commentText?: StringFieldUpdateOperationsInput | string
-    commentingUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
-    parentPost?: PostUpdateOneRequiredWithoutCommentsNestedInput
-    repliedComment?: CommentUpdateOneWithoutReplyToCommentNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type CommentUpdateWithWhereUniqueWithoutParentCommentInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutParentCommentInput, CommentUncheckedUpdateWithoutParentCommentInput>
   }
 
-  export type CommentUncheckedUpdateWithoutReplyToCommentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    commentText?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    repliedComment?: CommentUncheckedUpdateOneWithoutReplyToCommentNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type CommentUpdateManyWithWhereWithoutParentCommentInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutChildCommentsInput>
   }
 
   export type PostCreateWithoutHashTagsInput = {
@@ -28870,8 +28976,8 @@ export namespace Prisma {
 
   export type TweetCreateWithoutTweetingUserInput = {
     tweetText: string
-    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
-    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    parentTweet?: TweetCreateNestedOneWithoutChildTweetsInput
+    childTweets?: TweetCreateNestedManyWithoutParentTweetInput
     hashTags?: HashTagCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -28880,8 +28986,8 @@ export namespace Prisma {
   export type TweetUncheckedCreateWithoutTweetingUserInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
-    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    parentTweetId?: number | null
+    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29012,7 +29118,7 @@ export namespace Prisma {
     NOT?: Enumerable<TweetScalarWhereInput>
     id?: IntFilter | number
     tweetText?: StringFilter | string
-    replyToTweetId?: IntNullableFilter | number | null
+    parentTweetId?: IntNullableFilter | number | null
     userId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -29212,52 +29318,57 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutTweetsInput, UserUncheckedCreateWithoutTweetsInput>
   }
 
-  export type TweetCreateWithoutRepliedTweetInput = {
+  export type TweetCreateWithoutChildTweetsInput = {
     tweetText: string
     tweetingUser: UserCreateNestedOneWithoutTweetsInput
-    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
+    parentTweet?: TweetCreateNestedOneWithoutChildTweetsInput
     hashTags?: HashTagCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TweetUncheckedCreateWithoutRepliedTweetInput = {
+  export type TweetUncheckedCreateWithoutChildTweetsInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
+    parentTweetId?: number | null
     userId: number
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TweetCreateOrConnectWithoutRepliedTweetInput = {
+  export type TweetCreateOrConnectWithoutChildTweetsInput = {
     where: TweetWhereUniqueInput
-    create: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+    create: XOR<TweetCreateWithoutChildTweetsInput, TweetUncheckedCreateWithoutChildTweetsInput>
   }
 
-  export type TweetCreateWithoutReplyToTweetInput = {
+  export type TweetCreateWithoutParentTweetInput = {
     tweetText: string
     tweetingUser: UserCreateNestedOneWithoutTweetsInput
-    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    childTweets?: TweetCreateNestedManyWithoutParentTweetInput
     hashTags?: HashTagCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TweetUncheckedCreateWithoutReplyToTweetInput = {
+  export type TweetUncheckedCreateWithoutParentTweetInput = {
     id?: number
     tweetText: string
-    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     userId: number
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TweetCreateOrConnectWithoutReplyToTweetInput = {
+  export type TweetCreateOrConnectWithoutParentTweetInput = {
     where: TweetWhereUniqueInput
-    create: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+    create: XOR<TweetCreateWithoutParentTweetInput, TweetUncheckedCreateWithoutParentTweetInput>
+  }
+
+  export type TweetCreateManyParentTweetInputEnvelope = {
+    data: Enumerable<TweetCreateManyParentTweetInput>
+    skipDuplicates?: boolean
   }
 
   export type HashTagCreateWithoutIsInTweetsInput = {
@@ -29308,52 +29419,44 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TweetUpsertWithoutRepliedTweetInput = {
-    update: XOR<TweetUpdateWithoutRepliedTweetInput, TweetUncheckedUpdateWithoutRepliedTweetInput>
-    create: XOR<TweetCreateWithoutRepliedTweetInput, TweetUncheckedCreateWithoutRepliedTweetInput>
+  export type TweetUpsertWithoutChildTweetsInput = {
+    update: XOR<TweetUpdateWithoutChildTweetsInput, TweetUncheckedUpdateWithoutChildTweetsInput>
+    create: XOR<TweetCreateWithoutChildTweetsInput, TweetUncheckedCreateWithoutChildTweetsInput>
   }
 
-  export type TweetUpdateWithoutRepliedTweetInput = {
+  export type TweetUpdateWithoutChildTweetsInput = {
     tweetText?: StringFieldUpdateOperationsInput | string
     tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
-    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
+    parentTweet?: TweetUpdateOneWithoutChildTweetsNestedInput
     hashTags?: HashTagUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TweetUncheckedUpdateWithoutRepliedTweetInput = {
+  export type TweetUncheckedUpdateWithoutChildTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TweetUpsertWithoutReplyToTweetInput = {
-    update: XOR<TweetUpdateWithoutReplyToTweetInput, TweetUncheckedUpdateWithoutReplyToTweetInput>
-    create: XOR<TweetCreateWithoutReplyToTweetInput, TweetUncheckedCreateWithoutReplyToTweetInput>
+  export type TweetUpsertWithWhereUniqueWithoutParentTweetInput = {
+    where: TweetWhereUniqueInput
+    update: XOR<TweetUpdateWithoutParentTweetInput, TweetUncheckedUpdateWithoutParentTweetInput>
+    create: XOR<TweetCreateWithoutParentTweetInput, TweetUncheckedCreateWithoutParentTweetInput>
   }
 
-  export type TweetUpdateWithoutReplyToTweetInput = {
-    tweetText?: StringFieldUpdateOperationsInput | string
-    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
-    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
-    hashTags?: HashTagUpdateManyWithoutIsInTweetsNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TweetUpdateWithWhereUniqueWithoutParentTweetInput = {
+    where: TweetWhereUniqueInput
+    data: XOR<TweetUpdateWithoutParentTweetInput, TweetUncheckedUpdateWithoutParentTweetInput>
   }
 
-  export type TweetUncheckedUpdateWithoutReplyToTweetInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tweetText?: StringFieldUpdateOperationsInput | string
-    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
-    hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TweetUpdateManyWithWhereWithoutParentTweetInput = {
+    where: TweetScalarWhereInput
+    data: XOR<TweetUpdateManyMutationInput, TweetUncheckedUpdateManyWithoutChildTweetsInput>
   }
 
   export type HashTagUpsertWithWhereUniqueWithoutIsInTweetsInput = {
@@ -29385,8 +29488,8 @@ export namespace Prisma {
   export type TweetCreateWithoutHashTagsInput = {
     tweetText: string
     tweetingUser: UserCreateNestedOneWithoutTweetsInput
-    replyToTweet?: TweetCreateNestedOneWithoutRepliedTweetInput
-    repliedTweet?: TweetCreateNestedOneWithoutReplyToTweetInput
+    parentTweet?: TweetCreateNestedOneWithoutChildTweetsInput
+    childTweets?: TweetCreateNestedManyWithoutParentTweetInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -29394,8 +29497,8 @@ export namespace Prisma {
   export type TweetUncheckedCreateWithoutHashTagsInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
-    repliedTweet?: TweetUncheckedCreateNestedOneWithoutReplyToTweetInput
+    parentTweetId?: number | null
+    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -29851,7 +29954,7 @@ export namespace Prisma {
     id?: number
     commentText: string
     postId: number
-    replyToCommentId?: number | null
+    parentCommentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -29939,8 +30042,8 @@ export namespace Prisma {
   export type CommentUpdateWithoutCommentingUserInput = {
     commentText?: StringFieldUpdateOperationsInput | string
     parentPost?: PostUpdateOneRequiredWithoutCommentsNestedInput
-    replyToComment?: CommentUpdateOneWithoutRepliedCommentNestedInput
-    repliedComment?: CommentUpdateOneWithoutReplyToCommentNestedInput
+    parentComment?: CommentUpdateOneWithoutChildCommentsNestedInput
+    childComments?: CommentUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29949,8 +30052,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     commentText?: StringFieldUpdateOperationsInput | string
     postId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedComment?: CommentUncheckedUpdateOneWithoutReplyToCommentNestedInput
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childComments?: CommentUncheckedUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -29959,7 +30062,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     commentText?: StringFieldUpdateOperationsInput | string
     postId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30014,7 +30117,7 @@ export namespace Prisma {
     id?: number
     commentText: string
     userId: number
-    replyToCommentId?: number | null
+    parentCommentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -30022,8 +30125,8 @@ export namespace Prisma {
   export type CommentUpdateWithoutParentPostInput = {
     commentText?: StringFieldUpdateOperationsInput | string
     commentingUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
-    replyToComment?: CommentUpdateOneWithoutRepliedCommentNestedInput
-    repliedComment?: CommentUpdateOneWithoutReplyToCommentNestedInput
+    parentComment?: CommentUpdateOneWithoutChildCommentsNestedInput
+    childComments?: CommentUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30032,8 +30135,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     commentText?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
-    replyToCommentId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedComment?: CommentUncheckedUpdateOneWithoutReplyToCommentNestedInput
+    parentCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childComments?: CommentUncheckedUpdateManyWithoutParentCommentNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30054,6 +30157,43 @@ export namespace Prisma {
   export type FacebookHashTagUncheckedUpdateManyWithoutHashTagsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hashTagText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentCreateManyParentCommentInput = {
+    id?: number
+    commentText: string
+    userId: number
+    postId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateWithoutParentCommentInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    commentingUser?: FacebookUserUpdateOneRequiredWithoutCommentsNestedInput
+    parentPost?: PostUpdateOneRequiredWithoutCommentsNestedInput
+    childComments?: CommentUpdateManyWithoutParentCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateWithoutParentCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
+    childComments?: CommentUncheckedUpdateManyWithoutParentCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateManyWithoutChildCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30100,7 +30240,7 @@ export namespace Prisma {
   export type TweetCreateManyTweetingUserInput = {
     id?: number
     tweetText: string
-    replyToTweetId?: number | null
+    parentTweetId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -30163,8 +30303,8 @@ export namespace Prisma {
 
   export type TweetUpdateWithoutTweetingUserInput = {
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
-    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    parentTweet?: TweetUpdateOneWithoutChildTweetsNestedInput
+    childTweets?: TweetUpdateManyWithoutParentTweetNestedInput
     hashTags?: HashTagUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30173,8 +30313,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateWithoutTweetingUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30183,7 +30323,7 @@ export namespace Prisma {
   export type TweetUncheckedUpdateManyWithoutTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30234,6 +30374,41 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TweetCreateManyParentTweetInput = {
+    id?: number
+    tweetText: string
+    userId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TweetUpdateWithoutParentTweetInput = {
+    tweetText?: StringFieldUpdateOperationsInput | string
+    tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
+    childTweets?: TweetUpdateManyWithoutParentTweetNestedInput
+    hashTags?: HashTagUpdateManyWithoutIsInTweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateWithoutParentTweetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
+    userId?: IntFieldUpdateOperationsInput | number
+    hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TweetUncheckedUpdateManyWithoutChildTweetsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tweetText?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type HashTagUpdateWithoutIsInTweetsInput = {
     hashTagText?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30257,8 +30432,8 @@ export namespace Prisma {
   export type TweetUpdateWithoutHashTagsInput = {
     tweetText?: StringFieldUpdateOperationsInput | string
     tweetingUser?: UserUpdateOneRequiredWithoutTweetsNestedInput
-    replyToTweet?: TweetUpdateOneWithoutRepliedTweetNestedInput
-    repliedTweet?: TweetUpdateOneWithoutReplyToTweetNestedInput
+    parentTweet?: TweetUpdateOneWithoutChildTweetsNestedInput
+    childTweets?: TweetUpdateManyWithoutParentTweetNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30266,8 +30441,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateWithoutHashTagsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
-    repliedTweet?: TweetUncheckedUpdateOneWithoutReplyToTweetNestedInput
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30276,7 +30451,7 @@ export namespace Prisma {
   export type TweetUncheckedUpdateManyWithoutIsInTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    replyToTweetId?: NullableIntFieldUpdateOperationsInput | number | null
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

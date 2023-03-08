@@ -29,16 +29,16 @@ model UserRelation {
 }
 
 model Tweet {
-  id             Int       @id @default(autoincrement())
-  tweetText      String
-  tweetingUser   User      @relation(fields: [userId], references: [id])
-  replyToTweet   Tweet?    @relation("replyToTweet", fields: [replyToTweetId], references: [id])
-  replyToTweetId Int?      @unique
-  repliedTweet   Tweet?    @relation("replyToTweet")
-  userId         Int
-  hashTags       HashTag[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  tweetText     String
+  tweetingUser  User      @relation(fields: [userId], references: [id])
+  parentTweet   Tweet?    @relation("parentTweet", fields: [parentTweetId], references: [id])
+  parentTweetId Int?
+  childTweets   Tweet[]   @relation("parentTweet")
+  userId        Int
+  hashTags      HashTag[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@schema("twitter")
 }

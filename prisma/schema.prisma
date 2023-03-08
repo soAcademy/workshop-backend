@@ -143,17 +143,17 @@ model Post {
 }
 
 model Comment {
-  id               Int          @id @default(autoincrement())
-  commentText      String
-  commentingUser   FacebookUser @relation(fields: [userId], references: [id])
-  userId           Int
-  parentPost       Post         @relation(fields: [postId], references: [id])
-  postId           Int
-  replyToComment   Comment?     @relation("replyToComment", fields: [replyToCommentId], references: [id])
-  replyToCommentId Int?         @unique
-  repliedComment   Comment?     @relation("replyToComment")
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  id              Int          @id @default(autoincrement())
+  commentText     String
+  commentingUser  FacebookUser @relation(fields: [userId], references: [id])
+  userId          Int
+  parentPost      Post         @relation(fields: [postId], references: [id])
+  postId          Int
+  parentComment   Comment?     @relation("parentComment", fields: [parentCommentId], references: [id])
+  parentCommentId Int?
+  childComments   Comment[]    @relation("parentComment")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@schema("facebook")
 }
@@ -224,16 +224,16 @@ model UserRelation {
 }
 
 model Tweet {
-  id             Int       @id @default(autoincrement())
-  tweetText      String
-  tweetingUser   User      @relation(fields: [userId], references: [id])
-  replyToTweet   Tweet?    @relation("replyToTweet", fields: [replyToTweetId], references: [id])
-  replyToTweetId Int?      @unique
-  repliedTweet   Tweet?    @relation("replyToTweet")
-  userId         Int
-  hashTags       HashTag[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  tweetText     String
+  tweetingUser  User      @relation(fields: [userId], references: [id])
+  parentTweet   Tweet?    @relation("parentTweet", fields: [parentTweetId], references: [id])
+  parentTweetId Int?
+  childTweets   Tweet[]   @relation("parentTweet")
+  userId        Int
+  hashTags      HashTag[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@schema("twitter")
 }
