@@ -1,7 +1,7 @@
-model Following {
+model UserRelation {
   id         Int      @id @default(autoincrement())
-  from       User     @relation("FromFollowing", fields: [fromUserId], references: [id])
-  to         User     @relation("ToFollowing", fields: [toUserId], references: [id])
+  from       User     @relation("FromUserRelation", fields: [fromUserId], references: [id])
+  to         User     @relation("ToUserRelation", fields: [toUserId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   fromUserId Int
@@ -18,8 +18,11 @@ model User {
   fromDirectMessages DirectMessage[] @relation("FromDirectMessage")
   toDirectMessages   DirectMessage[] @relation("ToDirectMessage")
   postReplies        PostReply[]
-  fromFollowings     Following[]     @relation("FromFollowing")
-  toFollowings       Following[]     @relation("ToFollowing")
+  fromUserRelations  UserRelation[]  @relation("FromUserRelation")
+  toUserRelations    UserRelation[]  @relation("ToUserRelation")
+  ShareUser          SharePost[]     @relation("ShareUser")
+  GroupPost          GroupPost[]
+  LikePost           LikePost[]
 }
 
 model Post {
@@ -31,6 +34,7 @@ model Post {
   userId            Int
   messageToHashTags MessageToHashTag[]
   postReplies       PostReply[]
+  LikePost          LikePost[]
 }
 
 model DirectMessage {
@@ -72,3 +76,31 @@ model PostReply {
   userId    Int
   postId    Int
 }
+
+model GroupPost {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    Int
+}
+
+model LikePost {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  likecategory String
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       Int
+  user         User?    @relation(fields: [userId], references: [id])
+  userId       Int?
+}
+
+model SharePost {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation("ShareUser", fields: [shareUserId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  shareUserId Int
+}
+ถ้าจะใ่สต้งอใส่ทั้งคู่ 

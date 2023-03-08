@@ -1,0 +1,68 @@
+model User {
+  id                        Int                         @id @default(autoincrement())
+  userToChannels            UserToChannel[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  channelId                 Int?
+  userToChannelSubscription UserToChannelSubscription[]
+}
+
+enum Role {
+  Owner
+  Editor
+  Admin
+}
+
+model Channel {
+  id                        Int                         @id @default(autoincrement())
+  userToChannels            UserToChannel[]
+  videos                    Video[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  channelId                 Int?
+  UserToChannelSubscription UserToChannelSubscription[]
+}
+
+model UserToChannel {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  channel   Channel @relation(fields: [channelId], references: [id])
+  role      Role
+  userId    Int
+  channelId Int
+}
+
+model UserToChannelSubscription {
+  id           Int     @id @default(autoincrement())
+  user         User    @relation(fields: [userId], references: [id])
+  channel      Channel @relation(fields: [channelId], references: [id])
+  isPaidMember Boolean
+  userId       Int
+  channelId    Int
+}
+
+model Video {
+  id        Int        @id @default(autoincrement())
+  comments  Comment[]
+  reactions Reaction[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  channel   Channel?   @relation(fields: [channelId], references: [id])
+  channelId Int?
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Video     Video?   @relation(fields: [videoId], references: [id])
+  videoId   Int?
+}
+
+model Reaction {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Video     Video?   @relation(fields: [videoId], references: [id])
+  videoId   Int?
+}
