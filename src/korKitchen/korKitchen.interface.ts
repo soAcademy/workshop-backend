@@ -64,3 +64,7 @@ export interface IGetOrder extends t.TypeOf<typeof getOrderCodec> {}
 export const updateOrderCodec = t.type({ id: t.number, status: t.string });
 
 export interface IUpdateOrder extends t.TypeOf<typeof updateOrderCodec> {}
+
+export const deleteMenuCodec = t.type({ id: t.number});
+
+export interface IDeleteMenu extends t.TypeOf<typeof deleteMenuCodec> {}

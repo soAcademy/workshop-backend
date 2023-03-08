@@ -1,0 +1,45 @@
+model TriviaCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  questions TriviaQuestion[]
+  rounds    TriviaRound[]
+}
+
+model TriviaQuestion {
+  id             Int                   @id @default(autoincrement())
+  category       TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  name           String
+  answerID       Int
+  choices        TriviaChoice[]
+  roundQuestions TriviaRoundQuestion[]
+}
+
+model TriviaChoice {
+  id             Int                   @id @default(autoincrement())
+  question       TriviaQuestion        @relation(fields: [quizId], references: [id])
+  quizId         Int
+  name           String
+  roundQuestions TriviaRoundQuestion[]
+}
+
+model TriviaRoundQuestion {
+  id         Int            @id @default(autoincrement())
+  question   TriviaQuestion @relation(fields: [quizId], references: [id])
+  quizId     Int
+  userChoice TriviaChoice   @relation(fields: [choiceId], references: [id])
+  choiceId   Int
+  quizResult Boolean
+  round      TriviaRound?   @relation(fields: [roundId], references: [id])
+  roundId    Int?
+}
+
+model TriviaRound {
+  id          Int                   @id @default(autoincrement())
+  user        String
+  questions   TriviaRoundQuestion[]
+  category    TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  totalResult Int
+  createAt    DateTime              @default(now())
+}

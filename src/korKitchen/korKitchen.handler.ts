@@ -3,6 +3,7 @@ import {
   createCategoryCodec,
   createMenuCodec,
   createOrderCodec,
+  deleteMenuCodec,
   getCategoriesCodec,
   getMenusCodec,
   getOrderCodec,
@@ -14,6 +15,7 @@ import {
   createCategory,
   createMenu,
   createOrder,
+  deleteMenu,
   getCategories,
   getMenus,
   getOrder,
@@ -132,6 +134,17 @@ export const updateOrderHandler = (req: Request, res: Response) => {
   const body = req.body;
   if (updateOrderCodec.decode(body)._tag === "Right") {
     return updateOrder(body)
+      .then((response) => res.status(200).send(response))
+      .catch((error) => res.status(500).send(error));
+  } else {
+    res.status(500).send("Failed to validate codec");
+  }
+};
+
+export const deleteMenuHandler = (req: Request, res: Response) => {
+  const body = req.body;
+  if (deleteMenuCodec.decode(body)._tag === "Right") {
+    return deleteMenu(body)
       .then((response) => res.status(200).send(response))
       .catch((error) => res.status(500).send(error));
   } else {

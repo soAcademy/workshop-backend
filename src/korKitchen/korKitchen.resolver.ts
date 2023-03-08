@@ -4,6 +4,7 @@ import {
   ICreateCategory,
   ICreateMenu,
   ICreateOrder,
+  IDeleteMenu,
   IGetCategories,
   IGetMenus,
   IGetOrder,
@@ -60,6 +61,7 @@ export const getMenus = (args: IGetMenus) =>
       name: true,
       price: true,
       image: true,
+      categoryName: true,
     },
   });
 
@@ -147,3 +149,12 @@ export const getOrders = () =>
       status: args.status,
     }
   })
+
+  export const deleteMenu = (args: IDeleteMenu) =>
+   prisma.korKitchenMenu.delete({
+    where: {
+      id: args.id,
+    }
+   })
+
+   

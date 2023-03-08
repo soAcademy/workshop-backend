@@ -124,6 +124,12 @@ exports.Prisma.KorKitchenOrderScalarFieldEnum = makeEnum({
   updateAt: 'updateAt'
 });
 
+exports.Prisma.PostOnHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  postId: 'postId',
+  hashtagId: 'hashtagId'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -156,6 +162,80 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name'
+});
+
+exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  quizId: 'quizId',
+  name: 'name'
+});
+
+exports.Prisma.TriviaQuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  categoryId: 'categoryId',
+  name: 'name',
+  answerID: 'answerID'
+});
+
+exports.Prisma.TriviaRoundQuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  quizId: 'quizId',
+  choiceId: 'choiceId',
+  quizResult: 'quizResult',
+  roundId: 'roundId'
+});
+
+exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  user: 'user',
+  categoryId: 'categoryId',
+  totalResult: 'totalResult',
+  createAt: 'createAt'
+});
+
+exports.Prisma.TwitterDirectMessageScalarFieldEnum = makeEnum({
+  id: 'id',
+  from: 'from',
+  to: 'to',
+  message: 'message',
+  createAt: 'createAt'
+});
+
+exports.Prisma.TwitterHashtagScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message'
+});
+
+exports.Prisma.TwitterPostReplyScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message',
+  postId: 'postId',
+  userId: 'userId',
+  createAt: 'createAt'
+});
+
+exports.Prisma.TwitterPostScalarFieldEnum = makeEnum({
+  id: 'id',
+  message: 'message'
+});
+
+exports.Prisma.TwitterUserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  follower: 'follower',
+  following: 'following'
+});
+
+exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  image: 'image',
+  directMessageId: 'directMessageId',
+  userRelationId: 'userRelationId'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   KorKitchenCategory: 'KorKitchenCategory',
@@ -163,7 +243,19 @@ exports.Prisma.ModelName = makeEnum({
   KorKitchenOrder: 'KorKitchenOrder',
   KorKitchenOrderItem: 'KorKitchenOrderItem',
   TodoList: 'TodoList',
-  TestModel: 'TestModel'
+  TestModel: 'TestModel',
+  TriviaCategory: 'TriviaCategory',
+  TriviaQuestion: 'TriviaQuestion',
+  TriviaChoice: 'TriviaChoice',
+  TriviaRoundQuestion: 'TriviaRoundQuestion',
+  TriviaRound: 'TriviaRound',
+  TwitterUser: 'TwitterUser',
+  TwitterPost: 'TwitterPost',
+  TwitterHashtag: 'TwitterHashtag',
+  TwitterDirectMessage: 'TwitterDirectMessage',
+  TwitterUserRelation: 'TwitterUserRelation',
+  TwitterPostReply: 'TwitterPostReply',
+  PostOnHashtag: 'PostOnHashtag'
 });
 
 /**

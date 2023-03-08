@@ -30,6 +30,7 @@ import {
   createCategoryHandler,
   createMenuHandler,
   createOrderHandler,
+  deleteMenuHandler,
   getCategoriesHandler,
   getMenusHandler,
   getOrderHandler,
@@ -199,5 +200,10 @@ export const AppRoutes = [
     path: "/updateOrder",
     method: "post",
     action: updateOrderHandler,
+  },
+  {
+    path: "/deleteMenu",
+    method: "post",
+    action: deleteMenuHandler,
   }
 ];

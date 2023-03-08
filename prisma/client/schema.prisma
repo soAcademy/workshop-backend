@@ -55,6 +55,52 @@ model TestModel {
   Surname   String
 }
 
+model TriviaCategory {
+  id        Int              @id @default(autoincrement())
+  name      String           @unique
+  questions TriviaQuestion[]
+  rounds    TriviaRound[]
+}
+
+model TriviaQuestion {
+  id             Int                   @id @default(autoincrement())
+  category       TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  name           String
+  answerID       Int
+  choices        TriviaChoice[]
+  roundQuestions TriviaRoundQuestion[]
+}
+
+model TriviaChoice {
+  id             Int                   @id @default(autoincrement())
+  question       TriviaQuestion        @relation(fields: [quizId], references: [id])
+  quizId         Int
+  name           String
+  roundQuestions TriviaRoundQuestion[]
+}
+
+model TriviaRoundQuestion {
+  id         Int            @id @default(autoincrement())
+  question   TriviaQuestion @relation(fields: [quizId], references: [id])
+  quizId     Int
+  userChoice TriviaChoice   @relation(fields: [choiceId], references: [id])
+  choiceId   Int
+  quizResult Boolean
+  round      TriviaRound?   @relation(fields: [roundId], references: [id])
+  roundId    Int?
+}
+
+model TriviaRound {
+  id          Int                   @id @default(autoincrement())
+  user        String
+  questions   TriviaRoundQuestion[]
+  category    TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  totalResult Int
+  createAt    DateTime              @default(now())
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -64,4 +110,61 @@ generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
   output        = "../prisma/client"
+}
+model TwitterUser {
+  id               Int                  @id @default(autoincrement())
+  name             String
+  image            String
+  directMessage    TwitterDirectMessage @relation(fields: [directMessageId], references: [id])
+  directMessageId  Int
+  userRelate       TwitterUserRelation  @relation(fields: [userRelationId], references: [id])
+  userRelationId   Int
+  TwitterPostReply TwitterPostReply[]
+}
+
+model TwitterPost {
+  id               Int                @id @default(autoincrement())
+  message          String
+  TwitterPostReply TwitterPostReply[]
+  PostOnHashtag    PostOnHashtag[]
+}
+
+model TwitterHashtag {
+  id            Int             @id @default(autoincrement())
+  message       String
+  PostOnHashtag PostOnHashtag[]
+}
+
+model TwitterDirectMessage {
+  id          Int           @id @default(autoincrement())
+  from        String
+  to          String
+  message     String
+  createAt    DateTime      @default(now())
+  TwitterUser TwitterUser[]
+}
+
+model TwitterUserRelation {
+  id          Int           @id @default(autoincrement())
+  follower    String
+  following   String
+  TwitterUser TwitterUser[]
+}
+
+model TwitterPostReply {
+  id       Int         @id @default(autoincrement())
+  message  String
+  post     TwitterPost @relation(fields: [postId], references: [id])
+  postId   Int
+  user     TwitterUser @relation(fields: [userId], references: [id])
+  userId   Int
+  createAt DateTime    @default(now())
+}
+
+model PostOnHashtag {
+  id        Int            @id @default(autoincrement())
+  post      TwitterPost    @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   TwitterHashtag @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
 }
