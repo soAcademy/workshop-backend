@@ -264,7 +264,7 @@ model DirectMessage {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["todolist", "binkitchen", "binquiz", "twitter", "facebook"]
+  schemas  = ["todolist", "binkitchen", "binquiz", "twitter", "facebook", "youtube"]
 }
 
 generator client {
@@ -272,4 +272,111 @@ generator client {
   binaryTargets   = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
   output          = "../prisma/client"
   previewFeatures = ["multiSchema"]
+}
+
+model YouTubeUser {
+  id                         Int                       @id @default(autoincrement())
+  name                       String
+  profileImageUrl            String
+  bio                        String
+  memberOfChannels           Channel[]                 @relation("memberOfChannels")
+  usersToChannelswithRoles   UserToChannelwithRole[]
+  subscribingToChannels      Channel[]                 @relation("subscribingToChannels")
+  reactedVideos              Video[]
+  usersToVideosWithReactions UserToVideoWithReaction[]
+  videoComments              VideoComment[]
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime                  @updatedAt
+
+  @@map("User")
+  @@schema("youtube")
+}
+
+model Channel {
+  id                       Int                     @id @default(autoincrement())
+  name                     String
+  profileImageUrl          String
+  description              String
+  memberUsers              YouTubeUser[]           @relation("memberOfChannels")
+  subscribedUsers          YouTubeUser[]           @relation("subscribingToChannels")
+  usersToChannelswithRoles UserToChannelwithRole[]
+  owningVideos             Video[]
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+
+  @@schema("youtube")
+}
+
+enum Role {
+  MANAGER
+  EDITOR
+  VIEWER
+
+  @@schema("youtube")
+}
+
+model UserToChannelwithRole {
+  id            Int         @id @default(autoincrement())
+  user          YouTubeUser @relation(fields: [youTubeUserId], references: [id])
+  youTubeUserId Int
+  channel       Channel     @relation(fields: [channelId], references: [id])
+  channelId     Int
+  role          Role
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@schema("youtube")
+}
+
+model Video {
+  id                         Int                       @id @default(autoincrement())
+  title                      String
+  videoUrl                   String
+  thumbnailImageUrl          String
+  description                String
+  belongsToChannel           Channel                   @relation(fields: [channelId], references: [id])
+  channelId                  Int
+  reactedByYouTubeUsers      YouTubeUser[]
+  usersToVideosWithReactions UserToVideoWithReaction[]
+  videoComments              VideoComment[]
+  createdAt                  DateTime                  @default(now())
+  updatedAt                  DateTime                  @updatedAt
+
+  @@schema("youtube")
+}
+
+enum Reaction {
+  LIKE
+  DISLIKE
+
+  @@schema("youtube")
+}
+
+model UserToVideoWithReaction {
+  id            Int         @id @default(autoincrement())
+  user          YouTubeUser @relation(fields: [youTubeUserId], references: [id])
+  youTubeUserId Int
+  video         Video       @relation(fields: [videoId], references: [id])
+  videoId       Int
+  reaction      Reaction
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@schema("youtube")
+}
+
+model VideoComment {
+  id                   Int            @id @default(autoincrement())
+  commentText          String
+  commentingUser       YouTubeUser    @relation(fields: [youTubeUserId], references: [id])
+  youTubeUserId        Int
+  parentVideo          Video          @relation(fields: [videoId], references: [id])
+  videoId              Int
+  parentVideoComment   VideoComment?  @relation("parentVideoComment", fields: [parentVideoCommentId], references: [id])
+  parentVideoCommentId Int?
+  childVideoComments   VideoComment[] @relation("parentVideoComment")
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+
+  @@schema("youtube")
 }

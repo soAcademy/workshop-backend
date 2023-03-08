@@ -257,6 +257,111 @@ export type DirectMessage = {
   updatedAt: Date
 }
 
+/**
+ * Model YouTubeUser
+ * 
+ */
+export type YouTubeUser = {
+  id: number
+  name: string
+  profileImageUrl: string
+  bio: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Channel
+ * 
+ */
+export type Channel = {
+  id: number
+  name: string
+  profileImageUrl: string
+  description: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model UserToChannelwithRole
+ * 
+ */
+export type UserToChannelwithRole = {
+  id: number
+  youTubeUserId: number
+  channelId: number
+  role: Role
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Video
+ * 
+ */
+export type Video = {
+  id: number
+  title: string
+  videoUrl: string
+  thumbnailImageUrl: string
+  description: string
+  channelId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model UserToVideoWithReaction
+ * 
+ */
+export type UserToVideoWithReaction = {
+  id: number
+  youTubeUserId: number
+  videoId: number
+  reaction: Reaction
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model VideoComment
+ * 
+ */
+export type VideoComment = {
+  id: number
+  commentText: string
+  youTubeUserId: number
+  videoId: number
+  parentVideoCommentId: number | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+
+/**
+ * Enums
+ */
+
+// Based on
+// https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
+
+export const Reaction: {
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+};
+
+export type Reaction = (typeof Reaction)[keyof typeof Reaction]
+
+
+export const Role: {
+  MANAGER: 'MANAGER',
+  EDITOR: 'EDITOR',
+  VIEWER: 'VIEWER'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -574,6 +679,66 @@ export class PrismaClient<
     * ```
     */
   get directMessage(): Prisma.DirectMessageDelegate<GlobalReject>;
+
+  /**
+   * `prisma.youTubeUser`: Exposes CRUD operations for the **YouTubeUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YouTubeUsers
+    * const youTubeUsers = await prisma.youTubeUser.findMany()
+    * ```
+    */
+  get youTubeUser(): Prisma.YouTubeUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.channel`: Exposes CRUD operations for the **Channel** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Channels
+    * const channels = await prisma.channel.findMany()
+    * ```
+    */
+  get channel(): Prisma.ChannelDelegate<GlobalReject>;
+
+  /**
+   * `prisma.userToChannelwithRole`: Exposes CRUD operations for the **UserToChannelwithRole** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserToChannelwithRoles
+    * const userToChannelwithRoles = await prisma.userToChannelwithRole.findMany()
+    * ```
+    */
+  get userToChannelwithRole(): Prisma.UserToChannelwithRoleDelegate<GlobalReject>;
+
+  /**
+   * `prisma.video`: Exposes CRUD operations for the **Video** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Videos
+    * const videos = await prisma.video.findMany()
+    * ```
+    */
+  get video(): Prisma.VideoDelegate<GlobalReject>;
+
+  /**
+   * `prisma.userToVideoWithReaction`: Exposes CRUD operations for the **UserToVideoWithReaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserToVideoWithReactions
+    * const userToVideoWithReactions = await prisma.userToVideoWithReaction.findMany()
+    * ```
+    */
+  get userToVideoWithReaction(): Prisma.UserToVideoWithReactionDelegate<GlobalReject>;
+
+  /**
+   * `prisma.videoComment`: Exposes CRUD operations for the **VideoComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VideoComments
+    * const videoComments = await prisma.videoComment.findMany()
+    * ```
+    */
+  get videoComment(): Prisma.VideoCommentDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -1062,7 +1227,13 @@ export namespace Prisma {
     UserRelation: 'UserRelation',
     Tweet: 'Tweet',
     HashTag: 'HashTag',
-    DirectMessage: 'DirectMessage'
+    DirectMessage: 'DirectMessage',
+    YouTubeUser: 'YouTubeUser',
+    Channel: 'Channel',
+    UserToChannelwithRole: 'UserToChannelwithRole',
+    Video: 'Video',
+    UserToVideoWithReaction: 'UserToVideoWithReaction',
+    VideoComment: 'VideoComment'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1849,6 +2020,198 @@ export namespace Prisma {
      * Select specific fields to fetch from the HashTagCountOutputType
      */
     select?: HashTagCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type YouTubeUserCountOutputType
+   */
+
+
+  export type YouTubeUserCountOutputType = {
+    memberOfChannels: number
+    usersToChannelswithRoles: number
+    subscribingToChannels: number
+    reactedVideos: number
+    usersToVideosWithReactions: number
+    videoComments: number
+  }
+
+  export type YouTubeUserCountOutputTypeSelect = {
+    memberOfChannels?: boolean
+    usersToChannelswithRoles?: boolean
+    subscribingToChannels?: boolean
+    reactedVideos?: boolean
+    usersToVideosWithReactions?: boolean
+    videoComments?: boolean
+  }
+
+  export type YouTubeUserCountOutputTypeGetPayload<S extends boolean | null | undefined | YouTubeUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YouTubeUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (YouTubeUserCountOutputTypeArgs)
+    ? YouTubeUserCountOutputType 
+    : S extends { select: any } & (YouTubeUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof YouTubeUserCountOutputType ? YouTubeUserCountOutputType[P] : never
+  } 
+      : YouTubeUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YouTubeUserCountOutputType without action
+   */
+  export type YouTubeUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUserCountOutputType
+     */
+    select?: YouTubeUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type ChannelCountOutputType
+   */
+
+
+  export type ChannelCountOutputType = {
+    memberUsers: number
+    subscribedUsers: number
+    usersToChannelswithRoles: number
+    owningVideos: number
+  }
+
+  export type ChannelCountOutputTypeSelect = {
+    memberUsers?: boolean
+    subscribedUsers?: boolean
+    usersToChannelswithRoles?: boolean
+    owningVideos?: boolean
+  }
+
+  export type ChannelCountOutputTypeGetPayload<S extends boolean | null | undefined | ChannelCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? ChannelCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (ChannelCountOutputTypeArgs)
+    ? ChannelCountOutputType 
+    : S extends { select: any } & (ChannelCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof ChannelCountOutputType ? ChannelCountOutputType[P] : never
+  } 
+      : ChannelCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * ChannelCountOutputType without action
+   */
+  export type ChannelCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the ChannelCountOutputType
+     */
+    select?: ChannelCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type VideoCountOutputType
+   */
+
+
+  export type VideoCountOutputType = {
+    reactedByYouTubeUsers: number
+    usersToVideosWithReactions: number
+    videoComments: number
+  }
+
+  export type VideoCountOutputTypeSelect = {
+    reactedByYouTubeUsers?: boolean
+    usersToVideosWithReactions?: boolean
+    videoComments?: boolean
+  }
+
+  export type VideoCountOutputTypeGetPayload<S extends boolean | null | undefined | VideoCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? VideoCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (VideoCountOutputTypeArgs)
+    ? VideoCountOutputType 
+    : S extends { select: any } & (VideoCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof VideoCountOutputType ? VideoCountOutputType[P] : never
+  } 
+      : VideoCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * VideoCountOutputType without action
+   */
+  export type VideoCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the VideoCountOutputType
+     */
+    select?: VideoCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type VideoCommentCountOutputType
+   */
+
+
+  export type VideoCommentCountOutputType = {
+    childVideoComments: number
+  }
+
+  export type VideoCommentCountOutputTypeSelect = {
+    childVideoComments?: boolean
+  }
+
+  export type VideoCommentCountOutputTypeGetPayload<S extends boolean | null | undefined | VideoCommentCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? VideoCommentCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (VideoCommentCountOutputTypeArgs)
+    ? VideoCommentCountOutputType 
+    : S extends { select: any } & (VideoCommentCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof VideoCommentCountOutputType ? VideoCommentCountOutputType[P] : never
+  } 
+      : VideoCommentCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * VideoCommentCountOutputType without action
+   */
+  export type VideoCommentCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the VideoCommentCountOutputType
+     */
+    select?: VideoCommentCountOutputTypeSelect | null
   }
 
 
@@ -22079,6 +22442,6306 @@ export namespace Prisma {
 
 
   /**
+   * Model YouTubeUser
+   */
+
+
+  export type AggregateYouTubeUser = {
+    _count: YouTubeUserCountAggregateOutputType | null
+    _avg: YouTubeUserAvgAggregateOutputType | null
+    _sum: YouTubeUserSumAggregateOutputType | null
+    _min: YouTubeUserMinAggregateOutputType | null
+    _max: YouTubeUserMaxAggregateOutputType | null
+  }
+
+  export type YouTubeUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YouTubeUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type YouTubeUserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImageUrl: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YouTubeUserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImageUrl: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type YouTubeUserCountAggregateOutputType = {
+    id: number
+    name: number
+    profileImageUrl: number
+    bio: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type YouTubeUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type YouTubeUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type YouTubeUserMinAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YouTubeUserMaxAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type YouTubeUserCountAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type YouTubeUserAggregateArgs = {
+    /**
+     * Filter which YouTubeUser to aggregate.
+     */
+    where?: YouTubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YouTubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YouTubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YouTubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YouTubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YouTubeUsers
+    **/
+    _count?: true | YouTubeUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: YouTubeUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: YouTubeUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YouTubeUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YouTubeUserMaxAggregateInputType
+  }
+
+  export type GetYouTubeUserAggregateType<T extends YouTubeUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateYouTubeUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYouTubeUser[P]>
+      : GetScalarType<T[P], AggregateYouTubeUser[P]>
+  }
+
+
+
+
+  export type YouTubeUserGroupByArgs = {
+    where?: YouTubeUserWhereInput
+    orderBy?: Enumerable<YouTubeUserOrderByWithAggregationInput>
+    by: YouTubeUserScalarFieldEnum[]
+    having?: YouTubeUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YouTubeUserCountAggregateInputType | true
+    _avg?: YouTubeUserAvgAggregateInputType
+    _sum?: YouTubeUserSumAggregateInputType
+    _min?: YouTubeUserMinAggregateInputType
+    _max?: YouTubeUserMaxAggregateInputType
+  }
+
+
+  export type YouTubeUserGroupByOutputType = {
+    id: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    createdAt: Date
+    updatedAt: Date
+    _count: YouTubeUserCountAggregateOutputType | null
+    _avg: YouTubeUserAvgAggregateOutputType | null
+    _sum: YouTubeUserSumAggregateOutputType | null
+    _min: YouTubeUserMinAggregateOutputType | null
+    _max: YouTubeUserMaxAggregateOutputType | null
+  }
+
+  type GetYouTubeUserGroupByPayload<T extends YouTubeUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<YouTubeUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YouTubeUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YouTubeUserGroupByOutputType[P]>
+            : GetScalarType<T[P], YouTubeUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YouTubeUserSelect = {
+    id?: boolean
+    name?: boolean
+    profileImageUrl?: boolean
+    bio?: boolean
+    memberOfChannels?: boolean | YouTubeUser$memberOfChannelsArgs
+    usersToChannelswithRoles?: boolean | YouTubeUser$usersToChannelswithRolesArgs
+    subscribingToChannels?: boolean | YouTubeUser$subscribingToChannelsArgs
+    reactedVideos?: boolean | YouTubeUser$reactedVideosArgs
+    usersToVideosWithReactions?: boolean | YouTubeUser$usersToVideosWithReactionsArgs
+    videoComments?: boolean | YouTubeUser$videoCommentsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | YouTubeUserCountOutputTypeArgs
+  }
+
+
+  export type YouTubeUserInclude = {
+    memberOfChannels?: boolean | YouTubeUser$memberOfChannelsArgs
+    usersToChannelswithRoles?: boolean | YouTubeUser$usersToChannelswithRolesArgs
+    subscribingToChannels?: boolean | YouTubeUser$subscribingToChannelsArgs
+    reactedVideos?: boolean | YouTubeUser$reactedVideosArgs
+    usersToVideosWithReactions?: boolean | YouTubeUser$usersToVideosWithReactionsArgs
+    videoComments?: boolean | YouTubeUser$videoCommentsArgs
+    _count?: boolean | YouTubeUserCountOutputTypeArgs
+  }
+
+  export type YouTubeUserGetPayload<S extends boolean | null | undefined | YouTubeUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? YouTubeUser :
+    S extends undefined ? never :
+    S extends { include: any } & (YouTubeUserArgs | YouTubeUserFindManyArgs)
+    ? YouTubeUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'memberOfChannels' ? Array < ChannelGetPayload<S['include'][P]>>  :
+        P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['include'][P]>>  :
+        P extends 'subscribingToChannels' ? Array < ChannelGetPayload<S['include'][P]>>  :
+        P extends 'reactedVideos' ? Array < VideoGetPayload<S['include'][P]>>  :
+        P extends 'usersToVideosWithReactions' ? Array < UserToVideoWithReactionGetPayload<S['include'][P]>>  :
+        P extends 'videoComments' ? Array < VideoCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? YouTubeUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (YouTubeUserArgs | YouTubeUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'memberOfChannels' ? Array < ChannelGetPayload<S['select'][P]>>  :
+        P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['select'][P]>>  :
+        P extends 'subscribingToChannels' ? Array < ChannelGetPayload<S['select'][P]>>  :
+        P extends 'reactedVideos' ? Array < VideoGetPayload<S['select'][P]>>  :
+        P extends 'usersToVideosWithReactions' ? Array < UserToVideoWithReactionGetPayload<S['select'][P]>>  :
+        P extends 'videoComments' ? Array < VideoCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? YouTubeUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof YouTubeUser ? YouTubeUser[P] : never
+  } 
+      : YouTubeUser
+
+
+  type YouTubeUserCountArgs = 
+    Omit<YouTubeUserFindManyArgs, 'select' | 'include'> & {
+      select?: YouTubeUserCountAggregateInputType | true
+    }
+
+  export interface YouTubeUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one YouTubeUser that matches the filter.
+     * @param {YouTubeUserFindUniqueArgs} args - Arguments to find a YouTubeUser
+     * @example
+     * // Get one YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends YouTubeUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, YouTubeUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'YouTubeUser'> extends True ? Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>> : Prisma__YouTubeUserClient<YouTubeUserGetPayload<T> | null, null>
+
+    /**
+     * Find one YouTubeUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {YouTubeUserFindUniqueOrThrowArgs} args - Arguments to find a YouTubeUser
+     * @example
+     * // Get one YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends YouTubeUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, YouTubeUserFindUniqueOrThrowArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Find the first YouTubeUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserFindFirstArgs} args - Arguments to find a YouTubeUser
+     * @example
+     * // Get one YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends YouTubeUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, YouTubeUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'YouTubeUser'> extends True ? Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>> : Prisma__YouTubeUserClient<YouTubeUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first YouTubeUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserFindFirstOrThrowArgs} args - Arguments to find a YouTubeUser
+     * @example
+     * // Get one YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends YouTubeUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, YouTubeUserFindFirstOrThrowArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Find zero or more YouTubeUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YouTubeUsers
+     * const youTubeUsers = await prisma.youTubeUser.findMany()
+     * 
+     * // Get first 10 YouTubeUsers
+     * const youTubeUsers = await prisma.youTubeUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youTubeUserWithIdOnly = await prisma.youTubeUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends YouTubeUserFindManyArgs>(
+      args?: SelectSubset<T, YouTubeUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>>
+
+    /**
+     * Create a YouTubeUser.
+     * @param {YouTubeUserCreateArgs} args - Arguments to create a YouTubeUser.
+     * @example
+     * // Create one YouTubeUser
+     * const YouTubeUser = await prisma.youTubeUser.create({
+     *   data: {
+     *     // ... data to create a YouTubeUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends YouTubeUserCreateArgs>(
+      args: SelectSubset<T, YouTubeUserCreateArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Create many YouTubeUsers.
+     *     @param {YouTubeUserCreateManyArgs} args - Arguments to create many YouTubeUsers.
+     *     @example
+     *     // Create many YouTubeUsers
+     *     const youTubeUser = await prisma.youTubeUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends YouTubeUserCreateManyArgs>(
+      args?: SelectSubset<T, YouTubeUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a YouTubeUser.
+     * @param {YouTubeUserDeleteArgs} args - Arguments to delete one YouTubeUser.
+     * @example
+     * // Delete one YouTubeUser
+     * const YouTubeUser = await prisma.youTubeUser.delete({
+     *   where: {
+     *     // ... filter to delete one YouTubeUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends YouTubeUserDeleteArgs>(
+      args: SelectSubset<T, YouTubeUserDeleteArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Update one YouTubeUser.
+     * @param {YouTubeUserUpdateArgs} args - Arguments to update one YouTubeUser.
+     * @example
+     * // Update one YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends YouTubeUserUpdateArgs>(
+      args: SelectSubset<T, YouTubeUserUpdateArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Delete zero or more YouTubeUsers.
+     * @param {YouTubeUserDeleteManyArgs} args - Arguments to filter YouTubeUsers to delete.
+     * @example
+     * // Delete a few YouTubeUsers
+     * const { count } = await prisma.youTubeUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends YouTubeUserDeleteManyArgs>(
+      args?: SelectSubset<T, YouTubeUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YouTubeUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YouTubeUsers
+     * const youTubeUser = await prisma.youTubeUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends YouTubeUserUpdateManyArgs>(
+      args: SelectSubset<T, YouTubeUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one YouTubeUser.
+     * @param {YouTubeUserUpsertArgs} args - Arguments to update or create a YouTubeUser.
+     * @example
+     * // Update or create a YouTubeUser
+     * const youTubeUser = await prisma.youTubeUser.upsert({
+     *   create: {
+     *     // ... data to create a YouTubeUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YouTubeUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends YouTubeUserUpsertArgs>(
+      args: SelectSubset<T, YouTubeUserUpsertArgs>
+    ): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T>>
+
+    /**
+     * Count the number of YouTubeUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserCountArgs} args - Arguments to filter YouTubeUsers to count.
+     * @example
+     * // Count the number of YouTubeUsers
+     * const count = await prisma.youTubeUser.count({
+     *   where: {
+     *     // ... the filter for the YouTubeUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends YouTubeUserCountArgs>(
+      args?: Subset<T, YouTubeUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YouTubeUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YouTubeUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YouTubeUserAggregateArgs>(args: Subset<T, YouTubeUserAggregateArgs>): Prisma.PrismaPromise<GetYouTubeUserAggregateType<T>>
+
+    /**
+     * Group by YouTubeUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YouTubeUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YouTubeUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YouTubeUserGroupByArgs['orderBy'] }
+        : { orderBy?: YouTubeUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YouTubeUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYouTubeUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YouTubeUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__YouTubeUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    memberOfChannels<T extends YouTubeUser$memberOfChannelsArgs= {}>(args?: Subset<T, YouTubeUser$memberOfChannelsArgs>): Prisma.PrismaPromise<Array<ChannelGetPayload<T>>| Null>;
+
+    usersToChannelswithRoles<T extends YouTubeUser$usersToChannelswithRolesArgs= {}>(args?: Subset<T, YouTubeUser$usersToChannelswithRolesArgs>): Prisma.PrismaPromise<Array<UserToChannelwithRoleGetPayload<T>>| Null>;
+
+    subscribingToChannels<T extends YouTubeUser$subscribingToChannelsArgs= {}>(args?: Subset<T, YouTubeUser$subscribingToChannelsArgs>): Prisma.PrismaPromise<Array<ChannelGetPayload<T>>| Null>;
+
+    reactedVideos<T extends YouTubeUser$reactedVideosArgs= {}>(args?: Subset<T, YouTubeUser$reactedVideosArgs>): Prisma.PrismaPromise<Array<VideoGetPayload<T>>| Null>;
+
+    usersToVideosWithReactions<T extends YouTubeUser$usersToVideosWithReactionsArgs= {}>(args?: Subset<T, YouTubeUser$usersToVideosWithReactionsArgs>): Prisma.PrismaPromise<Array<UserToVideoWithReactionGetPayload<T>>| Null>;
+
+    videoComments<T extends YouTubeUser$videoCommentsArgs= {}>(args?: Subset<T, YouTubeUser$videoCommentsArgs>): Prisma.PrismaPromise<Array<VideoCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * YouTubeUser base type for findUnique actions
+   */
+  export type YouTubeUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter, which YouTubeUser to fetch.
+     */
+    where: YouTubeUserWhereUniqueInput
+  }
+
+  /**
+   * YouTubeUser findUnique
+   */
+  export interface YouTubeUserFindUniqueArgs extends YouTubeUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YouTubeUser findUniqueOrThrow
+   */
+  export type YouTubeUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter, which YouTubeUser to fetch.
+     */
+    where: YouTubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YouTubeUser base type for findFirst actions
+   */
+  export type YouTubeUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter, which YouTubeUser to fetch.
+     */
+    where?: YouTubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YouTubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YouTubeUsers.
+     */
+    cursor?: YouTubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YouTubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YouTubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YouTubeUsers.
+     */
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+  /**
+   * YouTubeUser findFirst
+   */
+  export interface YouTubeUserFindFirstArgs extends YouTubeUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * YouTubeUser findFirstOrThrow
+   */
+  export type YouTubeUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter, which YouTubeUser to fetch.
+     */
+    where?: YouTubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YouTubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YouTubeUsers.
+     */
+    cursor?: YouTubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YouTubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YouTubeUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YouTubeUsers.
+     */
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser findMany
+   */
+  export type YouTubeUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter, which YouTubeUsers to fetch.
+     */
+    where?: YouTubeUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YouTubeUsers to fetch.
+     */
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YouTubeUsers.
+     */
+    cursor?: YouTubeUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YouTubeUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YouTubeUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser create
+   */
+  export type YouTubeUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * The data needed to create a YouTubeUser.
+     */
+    data: XOR<YouTubeUserCreateInput, YouTubeUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * YouTubeUser createMany
+   */
+  export type YouTubeUserCreateManyArgs = {
+    /**
+     * The data used to create many YouTubeUsers.
+     */
+    data: Enumerable<YouTubeUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * YouTubeUser update
+   */
+  export type YouTubeUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * The data needed to update a YouTubeUser.
+     */
+    data: XOR<YouTubeUserUpdateInput, YouTubeUserUncheckedUpdateInput>
+    /**
+     * Choose, which YouTubeUser to update.
+     */
+    where: YouTubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YouTubeUser updateMany
+   */
+  export type YouTubeUserUpdateManyArgs = {
+    /**
+     * The data used to update YouTubeUsers.
+     */
+    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyInput>
+    /**
+     * Filter which YouTubeUsers to update
+     */
+    where?: YouTubeUserWhereInput
+  }
+
+
+  /**
+   * YouTubeUser upsert
+   */
+  export type YouTubeUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * The filter to search for the YouTubeUser to update in case it exists.
+     */
+    where: YouTubeUserWhereUniqueInput
+    /**
+     * In case the YouTubeUser found by the `where` argument doesn't exist, create a new YouTubeUser with this data.
+     */
+    create: XOR<YouTubeUserCreateInput, YouTubeUserUncheckedCreateInput>
+    /**
+     * In case the YouTubeUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YouTubeUserUpdateInput, YouTubeUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * YouTubeUser delete
+   */
+  export type YouTubeUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    /**
+     * Filter which YouTubeUser to delete.
+     */
+    where: YouTubeUserWhereUniqueInput
+  }
+
+
+  /**
+   * YouTubeUser deleteMany
+   */
+  export type YouTubeUserDeleteManyArgs = {
+    /**
+     * Filter which YouTubeUsers to delete
+     */
+    where?: YouTubeUserWhereInput
+  }
+
+
+  /**
+   * YouTubeUser.memberOfChannels
+   */
+  export type YouTubeUser$memberOfChannelsArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    where?: ChannelWhereInput
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    cursor?: ChannelWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ChannelScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser.usersToChannelswithRoles
+   */
+  export type YouTubeUser$usersToChannelswithRolesArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    where?: UserToChannelwithRoleWhereInput
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserToChannelwithRoleScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser.subscribingToChannels
+   */
+  export type YouTubeUser$subscribingToChannelsArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    where?: ChannelWhereInput
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    cursor?: ChannelWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ChannelScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser.reactedVideos
+   */
+  export type YouTubeUser$reactedVideosArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    where?: VideoWhereInput
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    cursor?: VideoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<VideoScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser.usersToVideosWithReactions
+   */
+  export type YouTubeUser$usersToVideosWithReactionsArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    where?: UserToVideoWithReactionWhereInput
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserToVideoWithReactionScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser.videoComments
+   */
+  export type YouTubeUser$videoCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    where?: VideoCommentWhereInput
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    cursor?: VideoCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * YouTubeUser without action
+   */
+  export type YouTubeUserArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+  }
+
+
+
+  /**
+   * Model Channel
+   */
+
+
+  export type AggregateChannel = {
+    _count: ChannelCountAggregateOutputType | null
+    _avg: ChannelAvgAggregateOutputType | null
+    _sum: ChannelSumAggregateOutputType | null
+    _min: ChannelMinAggregateOutputType | null
+    _max: ChannelMaxAggregateOutputType | null
+  }
+
+  export type ChannelAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ChannelSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ChannelMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImageUrl: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChannelMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImageUrl: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChannelCountAggregateOutputType = {
+    id: number
+    name: number
+    profileImageUrl: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChannelAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ChannelSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ChannelMinAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChannelMaxAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChannelCountAggregateInputType = {
+    id?: true
+    name?: true
+    profileImageUrl?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChannelAggregateArgs = {
+    /**
+     * Filter which Channel to aggregate.
+     */
+    where?: ChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Channels to fetch.
+     */
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Channels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Channels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Channels
+    **/
+    _count?: true | ChannelCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChannelAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChannelSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChannelMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChannelMaxAggregateInputType
+  }
+
+  export type GetChannelAggregateType<T extends ChannelAggregateArgs> = {
+        [P in keyof T & keyof AggregateChannel]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChannel[P]>
+      : GetScalarType<T[P], AggregateChannel[P]>
+  }
+
+
+
+
+  export type ChannelGroupByArgs = {
+    where?: ChannelWhereInput
+    orderBy?: Enumerable<ChannelOrderByWithAggregationInput>
+    by: ChannelScalarFieldEnum[]
+    having?: ChannelScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChannelCountAggregateInputType | true
+    _avg?: ChannelAvgAggregateInputType
+    _sum?: ChannelSumAggregateInputType
+    _min?: ChannelMinAggregateInputType
+    _max?: ChannelMaxAggregateInputType
+  }
+
+
+  export type ChannelGroupByOutputType = {
+    id: number
+    name: string
+    profileImageUrl: string
+    description: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ChannelCountAggregateOutputType | null
+    _avg: ChannelAvgAggregateOutputType | null
+    _sum: ChannelSumAggregateOutputType | null
+    _min: ChannelMinAggregateOutputType | null
+    _max: ChannelMaxAggregateOutputType | null
+  }
+
+  type GetChannelGroupByPayload<T extends ChannelGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<ChannelGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChannelGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChannelGroupByOutputType[P]>
+            : GetScalarType<T[P], ChannelGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChannelSelect = {
+    id?: boolean
+    name?: boolean
+    profileImageUrl?: boolean
+    description?: boolean
+    memberUsers?: boolean | Channel$memberUsersArgs
+    subscribedUsers?: boolean | Channel$subscribedUsersArgs
+    usersToChannelswithRoles?: boolean | Channel$usersToChannelswithRolesArgs
+    owningVideos?: boolean | Channel$owningVideosArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | ChannelCountOutputTypeArgs
+  }
+
+
+  export type ChannelInclude = {
+    memberUsers?: boolean | Channel$memberUsersArgs
+    subscribedUsers?: boolean | Channel$subscribedUsersArgs
+    usersToChannelswithRoles?: boolean | Channel$usersToChannelswithRolesArgs
+    owningVideos?: boolean | Channel$owningVideosArgs
+    _count?: boolean | ChannelCountOutputTypeArgs
+  }
+
+  export type ChannelGetPayload<S extends boolean | null | undefined | ChannelArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Channel :
+    S extends undefined ? never :
+    S extends { include: any } & (ChannelArgs | ChannelFindManyArgs)
+    ? Channel  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'memberUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
+        P extends 'subscribedUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
+        P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['include'][P]>>  :
+        P extends 'owningVideos' ? Array < VideoGetPayload<S['include'][P]>>  :
+        P extends '_count' ? ChannelCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (ChannelArgs | ChannelFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'memberUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
+        P extends 'subscribedUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
+        P extends 'usersToChannelswithRoles' ? Array < UserToChannelwithRoleGetPayload<S['select'][P]>>  :
+        P extends 'owningVideos' ? Array < VideoGetPayload<S['select'][P]>>  :
+        P extends '_count' ? ChannelCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Channel ? Channel[P] : never
+  } 
+      : Channel
+
+
+  type ChannelCountArgs = 
+    Omit<ChannelFindManyArgs, 'select' | 'include'> & {
+      select?: ChannelCountAggregateInputType | true
+    }
+
+  export interface ChannelDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Channel that matches the filter.
+     * @param {ChannelFindUniqueArgs} args - Arguments to find a Channel
+     * @example
+     * // Get one Channel
+     * const channel = await prisma.channel.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ChannelFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, ChannelFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Channel'> extends True ? Prisma__ChannelClient<ChannelGetPayload<T>> : Prisma__ChannelClient<ChannelGetPayload<T> | null, null>
+
+    /**
+     * Find one Channel that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ChannelFindUniqueOrThrowArgs} args - Arguments to find a Channel
+     * @example
+     * // Get one Channel
+     * const channel = await prisma.channel.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ChannelFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ChannelFindUniqueOrThrowArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Find the first Channel that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelFindFirstArgs} args - Arguments to find a Channel
+     * @example
+     * // Get one Channel
+     * const channel = await prisma.channel.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ChannelFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, ChannelFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Channel'> extends True ? Prisma__ChannelClient<ChannelGetPayload<T>> : Prisma__ChannelClient<ChannelGetPayload<T> | null, null>
+
+    /**
+     * Find the first Channel that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelFindFirstOrThrowArgs} args - Arguments to find a Channel
+     * @example
+     * // Get one Channel
+     * const channel = await prisma.channel.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ChannelFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ChannelFindFirstOrThrowArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Find zero or more Channels that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Channels
+     * const channels = await prisma.channel.findMany()
+     * 
+     * // Get first 10 Channels
+     * const channels = await prisma.channel.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const channelWithIdOnly = await prisma.channel.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ChannelFindManyArgs>(
+      args?: SelectSubset<T, ChannelFindManyArgs>
+    ): Prisma.PrismaPromise<Array<ChannelGetPayload<T>>>
+
+    /**
+     * Create a Channel.
+     * @param {ChannelCreateArgs} args - Arguments to create a Channel.
+     * @example
+     * // Create one Channel
+     * const Channel = await prisma.channel.create({
+     *   data: {
+     *     // ... data to create a Channel
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ChannelCreateArgs>(
+      args: SelectSubset<T, ChannelCreateArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Create many Channels.
+     *     @param {ChannelCreateManyArgs} args - Arguments to create many Channels.
+     *     @example
+     *     // Create many Channels
+     *     const channel = await prisma.channel.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ChannelCreateManyArgs>(
+      args?: SelectSubset<T, ChannelCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Channel.
+     * @param {ChannelDeleteArgs} args - Arguments to delete one Channel.
+     * @example
+     * // Delete one Channel
+     * const Channel = await prisma.channel.delete({
+     *   where: {
+     *     // ... filter to delete one Channel
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ChannelDeleteArgs>(
+      args: SelectSubset<T, ChannelDeleteArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Update one Channel.
+     * @param {ChannelUpdateArgs} args - Arguments to update one Channel.
+     * @example
+     * // Update one Channel
+     * const channel = await prisma.channel.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ChannelUpdateArgs>(
+      args: SelectSubset<T, ChannelUpdateArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Delete zero or more Channels.
+     * @param {ChannelDeleteManyArgs} args - Arguments to filter Channels to delete.
+     * @example
+     * // Delete a few Channels
+     * const { count } = await prisma.channel.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ChannelDeleteManyArgs>(
+      args?: SelectSubset<T, ChannelDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Channels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Channels
+     * const channel = await prisma.channel.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ChannelUpdateManyArgs>(
+      args: SelectSubset<T, ChannelUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Channel.
+     * @param {ChannelUpsertArgs} args - Arguments to update or create a Channel.
+     * @example
+     * // Update or create a Channel
+     * const channel = await prisma.channel.upsert({
+     *   create: {
+     *     // ... data to create a Channel
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Channel we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ChannelUpsertArgs>(
+      args: SelectSubset<T, ChannelUpsertArgs>
+    ): Prisma__ChannelClient<ChannelGetPayload<T>>
+
+    /**
+     * Count the number of Channels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelCountArgs} args - Arguments to filter Channels to count.
+     * @example
+     * // Count the number of Channels
+     * const count = await prisma.channel.count({
+     *   where: {
+     *     // ... the filter for the Channels we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChannelCountArgs>(
+      args?: Subset<T, ChannelCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChannelCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Channel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChannelAggregateArgs>(args: Subset<T, ChannelAggregateArgs>): Prisma.PrismaPromise<GetChannelAggregateType<T>>
+
+    /**
+     * Group by Channel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChannelGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChannelGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChannelGroupByArgs['orderBy'] }
+        : { orderBy?: ChannelGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChannelGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChannelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Channel.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__ChannelClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    memberUsers<T extends Channel$memberUsersArgs= {}>(args?: Subset<T, Channel$memberUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
+
+    subscribedUsers<T extends Channel$subscribedUsersArgs= {}>(args?: Subset<T, Channel$subscribedUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
+
+    usersToChannelswithRoles<T extends Channel$usersToChannelswithRolesArgs= {}>(args?: Subset<T, Channel$usersToChannelswithRolesArgs>): Prisma.PrismaPromise<Array<UserToChannelwithRoleGetPayload<T>>| Null>;
+
+    owningVideos<T extends Channel$owningVideosArgs= {}>(args?: Subset<T, Channel$owningVideosArgs>): Prisma.PrismaPromise<Array<VideoGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Channel base type for findUnique actions
+   */
+  export type ChannelFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter, which Channel to fetch.
+     */
+    where: ChannelWhereUniqueInput
+  }
+
+  /**
+   * Channel findUnique
+   */
+  export interface ChannelFindUniqueArgs extends ChannelFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Channel findUniqueOrThrow
+   */
+  export type ChannelFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter, which Channel to fetch.
+     */
+    where: ChannelWhereUniqueInput
+  }
+
+
+  /**
+   * Channel base type for findFirst actions
+   */
+  export type ChannelFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter, which Channel to fetch.
+     */
+    where?: ChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Channels to fetch.
+     */
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Channels.
+     */
+    cursor?: ChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Channels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Channels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Channels.
+     */
+    distinct?: Enumerable<ChannelScalarFieldEnum>
+  }
+
+  /**
+   * Channel findFirst
+   */
+  export interface ChannelFindFirstArgs extends ChannelFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Channel findFirstOrThrow
+   */
+  export type ChannelFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter, which Channel to fetch.
+     */
+    where?: ChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Channels to fetch.
+     */
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Channels.
+     */
+    cursor?: ChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Channels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Channels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Channels.
+     */
+    distinct?: Enumerable<ChannelScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel findMany
+   */
+  export type ChannelFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter, which Channels to fetch.
+     */
+    where?: ChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Channels to fetch.
+     */
+    orderBy?: Enumerable<ChannelOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Channels.
+     */
+    cursor?: ChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Channels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Channels.
+     */
+    skip?: number
+    distinct?: Enumerable<ChannelScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel create
+   */
+  export type ChannelCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * The data needed to create a Channel.
+     */
+    data: XOR<ChannelCreateInput, ChannelUncheckedCreateInput>
+  }
+
+
+  /**
+   * Channel createMany
+   */
+  export type ChannelCreateManyArgs = {
+    /**
+     * The data used to create many Channels.
+     */
+    data: Enumerable<ChannelCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Channel update
+   */
+  export type ChannelUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * The data needed to update a Channel.
+     */
+    data: XOR<ChannelUpdateInput, ChannelUncheckedUpdateInput>
+    /**
+     * Choose, which Channel to update.
+     */
+    where: ChannelWhereUniqueInput
+  }
+
+
+  /**
+   * Channel updateMany
+   */
+  export type ChannelUpdateManyArgs = {
+    /**
+     * The data used to update Channels.
+     */
+    data: XOR<ChannelUpdateManyMutationInput, ChannelUncheckedUpdateManyInput>
+    /**
+     * Filter which Channels to update
+     */
+    where?: ChannelWhereInput
+  }
+
+
+  /**
+   * Channel upsert
+   */
+  export type ChannelUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * The filter to search for the Channel to update in case it exists.
+     */
+    where: ChannelWhereUniqueInput
+    /**
+     * In case the Channel found by the `where` argument doesn't exist, create a new Channel with this data.
+     */
+    create: XOR<ChannelCreateInput, ChannelUncheckedCreateInput>
+    /**
+     * In case the Channel was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChannelUpdateInput, ChannelUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Channel delete
+   */
+  export type ChannelDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+    /**
+     * Filter which Channel to delete.
+     */
+    where: ChannelWhereUniqueInput
+  }
+
+
+  /**
+   * Channel deleteMany
+   */
+  export type ChannelDeleteManyArgs = {
+    /**
+     * Filter which Channels to delete
+     */
+    where?: ChannelWhereInput
+  }
+
+
+  /**
+   * Channel.memberUsers
+   */
+  export type Channel$memberUsersArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    where?: YouTubeUserWhereInput
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    cursor?: YouTubeUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel.subscribedUsers
+   */
+  export type Channel$subscribedUsersArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    where?: YouTubeUserWhereInput
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    cursor?: YouTubeUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel.usersToChannelswithRoles
+   */
+  export type Channel$usersToChannelswithRolesArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    where?: UserToChannelwithRoleWhereInput
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserToChannelwithRoleScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel.owningVideos
+   */
+  export type Channel$owningVideosArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    where?: VideoWhereInput
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    cursor?: VideoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<VideoScalarFieldEnum>
+  }
+
+
+  /**
+   * Channel without action
+   */
+  export type ChannelArgs = {
+    /**
+     * Select specific fields to fetch from the Channel
+     */
+    select?: ChannelSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChannelInclude | null
+  }
+
+
+
+  /**
+   * Model UserToChannelwithRole
+   */
+
+
+  export type AggregateUserToChannelwithRole = {
+    _count: UserToChannelwithRoleCountAggregateOutputType | null
+    _avg: UserToChannelwithRoleAvgAggregateOutputType | null
+    _sum: UserToChannelwithRoleSumAggregateOutputType | null
+    _min: UserToChannelwithRoleMinAggregateOutputType | null
+    _max: UserToChannelwithRoleMaxAggregateOutputType | null
+  }
+
+  export type UserToChannelwithRoleAvgAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    channelId: number | null
+  }
+
+  export type UserToChannelwithRoleSumAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    channelId: number | null
+  }
+
+  export type UserToChannelwithRoleMinAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    channelId: number | null
+    role: Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserToChannelwithRoleMaxAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    channelId: number | null
+    role: Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserToChannelwithRoleCountAggregateOutputType = {
+    id: number
+    youTubeUserId: number
+    channelId: number
+    role: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserToChannelwithRoleAvgAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    channelId?: true
+  }
+
+  export type UserToChannelwithRoleSumAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    channelId?: true
+  }
+
+  export type UserToChannelwithRoleMinAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    channelId?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserToChannelwithRoleMaxAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    channelId?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserToChannelwithRoleCountAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    channelId?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserToChannelwithRoleAggregateArgs = {
+    /**
+     * Filter which UserToChannelwithRole to aggregate.
+     */
+    where?: UserToChannelwithRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToChannelwithRoles to fetch.
+     */
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToChannelwithRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToChannelwithRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserToChannelwithRoles
+    **/
+    _count?: true | UserToChannelwithRoleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserToChannelwithRoleAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserToChannelwithRoleSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserToChannelwithRoleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserToChannelwithRoleMaxAggregateInputType
+  }
+
+  export type GetUserToChannelwithRoleAggregateType<T extends UserToChannelwithRoleAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserToChannelwithRole]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserToChannelwithRole[P]>
+      : GetScalarType<T[P], AggregateUserToChannelwithRole[P]>
+  }
+
+
+
+
+  export type UserToChannelwithRoleGroupByArgs = {
+    where?: UserToChannelwithRoleWhereInput
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithAggregationInput>
+    by: UserToChannelwithRoleScalarFieldEnum[]
+    having?: UserToChannelwithRoleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserToChannelwithRoleCountAggregateInputType | true
+    _avg?: UserToChannelwithRoleAvgAggregateInputType
+    _sum?: UserToChannelwithRoleSumAggregateInputType
+    _min?: UserToChannelwithRoleMinAggregateInputType
+    _max?: UserToChannelwithRoleMaxAggregateInputType
+  }
+
+
+  export type UserToChannelwithRoleGroupByOutputType = {
+    id: number
+    youTubeUserId: number
+    channelId: number
+    role: Role
+    createdAt: Date
+    updatedAt: Date
+    _count: UserToChannelwithRoleCountAggregateOutputType | null
+    _avg: UserToChannelwithRoleAvgAggregateOutputType | null
+    _sum: UserToChannelwithRoleSumAggregateOutputType | null
+    _min: UserToChannelwithRoleMinAggregateOutputType | null
+    _max: UserToChannelwithRoleMaxAggregateOutputType | null
+  }
+
+  type GetUserToChannelwithRoleGroupByPayload<T extends UserToChannelwithRoleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UserToChannelwithRoleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserToChannelwithRoleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserToChannelwithRoleGroupByOutputType[P]>
+            : GetScalarType<T[P], UserToChannelwithRoleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserToChannelwithRoleSelect = {
+    id?: boolean
+    user?: boolean | YouTubeUserArgs
+    youTubeUserId?: boolean
+    channel?: boolean | ChannelArgs
+    channelId?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type UserToChannelwithRoleInclude = {
+    user?: boolean | YouTubeUserArgs
+    channel?: boolean | ChannelArgs
+  }
+
+  export type UserToChannelwithRoleGetPayload<S extends boolean | null | undefined | UserToChannelwithRoleArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserToChannelwithRole :
+    S extends undefined ? never :
+    S extends { include: any } & (UserToChannelwithRoleArgs | UserToChannelwithRoleFindManyArgs)
+    ? UserToChannelwithRole  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? YouTubeUserGetPayload<S['include'][P]> :
+        P extends 'channel' ? ChannelGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UserToChannelwithRoleArgs | UserToChannelwithRoleFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? YouTubeUserGetPayload<S['select'][P]> :
+        P extends 'channel' ? ChannelGetPayload<S['select'][P]> :  P extends keyof UserToChannelwithRole ? UserToChannelwithRole[P] : never
+  } 
+      : UserToChannelwithRole
+
+
+  type UserToChannelwithRoleCountArgs = 
+    Omit<UserToChannelwithRoleFindManyArgs, 'select' | 'include'> & {
+      select?: UserToChannelwithRoleCountAggregateInputType | true
+    }
+
+  export interface UserToChannelwithRoleDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one UserToChannelwithRole that matches the filter.
+     * @param {UserToChannelwithRoleFindUniqueArgs} args - Arguments to find a UserToChannelwithRole
+     * @example
+     * // Get one UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UserToChannelwithRoleFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UserToChannelwithRoleFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UserToChannelwithRole'> extends True ? Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>> : Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T> | null, null>
+
+    /**
+     * Find one UserToChannelwithRole that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UserToChannelwithRoleFindUniqueOrThrowArgs} args - Arguments to find a UserToChannelwithRole
+     * @example
+     * // Get one UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UserToChannelwithRoleFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserToChannelwithRoleFindUniqueOrThrowArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Find the first UserToChannelwithRole that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleFindFirstArgs} args - Arguments to find a UserToChannelwithRole
+     * @example
+     * // Get one UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UserToChannelwithRoleFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UserToChannelwithRoleFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UserToChannelwithRole'> extends True ? Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>> : Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T> | null, null>
+
+    /**
+     * Find the first UserToChannelwithRole that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleFindFirstOrThrowArgs} args - Arguments to find a UserToChannelwithRole
+     * @example
+     * // Get one UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UserToChannelwithRoleFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserToChannelwithRoleFindFirstOrThrowArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Find zero or more UserToChannelwithRoles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserToChannelwithRoles
+     * const userToChannelwithRoles = await prisma.userToChannelwithRole.findMany()
+     * 
+     * // Get first 10 UserToChannelwithRoles
+     * const userToChannelwithRoles = await prisma.userToChannelwithRole.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userToChannelwithRoleWithIdOnly = await prisma.userToChannelwithRole.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UserToChannelwithRoleFindManyArgs>(
+      args?: SelectSubset<T, UserToChannelwithRoleFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UserToChannelwithRoleGetPayload<T>>>
+
+    /**
+     * Create a UserToChannelwithRole.
+     * @param {UserToChannelwithRoleCreateArgs} args - Arguments to create a UserToChannelwithRole.
+     * @example
+     * // Create one UserToChannelwithRole
+     * const UserToChannelwithRole = await prisma.userToChannelwithRole.create({
+     *   data: {
+     *     // ... data to create a UserToChannelwithRole
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UserToChannelwithRoleCreateArgs>(
+      args: SelectSubset<T, UserToChannelwithRoleCreateArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Create many UserToChannelwithRoles.
+     *     @param {UserToChannelwithRoleCreateManyArgs} args - Arguments to create many UserToChannelwithRoles.
+     *     @example
+     *     // Create many UserToChannelwithRoles
+     *     const userToChannelwithRole = await prisma.userToChannelwithRole.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UserToChannelwithRoleCreateManyArgs>(
+      args?: SelectSubset<T, UserToChannelwithRoleCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserToChannelwithRole.
+     * @param {UserToChannelwithRoleDeleteArgs} args - Arguments to delete one UserToChannelwithRole.
+     * @example
+     * // Delete one UserToChannelwithRole
+     * const UserToChannelwithRole = await prisma.userToChannelwithRole.delete({
+     *   where: {
+     *     // ... filter to delete one UserToChannelwithRole
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UserToChannelwithRoleDeleteArgs>(
+      args: SelectSubset<T, UserToChannelwithRoleDeleteArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Update one UserToChannelwithRole.
+     * @param {UserToChannelwithRoleUpdateArgs} args - Arguments to update one UserToChannelwithRole.
+     * @example
+     * // Update one UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UserToChannelwithRoleUpdateArgs>(
+      args: SelectSubset<T, UserToChannelwithRoleUpdateArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Delete zero or more UserToChannelwithRoles.
+     * @param {UserToChannelwithRoleDeleteManyArgs} args - Arguments to filter UserToChannelwithRoles to delete.
+     * @example
+     * // Delete a few UserToChannelwithRoles
+     * const { count } = await prisma.userToChannelwithRole.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UserToChannelwithRoleDeleteManyArgs>(
+      args?: SelectSubset<T, UserToChannelwithRoleDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserToChannelwithRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserToChannelwithRoles
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UserToChannelwithRoleUpdateManyArgs>(
+      args: SelectSubset<T, UserToChannelwithRoleUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserToChannelwithRole.
+     * @param {UserToChannelwithRoleUpsertArgs} args - Arguments to update or create a UserToChannelwithRole.
+     * @example
+     * // Update or create a UserToChannelwithRole
+     * const userToChannelwithRole = await prisma.userToChannelwithRole.upsert({
+     *   create: {
+     *     // ... data to create a UserToChannelwithRole
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserToChannelwithRole we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UserToChannelwithRoleUpsertArgs>(
+      args: SelectSubset<T, UserToChannelwithRoleUpsertArgs>
+    ): Prisma__UserToChannelwithRoleClient<UserToChannelwithRoleGetPayload<T>>
+
+    /**
+     * Count the number of UserToChannelwithRoles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleCountArgs} args - Arguments to filter UserToChannelwithRoles to count.
+     * @example
+     * // Count the number of UserToChannelwithRoles
+     * const count = await prisma.userToChannelwithRole.count({
+     *   where: {
+     *     // ... the filter for the UserToChannelwithRoles we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserToChannelwithRoleCountArgs>(
+      args?: Subset<T, UserToChannelwithRoleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserToChannelwithRoleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserToChannelwithRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserToChannelwithRoleAggregateArgs>(args: Subset<T, UserToChannelwithRoleAggregateArgs>): Prisma.PrismaPromise<GetUserToChannelwithRoleAggregateType<T>>
+
+    /**
+     * Group by UserToChannelwithRole.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToChannelwithRoleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserToChannelwithRoleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserToChannelwithRoleGroupByArgs['orderBy'] }
+        : { orderBy?: UserToChannelwithRoleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserToChannelwithRoleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserToChannelwithRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserToChannelwithRole.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UserToChannelwithRoleClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends YouTubeUserArgs= {}>(args?: Subset<T, YouTubeUserArgs>): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T> | Null>;
+
+    channel<T extends ChannelArgs= {}>(args?: Subset<T, ChannelArgs>): Prisma__ChannelClient<ChannelGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserToChannelwithRole base type for findUnique actions
+   */
+  export type UserToChannelwithRoleFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter, which UserToChannelwithRole to fetch.
+     */
+    where: UserToChannelwithRoleWhereUniqueInput
+  }
+
+  /**
+   * UserToChannelwithRole findUnique
+   */
+  export interface UserToChannelwithRoleFindUniqueArgs extends UserToChannelwithRoleFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserToChannelwithRole findUniqueOrThrow
+   */
+  export type UserToChannelwithRoleFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter, which UserToChannelwithRole to fetch.
+     */
+    where: UserToChannelwithRoleWhereUniqueInput
+  }
+
+
+  /**
+   * UserToChannelwithRole base type for findFirst actions
+   */
+  export type UserToChannelwithRoleFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter, which UserToChannelwithRole to fetch.
+     */
+    where?: UserToChannelwithRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToChannelwithRoles to fetch.
+     */
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserToChannelwithRoles.
+     */
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToChannelwithRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToChannelwithRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserToChannelwithRoles.
+     */
+    distinct?: Enumerable<UserToChannelwithRoleScalarFieldEnum>
+  }
+
+  /**
+   * UserToChannelwithRole findFirst
+   */
+  export interface UserToChannelwithRoleFindFirstArgs extends UserToChannelwithRoleFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserToChannelwithRole findFirstOrThrow
+   */
+  export type UserToChannelwithRoleFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter, which UserToChannelwithRole to fetch.
+     */
+    where?: UserToChannelwithRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToChannelwithRoles to fetch.
+     */
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserToChannelwithRoles.
+     */
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToChannelwithRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToChannelwithRoles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserToChannelwithRoles.
+     */
+    distinct?: Enumerable<UserToChannelwithRoleScalarFieldEnum>
+  }
+
+
+  /**
+   * UserToChannelwithRole findMany
+   */
+  export type UserToChannelwithRoleFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter, which UserToChannelwithRoles to fetch.
+     */
+    where?: UserToChannelwithRoleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToChannelwithRoles to fetch.
+     */
+    orderBy?: Enumerable<UserToChannelwithRoleOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserToChannelwithRoles.
+     */
+    cursor?: UserToChannelwithRoleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToChannelwithRoles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToChannelwithRoles.
+     */
+    skip?: number
+    distinct?: Enumerable<UserToChannelwithRoleScalarFieldEnum>
+  }
+
+
+  /**
+   * UserToChannelwithRole create
+   */
+  export type UserToChannelwithRoleCreateArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * The data needed to create a UserToChannelwithRole.
+     */
+    data: XOR<UserToChannelwithRoleCreateInput, UserToChannelwithRoleUncheckedCreateInput>
+  }
+
+
+  /**
+   * UserToChannelwithRole createMany
+   */
+  export type UserToChannelwithRoleCreateManyArgs = {
+    /**
+     * The data used to create many UserToChannelwithRoles.
+     */
+    data: Enumerable<UserToChannelwithRoleCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * UserToChannelwithRole update
+   */
+  export type UserToChannelwithRoleUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * The data needed to update a UserToChannelwithRole.
+     */
+    data: XOR<UserToChannelwithRoleUpdateInput, UserToChannelwithRoleUncheckedUpdateInput>
+    /**
+     * Choose, which UserToChannelwithRole to update.
+     */
+    where: UserToChannelwithRoleWhereUniqueInput
+  }
+
+
+  /**
+   * UserToChannelwithRole updateMany
+   */
+  export type UserToChannelwithRoleUpdateManyArgs = {
+    /**
+     * The data used to update UserToChannelwithRoles.
+     */
+    data: XOR<UserToChannelwithRoleUpdateManyMutationInput, UserToChannelwithRoleUncheckedUpdateManyInput>
+    /**
+     * Filter which UserToChannelwithRoles to update
+     */
+    where?: UserToChannelwithRoleWhereInput
+  }
+
+
+  /**
+   * UserToChannelwithRole upsert
+   */
+  export type UserToChannelwithRoleUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * The filter to search for the UserToChannelwithRole to update in case it exists.
+     */
+    where: UserToChannelwithRoleWhereUniqueInput
+    /**
+     * In case the UserToChannelwithRole found by the `where` argument doesn't exist, create a new UserToChannelwithRole with this data.
+     */
+    create: XOR<UserToChannelwithRoleCreateInput, UserToChannelwithRoleUncheckedCreateInput>
+    /**
+     * In case the UserToChannelwithRole was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserToChannelwithRoleUpdateInput, UserToChannelwithRoleUncheckedUpdateInput>
+  }
+
+
+  /**
+   * UserToChannelwithRole delete
+   */
+  export type UserToChannelwithRoleDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+    /**
+     * Filter which UserToChannelwithRole to delete.
+     */
+    where: UserToChannelwithRoleWhereUniqueInput
+  }
+
+
+  /**
+   * UserToChannelwithRole deleteMany
+   */
+  export type UserToChannelwithRoleDeleteManyArgs = {
+    /**
+     * Filter which UserToChannelwithRoles to delete
+     */
+    where?: UserToChannelwithRoleWhereInput
+  }
+
+
+  /**
+   * UserToChannelwithRole without action
+   */
+  export type UserToChannelwithRoleArgs = {
+    /**
+     * Select specific fields to fetch from the UserToChannelwithRole
+     */
+    select?: UserToChannelwithRoleSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToChannelwithRoleInclude | null
+  }
+
+
+
+  /**
+   * Model Video
+   */
+
+
+  export type AggregateVideo = {
+    _count: VideoCountAggregateOutputType | null
+    _avg: VideoAvgAggregateOutputType | null
+    _sum: VideoSumAggregateOutputType | null
+    _min: VideoMinAggregateOutputType | null
+    _max: VideoMaxAggregateOutputType | null
+  }
+
+  export type VideoAvgAggregateOutputType = {
+    id: number | null
+    channelId: number | null
+  }
+
+  export type VideoSumAggregateOutputType = {
+    id: number | null
+    channelId: number | null
+  }
+
+  export type VideoMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    videoUrl: string | null
+    thumbnailImageUrl: string | null
+    description: string | null
+    channelId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VideoMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    videoUrl: string | null
+    thumbnailImageUrl: string | null
+    description: string | null
+    channelId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VideoCountAggregateOutputType = {
+    id: number
+    title: number
+    videoUrl: number
+    thumbnailImageUrl: number
+    description: number
+    channelId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VideoAvgAggregateInputType = {
+    id?: true
+    channelId?: true
+  }
+
+  export type VideoSumAggregateInputType = {
+    id?: true
+    channelId?: true
+  }
+
+  export type VideoMinAggregateInputType = {
+    id?: true
+    title?: true
+    videoUrl?: true
+    thumbnailImageUrl?: true
+    description?: true
+    channelId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VideoMaxAggregateInputType = {
+    id?: true
+    title?: true
+    videoUrl?: true
+    thumbnailImageUrl?: true
+    description?: true
+    channelId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VideoCountAggregateInputType = {
+    id?: true
+    title?: true
+    videoUrl?: true
+    thumbnailImageUrl?: true
+    description?: true
+    channelId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VideoAggregateArgs = {
+    /**
+     * Filter which Video to aggregate.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Videos
+    **/
+    _count?: true | VideoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VideoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VideoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VideoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VideoMaxAggregateInputType
+  }
+
+  export type GetVideoAggregateType<T extends VideoAggregateArgs> = {
+        [P in keyof T & keyof AggregateVideo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVideo[P]>
+      : GetScalarType<T[P], AggregateVideo[P]>
+  }
+
+
+
+
+  export type VideoGroupByArgs = {
+    where?: VideoWhereInput
+    orderBy?: Enumerable<VideoOrderByWithAggregationInput>
+    by: VideoScalarFieldEnum[]
+    having?: VideoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VideoCountAggregateInputType | true
+    _avg?: VideoAvgAggregateInputType
+    _sum?: VideoSumAggregateInputType
+    _min?: VideoMinAggregateInputType
+    _max?: VideoMaxAggregateInputType
+  }
+
+
+  export type VideoGroupByOutputType = {
+    id: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: VideoCountAggregateOutputType | null
+    _avg: VideoAvgAggregateOutputType | null
+    _sum: VideoSumAggregateOutputType | null
+    _min: VideoMinAggregateOutputType | null
+    _max: VideoMaxAggregateOutputType | null
+  }
+
+  type GetVideoGroupByPayload<T extends VideoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<VideoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VideoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VideoGroupByOutputType[P]>
+            : GetScalarType<T[P], VideoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VideoSelect = {
+    id?: boolean
+    title?: boolean
+    videoUrl?: boolean
+    thumbnailImageUrl?: boolean
+    description?: boolean
+    belongsToChannel?: boolean | ChannelArgs
+    channelId?: boolean
+    reactedByYouTubeUsers?: boolean | Video$reactedByYouTubeUsersArgs
+    usersToVideosWithReactions?: boolean | Video$usersToVideosWithReactionsArgs
+    videoComments?: boolean | Video$videoCommentsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | VideoCountOutputTypeArgs
+  }
+
+
+  export type VideoInclude = {
+    belongsToChannel?: boolean | ChannelArgs
+    reactedByYouTubeUsers?: boolean | Video$reactedByYouTubeUsersArgs
+    usersToVideosWithReactions?: boolean | Video$usersToVideosWithReactionsArgs
+    videoComments?: boolean | Video$videoCommentsArgs
+    _count?: boolean | VideoCountOutputTypeArgs
+  }
+
+  export type VideoGetPayload<S extends boolean | null | undefined | VideoArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Video :
+    S extends undefined ? never :
+    S extends { include: any } & (VideoArgs | VideoFindManyArgs)
+    ? Video  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'belongsToChannel' ? ChannelGetPayload<S['include'][P]> :
+        P extends 'reactedByYouTubeUsers' ? Array < YouTubeUserGetPayload<S['include'][P]>>  :
+        P extends 'usersToVideosWithReactions' ? Array < UserToVideoWithReactionGetPayload<S['include'][P]>>  :
+        P extends 'videoComments' ? Array < VideoCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? VideoCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (VideoArgs | VideoFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'belongsToChannel' ? ChannelGetPayload<S['select'][P]> :
+        P extends 'reactedByYouTubeUsers' ? Array < YouTubeUserGetPayload<S['select'][P]>>  :
+        P extends 'usersToVideosWithReactions' ? Array < UserToVideoWithReactionGetPayload<S['select'][P]>>  :
+        P extends 'videoComments' ? Array < VideoCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? VideoCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Video ? Video[P] : never
+  } 
+      : Video
+
+
+  type VideoCountArgs = 
+    Omit<VideoFindManyArgs, 'select' | 'include'> & {
+      select?: VideoCountAggregateInputType | true
+    }
+
+  export interface VideoDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Video that matches the filter.
+     * @param {VideoFindUniqueArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends VideoFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, VideoFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Video'> extends True ? Prisma__VideoClient<VideoGetPayload<T>> : Prisma__VideoClient<VideoGetPayload<T> | null, null>
+
+    /**
+     * Find one Video that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {VideoFindUniqueOrThrowArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends VideoFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, VideoFindUniqueOrThrowArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Find the first Video that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindFirstArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends VideoFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, VideoFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Video'> extends True ? Prisma__VideoClient<VideoGetPayload<T>> : Prisma__VideoClient<VideoGetPayload<T> | null, null>
+
+    /**
+     * Find the first Video that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindFirstOrThrowArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends VideoFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, VideoFindFirstOrThrowArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Find zero or more Videos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Videos
+     * const videos = await prisma.video.findMany()
+     * 
+     * // Get first 10 Videos
+     * const videos = await prisma.video.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const videoWithIdOnly = await prisma.video.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends VideoFindManyArgs>(
+      args?: SelectSubset<T, VideoFindManyArgs>
+    ): Prisma.PrismaPromise<Array<VideoGetPayload<T>>>
+
+    /**
+     * Create a Video.
+     * @param {VideoCreateArgs} args - Arguments to create a Video.
+     * @example
+     * // Create one Video
+     * const Video = await prisma.video.create({
+     *   data: {
+     *     // ... data to create a Video
+     *   }
+     * })
+     * 
+    **/
+    create<T extends VideoCreateArgs>(
+      args: SelectSubset<T, VideoCreateArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Create many Videos.
+     *     @param {VideoCreateManyArgs} args - Arguments to create many Videos.
+     *     @example
+     *     // Create many Videos
+     *     const video = await prisma.video.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends VideoCreateManyArgs>(
+      args?: SelectSubset<T, VideoCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Video.
+     * @param {VideoDeleteArgs} args - Arguments to delete one Video.
+     * @example
+     * // Delete one Video
+     * const Video = await prisma.video.delete({
+     *   where: {
+     *     // ... filter to delete one Video
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends VideoDeleteArgs>(
+      args: SelectSubset<T, VideoDeleteArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Update one Video.
+     * @param {VideoUpdateArgs} args - Arguments to update one Video.
+     * @example
+     * // Update one Video
+     * const video = await prisma.video.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends VideoUpdateArgs>(
+      args: SelectSubset<T, VideoUpdateArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Delete zero or more Videos.
+     * @param {VideoDeleteManyArgs} args - Arguments to filter Videos to delete.
+     * @example
+     * // Delete a few Videos
+     * const { count } = await prisma.video.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends VideoDeleteManyArgs>(
+      args?: SelectSubset<T, VideoDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Videos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Videos
+     * const video = await prisma.video.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends VideoUpdateManyArgs>(
+      args: SelectSubset<T, VideoUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Video.
+     * @param {VideoUpsertArgs} args - Arguments to update or create a Video.
+     * @example
+     * // Update or create a Video
+     * const video = await prisma.video.upsert({
+     *   create: {
+     *     // ... data to create a Video
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Video we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends VideoUpsertArgs>(
+      args: SelectSubset<T, VideoUpsertArgs>
+    ): Prisma__VideoClient<VideoGetPayload<T>>
+
+    /**
+     * Count the number of Videos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCountArgs} args - Arguments to filter Videos to count.
+     * @example
+     * // Count the number of Videos
+     * const count = await prisma.video.count({
+     *   where: {
+     *     // ... the filter for the Videos we want to count
+     *   }
+     * })
+    **/
+    count<T extends VideoCountArgs>(
+      args?: Subset<T, VideoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VideoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Video.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VideoAggregateArgs>(args: Subset<T, VideoAggregateArgs>): Prisma.PrismaPromise<GetVideoAggregateType<T>>
+
+    /**
+     * Group by Video.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VideoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VideoGroupByArgs['orderBy'] }
+        : { orderBy?: VideoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VideoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Video.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__VideoClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    belongsToChannel<T extends ChannelArgs= {}>(args?: Subset<T, ChannelArgs>): Prisma__ChannelClient<ChannelGetPayload<T> | Null>;
+
+    reactedByYouTubeUsers<T extends Video$reactedByYouTubeUsersArgs= {}>(args?: Subset<T, Video$reactedByYouTubeUsersArgs>): Prisma.PrismaPromise<Array<YouTubeUserGetPayload<T>>| Null>;
+
+    usersToVideosWithReactions<T extends Video$usersToVideosWithReactionsArgs= {}>(args?: Subset<T, Video$usersToVideosWithReactionsArgs>): Prisma.PrismaPromise<Array<UserToVideoWithReactionGetPayload<T>>| Null>;
+
+    videoComments<T extends Video$videoCommentsArgs= {}>(args?: Subset<T, Video$videoCommentsArgs>): Prisma.PrismaPromise<Array<VideoCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Video base type for findUnique actions
+   */
+  export type VideoFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+  /**
+   * Video findUnique
+   */
+  export interface VideoFindUniqueArgs extends VideoFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Video findUniqueOrThrow
+   */
+  export type VideoFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+
+  /**
+   * Video base type for findFirst actions
+   */
+  export type VideoFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Videos.
+     */
+    distinct?: Enumerable<VideoScalarFieldEnum>
+  }
+
+  /**
+   * Video findFirst
+   */
+  export interface VideoFindFirstArgs extends VideoFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Video findFirstOrThrow
+   */
+  export type VideoFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Videos.
+     */
+    distinct?: Enumerable<VideoScalarFieldEnum>
+  }
+
+
+  /**
+   * Video findMany
+   */
+  export type VideoFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter, which Videos to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    distinct?: Enumerable<VideoScalarFieldEnum>
+  }
+
+
+  /**
+   * Video create
+   */
+  export type VideoCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * The data needed to create a Video.
+     */
+    data: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+  }
+
+
+  /**
+   * Video createMany
+   */
+  export type VideoCreateManyArgs = {
+    /**
+     * The data used to create many Videos.
+     */
+    data: Enumerable<VideoCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Video update
+   */
+  export type VideoUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * The data needed to update a Video.
+     */
+    data: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    /**
+     * Choose, which Video to update.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+
+  /**
+   * Video updateMany
+   */
+  export type VideoUpdateManyArgs = {
+    /**
+     * The data used to update Videos.
+     */
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    /**
+     * Filter which Videos to update
+     */
+    where?: VideoWhereInput
+  }
+
+
+  /**
+   * Video upsert
+   */
+  export type VideoUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * The filter to search for the Video to update in case it exists.
+     */
+    where: VideoWhereUniqueInput
+    /**
+     * In case the Video found by the `where` argument doesn't exist, create a new Video with this data.
+     */
+    create: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    /**
+     * In case the Video was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Video delete
+   */
+  export type VideoDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+    /**
+     * Filter which Video to delete.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+
+  /**
+   * Video deleteMany
+   */
+  export type VideoDeleteManyArgs = {
+    /**
+     * Filter which Videos to delete
+     */
+    where?: VideoWhereInput
+  }
+
+
+  /**
+   * Video.reactedByYouTubeUsers
+   */
+  export type Video$reactedByYouTubeUsersArgs = {
+    /**
+     * Select specific fields to fetch from the YouTubeUser
+     */
+    select?: YouTubeUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: YouTubeUserInclude | null
+    where?: YouTubeUserWhereInput
+    orderBy?: Enumerable<YouTubeUserOrderByWithRelationInput>
+    cursor?: YouTubeUserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<YouTubeUserScalarFieldEnum>
+  }
+
+
+  /**
+   * Video.usersToVideosWithReactions
+   */
+  export type Video$usersToVideosWithReactionsArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    where?: UserToVideoWithReactionWhereInput
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<UserToVideoWithReactionScalarFieldEnum>
+  }
+
+
+  /**
+   * Video.videoComments
+   */
+  export type Video$videoCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    where?: VideoCommentWhereInput
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    cursor?: VideoCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * Video without action
+   */
+  export type VideoArgs = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoInclude | null
+  }
+
+
+
+  /**
+   * Model UserToVideoWithReaction
+   */
+
+
+  export type AggregateUserToVideoWithReaction = {
+    _count: UserToVideoWithReactionCountAggregateOutputType | null
+    _avg: UserToVideoWithReactionAvgAggregateOutputType | null
+    _sum: UserToVideoWithReactionSumAggregateOutputType | null
+    _min: UserToVideoWithReactionMinAggregateOutputType | null
+    _max: UserToVideoWithReactionMaxAggregateOutputType | null
+  }
+
+  export type UserToVideoWithReactionAvgAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+  }
+
+  export type UserToVideoWithReactionSumAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+  }
+
+  export type UserToVideoWithReactionMinAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+    reaction: Reaction | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserToVideoWithReactionMaxAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+    reaction: Reaction | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserToVideoWithReactionCountAggregateOutputType = {
+    id: number
+    youTubeUserId: number
+    videoId: number
+    reaction: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserToVideoWithReactionAvgAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+  }
+
+  export type UserToVideoWithReactionSumAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+  }
+
+  export type UserToVideoWithReactionMinAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+    reaction?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserToVideoWithReactionMaxAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+    reaction?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserToVideoWithReactionCountAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+    reaction?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserToVideoWithReactionAggregateArgs = {
+    /**
+     * Filter which UserToVideoWithReaction to aggregate.
+     */
+    where?: UserToVideoWithReactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToVideoWithReactions to fetch.
+     */
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToVideoWithReactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToVideoWithReactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserToVideoWithReactions
+    **/
+    _count?: true | UserToVideoWithReactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserToVideoWithReactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserToVideoWithReactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserToVideoWithReactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserToVideoWithReactionMaxAggregateInputType
+  }
+
+  export type GetUserToVideoWithReactionAggregateType<T extends UserToVideoWithReactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserToVideoWithReaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserToVideoWithReaction[P]>
+      : GetScalarType<T[P], AggregateUserToVideoWithReaction[P]>
+  }
+
+
+
+
+  export type UserToVideoWithReactionGroupByArgs = {
+    where?: UserToVideoWithReactionWhereInput
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithAggregationInput>
+    by: UserToVideoWithReactionScalarFieldEnum[]
+    having?: UserToVideoWithReactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserToVideoWithReactionCountAggregateInputType | true
+    _avg?: UserToVideoWithReactionAvgAggregateInputType
+    _sum?: UserToVideoWithReactionSumAggregateInputType
+    _min?: UserToVideoWithReactionMinAggregateInputType
+    _max?: UserToVideoWithReactionMaxAggregateInputType
+  }
+
+
+  export type UserToVideoWithReactionGroupByOutputType = {
+    id: number
+    youTubeUserId: number
+    videoId: number
+    reaction: Reaction
+    createdAt: Date
+    updatedAt: Date
+    _count: UserToVideoWithReactionCountAggregateOutputType | null
+    _avg: UserToVideoWithReactionAvgAggregateOutputType | null
+    _sum: UserToVideoWithReactionSumAggregateOutputType | null
+    _min: UserToVideoWithReactionMinAggregateOutputType | null
+    _max: UserToVideoWithReactionMaxAggregateOutputType | null
+  }
+
+  type GetUserToVideoWithReactionGroupByPayload<T extends UserToVideoWithReactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UserToVideoWithReactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserToVideoWithReactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserToVideoWithReactionGroupByOutputType[P]>
+            : GetScalarType<T[P], UserToVideoWithReactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserToVideoWithReactionSelect = {
+    id?: boolean
+    user?: boolean | YouTubeUserArgs
+    youTubeUserId?: boolean
+    video?: boolean | VideoArgs
+    videoId?: boolean
+    reaction?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type UserToVideoWithReactionInclude = {
+    user?: boolean | YouTubeUserArgs
+    video?: boolean | VideoArgs
+  }
+
+  export type UserToVideoWithReactionGetPayload<S extends boolean | null | undefined | UserToVideoWithReactionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? UserToVideoWithReaction :
+    S extends undefined ? never :
+    S extends { include: any } & (UserToVideoWithReactionArgs | UserToVideoWithReactionFindManyArgs)
+    ? UserToVideoWithReaction  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? YouTubeUserGetPayload<S['include'][P]> :
+        P extends 'video' ? VideoGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (UserToVideoWithReactionArgs | UserToVideoWithReactionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? YouTubeUserGetPayload<S['select'][P]> :
+        P extends 'video' ? VideoGetPayload<S['select'][P]> :  P extends keyof UserToVideoWithReaction ? UserToVideoWithReaction[P] : never
+  } 
+      : UserToVideoWithReaction
+
+
+  type UserToVideoWithReactionCountArgs = 
+    Omit<UserToVideoWithReactionFindManyArgs, 'select' | 'include'> & {
+      select?: UserToVideoWithReactionCountAggregateInputType | true
+    }
+
+  export interface UserToVideoWithReactionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one UserToVideoWithReaction that matches the filter.
+     * @param {UserToVideoWithReactionFindUniqueArgs} args - Arguments to find a UserToVideoWithReaction
+     * @example
+     * // Get one UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends UserToVideoWithReactionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UserToVideoWithReactionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UserToVideoWithReaction'> extends True ? Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>> : Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T> | null, null>
+
+    /**
+     * Find one UserToVideoWithReaction that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {UserToVideoWithReactionFindUniqueOrThrowArgs} args - Arguments to find a UserToVideoWithReaction
+     * @example
+     * // Get one UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends UserToVideoWithReactionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserToVideoWithReactionFindUniqueOrThrowArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Find the first UserToVideoWithReaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionFindFirstArgs} args - Arguments to find a UserToVideoWithReaction
+     * @example
+     * // Get one UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends UserToVideoWithReactionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UserToVideoWithReactionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UserToVideoWithReaction'> extends True ? Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>> : Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T> | null, null>
+
+    /**
+     * Find the first UserToVideoWithReaction that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionFindFirstOrThrowArgs} args - Arguments to find a UserToVideoWithReaction
+     * @example
+     * // Get one UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends UserToVideoWithReactionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserToVideoWithReactionFindFirstOrThrowArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Find zero or more UserToVideoWithReactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserToVideoWithReactions
+     * const userToVideoWithReactions = await prisma.userToVideoWithReaction.findMany()
+     * 
+     * // Get first 10 UserToVideoWithReactions
+     * const userToVideoWithReactions = await prisma.userToVideoWithReaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userToVideoWithReactionWithIdOnly = await prisma.userToVideoWithReaction.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends UserToVideoWithReactionFindManyArgs>(
+      args?: SelectSubset<T, UserToVideoWithReactionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UserToVideoWithReactionGetPayload<T>>>
+
+    /**
+     * Create a UserToVideoWithReaction.
+     * @param {UserToVideoWithReactionCreateArgs} args - Arguments to create a UserToVideoWithReaction.
+     * @example
+     * // Create one UserToVideoWithReaction
+     * const UserToVideoWithReaction = await prisma.userToVideoWithReaction.create({
+     *   data: {
+     *     // ... data to create a UserToVideoWithReaction
+     *   }
+     * })
+     * 
+    **/
+    create<T extends UserToVideoWithReactionCreateArgs>(
+      args: SelectSubset<T, UserToVideoWithReactionCreateArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Create many UserToVideoWithReactions.
+     *     @param {UserToVideoWithReactionCreateManyArgs} args - Arguments to create many UserToVideoWithReactions.
+     *     @example
+     *     // Create many UserToVideoWithReactions
+     *     const userToVideoWithReaction = await prisma.userToVideoWithReaction.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends UserToVideoWithReactionCreateManyArgs>(
+      args?: SelectSubset<T, UserToVideoWithReactionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a UserToVideoWithReaction.
+     * @param {UserToVideoWithReactionDeleteArgs} args - Arguments to delete one UserToVideoWithReaction.
+     * @example
+     * // Delete one UserToVideoWithReaction
+     * const UserToVideoWithReaction = await prisma.userToVideoWithReaction.delete({
+     *   where: {
+     *     // ... filter to delete one UserToVideoWithReaction
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends UserToVideoWithReactionDeleteArgs>(
+      args: SelectSubset<T, UserToVideoWithReactionDeleteArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Update one UserToVideoWithReaction.
+     * @param {UserToVideoWithReactionUpdateArgs} args - Arguments to update one UserToVideoWithReaction.
+     * @example
+     * // Update one UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends UserToVideoWithReactionUpdateArgs>(
+      args: SelectSubset<T, UserToVideoWithReactionUpdateArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Delete zero or more UserToVideoWithReactions.
+     * @param {UserToVideoWithReactionDeleteManyArgs} args - Arguments to filter UserToVideoWithReactions to delete.
+     * @example
+     * // Delete a few UserToVideoWithReactions
+     * const { count } = await prisma.userToVideoWithReaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends UserToVideoWithReactionDeleteManyArgs>(
+      args?: SelectSubset<T, UserToVideoWithReactionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserToVideoWithReactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserToVideoWithReactions
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends UserToVideoWithReactionUpdateManyArgs>(
+      args: SelectSubset<T, UserToVideoWithReactionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one UserToVideoWithReaction.
+     * @param {UserToVideoWithReactionUpsertArgs} args - Arguments to update or create a UserToVideoWithReaction.
+     * @example
+     * // Update or create a UserToVideoWithReaction
+     * const userToVideoWithReaction = await prisma.userToVideoWithReaction.upsert({
+     *   create: {
+     *     // ... data to create a UserToVideoWithReaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserToVideoWithReaction we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends UserToVideoWithReactionUpsertArgs>(
+      args: SelectSubset<T, UserToVideoWithReactionUpsertArgs>
+    ): Prisma__UserToVideoWithReactionClient<UserToVideoWithReactionGetPayload<T>>
+
+    /**
+     * Count the number of UserToVideoWithReactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionCountArgs} args - Arguments to filter UserToVideoWithReactions to count.
+     * @example
+     * // Count the number of UserToVideoWithReactions
+     * const count = await prisma.userToVideoWithReaction.count({
+     *   where: {
+     *     // ... the filter for the UserToVideoWithReactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserToVideoWithReactionCountArgs>(
+      args?: Subset<T, UserToVideoWithReactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserToVideoWithReactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserToVideoWithReaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserToVideoWithReactionAggregateArgs>(args: Subset<T, UserToVideoWithReactionAggregateArgs>): Prisma.PrismaPromise<GetUserToVideoWithReactionAggregateType<T>>
+
+    /**
+     * Group by UserToVideoWithReaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserToVideoWithReactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserToVideoWithReactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserToVideoWithReactionGroupByArgs['orderBy'] }
+        : { orderBy?: UserToVideoWithReactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserToVideoWithReactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserToVideoWithReactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserToVideoWithReaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__UserToVideoWithReactionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends YouTubeUserArgs= {}>(args?: Subset<T, YouTubeUserArgs>): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T> | Null>;
+
+    video<T extends VideoArgs= {}>(args?: Subset<T, VideoArgs>): Prisma__VideoClient<VideoGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * UserToVideoWithReaction base type for findUnique actions
+   */
+  export type UserToVideoWithReactionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter, which UserToVideoWithReaction to fetch.
+     */
+    where: UserToVideoWithReactionWhereUniqueInput
+  }
+
+  /**
+   * UserToVideoWithReaction findUnique
+   */
+  export interface UserToVideoWithReactionFindUniqueArgs extends UserToVideoWithReactionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserToVideoWithReaction findUniqueOrThrow
+   */
+  export type UserToVideoWithReactionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter, which UserToVideoWithReaction to fetch.
+     */
+    where: UserToVideoWithReactionWhereUniqueInput
+  }
+
+
+  /**
+   * UserToVideoWithReaction base type for findFirst actions
+   */
+  export type UserToVideoWithReactionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter, which UserToVideoWithReaction to fetch.
+     */
+    where?: UserToVideoWithReactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToVideoWithReactions to fetch.
+     */
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserToVideoWithReactions.
+     */
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToVideoWithReactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToVideoWithReactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserToVideoWithReactions.
+     */
+    distinct?: Enumerable<UserToVideoWithReactionScalarFieldEnum>
+  }
+
+  /**
+   * UserToVideoWithReaction findFirst
+   */
+  export interface UserToVideoWithReactionFindFirstArgs extends UserToVideoWithReactionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * UserToVideoWithReaction findFirstOrThrow
+   */
+  export type UserToVideoWithReactionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter, which UserToVideoWithReaction to fetch.
+     */
+    where?: UserToVideoWithReactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToVideoWithReactions to fetch.
+     */
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserToVideoWithReactions.
+     */
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToVideoWithReactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToVideoWithReactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserToVideoWithReactions.
+     */
+    distinct?: Enumerable<UserToVideoWithReactionScalarFieldEnum>
+  }
+
+
+  /**
+   * UserToVideoWithReaction findMany
+   */
+  export type UserToVideoWithReactionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter, which UserToVideoWithReactions to fetch.
+     */
+    where?: UserToVideoWithReactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserToVideoWithReactions to fetch.
+     */
+    orderBy?: Enumerable<UserToVideoWithReactionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserToVideoWithReactions.
+     */
+    cursor?: UserToVideoWithReactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserToVideoWithReactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserToVideoWithReactions.
+     */
+    skip?: number
+    distinct?: Enumerable<UserToVideoWithReactionScalarFieldEnum>
+  }
+
+
+  /**
+   * UserToVideoWithReaction create
+   */
+  export type UserToVideoWithReactionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * The data needed to create a UserToVideoWithReaction.
+     */
+    data: XOR<UserToVideoWithReactionCreateInput, UserToVideoWithReactionUncheckedCreateInput>
+  }
+
+
+  /**
+   * UserToVideoWithReaction createMany
+   */
+  export type UserToVideoWithReactionCreateManyArgs = {
+    /**
+     * The data used to create many UserToVideoWithReactions.
+     */
+    data: Enumerable<UserToVideoWithReactionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * UserToVideoWithReaction update
+   */
+  export type UserToVideoWithReactionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * The data needed to update a UserToVideoWithReaction.
+     */
+    data: XOR<UserToVideoWithReactionUpdateInput, UserToVideoWithReactionUncheckedUpdateInput>
+    /**
+     * Choose, which UserToVideoWithReaction to update.
+     */
+    where: UserToVideoWithReactionWhereUniqueInput
+  }
+
+
+  /**
+   * UserToVideoWithReaction updateMany
+   */
+  export type UserToVideoWithReactionUpdateManyArgs = {
+    /**
+     * The data used to update UserToVideoWithReactions.
+     */
+    data: XOR<UserToVideoWithReactionUpdateManyMutationInput, UserToVideoWithReactionUncheckedUpdateManyInput>
+    /**
+     * Filter which UserToVideoWithReactions to update
+     */
+    where?: UserToVideoWithReactionWhereInput
+  }
+
+
+  /**
+   * UserToVideoWithReaction upsert
+   */
+  export type UserToVideoWithReactionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * The filter to search for the UserToVideoWithReaction to update in case it exists.
+     */
+    where: UserToVideoWithReactionWhereUniqueInput
+    /**
+     * In case the UserToVideoWithReaction found by the `where` argument doesn't exist, create a new UserToVideoWithReaction with this data.
+     */
+    create: XOR<UserToVideoWithReactionCreateInput, UserToVideoWithReactionUncheckedCreateInput>
+    /**
+     * In case the UserToVideoWithReaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserToVideoWithReactionUpdateInput, UserToVideoWithReactionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * UserToVideoWithReaction delete
+   */
+  export type UserToVideoWithReactionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+    /**
+     * Filter which UserToVideoWithReaction to delete.
+     */
+    where: UserToVideoWithReactionWhereUniqueInput
+  }
+
+
+  /**
+   * UserToVideoWithReaction deleteMany
+   */
+  export type UserToVideoWithReactionDeleteManyArgs = {
+    /**
+     * Filter which UserToVideoWithReactions to delete
+     */
+    where?: UserToVideoWithReactionWhereInput
+  }
+
+
+  /**
+   * UserToVideoWithReaction without action
+   */
+  export type UserToVideoWithReactionArgs = {
+    /**
+     * Select specific fields to fetch from the UserToVideoWithReaction
+     */
+    select?: UserToVideoWithReactionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: UserToVideoWithReactionInclude | null
+  }
+
+
+
+  /**
+   * Model VideoComment
+   */
+
+
+  export type AggregateVideoComment = {
+    _count: VideoCommentCountAggregateOutputType | null
+    _avg: VideoCommentAvgAggregateOutputType | null
+    _sum: VideoCommentSumAggregateOutputType | null
+    _min: VideoCommentMinAggregateOutputType | null
+    _max: VideoCommentMaxAggregateOutputType | null
+  }
+
+  export type VideoCommentAvgAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+    parentVideoCommentId: number | null
+  }
+
+  export type VideoCommentSumAggregateOutputType = {
+    id: number | null
+    youTubeUserId: number | null
+    videoId: number | null
+    parentVideoCommentId: number | null
+  }
+
+  export type VideoCommentMinAggregateOutputType = {
+    id: number | null
+    commentText: string | null
+    youTubeUserId: number | null
+    videoId: number | null
+    parentVideoCommentId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VideoCommentMaxAggregateOutputType = {
+    id: number | null
+    commentText: string | null
+    youTubeUserId: number | null
+    videoId: number | null
+    parentVideoCommentId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VideoCommentCountAggregateOutputType = {
+    id: number
+    commentText: number
+    youTubeUserId: number
+    videoId: number
+    parentVideoCommentId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VideoCommentAvgAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+    parentVideoCommentId?: true
+  }
+
+  export type VideoCommentSumAggregateInputType = {
+    id?: true
+    youTubeUserId?: true
+    videoId?: true
+    parentVideoCommentId?: true
+  }
+
+  export type VideoCommentMinAggregateInputType = {
+    id?: true
+    commentText?: true
+    youTubeUserId?: true
+    videoId?: true
+    parentVideoCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VideoCommentMaxAggregateInputType = {
+    id?: true
+    commentText?: true
+    youTubeUserId?: true
+    videoId?: true
+    parentVideoCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VideoCommentCountAggregateInputType = {
+    id?: true
+    commentText?: true
+    youTubeUserId?: true
+    videoId?: true
+    parentVideoCommentId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VideoCommentAggregateArgs = {
+    /**
+     * Filter which VideoComment to aggregate.
+     */
+    where?: VideoCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoComments to fetch.
+     */
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VideoCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VideoComments
+    **/
+    _count?: true | VideoCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VideoCommentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VideoCommentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VideoCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VideoCommentMaxAggregateInputType
+  }
+
+  export type GetVideoCommentAggregateType<T extends VideoCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateVideoComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVideoComment[P]>
+      : GetScalarType<T[P], AggregateVideoComment[P]>
+  }
+
+
+
+
+  export type VideoCommentGroupByArgs = {
+    where?: VideoCommentWhereInput
+    orderBy?: Enumerable<VideoCommentOrderByWithAggregationInput>
+    by: VideoCommentScalarFieldEnum[]
+    having?: VideoCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VideoCommentCountAggregateInputType | true
+    _avg?: VideoCommentAvgAggregateInputType
+    _sum?: VideoCommentSumAggregateInputType
+    _min?: VideoCommentMinAggregateInputType
+    _max?: VideoCommentMaxAggregateInputType
+  }
+
+
+  export type VideoCommentGroupByOutputType = {
+    id: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    parentVideoCommentId: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: VideoCommentCountAggregateOutputType | null
+    _avg: VideoCommentAvgAggregateOutputType | null
+    _sum: VideoCommentSumAggregateOutputType | null
+    _min: VideoCommentMinAggregateOutputType | null
+    _max: VideoCommentMaxAggregateOutputType | null
+  }
+
+  type GetVideoCommentGroupByPayload<T extends VideoCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<VideoCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VideoCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VideoCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], VideoCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VideoCommentSelect = {
+    id?: boolean
+    commentText?: boolean
+    commentingUser?: boolean | YouTubeUserArgs
+    youTubeUserId?: boolean
+    parentVideo?: boolean | VideoArgs
+    videoId?: boolean
+    parentVideoComment?: boolean | VideoCommentArgs
+    parentVideoCommentId?: boolean
+    childVideoComments?: boolean | VideoComment$childVideoCommentsArgs
+    createdAt?: boolean
+    updatedAt?: boolean
+    _count?: boolean | VideoCommentCountOutputTypeArgs
+  }
+
+
+  export type VideoCommentInclude = {
+    commentingUser?: boolean | YouTubeUserArgs
+    parentVideo?: boolean | VideoArgs
+    parentVideoComment?: boolean | VideoCommentArgs
+    childVideoComments?: boolean | VideoComment$childVideoCommentsArgs
+    _count?: boolean | VideoCommentCountOutputTypeArgs
+  }
+
+  export type VideoCommentGetPayload<S extends boolean | null | undefined | VideoCommentArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? VideoComment :
+    S extends undefined ? never :
+    S extends { include: any } & (VideoCommentArgs | VideoCommentFindManyArgs)
+    ? VideoComment  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'commentingUser' ? YouTubeUserGetPayload<S['include'][P]> :
+        P extends 'parentVideo' ? VideoGetPayload<S['include'][P]> :
+        P extends 'parentVideoComment' ? VideoCommentGetPayload<S['include'][P]> | null :
+        P extends 'childVideoComments' ? Array < VideoCommentGetPayload<S['include'][P]>>  :
+        P extends '_count' ? VideoCommentCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (VideoCommentArgs | VideoCommentFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'commentingUser' ? YouTubeUserGetPayload<S['select'][P]> :
+        P extends 'parentVideo' ? VideoGetPayload<S['select'][P]> :
+        P extends 'parentVideoComment' ? VideoCommentGetPayload<S['select'][P]> | null :
+        P extends 'childVideoComments' ? Array < VideoCommentGetPayload<S['select'][P]>>  :
+        P extends '_count' ? VideoCommentCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof VideoComment ? VideoComment[P] : never
+  } 
+      : VideoComment
+
+
+  type VideoCommentCountArgs = 
+    Omit<VideoCommentFindManyArgs, 'select' | 'include'> & {
+      select?: VideoCommentCountAggregateInputType | true
+    }
+
+  export interface VideoCommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one VideoComment that matches the filter.
+     * @param {VideoCommentFindUniqueArgs} args - Arguments to find a VideoComment
+     * @example
+     * // Get one VideoComment
+     * const videoComment = await prisma.videoComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends VideoCommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, VideoCommentFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'VideoComment'> extends True ? Prisma__VideoCommentClient<VideoCommentGetPayload<T>> : Prisma__VideoCommentClient<VideoCommentGetPayload<T> | null, null>
+
+    /**
+     * Find one VideoComment that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {VideoCommentFindUniqueOrThrowArgs} args - Arguments to find a VideoComment
+     * @example
+     * // Get one VideoComment
+     * const videoComment = await prisma.videoComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends VideoCommentFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, VideoCommentFindUniqueOrThrowArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Find the first VideoComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentFindFirstArgs} args - Arguments to find a VideoComment
+     * @example
+     * // Get one VideoComment
+     * const videoComment = await prisma.videoComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends VideoCommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, VideoCommentFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'VideoComment'> extends True ? Prisma__VideoCommentClient<VideoCommentGetPayload<T>> : Prisma__VideoCommentClient<VideoCommentGetPayload<T> | null, null>
+
+    /**
+     * Find the first VideoComment that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentFindFirstOrThrowArgs} args - Arguments to find a VideoComment
+     * @example
+     * // Get one VideoComment
+     * const videoComment = await prisma.videoComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends VideoCommentFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, VideoCommentFindFirstOrThrowArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Find zero or more VideoComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VideoComments
+     * const videoComments = await prisma.videoComment.findMany()
+     * 
+     * // Get first 10 VideoComments
+     * const videoComments = await prisma.videoComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const videoCommentWithIdOnly = await prisma.videoComment.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends VideoCommentFindManyArgs>(
+      args?: SelectSubset<T, VideoCommentFindManyArgs>
+    ): Prisma.PrismaPromise<Array<VideoCommentGetPayload<T>>>
+
+    /**
+     * Create a VideoComment.
+     * @param {VideoCommentCreateArgs} args - Arguments to create a VideoComment.
+     * @example
+     * // Create one VideoComment
+     * const VideoComment = await prisma.videoComment.create({
+     *   data: {
+     *     // ... data to create a VideoComment
+     *   }
+     * })
+     * 
+    **/
+    create<T extends VideoCommentCreateArgs>(
+      args: SelectSubset<T, VideoCommentCreateArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Create many VideoComments.
+     *     @param {VideoCommentCreateManyArgs} args - Arguments to create many VideoComments.
+     *     @example
+     *     // Create many VideoComments
+     *     const videoComment = await prisma.videoComment.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends VideoCommentCreateManyArgs>(
+      args?: SelectSubset<T, VideoCommentCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a VideoComment.
+     * @param {VideoCommentDeleteArgs} args - Arguments to delete one VideoComment.
+     * @example
+     * // Delete one VideoComment
+     * const VideoComment = await prisma.videoComment.delete({
+     *   where: {
+     *     // ... filter to delete one VideoComment
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends VideoCommentDeleteArgs>(
+      args: SelectSubset<T, VideoCommentDeleteArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Update one VideoComment.
+     * @param {VideoCommentUpdateArgs} args - Arguments to update one VideoComment.
+     * @example
+     * // Update one VideoComment
+     * const videoComment = await prisma.videoComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends VideoCommentUpdateArgs>(
+      args: SelectSubset<T, VideoCommentUpdateArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Delete zero or more VideoComments.
+     * @param {VideoCommentDeleteManyArgs} args - Arguments to filter VideoComments to delete.
+     * @example
+     * // Delete a few VideoComments
+     * const { count } = await prisma.videoComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends VideoCommentDeleteManyArgs>(
+      args?: SelectSubset<T, VideoCommentDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VideoComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VideoComments
+     * const videoComment = await prisma.videoComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends VideoCommentUpdateManyArgs>(
+      args: SelectSubset<T, VideoCommentUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VideoComment.
+     * @param {VideoCommentUpsertArgs} args - Arguments to update or create a VideoComment.
+     * @example
+     * // Update or create a VideoComment
+     * const videoComment = await prisma.videoComment.upsert({
+     *   create: {
+     *     // ... data to create a VideoComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VideoComment we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends VideoCommentUpsertArgs>(
+      args: SelectSubset<T, VideoCommentUpsertArgs>
+    ): Prisma__VideoCommentClient<VideoCommentGetPayload<T>>
+
+    /**
+     * Count the number of VideoComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentCountArgs} args - Arguments to filter VideoComments to count.
+     * @example
+     * // Count the number of VideoComments
+     * const count = await prisma.videoComment.count({
+     *   where: {
+     *     // ... the filter for the VideoComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends VideoCommentCountArgs>(
+      args?: Subset<T, VideoCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VideoCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VideoComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VideoCommentAggregateArgs>(args: Subset<T, VideoCommentAggregateArgs>): Prisma.PrismaPromise<GetVideoCommentAggregateType<T>>
+
+    /**
+     * Group by VideoComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VideoCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VideoCommentGroupByArgs['orderBy'] }
+        : { orderBy?: VideoCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VideoCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VideoComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__VideoCommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    commentingUser<T extends YouTubeUserArgs= {}>(args?: Subset<T, YouTubeUserArgs>): Prisma__YouTubeUserClient<YouTubeUserGetPayload<T> | Null>;
+
+    parentVideo<T extends VideoArgs= {}>(args?: Subset<T, VideoArgs>): Prisma__VideoClient<VideoGetPayload<T> | Null>;
+
+    parentVideoComment<T extends VideoCommentArgs= {}>(args?: Subset<T, VideoCommentArgs>): Prisma__VideoCommentClient<VideoCommentGetPayload<T> | Null>;
+
+    childVideoComments<T extends VideoComment$childVideoCommentsArgs= {}>(args?: Subset<T, VideoComment$childVideoCommentsArgs>): Prisma.PrismaPromise<Array<VideoCommentGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * VideoComment base type for findUnique actions
+   */
+  export type VideoCommentFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter, which VideoComment to fetch.
+     */
+    where: VideoCommentWhereUniqueInput
+  }
+
+  /**
+   * VideoComment findUnique
+   */
+  export interface VideoCommentFindUniqueArgs extends VideoCommentFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * VideoComment findUniqueOrThrow
+   */
+  export type VideoCommentFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter, which VideoComment to fetch.
+     */
+    where: VideoCommentWhereUniqueInput
+  }
+
+
+  /**
+   * VideoComment base type for findFirst actions
+   */
+  export type VideoCommentFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter, which VideoComment to fetch.
+     */
+    where?: VideoCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoComments to fetch.
+     */
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VideoComments.
+     */
+    cursor?: VideoCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VideoComments.
+     */
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+  /**
+   * VideoComment findFirst
+   */
+  export interface VideoCommentFindFirstArgs extends VideoCommentFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * VideoComment findFirstOrThrow
+   */
+  export type VideoCommentFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter, which VideoComment to fetch.
+     */
+    where?: VideoCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoComments to fetch.
+     */
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VideoComments.
+     */
+    cursor?: VideoCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VideoComments.
+     */
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * VideoComment findMany
+   */
+  export type VideoCommentFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter, which VideoComments to fetch.
+     */
+    where?: VideoCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VideoComments to fetch.
+     */
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VideoComments.
+     */
+    cursor?: VideoCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VideoComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VideoComments.
+     */
+    skip?: number
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * VideoComment create
+   */
+  export type VideoCommentCreateArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * The data needed to create a VideoComment.
+     */
+    data: XOR<VideoCommentCreateInput, VideoCommentUncheckedCreateInput>
+  }
+
+
+  /**
+   * VideoComment createMany
+   */
+  export type VideoCommentCreateManyArgs = {
+    /**
+     * The data used to create many VideoComments.
+     */
+    data: Enumerable<VideoCommentCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * VideoComment update
+   */
+  export type VideoCommentUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * The data needed to update a VideoComment.
+     */
+    data: XOR<VideoCommentUpdateInput, VideoCommentUncheckedUpdateInput>
+    /**
+     * Choose, which VideoComment to update.
+     */
+    where: VideoCommentWhereUniqueInput
+  }
+
+
+  /**
+   * VideoComment updateMany
+   */
+  export type VideoCommentUpdateManyArgs = {
+    /**
+     * The data used to update VideoComments.
+     */
+    data: XOR<VideoCommentUpdateManyMutationInput, VideoCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which VideoComments to update
+     */
+    where?: VideoCommentWhereInput
+  }
+
+
+  /**
+   * VideoComment upsert
+   */
+  export type VideoCommentUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * The filter to search for the VideoComment to update in case it exists.
+     */
+    where: VideoCommentWhereUniqueInput
+    /**
+     * In case the VideoComment found by the `where` argument doesn't exist, create a new VideoComment with this data.
+     */
+    create: XOR<VideoCommentCreateInput, VideoCommentUncheckedCreateInput>
+    /**
+     * In case the VideoComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VideoCommentUpdateInput, VideoCommentUncheckedUpdateInput>
+  }
+
+
+  /**
+   * VideoComment delete
+   */
+  export type VideoCommentDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    /**
+     * Filter which VideoComment to delete.
+     */
+    where: VideoCommentWhereUniqueInput
+  }
+
+
+  /**
+   * VideoComment deleteMany
+   */
+  export type VideoCommentDeleteManyArgs = {
+    /**
+     * Filter which VideoComments to delete
+     */
+    where?: VideoCommentWhereInput
+  }
+
+
+  /**
+   * VideoComment.childVideoComments
+   */
+  export type VideoComment$childVideoCommentsArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+    where?: VideoCommentWhereInput
+    orderBy?: Enumerable<VideoCommentOrderByWithRelationInput>
+    cursor?: VideoCommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<VideoCommentScalarFieldEnum>
+  }
+
+
+  /**
+   * VideoComment without action
+   */
+  export type VideoCommentArgs = {
+    /**
+     * Select specific fields to fetch from the VideoComment
+     */
+    select?: VideoCommentSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: VideoCommentInclude | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -22093,6 +28756,18 @@ export namespace Prisma {
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+  export const ChannelScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    profileImageUrl: 'profileImageUrl',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChannelScalarFieldEnum = (typeof ChannelScalarFieldEnum)[keyof typeof ChannelScalarFieldEnum]
 
 
   export const ChoiceScalarFieldEnum: {
@@ -22336,6 +29011,69 @@ export namespace Prisma {
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const UserToChannelwithRoleScalarFieldEnum: {
+    id: 'id',
+    youTubeUserId: 'youTubeUserId',
+    channelId: 'channelId',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserToChannelwithRoleScalarFieldEnum = (typeof UserToChannelwithRoleScalarFieldEnum)[keyof typeof UserToChannelwithRoleScalarFieldEnum]
+
+
+  export const UserToVideoWithReactionScalarFieldEnum: {
+    id: 'id',
+    youTubeUserId: 'youTubeUserId',
+    videoId: 'videoId',
+    reaction: 'reaction',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserToVideoWithReactionScalarFieldEnum = (typeof UserToVideoWithReactionScalarFieldEnum)[keyof typeof UserToVideoWithReactionScalarFieldEnum]
+
+
+  export const VideoCommentScalarFieldEnum: {
+    id: 'id',
+    commentText: 'commentText',
+    youTubeUserId: 'youTubeUserId',
+    videoId: 'videoId',
+    parentVideoCommentId: 'parentVideoCommentId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VideoCommentScalarFieldEnum = (typeof VideoCommentScalarFieldEnum)[keyof typeof VideoCommentScalarFieldEnum]
+
+
+  export const VideoScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    videoUrl: 'videoUrl',
+    thumbnailImageUrl: 'thumbnailImageUrl',
+    description: 'description',
+    channelId: 'channelId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
+
+
+  export const YouTubeUserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    profileImageUrl: 'profileImageUrl',
+    bio: 'bio',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type YouTubeUserScalarFieldEnum = (typeof YouTubeUserScalarFieldEnum)[keyof typeof YouTubeUserScalarFieldEnum]
 
 
   /**
@@ -23403,6 +30141,368 @@ export namespace Prisma {
     dmText?: StringWithAggregatesFilter | string
     fromUserId?: IntWithAggregatesFilter | number
     toUserId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type YouTubeUserWhereInput = {
+    AND?: Enumerable<YouTubeUserWhereInput>
+    OR?: Enumerable<YouTubeUserWhereInput>
+    NOT?: Enumerable<YouTubeUserWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImageUrl?: StringFilter | string
+    bio?: StringFilter | string
+    memberOfChannels?: ChannelListRelationFilter
+    usersToChannelswithRoles?: UserToChannelwithRoleListRelationFilter
+    subscribingToChannels?: ChannelListRelationFilter
+    reactedVideos?: VideoListRelationFilter
+    usersToVideosWithReactions?: UserToVideoWithReactionListRelationFilter
+    videoComments?: VideoCommentListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YouTubeUserOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    bio?: SortOrder
+    memberOfChannels?: ChannelOrderByRelationAggregateInput
+    usersToChannelswithRoles?: UserToChannelwithRoleOrderByRelationAggregateInput
+    subscribingToChannels?: ChannelOrderByRelationAggregateInput
+    reactedVideos?: VideoOrderByRelationAggregateInput
+    usersToVideosWithReactions?: UserToVideoWithReactionOrderByRelationAggregateInput
+    videoComments?: VideoCommentOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YouTubeUserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type YouTubeUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: YouTubeUserCountOrderByAggregateInput
+    _avg?: YouTubeUserAvgOrderByAggregateInput
+    _max?: YouTubeUserMaxOrderByAggregateInput
+    _min?: YouTubeUserMinOrderByAggregateInput
+    _sum?: YouTubeUserSumOrderByAggregateInput
+  }
+
+  export type YouTubeUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<YouTubeUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<YouTubeUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<YouTubeUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    profileImageUrl?: StringWithAggregatesFilter | string
+    bio?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type ChannelWhereInput = {
+    AND?: Enumerable<ChannelWhereInput>
+    OR?: Enumerable<ChannelWhereInput>
+    NOT?: Enumerable<ChannelWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImageUrl?: StringFilter | string
+    description?: StringFilter | string
+    memberUsers?: YouTubeUserListRelationFilter
+    subscribedUsers?: YouTubeUserListRelationFilter
+    usersToChannelswithRoles?: UserToChannelwithRoleListRelationFilter
+    owningVideos?: VideoListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ChannelOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    description?: SortOrder
+    memberUsers?: YouTubeUserOrderByRelationAggregateInput
+    subscribedUsers?: YouTubeUserOrderByRelationAggregateInput
+    usersToChannelswithRoles?: UserToChannelwithRoleOrderByRelationAggregateInput
+    owningVideos?: VideoOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChannelWhereUniqueInput = {
+    id?: number
+  }
+
+  export type ChannelOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChannelCountOrderByAggregateInput
+    _avg?: ChannelAvgOrderByAggregateInput
+    _max?: ChannelMaxOrderByAggregateInput
+    _min?: ChannelMinOrderByAggregateInput
+    _sum?: ChannelSumOrderByAggregateInput
+  }
+
+  export type ChannelScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<ChannelScalarWhereWithAggregatesInput>
+    OR?: Enumerable<ChannelScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<ChannelScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    profileImageUrl?: StringWithAggregatesFilter | string
+    description?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UserToChannelwithRoleWhereInput = {
+    AND?: Enumerable<UserToChannelwithRoleWhereInput>
+    OR?: Enumerable<UserToChannelwithRoleWhereInput>
+    NOT?: Enumerable<UserToChannelwithRoleWhereInput>
+    id?: IntFilter | number
+    user?: XOR<YouTubeUserRelationFilter, YouTubeUserWhereInput>
+    youTubeUserId?: IntFilter | number
+    channel?: XOR<ChannelRelationFilter, ChannelWhereInput>
+    channelId?: IntFilter | number
+    role?: EnumRoleFilter | Role
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserToChannelwithRoleOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: YouTubeUserOrderByWithRelationInput
+    youTubeUserId?: SortOrder
+    channel?: ChannelOrderByWithRelationInput
+    channelId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToChannelwithRoleWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UserToChannelwithRoleOrderByWithAggregationInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserToChannelwithRoleCountOrderByAggregateInput
+    _avg?: UserToChannelwithRoleAvgOrderByAggregateInput
+    _max?: UserToChannelwithRoleMaxOrderByAggregateInput
+    _min?: UserToChannelwithRoleMinOrderByAggregateInput
+    _sum?: UserToChannelwithRoleSumOrderByAggregateInput
+  }
+
+  export type UserToChannelwithRoleScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UserToChannelwithRoleScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UserToChannelwithRoleScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UserToChannelwithRoleScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    youTubeUserId?: IntWithAggregatesFilter | number
+    channelId?: IntWithAggregatesFilter | number
+    role?: EnumRoleWithAggregatesFilter | Role
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type VideoWhereInput = {
+    AND?: Enumerable<VideoWhereInput>
+    OR?: Enumerable<VideoWhereInput>
+    NOT?: Enumerable<VideoWhereInput>
+    id?: IntFilter | number
+    title?: StringFilter | string
+    videoUrl?: StringFilter | string
+    thumbnailImageUrl?: StringFilter | string
+    description?: StringFilter | string
+    belongsToChannel?: XOR<ChannelRelationFilter, ChannelWhereInput>
+    channelId?: IntFilter | number
+    reactedByYouTubeUsers?: YouTubeUserListRelationFilter
+    usersToVideosWithReactions?: UserToVideoWithReactionListRelationFilter
+    videoComments?: VideoCommentListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type VideoOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    videoUrl?: SortOrder
+    thumbnailImageUrl?: SortOrder
+    description?: SortOrder
+    belongsToChannel?: ChannelOrderByWithRelationInput
+    channelId?: SortOrder
+    reactedByYouTubeUsers?: YouTubeUserOrderByRelationAggregateInput
+    usersToVideosWithReactions?: UserToVideoWithReactionOrderByRelationAggregateInput
+    videoComments?: VideoCommentOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoWhereUniqueInput = {
+    id?: number
+  }
+
+  export type VideoOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    videoUrl?: SortOrder
+    thumbnailImageUrl?: SortOrder
+    description?: SortOrder
+    channelId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VideoCountOrderByAggregateInput
+    _avg?: VideoAvgOrderByAggregateInput
+    _max?: VideoMaxOrderByAggregateInput
+    _min?: VideoMinOrderByAggregateInput
+    _sum?: VideoSumOrderByAggregateInput
+  }
+
+  export type VideoScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<VideoScalarWhereWithAggregatesInput>
+    OR?: Enumerable<VideoScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<VideoScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    title?: StringWithAggregatesFilter | string
+    videoUrl?: StringWithAggregatesFilter | string
+    thumbnailImageUrl?: StringWithAggregatesFilter | string
+    description?: StringWithAggregatesFilter | string
+    channelId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UserToVideoWithReactionWhereInput = {
+    AND?: Enumerable<UserToVideoWithReactionWhereInput>
+    OR?: Enumerable<UserToVideoWithReactionWhereInput>
+    NOT?: Enumerable<UserToVideoWithReactionWhereInput>
+    id?: IntFilter | number
+    user?: XOR<YouTubeUserRelationFilter, YouTubeUserWhereInput>
+    youTubeUserId?: IntFilter | number
+    video?: XOR<VideoRelationFilter, VideoWhereInput>
+    videoId?: IntFilter | number
+    reaction?: EnumReactionFilter | Reaction
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserToVideoWithReactionOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: YouTubeUserOrderByWithRelationInput
+    youTubeUserId?: SortOrder
+    video?: VideoOrderByWithRelationInput
+    videoId?: SortOrder
+    reaction?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToVideoWithReactionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type UserToVideoWithReactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    reaction?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserToVideoWithReactionCountOrderByAggregateInput
+    _avg?: UserToVideoWithReactionAvgOrderByAggregateInput
+    _max?: UserToVideoWithReactionMaxOrderByAggregateInput
+    _min?: UserToVideoWithReactionMinOrderByAggregateInput
+    _sum?: UserToVideoWithReactionSumOrderByAggregateInput
+  }
+
+  export type UserToVideoWithReactionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UserToVideoWithReactionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UserToVideoWithReactionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UserToVideoWithReactionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    youTubeUserId?: IntWithAggregatesFilter | number
+    videoId?: IntWithAggregatesFilter | number
+    reaction?: EnumReactionWithAggregatesFilter | Reaction
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type VideoCommentWhereInput = {
+    AND?: Enumerable<VideoCommentWhereInput>
+    OR?: Enumerable<VideoCommentWhereInput>
+    NOT?: Enumerable<VideoCommentWhereInput>
+    id?: IntFilter | number
+    commentText?: StringFilter | string
+    commentingUser?: XOR<YouTubeUserRelationFilter, YouTubeUserWhereInput>
+    youTubeUserId?: IntFilter | number
+    parentVideo?: XOR<VideoRelationFilter, VideoWhereInput>
+    videoId?: IntFilter | number
+    parentVideoComment?: XOR<VideoCommentRelationFilter, VideoCommentWhereInput> | null
+    parentVideoCommentId?: IntNullableFilter | number | null
+    childVideoComments?: VideoCommentListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type VideoCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    commentText?: SortOrder
+    commentingUser?: YouTubeUserOrderByWithRelationInput
+    youTubeUserId?: SortOrder
+    parentVideo?: VideoOrderByWithRelationInput
+    videoId?: SortOrder
+    parentVideoComment?: VideoCommentOrderByWithRelationInput
+    parentVideoCommentId?: SortOrder
+    childVideoComments?: VideoCommentOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoCommentWhereUniqueInput = {
+    id?: number
+  }
+
+  export type VideoCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    commentText?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VideoCommentCountOrderByAggregateInput
+    _avg?: VideoCommentAvgOrderByAggregateInput
+    _max?: VideoCommentMaxOrderByAggregateInput
+    _min?: VideoCommentMinOrderByAggregateInput
+    _sum?: VideoCommentSumOrderByAggregateInput
+  }
+
+  export type VideoCommentScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<VideoCommentScalarWhereWithAggregatesInput>
+    OR?: Enumerable<VideoCommentScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<VideoCommentScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    commentText?: StringWithAggregatesFilter | string
+    youTubeUserId?: IntWithAggregatesFilter | number
+    videoId?: IntWithAggregatesFilter | number
+    parentVideoCommentId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -24608,6 +31708,435 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type YouTubeUserCreateInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserCreateManyInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelCreateInput = {
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUncheckedCreateInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelCreateManyInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleCreateInput = {
+    user: YouTubeUserCreateNestedOneWithoutUsersToChannelswithRolesInput
+    channel: ChannelCreateNestedOneWithoutUsersToChannelswithRolesInput
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedCreateInput = {
+    id?: number
+    youTubeUserId: number
+    channelId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleUpdateInput = {
+    user?: YouTubeUserUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
+    channel?: ChannelUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    channelId?: IntFieldUpdateOperationsInput | number
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleCreateManyInput = {
+    id?: number
+    youTubeUserId: number
+    channelId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleUpdateManyMutationInput = {
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    channelId?: IntFieldUpdateOperationsInput | number
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCreateInput = {
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
+    reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
+    reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCreateManyInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionCreateInput = {
+    user: YouTubeUserCreateNestedOneWithoutUsersToVideosWithReactionsInput
+    video: VideoCreateNestedOneWithoutUsersToVideosWithReactionsInput
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedCreateInput = {
+    id?: number
+    youTubeUserId: number
+    videoId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionUpdateInput = {
+    user?: YouTubeUserUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
+    video?: VideoUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionCreateManyInput = {
+    id?: number
+    youTubeUserId: number
+    videoId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionUpdateManyMutationInput = {
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentCreateInput = {
+    commentText: string
+    commentingUser: YouTubeUserCreateNestedOneWithoutVideoCommentsInput
+    parentVideo: VideoCreateNestedOneWithoutVideoCommentsInput
+    parentVideoComment?: VideoCommentCreateNestedOneWithoutChildVideoCommentsInput
+    childVideoComments?: VideoCommentCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUncheckedCreateInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    parentVideoCommentId?: number | null
+    childVideoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUpdateInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    commentingUser?: YouTubeUserUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideo?: VideoUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideoComment?: VideoCommentUpdateOneWithoutChildVideoCommentsNestedInput
+    childVideoComments?: VideoCommentUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childVideoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentCreateManyInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    parentVideoCommentId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUpdateManyMutationInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter = {
     equals?: number
     in?: Enumerable<number>
@@ -25649,6 +33178,355 @@ export namespace Prisma {
     id?: SortOrder
     fromUserId?: SortOrder
     toUserId?: SortOrder
+  }
+
+  export type ChannelListRelationFilter = {
+    every?: ChannelWhereInput
+    some?: ChannelWhereInput
+    none?: ChannelWhereInput
+  }
+
+  export type UserToChannelwithRoleListRelationFilter = {
+    every?: UserToChannelwithRoleWhereInput
+    some?: UserToChannelwithRoleWhereInput
+    none?: UserToChannelwithRoleWhereInput
+  }
+
+  export type VideoListRelationFilter = {
+    every?: VideoWhereInput
+    some?: VideoWhereInput
+    none?: VideoWhereInput
+  }
+
+  export type UserToVideoWithReactionListRelationFilter = {
+    every?: UserToVideoWithReactionWhereInput
+    some?: UserToVideoWithReactionWhereInput
+    none?: UserToVideoWithReactionWhereInput
+  }
+
+  export type VideoCommentListRelationFilter = {
+    every?: VideoCommentWhereInput
+    some?: VideoCommentWhereInput
+    none?: VideoCommentWhereInput
+  }
+
+  export type ChannelOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserToChannelwithRoleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VideoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserToVideoWithReactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VideoCommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YouTubeUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YouTubeUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YouTubeUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YouTubeUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type YouTubeUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YouTubeUserListRelationFilter = {
+    every?: YouTubeUserWhereInput
+    some?: YouTubeUserWhereInput
+    none?: YouTubeUserWhereInput
+  }
+
+  export type YouTubeUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChannelCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChannelAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ChannelMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChannelMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImageUrl?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChannelSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type YouTubeUserRelationFilter = {
+    is?: YouTubeUserWhereInput
+    isNot?: YouTubeUserWhereInput
+  }
+
+  export type ChannelRelationFilter = {
+    is?: ChannelWhereInput
+    isNot?: ChannelWhereInput
+  }
+
+  export type EnumRoleFilter = {
+    equals?: Role
+    in?: Enumerable<Role>
+    notIn?: Enumerable<Role>
+    not?: NestedEnumRoleFilter | Role
+  }
+
+  export type UserToChannelwithRoleCountOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToChannelwithRoleAvgOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+  }
+
+  export type UserToChannelwithRoleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToChannelwithRoleMinOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToChannelwithRoleSumOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    channelId?: SortOrder
+  }
+
+  export type EnumRoleWithAggregatesFilter = {
+    equals?: Role
+    in?: Enumerable<Role>
+    notIn?: Enumerable<Role>
+    not?: NestedEnumRoleWithAggregatesFilter | Role
+    _count?: NestedIntFilter
+    _min?: NestedEnumRoleFilter
+    _max?: NestedEnumRoleFilter
+  }
+
+  export type VideoCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    videoUrl?: SortOrder
+    thumbnailImageUrl?: SortOrder
+    description?: SortOrder
+    channelId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoAvgOrderByAggregateInput = {
+    id?: SortOrder
+    channelId?: SortOrder
+  }
+
+  export type VideoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    videoUrl?: SortOrder
+    thumbnailImageUrl?: SortOrder
+    description?: SortOrder
+    channelId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    videoUrl?: SortOrder
+    thumbnailImageUrl?: SortOrder
+    description?: SortOrder
+    channelId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoSumOrderByAggregateInput = {
+    id?: SortOrder
+    channelId?: SortOrder
+  }
+
+  export type VideoRelationFilter = {
+    is?: VideoWhereInput
+    isNot?: VideoWhereInput
+  }
+
+  export type EnumReactionFilter = {
+    equals?: Reaction
+    in?: Enumerable<Reaction>
+    notIn?: Enumerable<Reaction>
+    not?: NestedEnumReactionFilter | Reaction
+  }
+
+  export type UserToVideoWithReactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    reaction?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToVideoWithReactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+  }
+
+  export type UserToVideoWithReactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    reaction?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToVideoWithReactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    reaction?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserToVideoWithReactionSumOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+  }
+
+  export type EnumReactionWithAggregatesFilter = {
+    equals?: Reaction
+    in?: Enumerable<Reaction>
+    notIn?: Enumerable<Reaction>
+    not?: NestedEnumReactionWithAggregatesFilter | Reaction
+    _count?: NestedIntFilter
+    _min?: NestedEnumReactionFilter
+    _max?: NestedEnumReactionFilter
+  }
+
+  export type VideoCommentRelationFilter = {
+    is?: VideoCommentWhereInput | null
+    isNot?: VideoCommentWhereInput | null
+  }
+
+  export type VideoCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    commentText?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoCommentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
+  }
+
+  export type VideoCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    commentText?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    commentText?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VideoCommentSumOrderByAggregateInput = {
+    id?: SortOrder
+    youTubeUserId?: SortOrder
+    videoId?: SortOrder
+    parentVideoCommentId?: SortOrder
   }
 
   export type MenuCreateNestedManyWithoutCategoryInput = {
@@ -27117,6 +34995,692 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutDirectMessagesToInput, UserUncheckedUpdateWithoutDirectMessagesToInput>
   }
 
+  export type ChannelCreateNestedManyWithoutMemberUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+  }
+
+  export type UserToChannelwithRoleCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutUserInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutUserInput>
+    createMany?: UserToChannelwithRoleCreateManyUserInputEnvelope
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+  }
+
+  export type ChannelCreateNestedManyWithoutSubscribedUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutSubscribedUsersInput>, Enumerable<ChannelUncheckedCreateWithoutSubscribedUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutSubscribedUsersInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+  }
+
+  export type VideoCreateNestedManyWithoutReactedByYouTubeUsersInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutReactedByYouTubeUsersInput>, Enumerable<VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutReactedByYouTubeUsersInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+  }
+
+  export type UserToVideoWithReactionCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutUserInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutUserInput>
+    createMany?: UserToVideoWithReactionCreateManyUserInputEnvelope
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+  }
+
+  export type VideoCommentCreateNestedManyWithoutCommentingUserInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutCommentingUserInput>, Enumerable<VideoCommentUncheckedCreateWithoutCommentingUserInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutCommentingUserInput>
+    createMany?: VideoCommentCreateManyCommentingUserInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type ChannelUncheckedCreateNestedManyWithoutMemberUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+  }
+
+  export type UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutUserInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutUserInput>
+    createMany?: UserToChannelwithRoleCreateManyUserInputEnvelope
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+  }
+
+  export type ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutSubscribedUsersInput>, Enumerable<ChannelUncheckedCreateWithoutSubscribedUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutSubscribedUsersInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+  }
+
+  export type VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutReactedByYouTubeUsersInput>, Enumerable<VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutReactedByYouTubeUsersInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+  }
+
+  export type UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutUserInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutUserInput>
+    createMany?: UserToVideoWithReactionCreateManyUserInputEnvelope
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+  }
+
+  export type VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutCommentingUserInput>, Enumerable<VideoCommentUncheckedCreateWithoutCommentingUserInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutCommentingUserInput>
+    createMany?: VideoCommentCreateManyCommentingUserInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type ChannelUpdateManyWithoutMemberUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutMemberUsersInput>
+    set?: Enumerable<ChannelWhereUniqueInput>
+    disconnect?: Enumerable<ChannelWhereUniqueInput>
+    delete?: Enumerable<ChannelWhereUniqueInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutMemberUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutMemberUsersInput>
+    deleteMany?: Enumerable<ChannelScalarWhereInput>
+  }
+
+  export type UserToChannelwithRoleUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutUserInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UserToChannelwithRoleUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UserToChannelwithRoleCreateManyUserInputEnvelope
+    set?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    disconnect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    delete?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    update?: Enumerable<UserToChannelwithRoleUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UserToChannelwithRoleUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+  }
+
+  export type ChannelUpdateManyWithoutSubscribedUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutSubscribedUsersInput>, Enumerable<ChannelUncheckedCreateWithoutSubscribedUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutSubscribedUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutSubscribedUsersInput>
+    set?: Enumerable<ChannelWhereUniqueInput>
+    disconnect?: Enumerable<ChannelWhereUniqueInput>
+    delete?: Enumerable<ChannelWhereUniqueInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutSubscribedUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutSubscribedUsersInput>
+    deleteMany?: Enumerable<ChannelScalarWhereInput>
+  }
+
+  export type VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutReactedByYouTubeUsersInput>, Enumerable<VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutReactedByYouTubeUsersInput>
+    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutReactedByYouTubeUsersInput>
+    set?: Enumerable<VideoWhereUniqueInput>
+    disconnect?: Enumerable<VideoWhereUniqueInput>
+    delete?: Enumerable<VideoWhereUniqueInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutReactedByYouTubeUsersInput>
+    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutReactedByYouTubeUsersInput>
+    deleteMany?: Enumerable<VideoScalarWhereInput>
+  }
+
+  export type UserToVideoWithReactionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutUserInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UserToVideoWithReactionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UserToVideoWithReactionCreateManyUserInputEnvelope
+    set?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    disconnect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    delete?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    update?: Enumerable<UserToVideoWithReactionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UserToVideoWithReactionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+  }
+
+  export type VideoCommentUpdateManyWithoutCommentingUserNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutCommentingUserInput>, Enumerable<VideoCommentUncheckedCreateWithoutCommentingUserInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutCommentingUserInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutCommentingUserInput>
+    createMany?: VideoCommentCreateManyCommentingUserInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutCommentingUserInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutCommentingUserInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
+  export type ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutMemberUsersInput>, Enumerable<ChannelUncheckedCreateWithoutMemberUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutMemberUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutMemberUsersInput>
+    set?: Enumerable<ChannelWhereUniqueInput>
+    disconnect?: Enumerable<ChannelWhereUniqueInput>
+    delete?: Enumerable<ChannelWhereUniqueInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutMemberUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutMemberUsersInput>
+    deleteMany?: Enumerable<ChannelScalarWhereInput>
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutUserInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UserToChannelwithRoleUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UserToChannelwithRoleCreateManyUserInputEnvelope
+    set?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    disconnect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    delete?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    update?: Enumerable<UserToChannelwithRoleUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UserToChannelwithRoleUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+  }
+
+  export type ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput = {
+    create?: XOR<Enumerable<ChannelCreateWithoutSubscribedUsersInput>, Enumerable<ChannelUncheckedCreateWithoutSubscribedUsersInput>>
+    connectOrCreate?: Enumerable<ChannelCreateOrConnectWithoutSubscribedUsersInput>
+    upsert?: Enumerable<ChannelUpsertWithWhereUniqueWithoutSubscribedUsersInput>
+    set?: Enumerable<ChannelWhereUniqueInput>
+    disconnect?: Enumerable<ChannelWhereUniqueInput>
+    delete?: Enumerable<ChannelWhereUniqueInput>
+    connect?: Enumerable<ChannelWhereUniqueInput>
+    update?: Enumerable<ChannelUpdateWithWhereUniqueWithoutSubscribedUsersInput>
+    updateMany?: Enumerable<ChannelUpdateManyWithWhereWithoutSubscribedUsersInput>
+    deleteMany?: Enumerable<ChannelScalarWhereInput>
+  }
+
+  export type VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutReactedByYouTubeUsersInput>, Enumerable<VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutReactedByYouTubeUsersInput>
+    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutReactedByYouTubeUsersInput>
+    set?: Enumerable<VideoWhereUniqueInput>
+    disconnect?: Enumerable<VideoWhereUniqueInput>
+    delete?: Enumerable<VideoWhereUniqueInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutReactedByYouTubeUsersInput>
+    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutReactedByYouTubeUsersInput>
+    deleteMany?: Enumerable<VideoScalarWhereInput>
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutUserInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<UserToVideoWithReactionUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: UserToVideoWithReactionCreateManyUserInputEnvelope
+    set?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    disconnect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    delete?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    update?: Enumerable<UserToVideoWithReactionUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<UserToVideoWithReactionUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+  }
+
+  export type VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutCommentingUserInput>, Enumerable<VideoCommentUncheckedCreateWithoutCommentingUserInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutCommentingUserInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutCommentingUserInput>
+    createMany?: VideoCommentCreateManyCommentingUserInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutCommentingUserInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutCommentingUserInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
+  export type YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutSubscribingToChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutSubscribingToChannelsInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type UserToChannelwithRoleCreateNestedManyWithoutChannelInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutChannelInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutChannelInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutChannelInput>
+    createMany?: UserToChannelwithRoleCreateManyChannelInputEnvelope
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+  }
+
+  export type VideoCreateNestedManyWithoutBelongsToChannelInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutBelongsToChannelInput>, Enumerable<VideoUncheckedCreateWithoutBelongsToChannelInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutBelongsToChannelInput>
+    createMany?: VideoCreateManyBelongsToChannelInputEnvelope
+    connect?: Enumerable<VideoWhereUniqueInput>
+  }
+
+  export type YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutSubscribingToChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutSubscribingToChannelsInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutChannelInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutChannelInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutChannelInput>
+    createMany?: UserToChannelwithRoleCreateManyChannelInputEnvelope
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+  }
+
+  export type VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutBelongsToChannelInput>, Enumerable<VideoUncheckedCreateWithoutBelongsToChannelInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutBelongsToChannelInput>
+    createMany?: VideoCreateManyBelongsToChannelInputEnvelope
+    connect?: Enumerable<VideoWhereUniqueInput>
+  }
+
+  export type YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutSubscribingToChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutSubscribingToChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutSubscribingToChannelsInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutSubscribingToChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutSubscribingToChannelsInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type UserToChannelwithRoleUpdateManyWithoutChannelNestedInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutChannelInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutChannelInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutChannelInput>
+    upsert?: Enumerable<UserToChannelwithRoleUpsertWithWhereUniqueWithoutChannelInput>
+    createMany?: UserToChannelwithRoleCreateManyChannelInputEnvelope
+    set?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    disconnect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    delete?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    update?: Enumerable<UserToChannelwithRoleUpdateWithWhereUniqueWithoutChannelInput>
+    updateMany?: Enumerable<UserToChannelwithRoleUpdateManyWithWhereWithoutChannelInput>
+    deleteMany?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+  }
+
+  export type VideoUpdateManyWithoutBelongsToChannelNestedInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutBelongsToChannelInput>, Enumerable<VideoUncheckedCreateWithoutBelongsToChannelInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutBelongsToChannelInput>
+    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutBelongsToChannelInput>
+    createMany?: VideoCreateManyBelongsToChannelInputEnvelope
+    set?: Enumerable<VideoWhereUniqueInput>
+    disconnect?: Enumerable<VideoWhereUniqueInput>
+    delete?: Enumerable<VideoWhereUniqueInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutBelongsToChannelInput>
+    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutBelongsToChannelInput>
+    deleteMany?: Enumerable<VideoScalarWhereInput>
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutMemberOfChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutSubscribingToChannelsInput>, Enumerable<YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutSubscribingToChannelsInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutSubscribingToChannelsInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutSubscribingToChannelsInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutSubscribingToChannelsInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput = {
+    create?: XOR<Enumerable<UserToChannelwithRoleCreateWithoutChannelInput>, Enumerable<UserToChannelwithRoleUncheckedCreateWithoutChannelInput>>
+    connectOrCreate?: Enumerable<UserToChannelwithRoleCreateOrConnectWithoutChannelInput>
+    upsert?: Enumerable<UserToChannelwithRoleUpsertWithWhereUniqueWithoutChannelInput>
+    createMany?: UserToChannelwithRoleCreateManyChannelInputEnvelope
+    set?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    disconnect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    delete?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    connect?: Enumerable<UserToChannelwithRoleWhereUniqueInput>
+    update?: Enumerable<UserToChannelwithRoleUpdateWithWhereUniqueWithoutChannelInput>
+    updateMany?: Enumerable<UserToChannelwithRoleUpdateManyWithWhereWithoutChannelInput>
+    deleteMany?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+  }
+
+  export type VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput = {
+    create?: XOR<Enumerable<VideoCreateWithoutBelongsToChannelInput>, Enumerable<VideoUncheckedCreateWithoutBelongsToChannelInput>>
+    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutBelongsToChannelInput>
+    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutBelongsToChannelInput>
+    createMany?: VideoCreateManyBelongsToChannelInputEnvelope
+    set?: Enumerable<VideoWhereUniqueInput>
+    disconnect?: Enumerable<VideoWhereUniqueInput>
+    delete?: Enumerable<VideoWhereUniqueInput>
+    connect?: Enumerable<VideoWhereUniqueInput>
+    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutBelongsToChannelInput>
+    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutBelongsToChannelInput>
+    deleteMany?: Enumerable<VideoScalarWhereInput>
+  }
+
+  export type YouTubeUserCreateNestedOneWithoutUsersToChannelswithRolesInput = {
+    create?: XOR<YouTubeUserCreateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutUsersToChannelswithRolesInput
+    connect?: YouTubeUserWhereUniqueInput
+  }
+
+  export type ChannelCreateNestedOneWithoutUsersToChannelswithRolesInput = {
+    create?: XOR<ChannelCreateWithoutUsersToChannelswithRolesInput, ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput>
+    connectOrCreate?: ChannelCreateOrConnectWithoutUsersToChannelswithRolesInput
+    connect?: ChannelWhereUniqueInput
+  }
+
+  export type YouTubeUserUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput = {
+    create?: XOR<YouTubeUserCreateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutUsersToChannelswithRolesInput
+    upsert?: YouTubeUserUpsertWithoutUsersToChannelswithRolesInput
+    connect?: YouTubeUserWhereUniqueInput
+    update?: XOR<YouTubeUserUpdateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedUpdateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type ChannelUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput = {
+    create?: XOR<ChannelCreateWithoutUsersToChannelswithRolesInput, ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput>
+    connectOrCreate?: ChannelCreateOrConnectWithoutUsersToChannelswithRolesInput
+    upsert?: ChannelUpsertWithoutUsersToChannelswithRolesInput
+    connect?: ChannelWhereUniqueInput
+    update?: XOR<ChannelUpdateWithoutUsersToChannelswithRolesInput, ChannelUncheckedUpdateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: Role
+  }
+
+  export type ChannelCreateNestedOneWithoutOwningVideosInput = {
+    create?: XOR<ChannelCreateWithoutOwningVideosInput, ChannelUncheckedCreateWithoutOwningVideosInput>
+    connectOrCreate?: ChannelCreateOrConnectWithoutOwningVideosInput
+    connect?: ChannelWhereUniqueInput
+  }
+
+  export type YouTubeUserCreateNestedManyWithoutReactedVideosInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutReactedVideosInput>, Enumerable<YouTubeUserUncheckedCreateWithoutReactedVideosInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutReactedVideosInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type UserToVideoWithReactionCreateNestedManyWithoutVideoInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutVideoInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutVideoInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutVideoInput>
+    createMany?: UserToVideoWithReactionCreateManyVideoInputEnvelope
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+  }
+
+  export type VideoCommentCreateNestedManyWithoutParentVideoInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoInput>
+    createMany?: VideoCommentCreateManyParentVideoInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutReactedVideosInput>, Enumerable<YouTubeUserUncheckedCreateWithoutReactedVideosInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutReactedVideosInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+  }
+
+  export type UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutVideoInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutVideoInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutVideoInput>
+    createMany?: UserToVideoWithReactionCreateManyVideoInputEnvelope
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+  }
+
+  export type VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoInput>
+    createMany?: VideoCommentCreateManyParentVideoInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type ChannelUpdateOneRequiredWithoutOwningVideosNestedInput = {
+    create?: XOR<ChannelCreateWithoutOwningVideosInput, ChannelUncheckedCreateWithoutOwningVideosInput>
+    connectOrCreate?: ChannelCreateOrConnectWithoutOwningVideosInput
+    upsert?: ChannelUpsertWithoutOwningVideosInput
+    connect?: ChannelWhereUniqueInput
+    update?: XOR<ChannelUpdateWithoutOwningVideosInput, ChannelUncheckedUpdateWithoutOwningVideosInput>
+  }
+
+  export type YouTubeUserUpdateManyWithoutReactedVideosNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutReactedVideosInput>, Enumerable<YouTubeUserUncheckedCreateWithoutReactedVideosInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutReactedVideosInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutReactedVideosInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutReactedVideosInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutReactedVideosInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type UserToVideoWithReactionUpdateManyWithoutVideoNestedInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutVideoInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutVideoInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutVideoInput>
+    upsert?: Enumerable<UserToVideoWithReactionUpsertWithWhereUniqueWithoutVideoInput>
+    createMany?: UserToVideoWithReactionCreateManyVideoInputEnvelope
+    set?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    disconnect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    delete?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    update?: Enumerable<UserToVideoWithReactionUpdateWithWhereUniqueWithoutVideoInput>
+    updateMany?: Enumerable<UserToVideoWithReactionUpdateManyWithWhereWithoutVideoInput>
+    deleteMany?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+  }
+
+  export type VideoCommentUpdateManyWithoutParentVideoNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutParentVideoInput>
+    createMany?: VideoCommentCreateManyParentVideoInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutParentVideoInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutParentVideoInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput = {
+    create?: XOR<Enumerable<YouTubeUserCreateWithoutReactedVideosInput>, Enumerable<YouTubeUserUncheckedCreateWithoutReactedVideosInput>>
+    connectOrCreate?: Enumerable<YouTubeUserCreateOrConnectWithoutReactedVideosInput>
+    upsert?: Enumerable<YouTubeUserUpsertWithWhereUniqueWithoutReactedVideosInput>
+    set?: Enumerable<YouTubeUserWhereUniqueInput>
+    disconnect?: Enumerable<YouTubeUserWhereUniqueInput>
+    delete?: Enumerable<YouTubeUserWhereUniqueInput>
+    connect?: Enumerable<YouTubeUserWhereUniqueInput>
+    update?: Enumerable<YouTubeUserUpdateWithWhereUniqueWithoutReactedVideosInput>
+    updateMany?: Enumerable<YouTubeUserUpdateManyWithWhereWithoutReactedVideosInput>
+    deleteMany?: Enumerable<YouTubeUserScalarWhereInput>
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput = {
+    create?: XOR<Enumerable<UserToVideoWithReactionCreateWithoutVideoInput>, Enumerable<UserToVideoWithReactionUncheckedCreateWithoutVideoInput>>
+    connectOrCreate?: Enumerable<UserToVideoWithReactionCreateOrConnectWithoutVideoInput>
+    upsert?: Enumerable<UserToVideoWithReactionUpsertWithWhereUniqueWithoutVideoInput>
+    createMany?: UserToVideoWithReactionCreateManyVideoInputEnvelope
+    set?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    disconnect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    delete?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    connect?: Enumerable<UserToVideoWithReactionWhereUniqueInput>
+    update?: Enumerable<UserToVideoWithReactionUpdateWithWhereUniqueWithoutVideoInput>
+    updateMany?: Enumerable<UserToVideoWithReactionUpdateManyWithWhereWithoutVideoInput>
+    deleteMany?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+  }
+
+  export type VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutParentVideoInput>
+    createMany?: VideoCommentCreateManyParentVideoInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutParentVideoInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutParentVideoInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
+  export type YouTubeUserCreateNestedOneWithoutUsersToVideosWithReactionsInput = {
+    create?: XOR<YouTubeUserCreateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutUsersToVideosWithReactionsInput
+    connect?: YouTubeUserWhereUniqueInput
+  }
+
+  export type VideoCreateNestedOneWithoutUsersToVideosWithReactionsInput = {
+    create?: XOR<VideoCreateWithoutUsersToVideosWithReactionsInput, VideoUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutUsersToVideosWithReactionsInput
+    connect?: VideoWhereUniqueInput
+  }
+
+  export type YouTubeUserUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput = {
+    create?: XOR<YouTubeUserCreateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutUsersToVideosWithReactionsInput
+    upsert?: YouTubeUserUpsertWithoutUsersToVideosWithReactionsInput
+    connect?: YouTubeUserWhereUniqueInput
+    update?: XOR<YouTubeUserUpdateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedUpdateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type VideoUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput = {
+    create?: XOR<VideoCreateWithoutUsersToVideosWithReactionsInput, VideoUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutUsersToVideosWithReactionsInput
+    upsert?: VideoUpsertWithoutUsersToVideosWithReactionsInput
+    connect?: VideoWhereUniqueInput
+    update?: XOR<VideoUpdateWithoutUsersToVideosWithReactionsInput, VideoUncheckedUpdateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type EnumReactionFieldUpdateOperationsInput = {
+    set?: Reaction
+  }
+
+  export type YouTubeUserCreateNestedOneWithoutVideoCommentsInput = {
+    create?: XOR<YouTubeUserCreateWithoutVideoCommentsInput, YouTubeUserUncheckedCreateWithoutVideoCommentsInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutVideoCommentsInput
+    connect?: YouTubeUserWhereUniqueInput
+  }
+
+  export type VideoCreateNestedOneWithoutVideoCommentsInput = {
+    create?: XOR<VideoCreateWithoutVideoCommentsInput, VideoUncheckedCreateWithoutVideoCommentsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutVideoCommentsInput
+    connect?: VideoWhereUniqueInput
+  }
+
+  export type VideoCommentCreateNestedOneWithoutChildVideoCommentsInput = {
+    create?: XOR<VideoCommentCreateWithoutChildVideoCommentsInput, VideoCommentUncheckedCreateWithoutChildVideoCommentsInput>
+    connectOrCreate?: VideoCommentCreateOrConnectWithoutChildVideoCommentsInput
+    connect?: VideoCommentWhereUniqueInput
+  }
+
+  export type VideoCommentCreateNestedManyWithoutParentVideoCommentInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoCommentInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoCommentInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoCommentInput>
+    createMany?: VideoCommentCreateManyParentVideoCommentInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type VideoCommentUncheckedCreateNestedManyWithoutParentVideoCommentInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoCommentInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoCommentInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoCommentInput>
+    createMany?: VideoCommentCreateManyParentVideoCommentInputEnvelope
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+  }
+
+  export type YouTubeUserUpdateOneRequiredWithoutVideoCommentsNestedInput = {
+    create?: XOR<YouTubeUserCreateWithoutVideoCommentsInput, YouTubeUserUncheckedCreateWithoutVideoCommentsInput>
+    connectOrCreate?: YouTubeUserCreateOrConnectWithoutVideoCommentsInput
+    upsert?: YouTubeUserUpsertWithoutVideoCommentsInput
+    connect?: YouTubeUserWhereUniqueInput
+    update?: XOR<YouTubeUserUpdateWithoutVideoCommentsInput, YouTubeUserUncheckedUpdateWithoutVideoCommentsInput>
+  }
+
+  export type VideoUpdateOneRequiredWithoutVideoCommentsNestedInput = {
+    create?: XOR<VideoCreateWithoutVideoCommentsInput, VideoUncheckedCreateWithoutVideoCommentsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutVideoCommentsInput
+    upsert?: VideoUpsertWithoutVideoCommentsInput
+    connect?: VideoWhereUniqueInput
+    update?: XOR<VideoUpdateWithoutVideoCommentsInput, VideoUncheckedUpdateWithoutVideoCommentsInput>
+  }
+
+  export type VideoCommentUpdateOneWithoutChildVideoCommentsNestedInput = {
+    create?: XOR<VideoCommentCreateWithoutChildVideoCommentsInput, VideoCommentUncheckedCreateWithoutChildVideoCommentsInput>
+    connectOrCreate?: VideoCommentCreateOrConnectWithoutChildVideoCommentsInput
+    upsert?: VideoCommentUpsertWithoutChildVideoCommentsInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: VideoCommentWhereUniqueInput
+    update?: XOR<VideoCommentUpdateWithoutChildVideoCommentsInput, VideoCommentUncheckedUpdateWithoutChildVideoCommentsInput>
+  }
+
+  export type VideoCommentUpdateManyWithoutParentVideoCommentNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoCommentInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoCommentInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoCommentInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutParentVideoCommentInput>
+    createMany?: VideoCommentCreateManyParentVideoCommentInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutParentVideoCommentInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutParentVideoCommentInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
+  export type VideoCommentUncheckedUpdateManyWithoutParentVideoCommentNestedInput = {
+    create?: XOR<Enumerable<VideoCommentCreateWithoutParentVideoCommentInput>, Enumerable<VideoCommentUncheckedCreateWithoutParentVideoCommentInput>>
+    connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutParentVideoCommentInput>
+    upsert?: Enumerable<VideoCommentUpsertWithWhereUniqueWithoutParentVideoCommentInput>
+    createMany?: VideoCommentCreateManyParentVideoCommentInputEnvelope
+    set?: Enumerable<VideoCommentWhereUniqueInput>
+    disconnect?: Enumerable<VideoCommentWhereUniqueInput>
+    delete?: Enumerable<VideoCommentWhereUniqueInput>
+    connect?: Enumerable<VideoCommentWhereUniqueInput>
+    update?: Enumerable<VideoCommentUpdateWithWhereUniqueWithoutParentVideoCommentInput>
+    updateMany?: Enumerable<VideoCommentUpdateManyWithWhereWithoutParentVideoCommentInput>
+    deleteMany?: Enumerable<VideoCommentScalarWhereInput>
+  }
+
   export type NestedIntFilter = {
     equals?: number
     in?: Enumerable<number>
@@ -27263,6 +35827,40 @@ export namespace Prisma {
     gt?: number
     gte?: number
     not?: NestedFloatNullableFilter | number | null
+  }
+
+  export type NestedEnumRoleFilter = {
+    equals?: Role
+    in?: Enumerable<Role>
+    notIn?: Enumerable<Role>
+    not?: NestedEnumRoleFilter | Role
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter = {
+    equals?: Role
+    in?: Enumerable<Role>
+    notIn?: Enumerable<Role>
+    not?: NestedEnumRoleWithAggregatesFilter | Role
+    _count?: NestedIntFilter
+    _min?: NestedEnumRoleFilter
+    _max?: NestedEnumRoleFilter
+  }
+
+  export type NestedEnumReactionFilter = {
+    equals?: Reaction
+    in?: Enumerable<Reaction>
+    notIn?: Enumerable<Reaction>
+    not?: NestedEnumReactionFilter | Reaction
+  }
+
+  export type NestedEnumReactionWithAggregatesFilter = {
+    equals?: Reaction
+    in?: Enumerable<Reaction>
+    notIn?: Enumerable<Reaction>
+    not?: NestedEnumReactionWithAggregatesFilter | Reaction
+    _count?: NestedIntFilter
+    _min?: NestedEnumReactionFilter
+    _max?: NestedEnumReactionFilter
   }
 
   export type MenuCreateWithoutCategoryInput = {
@@ -29645,6 +38243,1181 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ChannelCreateWithoutMemberUsersInput = {
+    name: string
+    profileImageUrl: string
+    description: string
+    subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUncheckedCreateWithoutMemberUsersInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelCreateOrConnectWithoutMemberUsersInput = {
+    where: ChannelWhereUniqueInput
+    create: XOR<ChannelCreateWithoutMemberUsersInput, ChannelUncheckedCreateWithoutMemberUsersInput>
+  }
+
+  export type UserToChannelwithRoleCreateWithoutUserInput = {
+    channel: ChannelCreateNestedOneWithoutUsersToChannelswithRolesInput
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedCreateWithoutUserInput = {
+    id?: number
+    channelId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleCreateOrConnectWithoutUserInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    create: XOR<UserToChannelwithRoleCreateWithoutUserInput, UserToChannelwithRoleUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserToChannelwithRoleCreateManyUserInputEnvelope = {
+    data: Enumerable<UserToChannelwithRoleCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ChannelCreateWithoutSubscribedUsersInput = {
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUncheckedCreateWithoutSubscribedUsersInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
+    owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelCreateOrConnectWithoutSubscribedUsersInput = {
+    where: ChannelWhereUniqueInput
+    create: XOR<ChannelCreateWithoutSubscribedUsersInput, ChannelUncheckedCreateWithoutSubscribedUsersInput>
+  }
+
+  export type VideoCreateWithoutReactedByYouTubeUsersInput = {
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateWithoutReactedByYouTubeUsersInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateOrConnectWithoutReactedByYouTubeUsersInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutReactedByYouTubeUsersInput, VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>
+  }
+
+  export type UserToVideoWithReactionCreateWithoutUserInput = {
+    video: VideoCreateNestedOneWithoutUsersToVideosWithReactionsInput
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedCreateWithoutUserInput = {
+    id?: number
+    videoId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionCreateOrConnectWithoutUserInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    create: XOR<UserToVideoWithReactionCreateWithoutUserInput, UserToVideoWithReactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserToVideoWithReactionCreateManyUserInputEnvelope = {
+    data: Enumerable<UserToVideoWithReactionCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type VideoCommentCreateWithoutCommentingUserInput = {
+    commentText: string
+    parentVideo: VideoCreateNestedOneWithoutVideoCommentsInput
+    parentVideoComment?: VideoCommentCreateNestedOneWithoutChildVideoCommentsInput
+    childVideoComments?: VideoCommentCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUncheckedCreateWithoutCommentingUserInput = {
+    id?: number
+    commentText: string
+    videoId: number
+    parentVideoCommentId?: number | null
+    childVideoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateOrConnectWithoutCommentingUserInput = {
+    where: VideoCommentWhereUniqueInput
+    create: XOR<VideoCommentCreateWithoutCommentingUserInput, VideoCommentUncheckedCreateWithoutCommentingUserInput>
+  }
+
+  export type VideoCommentCreateManyCommentingUserInputEnvelope = {
+    data: Enumerable<VideoCommentCreateManyCommentingUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ChannelUpsertWithWhereUniqueWithoutMemberUsersInput = {
+    where: ChannelWhereUniqueInput
+    update: XOR<ChannelUpdateWithoutMemberUsersInput, ChannelUncheckedUpdateWithoutMemberUsersInput>
+    create: XOR<ChannelCreateWithoutMemberUsersInput, ChannelUncheckedCreateWithoutMemberUsersInput>
+  }
+
+  export type ChannelUpdateWithWhereUniqueWithoutMemberUsersInput = {
+    where: ChannelWhereUniqueInput
+    data: XOR<ChannelUpdateWithoutMemberUsersInput, ChannelUncheckedUpdateWithoutMemberUsersInput>
+  }
+
+  export type ChannelUpdateManyWithWhereWithoutMemberUsersInput = {
+    where: ChannelScalarWhereInput
+    data: XOR<ChannelUpdateManyMutationInput, ChannelUncheckedUpdateManyWithoutMemberOfChannelsInput>
+  }
+
+  export type ChannelScalarWhereInput = {
+    AND?: Enumerable<ChannelScalarWhereInput>
+    OR?: Enumerable<ChannelScalarWhereInput>
+    NOT?: Enumerable<ChannelScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImageUrl?: StringFilter | string
+    description?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserToChannelwithRoleUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    update: XOR<UserToChannelwithRoleUpdateWithoutUserInput, UserToChannelwithRoleUncheckedUpdateWithoutUserInput>
+    create: XOR<UserToChannelwithRoleCreateWithoutUserInput, UserToChannelwithRoleUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserToChannelwithRoleUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    data: XOR<UserToChannelwithRoleUpdateWithoutUserInput, UserToChannelwithRoleUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserToChannelwithRoleUpdateManyWithWhereWithoutUserInput = {
+    where: UserToChannelwithRoleScalarWhereInput
+    data: XOR<UserToChannelwithRoleUpdateManyMutationInput, UserToChannelwithRoleUncheckedUpdateManyWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type UserToChannelwithRoleScalarWhereInput = {
+    AND?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+    OR?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+    NOT?: Enumerable<UserToChannelwithRoleScalarWhereInput>
+    id?: IntFilter | number
+    youTubeUserId?: IntFilter | number
+    channelId?: IntFilter | number
+    role?: EnumRoleFilter | Role
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type ChannelUpsertWithWhereUniqueWithoutSubscribedUsersInput = {
+    where: ChannelWhereUniqueInput
+    update: XOR<ChannelUpdateWithoutSubscribedUsersInput, ChannelUncheckedUpdateWithoutSubscribedUsersInput>
+    create: XOR<ChannelCreateWithoutSubscribedUsersInput, ChannelUncheckedCreateWithoutSubscribedUsersInput>
+  }
+
+  export type ChannelUpdateWithWhereUniqueWithoutSubscribedUsersInput = {
+    where: ChannelWhereUniqueInput
+    data: XOR<ChannelUpdateWithoutSubscribedUsersInput, ChannelUncheckedUpdateWithoutSubscribedUsersInput>
+  }
+
+  export type ChannelUpdateManyWithWhereWithoutSubscribedUsersInput = {
+    where: ChannelScalarWhereInput
+    data: XOR<ChannelUpdateManyMutationInput, ChannelUncheckedUpdateManyWithoutSubscribingToChannelsInput>
+  }
+
+  export type VideoUpsertWithWhereUniqueWithoutReactedByYouTubeUsersInput = {
+    where: VideoWhereUniqueInput
+    update: XOR<VideoUpdateWithoutReactedByYouTubeUsersInput, VideoUncheckedUpdateWithoutReactedByYouTubeUsersInput>
+    create: XOR<VideoCreateWithoutReactedByYouTubeUsersInput, VideoUncheckedCreateWithoutReactedByYouTubeUsersInput>
+  }
+
+  export type VideoUpdateWithWhereUniqueWithoutReactedByYouTubeUsersInput = {
+    where: VideoWhereUniqueInput
+    data: XOR<VideoUpdateWithoutReactedByYouTubeUsersInput, VideoUncheckedUpdateWithoutReactedByYouTubeUsersInput>
+  }
+
+  export type VideoUpdateManyWithWhereWithoutReactedByYouTubeUsersInput = {
+    where: VideoScalarWhereInput
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutReactedVideosInput>
+  }
+
+  export type VideoScalarWhereInput = {
+    AND?: Enumerable<VideoScalarWhereInput>
+    OR?: Enumerable<VideoScalarWhereInput>
+    NOT?: Enumerable<VideoScalarWhereInput>
+    id?: IntFilter | number
+    title?: StringFilter | string
+    videoUrl?: StringFilter | string
+    thumbnailImageUrl?: StringFilter | string
+    description?: StringFilter | string
+    channelId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type UserToVideoWithReactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    update: XOR<UserToVideoWithReactionUpdateWithoutUserInput, UserToVideoWithReactionUncheckedUpdateWithoutUserInput>
+    create: XOR<UserToVideoWithReactionCreateWithoutUserInput, UserToVideoWithReactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserToVideoWithReactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    data: XOR<UserToVideoWithReactionUpdateWithoutUserInput, UserToVideoWithReactionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserToVideoWithReactionUpdateManyWithWhereWithoutUserInput = {
+    where: UserToVideoWithReactionScalarWhereInput
+    data: XOR<UserToVideoWithReactionUpdateManyMutationInput, UserToVideoWithReactionUncheckedUpdateManyWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type UserToVideoWithReactionScalarWhereInput = {
+    AND?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+    OR?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+    NOT?: Enumerable<UserToVideoWithReactionScalarWhereInput>
+    id?: IntFilter | number
+    youTubeUserId?: IntFilter | number
+    videoId?: IntFilter | number
+    reaction?: EnumReactionFilter | Reaction
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type VideoCommentUpsertWithWhereUniqueWithoutCommentingUserInput = {
+    where: VideoCommentWhereUniqueInput
+    update: XOR<VideoCommentUpdateWithoutCommentingUserInput, VideoCommentUncheckedUpdateWithoutCommentingUserInput>
+    create: XOR<VideoCommentCreateWithoutCommentingUserInput, VideoCommentUncheckedCreateWithoutCommentingUserInput>
+  }
+
+  export type VideoCommentUpdateWithWhereUniqueWithoutCommentingUserInput = {
+    where: VideoCommentWhereUniqueInput
+    data: XOR<VideoCommentUpdateWithoutCommentingUserInput, VideoCommentUncheckedUpdateWithoutCommentingUserInput>
+  }
+
+  export type VideoCommentUpdateManyWithWhereWithoutCommentingUserInput = {
+    where: VideoCommentScalarWhereInput
+    data: XOR<VideoCommentUpdateManyMutationInput, VideoCommentUncheckedUpdateManyWithoutVideoCommentsInput>
+  }
+
+  export type VideoCommentScalarWhereInput = {
+    AND?: Enumerable<VideoCommentScalarWhereInput>
+    OR?: Enumerable<VideoCommentScalarWhereInput>
+    NOT?: Enumerable<VideoCommentScalarWhereInput>
+    id?: IntFilter | number
+    commentText?: StringFilter | string
+    youTubeUserId?: IntFilter | number
+    videoId?: IntFilter | number
+    parentVideoCommentId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YouTubeUserCreateWithoutMemberOfChannelsInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutMemberOfChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutMemberOfChannelsInput, YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>
+  }
+
+  export type YouTubeUserCreateWithoutSubscribingToChannelsInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutSubscribingToChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutSubscribingToChannelsInput, YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>
+  }
+
+  export type UserToChannelwithRoleCreateWithoutChannelInput = {
+    user: YouTubeUserCreateNestedOneWithoutUsersToChannelswithRolesInput
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedCreateWithoutChannelInput = {
+    id?: number
+    youTubeUserId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToChannelwithRoleCreateOrConnectWithoutChannelInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    create: XOR<UserToChannelwithRoleCreateWithoutChannelInput, UserToChannelwithRoleUncheckedCreateWithoutChannelInput>
+  }
+
+  export type UserToChannelwithRoleCreateManyChannelInputEnvelope = {
+    data: Enumerable<UserToChannelwithRoleCreateManyChannelInput>
+    skipDuplicates?: boolean
+  }
+
+  export type VideoCreateWithoutBelongsToChannelInput = {
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateWithoutBelongsToChannelInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateOrConnectWithoutBelongsToChannelInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutBelongsToChannelInput, VideoUncheckedCreateWithoutBelongsToChannelInput>
+  }
+
+  export type VideoCreateManyBelongsToChannelInputEnvelope = {
+    data: Enumerable<VideoCreateManyBelongsToChannelInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YouTubeUserUpsertWithWhereUniqueWithoutMemberOfChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    update: XOR<YouTubeUserUpdateWithoutMemberOfChannelsInput, YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput>
+    create: XOR<YouTubeUserCreateWithoutMemberOfChannelsInput, YouTubeUserUncheckedCreateWithoutMemberOfChannelsInput>
+  }
+
+  export type YouTubeUserUpdateWithWhereUniqueWithoutMemberOfChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    data: XOR<YouTubeUserUpdateWithoutMemberOfChannelsInput, YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput>
+  }
+
+  export type YouTubeUserUpdateManyWithWhereWithoutMemberOfChannelsInput = {
+    where: YouTubeUserScalarWhereInput
+    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyWithoutMemberUsersInput>
+  }
+
+  export type YouTubeUserScalarWhereInput = {
+    AND?: Enumerable<YouTubeUserScalarWhereInput>
+    OR?: Enumerable<YouTubeUserScalarWhereInput>
+    NOT?: Enumerable<YouTubeUserScalarWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImageUrl?: StringFilter | string
+    bio?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type YouTubeUserUpsertWithWhereUniqueWithoutSubscribingToChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    update: XOR<YouTubeUserUpdateWithoutSubscribingToChannelsInput, YouTubeUserUncheckedUpdateWithoutSubscribingToChannelsInput>
+    create: XOR<YouTubeUserCreateWithoutSubscribingToChannelsInput, YouTubeUserUncheckedCreateWithoutSubscribingToChannelsInput>
+  }
+
+  export type YouTubeUserUpdateWithWhereUniqueWithoutSubscribingToChannelsInput = {
+    where: YouTubeUserWhereUniqueInput
+    data: XOR<YouTubeUserUpdateWithoutSubscribingToChannelsInput, YouTubeUserUncheckedUpdateWithoutSubscribingToChannelsInput>
+  }
+
+  export type YouTubeUserUpdateManyWithWhereWithoutSubscribingToChannelsInput = {
+    where: YouTubeUserScalarWhereInput
+    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyWithoutSubscribedUsersInput>
+  }
+
+  export type UserToChannelwithRoleUpsertWithWhereUniqueWithoutChannelInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    update: XOR<UserToChannelwithRoleUpdateWithoutChannelInput, UserToChannelwithRoleUncheckedUpdateWithoutChannelInput>
+    create: XOR<UserToChannelwithRoleCreateWithoutChannelInput, UserToChannelwithRoleUncheckedCreateWithoutChannelInput>
+  }
+
+  export type UserToChannelwithRoleUpdateWithWhereUniqueWithoutChannelInput = {
+    where: UserToChannelwithRoleWhereUniqueInput
+    data: XOR<UserToChannelwithRoleUpdateWithoutChannelInput, UserToChannelwithRoleUncheckedUpdateWithoutChannelInput>
+  }
+
+  export type UserToChannelwithRoleUpdateManyWithWhereWithoutChannelInput = {
+    where: UserToChannelwithRoleScalarWhereInput
+    data: XOR<UserToChannelwithRoleUpdateManyMutationInput, UserToChannelwithRoleUncheckedUpdateManyWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type VideoUpsertWithWhereUniqueWithoutBelongsToChannelInput = {
+    where: VideoWhereUniqueInput
+    update: XOR<VideoUpdateWithoutBelongsToChannelInput, VideoUncheckedUpdateWithoutBelongsToChannelInput>
+    create: XOR<VideoCreateWithoutBelongsToChannelInput, VideoUncheckedCreateWithoutBelongsToChannelInput>
+  }
+
+  export type VideoUpdateWithWhereUniqueWithoutBelongsToChannelInput = {
+    where: VideoWhereUniqueInput
+    data: XOR<VideoUpdateWithoutBelongsToChannelInput, VideoUncheckedUpdateWithoutBelongsToChannelInput>
+  }
+
+  export type VideoUpdateManyWithWhereWithoutBelongsToChannelInput = {
+    where: VideoScalarWhereInput
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutOwningVideosInput>
+  }
+
+  export type YouTubeUserCreateWithoutUsersToChannelswithRolesInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutUsersToChannelswithRolesInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type ChannelCreateWithoutUsersToChannelswithRolesInput = {
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
+    owningVideos?: VideoCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
+    owningVideos?: VideoUncheckedCreateNestedManyWithoutBelongsToChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelCreateOrConnectWithoutUsersToChannelswithRolesInput = {
+    where: ChannelWhereUniqueInput
+    create: XOR<ChannelCreateWithoutUsersToChannelswithRolesInput, ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type YouTubeUserUpsertWithoutUsersToChannelswithRolesInput = {
+    update: XOR<YouTubeUserUpdateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedUpdateWithoutUsersToChannelswithRolesInput>
+    create: XOR<YouTubeUserCreateWithoutUsersToChannelswithRolesInput, YouTubeUserUncheckedCreateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type YouTubeUserUpdateWithoutUsersToChannelswithRolesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutUsersToChannelswithRolesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUpsertWithoutUsersToChannelswithRolesInput = {
+    update: XOR<ChannelUpdateWithoutUsersToChannelswithRolesInput, ChannelUncheckedUpdateWithoutUsersToChannelswithRolesInput>
+    create: XOR<ChannelCreateWithoutUsersToChannelswithRolesInput, ChannelUncheckedCreateWithoutUsersToChannelswithRolesInput>
+  }
+
+  export type ChannelUpdateWithoutUsersToChannelswithRolesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
+    owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateWithoutUsersToChannelswithRolesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
+    owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelCreateWithoutOwningVideosInput = {
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUncheckedCreateWithoutOwningVideosInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    description: string
+    memberUsers?: YouTubeUserUncheckedCreateNestedManyWithoutMemberOfChannelsInput
+    subscribedUsers?: YouTubeUserUncheckedCreateNestedManyWithoutSubscribingToChannelsInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutChannelInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelCreateOrConnectWithoutOwningVideosInput = {
+    where: ChannelWhereUniqueInput
+    create: XOR<ChannelCreateWithoutOwningVideosInput, ChannelUncheckedCreateWithoutOwningVideosInput>
+  }
+
+  export type YouTubeUserCreateWithoutReactedVideosInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutReactedVideosInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutReactedVideosInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutReactedVideosInput, YouTubeUserUncheckedCreateWithoutReactedVideosInput>
+  }
+
+  export type UserToVideoWithReactionCreateWithoutVideoInput = {
+    user: YouTubeUserCreateNestedOneWithoutUsersToVideosWithReactionsInput
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedCreateWithoutVideoInput = {
+    id?: number
+    youTubeUserId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionCreateOrConnectWithoutVideoInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    create: XOR<UserToVideoWithReactionCreateWithoutVideoInput, UserToVideoWithReactionUncheckedCreateWithoutVideoInput>
+  }
+
+  export type UserToVideoWithReactionCreateManyVideoInputEnvelope = {
+    data: Enumerable<UserToVideoWithReactionCreateManyVideoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type VideoCommentCreateWithoutParentVideoInput = {
+    commentText: string
+    commentingUser: YouTubeUserCreateNestedOneWithoutVideoCommentsInput
+    parentVideoComment?: VideoCommentCreateNestedOneWithoutChildVideoCommentsInput
+    childVideoComments?: VideoCommentCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUncheckedCreateWithoutParentVideoInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    parentVideoCommentId?: number | null
+    childVideoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateOrConnectWithoutParentVideoInput = {
+    where: VideoCommentWhereUniqueInput
+    create: XOR<VideoCommentCreateWithoutParentVideoInput, VideoCommentUncheckedCreateWithoutParentVideoInput>
+  }
+
+  export type VideoCommentCreateManyParentVideoInputEnvelope = {
+    data: Enumerable<VideoCommentCreateManyParentVideoInput>
+    skipDuplicates?: boolean
+  }
+
+  export type ChannelUpsertWithoutOwningVideosInput = {
+    update: XOR<ChannelUpdateWithoutOwningVideosInput, ChannelUncheckedUpdateWithoutOwningVideosInput>
+    create: XOR<ChannelCreateWithoutOwningVideosInput, ChannelUncheckedCreateWithoutOwningVideosInput>
+  }
+
+  export type ChannelUpdateWithoutOwningVideosInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateWithoutOwningVideosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUpsertWithWhereUniqueWithoutReactedVideosInput = {
+    where: YouTubeUserWhereUniqueInput
+    update: XOR<YouTubeUserUpdateWithoutReactedVideosInput, YouTubeUserUncheckedUpdateWithoutReactedVideosInput>
+    create: XOR<YouTubeUserCreateWithoutReactedVideosInput, YouTubeUserUncheckedCreateWithoutReactedVideosInput>
+  }
+
+  export type YouTubeUserUpdateWithWhereUniqueWithoutReactedVideosInput = {
+    where: YouTubeUserWhereUniqueInput
+    data: XOR<YouTubeUserUpdateWithoutReactedVideosInput, YouTubeUserUncheckedUpdateWithoutReactedVideosInput>
+  }
+
+  export type YouTubeUserUpdateManyWithWhereWithoutReactedVideosInput = {
+    where: YouTubeUserScalarWhereInput
+    data: XOR<YouTubeUserUpdateManyMutationInput, YouTubeUserUncheckedUpdateManyWithoutReactedByYouTubeUsersInput>
+  }
+
+  export type UserToVideoWithReactionUpsertWithWhereUniqueWithoutVideoInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    update: XOR<UserToVideoWithReactionUpdateWithoutVideoInput, UserToVideoWithReactionUncheckedUpdateWithoutVideoInput>
+    create: XOR<UserToVideoWithReactionCreateWithoutVideoInput, UserToVideoWithReactionUncheckedCreateWithoutVideoInput>
+  }
+
+  export type UserToVideoWithReactionUpdateWithWhereUniqueWithoutVideoInput = {
+    where: UserToVideoWithReactionWhereUniqueInput
+    data: XOR<UserToVideoWithReactionUpdateWithoutVideoInput, UserToVideoWithReactionUncheckedUpdateWithoutVideoInput>
+  }
+
+  export type UserToVideoWithReactionUpdateManyWithWhereWithoutVideoInput = {
+    where: UserToVideoWithReactionScalarWhereInput
+    data: XOR<UserToVideoWithReactionUpdateManyMutationInput, UserToVideoWithReactionUncheckedUpdateManyWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type VideoCommentUpsertWithWhereUniqueWithoutParentVideoInput = {
+    where: VideoCommentWhereUniqueInput
+    update: XOR<VideoCommentUpdateWithoutParentVideoInput, VideoCommentUncheckedUpdateWithoutParentVideoInput>
+    create: XOR<VideoCommentCreateWithoutParentVideoInput, VideoCommentUncheckedCreateWithoutParentVideoInput>
+  }
+
+  export type VideoCommentUpdateWithWhereUniqueWithoutParentVideoInput = {
+    where: VideoCommentWhereUniqueInput
+    data: XOR<VideoCommentUpdateWithoutParentVideoInput, VideoCommentUncheckedUpdateWithoutParentVideoInput>
+  }
+
+  export type VideoCommentUpdateManyWithWhereWithoutParentVideoInput = {
+    where: VideoCommentScalarWhereInput
+    data: XOR<VideoCommentUpdateManyMutationInput, VideoCommentUncheckedUpdateManyWithoutVideoCommentsInput>
+  }
+
+  export type YouTubeUserCreateWithoutUsersToVideosWithReactionsInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    videoComments?: VideoCommentCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutCommentingUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutUsersToVideosWithReactionsInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type VideoCreateWithoutUsersToVideosWithReactionsInput = {
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
+    reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
+    videoComments?: VideoCommentCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateWithoutUsersToVideosWithReactionsInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
+    videoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateOrConnectWithoutUsersToVideosWithReactionsInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutUsersToVideosWithReactionsInput, VideoUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type YouTubeUserUpsertWithoutUsersToVideosWithReactionsInput = {
+    update: XOR<YouTubeUserUpdateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedUpdateWithoutUsersToVideosWithReactionsInput>
+    create: XOR<YouTubeUserCreateWithoutUsersToVideosWithReactionsInput, YouTubeUserUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type YouTubeUserUpdateWithoutUsersToVideosWithReactionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutUsersToVideosWithReactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpsertWithoutUsersToVideosWithReactionsInput = {
+    update: XOR<VideoUpdateWithoutUsersToVideosWithReactionsInput, VideoUncheckedUpdateWithoutUsersToVideosWithReactionsInput>
+    create: XOR<VideoCreateWithoutUsersToVideosWithReactionsInput, VideoUncheckedCreateWithoutUsersToVideosWithReactionsInput>
+  }
+
+  export type VideoUpdateWithoutUsersToVideosWithReactionsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
+    reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateWithoutUsersToVideosWithReactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserCreateWithoutVideoCommentsInput = {
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUncheckedCreateWithoutVideoCommentsInput = {
+    id?: number
+    name: string
+    profileImageUrl: string
+    bio: string
+    memberOfChannels?: ChannelUncheckedCreateNestedManyWithoutMemberUsersInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedCreateNestedManyWithoutUserInput
+    subscribingToChannels?: ChannelUncheckedCreateNestedManyWithoutSubscribedUsersInput
+    reactedVideos?: VideoUncheckedCreateNestedManyWithoutReactedByYouTubeUsersInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutUserInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserCreateOrConnectWithoutVideoCommentsInput = {
+    where: YouTubeUserWhereUniqueInput
+    create: XOR<YouTubeUserCreateWithoutVideoCommentsInput, YouTubeUserUncheckedCreateWithoutVideoCommentsInput>
+  }
+
+  export type VideoCreateWithoutVideoCommentsInput = {
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    belongsToChannel: ChannelCreateNestedOneWithoutOwningVideosInput
+    reactedByYouTubeUsers?: YouTubeUserCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionCreateNestedManyWithoutVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoUncheckedCreateWithoutVideoCommentsInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    channelId: number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedCreateNestedManyWithoutReactedVideosInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedCreateNestedManyWithoutVideoInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateOrConnectWithoutVideoCommentsInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutVideoCommentsInput, VideoUncheckedCreateWithoutVideoCommentsInput>
+  }
+
+  export type VideoCommentCreateWithoutChildVideoCommentsInput = {
+    commentText: string
+    commentingUser: YouTubeUserCreateNestedOneWithoutVideoCommentsInput
+    parentVideo: VideoCreateNestedOneWithoutVideoCommentsInput
+    parentVideoComment?: VideoCommentCreateNestedOneWithoutChildVideoCommentsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUncheckedCreateWithoutChildVideoCommentsInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    parentVideoCommentId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateOrConnectWithoutChildVideoCommentsInput = {
+    where: VideoCommentWhereUniqueInput
+    create: XOR<VideoCommentCreateWithoutChildVideoCommentsInput, VideoCommentUncheckedCreateWithoutChildVideoCommentsInput>
+  }
+
+  export type VideoCommentCreateWithoutParentVideoCommentInput = {
+    commentText: string
+    commentingUser: YouTubeUserCreateNestedOneWithoutVideoCommentsInput
+    parentVideo: VideoCreateNestedOneWithoutVideoCommentsInput
+    childVideoComments?: VideoCommentCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUncheckedCreateWithoutParentVideoCommentInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    childVideoComments?: VideoCommentUncheckedCreateNestedManyWithoutParentVideoCommentInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateOrConnectWithoutParentVideoCommentInput = {
+    where: VideoCommentWhereUniqueInput
+    create: XOR<VideoCommentCreateWithoutParentVideoCommentInput, VideoCommentUncheckedCreateWithoutParentVideoCommentInput>
+  }
+
+  export type VideoCommentCreateManyParentVideoCommentInputEnvelope = {
+    data: Enumerable<VideoCommentCreateManyParentVideoCommentInput>
+    skipDuplicates?: boolean
+  }
+
+  export type YouTubeUserUpsertWithoutVideoCommentsInput = {
+    update: XOR<YouTubeUserUpdateWithoutVideoCommentsInput, YouTubeUserUncheckedUpdateWithoutVideoCommentsInput>
+    create: XOR<YouTubeUserCreateWithoutVideoCommentsInput, YouTubeUserUncheckedCreateWithoutVideoCommentsInput>
+  }
+
+  export type YouTubeUserUpdateWithoutVideoCommentsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutVideoCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpsertWithoutVideoCommentsInput = {
+    update: XOR<VideoUpdateWithoutVideoCommentsInput, VideoUncheckedUpdateWithoutVideoCommentsInput>
+    create: XOR<VideoCreateWithoutVideoCommentsInput, VideoUncheckedCreateWithoutVideoCommentsInput>
+  }
+
+  export type VideoUpdateWithoutVideoCommentsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
+    reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateWithoutVideoCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUpsertWithoutChildVideoCommentsInput = {
+    update: XOR<VideoCommentUpdateWithoutChildVideoCommentsInput, VideoCommentUncheckedUpdateWithoutChildVideoCommentsInput>
+    create: XOR<VideoCommentCreateWithoutChildVideoCommentsInput, VideoCommentUncheckedCreateWithoutChildVideoCommentsInput>
+  }
+
+  export type VideoCommentUpdateWithoutChildVideoCommentsInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    commentingUser?: YouTubeUserUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideo?: VideoUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideoComment?: VideoCommentUpdateOneWithoutChildVideoCommentsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateWithoutChildVideoCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUpsertWithWhereUniqueWithoutParentVideoCommentInput = {
+    where: VideoCommentWhereUniqueInput
+    update: XOR<VideoCommentUpdateWithoutParentVideoCommentInput, VideoCommentUncheckedUpdateWithoutParentVideoCommentInput>
+    create: XOR<VideoCommentCreateWithoutParentVideoCommentInput, VideoCommentUncheckedCreateWithoutParentVideoCommentInput>
+  }
+
+  export type VideoCommentUpdateWithWhereUniqueWithoutParentVideoCommentInput = {
+    where: VideoCommentWhereUniqueInput
+    data: XOR<VideoCommentUpdateWithoutParentVideoCommentInput, VideoCommentUncheckedUpdateWithoutParentVideoCommentInput>
+  }
+
+  export type VideoCommentUpdateManyWithWhereWithoutParentVideoCommentInput = {
+    where: VideoCommentScalarWhereInput
+    data: XOR<VideoCommentUpdateManyMutationInput, VideoCommentUncheckedUpdateManyWithoutChildVideoCommentsInput>
+  }
+
   export type MenuCreateManyCategoryInput = {
     id?: number
     name: string
@@ -30453,6 +40226,469 @@ export namespace Prisma {
     tweetText?: StringFieldUpdateOperationsInput | string
     parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleCreateManyUserInput = {
+    id?: number
+    channelId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserToVideoWithReactionCreateManyUserInput = {
+    id?: number
+    videoId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateManyCommentingUserInput = {
+    id?: number
+    commentText: string
+    videoId: number
+    parentVideoCommentId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChannelUpdateWithoutMemberUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    subscribedUsers?: YouTubeUserUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateWithoutMemberUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    subscribedUsers?: YouTubeUserUncheckedUpdateManyWithoutSubscribingToChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateManyWithoutMemberOfChannelsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUpdateWithoutUserInput = {
+    channel?: ChannelUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    channelId?: IntFieldUpdateOperationsInput | number
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateManyWithoutUsersToChannelswithRolesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    channelId?: IntFieldUpdateOperationsInput | number
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUpdateWithoutSubscribedUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUpdateManyWithoutMemberOfChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateWithoutSubscribedUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    memberUsers?: YouTubeUserUncheckedUpdateManyWithoutMemberOfChannelsNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutChannelNestedInput
+    owningVideos?: VideoUncheckedUpdateManyWithoutBelongsToChannelNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChannelUncheckedUpdateManyWithoutSubscribingToChannelsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpdateWithoutReactedByYouTubeUsersInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    belongsToChannel?: ChannelUpdateOneRequiredWithoutOwningVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateWithoutReactedByYouTubeUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateManyWithoutReactedVideosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    channelId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUpdateWithoutUserInput = {
+    video?: VideoUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateManyWithoutUsersToVideosWithReactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUpdateWithoutCommentingUserInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    parentVideo?: VideoUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideoComment?: VideoCommentUpdateOneWithoutChildVideoCommentsNestedInput
+    childVideoComments?: VideoCommentUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateWithoutCommentingUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    videoId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childVideoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateManyWithoutVideoCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    videoId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleCreateManyChannelInput = {
+    id?: number
+    youTubeUserId: number
+    role: Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCreateManyBelongsToChannelInput = {
+    id?: number
+    title: string
+    videoUrl: string
+    thumbnailImageUrl: string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUpdateWithoutMemberOfChannelsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutMemberOfChannelsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutMemberUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUpdateWithoutSubscribingToChannelsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    reactedVideos?: VideoUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutSubscribingToChannelsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    reactedVideos?: VideoUncheckedUpdateManyWithoutReactedByYouTubeUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutSubscribedUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUpdateWithoutChannelInput = {
+    user?: YouTubeUserUpdateOneRequiredWithoutUsersToChannelswithRolesNestedInput
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToChannelwithRoleUncheckedUpdateWithoutChannelInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    role?: EnumRoleFieldUpdateOperationsInput | Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpdateWithoutBelongsToChannelInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    reactedByYouTubeUsers?: YouTubeUserUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateWithoutBelongsToChannelInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    reactedByYouTubeUsers?: YouTubeUserUncheckedUpdateManyWithoutReactedVideosNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutVideoNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUncheckedUpdateManyWithoutOwningVideosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    videoUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailImageUrl?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionCreateManyVideoInput = {
+    id?: number
+    youTubeUserId: number
+    reaction: Reaction
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentCreateManyParentVideoInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    parentVideoCommentId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type YouTubeUserUpdateWithoutReactedVideosInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUpdateManyWithoutSubscribedUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateWithoutReactedVideosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    memberOfChannels?: ChannelUncheckedUpdateManyWithoutMemberUsersNestedInput
+    usersToChannelswithRoles?: UserToChannelwithRoleUncheckedUpdateManyWithoutUserNestedInput
+    subscribingToChannels?: ChannelUncheckedUpdateManyWithoutSubscribedUsersNestedInput
+    usersToVideosWithReactions?: UserToVideoWithReactionUncheckedUpdateManyWithoutUserNestedInput
+    videoComments?: VideoCommentUncheckedUpdateManyWithoutCommentingUserNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YouTubeUserUncheckedUpdateManyWithoutReactedByYouTubeUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImageUrl?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUpdateWithoutVideoInput = {
+    user?: YouTubeUserUpdateOneRequiredWithoutUsersToVideosWithReactionsNestedInput
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserToVideoWithReactionUncheckedUpdateWithoutVideoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    reaction?: EnumReactionFieldUpdateOperationsInput | Reaction
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUpdateWithoutParentVideoInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    commentingUser?: YouTubeUserUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideoComment?: VideoCommentUpdateOneWithoutChildVideoCommentsNestedInput
+    childVideoComments?: VideoCommentUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateWithoutParentVideoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    parentVideoCommentId?: NullableIntFieldUpdateOperationsInput | number | null
+    childVideoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentCreateManyParentVideoCommentInput = {
+    id?: number
+    commentText: string
+    youTubeUserId: number
+    videoId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VideoCommentUpdateWithoutParentVideoCommentInput = {
+    commentText?: StringFieldUpdateOperationsInput | string
+    commentingUser?: YouTubeUserUpdateOneRequiredWithoutVideoCommentsNestedInput
+    parentVideo?: VideoUpdateOneRequiredWithoutVideoCommentsNestedInput
+    childVideoComments?: VideoCommentUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateWithoutParentVideoCommentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
+    childVideoComments?: VideoCommentUncheckedUpdateManyWithoutParentVideoCommentNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCommentUncheckedUpdateManyWithoutChildVideoCommentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    commentText?: StringFieldUpdateOperationsInput | string
+    youTubeUserId?: IntFieldUpdateOperationsInput | number
+    videoId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

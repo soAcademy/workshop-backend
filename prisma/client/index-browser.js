@@ -96,6 +96,15 @@ exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.ChannelScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImageUrl: 'profileImageUrl',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
   id: 'id',
   answerText: 'answerText',
@@ -273,6 +282,63 @@ exports.Prisma.UserScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.UserToChannelwithRoleScalarFieldEnum = makeEnum({
+  id: 'id',
+  youTubeUserId: 'youTubeUserId',
+  channelId: 'channelId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UserToVideoWithReactionScalarFieldEnum = makeEnum({
+  id: 'id',
+  youTubeUserId: 'youTubeUserId',
+  videoId: 'videoId',
+  reaction: 'reaction',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.VideoCommentScalarFieldEnum = makeEnum({
+  id: 'id',
+  commentText: 'commentText',
+  youTubeUserId: 'youTubeUserId',
+  videoId: 'videoId',
+  parentVideoCommentId: 'parentVideoCommentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.VideoScalarFieldEnum = makeEnum({
+  id: 'id',
+  title: 'title',
+  videoUrl: 'videoUrl',
+  thumbnailImageUrl: 'thumbnailImageUrl',
+  description: 'description',
+  channelId: 'channelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.YouTubeUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImageUrl: 'profileImageUrl',
+  bio: 'bio',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+exports.Reaction = makeEnum({
+  LIKE: 'LIKE',
+  DISLIKE: 'DISLIKE'
+});
+
+exports.Role = makeEnum({
+  MANAGER: 'MANAGER',
+  EDITOR: 'EDITOR',
+  VIEWER: 'VIEWER'
+});
 
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
@@ -294,7 +360,13 @@ exports.Prisma.ModelName = makeEnum({
   UserRelation: 'UserRelation',
   Tweet: 'Tweet',
   HashTag: 'HashTag',
-  DirectMessage: 'DirectMessage'
+  DirectMessage: 'DirectMessage',
+  YouTubeUser: 'YouTubeUser',
+  Channel: 'Channel',
+  UserToChannelwithRole: 'UserToChannelwithRole',
+  Video: 'Video',
+  UserToVideoWithReaction: 'UserToVideoWithReaction',
+  VideoComment: 'VideoComment'
 });
 
 /**
