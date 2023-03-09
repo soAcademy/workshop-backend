@@ -5,6 +5,7 @@ export const prisma = new PrismaClient();
 export const createQuiz = (args: {
   quiz: string;
   answer: string;
+  categoryId: number;
   choices: { choice: string }[];
 }) => prisma.triviaQuiz.create({
   data: {
@@ -16,6 +17,11 @@ export const createQuiz = (args: {
     },
     choices: {
       create: args.choices
+    },
+    category: {
+      connect: {
+        id: args.categoryId
+      }
     }
   }
 })
