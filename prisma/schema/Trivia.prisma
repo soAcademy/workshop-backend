@@ -1,19 +1,19 @@
 model TriviaQuiz {
-  id               Int            @id @default(autoincrement())
-  quiz             String
-  answer           TriviaChoice   @relation("TriviaQuizAnswer", fields: [triviaChoiceId], references: [id])
-  choices          TriviaChoice[]
-  triviaChoiceId   Int
-  category         TriviaCategory @relation(fields: [triviaCategoryId], references: [id])
-  triviaCategoryId Int
+  id                   Int            @id @default(autoincrement())
+  quiz                 String
+  answer               TriviaChoice   @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
+  choices              TriviaChoice[]
+  triviaAnswerChoiceId Int            @unique
+  category             TriviaCategory @relation(fields: [triviaCategoryId], references: [id])
+  triviaCategoryId     Int
 }
 
 model TriviaChoice {
-  id                Int          @id @default(autoincrement())
-  choice            String
-  triviaQuiz        TriviaQuiz?  @relation(fields: [triviaQuizId], references: [id])
-  triviaQuizId      Int?
-  triviaQuizAnswers TriviaQuiz[] @relation("TriviaQuizAnswer")
+  id               Int         @id @default(autoincrement())
+  choice           String
+  triviaQuiz       TriviaQuiz? @relation(fields: [triviaQuizId], references: [id])
+  triviaQuizId     Int?
+  triviaQuizAnswer TriviaQuiz? @relation("TriviaQuizAnswer")
 }
 
 model TriviaCategory {

@@ -80,7 +80,7 @@ export type TodoList = {
 export type TriviaQuiz = {
   id: number
   quiz: string
-  triviaChoiceId: number
+  triviaAnswerChoiceId: number
   triviaCategoryId: number
 }
 
@@ -1105,49 +1105,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the TriviaQuizCountOutputType
      */
     select?: TriviaQuizCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type TriviaChoiceCountOutputType
-   */
-
-
-  export type TriviaChoiceCountOutputType = {
-    triviaQuizAnswers: number
-  }
-
-  export type TriviaChoiceCountOutputTypeSelect = {
-    triviaQuizAnswers?: boolean
-  }
-
-  export type TriviaChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaChoiceCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TriviaChoiceCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (TriviaChoiceCountOutputTypeArgs)
-    ? TriviaChoiceCountOutputType 
-    : S extends { select: any } & (TriviaChoiceCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof TriviaChoiceCountOutputType ? TriviaChoiceCountOutputType[P] : never
-  } 
-      : TriviaChoiceCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TriviaChoiceCountOutputType without action
-   */
-  export type TriviaChoiceCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the TriviaChoiceCountOutputType
-     */
-    select?: TriviaChoiceCountOutputTypeSelect | null
   }
 
 
@@ -6125,34 +6082,34 @@ export namespace Prisma {
 
   export type TriviaQuizAvgAggregateOutputType = {
     id: number | null
-    triviaChoiceId: number | null
+    triviaAnswerChoiceId: number | null
     triviaCategoryId: number | null
   }
 
   export type TriviaQuizSumAggregateOutputType = {
     id: number | null
-    triviaChoiceId: number | null
+    triviaAnswerChoiceId: number | null
     triviaCategoryId: number | null
   }
 
   export type TriviaQuizMinAggregateOutputType = {
     id: number | null
     quiz: string | null
-    triviaChoiceId: number | null
+    triviaAnswerChoiceId: number | null
     triviaCategoryId: number | null
   }
 
   export type TriviaQuizMaxAggregateOutputType = {
     id: number | null
     quiz: string | null
-    triviaChoiceId: number | null
+    triviaAnswerChoiceId: number | null
     triviaCategoryId: number | null
   }
 
   export type TriviaQuizCountAggregateOutputType = {
     id: number
     quiz: number
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
     triviaCategoryId: number
     _all: number
   }
@@ -6160,34 +6117,34 @@ export namespace Prisma {
 
   export type TriviaQuizAvgAggregateInputType = {
     id?: true
-    triviaChoiceId?: true
+    triviaAnswerChoiceId?: true
     triviaCategoryId?: true
   }
 
   export type TriviaQuizSumAggregateInputType = {
     id?: true
-    triviaChoiceId?: true
+    triviaAnswerChoiceId?: true
     triviaCategoryId?: true
   }
 
   export type TriviaQuizMinAggregateInputType = {
     id?: true
     quiz?: true
-    triviaChoiceId?: true
+    triviaAnswerChoiceId?: true
     triviaCategoryId?: true
   }
 
   export type TriviaQuizMaxAggregateInputType = {
     id?: true
     quiz?: true
-    triviaChoiceId?: true
+    triviaAnswerChoiceId?: true
     triviaCategoryId?: true
   }
 
   export type TriviaQuizCountAggregateInputType = {
     id?: true
     quiz?: true
-    triviaChoiceId?: true
+    triviaAnswerChoiceId?: true
     triviaCategoryId?: true
     _all?: true
   }
@@ -6282,7 +6239,7 @@ export namespace Prisma {
   export type TriviaQuizGroupByOutputType = {
     id: number
     quiz: string
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
     triviaCategoryId: number
     _count: TriviaQuizCountAggregateOutputType | null
     _avg: TriviaQuizAvgAggregateOutputType | null
@@ -6310,7 +6267,7 @@ export namespace Prisma {
     quiz?: boolean
     answer?: boolean | TriviaChoiceArgs
     choices?: boolean | TriviaQuiz$choicesArgs
-    triviaChoiceId?: boolean
+    triviaAnswerChoiceId?: boolean
     category?: boolean | TriviaCategoryArgs
     triviaCategoryId?: boolean
     _count?: boolean | TriviaQuizCountOutputTypeArgs
@@ -7301,15 +7258,13 @@ export namespace Prisma {
     choice?: boolean
     triviaQuiz?: boolean | TriviaQuizArgs
     triviaQuizId?: boolean
-    triviaQuizAnswers?: boolean | TriviaChoice$triviaQuizAnswersArgs
-    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+    triviaQuizAnswer?: boolean | TriviaQuizArgs
   }
 
 
   export type TriviaChoiceInclude = {
     triviaQuiz?: boolean | TriviaQuizArgs
-    triviaQuizAnswers?: boolean | TriviaChoice$triviaQuizAnswersArgs
-    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+    triviaQuizAnswer?: boolean | TriviaQuizArgs
   }
 
   export type TriviaChoiceGetPayload<S extends boolean | null | undefined | TriviaChoiceArgs> =
@@ -7320,15 +7275,13 @@ export namespace Prisma {
     ? TriviaChoice  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'triviaQuiz' ? TriviaQuizGetPayload<S['include'][P]> | null :
-        P extends 'triviaQuizAnswers' ? Array < TriviaQuizGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'triviaQuizAnswer' ? TriviaQuizGetPayload<S['include'][P]> | null :  never
   } 
     : S extends { select: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'triviaQuiz' ? TriviaQuizGetPayload<S['select'][P]> | null :
-        P extends 'triviaQuizAnswers' ? Array < TriviaQuizGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaChoice ? TriviaChoice[P] : never
+        P extends 'triviaQuizAnswer' ? TriviaQuizGetPayload<S['select'][P]> | null :  P extends keyof TriviaChoice ? TriviaChoice[P] : never
   } 
       : TriviaChoice
 
@@ -7702,7 +7655,7 @@ export namespace Prisma {
 
     triviaQuiz<T extends TriviaQuizArgs= {}>(args?: Subset<T, TriviaQuizArgs>): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | Null>;
 
-    triviaQuizAnswers<T extends TriviaChoice$triviaQuizAnswersArgs= {}>(args?: Subset<T, TriviaChoice$triviaQuizAnswersArgs>): Prisma.PrismaPromise<Array<TriviaQuizGetPayload<T>>| Null>;
+    triviaQuizAnswer<T extends TriviaQuizArgs= {}>(args?: Subset<T, TriviaQuizArgs>): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -8056,27 +8009,6 @@ export namespace Prisma {
      * Filter which TriviaChoices to delete
      */
     where?: TriviaChoiceWhereInput
-  }
-
-
-  /**
-   * TriviaChoice.triviaQuizAnswers
-   */
-  export type TriviaChoice$triviaQuizAnswersArgs = {
-    /**
-     * Select specific fields to fetch from the TriviaQuiz
-     */
-    select?: TriviaQuizSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TriviaQuizInclude | null
-    where?: TriviaQuizWhereInput
-    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
-    cursor?: TriviaQuizWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TriviaQuizScalarFieldEnum>
   }
 
 
@@ -9173,7 +9105,7 @@ export namespace Prisma {
   export const TriviaQuizScalarFieldEnum: {
     id: 'id',
     quiz: 'quiz',
-    triviaChoiceId: 'triviaChoiceId',
+    triviaAnswerChoiceId: 'triviaAnswerChoiceId',
     triviaCategoryId: 'triviaCategoryId'
   };
 
@@ -9453,7 +9385,7 @@ export namespace Prisma {
     quiz?: StringFilter | string
     answer?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
     choices?: TriviaChoiceListRelationFilter
-    triviaChoiceId?: IntFilter | number
+    triviaAnswerChoiceId?: IntFilter | number
     category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput>
     triviaCategoryId?: IntFilter | number
   }
@@ -9463,19 +9395,20 @@ export namespace Prisma {
     quiz?: SortOrder
     answer?: TriviaChoiceOrderByWithRelationInput
     choices?: TriviaChoiceOrderByRelationAggregateInput
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     category?: TriviaCategoryOrderByWithRelationInput
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizWhereUniqueInput = {
     id?: number
+    triviaAnswerChoiceId?: number
   }
 
   export type TriviaQuizOrderByWithAggregationInput = {
     id?: SortOrder
     quiz?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
     _count?: TriviaQuizCountOrderByAggregateInput
     _avg?: TriviaQuizAvgOrderByAggregateInput
@@ -9490,7 +9423,7 @@ export namespace Prisma {
     NOT?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     quiz?: StringWithAggregatesFilter | string
-    triviaChoiceId?: IntWithAggregatesFilter | number
+    triviaAnswerChoiceId?: IntWithAggregatesFilter | number
     triviaCategoryId?: IntWithAggregatesFilter | number
   }
 
@@ -9502,7 +9435,7 @@ export namespace Prisma {
     choice?: StringFilter | string
     triviaQuiz?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput> | null
     triviaQuizId?: IntNullableFilter | number | null
-    triviaQuizAnswers?: TriviaQuizListRelationFilter
+    triviaQuizAnswer?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput> | null
   }
 
   export type TriviaChoiceOrderByWithRelationInput = {
@@ -9510,7 +9443,7 @@ export namespace Prisma {
     choice?: SortOrder
     triviaQuiz?: TriviaQuizOrderByWithRelationInput
     triviaQuizId?: SortOrder
-    triviaQuizAnswers?: TriviaQuizOrderByRelationAggregateInput
+    triviaQuizAnswer?: TriviaQuizOrderByWithRelationInput
   }
 
   export type TriviaChoiceWhereUniqueInput = {
@@ -9871,7 +9804,7 @@ export namespace Prisma {
 
   export type TriviaQuizCreateInput = {
     quiz: string
-    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswersInput
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     choices?: TriviaChoiceCreateNestedManyWithoutTriviaQuizInput
     category: TriviaCategoryCreateNestedOneWithoutTriviaQuizesInput
   }
@@ -9880,13 +9813,13 @@ export namespace Prisma {
     id?: number
     quiz: string
     choices?: TriviaChoiceUncheckedCreateNestedManyWithoutTriviaQuizInput
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
     triviaCategoryId: number
   }
 
   export type TriviaQuizUpdateInput = {
     quiz?: StringFieldUpdateOperationsInput | string
-    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswersNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizesNestedInput
   }
@@ -9895,14 +9828,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     quiz?: StringFieldUpdateOperationsInput | string
     choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
-    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     triviaCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TriviaQuizCreateManyInput = {
     id?: number
     quiz: string
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
     triviaCategoryId: number
   }
 
@@ -9913,34 +9846,34 @@ export namespace Prisma {
   export type TriviaQuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     quiz?: StringFieldUpdateOperationsInput | string
-    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     triviaCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TriviaChoiceCreateInput = {
     choice: string
     triviaQuiz?: TriviaQuizCreateNestedOneWithoutChoicesInput
-    triviaQuizAnswers?: TriviaQuizCreateNestedManyWithoutAnswerInput
+    triviaQuizAnswer?: TriviaQuizCreateNestedOneWithoutAnswerInput
   }
 
   export type TriviaChoiceUncheckedCreateInput = {
     id?: number
     choice: string
     triviaQuizId?: number | null
-    triviaQuizAnswers?: TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput
   }
 
   export type TriviaChoiceUpdateInput = {
     choice?: StringFieldUpdateOperationsInput | string
     triviaQuiz?: TriviaQuizUpdateOneWithoutChoicesNestedInput
-    triviaQuizAnswers?: TriviaQuizUpdateManyWithoutAnswerNestedInput
+    triviaQuizAnswer?: TriviaQuizUpdateOneWithoutAnswerNestedInput
   }
 
   export type TriviaChoiceUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     triviaQuizId?: NullableIntFieldUpdateOperationsInput | number | null
-    triviaQuizAnswers?: TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput
   }
 
   export type TriviaChoiceCreateManyInput = {
@@ -10406,49 +10339,39 @@ export namespace Prisma {
   export type TriviaQuizCountOrderByAggregateInput = {
     id?: SortOrder
     quiz?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizAvgOrderByAggregateInput = {
     id?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizMaxOrderByAggregateInput = {
     id?: SortOrder
     quiz?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizMinOrderByAggregateInput = {
     id?: SortOrder
     quiz?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizSumOrderByAggregateInput = {
     id?: SortOrder
-    triviaChoiceId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     triviaCategoryId?: SortOrder
   }
 
   export type TriviaQuizRelationFilter = {
     is?: TriviaQuizWhereInput | null
     isNot?: TriviaQuizWhereInput | null
-  }
-
-  export type TriviaQuizListRelationFilter = {
-    every?: TriviaQuizWhereInput
-    some?: TriviaQuizWhereInput
-    none?: TriviaQuizWhereInput
-  }
-
-  export type TriviaQuizOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type TriviaChoiceCountOrderByAggregateInput = {
@@ -10477,6 +10400,16 @@ export namespace Prisma {
   export type TriviaChoiceSumOrderByAggregateInput = {
     id?: SortOrder
     triviaQuizId?: SortOrder
+  }
+
+  export type TriviaQuizListRelationFilter = {
+    every?: TriviaQuizWhereInput
+    some?: TriviaQuizWhereInput
+    none?: TriviaQuizWhereInput
+  }
+
+  export type TriviaQuizOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type TriviaCategoryCountOrderByAggregateInput = {
@@ -10710,9 +10643,9 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswersInput = {
-    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswersInput>
-    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswersInput
+  export type TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
     connect?: TriviaChoiceWhereUniqueInput
   }
 
@@ -10736,12 +10669,12 @@ export namespace Prisma {
     connect?: Enumerable<TriviaChoiceWhereUniqueInput>
   }
 
-  export type TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswersNestedInput = {
-    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswersInput>
-    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswersInput
-    upsert?: TriviaChoiceUpsertWithoutTriviaQuizAnswersInput
+  export type TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
+    upsert?: TriviaChoiceUpsertWithoutTriviaQuizAnswerInput
     connect?: TriviaChoiceWhereUniqueInput
-    update?: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswersInput>
+    update?: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
   }
 
   export type TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput = {
@@ -10786,18 +10719,16 @@ export namespace Prisma {
     connect?: TriviaQuizWhereUniqueInput
   }
 
-  export type TriviaQuizCreateNestedManyWithoutAnswerInput = {
-    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
-    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
-    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
-    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+  export type TriviaQuizCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    connect?: TriviaQuizWhereUniqueInput
   }
 
-  export type TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput = {
-    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
-    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
-    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
-    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+  export type TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    connect?: TriviaQuizWhereUniqueInput
   }
 
   export type TriviaQuizUpdateOneWithoutChoicesNestedInput = {
@@ -10810,32 +10741,24 @@ export namespace Prisma {
     update?: XOR<TriviaQuizUpdateWithoutChoicesInput, TriviaQuizUncheckedUpdateWithoutChoicesInput>
   }
 
-  export type TriviaQuizUpdateManyWithoutAnswerNestedInput = {
-    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
-    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
-    upsert?: Enumerable<TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput>
-    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
-    set?: Enumerable<TriviaQuizWhereUniqueInput>
-    disconnect?: Enumerable<TriviaQuizWhereUniqueInput>
-    delete?: Enumerable<TriviaQuizWhereUniqueInput>
-    connect?: Enumerable<TriviaQuizWhereUniqueInput>
-    update?: Enumerable<TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput>
-    updateMany?: Enumerable<TriviaQuizUpdateManyWithWhereWithoutAnswerInput>
-    deleteMany?: Enumerable<TriviaQuizScalarWhereInput>
+  export type TriviaQuizUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuizWhereUniqueInput
+    update?: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput = {
-    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
-    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
-    upsert?: Enumerable<TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput>
-    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
-    set?: Enumerable<TriviaQuizWhereUniqueInput>
-    disconnect?: Enumerable<TriviaQuizWhereUniqueInput>
-    delete?: Enumerable<TriviaQuizWhereUniqueInput>
-    connect?: Enumerable<TriviaQuizWhereUniqueInput>
-    update?: Enumerable<TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput>
-    updateMany?: Enumerable<TriviaQuizUpdateManyWithWhereWithoutAnswerInput>
-    deleteMany?: Enumerable<TriviaQuizScalarWhereInput>
+  export type TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuizWhereUniqueInput
+    update?: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
   }
 
   export type TriviaQuizCreateNestedManyWithoutCategoryInput = {
@@ -11340,31 +11263,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TriviaChoiceCreateWithoutTriviaQuizAnswersInput = {
+  export type TriviaChoiceCreateWithoutTriviaQuizAnswerInput = {
     choice: string
     triviaQuiz?: TriviaQuizCreateNestedOneWithoutChoicesInput
   }
 
-  export type TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswersInput = {
+  export type TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput = {
     id?: number
     choice: string
     triviaQuizId?: number | null
   }
 
-  export type TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswersInput = {
+  export type TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput = {
     where: TriviaChoiceWhereUniqueInput
-    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswersInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
   }
 
   export type TriviaChoiceCreateWithoutTriviaQuizInput = {
     choice: string
-    triviaQuizAnswers?: TriviaQuizCreateNestedManyWithoutAnswerInput
+    triviaQuizAnswer?: TriviaQuizCreateNestedOneWithoutAnswerInput
   }
 
   export type TriviaChoiceUncheckedCreateWithoutTriviaQuizInput = {
     id?: number
     choice: string
-    triviaQuizAnswers?: TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput
   }
 
   export type TriviaChoiceCreateOrConnectWithoutTriviaQuizInput = {
@@ -11391,17 +11314,17 @@ export namespace Prisma {
     create: XOR<TriviaCategoryCreateWithoutTriviaQuizesInput, TriviaCategoryUncheckedCreateWithoutTriviaQuizesInput>
   }
 
-  export type TriviaChoiceUpsertWithoutTriviaQuizAnswersInput = {
-    update: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswersInput>
-    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswersInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswersInput>
+  export type TriviaChoiceUpsertWithoutTriviaQuizAnswerInput = {
+    update: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
   }
 
-  export type TriviaChoiceUpdateWithoutTriviaQuizAnswersInput = {
+  export type TriviaChoiceUpdateWithoutTriviaQuizAnswerInput = {
     choice?: StringFieldUpdateOperationsInput | string
     triviaQuiz?: TriviaQuizUpdateOneWithoutChoicesNestedInput
   }
 
-  export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswersInput = {
+  export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput = {
     id?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     triviaQuizId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11448,14 +11371,14 @@ export namespace Prisma {
 
   export type TriviaQuizCreateWithoutChoicesInput = {
     quiz: string
-    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswersInput
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     category: TriviaCategoryCreateNestedOneWithoutTriviaQuizesInput
   }
 
   export type TriviaQuizUncheckedCreateWithoutChoicesInput = {
     id?: number
     quiz: string
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
     triviaCategoryId: number
   }
 
@@ -11482,11 +11405,6 @@ export namespace Prisma {
     create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
   }
 
-  export type TriviaQuizCreateManyAnswerInputEnvelope = {
-    data: Enumerable<TriviaQuizCreateManyAnswerInput>
-    skipDuplicates?: boolean
-  }
-
   export type TriviaQuizUpsertWithoutChoicesInput = {
     update: XOR<TriviaQuizUpdateWithoutChoicesInput, TriviaQuizUncheckedUpdateWithoutChoicesInput>
     create: XOR<TriviaQuizCreateWithoutChoicesInput, TriviaQuizUncheckedCreateWithoutChoicesInput>
@@ -11494,46 +11412,38 @@ export namespace Prisma {
 
   export type TriviaQuizUpdateWithoutChoicesInput = {
     quiz?: StringFieldUpdateOperationsInput | string
-    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswersNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizesNestedInput
   }
 
   export type TriviaQuizUncheckedUpdateWithoutChoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
     quiz?: StringFieldUpdateOperationsInput | string
-    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     triviaCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput = {
-    where: TriviaQuizWhereUniqueInput
+  export type TriviaQuizUpsertWithoutAnswerInput = {
     update: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
     create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
   }
 
-  export type TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput = {
-    where: TriviaQuizWhereUniqueInput
-    data: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
+  export type TriviaQuizUpdateWithoutAnswerInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
+    category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizesNestedInput
   }
 
-  export type TriviaQuizUpdateManyWithWhereWithoutAnswerInput = {
-    where: TriviaQuizScalarWhereInput
-    data: XOR<TriviaQuizUpdateManyMutationInput, TriviaQuizUncheckedUpdateManyWithoutTriviaQuizAnswersInput>
-  }
-
-  export type TriviaQuizScalarWhereInput = {
-    AND?: Enumerable<TriviaQuizScalarWhereInput>
-    OR?: Enumerable<TriviaQuizScalarWhereInput>
-    NOT?: Enumerable<TriviaQuizScalarWhereInput>
-    id?: IntFilter | number
-    quiz?: StringFilter | string
-    triviaChoiceId?: IntFilter | number
-    triviaCategoryId?: IntFilter | number
+  export type TriviaQuizUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
+    triviaCategoryId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TriviaQuizCreateWithoutCategoryInput = {
     quiz: string
-    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswersInput
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     choices?: TriviaChoiceCreateNestedManyWithoutTriviaQuizInput
   }
 
@@ -11541,7 +11451,7 @@ export namespace Prisma {
     id?: number
     quiz: string
     choices?: TriviaChoiceUncheckedCreateNestedManyWithoutTriviaQuizInput
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
   }
 
   export type TriviaQuizCreateOrConnectWithoutCategoryInput = {
@@ -11568,6 +11478,16 @@ export namespace Prisma {
   export type TriviaQuizUpdateManyWithWhereWithoutCategoryInput = {
     where: TriviaQuizScalarWhereInput
     data: XOR<TriviaQuizUpdateManyMutationInput, TriviaQuizUncheckedUpdateManyWithoutTriviaQuizesInput>
+  }
+
+  export type TriviaQuizScalarWhereInput = {
+    AND?: Enumerable<TriviaQuizScalarWhereInput>
+    OR?: Enumerable<TriviaQuizScalarWhereInput>
+    NOT?: Enumerable<TriviaQuizScalarWhereInput>
+    id?: IntFilter | number
+    quiz?: StringFilter | string
+    triviaAnswerChoiceId?: IntFilter | number
+    triviaCategoryId?: IntFilter | number
   }
 
   export type BinKitchenMenuCreateManyCategoryInput = {
@@ -11684,13 +11604,13 @@ export namespace Prisma {
 
   export type TriviaChoiceUpdateWithoutTriviaQuizInput = {
     choice?: StringFieldUpdateOperationsInput | string
-    triviaQuizAnswers?: TriviaQuizUpdateManyWithoutAnswerNestedInput
+    triviaQuizAnswer?: TriviaQuizUpdateOneWithoutAnswerNestedInput
   }
 
   export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
-    triviaQuizAnswers?: TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput
   }
 
   export type TriviaChoiceUncheckedUpdateManyWithoutChoicesInput = {
@@ -11698,40 +11618,15 @@ export namespace Prisma {
     choice?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TriviaQuizCreateManyAnswerInput = {
-    id?: number
-    quiz: string
-    triviaCategoryId: number
-  }
-
-  export type TriviaQuizUpdateWithoutAnswerInput = {
-    quiz?: StringFieldUpdateOperationsInput | string
-    choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
-    category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizesNestedInput
-  }
-
-  export type TriviaQuizUncheckedUpdateWithoutAnswerInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quiz?: StringFieldUpdateOperationsInput | string
-    choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
-    triviaCategoryId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type TriviaQuizUncheckedUpdateManyWithoutTriviaQuizAnswersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    quiz?: StringFieldUpdateOperationsInput | string
-    triviaCategoryId?: IntFieldUpdateOperationsInput | number
-  }
-
   export type TriviaQuizCreateManyCategoryInput = {
     id?: number
     quiz: string
-    triviaChoiceId: number
+    triviaAnswerChoiceId: number
   }
 
   export type TriviaQuizUpdateWithoutCategoryInput = {
     quiz?: StringFieldUpdateOperationsInput | string
-    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswersNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
   }
 
@@ -11739,13 +11634,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     quiz?: StringFieldUpdateOperationsInput | string
     choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
-    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TriviaQuizUncheckedUpdateManyWithoutTriviaQuizesInput = {
     id?: IntFieldUpdateOperationsInput | number
     quiz?: StringFieldUpdateOperationsInput | string
-    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
 

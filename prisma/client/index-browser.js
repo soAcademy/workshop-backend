@@ -163,7 +163,7 @@ exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
 exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
   id: 'id',
   quiz: 'quiz',
-  triviaChoiceId: 'triviaChoiceId',
+  triviaAnswerChoiceId: 'triviaAnswerChoiceId',
   triviaCategoryId: 'triviaCategoryId'
 });
 
