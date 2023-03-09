@@ -1,5 +1,5 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateCategory } from "./binQuiz.interfaces";
+import { ICreateCategory, ICreateQuiz } from "./binQuiz.interfaces";
 
 export const prisma = new PrismaClient();
 
@@ -14,5 +14,16 @@ export const createCategory = (args: ICreateCategory) => {
 export const getCategories = () => {
   return prisma.quizCategory.findMany({
     orderBy: { name: "asc" },
+  });
+};
+
+export const createQuiz = (args: ICreateQuiz) => {
+  return prisma.quiz.create({
+    data: {
+      questionText: args.questionText,
+      category: { connect: { id: args.quizCategoryId } },
+      correctChoice: { create: args.correctChoice },
+      otherChoices: { create: args.otherChoices },
+    },
   });
 };

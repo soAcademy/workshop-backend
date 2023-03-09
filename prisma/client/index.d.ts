@@ -1974,12 +1974,10 @@ export namespace Prisma {
 
 
   export type ChoiceCountOutputType = {
-    correctQuizzes: number
     rounds: number
   }
 
   export type ChoiceCountOutputTypeSelect = {
-    correctQuizzes?: boolean
     rounds?: boolean
   }
 
@@ -2019,12 +2017,12 @@ export namespace Prisma {
 
 
   export type QuizCountOutputType = {
-    choices: number
+    otherChoices: number
     rounds: number
   }
 
   export type QuizCountOutputTypeSelect = {
-    choices?: boolean
+    otherChoices?: boolean
     rounds?: boolean
   }
 
@@ -8307,7 +8305,7 @@ export namespace Prisma {
     answerText?: boolean
     quiz?: boolean | QuizArgs
     quizId?: boolean
-    correctQuizzes?: boolean | Choice$correctQuizzesArgs
+    correctChoiceToQuiz?: boolean | QuizArgs
     rounds?: boolean | Choice$roundsArgs
     createdAt?: boolean
     updatedAt?: boolean
@@ -8317,7 +8315,7 @@ export namespace Prisma {
 
   export type ChoiceInclude = {
     quiz?: boolean | QuizArgs
-    correctQuizzes?: boolean | Choice$correctQuizzesArgs
+    correctChoiceToQuiz?: boolean | QuizArgs
     rounds?: boolean | Choice$roundsArgs
     _count?: boolean | ChoiceCountOutputTypeArgs
   }
@@ -8330,7 +8328,7 @@ export namespace Prisma {
     ? Choice  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'quiz' ? QuizGetPayload<S['include'][P]> | null :
-        P extends 'correctQuizzes' ? Array < QuizGetPayload<S['include'][P]>>  :
+        P extends 'correctChoiceToQuiz' ? QuizGetPayload<S['include'][P]> | null :
         P extends 'rounds' ? Array < RoundGetPayload<S['include'][P]>>  :
         P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -8338,7 +8336,7 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'quiz' ? QuizGetPayload<S['select'][P]> | null :
-        P extends 'correctQuizzes' ? Array < QuizGetPayload<S['select'][P]>>  :
+        P extends 'correctChoiceToQuiz' ? QuizGetPayload<S['select'][P]> | null :
         P extends 'rounds' ? Array < RoundGetPayload<S['select'][P]>>  :
         P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Choice ? Choice[P] : never
   } 
@@ -8714,7 +8712,7 @@ export namespace Prisma {
 
     quiz<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
 
-    correctQuizzes<T extends Choice$correctQuizzesArgs= {}>(args?: Subset<T, Choice$correctQuizzesArgs>): Prisma.PrismaPromise<Array<QuizGetPayload<T>>| Null>;
+    correctChoiceToQuiz<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
 
     rounds<T extends Choice$roundsArgs= {}>(args?: Subset<T, Choice$roundsArgs>): Prisma.PrismaPromise<Array<RoundGetPayload<T>>| Null>;
 
@@ -9074,27 +9072,6 @@ export namespace Prisma {
 
 
   /**
-   * Choice.correctQuizzes
-   */
-  export type Choice$correctQuizzesArgs = {
-    /**
-     * Select specific fields to fetch from the Quiz
-     */
-    select?: QuizSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: QuizInclude | null
-    where?: QuizWhereInput
-    orderBy?: Enumerable<QuizOrderByWithRelationInput>
-    cursor?: QuizWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<QuizScalarFieldEnum>
-  }
-
-
-  /**
    * Choice.rounds
    */
   export type Choice$roundsArgs = {
@@ -9345,9 +9322,9 @@ export namespace Prisma {
     questionText?: boolean
     category?: boolean | QuizCategoryArgs
     quizCategoryId?: boolean
-    choices?: boolean | Quiz$choicesArgs
     correctChoice?: boolean | ChoiceArgs
     correctChoiceId?: boolean
+    otherChoices?: boolean | Quiz$otherChoicesArgs
     rounds?: boolean | Quiz$roundsArgs
     createdAt?: boolean
     updatedAt?: boolean
@@ -9357,8 +9334,8 @@ export namespace Prisma {
 
   export type QuizInclude = {
     category?: boolean | QuizCategoryArgs
-    choices?: boolean | Quiz$choicesArgs
     correctChoice?: boolean | ChoiceArgs
+    otherChoices?: boolean | Quiz$otherChoicesArgs
     rounds?: boolean | Quiz$roundsArgs
     _count?: boolean | QuizCountOutputTypeArgs
   }
@@ -9371,8 +9348,8 @@ export namespace Prisma {
     ? Quiz  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'category' ? QuizCategoryGetPayload<S['include'][P]> :
-        P extends 'choices' ? Array < ChoiceGetPayload<S['include'][P]>>  :
         P extends 'correctChoice' ? ChoiceGetPayload<S['include'][P]> :
+        P extends 'otherChoices' ? Array < ChoiceGetPayload<S['include'][P]>>  :
         P extends 'rounds' ? Array < RoundGetPayload<S['include'][P]>>  :
         P extends '_count' ? QuizCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -9380,8 +9357,8 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'category' ? QuizCategoryGetPayload<S['select'][P]> :
-        P extends 'choices' ? Array < ChoiceGetPayload<S['select'][P]>>  :
         P extends 'correctChoice' ? ChoiceGetPayload<S['select'][P]> :
+        P extends 'otherChoices' ? Array < ChoiceGetPayload<S['select'][P]>>  :
         P extends 'rounds' ? Array < RoundGetPayload<S['select'][P]>>  :
         P extends '_count' ? QuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Quiz ? Quiz[P] : never
   } 
@@ -9757,9 +9734,9 @@ export namespace Prisma {
 
     category<T extends QuizCategoryArgs= {}>(args?: Subset<T, QuizCategoryArgs>): Prisma__QuizCategoryClient<QuizCategoryGetPayload<T> | Null>;
 
-    choices<T extends Quiz$choicesArgs= {}>(args?: Subset<T, Quiz$choicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
-
     correctChoice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    otherChoices<T extends Quiz$otherChoicesArgs= {}>(args?: Subset<T, Quiz$otherChoicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
 
     rounds<T extends Quiz$roundsArgs= {}>(args?: Subset<T, Quiz$roundsArgs>): Prisma.PrismaPromise<Array<RoundGetPayload<T>>| Null>;
 
@@ -10119,9 +10096,9 @@ export namespace Prisma {
 
 
   /**
-   * Quiz.choices
+   * Quiz.otherChoices
    */
-  export type Quiz$choicesArgs = {
+  export type Quiz$otherChoicesArgs = {
     /**
      * Select specific fields to fetch from the Choice
      */
@@ -46948,7 +46925,7 @@ export namespace Prisma {
     answerText?: StringFilter | string
     quiz?: XOR<QuizRelationFilter, QuizWhereInput> | null
     quizId?: IntNullableFilter | number | null
-    correctQuizzes?: QuizListRelationFilter
+    correctChoiceToQuiz?: XOR<QuizRelationFilter, QuizWhereInput> | null
     rounds?: RoundListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -46959,7 +46936,7 @@ export namespace Prisma {
     answerText?: SortOrder
     quiz?: QuizOrderByWithRelationInput
     quizId?: SortOrder
-    correctQuizzes?: QuizOrderByRelationAggregateInput
+    correctChoiceToQuiz?: QuizOrderByWithRelationInput
     rounds?: RoundOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47001,9 +46978,9 @@ export namespace Prisma {
     questionText?: StringFilter | string
     category?: XOR<QuizCategoryRelationFilter, QuizCategoryWhereInput>
     quizCategoryId?: IntFilter | number
-    choices?: ChoiceListRelationFilter
     correctChoice?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
     correctChoiceId?: IntFilter | number
+    otherChoices?: ChoiceListRelationFilter
     rounds?: RoundListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -47014,9 +46991,9 @@ export namespace Prisma {
     questionText?: SortOrder
     category?: QuizCategoryOrderByWithRelationInput
     quizCategoryId?: SortOrder
-    choices?: ChoiceOrderByRelationAggregateInput
     correctChoice?: ChoiceOrderByWithRelationInput
     correctChoiceId?: SortOrder
+    otherChoices?: ChoiceOrderByRelationAggregateInput
     rounds?: RoundOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -47024,6 +47001,7 @@ export namespace Prisma {
 
   export type QuizWhereUniqueInput = {
     id?: number
+    correctChoiceId?: number
   }
 
   export type QuizOrderByWithAggregationInput = {
@@ -49347,8 +49325,8 @@ export namespace Prisma {
 
   export type ChoiceCreateInput = {
     answerText: string
-    quiz?: QuizCreateNestedOneWithoutChoicesInput
-    correctQuizzes?: QuizCreateNestedManyWithoutCorrectChoiceInput
+    quiz?: QuizCreateNestedOneWithoutOtherChoicesInput
+    correctChoiceToQuiz?: QuizCreateNestedOneWithoutCorrectChoiceInput
     rounds?: RoundCreateNestedManyWithoutSelectedChoicesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49358,7 +49336,7 @@ export namespace Prisma {
     id?: number
     answerText: string
     quizId?: number | null
-    correctQuizzes?: QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput
+    correctChoiceToQuiz?: QuizUncheckedCreateNestedOneWithoutCorrectChoiceInput
     rounds?: RoundUncheckedCreateNestedManyWithoutSelectedChoicesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49366,8 +49344,8 @@ export namespace Prisma {
 
   export type ChoiceUpdateInput = {
     answerText?: StringFieldUpdateOperationsInput | string
-    quiz?: QuizUpdateOneWithoutChoicesNestedInput
-    correctQuizzes?: QuizUpdateManyWithoutCorrectChoiceNestedInput
+    quiz?: QuizUpdateOneWithoutOtherChoicesNestedInput
+    correctChoiceToQuiz?: QuizUpdateOneWithoutCorrectChoiceNestedInput
     rounds?: RoundUpdateManyWithoutSelectedChoicesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49377,7 +49355,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
-    correctQuizzes?: QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput
+    correctChoiceToQuiz?: QuizUncheckedUpdateOneWithoutCorrectChoiceNestedInput
     rounds?: RoundUncheckedUpdateManyWithoutSelectedChoicesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49408,8 +49386,8 @@ export namespace Prisma {
   export type QuizCreateInput = {
     questionText: string
     category: QuizCategoryCreateNestedOneWithoutQuizzesInput
-    choices?: ChoiceCreateNestedManyWithoutQuizInput
-    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizzesInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectChoiceToQuizInput
+    otherChoices?: ChoiceCreateNestedManyWithoutQuizInput
     rounds?: RoundCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49419,8 +49397,8 @@ export namespace Prisma {
     id?: number
     questionText: string
     quizCategoryId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     correctChoiceId: number
+    otherChoices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     rounds?: RoundUncheckedCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49429,8 +49407,8 @@ export namespace Prisma {
   export type QuizUpdateInput = {
     questionText?: StringFieldUpdateOperationsInput | string
     category?: QuizCategoryUpdateOneRequiredWithoutQuizzesNestedInput
-    choices?: ChoiceUpdateManyWithoutQuizNestedInput
-    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizzesNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectChoiceToQuizNestedInput
+    otherChoices?: ChoiceUpdateManyWithoutQuizNestedInput
     rounds?: RoundUpdateManyWithoutQuizzesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49440,8 +49418,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     questionText?: StringFieldUpdateOperationsInput | string
     quizCategoryId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     correctChoiceId?: IntFieldUpdateOperationsInput | number
+    otherChoices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     rounds?: RoundUncheckedUpdateManyWithoutQuizzesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52212,15 +52190,15 @@ export namespace Prisma {
     isNot?: QuizCategoryWhereInput
   }
 
+  export type ChoiceRelationFilter = {
+    is?: ChoiceWhereInput
+    isNot?: ChoiceWhereInput
+  }
+
   export type ChoiceListRelationFilter = {
     every?: ChoiceWhereInput
     some?: ChoiceWhereInput
     none?: ChoiceWhereInput
-  }
-
-  export type ChoiceRelationFilter = {
-    is?: ChoiceWhereInput
-    isNot?: ChoiceWhereInput
   }
 
   export type ChoiceOrderByRelationAggregateInput = {
@@ -54351,17 +54329,16 @@ export namespace Prisma {
     deleteMany?: Enumerable<QuizScalarWhereInput>
   }
 
-  export type QuizCreateNestedOneWithoutChoicesInput = {
-    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
-    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
+  export type QuizCreateNestedOneWithoutOtherChoicesInput = {
+    create?: XOR<QuizCreateWithoutOtherChoicesInput, QuizUncheckedCreateWithoutOtherChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutOtherChoicesInput
     connect?: QuizWhereUniqueInput
   }
 
-  export type QuizCreateNestedManyWithoutCorrectChoiceInput = {
-    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
-    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
-    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
-    connect?: Enumerable<QuizWhereUniqueInput>
+  export type QuizCreateNestedOneWithoutCorrectChoiceInput = {
+    create?: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutCorrectChoiceInput
+    connect?: QuizWhereUniqueInput
   }
 
   export type RoundCreateNestedManyWithoutSelectedChoicesInput = {
@@ -54370,11 +54347,10 @@ export namespace Prisma {
     connect?: Enumerable<RoundWhereUniqueInput>
   }
 
-  export type QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput = {
-    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
-    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
-    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
-    connect?: Enumerable<QuizWhereUniqueInput>
+  export type QuizUncheckedCreateNestedOneWithoutCorrectChoiceInput = {
+    create?: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutCorrectChoiceInput
+    connect?: QuizWhereUniqueInput
   }
 
   export type RoundUncheckedCreateNestedManyWithoutSelectedChoicesInput = {
@@ -54383,28 +54359,24 @@ export namespace Prisma {
     connect?: Enumerable<RoundWhereUniqueInput>
   }
 
-  export type QuizUpdateOneWithoutChoicesNestedInput = {
-    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
-    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
-    upsert?: QuizUpsertWithoutChoicesInput
+  export type QuizUpdateOneWithoutOtherChoicesNestedInput = {
+    create?: XOR<QuizCreateWithoutOtherChoicesInput, QuizUncheckedCreateWithoutOtherChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutOtherChoicesInput
+    upsert?: QuizUpsertWithoutOtherChoicesInput
     disconnect?: boolean
     delete?: boolean
     connect?: QuizWhereUniqueInput
-    update?: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
+    update?: XOR<QuizUpdateWithoutOtherChoicesInput, QuizUncheckedUpdateWithoutOtherChoicesInput>
   }
 
-  export type QuizUpdateManyWithoutCorrectChoiceNestedInput = {
-    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
-    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
-    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput>
-    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
-    set?: Enumerable<QuizWhereUniqueInput>
-    disconnect?: Enumerable<QuizWhereUniqueInput>
-    delete?: Enumerable<QuizWhereUniqueInput>
-    connect?: Enumerable<QuizWhereUniqueInput>
-    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput>
-    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCorrectChoiceInput>
-    deleteMany?: Enumerable<QuizScalarWhereInput>
+  export type QuizUpdateOneWithoutCorrectChoiceNestedInput = {
+    create?: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutCorrectChoiceInput
+    upsert?: QuizUpsertWithoutCorrectChoiceInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
   }
 
   export type RoundUpdateManyWithoutSelectedChoicesNestedInput = {
@@ -54420,18 +54392,14 @@ export namespace Prisma {
     deleteMany?: Enumerable<RoundScalarWhereInput>
   }
 
-  export type QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput = {
-    create?: XOR<Enumerable<QuizCreateWithoutCorrectChoiceInput>, Enumerable<QuizUncheckedCreateWithoutCorrectChoiceInput>>
-    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCorrectChoiceInput>
-    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput>
-    createMany?: QuizCreateManyCorrectChoiceInputEnvelope
-    set?: Enumerable<QuizWhereUniqueInput>
-    disconnect?: Enumerable<QuizWhereUniqueInput>
-    delete?: Enumerable<QuizWhereUniqueInput>
-    connect?: Enumerable<QuizWhereUniqueInput>
-    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput>
-    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCorrectChoiceInput>
-    deleteMany?: Enumerable<QuizScalarWhereInput>
+  export type QuizUncheckedUpdateOneWithoutCorrectChoiceNestedInput = {
+    create?: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutCorrectChoiceInput
+    upsert?: QuizUpsertWithoutCorrectChoiceInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
   }
 
   export type RoundUncheckedUpdateManyWithoutSelectedChoicesNestedInput = {
@@ -54453,17 +54421,17 @@ export namespace Prisma {
     connect?: QuizCategoryWhereUniqueInput
   }
 
+  export type ChoiceCreateNestedOneWithoutCorrectChoiceToQuizInput = {
+    create?: XOR<ChoiceCreateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedCreateWithoutCorrectChoiceToQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectChoiceToQuizInput
+    connect?: ChoiceWhereUniqueInput
+  }
+
   export type ChoiceCreateNestedManyWithoutQuizInput = {
     create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
     connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
     createMany?: ChoiceCreateManyQuizInputEnvelope
     connect?: Enumerable<ChoiceWhereUniqueInput>
-  }
-
-  export type ChoiceCreateNestedOneWithoutCorrectQuizzesInput = {
-    create?: XOR<ChoiceCreateWithoutCorrectQuizzesInput, ChoiceUncheckedCreateWithoutCorrectQuizzesInput>
-    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectQuizzesInput
-    connect?: ChoiceWhereUniqueInput
   }
 
   export type RoundCreateNestedManyWithoutQuizzesInput = {
@@ -54493,6 +54461,14 @@ export namespace Prisma {
     update?: XOR<QuizCategoryUpdateWithoutQuizzesInput, QuizCategoryUncheckedUpdateWithoutQuizzesInput>
   }
 
+  export type ChoiceUpdateOneRequiredWithoutCorrectChoiceToQuizNestedInput = {
+    create?: XOR<ChoiceCreateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedCreateWithoutCorrectChoiceToQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectChoiceToQuizInput
+    upsert?: ChoiceUpsertWithoutCorrectChoiceToQuizInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedUpdateWithoutCorrectChoiceToQuizInput>
+  }
+
   export type ChoiceUpdateManyWithoutQuizNestedInput = {
     create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
     connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
@@ -54505,14 +54481,6 @@ export namespace Prisma {
     update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuizInput>
     updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuizInput>
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
-  }
-
-  export type ChoiceUpdateOneRequiredWithoutCorrectQuizzesNestedInput = {
-    create?: XOR<ChoiceCreateWithoutCorrectQuizzesInput, ChoiceUncheckedCreateWithoutCorrectQuizzesInput>
-    connectOrCreate?: ChoiceCreateOrConnectWithoutCorrectQuizzesInput
-    upsert?: ChoiceUpsertWithoutCorrectQuizzesInput
-    connect?: ChoiceWhereUniqueInput
-    update?: XOR<ChoiceUpdateWithoutCorrectQuizzesInput, ChoiceUncheckedUpdateWithoutCorrectQuizzesInput>
   }
 
   export type RoundUpdateManyWithoutQuizzesNestedInput = {
@@ -58118,8 +58086,8 @@ export namespace Prisma {
 
   export type QuizCreateWithoutCategoryInput = {
     questionText: string
-    choices?: ChoiceCreateNestedManyWithoutQuizInput
-    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizzesInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectChoiceToQuizInput
+    otherChoices?: ChoiceCreateNestedManyWithoutQuizInput
     rounds?: RoundCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58128,8 +58096,8 @@ export namespace Prisma {
   export type QuizUncheckedCreateWithoutCategoryInput = {
     id?: number
     questionText: string
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     correctChoiceId: number
+    otherChoices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     rounds?: RoundUncheckedCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58173,16 +58141,16 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type QuizCreateWithoutChoicesInput = {
+  export type QuizCreateWithoutOtherChoicesInput = {
     questionText: string
     category: QuizCategoryCreateNestedOneWithoutQuizzesInput
-    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizzesInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectChoiceToQuizInput
     rounds?: RoundCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type QuizUncheckedCreateWithoutChoicesInput = {
+  export type QuizUncheckedCreateWithoutOtherChoicesInput = {
     id?: number
     questionText: string
     quizCategoryId: number
@@ -58192,15 +58160,15 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type QuizCreateOrConnectWithoutChoicesInput = {
+  export type QuizCreateOrConnectWithoutOtherChoicesInput = {
     where: QuizWhereUniqueInput
-    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+    create: XOR<QuizCreateWithoutOtherChoicesInput, QuizUncheckedCreateWithoutOtherChoicesInput>
   }
 
   export type QuizCreateWithoutCorrectChoiceInput = {
     questionText: string
     category: QuizCategoryCreateNestedOneWithoutQuizzesInput
-    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    otherChoices?: ChoiceCreateNestedManyWithoutQuizInput
     rounds?: RoundCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58210,7 +58178,7 @@ export namespace Prisma {
     id?: number
     questionText: string
     quizCategoryId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    otherChoices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     rounds?: RoundUncheckedCreateNestedManyWithoutQuizzesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58219,11 +58187,6 @@ export namespace Prisma {
   export type QuizCreateOrConnectWithoutCorrectChoiceInput = {
     where: QuizWhereUniqueInput
     create: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
-  }
-
-  export type QuizCreateManyCorrectChoiceInputEnvelope = {
-    data: Enumerable<QuizCreateManyCorrectChoiceInput>
-    skipDuplicates?: boolean
   }
 
   export type RoundCreateWithoutSelectedChoicesInput = {
@@ -58244,21 +58207,21 @@ export namespace Prisma {
     create: XOR<RoundCreateWithoutSelectedChoicesInput, RoundUncheckedCreateWithoutSelectedChoicesInput>
   }
 
-  export type QuizUpsertWithoutChoicesInput = {
-    update: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
-    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+  export type QuizUpsertWithoutOtherChoicesInput = {
+    update: XOR<QuizUpdateWithoutOtherChoicesInput, QuizUncheckedUpdateWithoutOtherChoicesInput>
+    create: XOR<QuizCreateWithoutOtherChoicesInput, QuizUncheckedCreateWithoutOtherChoicesInput>
   }
 
-  export type QuizUpdateWithoutChoicesInput = {
+  export type QuizUpdateWithoutOtherChoicesInput = {
     questionText?: StringFieldUpdateOperationsInput | string
     category?: QuizCategoryUpdateOneRequiredWithoutQuizzesNestedInput
-    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizzesNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectChoiceToQuizNestedInput
     rounds?: RoundUpdateManyWithoutQuizzesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QuizUncheckedUpdateWithoutChoicesInput = {
+  export type QuizUncheckedUpdateWithoutOtherChoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
     questionText?: StringFieldUpdateOperationsInput | string
     quizCategoryId?: IntFieldUpdateOperationsInput | number
@@ -58268,20 +58231,28 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QuizUpsertWithWhereUniqueWithoutCorrectChoiceInput = {
-    where: QuizWhereUniqueInput
+  export type QuizUpsertWithoutCorrectChoiceInput = {
     update: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
     create: XOR<QuizCreateWithoutCorrectChoiceInput, QuizUncheckedCreateWithoutCorrectChoiceInput>
   }
 
-  export type QuizUpdateWithWhereUniqueWithoutCorrectChoiceInput = {
-    where: QuizWhereUniqueInput
-    data: XOR<QuizUpdateWithoutCorrectChoiceInput, QuizUncheckedUpdateWithoutCorrectChoiceInput>
+  export type QuizUpdateWithoutCorrectChoiceInput = {
+    questionText?: StringFieldUpdateOperationsInput | string
+    category?: QuizCategoryUpdateOneRequiredWithoutQuizzesNestedInput
+    otherChoices?: ChoiceUpdateManyWithoutQuizNestedInput
+    rounds?: RoundUpdateManyWithoutQuizzesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QuizUpdateManyWithWhereWithoutCorrectChoiceInput = {
-    where: QuizScalarWhereInput
-    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutCorrectQuizzesInput>
+  export type QuizUncheckedUpdateWithoutCorrectChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionText?: StringFieldUpdateOperationsInput | string
+    quizCategoryId?: IntFieldUpdateOperationsInput | number
+    otherChoices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    rounds?: RoundUncheckedUpdateManyWithoutQuizzesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RoundUpsertWithWhereUniqueWithoutSelectedChoicesInput = {
@@ -58327,9 +58298,31 @@ export namespace Prisma {
     create: XOR<QuizCategoryCreateWithoutQuizzesInput, QuizCategoryUncheckedCreateWithoutQuizzesInput>
   }
 
+  export type ChoiceCreateWithoutCorrectChoiceToQuizInput = {
+    answerText: string
+    quiz?: QuizCreateNestedOneWithoutOtherChoicesInput
+    rounds?: RoundCreateNestedManyWithoutSelectedChoicesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutCorrectChoiceToQuizInput = {
+    id?: number
+    answerText: string
+    quizId?: number | null
+    rounds?: RoundUncheckedCreateNestedManyWithoutSelectedChoicesInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutCorrectChoiceToQuizInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedCreateWithoutCorrectChoiceToQuizInput>
+  }
+
   export type ChoiceCreateWithoutQuizInput = {
     answerText: string
-    correctQuizzes?: QuizCreateNestedManyWithoutCorrectChoiceInput
+    correctChoiceToQuiz?: QuizCreateNestedOneWithoutCorrectChoiceInput
     rounds?: RoundCreateNestedManyWithoutSelectedChoicesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58338,7 +58331,7 @@ export namespace Prisma {
   export type ChoiceUncheckedCreateWithoutQuizInput = {
     id?: number
     answerText: string
-    correctQuizzes?: QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput
+    correctChoiceToQuiz?: QuizUncheckedCreateNestedOneWithoutCorrectChoiceInput
     rounds?: RoundUncheckedCreateNestedManyWithoutSelectedChoicesInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -58352,28 +58345,6 @@ export namespace Prisma {
   export type ChoiceCreateManyQuizInputEnvelope = {
     data: Enumerable<ChoiceCreateManyQuizInput>
     skipDuplicates?: boolean
-  }
-
-  export type ChoiceCreateWithoutCorrectQuizzesInput = {
-    answerText: string
-    quiz?: QuizCreateNestedOneWithoutChoicesInput
-    rounds?: RoundCreateNestedManyWithoutSelectedChoicesInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ChoiceUncheckedCreateWithoutCorrectQuizzesInput = {
-    id?: number
-    answerText: string
-    quizId?: number | null
-    rounds?: RoundUncheckedCreateNestedManyWithoutSelectedChoicesInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ChoiceCreateOrConnectWithoutCorrectQuizzesInput = {
-    where: ChoiceWhereUniqueInput
-    create: XOR<ChoiceCreateWithoutCorrectQuizzesInput, ChoiceUncheckedCreateWithoutCorrectQuizzesInput>
   }
 
   export type RoundCreateWithoutQuizzesInput = {
@@ -58412,6 +58383,28 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ChoiceUpsertWithoutCorrectChoiceToQuizInput = {
+    update: XOR<ChoiceUpdateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedUpdateWithoutCorrectChoiceToQuizInput>
+    create: XOR<ChoiceCreateWithoutCorrectChoiceToQuizInput, ChoiceUncheckedCreateWithoutCorrectChoiceToQuizInput>
+  }
+
+  export type ChoiceUpdateWithoutCorrectChoiceToQuizInput = {
+    answerText?: StringFieldUpdateOperationsInput | string
+    quiz?: QuizUpdateOneWithoutOtherChoicesNestedInput
+    rounds?: RoundUpdateManyWithoutSelectedChoicesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutCorrectChoiceToQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerText?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    rounds?: RoundUncheckedUpdateManyWithoutSelectedChoicesNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ChoiceUpsertWithWhereUniqueWithoutQuizInput = {
     where: ChoiceWhereUniqueInput
     update: XOR<ChoiceUpdateWithoutQuizInput, ChoiceUncheckedUpdateWithoutQuizInput>
@@ -58425,7 +58418,7 @@ export namespace Prisma {
 
   export type ChoiceUpdateManyWithWhereWithoutQuizInput = {
     where: ChoiceScalarWhereInput
-    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutChoicesInput>
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutOtherChoicesInput>
   }
 
   export type ChoiceScalarWhereInput = {
@@ -58437,28 +58430,6 @@ export namespace Prisma {
     quizId?: IntNullableFilter | number | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type ChoiceUpsertWithoutCorrectQuizzesInput = {
-    update: XOR<ChoiceUpdateWithoutCorrectQuizzesInput, ChoiceUncheckedUpdateWithoutCorrectQuizzesInput>
-    create: XOR<ChoiceCreateWithoutCorrectQuizzesInput, ChoiceUncheckedCreateWithoutCorrectQuizzesInput>
-  }
-
-  export type ChoiceUpdateWithoutCorrectQuizzesInput = {
-    answerText?: StringFieldUpdateOperationsInput | string
-    quiz?: QuizUpdateOneWithoutChoicesNestedInput
-    rounds?: RoundUpdateManyWithoutSelectedChoicesNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ChoiceUncheckedUpdateWithoutCorrectQuizzesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    answerText?: StringFieldUpdateOperationsInput | string
-    quizId?: NullableIntFieldUpdateOperationsInput | number | null
-    rounds?: RoundUncheckedUpdateManyWithoutSelectedChoicesNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RoundUpsertWithWhereUniqueWithoutQuizzesInput = {
@@ -58480,8 +58451,8 @@ export namespace Prisma {
   export type QuizCreateWithoutRoundsInput = {
     questionText: string
     category: QuizCategoryCreateNestedOneWithoutQuizzesInput
-    choices?: ChoiceCreateNestedManyWithoutQuizInput
-    correctChoice: ChoiceCreateNestedOneWithoutCorrectQuizzesInput
+    correctChoice: ChoiceCreateNestedOneWithoutCorrectChoiceToQuizInput
+    otherChoices?: ChoiceCreateNestedManyWithoutQuizInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -58490,8 +58461,8 @@ export namespace Prisma {
     id?: number
     questionText: string
     quizCategoryId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     correctChoiceId: number
+    otherChoices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -58503,8 +58474,8 @@ export namespace Prisma {
 
   export type ChoiceCreateWithoutRoundsInput = {
     answerText: string
-    quiz?: QuizCreateNestedOneWithoutChoicesInput
-    correctQuizzes?: QuizCreateNestedManyWithoutCorrectChoiceInput
+    quiz?: QuizCreateNestedOneWithoutOtherChoicesInput
+    correctChoiceToQuiz?: QuizCreateNestedOneWithoutCorrectChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -58513,7 +58484,7 @@ export namespace Prisma {
     id?: number
     answerText: string
     quizId?: number | null
-    correctQuizzes?: QuizUncheckedCreateNestedManyWithoutCorrectChoiceInput
+    correctChoiceToQuiz?: QuizUncheckedCreateNestedOneWithoutCorrectChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -63804,8 +63775,8 @@ export namespace Prisma {
 
   export type QuizUpdateWithoutCategoryInput = {
     questionText?: StringFieldUpdateOperationsInput | string
-    choices?: ChoiceUpdateManyWithoutQuizNestedInput
-    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizzesNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectChoiceToQuizNestedInput
+    otherChoices?: ChoiceUpdateManyWithoutQuizNestedInput
     rounds?: RoundUpdateManyWithoutQuizzesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63814,8 +63785,8 @@ export namespace Prisma {
   export type QuizUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     questionText?: StringFieldUpdateOperationsInput | string
-    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     correctChoiceId?: IntFieldUpdateOperationsInput | number
+    otherChoices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     rounds?: RoundUncheckedUpdateManyWithoutQuizzesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63825,41 +63796,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     questionText?: StringFieldUpdateOperationsInput | string
     correctChoiceId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizCreateManyCorrectChoiceInput = {
-    id?: number
-    questionText: string
-    quizCategoryId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type QuizUpdateWithoutCorrectChoiceInput = {
-    questionText?: StringFieldUpdateOperationsInput | string
-    category?: QuizCategoryUpdateOneRequiredWithoutQuizzesNestedInput
-    choices?: ChoiceUpdateManyWithoutQuizNestedInput
-    rounds?: RoundUpdateManyWithoutQuizzesNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizUncheckedUpdateWithoutCorrectChoiceInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    questionText?: StringFieldUpdateOperationsInput | string
-    quizCategoryId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
-    rounds?: RoundUncheckedUpdateManyWithoutQuizzesNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizUncheckedUpdateManyWithoutCorrectQuizzesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    questionText?: StringFieldUpdateOperationsInput | string
-    quizCategoryId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -63892,7 +63828,7 @@ export namespace Prisma {
 
   export type ChoiceUpdateWithoutQuizInput = {
     answerText?: StringFieldUpdateOperationsInput | string
-    correctQuizzes?: QuizUpdateManyWithoutCorrectChoiceNestedInput
+    correctChoiceToQuiz?: QuizUpdateOneWithoutCorrectChoiceNestedInput
     rounds?: RoundUpdateManyWithoutSelectedChoicesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63901,13 +63837,13 @@ export namespace Prisma {
   export type ChoiceUncheckedUpdateWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
-    correctQuizzes?: QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput
+    correctChoiceToQuiz?: QuizUncheckedUpdateOneWithoutCorrectChoiceNestedInput
     rounds?: RoundUncheckedUpdateManyWithoutSelectedChoicesNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChoiceUncheckedUpdateManyWithoutChoicesInput = {
+  export type ChoiceUncheckedUpdateManyWithoutOtherChoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63930,8 +63866,8 @@ export namespace Prisma {
   export type QuizUpdateWithoutRoundsInput = {
     questionText?: StringFieldUpdateOperationsInput | string
     category?: QuizCategoryUpdateOneRequiredWithoutQuizzesNestedInput
-    choices?: ChoiceUpdateManyWithoutQuizNestedInput
-    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectQuizzesNestedInput
+    correctChoice?: ChoiceUpdateOneRequiredWithoutCorrectChoiceToQuizNestedInput
+    otherChoices?: ChoiceUpdateManyWithoutQuizNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -63940,16 +63876,16 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     questionText?: StringFieldUpdateOperationsInput | string
     quizCategoryId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     correctChoiceId?: IntFieldUpdateOperationsInput | number
+    otherChoices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChoiceUpdateWithoutRoundsInput = {
     answerText?: StringFieldUpdateOperationsInput | string
-    quiz?: QuizUpdateOneWithoutChoicesNestedInput
-    correctQuizzes?: QuizUpdateManyWithoutCorrectChoiceNestedInput
+    quiz?: QuizUpdateOneWithoutOtherChoicesNestedInput
+    correctChoiceToQuiz?: QuizUpdateOneWithoutCorrectChoiceNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -63958,7 +63894,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     answerText?: StringFieldUpdateOperationsInput | string
     quizId?: NullableIntFieldUpdateOperationsInput | number | null
-    correctQuizzes?: QuizUncheckedUpdateManyWithoutCorrectChoiceNestedInput
+    correctChoiceToQuiz?: QuizUncheckedUpdateOneWithoutCorrectChoiceNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
