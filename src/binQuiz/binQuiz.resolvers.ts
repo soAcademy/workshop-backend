@@ -27,3 +27,18 @@ export const createQuiz = (args: ICreateQuiz) => {
     },
   });
 };
+
+export const getQuizzes = () => {
+  return prisma.quiz.findMany({
+    select: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
+      questionText: true,
+      correctChoice: { select: { answerText: true } },
+      otherChoices: { select: { answerText: true } },
+    },
+  });
+};
