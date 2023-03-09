@@ -1,4 +1,7 @@
-import { createQuizCategoryHandler } from "./binQuiz/binQuiz.handlers";
+import {
+  createQuizCategoryHandler,
+  getQuizCategoriesHandler,
+} from "./binQuiz/binQuiz.handlers";
 import {
   createCategoryHandler,
   getCategoriesHandler,
@@ -34,6 +37,11 @@ export const AppRoutes = [
     path: "/binQuiz/createCategory",
     method: "post",
     action: createQuizCategoryHandler,
+  },
+  {
+    path: "/binQuiz/getCategories",
+    method: "post",
+    action: getQuizCategoriesHandler,
   },
   {
     path: "/binKitchen/create-category",

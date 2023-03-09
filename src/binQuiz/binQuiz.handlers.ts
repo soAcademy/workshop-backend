@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CreateCategoryCodec } from "./binQuiz.interfaces";
-import { createCategory } from "./binQuiz.resolvers";
+import { createCategory, getCategories } from "./binQuiz.resolvers";
 
 export const createQuizCategoryHandler = async (
   req: Request,
@@ -20,5 +20,16 @@ export const createQuizCategoryHandler = async (
     }
   } else {
     res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+  }
+};
+
+export const getQuizCategoriesHandler = async (req: Request, res: Response) => {
+  try {
+    const result = await getCategories();
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
   }
 };

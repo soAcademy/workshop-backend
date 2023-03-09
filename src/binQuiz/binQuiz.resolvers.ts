@@ -10,3 +10,9 @@ export const createCategory = (args: ICreateCategory) => {
     },
   });
 };
+
+export const getCategories = () => {
+  return prisma.quizCategory.findMany({
+    orderBy: { name: "asc" },
+  });
+};
