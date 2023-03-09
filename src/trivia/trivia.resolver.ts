@@ -27,7 +27,11 @@ export const createQuiz = (args: {
     },
   });
 
-export const getQuiz = async (args: { categoryId: number }) => {
+interface IGetQuiz {
+  categoryId: number;
+}
+
+export const getQuiz = async (args: IGetQuiz) => {
   const quizes = await prisma.triviaQuiz.findMany({
     where: { category: { id: args.categoryId } },
     include: {
@@ -45,6 +49,7 @@ export const getQuiz = async (args: { categoryId: number }) => {
       choices: [
         ...r.choices
           .sort((a, b) => Math.random() - 0.5)
+          .slice(0, 3)
           .map((c) => ({
             id: c.id,
             choice: c.choice,
