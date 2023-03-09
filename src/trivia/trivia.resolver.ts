@@ -63,3 +63,21 @@ export const getQuiz = async (args: IGetQuiz) => {
 
   return result;
 };
+
+// const submitQuiz = async () => {
+//   const quizes = await prisma.triviaQuiz.findMany({
+//     // where: {
+//     //   OR: args.roundQuizes.map((r) => ({id: r.id}))
+//     // }
+//   });
+
+//   const totalScore = args.roundQuizes.reduce((acc, r) => {
+//     const isCorrect = quizes.find((s) => s.id === r.id).answerId === r.answerId;
+//     return acc + (isCorrect? 1 : 0 )
+
+//    }, 0)
+
+//    const result = await prisma.triviaRound.create({
+
+//    })
+// }
