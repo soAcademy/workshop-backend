@@ -7,21 +7,54 @@ export const createQuiz = (args: {
   answer: string;
   categoryId: number;
   choices: { choice: string }[];
-}) => prisma.triviaQuiz.create({
-  data: {
-    quiz: args.quiz,
-    answer: {
-      create: {
-        choice: args.answer
-      }
+}) =>
+  prisma.triviaQuiz.create({
+    data: {
+      quiz: args.quiz,
+      answer: {
+        create: {
+          choice: args.answer,
+        },
+      },
+      choices: {
+        create: args.choices,
+      },
+      category: {
+        connect: {
+          id: args.categoryId,
+        },
+      },
     },
-    choices: {
-      create: args.choices
+  });
+
+export const getQuiz = async (args: { categoryId: number }) => {
+  const quizes = await prisma.triviaQuiz.findMany({
+    where: { category: { id: args.categoryId } },
+    include: {
+      answer: true,
+      choices: true,
     },
-    category: {
-      connect: {
-        id: args.categoryId
-      }
-    }
-  }
-})
+  });
+
+  const result = quizes
+    .sort((a, b) => Math.random() - 0.5)
+    .slice(0, 3)
+    .map((r) => ({
+      id: r.id,
+      quiz: r.quiz,
+      choices: [
+        ...r.choices
+          .sort((a, b) => Math.random() - 0.5)
+          .map((c) => ({
+            id: c.id,
+            choice: c.choice,
+          })),
+        {
+          id: r.answer.id,
+          choice: r.answer.choice,
+        },
+      ].sort((a, b) => Math.random() - 0.5),
+    }));
+
+  return result;
+};
