@@ -177,3 +177,12 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todo
 - getQuiz (ส่ง category ที่ต้องการเล่นมา สุ่ม คำถาม 3 ข้อจาก database และแต่ละข้อ random choice มา 3 choice)
 - submitQuiz (ส่งคำตอบของ user แต่ละข้อไป -> response จะบอกว่าข้อไหนถูก ข้อไหนผิด และคะแนนของรอบนั้น)
 - getResults (แสดงผลลัพธ์ของการเล่นแต่ละรอบทั้งหมด คะแนน)
+- updateQuiz
+
+# 9. API Twitter
+- getUserProfile
+- createUserPost
+- getHashtags
+- getPostByHashtag (ส่ง hashtag ที่ต้องการไป แล้วแสดง post ทั้งหมด)
+- getPostByUser (แสดงรายละเอียดของ user คนนั้น พร้อม reply)
+- 

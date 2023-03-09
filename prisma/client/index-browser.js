@@ -149,13 +149,27 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  choice: 'choice',
+  triviaQuizId: 'triviaQuizId'
+});
+
+exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  quiz: 'quiz',
+  triviaChoiceId: 'triviaChoiceId'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
   BinKitchenCategory: 'BinKitchenCategory',
   BinKitchenMenu: 'BinKitchenMenu',
   BinKitchenOrder: 'BinKitchenOrder',
   BinKitchenOrderItem: 'BinKitchenOrderItem',
-  TodoList: 'TodoList'
+  TodoList: 'TodoList',
+  TriviaQuiz: 'TriviaQuiz',
+  TriviaChoice: 'TriviaChoice'
 });
 
 /**

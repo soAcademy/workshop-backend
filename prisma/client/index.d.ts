@@ -73,6 +73,26 @@ export type TodoList = {
   updatedAt: Date
 }
 
+/**
+ * Model TriviaQuiz
+ * 
+ */
+export type TriviaQuiz = {
+  id: number
+  quiz: string
+  triviaChoiceId: number
+}
+
+/**
+ * Model TriviaChoice
+ * 
+ */
+export type TriviaChoice = {
+  id: number
+  choice: string
+  triviaQuizId: number | null
+}
+
 
 /**
  * ##  Prisma Client ʲˢ
@@ -240,6 +260,26 @@ export class PrismaClient<
     * ```
     */
   get todoList(): Prisma.TodoListDelegate<GlobalReject>;
+
+  /**
+   * `prisma.triviaQuiz`: Exposes CRUD operations for the **TriviaQuiz** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TriviaQuizs
+    * const triviaQuizs = await prisma.triviaQuiz.findMany()
+    * ```
+    */
+  get triviaQuiz(): Prisma.TriviaQuizDelegate<GlobalReject>;
+
+  /**
+   * `prisma.triviaChoice`: Exposes CRUD operations for the **TriviaChoice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TriviaChoices
+    * const triviaChoices = await prisma.triviaChoice.findMany()
+    * ```
+    */
+  get triviaChoice(): Prisma.TriviaChoiceDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -713,7 +753,9 @@ export namespace Prisma {
     BinKitchenMenu: 'BinKitchenMenu',
     BinKitchenOrder: 'BinKitchenOrder',
     BinKitchenOrderItem: 'BinKitchenOrderItem',
-    TodoList: 'TodoList'
+    TodoList: 'TodoList',
+    TriviaQuiz: 'TriviaQuiz',
+    TriviaChoice: 'TriviaChoice'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -923,11 +965,11 @@ export namespace Prisma {
 
 
   export type BinKitchenMenuCountOutputType = {
-    OrderItem: number
+    orderItems: number
   }
 
   export type BinKitchenMenuCountOutputTypeSelect = {
-    OrderItem?: boolean
+    orderItems?: boolean
   }
 
   export type BinKitchenMenuCountOutputTypeGetPayload<S extends boolean | null | undefined | BinKitchenMenuCountOutputTypeArgs> =
@@ -999,6 +1041,92 @@ export namespace Prisma {
      * Select specific fields to fetch from the BinKitchenOrderCountOutputType
      */
     select?: BinKitchenOrderCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type TriviaQuizCountOutputType
+   */
+
+
+  export type TriviaQuizCountOutputType = {
+    choices: number
+  }
+
+  export type TriviaQuizCountOutputTypeSelect = {
+    choices?: boolean
+  }
+
+  export type TriviaQuizCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaQuizCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaQuizCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaQuizCountOutputTypeArgs)
+    ? TriviaQuizCountOutputType 
+    : S extends { select: any } & (TriviaQuizCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof TriviaQuizCountOutputType ? TriviaQuizCountOutputType[P] : never
+  } 
+      : TriviaQuizCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaQuizCountOutputType without action
+   */
+  export type TriviaQuizCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuizCountOutputType
+     */
+    select?: TriviaQuizCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type TriviaChoiceCountOutputType
+   */
+
+
+  export type TriviaChoiceCountOutputType = {
+    triviaQuizAnswer: number
+  }
+
+  export type TriviaChoiceCountOutputTypeSelect = {
+    triviaQuizAnswer?: boolean
+  }
+
+  export type TriviaChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaChoiceCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaChoiceCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaChoiceCountOutputTypeArgs)
+    ? TriviaChoiceCountOutputType 
+    : S extends { select: any } & (TriviaChoiceCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof TriviaChoiceCountOutputType ? TriviaChoiceCountOutputType[P] : never
+  } 
+      : TriviaChoiceCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaChoiceCountOutputType without action
+   */
+  export type TriviaChoiceCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoiceCountOutputType
+     */
+    select?: TriviaChoiceCountOutputTypeSelect | null
   }
 
 
@@ -2208,16 +2336,16 @@ export namespace Prisma {
     price?: boolean
     category?: boolean | BinKitchenCategoryArgs
     categoryName?: boolean
+    orderItems?: boolean | BinKitchenMenu$orderItemsArgs
     createdAt?: boolean
     updatedAt?: boolean
-    OrderItem?: boolean | BinKitchenMenu$OrderItemArgs
     _count?: boolean | BinKitchenMenuCountOutputTypeArgs
   }
 
 
   export type BinKitchenMenuInclude = {
     category?: boolean | BinKitchenCategoryArgs
-    OrderItem?: boolean | BinKitchenMenu$OrderItemArgs
+    orderItems?: boolean | BinKitchenMenu$orderItemsArgs
     _count?: boolean | BinKitchenMenuCountOutputTypeArgs
   }
 
@@ -2229,14 +2357,14 @@ export namespace Prisma {
     ? BinKitchenMenu  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'category' ? BinKitchenCategoryGetPayload<S['include'][P]> | null :
-        P extends 'OrderItem' ? Array < BinKitchenOrderItemGetPayload<S['include'][P]>>  :
+        P extends 'orderItems' ? Array < BinKitchenOrderItemGetPayload<S['include'][P]>>  :
         P extends '_count' ? BinKitchenMenuCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (BinKitchenMenuArgs | BinKitchenMenuFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'category' ? BinKitchenCategoryGetPayload<S['select'][P]> | null :
-        P extends 'OrderItem' ? Array < BinKitchenOrderItemGetPayload<S['select'][P]>>  :
+        P extends 'orderItems' ? Array < BinKitchenOrderItemGetPayload<S['select'][P]>>  :
         P extends '_count' ? BinKitchenMenuCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BinKitchenMenu ? BinKitchenMenu[P] : never
   } 
       : BinKitchenMenu
@@ -2611,7 +2739,7 @@ export namespace Prisma {
 
     category<T extends BinKitchenCategoryArgs= {}>(args?: Subset<T, BinKitchenCategoryArgs>): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T> | Null>;
 
-    OrderItem<T extends BinKitchenMenu$OrderItemArgs= {}>(args?: Subset<T, BinKitchenMenu$OrderItemArgs>): Prisma.PrismaPromise<Array<BinKitchenOrderItemGetPayload<T>>| Null>;
+    orderItems<T extends BinKitchenMenu$orderItemsArgs= {}>(args?: Subset<T, BinKitchenMenu$orderItemsArgs>): Prisma.PrismaPromise<Array<BinKitchenOrderItemGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -2969,9 +3097,9 @@ export namespace Prisma {
 
 
   /**
-   * BinKitchenMenu.OrderItem
+   * BinKitchenMenu.orderItems
    */
-  export type BinKitchenMenu$OrderItemArgs = {
+  export type BinKitchenMenu$orderItemsArgs = {
     /**
      * Select specific fields to fetch from the BinKitchenOrderItem
      */
@@ -5919,6 +6047,1974 @@ export namespace Prisma {
 
 
   /**
+   * Model TriviaQuiz
+   */
+
+
+  export type AggregateTriviaQuiz = {
+    _count: TriviaQuizCountAggregateOutputType | null
+    _avg: TriviaQuizAvgAggregateOutputType | null
+    _sum: TriviaQuizSumAggregateOutputType | null
+    _min: TriviaQuizMinAggregateOutputType | null
+    _max: TriviaQuizMaxAggregateOutputType | null
+  }
+
+  export type TriviaQuizAvgAggregateOutputType = {
+    id: number | null
+    triviaChoiceId: number | null
+  }
+
+  export type TriviaQuizSumAggregateOutputType = {
+    id: number | null
+    triviaChoiceId: number | null
+  }
+
+  export type TriviaQuizMinAggregateOutputType = {
+    id: number | null
+    quiz: string | null
+    triviaChoiceId: number | null
+  }
+
+  export type TriviaQuizMaxAggregateOutputType = {
+    id: number | null
+    quiz: string | null
+    triviaChoiceId: number | null
+  }
+
+  export type TriviaQuizCountAggregateOutputType = {
+    id: number
+    quiz: number
+    triviaChoiceId: number
+    _all: number
+  }
+
+
+  export type TriviaQuizAvgAggregateInputType = {
+    id?: true
+    triviaChoiceId?: true
+  }
+
+  export type TriviaQuizSumAggregateInputType = {
+    id?: true
+    triviaChoiceId?: true
+  }
+
+  export type TriviaQuizMinAggregateInputType = {
+    id?: true
+    quiz?: true
+    triviaChoiceId?: true
+  }
+
+  export type TriviaQuizMaxAggregateInputType = {
+    id?: true
+    quiz?: true
+    triviaChoiceId?: true
+  }
+
+  export type TriviaQuizCountAggregateInputType = {
+    id?: true
+    quiz?: true
+    triviaChoiceId?: true
+    _all?: true
+  }
+
+  export type TriviaQuizAggregateArgs = {
+    /**
+     * Filter which TriviaQuiz to aggregate.
+     */
+    where?: TriviaQuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaQuizs to fetch.
+     */
+    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TriviaQuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaQuizs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaQuizs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TriviaQuizs
+    **/
+    _count?: true | TriviaQuizCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TriviaQuizAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TriviaQuizSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TriviaQuizMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TriviaQuizMaxAggregateInputType
+  }
+
+  export type GetTriviaQuizAggregateType<T extends TriviaQuizAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaQuiz]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTriviaQuiz[P]>
+      : GetScalarType<T[P], AggregateTriviaQuiz[P]>
+  }
+
+
+
+
+  export type TriviaQuizGroupByArgs = {
+    where?: TriviaQuizWhereInput
+    orderBy?: Enumerable<TriviaQuizOrderByWithAggregationInput>
+    by: TriviaQuizScalarFieldEnum[]
+    having?: TriviaQuizScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TriviaQuizCountAggregateInputType | true
+    _avg?: TriviaQuizAvgAggregateInputType
+    _sum?: TriviaQuizSumAggregateInputType
+    _min?: TriviaQuizMinAggregateInputType
+    _max?: TriviaQuizMaxAggregateInputType
+  }
+
+
+  export type TriviaQuizGroupByOutputType = {
+    id: number
+    quiz: string
+    triviaChoiceId: number
+    _count: TriviaQuizCountAggregateOutputType | null
+    _avg: TriviaQuizAvgAggregateOutputType | null
+    _sum: TriviaQuizSumAggregateOutputType | null
+    _min: TriviaQuizMinAggregateOutputType | null
+    _max: TriviaQuizMaxAggregateOutputType | null
+  }
+
+  type GetTriviaQuizGroupByPayload<T extends TriviaQuizGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TriviaQuizGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TriviaQuizGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TriviaQuizGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaQuizGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TriviaQuizSelect = {
+    id?: boolean
+    quiz?: boolean
+    answer?: boolean | TriviaChoiceArgs
+    choices?: boolean | TriviaQuiz$choicesArgs
+    triviaChoiceId?: boolean
+    _count?: boolean | TriviaQuizCountOutputTypeArgs
+  }
+
+
+  export type TriviaQuizInclude = {
+    answer?: boolean | TriviaChoiceArgs
+    choices?: boolean | TriviaQuiz$choicesArgs
+    _count?: boolean | TriviaQuizCountOutputTypeArgs
+  }
+
+  export type TriviaQuizGetPayload<S extends boolean | null | undefined | TriviaQuizArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaQuiz :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaQuizArgs | TriviaQuizFindManyArgs)
+    ? TriviaQuiz  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'answer' ? TriviaChoiceGetPayload<S['include'][P]> :
+        P extends 'choices' ? Array < TriviaChoiceGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TriviaQuizCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TriviaQuizArgs | TriviaQuizFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'answer' ? TriviaChoiceGetPayload<S['select'][P]> :
+        P extends 'choices' ? Array < TriviaChoiceGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TriviaQuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaQuiz ? TriviaQuiz[P] : never
+  } 
+      : TriviaQuiz
+
+
+  type TriviaQuizCountArgs = 
+    Omit<TriviaQuizFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaQuizCountAggregateInputType | true
+    }
+
+  export interface TriviaQuizDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one TriviaQuiz that matches the filter.
+     * @param {TriviaQuizFindUniqueArgs} args - Arguments to find a TriviaQuiz
+     * @example
+     * // Get one TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TriviaQuizFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaQuizFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaQuiz'> extends True ? Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>> : Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | null, null>
+
+    /**
+     * Find one TriviaQuiz that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TriviaQuizFindUniqueOrThrowArgs} args - Arguments to find a TriviaQuiz
+     * @example
+     * // Get one TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TriviaQuizFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaQuizFindUniqueOrThrowArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Find the first TriviaQuiz that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizFindFirstArgs} args - Arguments to find a TriviaQuiz
+     * @example
+     * // Get one TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TriviaQuizFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaQuizFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaQuiz'> extends True ? Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>> : Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | null, null>
+
+    /**
+     * Find the first TriviaQuiz that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizFindFirstOrThrowArgs} args - Arguments to find a TriviaQuiz
+     * @example
+     * // Get one TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TriviaQuizFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaQuizFindFirstOrThrowArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Find zero or more TriviaQuizs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TriviaQuizs
+     * const triviaQuizs = await prisma.triviaQuiz.findMany()
+     * 
+     * // Get first 10 TriviaQuizs
+     * const triviaQuizs = await prisma.triviaQuiz.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const triviaQuizWithIdOnly = await prisma.triviaQuiz.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TriviaQuizFindManyArgs>(
+      args?: SelectSubset<T, TriviaQuizFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaQuizGetPayload<T>>>
+
+    /**
+     * Create a TriviaQuiz.
+     * @param {TriviaQuizCreateArgs} args - Arguments to create a TriviaQuiz.
+     * @example
+     * // Create one TriviaQuiz
+     * const TriviaQuiz = await prisma.triviaQuiz.create({
+     *   data: {
+     *     // ... data to create a TriviaQuiz
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TriviaQuizCreateArgs>(
+      args: SelectSubset<T, TriviaQuizCreateArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Create many TriviaQuizs.
+     *     @param {TriviaQuizCreateManyArgs} args - Arguments to create many TriviaQuizs.
+     *     @example
+     *     // Create many TriviaQuizs
+     *     const triviaQuiz = await prisma.triviaQuiz.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TriviaQuizCreateManyArgs>(
+      args?: SelectSubset<T, TriviaQuizCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TriviaQuiz.
+     * @param {TriviaQuizDeleteArgs} args - Arguments to delete one TriviaQuiz.
+     * @example
+     * // Delete one TriviaQuiz
+     * const TriviaQuiz = await prisma.triviaQuiz.delete({
+     *   where: {
+     *     // ... filter to delete one TriviaQuiz
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TriviaQuizDeleteArgs>(
+      args: SelectSubset<T, TriviaQuizDeleteArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Update one TriviaQuiz.
+     * @param {TriviaQuizUpdateArgs} args - Arguments to update one TriviaQuiz.
+     * @example
+     * // Update one TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TriviaQuizUpdateArgs>(
+      args: SelectSubset<T, TriviaQuizUpdateArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Delete zero or more TriviaQuizs.
+     * @param {TriviaQuizDeleteManyArgs} args - Arguments to filter TriviaQuizs to delete.
+     * @example
+     * // Delete a few TriviaQuizs
+     * const { count } = await prisma.triviaQuiz.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TriviaQuizDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaQuizDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TriviaQuizs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TriviaQuizs
+     * const triviaQuiz = await prisma.triviaQuiz.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TriviaQuizUpdateManyArgs>(
+      args: SelectSubset<T, TriviaQuizUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TriviaQuiz.
+     * @param {TriviaQuizUpsertArgs} args - Arguments to update or create a TriviaQuiz.
+     * @example
+     * // Update or create a TriviaQuiz
+     * const triviaQuiz = await prisma.triviaQuiz.upsert({
+     *   create: {
+     *     // ... data to create a TriviaQuiz
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TriviaQuiz we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TriviaQuizUpsertArgs>(
+      args: SelectSubset<T, TriviaQuizUpsertArgs>
+    ): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T>>
+
+    /**
+     * Count the number of TriviaQuizs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizCountArgs} args - Arguments to filter TriviaQuizs to count.
+     * @example
+     * // Count the number of TriviaQuizs
+     * const count = await prisma.triviaQuiz.count({
+     *   where: {
+     *     // ... the filter for the TriviaQuizs we want to count
+     *   }
+     * })
+    **/
+    count<T extends TriviaQuizCountArgs>(
+      args?: Subset<T, TriviaQuizCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TriviaQuizCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TriviaQuiz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TriviaQuizAggregateArgs>(args: Subset<T, TriviaQuizAggregateArgs>): Prisma.PrismaPromise<GetTriviaQuizAggregateType<T>>
+
+    /**
+     * Group by TriviaQuiz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaQuizGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TriviaQuizGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TriviaQuizGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaQuizGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TriviaQuizGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaQuizGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TriviaQuiz.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TriviaQuizClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    answer<T extends TriviaChoiceArgs= {}>(args?: Subset<T, TriviaChoiceArgs>): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | Null>;
+
+    choices<T extends TriviaQuiz$choicesArgs= {}>(args?: Subset<T, TriviaQuiz$choicesArgs>): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaQuiz base type for findUnique actions
+   */
+  export type TriviaQuizFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter, which TriviaQuiz to fetch.
+     */
+    where: TriviaQuizWhereUniqueInput
+  }
+
+  /**
+   * TriviaQuiz findUnique
+   */
+  export interface TriviaQuizFindUniqueArgs extends TriviaQuizFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaQuiz findUniqueOrThrow
+   */
+  export type TriviaQuizFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter, which TriviaQuiz to fetch.
+     */
+    where: TriviaQuizWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaQuiz base type for findFirst actions
+   */
+  export type TriviaQuizFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter, which TriviaQuiz to fetch.
+     */
+    where?: TriviaQuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaQuizs to fetch.
+     */
+    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaQuizs.
+     */
+    cursor?: TriviaQuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaQuizs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaQuizs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaQuizs.
+     */
+    distinct?: Enumerable<TriviaQuizScalarFieldEnum>
+  }
+
+  /**
+   * TriviaQuiz findFirst
+   */
+  export interface TriviaQuizFindFirstArgs extends TriviaQuizFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaQuiz findFirstOrThrow
+   */
+  export type TriviaQuizFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter, which TriviaQuiz to fetch.
+     */
+    where?: TriviaQuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaQuizs to fetch.
+     */
+    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaQuizs.
+     */
+    cursor?: TriviaQuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaQuizs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaQuizs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaQuizs.
+     */
+    distinct?: Enumerable<TriviaQuizScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaQuiz findMany
+   */
+  export type TriviaQuizFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter, which TriviaQuizs to fetch.
+     */
+    where?: TriviaQuizWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaQuizs to fetch.
+     */
+    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TriviaQuizs.
+     */
+    cursor?: TriviaQuizWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaQuizs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaQuizs.
+     */
+    skip?: number
+    distinct?: Enumerable<TriviaQuizScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaQuiz create
+   */
+  export type TriviaQuizCreateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * The data needed to create a TriviaQuiz.
+     */
+    data: XOR<TriviaQuizCreateInput, TriviaQuizUncheckedCreateInput>
+  }
+
+
+  /**
+   * TriviaQuiz createMany
+   */
+  export type TriviaQuizCreateManyArgs = {
+    /**
+     * The data used to create many TriviaQuizs.
+     */
+    data: Enumerable<TriviaQuizCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * TriviaQuiz update
+   */
+  export type TriviaQuizUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * The data needed to update a TriviaQuiz.
+     */
+    data: XOR<TriviaQuizUpdateInput, TriviaQuizUncheckedUpdateInput>
+    /**
+     * Choose, which TriviaQuiz to update.
+     */
+    where: TriviaQuizWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaQuiz updateMany
+   */
+  export type TriviaQuizUpdateManyArgs = {
+    /**
+     * The data used to update TriviaQuizs.
+     */
+    data: XOR<TriviaQuizUpdateManyMutationInput, TriviaQuizUncheckedUpdateManyInput>
+    /**
+     * Filter which TriviaQuizs to update
+     */
+    where?: TriviaQuizWhereInput
+  }
+
+
+  /**
+   * TriviaQuiz upsert
+   */
+  export type TriviaQuizUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * The filter to search for the TriviaQuiz to update in case it exists.
+     */
+    where: TriviaQuizWhereUniqueInput
+    /**
+     * In case the TriviaQuiz found by the `where` argument doesn't exist, create a new TriviaQuiz with this data.
+     */
+    create: XOR<TriviaQuizCreateInput, TriviaQuizUncheckedCreateInput>
+    /**
+     * In case the TriviaQuiz was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TriviaQuizUpdateInput, TriviaQuizUncheckedUpdateInput>
+  }
+
+
+  /**
+   * TriviaQuiz delete
+   */
+  export type TriviaQuizDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    /**
+     * Filter which TriviaQuiz to delete.
+     */
+    where: TriviaQuizWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaQuiz deleteMany
+   */
+  export type TriviaQuizDeleteManyArgs = {
+    /**
+     * Filter which TriviaQuizs to delete
+     */
+    where?: TriviaQuizWhereInput
+  }
+
+
+  /**
+   * TriviaQuiz.choices
+   */
+  export type TriviaQuiz$choicesArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    cursor?: TriviaChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaQuiz without action
+   */
+  export type TriviaQuizArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+  }
+
+
+
+  /**
+   * Model TriviaChoice
+   */
+
+
+  export type AggregateTriviaChoice = {
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
+  }
+
+  export type TriviaChoiceAvgAggregateOutputType = {
+    id: number | null
+    triviaQuizId: number | null
+  }
+
+  export type TriviaChoiceSumAggregateOutputType = {
+    id: number | null
+    triviaQuizId: number | null
+  }
+
+  export type TriviaChoiceMinAggregateOutputType = {
+    id: number | null
+    choice: string | null
+    triviaQuizId: number | null
+  }
+
+  export type TriviaChoiceMaxAggregateOutputType = {
+    id: number | null
+    choice: string | null
+    triviaQuizId: number | null
+  }
+
+  export type TriviaChoiceCountAggregateOutputType = {
+    id: number
+    choice: number
+    triviaQuizId: number
+    _all: number
+  }
+
+
+  export type TriviaChoiceAvgAggregateInputType = {
+    id?: true
+    triviaQuizId?: true
+  }
+
+  export type TriviaChoiceSumAggregateInputType = {
+    id?: true
+    triviaQuizId?: true
+  }
+
+  export type TriviaChoiceMinAggregateInputType = {
+    id?: true
+    choice?: true
+    triviaQuizId?: true
+  }
+
+  export type TriviaChoiceMaxAggregateInputType = {
+    id?: true
+    choice?: true
+    triviaQuizId?: true
+  }
+
+  export type TriviaChoiceCountAggregateInputType = {
+    id?: true
+    choice?: true
+    triviaQuizId?: true
+    _all?: true
+  }
+
+  export type TriviaChoiceAggregateArgs = {
+    /**
+     * Filter which TriviaChoice to aggregate.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TriviaChoices
+    **/
+    _count?: true | TriviaChoiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TriviaChoiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TriviaChoiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TriviaChoiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TriviaChoiceMaxAggregateInputType
+  }
+
+  export type GetTriviaChoiceAggregateType<T extends TriviaChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaChoice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTriviaChoice[P]>
+      : GetScalarType<T[P], AggregateTriviaChoice[P]>
+  }
+
+
+
+
+  export type TriviaChoiceGroupByArgs = {
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithAggregationInput>
+    by: TriviaChoiceScalarFieldEnum[]
+    having?: TriviaChoiceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TriviaChoiceCountAggregateInputType | true
+    _avg?: TriviaChoiceAvgAggregateInputType
+    _sum?: TriviaChoiceSumAggregateInputType
+    _min?: TriviaChoiceMinAggregateInputType
+    _max?: TriviaChoiceMaxAggregateInputType
+  }
+
+
+  export type TriviaChoiceGroupByOutputType = {
+    id: number
+    choice: string
+    triviaQuizId: number | null
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
+  }
+
+  type GetTriviaChoiceGroupByPayload<T extends TriviaChoiceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TriviaChoiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TriviaChoiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TriviaChoiceSelect = {
+    id?: boolean
+    choice?: boolean
+    triviaQuiz?: boolean | TriviaQuizArgs
+    triviaQuizId?: boolean
+    triviaQuizAnswer?: boolean | TriviaChoice$triviaQuizAnswerArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+  }
+
+
+  export type TriviaChoiceInclude = {
+    triviaQuiz?: boolean | TriviaQuizArgs
+    triviaQuizAnswer?: boolean | TriviaChoice$triviaQuizAnswerArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+  }
+
+  export type TriviaChoiceGetPayload<S extends boolean | null | undefined | TriviaChoiceArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaChoice :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
+    ? TriviaChoice  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'triviaQuiz' ? TriviaQuizGetPayload<S['include'][P]> | null :
+        P extends 'triviaQuizAnswer' ? Array < TriviaQuizGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'triviaQuiz' ? TriviaQuizGetPayload<S['select'][P]> | null :
+        P extends 'triviaQuizAnswer' ? Array < TriviaQuizGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaChoice ? TriviaChoice[P] : never
+  } 
+      : TriviaChoice
+
+
+  type TriviaChoiceCountArgs = 
+    Omit<TriviaChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaChoiceCountAggregateInputType | true
+    }
+
+  export interface TriviaChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one TriviaChoice that matches the filter.
+     * @param {TriviaChoiceFindUniqueArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TriviaChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find one TriviaChoice that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TriviaChoiceFindUniqueOrThrowArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TriviaChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindUniqueOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Find the first TriviaChoice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindFirstArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TriviaChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find the first TriviaChoice that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindFirstOrThrowArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TriviaChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Find zero or more TriviaChoices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany()
+     * 
+     * // Get first 10 TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const triviaChoiceWithIdOnly = await prisma.triviaChoice.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TriviaChoiceFindManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>>
+
+    /**
+     * Create a TriviaChoice.
+     * @param {TriviaChoiceCreateArgs} args - Arguments to create a TriviaChoice.
+     * @example
+     * // Create one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.create({
+     *   data: {
+     *     // ... data to create a TriviaChoice
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TriviaChoiceCreateArgs>(
+      args: SelectSubset<T, TriviaChoiceCreateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Create many TriviaChoices.
+     *     @param {TriviaChoiceCreateManyArgs} args - Arguments to create many TriviaChoices.
+     *     @example
+     *     // Create many TriviaChoices
+     *     const triviaChoice = await prisma.triviaChoice.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TriviaChoiceCreateManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TriviaChoice.
+     * @param {TriviaChoiceDeleteArgs} args - Arguments to delete one TriviaChoice.
+     * @example
+     * // Delete one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.delete({
+     *   where: {
+     *     // ... filter to delete one TriviaChoice
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TriviaChoiceDeleteArgs>(
+      args: SelectSubset<T, TriviaChoiceDeleteArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Update one TriviaChoice.
+     * @param {TriviaChoiceUpdateArgs} args - Arguments to update one TriviaChoice.
+     * @example
+     * // Update one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TriviaChoiceUpdateArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Delete zero or more TriviaChoices.
+     * @param {TriviaChoiceDeleteManyArgs} args - Arguments to filter TriviaChoices to delete.
+     * @example
+     * // Delete a few TriviaChoices
+     * const { count } = await prisma.triviaChoice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TriviaChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TriviaChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TriviaChoices
+     * const triviaChoice = await prisma.triviaChoice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TriviaChoiceUpdateManyArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TriviaChoice.
+     * @param {TriviaChoiceUpsertArgs} args - Arguments to update or create a TriviaChoice.
+     * @example
+     * // Update or create a TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.upsert({
+     *   create: {
+     *     // ... data to create a TriviaChoice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TriviaChoice we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TriviaChoiceUpsertArgs>(
+      args: SelectSubset<T, TriviaChoiceUpsertArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Count the number of TriviaChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceCountArgs} args - Arguments to filter TriviaChoices to count.
+     * @example
+     * // Count the number of TriviaChoices
+     * const count = await prisma.triviaChoice.count({
+     *   where: {
+     *     // ... the filter for the TriviaChoices we want to count
+     *   }
+     * })
+    **/
+    count<T extends TriviaChoiceCountArgs>(
+      args?: Subset<T, TriviaChoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TriviaChoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TriviaChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TriviaChoiceAggregateArgs>(args: Subset<T, TriviaChoiceAggregateArgs>): Prisma.PrismaPromise<GetTriviaChoiceAggregateType<T>>
+
+    /**
+     * Group by TriviaChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TriviaChoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TriviaChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaChoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TriviaChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TriviaChoice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TriviaChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    triviaQuiz<T extends TriviaQuizArgs= {}>(args?: Subset<T, TriviaQuizArgs>): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | Null>;
+
+    triviaQuizAnswer<T extends TriviaChoice$triviaQuizAnswerArgs= {}>(args?: Subset<T, TriviaChoice$triviaQuizAnswerArgs>): Prisma.PrismaPromise<Array<TriviaQuizGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaChoice base type for findUnique actions
+   */
+  export type TriviaChoiceFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+  /**
+   * TriviaChoice findUnique
+   */
+  export interface TriviaChoiceFindUniqueArgs extends TriviaChoiceFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaChoice findUniqueOrThrow
+   */
+  export type TriviaChoiceFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice base type for findFirst actions
+   */
+  export type TriviaChoiceFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaChoices.
+     */
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+  /**
+   * TriviaChoice findFirst
+   */
+  export interface TriviaChoiceFindFirstArgs extends TriviaChoiceFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaChoice findFirstOrThrow
+   */
+  export type TriviaChoiceFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaChoices.
+     */
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice findMany
+   */
+  export type TriviaChoiceFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoices to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice create
+   */
+  export type TriviaChoiceCreateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The data needed to create a TriviaChoice.
+     */
+    data: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
+  }
+
+
+  /**
+   * TriviaChoice createMany
+   */
+  export type TriviaChoiceCreateManyArgs = {
+    /**
+     * The data used to create many TriviaChoices.
+     */
+    data: Enumerable<TriviaChoiceCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * TriviaChoice update
+   */
+  export type TriviaChoiceUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The data needed to update a TriviaChoice.
+     */
+    data: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
+    /**
+     * Choose, which TriviaChoice to update.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice updateMany
+   */
+  export type TriviaChoiceUpdateManyArgs = {
+    /**
+     * The data used to update TriviaChoices.
+     */
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which TriviaChoices to update
+     */
+    where?: TriviaChoiceWhereInput
+  }
+
+
+  /**
+   * TriviaChoice upsert
+   */
+  export type TriviaChoiceUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The filter to search for the TriviaChoice to update in case it exists.
+     */
+    where: TriviaChoiceWhereUniqueInput
+    /**
+     * In case the TriviaChoice found by the `where` argument doesn't exist, create a new TriviaChoice with this data.
+     */
+    create: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
+    /**
+     * In case the TriviaChoice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * TriviaChoice delete
+   */
+  export type TriviaChoiceDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter which TriviaChoice to delete.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice deleteMany
+   */
+  export type TriviaChoiceDeleteManyArgs = {
+    /**
+     * Filter which TriviaChoices to delete
+     */
+    where?: TriviaChoiceWhereInput
+  }
+
+
+  /**
+   * TriviaChoice.triviaQuizAnswer
+   */
+  export type TriviaChoice$triviaQuizAnswerArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuiz
+     */
+    select?: TriviaQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuizInclude | null
+    where?: TriviaQuizWhereInput
+    orderBy?: Enumerable<TriviaQuizOrderByWithRelationInput>
+    cursor?: TriviaQuizWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaQuizScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice without action
+   */
+  export type TriviaChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+  }
+
+
+
+  /**
    * Enums
    */
 
@@ -6009,6 +8105,24 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const TriviaChoiceScalarFieldEnum: {
+    id: 'id',
+    choice: 'choice',
+    triviaQuizId: 'triviaQuizId'
+  };
+
+  export type TriviaChoiceScalarFieldEnum = (typeof TriviaChoiceScalarFieldEnum)[keyof typeof TriviaChoiceScalarFieldEnum]
+
+
+  export const TriviaQuizScalarFieldEnum: {
+    id: 'id',
+    quiz: 'quiz',
+    triviaChoiceId: 'triviaChoiceId'
+  };
+
+  export type TriviaQuizScalarFieldEnum = (typeof TriviaQuizScalarFieldEnum)[keyof typeof TriviaQuizScalarFieldEnum]
+
+
   /**
    * Deep Input Types
    */
@@ -6070,9 +8184,9 @@ export namespace Prisma {
     price?: FloatFilter | number
     category?: XOR<BinKitchenCategoryRelationFilter, BinKitchenCategoryWhereInput> | null
     categoryName?: StringNullableFilter | string | null
+    orderItems?: BinKitchenOrderItemListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    OrderItem?: BinKitchenOrderItemListRelationFilter
   }
 
   export type BinKitchenMenuOrderByWithRelationInput = {
@@ -6082,9 +8196,9 @@ export namespace Prisma {
     price?: SortOrder
     category?: BinKitchenCategoryOrderByWithRelationInput
     categoryName?: SortOrder
+    orderItems?: BinKitchenOrderItemOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    OrderItem?: BinKitchenOrderItemOrderByRelationAggregateInput
   }
 
   export type BinKitchenMenuWhereUniqueInput = {
@@ -6274,6 +8388,92 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
+  export type TriviaQuizWhereInput = {
+    AND?: Enumerable<TriviaQuizWhereInput>
+    OR?: Enumerable<TriviaQuizWhereInput>
+    NOT?: Enumerable<TriviaQuizWhereInput>
+    id?: IntFilter | number
+    quiz?: StringFilter | string
+    answer?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
+    choices?: TriviaChoiceListRelationFilter
+    triviaChoiceId?: IntFilter | number
+  }
+
+  export type TriviaQuizOrderByWithRelationInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    answer?: TriviaChoiceOrderByWithRelationInput
+    choices?: TriviaChoiceOrderByRelationAggregateInput
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizWhereUniqueInput = {
+    id?: number
+  }
+
+  export type TriviaQuizOrderByWithAggregationInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    triviaChoiceId?: SortOrder
+    _count?: TriviaQuizCountOrderByAggregateInput
+    _avg?: TriviaQuizAvgOrderByAggregateInput
+    _max?: TriviaQuizMaxOrderByAggregateInput
+    _min?: TriviaQuizMinOrderByAggregateInput
+    _sum?: TriviaQuizSumOrderByAggregateInput
+  }
+
+  export type TriviaQuizScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    quiz?: StringWithAggregatesFilter | string
+    triviaChoiceId?: IntWithAggregatesFilter | number
+  }
+
+  export type TriviaChoiceWhereInput = {
+    AND?: Enumerable<TriviaChoiceWhereInput>
+    OR?: Enumerable<TriviaChoiceWhereInput>
+    NOT?: Enumerable<TriviaChoiceWhereInput>
+    id?: IntFilter | number
+    choice?: StringFilter | string
+    triviaQuiz?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput> | null
+    triviaQuizId?: IntNullableFilter | number | null
+    triviaQuizAnswer?: TriviaQuizListRelationFilter
+  }
+
+  export type TriviaChoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    triviaQuiz?: TriviaQuizOrderByWithRelationInput
+    triviaQuizId?: SortOrder
+    triviaQuizAnswer?: TriviaQuizOrderByRelationAggregateInput
+  }
+
+  export type TriviaChoiceWhereUniqueInput = {
+    id?: number
+  }
+
+  export type TriviaChoiceOrderByWithAggregationInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    triviaQuizId?: SortOrder
+    _count?: TriviaChoiceCountOrderByAggregateInput
+    _avg?: TriviaChoiceAvgOrderByAggregateInput
+    _max?: TriviaChoiceMaxOrderByAggregateInput
+    _min?: TriviaChoiceMinOrderByAggregateInput
+    _sum?: TriviaChoiceSumOrderByAggregateInput
+  }
+
+  export type TriviaChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    choice?: StringWithAggregatesFilter | string
+    triviaQuizId?: IntNullableWithAggregatesFilter | number | null
+  }
+
   export type BinKitchenCategoryCreateInput = {
     name: string
     menus?: BinKitchenMenuCreateNestedManyWithoutCategoryInput
@@ -6329,9 +8529,9 @@ export namespace Prisma {
     image: string
     price: number
     category?: BinKitchenCategoryCreateNestedOneWithoutMenusInput
+    orderItems?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    OrderItem?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
   }
 
   export type BinKitchenMenuUncheckedCreateInput = {
@@ -6340,9 +8540,9 @@ export namespace Prisma {
     image: string
     price: number
     categoryName?: string | null
+    orderItems?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    OrderItem?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
   }
 
   export type BinKitchenMenuUpdateInput = {
@@ -6350,9 +8550,9 @@ export namespace Prisma {
     image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     category?: BinKitchenCategoryUpdateOneWithoutMenusNestedInput
+    orderItems?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OrderItem?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
   }
 
   export type BinKitchenMenuUncheckedUpdateInput = {
@@ -6361,9 +8561,9 @@ export namespace Prisma {
     image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    orderItems?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OrderItem?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
   }
 
   export type BinKitchenMenuCreateManyInput = {
@@ -6452,7 +8652,7 @@ export namespace Prisma {
   }
 
   export type BinKitchenOrderItemCreateInput = {
-    menu: BinKitchenMenuCreateNestedOneWithoutOrderItemInput
+    menu: BinKitchenMenuCreateNestedOneWithoutOrderItemsInput
     order?: BinKitchenOrderCreateNestedOneWithoutItemsInput
     quantity: number
     totalPrice: number
@@ -6471,7 +8671,7 @@ export namespace Prisma {
   }
 
   export type BinKitchenOrderItemUpdateInput = {
-    menu?: BinKitchenMenuUpdateOneRequiredWithoutOrderItemNestedInput
+    menu?: BinKitchenMenuUpdateOneRequiredWithoutOrderItemsNestedInput
     order?: BinKitchenOrderUpdateOneWithoutItemsNestedInput
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
@@ -6567,6 +8767,90 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TriviaQuizCreateInput = {
+    quiz: string
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
+    choices?: TriviaChoiceCreateNestedManyWithoutTriviaQuizInput
+  }
+
+  export type TriviaQuizUncheckedCreateInput = {
+    id?: number
+    quiz: string
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutTriviaQuizInput
+    triviaChoiceId: number
+  }
+
+  export type TriviaQuizUpdateInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
+    choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
+  }
+
+  export type TriviaQuizUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
+    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaQuizCreateManyInput = {
+    id?: number
+    quiz: string
+    triviaChoiceId: number
+  }
+
+  export type TriviaQuizUpdateManyMutationInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaQuizUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaChoiceCreateInput = {
+    choice: string
+    triviaQuiz?: TriviaQuizCreateNestedOneWithoutChoicesInput
+    triviaQuizAnswer?: TriviaQuizCreateNestedManyWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUncheckedCreateInput = {
+    id?: number
+    choice: string
+    triviaQuizId?: number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUpdateInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuiz?: TriviaQuizUpdateOneWithoutChoicesNestedInput
+    triviaQuizAnswer?: TriviaQuizUpdateManyWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuizId?: NullableIntFieldUpdateOperationsInput | number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceCreateManyInput = {
+    id?: number
+    choice: string
+    triviaQuizId?: number | null
+  }
+
+  export type TriviaChoiceUpdateManyMutationInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type IntFilter = {
@@ -6957,6 +9241,92 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type TriviaChoiceRelationFilter = {
+    is?: TriviaChoiceWhereInput
+    isNot?: TriviaChoiceWhereInput
+  }
+
+  export type TriviaChoiceListRelationFilter = {
+    every?: TriviaChoiceWhereInput
+    some?: TriviaChoiceWhereInput
+    none?: TriviaChoiceWhereInput
+  }
+
+  export type TriviaChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TriviaQuizCountOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizAvgOrderByAggregateInput = {
+    id?: SortOrder
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizMinOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizSumOrderByAggregateInput = {
+    id?: SortOrder
+    triviaChoiceId?: SortOrder
+  }
+
+  export type TriviaQuizRelationFilter = {
+    is?: TriviaQuizWhereInput | null
+    isNot?: TriviaQuizWhereInput | null
+  }
+
+  export type TriviaQuizListRelationFilter = {
+    every?: TriviaQuizWhereInput
+    some?: TriviaQuizWhereInput
+    none?: TriviaQuizWhereInput
+  }
+
+  export type TriviaQuizOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TriviaChoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    triviaQuizId?: SortOrder
+  }
+
+  export type TriviaChoiceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    triviaQuizId?: SortOrder
+  }
+
+  export type TriviaChoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    triviaQuizId?: SortOrder
+  }
+
+  export type TriviaChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    triviaQuizId?: SortOrder
+  }
+
+  export type TriviaChoiceSumOrderByAggregateInput = {
+    id?: SortOrder
+    triviaQuizId?: SortOrder
+  }
+
   export type BinKitchenMenuCreateNestedManyWithoutCategoryInput = {
     create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
     connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
@@ -7127,9 +9497,9 @@ export namespace Prisma {
     deleteMany?: Enumerable<BinKitchenOrderItemScalarWhereInput>
   }
 
-  export type BinKitchenMenuCreateNestedOneWithoutOrderItemInput = {
-    create?: XOR<BinKitchenMenuCreateWithoutOrderItemInput, BinKitchenMenuUncheckedCreateWithoutOrderItemInput>
-    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutOrderItemInput
+  export type BinKitchenMenuCreateNestedOneWithoutOrderItemsInput = {
+    create?: XOR<BinKitchenMenuCreateWithoutOrderItemsInput, BinKitchenMenuUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutOrderItemsInput
     connect?: BinKitchenMenuWhereUniqueInput
   }
 
@@ -7139,12 +9509,12 @@ export namespace Prisma {
     connect?: BinKitchenOrderWhereUniqueInput
   }
 
-  export type BinKitchenMenuUpdateOneRequiredWithoutOrderItemNestedInput = {
-    create?: XOR<BinKitchenMenuCreateWithoutOrderItemInput, BinKitchenMenuUncheckedCreateWithoutOrderItemInput>
-    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutOrderItemInput
-    upsert?: BinKitchenMenuUpsertWithoutOrderItemInput
+  export type BinKitchenMenuUpdateOneRequiredWithoutOrderItemsNestedInput = {
+    create?: XOR<BinKitchenMenuCreateWithoutOrderItemsInput, BinKitchenMenuUncheckedCreateWithoutOrderItemsInput>
+    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutOrderItemsInput
+    upsert?: BinKitchenMenuUpsertWithoutOrderItemsInput
     connect?: BinKitchenMenuWhereUniqueInput
-    update?: XOR<BinKitchenMenuUpdateWithoutOrderItemInput, BinKitchenMenuUncheckedUpdateWithoutOrderItemInput>
+    update?: XOR<BinKitchenMenuUpdateWithoutOrderItemsInput, BinKitchenMenuUncheckedUpdateWithoutOrderItemsInput>
   }
 
   export type BinKitchenOrderUpdateOneWithoutItemsNestedInput = {
@@ -7163,6 +9533,120 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
+  }
+
+  export type TriviaChoiceCreateNestedManyWithoutTriviaQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutTriviaQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutTriviaQuizInput>
+    createMany?: TriviaChoiceCreateManyTriviaQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+  }
+
+  export type TriviaChoiceUncheckedCreateNestedManyWithoutTriviaQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutTriviaQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutTriviaQuizInput>
+    createMany?: TriviaChoiceCreateManyTriviaQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+  }
+
+  export type TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
+    upsert?: TriviaChoiceUpsertWithoutTriviaQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
+    update?: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
+  }
+
+  export type TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutTriviaQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutTriviaQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutTriviaQuizInput>
+    createMany?: TriviaChoiceCreateManyTriviaQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutTriviaQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutTriviaQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutTriviaQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutTriviaQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutTriviaQuizInput>
+    createMany?: TriviaChoiceCreateManyTriviaQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutTriviaQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutTriviaQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
+  }
+
+  export type TriviaQuizCreateNestedOneWithoutChoicesInput = {
+    create?: XOR<TriviaQuizCreateWithoutChoicesInput, TriviaQuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutChoicesInput
+    connect?: TriviaQuizWhereUniqueInput
+  }
+
+  export type TriviaQuizCreateNestedManyWithoutAnswerInput = {
+    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
+    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
+    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+  }
+
+  export type TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput = {
+    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
+    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
+    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+  }
+
+  export type TriviaQuizUpdateOneWithoutChoicesNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutChoicesInput, TriviaQuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutChoicesInput
+    upsert?: TriviaQuizUpsertWithoutChoicesInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuizWhereUniqueInput
+    update?: XOR<TriviaQuizUpdateWithoutChoicesInput, TriviaQuizUncheckedUpdateWithoutChoicesInput>
+  }
+
+  export type TriviaQuizUpdateManyWithoutAnswerNestedInput = {
+    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
+    upsert?: Enumerable<TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput>
+    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
+    set?: Enumerable<TriviaQuizWhereUniqueInput>
+    disconnect?: Enumerable<TriviaQuizWhereUniqueInput>
+    delete?: Enumerable<TriviaQuizWhereUniqueInput>
+    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+    update?: Enumerable<TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput>
+    updateMany?: Enumerable<TriviaQuizUpdateManyWithWhereWithoutAnswerInput>
+    deleteMany?: Enumerable<TriviaQuizScalarWhereInput>
+  }
+
+  export type TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput = {
+    create?: XOR<Enumerable<TriviaQuizCreateWithoutAnswerInput>, Enumerable<TriviaQuizUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<TriviaQuizCreateOrConnectWithoutAnswerInput>
+    upsert?: Enumerable<TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput>
+    createMany?: TriviaQuizCreateManyAnswerInputEnvelope
+    set?: Enumerable<TriviaQuizWhereUniqueInput>
+    disconnect?: Enumerable<TriviaQuizWhereUniqueInput>
+    delete?: Enumerable<TriviaQuizWhereUniqueInput>
+    connect?: Enumerable<TriviaQuizWhereUniqueInput>
+    update?: Enumerable<TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput>
+    updateMany?: Enumerable<TriviaQuizUpdateManyWithWhereWithoutAnswerInput>
+    deleteMany?: Enumerable<TriviaQuizScalarWhereInput>
   }
 
   export type NestedIntFilter = {
@@ -7348,9 +9832,9 @@ export namespace Prisma {
     name: string
     image: string
     price: number
+    orderItems?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    OrderItem?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
   }
 
   export type BinKitchenMenuUncheckedCreateWithoutCategoryInput = {
@@ -7358,9 +9842,9 @@ export namespace Prisma {
     name: string
     image: string
     price: number
+    orderItems?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    OrderItem?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
   }
 
   export type BinKitchenMenuCreateOrConnectWithoutCategoryInput = {
@@ -7478,7 +9962,7 @@ export namespace Prisma {
 
   export type BinKitchenOrderItemUpdateManyWithWhereWithoutMenuInput = {
     where: BinKitchenOrderItemScalarWhereInput
-    data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyWithoutOrderItemInput>
+    data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyWithoutOrderItemsInput>
   }
 
   export type BinKitchenOrderItemScalarWhereInput = {
@@ -7495,7 +9979,7 @@ export namespace Prisma {
   }
 
   export type BinKitchenOrderItemCreateWithoutOrderInput = {
-    menu: BinKitchenMenuCreateNestedOneWithoutOrderItemInput
+    menu: BinKitchenMenuCreateNestedOneWithoutOrderItemsInput
     quantity: number
     totalPrice: number
     createdAt?: Date | string
@@ -7537,7 +10021,7 @@ export namespace Prisma {
     data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyWithoutItemsInput>
   }
 
-  export type BinKitchenMenuCreateWithoutOrderItemInput = {
+  export type BinKitchenMenuCreateWithoutOrderItemsInput = {
     name: string
     image: string
     price: number
@@ -7546,7 +10030,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type BinKitchenMenuUncheckedCreateWithoutOrderItemInput = {
+  export type BinKitchenMenuUncheckedCreateWithoutOrderItemsInput = {
     id?: number
     name: string
     image: string
@@ -7556,9 +10040,9 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type BinKitchenMenuCreateOrConnectWithoutOrderItemInput = {
+  export type BinKitchenMenuCreateOrConnectWithoutOrderItemsInput = {
     where: BinKitchenMenuWhereUniqueInput
-    create: XOR<BinKitchenMenuCreateWithoutOrderItemInput, BinKitchenMenuUncheckedCreateWithoutOrderItemInput>
+    create: XOR<BinKitchenMenuCreateWithoutOrderItemsInput, BinKitchenMenuUncheckedCreateWithoutOrderItemsInput>
   }
 
   export type BinKitchenOrderCreateWithoutItemsInput = {
@@ -7581,12 +10065,12 @@ export namespace Prisma {
     create: XOR<BinKitchenOrderCreateWithoutItemsInput, BinKitchenOrderUncheckedCreateWithoutItemsInput>
   }
 
-  export type BinKitchenMenuUpsertWithoutOrderItemInput = {
-    update: XOR<BinKitchenMenuUpdateWithoutOrderItemInput, BinKitchenMenuUncheckedUpdateWithoutOrderItemInput>
-    create: XOR<BinKitchenMenuCreateWithoutOrderItemInput, BinKitchenMenuUncheckedCreateWithoutOrderItemInput>
+  export type BinKitchenMenuUpsertWithoutOrderItemsInput = {
+    update: XOR<BinKitchenMenuUpdateWithoutOrderItemsInput, BinKitchenMenuUncheckedUpdateWithoutOrderItemsInput>
+    create: XOR<BinKitchenMenuCreateWithoutOrderItemsInput, BinKitchenMenuUncheckedCreateWithoutOrderItemsInput>
   }
 
-  export type BinKitchenMenuUpdateWithoutOrderItemInput = {
+  export type BinKitchenMenuUpdateWithoutOrderItemsInput = {
     name?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
@@ -7595,7 +10079,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BinKitchenMenuUncheckedUpdateWithoutOrderItemInput = {
+  export type BinKitchenMenuUncheckedUpdateWithoutOrderItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
@@ -7625,6 +10109,162 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TriviaChoiceCreateWithoutTriviaQuizAnswerInput = {
+    choice: string
+    triviaQuiz?: TriviaQuizCreateNestedOneWithoutChoicesInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput = {
+    id?: number
+    choice: string
+    triviaQuizId?: number | null
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+  }
+
+  export type TriviaChoiceCreateWithoutTriviaQuizInput = {
+    choice: string
+    triviaQuizAnswer?: TriviaQuizCreateNestedManyWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutTriviaQuizInput = {
+    id?: number
+    choice: string
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedManyWithoutAnswerInput
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutTriviaQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>
+  }
+
+  export type TriviaChoiceCreateManyTriviaQuizInputEnvelope = {
+    data: Enumerable<TriviaChoiceCreateManyTriviaQuizInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaChoiceUpsertWithoutTriviaQuizAnswerInput = {
+    update: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+  }
+
+  export type TriviaChoiceUpdateWithoutTriviaQuizAnswerInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuiz?: TriviaQuizUpdateOneWithoutChoicesNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuizId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TriviaChoiceUpsertWithWhereUniqueWithoutTriviaQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    update: XOR<TriviaChoiceUpdateWithoutTriviaQuizInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizInput>
+  }
+
+  export type TriviaChoiceUpdateWithWhereUniqueWithoutTriviaQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    data: XOR<TriviaChoiceUpdateWithoutTriviaQuizInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizInput>
+  }
+
+  export type TriviaChoiceUpdateManyWithWhereWithoutTriviaQuizInput = {
+    where: TriviaChoiceScalarWhereInput
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyWithoutChoicesInput>
+  }
+
+  export type TriviaChoiceScalarWhereInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereInput>
+    id?: IntFilter | number
+    choice?: StringFilter | string
+    triviaQuizId?: IntNullableFilter | number | null
+  }
+
+  export type TriviaQuizCreateWithoutChoicesInput = {
+    quiz: string
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
+  }
+
+  export type TriviaQuizUncheckedCreateWithoutChoicesInput = {
+    id?: number
+    quiz: string
+    triviaChoiceId: number
+  }
+
+  export type TriviaQuizCreateOrConnectWithoutChoicesInput = {
+    where: TriviaQuizWhereUniqueInput
+    create: XOR<TriviaQuizCreateWithoutChoicesInput, TriviaQuizUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type TriviaQuizCreateWithoutAnswerInput = {
+    quiz: string
+    choices?: TriviaChoiceCreateNestedManyWithoutTriviaQuizInput
+  }
+
+  export type TriviaQuizUncheckedCreateWithoutAnswerInput = {
+    id?: number
+    quiz: string
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutTriviaQuizInput
+  }
+
+  export type TriviaQuizCreateOrConnectWithoutAnswerInput = {
+    where: TriviaQuizWhereUniqueInput
+    create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type TriviaQuizCreateManyAnswerInputEnvelope = {
+    data: Enumerable<TriviaQuizCreateManyAnswerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaQuizUpsertWithoutChoicesInput = {
+    update: XOR<TriviaQuizUpdateWithoutChoicesInput, TriviaQuizUncheckedUpdateWithoutChoicesInput>
+    create: XOR<TriviaQuizCreateWithoutChoicesInput, TriviaQuizUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type TriviaQuizUpdateWithoutChoicesInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
+  }
+
+  export type TriviaQuizUncheckedUpdateWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    triviaChoiceId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaQuizUpsertWithWhereUniqueWithoutAnswerInput = {
+    where: TriviaQuizWhereUniqueInput
+    update: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
+    create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type TriviaQuizUpdateWithWhereUniqueWithoutAnswerInput = {
+    where: TriviaQuizWhereUniqueInput
+    data: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
+  }
+
+  export type TriviaQuizUpdateManyWithWhereWithoutAnswerInput = {
+    where: TriviaQuizScalarWhereInput
+    data: XOR<TriviaQuizUpdateManyMutationInput, TriviaQuizUncheckedUpdateManyWithoutTriviaQuizAnswerInput>
+  }
+
+  export type TriviaQuizScalarWhereInput = {
+    AND?: Enumerable<TriviaQuizScalarWhereInput>
+    OR?: Enumerable<TriviaQuizScalarWhereInput>
+    NOT?: Enumerable<TriviaQuizScalarWhereInput>
+    id?: IntFilter | number
+    quiz?: StringFilter | string
+    triviaChoiceId?: IntFilter | number
+  }
+
   export type BinKitchenMenuCreateManyCategoryInput = {
     id?: number
     name: string
@@ -7638,9 +10278,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    orderItems?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OrderItem?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
   }
 
   export type BinKitchenMenuUncheckedUpdateWithoutCategoryInput = {
@@ -7648,9 +10288,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
+    orderItems?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OrderItem?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
   }
 
   export type BinKitchenMenuUncheckedUpdateManyWithoutMenusInput = {
@@ -7688,7 +10328,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BinKitchenOrderItemUncheckedUpdateManyWithoutOrderItemInput = {
+  export type BinKitchenOrderItemUncheckedUpdateManyWithoutOrderItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     orderId?: NullableIntFieldUpdateOperationsInput | number | null
     quantity?: IntFieldUpdateOperationsInput | number
@@ -7707,7 +10347,7 @@ export namespace Prisma {
   }
 
   export type BinKitchenOrderItemUpdateWithoutOrderInput = {
-    menu?: BinKitchenMenuUpdateOneRequiredWithoutOrderItemNestedInput
+    menu?: BinKitchenMenuUpdateOneRequiredWithoutOrderItemsNestedInput
     quantity?: IntFieldUpdateOperationsInput | number
     totalPrice?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7730,6 +10370,48 @@ export namespace Prisma {
     totalPrice?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TriviaChoiceCreateManyTriviaQuizInput = {
+    id?: number
+    choice: string
+  }
+
+  export type TriviaChoiceUpdateWithoutTriviaQuizInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuizAnswer?: TriviaQuizUpdateManyWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateManyWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaQuizCreateManyAnswerInput = {
+    id?: number
+    quiz: string
+  }
+
+  export type TriviaQuizUpdateWithoutAnswerInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    choices?: TriviaChoiceUpdateManyWithoutTriviaQuizNestedInput
+  }
+
+  export type TriviaQuizUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutTriviaQuizNestedInput
+  }
+
+  export type TriviaQuizUncheckedUpdateManyWithoutTriviaQuizAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -161,3 +161,38 @@ const menusData = [
     category: "ผัด"
   }
 ]
+
+{
+  question: "AAAA",
+  answer: "BBBB",
+  choices: [
+    "A1", "B1", "C1", "D1"
+  ]
+}
+
+// const quizResult = prisma.quiz.create({data: {quiz, choices: {create: choices}}})
+
+// const answerResult = prisma.choice.create({data: {answer, quizId: quizResult.id}})
+
+// // const choiceResult = prisma.choice.create({data: [{chocies, quizId: quizResult.id}]})
+
+// const quizResult = prisma.quiz.update({where: {id: quizResult.id}, data: {answerId: answerResult.id}})
+
+// model Quiz {
+//   answer Choice
+//   choices Choice[]
+// }
+
+// prisma.quiz.create({
+//   data: {
+//     quiz: args.quiz,
+//     answer: {
+//       create: {
+//         name: args.answer
+//       }
+//     },
+//     choices: {
+//       create: args.choices
+//     }
+//   }
+// })

@@ -52,9 +52,9 @@ model BinKitchenMenu {
   price        Float
   category     BinKitchenCategory?   @relation(fields: [categoryName], references: [name])
   categoryName String?
+  orderItems   BinKitchenOrderItem[]
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @default(now())
-  OrderItem    BinKitchenOrderItem[]
 }
 
 model BinKitchenOrder {
@@ -84,6 +84,22 @@ model TodoList {
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+}
+
+model TriviaQuiz {
+  id             Int            @id @default(autoincrement())
+  quiz           String
+  answer         TriviaChoice   @relation("TriviaQuizAnswer", fields: [triviaChoiceId], references: [id])
+  choices        TriviaChoice[]
+  triviaChoiceId Int
+}
+
+model TriviaChoice {
+  id               Int          @id @default(autoincrement())
+  choice           String
+  triviaQuiz       TriviaQuiz?  @relation(fields: [triviaQuizId], references: [id])
+  triviaQuizId     Int?
+  triviaQuizAnswer TriviaQuiz[] @relation("TriviaQuizAnswer")
 }
 
 datasource db {
