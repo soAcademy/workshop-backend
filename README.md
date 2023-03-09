@@ -169,3 +169,11 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todo
 สามารถสร้างห้องประชุมได้ หลายห้อง แต่ละห้องมี slot เวลา ให้เลือก การจองขั้นต่ำครึ่งชั่วโมง ถ้าวันเวลาและห้องนั้นเต็มต้องมี Error แจ้งเตือนไม่ให้จอง
 
 เมื่อจองแล้วจะมีรหัสลับ 4 ตัว ให้เจ้าของ ซึ่งเจ้าของสามารถใช้รหัสลับนั้นยกเลิกการจองได้
+
+# 8. API Trivia
+- createCategory
+- getCategories
+- createQuiz (ส่ง category มา)
+- getQuiz (ส่ง category ที่ต้องการเล่นมา สุ่ม คำถาม 3 ข้อจาก database และแต่ละข้อ random choice มา 3 choice)
+- submitQuiz (ส่งคำตอบของ user แต่ละข้อไป -> response จะบอกว่าข้อไหนถูก ข้อไหนผิด และคะแนนของรอบนั้น)
+- getResults (แสดงผลลัพธ์ของการเล่นแต่ละรอบทั้งหมด คะแนน)

@@ -1,4 +1,4 @@
-import { Category } from "fp-ts/lib/Reader"
+import { Category } from "fp-ts/lib/Reader";
 
 // CRUD
 // 1. Create Category
@@ -72,30 +72,53 @@ import { Category } from "fp-ts/lib/Reader"
 //     ]
 //   })
 
-
-//   prisma.binKitchenOrder.create({
-//     data: {
-//       status: 'PENDING',
-//       tableId: 1,
-//       items: {
-//         create: [{
+// prisma.binKitchenOrder.create({
+//   data: {
+//     status: "PENDING",
+//     tableId: 1,
+//     items: {
+//       create: [
+//         {
 //           menu: {
 //             connect: {
-//               id: 1
-//             }
+//               id: 1,
+//             },
 //           },
 //           quantity: 1,
-//           totalPrice: 100
+//           totalPrice: 100,
 //         },
 //         {
 //           menu: {
 //             connect: {
-//               id: 2
-//             }
+//               id: 2,
+//             },
 //           },
 //           quantity: 1,
-//           totalPrice: 100
-//         }]
-//       }
-//     }
-//   })
+//           totalPrice: 100,
+//         },
+//       ],
+//     },
+//   },
+// });
+
+const order = await prisma.binKitchenOrder.create({
+  data: {
+    status: "PENDING",
+    tableId: 1,
+  },
+});
+
+const orderItems = await prisma.binKitchenOrderItems.createMany({
+  data: [
+    {
+      quantity: 1,
+      totalPrice: 100,
+      menu: {
+        connect: 
+          {
+            id: 1,
+          },
+      },
+    },
+  ],
+});
