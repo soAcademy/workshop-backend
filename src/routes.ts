@@ -27,6 +27,14 @@ import {
 } from "./todoList/todoList.handler";
 import {
   createCategoryHandler,
+  createQuizHandler,
+  getCategoriesHandler,
+  getQuizesByCategoryHandler,
+  getResultsHandler,
+  submitQuestionHandler,
+} from "./trivia/trivia.handler";
+import {
+  // createCategoryHandler,
   createManyCategoryHandler,
   createMenuHandler,
   createOrderHandler,
@@ -149,59 +157,90 @@ export const AppRoutes = [
     action: deleteTasksHandler,
   },
   //todo: create route for bin kitchen project
-  {
-    path: "/binKitchen/createCategory",
-    method: "post",
-    action: createCategoryHandler,
-  },
-  {
-    path: "/binKitchen/createManyCategory",
-    method: "post",
-    action: createManyCategoryHandler,
-  },
-  {
-    path: "/binKitchen/getCategory",
-    method: "post",
-    action: getCategoryHandler,
-  },
-  {
-    path: "/binKitchen/updateCategory",
-    method: "post",
-    action: updateCategoryHandler,
-  },
-  {
-    path: "/binKitchen/createMenu",
-    method: "post",
-    action: createMenuHandler,
-  },
+  // {
+  //   path: "/binKitchen/createCategory",
+  //   method: "post",
+  //   action: createCategoryHandler,
+  // },
+  // {
+  //   path: "/binKitchen/createManyCategory",
+  //   method: "post",
+  //   action: createManyCategoryHandler,
+  // },
+  // {
+  //   path: "/binKitchen/getCategory",
+  //   method: "post",
+  //   action: getCategoryHandler,
+  // },
+  // {
+  //   path: "/binKitchen/updateCategory",
+  //   method: "post",
+  //   action: updateCategoryHandler,
+  // },
+  // {
+  //   path: "/binKitchen/createMenu",
+  //   method: "post",
+  //   action: createMenuHandler,
+  // },
   {
     path: "/binKitchen/getMenus",
     method: "post",
     action: getMenusHandler,
   },
+  // {
+  //   path: "/binKitchen/updateMenu",
+  //   method: "post",
+  //   action: updateMenuHandler,
+  // },
+  // {
+  //   path: "/binKitchen/createOrder",
+  //   method: "post",
+  //   action: createOrderHandler,
+  // },
+  // {
+  //   path: "/binKitchen/getOrders",
+  //   method: "post",
+  //   action: getOrdersHandler,
+  // },
+  // {
+  //   path: "/binKitchen/getOrdersByTableId",
+  //   method: "post",
+  //   action: getOrdersByTableIdHandler,
+  // },
+  // {
+  //   path: "/binKitchen/getOrderById",
+  //   method: "post",
+  //   action: getOrderByIdHandler,
+  // },
+  //todo: create route for trivia project
   {
-    path: "/binKitchen/updateMenu",
+    path: "/trivia/createCategory",
     method: "post",
-    action: updateMenuHandler,
+    action: createCategoryHandler,
   },
   {
-    path: "/binKitchen/createOrder",
+    path: "/trivia/getCategories",
     method: "post",
-    action: createOrderHandler,
+    action: getCategoriesHandler,
   },
   {
-    path: "/binKitchen/getOrders",
+    path: "/trivia/createQuiz",
     method: "post",
-    action: getOrdersHandler,
+    action: createQuizHandler,
   },
   {
-    path: "/binKitchen/getOrdersByTableId",
+    path: "/trivia/getQuizesByCategory",
     method: "post",
-    action: getOrdersByTableIdHandler,
+    action: getQuizesByCategoryHandler,
   },
   {
-    path: "/binKitchen/getOrderById",
+    path: "/trivia/submitQuestion",
     method: "post",
-    action: getOrderByIdHandler,
+    action: submitQuestionHandler,
+  },
+  {
+    path: "/trivia/getResults",
+    method: "post",
+    action: getResultsHandler,
   },
 ];

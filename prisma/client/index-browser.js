@@ -297,7 +297,7 @@ exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
   categoryName: 'categoryName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  answerId: 'answerId'
+  answerChoiceId: 'answerChoiceId'
 });
 
 exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
@@ -311,8 +311,8 @@ exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
 
 exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
   id: 'id',
-  round: 'round',
-  categoryId: 'categoryId',
+  user: 'user',
+  categoryName: 'categoryName',
   score: 'score',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
