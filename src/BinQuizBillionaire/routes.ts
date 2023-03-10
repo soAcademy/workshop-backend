@@ -3,6 +3,7 @@ import {
   createQuestionHandler,
   getCategoriesHandler,
   getQuestionHandler,
+  getResultsHandler,
   submitQuestionHandler,
 } from "./BinQuizBillionaire.handler";
 
@@ -31,5 +32,10 @@ export const AppRoutes = [
     path: "/submitQuestion",
     method: "post",
     action: submitQuestionHandler,
+  },
+  {
+    path: "/getResult",
+    method: "post",
+    action: getResultsHandler,
   },
 ];

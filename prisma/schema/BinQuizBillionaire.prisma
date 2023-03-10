@@ -42,12 +42,12 @@ model QuizRoundQuestion {
 }
 
 model QuizRound {
-  id         Int                 @id @default(autoincrement())
-  user       String
-  category   QuizCategory        @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  score      Int?
-  createdAt  DateTime            @default(now())
-  updatedAt  DateTime            @updatedAt
-  questions  QuizRoundQuestion[]
+  id             Int                 @id @default(autoincrement())
+  user           String
+  category       QuizCategory        @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  score          Int?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  roundQuestions QuizRoundQuestion[]
 }

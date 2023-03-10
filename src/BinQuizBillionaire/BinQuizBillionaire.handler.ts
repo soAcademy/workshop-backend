@@ -8,6 +8,7 @@ import {
   createQuestion,
   getCategories,
   getQuestion,
+  getResults,
   submitQuestion,
   // submitQuestion,
 } from "./BinQuizBillionaire.resolver";
@@ -75,6 +76,15 @@ export const submitQuestionHandler = async (req: Request, res: Response) => {
 
   try {
     const result = await submitQuestion(args);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+};
+
+export const getResultsHandler = (req: Request, res: Response) => {
+  try {
+    const result = getResults();
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json({ error: String(err) });
