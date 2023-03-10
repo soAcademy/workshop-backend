@@ -1,0 +1,100 @@
+model YoutubeUser {
+  id             Int                    @id @default(autoincrement())
+  username       String                 @unique
+  email          String                 @unique
+  image          String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  userToChannels YoutubeUserToChannel[]
+  subscribers    YoutubeSubscriber[]
+  reactions      YoutubeReaction[]
+  comments       YoutubeComment[]
+}
+
+model YoutubeRole {
+  id             Int                    @id @default(autoincrement())
+  role           String                 @unique
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  userToChannels YoutubeUserToChannel[]
+}
+
+model YoutubeChannel {
+  id             Int                    @id @default(autoincrement())
+  name           String                 @unique
+  descriptions   String
+  image          String?
+  coverImage     String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  userToChannels YoutubeUserToChannel[]
+  videos         YoutubeVideo[]
+  subscribers    YoutubeSubscriber[]
+}
+
+model YoutubeUserToChannel {
+  id        Int            @id @default(autoincrement())
+  user      YoutubeUser    @relation(fields: [userId], references: [id])
+  role      YoutubeRole    @relation(fields: [roleId], references: [id])
+  channel   YoutubeChannel @relation(fields: [channelId], references: [id])
+  userId    Int
+  roleId    Int
+  channelId Int
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model YoutubeVideo {
+  id           Int               @id @default(autoincrement())
+  channel      YoutubeChannel    @relation(fields: [channelId], references: [id])
+  channelId    Int
+  name         String
+  urlFile      String
+  coverImage   String?
+  descriptions String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  comments     YoutubeComment[]
+  reactions    YoutubeReaction[]
+}
+
+model YoutubeSubscriber {
+  id         Int            @id @default(autoincrement())
+  user       YoutubeUser    @relation(fields: [userId], references: [id])
+  channel    YoutubeChannel @relation(fields: [channelId], references: [id])
+  userId     Int
+  channelId  Int
+  membership Boolean
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+enum ReactionEnum {
+  LIKE
+  DISELIKE
+}
+
+model YoutubeReaction {
+  id        Int          @id @default(autoincrement())
+  type      ReactionEnum
+  user      YoutubeUser  @relation(fields: [userId], references: [id])
+  video     YoutubeVideo @relation(fields: [videoId], references: [id])
+  userId    Int
+  videoId   Int
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model YoutubeComment {
+  id           Int              @id @default(autoincrement())
+  video        YoutubeVideo     @relation(fields: [videoId], references: [id])
+  user         YoutubeUser      @relation(fields: [userId], references: [id])
+  commentTo    YoutubeComment?  @relation("replyComm", fields: [commentToId], references: [id])
+  videoId      Int
+  userId       Int
+  message      String
+  commentToId  Int?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  commentPosts YoutubeComment[] @relation("replyComm")
+}

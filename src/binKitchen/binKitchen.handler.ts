@@ -3,6 +3,7 @@ import {
   CreateCategoryCodec,
   CreateMenuCodec,
   CreateOrderCodec,
+  DeleteOrderCodec,
   GetMenuByCategoryCodec,
   GetOrderCodec,
   UpdateCategoryCodec,
@@ -13,6 +14,7 @@ import {
   createCategory,
   createMenu,
   createOrder,
+  deleteOrder,
   getCategory,
   getMenu,
   getMenuByCategory,
@@ -194,6 +196,25 @@ export const updateOrderHandler = async (req: Request, res: Response) => {
       const result = await updateOrder({
         id: args.id,
         updateStatus: args.updateStatus,
+      });
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+};
+
+export const deleteOrderHandler = async (req: Request, res: Response) => {
+  const args = req?.body;
+  console.log(args);
+  console.log(DeleteOrderCodec.decode(args));
+
+  try {
+    if (DeleteOrderCodec.decode(args)._tag === "Right") {
+      const result = await deleteOrder({
+        id: args.id,
       });
       res.status(200).json(result);
     } else {

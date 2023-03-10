@@ -1,0 +1,113 @@
+model LaunderBranchInfo {
+  id              Int                     @id @default(autoincrement())
+  owner           String
+  phone           Int                     @unique
+  location        String
+  areaSize        Int
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  machineInStores LaundryMachineInStore[]
+}
+
+model LaunderMachine {
+  id               Int                     @id @default(autoincrement())
+  brand            String
+  Capacity         Int
+  type             String
+  serialNumber     Int
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  machineInStores  LaundryMachineInStore[]
+  serviceHistories LaunderServiceHistory[]
+}
+
+model LaundryMachineInStore {
+  id                Int                       @id @default(autoincrement())
+  branch            LaunderBranchInfo         @relation(fields: [branchId], references: [id])
+  machine           LaunderMachine            @relation(fields: [machineId], references: [id])
+  branchId          Int
+  machineId         Int
+  mfd               String
+  Warranty          String
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  programInMachines LaunderProgramInMachine[]
+  washingHistories  LaundryWashingHistory[]
+}
+
+model LaunderTechnician {
+  id               Int                     @id @default(autoincrement())
+  firstName        String
+  lastName         String
+  image            String?
+  phone            Int
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  serviceHistories LaunderServiceHistory[]
+}
+
+model LaunderServiceHistory {
+  id           Int               @id @default(autoincrement())
+  date         DateTime
+  machine      LaunderMachine    @relation(fields: [machineId], references: [id])
+  technician   LaunderTechnician @relation(fields: [technicianId], references: [id])
+  machineId    Int
+  technicianId Int
+  descriptions String
+  image        String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
+
+model LaunderWashingProgram {
+  id                Int                       @id @default(autoincrement())
+  program           String
+  price             Int
+  duration          Int
+  capacityLimit     Int
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  programInMachines LaunderProgramInMachine[]
+  washingHistories  LaundryWashingHistory[]
+}
+
+model LaunderProgramInMachine {
+  id        Int                   @id @default(autoincrement())
+  machine   LaundryMachineInStore @relation(fields: [machineId], references: [id])
+  program   LaunderWashingProgram @relation(fields: [programId], references: [id])
+  machineId Int
+  programId Int
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+}
+
+model LaunderUser {
+  id             Int                   @id @default(autoincrement())
+  username       String
+  phone          Int
+  walletBalance  Int
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  topupHistories LaundryTopupHistory[]
+}
+
+model LaundryTopupHistory {
+  id        Int         @id @default(autoincrement())
+  user      LaunderUser @relation(fields: [userId], references: [id])
+  userId    Int
+  value     Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model LaundryWashingHistory {
+  id        Int                   @id @default(autoincrement())
+  machine   LaundryMachineInStore @relation(fields: [machineId], references: [id])
+  program   LaunderWashingProgram @relation(fields: [programId], references: [id])
+  machineId Int
+  programId Int
+  date      DateTime
+  price     Int
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+}

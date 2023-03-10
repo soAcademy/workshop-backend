@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
-import { AppRoutes } from "./routes";
-import cors from 'cors';
+import { AppRoutes } from "./BinQuizBillionaire/routes";
+import cors from "cors";
 // Express Server
 
 const app: Application = express();

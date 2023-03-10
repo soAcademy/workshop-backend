@@ -9,10 +9,11 @@ model QuizCategory {
 
 model QuizQuestion {
   id             Int                 @id @default(autoincrement())
-  name           String
-  category       QuizCategory        @relation(fields: [categoryName], references: [name])
-  categoryName   String
-  anwserChoiceId Int
+  questName      String
+  category       QuizCategory        @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  answer         QuizChoice          @relation("answer", fields: [answerChoiceId], references: [id])
+  answerChoiceId Int                 @unique
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
   choices        QuizChoice[]
@@ -20,12 +21,13 @@ model QuizQuestion {
 }
 
 model QuizChoice {
-  id         Int          @id @default(autoincrement())
-  name       String
-  question   QuizQuestion @relation(fields: [questionId], references: [id])
-  questionId Int
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id             Int           @id @default(autoincrement())
+  choiceName     String
+  questione      QuizQuestion? @relation(fields: [questionId], references: [id])
+  questionId     Int?
+  questionAnswer QuizQuestion? @relation("answer")
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 }
 
 model QuizRoundQuestion {
@@ -40,12 +42,12 @@ model QuizRoundQuestion {
 }
 
 model QuizRound {
-  id           Int                 @id @default(autoincrement())
-  user         String
-  category     QuizCategory        @relation(fields: [categoryName], references: [name])
-  categoryName String
-  score        Int
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-  questions    QuizRoundQuestion[]
+  id         Int                 @id @default(autoincrement())
+  user       String
+  category   QuizCategory        @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  score      Int?
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+  questions  QuizRoundQuestion[]
 }

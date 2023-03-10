@@ -64,3 +64,9 @@ export const GetOrderCodec = t.type({
 });
 
 export interface IGetOrder extends t.TypeOf<typeof GetOrderCodec> {}
+
+export const DeleteOrderCodec = t.type({
+  id: t.number,
+});
+
+export interface IDeleteOrder extends t.TypeOf<typeof DeleteOrderCodec> {}

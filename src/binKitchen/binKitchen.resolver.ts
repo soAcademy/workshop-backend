@@ -1,9 +1,9 @@
-import { includes } from "fp-ts/lib/string";
 import { PrismaClient } from "../../prisma/client";
 import {
   ICreateCategory,
   ICreateMenu,
   ICreateOrder,
+  IDeleteOrder,
   IGetMenuByCategory,
   IGetOrder,
   IUpdateCategory,
@@ -114,4 +114,9 @@ export const updateOrder = (args: IUpdateOrder) =>
   prisma.binKitchenOrder.updateMany({
     where: { id: args.id },
     data: { status: args.updateStatus },
+  });
+
+export const deleteOrder = (args: IDeleteOrder) =>
+  prisma.binKitchenOrder.delete({
+    where: { id: args.id },
   });

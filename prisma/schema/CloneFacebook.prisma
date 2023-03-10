@@ -9,10 +9,11 @@ model FacebookUser {
   to                FacebookUserRelationship[] @relation("to")
   userInGroups      FacebookUserInGroup[]
   posts             FacebookPost[]
-  replyPosts        FacebookReplyComment[]
   directMessageFrom FacebookDirectMessage[]    @relation("DmFrom")
   directMessageTo   FacebookDirectMessage[]    @relation("DmTo")
   commentPosts      FacebookCommentPost[]
+  likes             FacebookLike[]
+  postDestinations  FacebookPostDestination[]
 }
 
 model FacebookUserRelationship {
@@ -54,28 +55,43 @@ model FacebookHashtag {
   posts     FacebookPost[]
 }
 
-model FacebookLikeType {
-  id        Int            @id @default(autoincrement())
-  type      String
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  posts     FacebookPost[]
+model FacebookLike {
+  id        Int                  @id @default(autoincrement())
+  type      FacebookLikeTypeEnum
+  user      FacebookUser         @relation(fields: [userId], references: [id])
+  userId    Int
+  posts     FacebookPost?        @relation(fields: [postId], references: [id])
+  postId    Int?
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+}
+
+enum FacebookLikeTypeEnum {
+  SAD
+  LIKE
+  LOVE
+  CARE
+  ANGRY
+  HAHA
+  WOW
 }
 
 model FacebookShareType {
-  id        Int            @id @default(autoincrement())
-  type      String
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-  posts     FacebookPost[]
+  id           Int                   @id @default(autoincrement())
+  type         String
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  commentPosts FacebookCommentPost[]
+  posts        FacebookPost[]
 }
 
 model FacebookGroup {
-  id           Int                   @id @default(autoincrement())
-  name         String                @unique
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
-  userInGroups FacebookUserInGroup[]
+  id               Int                       @id @default(autoincrement())
+  name             String                    @unique
+  createdAt        DateTime                  @default(now())
+  updatedAt        DateTime                  @updatedAt
+  userInGroups     FacebookUserInGroup[]
+  postDestinations FacebookPostDestination[]
 }
 
 model FacebookUserInGroup {
@@ -88,56 +104,77 @@ model FacebookUserInGroup {
   updatedAt DateTime      @updatedAt
 }
 
-model FacebookPostType {
+model FacebookPostDestination {
   id        Int            @id @default(autoincrement())
   type      String
+  userWall  FacebookUser?  @relation(fields: [userId], references: [id])
+  group     FacebookGroup? @relation(fields: [groupId], references: [id])
+  userId    Int
+  groupId   Int
+  post      FacebookPost?  @relation(fields: [postId], references: [id])
+  postId    Int?
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-  posts     FacebookPost[]
 }
 
 model FacebookPost {
-  id           Int                   @id @default(autoincrement())
-  user         FacebookUser          @relation(fields: [userId], references: [id])
-  userId       Int
-  message      String
-  image        String?
-  postType     FacebookPostType      @relation(fields: [postTypeId], references: [id])
-  postTypeId   Int
-  location     FacebookLocation      @relation(fields: [locationId], references: [id])
-  locationId   Int
-  like         FacebookLikeType?     @relation(fields: [likeTypeId], references: [id])
-  likeTypeId   Int
-  share        FacebookShareType?    @relation(fields: [shareTypeId], references: [id])
-  shareTypeId  Int
-  hashtag      FacebookHashtag?      @relation(fields: [hashtagId], references: [id])
-  hashtagId    Int
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
-  commentPosts FacebookCommentPost[]
+  id                Int                       @id @default(autoincrement())
+  user              FacebookUser              @relation(fields: [userId], references: [id])
+  userId            Int
+  message           String?
+  image             String?
+  location          FacebookLocation          @relation(fields: [locationId], references: [id])
+  locationId        Int
+  hashtag           FacebookHashtag?          @relation(fields: [hashtagId], references: [id])
+  hashtagId         Int
+  share             FacebookShareType?        @relation(fields: [shareToId], references: [id])
+  shareToId         Int
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  likes             FacebookLike[]
+  commentPosts      FacebookCommentPost[]
+  postDestionations FacebookPostDestination[]
 }
 
 model FacebookCommentPost {
-  id            Int                    @id @default(autoincrement())
-  post          FacebookPost           @relation(fields: [postId], references: [id])
-  postId        Int
-  user          FacebookUser           @relation(fields: [userId], references: [id])
-  userId        Int
-  message       String
-  image         String?
-  createdAt     DateTime               @default(now())
-  updatedAt     DateTime               @updatedAt
-  replyComments FacebookReplyComment[]
+  id           Int                   @id @default(autoincrement())
+  post         FacebookPost          @relation(fields: [postId], references: [id])
+  postId       Int
+  user         FacebookUser          @relation(fields: [userId], references: [id])
+  userId       Int
+  message      String?
+  image        String?
+  commentTo    FacebookCommentPost?  @relation("replyComm", fields: [commentToId], references: [id])
+  commentToId  Int?
+  share        FacebookShareType     @relation(fields: [shareToId], references: [id])
+  shareToId    Int
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  commentPosts FacebookCommentPost[] @relation("replyComm")
 }
 
-model FacebookReplyComment {
-  id            Int                 @id @default(autoincrement())
-  user          FacebookUser        @relation(fields: [userId], references: [id])
-  userId        Int
-  comment       FacebookCommentPost @relation(fields: [commentPostId], references: [id])
-  commentPostId Int
-  message       String
-  image         String?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
-}
+// model FacebookReplyComment {
+//   id            Int                 @id @default(autoincrement())
+//   user          FacebookUser        @relation(fields: [userId], references: [id])
+//   userId        Int
+//   comment       FacebookCommentPost @relation(fields: [commentPostId], references: [id])
+//   commentPostId Int
+//   message       String
+//   image         String?
+//   createdAt     DateTime            @default(now())
+//   updatedAt     DateTime            @updatedAt
+// }
+
+// model FacebookSharePost {
+//   id          Int                @id @default(autoincrement())
+//   post        FacebookPost       @relation(fields: [postId], references: [id])
+//   postId      Int
+//   user        FacebookUser       @relation(fields: [userId], references: [id])
+//   userId      Int
+//   message     String?
+//   image       String?
+//   share       FacebookShareType? @relation(fields: [shareTypeId], references: [id])
+//   shareTypeId Int
+//   createdAt   DateTime           @default(now())
+//   updatedAt   DateTime           @updatedAt
+// }
