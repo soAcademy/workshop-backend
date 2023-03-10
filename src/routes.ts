@@ -16,6 +16,7 @@ import {
   deleteTeacherHandler,
 } from "./sql";
 import { createManyTasksHandler, createTaskHandler, deleteManyTasksHandler, deleteTaskHandler, findUniqueOrThrowTaskHandler, findUniqueTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
+import { createQuizCategoryHandler, createQuizHandler, getQuizHandler, getResultsHandler, submitQuizHandler } from "./trivia/trivia.handler";
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -186,5 +187,30 @@ export const AppRoutes = [
     path: "/binKitchen/updateOrder",
     method: "post",
     action: updateOrderHandler,
+  },
+  {
+    path: "/trivia/createQuizCategory",
+    method: "post",
+    action: createQuizCategoryHandler,
+  },
+  {
+    path: "/trivia/createQuiz",
+    method: "post",
+    action: createQuizHandler,
+  },
+  {
+    path: "/trivia/getQuiz",
+    method: "post",
+    action: getQuizHandler,
+  },
+  {
+    path: "/trivia/submitQuiz",
+    method: "post",
+    action: submitQuizHandler,
+  },
+  {
+    path: "/trivia/getResults",
+    method: "post",
+    action: getResultsHandler,
   },
 ];

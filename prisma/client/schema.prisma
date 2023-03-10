@@ -271,31 +271,34 @@ model QuizCategory {
 }
 
 model QuizQuestion {
-  id             Int           @id @default(autoincrement())
-  name           String        @unique
-  answerId       Int
-  category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
-  quizCategoryId Int?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now())
-  quizChoices    QuizChoice[]
-  quizRecords    QuizRecord[]
+  id                 Int           @id @default(autoincrement())
+  name               String        @unique
+  answer             QuizChoice    @relation("quizAnswer", fields: [quizChoiceId], references: [id])
+  category           QuizCategory? @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId     Int?
+  quizAnswerChoiceId Int           @unique
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @default(now())
+  quizChoices        QuizChoice[]
+  quizRecords        QuizRecord[]
+  quizChoiceId       Int           @unique
 }
 
 model QuizChoice {
   id             Int           @id @default(autoincrement())
-  name           String
+  choice         String
   question       QuizQuestion? @relation(fields: [quizQuestionId], references: [id])
-  quizQuestionId Int
+  quizQuestionId Int?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @default(now())
   quizRecords    QuizRecord[]
+  quizAnswer     QuizQuestion? @relation("quizAnswer")
 }
 
 model QuizRound {
   id             Int           @id @default(autoincrement())
   name           String        @unique //playerName (unique)
-  totalScore     String
+  totalScore     Int
   category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
   quizCategoryId Int
   createdAt      DateTime      @default(now())
