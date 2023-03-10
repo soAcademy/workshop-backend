@@ -1,88 +1,88 @@
-model UserYoutube {
-  id           Int            @id @default(autoincrement())
-  name         String
-  email        String
-  imageProfile String
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  chanel       Chanel[]
-  Comment      Comment[]
-  userToChanel UserToChanel[]
-  permission   Permission[]
-}
+// model UserYoutube {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   email        String
+//   imageProfile String
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   chanel       Chanel[]
+//   Comment      Comment[]
+//   userToChanel UserToChanel[]
+//   permission   Permission[]
+// }
 
-model Chanel {
-  id           Int            @id @default(autoincrement())
-  name         String
-  // user         User           @relation(fields: [userId], references: [id])
-  // userId       Int
-  videos       Video[]
-  description  String
-  user         UserYoutube    @relation(fields: [userId], references: [id])
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  userToChanel UserToChanel[]
-  // permission   Permission[]
-  userId       Int
-  Permission   Permission[]
-}
+// model Chanel {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   // user         User           @relation(fields: [userId], references: [id])
+//   // userId       Int
+//   videos       Video[]
+//   description  String
+//   user         UserYoutube    @relation(fields: [userId], references: [id])
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   userToChanel UserToChanel[]
+//   // permission   Permission[]
+//   userId       Int
+//   Permission   Permission[]
+// }
 
-enum RoleEnum {
-  Admin
-  Editor
-  Creater
-}
+// enum RoleEnum {
+//   Admin
+//   Editor
+//   Creater
+// }
 
-enum FeelingEnum {
-  like
-  unlike
-}
+// enum FeelingEnum {
+//   like
+//   unlike
+// }
 
-model Comment {
-  id       Int         @id @default(autoincrement())
-  user     UserYoutube @relation(fields: [userId], references: [id])
-  userId   Int
-  video    Video       @relation(fields: [videoId], references: [id])
-  videoId  Int
-  createAt DateTime    @default(now())
-  updateAt DateTime    @updatedAt
-}
+// model Comment {
+//   id       Int         @id @default(autoincrement())
+//   user     UserYoutube @relation(fields: [userId], references: [id])
+//   userId   Int
+//   video    Video       @relation(fields: [videoId], references: [id])
+//   videoId  Int
+//   createAt DateTime    @default(now())
+//   updateAt DateTime    @updatedAt
+// }
 
-model Video {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  comments    Comment[]
-  url         String
-  createAt    DateTime  @default(now())
-  updateAt    DateTime  @updatedAt
-  Chanel      Chanel?   @relation(fields: [chanelId], references: [id])
-  chanelId    Int?
-}
+// model Video {
+//   id          Int       @id @default(autoincrement())
+//   name        String
+//   description String
+//   comments    Comment[]
+//   url         String
+//   createAt    DateTime  @default(now())
+//   updateAt    DateTime  @updatedAt
+//   Chanel      Chanel?   @relation(fields: [chanelId], references: [id])
+//   chanelId    Int?
+// }
 
-model Permission {
-  id           Int            @id @default(autoincrement())
-  role         RoleEnum
-  edit         Boolean
-  post         Boolean
-  delete       Boolean
-  upload       Boolean
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  User         UserYoutube?   @relation(fields: [userId], references: [id])
-  userId       Int?
-  Chanel       Chanel?        @relation(fields: [chanelId], references: [id])
-  chanelId     Int?
-  userToChanel UserToChanel[]
-}
+// model Permission {
+//   id           Int            @id @default(autoincrement())
+//   role         RoleEnum
+//   edit         Boolean
+//   post         Boolean
+//   delete       Boolean
+//   upload       Boolean
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   User         UserYoutube?   @relation(fields: [userId], references: [id])
+//   userId       Int?
+//   Chanel       Chanel?        @relation(fields: [chanelId], references: [id])
+//   chanelId     Int?
+//   userToChanel UserToChanel[]
+// }
 
-model UserToChanel {
-  id           Int         @id @default(autoincrement())
-  role         RoleEnum
-  user         UserYoutube @relation(fields: [userId], references: [id])
-  userId       Int
-  chanel       Chanel      @relation(fields: [chanelId], references: [id])
-  chanelId     Int
-  permission   Permission  @relation(fields: [permissionId], references: [id])
-  permissionId Int
-}
+// model UserToChanel {
+//   id           Int         @id @default(autoincrement())
+//   role         RoleEnum
+//   user         UserYoutube @relation(fields: [userId], references: [id])
+//   userId       Int
+//   chanel       Chanel      @relation(fields: [chanelId], references: [id])
+//   chanelId     Int
+//   permission   Permission  @relation(fields: [permissionId], references: [id])
+//   permissionId Int
+// }

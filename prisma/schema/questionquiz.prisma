@@ -1,0 +1,64 @@
+model QuestionCategory {
+  id        Int         @id @default(autoincrement())
+  name      String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  Question  Question[]
+  RoundQuiz RoundQuiz[]
+}
+
+model Question {
+  id                 Int              @id @default(autoincrement())
+  questionCategories QuestionCategory @relation(fields: [questionCategoryId], references: [id])
+  questionCategoryId Int
+  textQuestion       String
+  answer             Choice           @relation("questionAnswer", fields: [answerId], references: [id]) //resolver
+  answerId           Int              @unique //show on database
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @updatedAt
+  choice             Choice[]
+  RoundDetail        RoundDetail[]
+}
+
+model Choice {
+  id             Int       @id @default(autoincrement())
+  choiceName     String
+  question       Question  @relation(fields: [questionId], references: [id])
+  questionId     Int
+  questionAnswer Question? @relation("questionAnswer")
+  createAt       DateTime  @default(now())
+  updateAt       DateTime  @updatedAt
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  RoundQuiz RoundQuiz[]
+}
+
+model RoundQuiz {
+  id                 Int              @id @default(autoincrement())
+  questionCategories QuestionCategory @relation(fields: [questionCategoryId], references: [id])
+  questionCategoryId Int
+  score              Int
+  user               User             @relation(fields: [userId], references: [id])
+  userId             Int
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @updatedAt
+  RoundDetail        RoundDetail[]
+}
+
+model RoundDetail {
+  id            Int       @id @default(autoincrement())
+  roundQuiz     RoundQuiz @relation(fields: [roundQuizId], references: [id])
+  roundQuizId   Int
+  question      Question  @relation(fields: [questionId], references: [id])
+  questionId    Int
+  questionOrder Int
+  userChoose    Int
+  result        Boolean
+  createAt      DateTime  @default(now())
+  updateAt      DateTime  @updatedAt
+}

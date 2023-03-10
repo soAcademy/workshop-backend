@@ -1,0 +1,132 @@
+// model BoeingWash {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+// }
+
+// model BranchWash {
+//   id               Int                   @id @default(autoincrement())
+//   owner            String
+//   tel              Int
+//   address          String
+//   area             Int
+//   createAt         DateTime              @default(now())
+//   updateAt         DateTime              @updatedAt
+//   MachineAtBranchs MachineAtBranchWash[]
+// }
+
+// model MachineWash {
+//   id               Int                   @id @default(autoincrement())
+//   brand            String
+//   size             Int
+//   type             String
+//   model            String
+//   year             Int
+//   insurances       InsuranceWash[]
+//   createAt         DateTime              @default(now())
+//   updateAt         DateTime              @updatedAt
+//   MachineAtBranchs MachineAtBranchWash[]
+//   MachineToProgram MachineToProgram[]
+//   maintainance     maintainance[]
+//   histories        HistoryWash[]
+// }
+
+// model MachineAtBranchWash {
+//   id        Int         @id @default(autoincrement())
+//   machine   MachineWash @relation(fields: [machineId], references: [id])
+//   machineId Int
+//   branch    BranchWash  @relation(fields: [branchId], references: [id])
+//   branchId  Int
+//   createAt  DateTime    @default(now())
+//   updateAt  DateTime    @updatedAt
+// }
+
+// model InsuranceWash {
+//   id            Int           @id @default(autoincrement())
+//   startTime     DateTime
+//   endTime       DateTime
+//   remainingTime DateTime
+//   createAt      DateTime      @default(now())
+//   updateAt      DateTime      @updatedAt
+//   Machine       MachineWash[]
+// }
+
+// model CategoryProgramWash {
+//   id       Int           @id @default(autoincrement())
+//   name     String
+//   createAt DateTime      @default(now())
+//   updateAt DateTime      @updatedAt
+//   program  ProgramWash[]
+// }
+
+// model ProgramWash {
+//   id                    Int                 @id @default(autoincrement())
+//   categoryProgramWash   CategoryProgramWash @relation(fields: [categoryProgramWashId], references: [id])
+//   categoryProgramWashId Int
+//   price                 Int
+//   duration              DateTime
+//   weight                Int
+//   createAt              DateTime            @default(now())
+//   updateAt              DateTime            @updatedAt
+//   MachineToProgram      MachineToProgram[]
+//   history               HistoryWash[]
+// }
+
+// model MachineToProgram {
+//   id            Int         @id @default(autoincrement())
+//   machineWash   MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId Int
+//   programWash   ProgramWash @relation(fields: [programWashId], references: [id])
+//   programWashId Int
+//   createAt      DateTime    @default(now())
+//   updateAt      DateTime    @updatedAt
+// }
+
+// model maintainance {
+//   id             Int         @id @default(autoincrement())
+//   round          Int
+//   dateUseMachine DateTime
+//   levelDamage    Int
+//   cause          String
+//   machanicName   String
+//   machineWash    MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId  Int
+//   createAt       DateTime    @default(now())
+//   updateAt       DateTime    @updatedAt
+// }
+
+// model userWash {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   tel          Int
+//   balance      Int
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   HistoryWash  HistoryWash[]
+//   topUpHistory topUpHistory[]
+// }
+
+// model HistoryWash {
+//   id            Int         @id @default(autoincrement())
+//   machineWash   MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId Int
+//   programWash   ProgramWash @relation(fields: [programWashId], references: [id])
+//   programWashId Int
+//   startWashAt   DateTime
+//   endWashAt     DateTime
+//   price         Int
+//   userWash      userWash    @relation(fields: [userWashId], references: [id])
+//   userWashId    Int
+//   createAt      DateTime    @default(now())
+//   updateAt      DateTime    @updatedAt
+// }
+
+// model topUpHistory {
+//   id         Int      @id @default(autoincrement())
+//   userWash   userWash @relation(fields: [userWashId], references: [id])
+//   userWashId Int
+//   topUpValue Int
+//   createAt   DateTime @default(now())
+//   updateAt   DateTime @updatedAt
+// }

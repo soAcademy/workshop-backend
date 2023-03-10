@@ -1,0 +1,12 @@
+// model University {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+// }
+
+// model Book {
+//   id   Int    @id @default(autoincrement())
+//   name String
+//   isbn Int
+// }

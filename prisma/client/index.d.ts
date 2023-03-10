@@ -11,101 +11,79 @@ type UnwrapTuple<Tuple extends readonly unknown[]> = {
 
 
 /**
- * Model UserYoutube
+ * Model QuestionCategory
  * 
  */
-export type UserYoutube = {
+export type QuestionCategory = {
   id: number
   name: string
-  email: string
-  imageProfile: string
   createAt: Date
   updateAt: Date
 }
 
 /**
- * Model Chanel
+ * Model Question
  * 
  */
-export type Chanel = {
+export type Question = {
+  id: number
+  questionCategoryId: number
+  textQuestion: string
+  answerId: number
+  createAt: Date
+  updateAt: Date
+}
+
+/**
+ * Model Choice
+ * 
+ */
+export type Choice = {
+  id: number
+  choiceName: string
+  questionId: number | null
+  createAt: Date
+  updateAt: Date
+}
+
+/**
+ * Model User
+ * 
+ */
+export type User = {
   id: number
   name: string
-  description: string
   createAt: Date
   updateAt: Date
+}
+
+/**
+ * Model RoundQuiz
+ * 
+ */
+export type RoundQuiz = {
+  id: number
+  questionCategoryId: number
+  score: number
   userId: number
-}
-
-/**
- * Model Comment
- * 
- */
-export type Comment = {
-  id: number
-  userId: number
-  videoId: number
   createAt: Date
   updateAt: Date
 }
 
 /**
- * Model Video
+ * Model RoundDetail
  * 
  */
-export type Video = {
+export type RoundDetail = {
   id: number
-  name: string
-  description: string
-  url: string
+  roundQuizId: number
+  questionId: number
+  questionOrder: number
+  userChoose: number
+  result: boolean
   createAt: Date
   updateAt: Date
-  chanelId: number | null
 }
-
-/**
- * Model Permission
- * 
- */
-export type Permission = {
-  id: number
-  role: RoleEnum
-  edit: boolean
-  post: boolean
-  delete: boolean
-  upload: boolean
-  createAt: Date
-  updateAt: Date
-  userId: number | null
-  chanelId: number | null
-}
-
-/**
- * Model UserToChanel
- * 
- */
-export type UserToChanel = {
-  id: number
-  role: RoleEnum
-  userId: number
-  chanelId: number
-  permissionId: number
-}
-
-
-/**
- * Enums
- */
-
-// Based on
-// https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
-
-export const RoleEnum: {
-  Admin: 'Admin',
-  Editor: 'Editor',
-  Creater: 'Creater'
-};
-
-export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
 
 
 /**
@@ -115,8 +93,8 @@ export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more UserYoutubes
- * const userYoutubes = await prisma.userYoutube.findMany()
+ * // Fetch zero or more QuestionCategories
+ * const questionCategories = await prisma.questionCategory.findMany()
  * ```
  *
  * 
@@ -136,8 +114,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more UserYoutubes
-   * const userYoutubes = await prisma.userYoutube.findMany()
+   * // Fetch zero or more QuestionCategories
+   * const questionCategories = await prisma.questionCategory.findMany()
    * ```
    *
    * 
@@ -226,64 +204,64 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<this, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => Promise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): Promise<R>
 
       /**
-   * `prisma.userYoutube`: Exposes CRUD operations for the **UserYoutube** model.
+   * `prisma.questionCategory`: Exposes CRUD operations for the **QuestionCategory** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more UserYoutubes
-    * const userYoutubes = await prisma.userYoutube.findMany()
+    * // Fetch zero or more QuestionCategories
+    * const questionCategories = await prisma.questionCategory.findMany()
     * ```
     */
-  get userYoutube(): Prisma.UserYoutubeDelegate<GlobalReject>;
+  get questionCategory(): Prisma.QuestionCategoryDelegate<GlobalReject>;
 
   /**
-   * `prisma.chanel`: Exposes CRUD operations for the **Chanel** model.
+   * `prisma.question`: Exposes CRUD operations for the **Question** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Chanels
-    * const chanels = await prisma.chanel.findMany()
+    * // Fetch zero or more Questions
+    * const questions = await prisma.question.findMany()
     * ```
     */
-  get chanel(): Prisma.ChanelDelegate<GlobalReject>;
+  get question(): Prisma.QuestionDelegate<GlobalReject>;
 
   /**
-   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
+   * `prisma.choice`: Exposes CRUD operations for the **Choice** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Comments
-    * const comments = await prisma.comment.findMany()
+    * // Fetch zero or more Choices
+    * const choices = await prisma.choice.findMany()
     * ```
     */
-  get comment(): Prisma.CommentDelegate<GlobalReject>;
+  get choice(): Prisma.ChoiceDelegate<GlobalReject>;
 
   /**
-   * `prisma.video`: Exposes CRUD operations for the **Video** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Videos
-    * const videos = await prisma.video.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get video(): Prisma.VideoDelegate<GlobalReject>;
+  get user(): Prisma.UserDelegate<GlobalReject>;
 
   /**
-   * `prisma.permission`: Exposes CRUD operations for the **Permission** model.
+   * `prisma.roundQuiz`: Exposes CRUD operations for the **RoundQuiz** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Permissions
-    * const permissions = await prisma.permission.findMany()
+    * // Fetch zero or more RoundQuizs
+    * const roundQuizs = await prisma.roundQuiz.findMany()
     * ```
     */
-  get permission(): Prisma.PermissionDelegate<GlobalReject>;
+  get roundQuiz(): Prisma.RoundQuizDelegate<GlobalReject>;
 
   /**
-   * `prisma.userToChanel`: Exposes CRUD operations for the **UserToChanel** model.
+   * `prisma.roundDetail`: Exposes CRUD operations for the **RoundDetail** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more UserToChanels
-    * const userToChanels = await prisma.userToChanel.findMany()
+    * // Fetch zero or more RoundDetails
+    * const roundDetails = await prisma.roundDetail.findMany()
     * ```
     */
-  get userToChanel(): Prisma.UserToChanelDelegate<GlobalReject>;
+  get roundDetail(): Prisma.RoundDetailDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -753,12 +731,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    UserYoutube: 'UserYoutube',
-    Chanel: 'Chanel',
-    Comment: 'Comment',
-    Video: 'Video',
-    Permission: 'Permission',
-    UserToChanel: 'UserToChanel'
+    QuestionCategory: 'QuestionCategory',
+    Question: 'Question',
+    Choice: 'Choice',
+    User: 'User',
+    RoundQuiz: 'RoundQuiz',
+    RoundDetail: 'RoundDetail'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -920,36 +898,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserYoutubeCountOutputType
+   * Count Type QuestionCategoryCountOutputType
    */
 
 
-  export type UserYoutubeCountOutputType = {
-    chanel: number
-    Comment: number
-    userToChanel: number
-    permission: number
+  export type QuestionCategoryCountOutputType = {
+    Question: number
+    RoundQuiz: number
   }
 
-  export type UserYoutubeCountOutputTypeSelect = {
-    chanel?: boolean
-    Comment?: boolean
-    userToChanel?: boolean
-    permission?: boolean
+  export type QuestionCategoryCountOutputTypeSelect = {
+    Question?: boolean
+    RoundQuiz?: boolean
   }
 
-  export type UserYoutubeCountOutputTypeGetPayload<S extends boolean | null | undefined | UserYoutubeCountOutputTypeArgs> =
+  export type QuestionCategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | QuestionCategoryCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserYoutubeCountOutputType :
+    S extends true ? QuestionCategoryCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (UserYoutubeCountOutputTypeArgs)
-    ? UserYoutubeCountOutputType 
-    : S extends { select: any } & (UserYoutubeCountOutputTypeArgs)
+    S extends { include: any } & (QuestionCategoryCountOutputTypeArgs)
+    ? QuestionCategoryCountOutputType 
+    : S extends { select: any } & (QuestionCategoryCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof UserYoutubeCountOutputType ? UserYoutubeCountOutputType[P] : never
+    P extends keyof QuestionCategoryCountOutputType ? QuestionCategoryCountOutputType[P] : never
   } 
-      : UserYoutubeCountOutputType
+      : QuestionCategoryCountOutputType
 
 
 
@@ -957,46 +931,44 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * UserYoutubeCountOutputType without action
+   * QuestionCategoryCountOutputType without action
    */
-  export type UserYoutubeCountOutputTypeArgs = {
+  export type QuestionCategoryCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutubeCountOutputType
+     * Select specific fields to fetch from the QuestionCategoryCountOutputType
      */
-    select?: UserYoutubeCountOutputTypeSelect | null
+    select?: QuestionCategoryCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type ChanelCountOutputType
+   * Count Type QuestionCountOutputType
    */
 
 
-  export type ChanelCountOutputType = {
-    videos: number
-    userToChanel: number
-    Permission: number
+  export type QuestionCountOutputType = {
+    choice: number
+    RoundDetail: number
   }
 
-  export type ChanelCountOutputTypeSelect = {
-    videos?: boolean
-    userToChanel?: boolean
-    Permission?: boolean
+  export type QuestionCountOutputTypeSelect = {
+    choice?: boolean
+    RoundDetail?: boolean
   }
 
-  export type ChanelCountOutputTypeGetPayload<S extends boolean | null | undefined | ChanelCountOutputTypeArgs> =
+  export type QuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | QuestionCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? ChanelCountOutputType :
+    S extends true ? QuestionCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (ChanelCountOutputTypeArgs)
-    ? ChanelCountOutputType 
-    : S extends { select: any } & (ChanelCountOutputTypeArgs)
+    S extends { include: any } & (QuestionCountOutputTypeArgs)
+    ? QuestionCountOutputType 
+    : S extends { select: any } & (QuestionCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof ChanelCountOutputType ? ChanelCountOutputType[P] : never
+    P extends keyof QuestionCountOutputType ? QuestionCountOutputType[P] : never
   } 
-      : ChanelCountOutputType
+      : QuestionCountOutputType
 
 
 
@@ -1004,42 +976,42 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * ChanelCountOutputType without action
+   * QuestionCountOutputType without action
    */
-  export type ChanelCountOutputTypeArgs = {
+  export type QuestionCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the ChanelCountOutputType
+     * Select specific fields to fetch from the QuestionCountOutputType
      */
-    select?: ChanelCountOutputTypeSelect | null
+    select?: QuestionCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type VideoCountOutputType
+   * Count Type UserCountOutputType
    */
 
 
-  export type VideoCountOutputType = {
-    comments: number
+  export type UserCountOutputType = {
+    RoundQuiz: number
   }
 
-  export type VideoCountOutputTypeSelect = {
-    comments?: boolean
+  export type UserCountOutputTypeSelect = {
+    RoundQuiz?: boolean
   }
 
-  export type VideoCountOutputTypeGetPayload<S extends boolean | null | undefined | VideoCountOutputTypeArgs> =
+  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? VideoCountOutputType :
+    S extends true ? UserCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (VideoCountOutputTypeArgs)
-    ? VideoCountOutputType 
-    : S extends { select: any } & (VideoCountOutputTypeArgs)
+    S extends { include: any } & (UserCountOutputTypeArgs)
+    ? UserCountOutputType 
+    : S extends { select: any } & (UserCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof VideoCountOutputType ? VideoCountOutputType[P] : never
+    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
   } 
-      : VideoCountOutputType
+      : UserCountOutputType
 
 
 
@@ -1047,42 +1019,42 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * VideoCountOutputType without action
+   * UserCountOutputType without action
    */
-  export type VideoCountOutputTypeArgs = {
+  export type UserCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the VideoCountOutputType
+     * Select specific fields to fetch from the UserCountOutputType
      */
-    select?: VideoCountOutputTypeSelect | null
+    select?: UserCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type PermissionCountOutputType
+   * Count Type RoundQuizCountOutputType
    */
 
 
-  export type PermissionCountOutputType = {
-    userToChanel: number
+  export type RoundQuizCountOutputType = {
+    RoundDetail: number
   }
 
-  export type PermissionCountOutputTypeSelect = {
-    userToChanel?: boolean
+  export type RoundQuizCountOutputTypeSelect = {
+    RoundDetail?: boolean
   }
 
-  export type PermissionCountOutputTypeGetPayload<S extends boolean | null | undefined | PermissionCountOutputTypeArgs> =
+  export type RoundQuizCountOutputTypeGetPayload<S extends boolean | null | undefined | RoundQuizCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? PermissionCountOutputType :
+    S extends true ? RoundQuizCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (PermissionCountOutputTypeArgs)
-    ? PermissionCountOutputType 
-    : S extends { select: any } & (PermissionCountOutputTypeArgs)
+    S extends { include: any } & (RoundQuizCountOutputTypeArgs)
+    ? RoundQuizCountOutputType 
+    : S extends { select: any } & (RoundQuizCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof PermissionCountOutputType ? PermissionCountOutputType[P] : never
+    P extends keyof RoundQuizCountOutputType ? RoundQuizCountOutputType[P] : never
   } 
-      : PermissionCountOutputType
+      : RoundQuizCountOutputType
 
 
 
@@ -1090,13 +1062,13 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * PermissionCountOutputType without action
+   * RoundQuizCountOutputType without action
    */
-  export type PermissionCountOutputTypeArgs = {
+  export type RoundQuizCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the PermissionCountOutputType
+     * Select specific fields to fetch from the RoundQuizCountOutputType
      */
-    select?: PermissionCountOutputTypeSelect | null
+    select?: RoundQuizCountOutputTypeSelect | null
   }
 
 
@@ -1106,401 +1078,377 @@ export namespace Prisma {
    */
 
   /**
-   * Model UserYoutube
+   * Model QuestionCategory
    */
 
 
-  export type AggregateUserYoutube = {
-    _count: UserYoutubeCountAggregateOutputType | null
-    _avg: UserYoutubeAvgAggregateOutputType | null
-    _sum: UserYoutubeSumAggregateOutputType | null
-    _min: UserYoutubeMinAggregateOutputType | null
-    _max: UserYoutubeMaxAggregateOutputType | null
+  export type AggregateQuestionCategory = {
+    _count: QuestionCategoryCountAggregateOutputType | null
+    _avg: QuestionCategoryAvgAggregateOutputType | null
+    _sum: QuestionCategorySumAggregateOutputType | null
+    _min: QuestionCategoryMinAggregateOutputType | null
+    _max: QuestionCategoryMaxAggregateOutputType | null
   }
 
-  export type UserYoutubeAvgAggregateOutputType = {
+  export type QuestionCategoryAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type UserYoutubeSumAggregateOutputType = {
+  export type QuestionCategorySumAggregateOutputType = {
     id: number | null
   }
 
-  export type UserYoutubeMinAggregateOutputType = {
+  export type QuestionCategoryMinAggregateOutputType = {
     id: number | null
     name: string | null
-    email: string | null
-    imageProfile: string | null
     createAt: Date | null
     updateAt: Date | null
   }
 
-  export type UserYoutubeMaxAggregateOutputType = {
+  export type QuestionCategoryMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    email: string | null
-    imageProfile: string | null
     createAt: Date | null
     updateAt: Date | null
   }
 
-  export type UserYoutubeCountAggregateOutputType = {
+  export type QuestionCategoryCountAggregateOutputType = {
     id: number
     name: number
-    email: number
-    imageProfile: number
     createAt: number
     updateAt: number
     _all: number
   }
 
 
-  export type UserYoutubeAvgAggregateInputType = {
+  export type QuestionCategoryAvgAggregateInputType = {
     id?: true
   }
 
-  export type UserYoutubeSumAggregateInputType = {
+  export type QuestionCategorySumAggregateInputType = {
     id?: true
   }
 
-  export type UserYoutubeMinAggregateInputType = {
+  export type QuestionCategoryMinAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    imageProfile?: true
     createAt?: true
     updateAt?: true
   }
 
-  export type UserYoutubeMaxAggregateInputType = {
+  export type QuestionCategoryMaxAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    imageProfile?: true
     createAt?: true
     updateAt?: true
   }
 
-  export type UserYoutubeCountAggregateInputType = {
+  export type QuestionCategoryCountAggregateInputType = {
     id?: true
     name?: true
-    email?: true
-    imageProfile?: true
     createAt?: true
     updateAt?: true
     _all?: true
   }
 
-  export type UserYoutubeAggregateArgs = {
+  export type QuestionCategoryAggregateArgs = {
     /**
-     * Filter which UserYoutube to aggregate.
+     * Filter which QuestionCategory to aggregate.
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserYoutubes to fetch.
+     * Determine the order of QuestionCategories to fetch.
      */
-    orderBy?: Enumerable<UserYoutubeOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: UserYoutubeWhereUniqueInput
+    cursor?: QuestionCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserYoutubes from the position of the cursor.
+     * Take `±n` QuestionCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserYoutubes.
+     * Skip the first `n` QuestionCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned UserYoutubes
+     * Count returned QuestionCategories
     **/
-    _count?: true | UserYoutubeCountAggregateInputType
+    _count?: true | QuestionCategoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: UserYoutubeAvgAggregateInputType
+    _avg?: QuestionCategoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: UserYoutubeSumAggregateInputType
+    _sum?: QuestionCategorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: UserYoutubeMinAggregateInputType
+    _min?: QuestionCategoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: UserYoutubeMaxAggregateInputType
+    _max?: QuestionCategoryMaxAggregateInputType
   }
 
-  export type GetUserYoutubeAggregateType<T extends UserYoutubeAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserYoutube]: P extends '_count' | 'count'
+  export type GetQuestionCategoryAggregateType<T extends QuestionCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuestionCategory]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateUserYoutube[P]>
-      : GetScalarType<T[P], AggregateUserYoutube[P]>
+        : GetScalarType<T[P], AggregateQuestionCategory[P]>
+      : GetScalarType<T[P], AggregateQuestionCategory[P]>
   }
 
 
 
 
-  export type UserYoutubeGroupByArgs = {
-    where?: UserYoutubeWhereInput
-    orderBy?: Enumerable<UserYoutubeOrderByWithAggregationInput>
-    by: UserYoutubeScalarFieldEnum[]
-    having?: UserYoutubeScalarWhereWithAggregatesInput
+  export type QuestionCategoryGroupByArgs = {
+    where?: QuestionCategoryWhereInput
+    orderBy?: Enumerable<QuestionCategoryOrderByWithAggregationInput>
+    by: QuestionCategoryScalarFieldEnum[]
+    having?: QuestionCategoryScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: UserYoutubeCountAggregateInputType | true
-    _avg?: UserYoutubeAvgAggregateInputType
-    _sum?: UserYoutubeSumAggregateInputType
-    _min?: UserYoutubeMinAggregateInputType
-    _max?: UserYoutubeMaxAggregateInputType
+    _count?: QuestionCategoryCountAggregateInputType | true
+    _avg?: QuestionCategoryAvgAggregateInputType
+    _sum?: QuestionCategorySumAggregateInputType
+    _min?: QuestionCategoryMinAggregateInputType
+    _max?: QuestionCategoryMaxAggregateInputType
   }
 
 
-  export type UserYoutubeGroupByOutputType = {
+  export type QuestionCategoryGroupByOutputType = {
     id: number
     name: string
-    email: string
-    imageProfile: string
     createAt: Date
     updateAt: Date
-    _count: UserYoutubeCountAggregateOutputType | null
-    _avg: UserYoutubeAvgAggregateOutputType | null
-    _sum: UserYoutubeSumAggregateOutputType | null
-    _min: UserYoutubeMinAggregateOutputType | null
-    _max: UserYoutubeMaxAggregateOutputType | null
+    _count: QuestionCategoryCountAggregateOutputType | null
+    _avg: QuestionCategoryAvgAggregateOutputType | null
+    _sum: QuestionCategorySumAggregateOutputType | null
+    _min: QuestionCategoryMinAggregateOutputType | null
+    _max: QuestionCategoryMaxAggregateOutputType | null
   }
 
-  type GetUserYoutubeGroupByPayload<T extends UserYoutubeGroupByArgs> = Prisma.PrismaPromise<
+  type GetQuestionCategoryGroupByPayload<T extends QuestionCategoryGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<UserYoutubeGroupByOutputType, T['by']> &
+      PickArray<QuestionCategoryGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof UserYoutubeGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof QuestionCategoryGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], UserYoutubeGroupByOutputType[P]>
-            : GetScalarType<T[P], UserYoutubeGroupByOutputType[P]>
+              : GetScalarType<T[P], QuestionCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], QuestionCategoryGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type UserYoutubeSelect = {
+  export type QuestionCategorySelect = {
     id?: boolean
     name?: boolean
-    email?: boolean
-    imageProfile?: boolean
     createAt?: boolean
     updateAt?: boolean
-    chanel?: boolean | UserYoutube$chanelArgs
-    Comment?: boolean | UserYoutube$CommentArgs
-    userToChanel?: boolean | UserYoutube$userToChanelArgs
-    permission?: boolean | UserYoutube$permissionArgs
-    _count?: boolean | UserYoutubeCountOutputTypeArgs
+    Question?: boolean | QuestionCategory$QuestionArgs
+    RoundQuiz?: boolean | QuestionCategory$RoundQuizArgs
+    _count?: boolean | QuestionCategoryCountOutputTypeArgs
   }
 
 
-  export type UserYoutubeInclude = {
-    chanel?: boolean | UserYoutube$chanelArgs
-    Comment?: boolean | UserYoutube$CommentArgs
-    userToChanel?: boolean | UserYoutube$userToChanelArgs
-    permission?: boolean | UserYoutube$permissionArgs
-    _count?: boolean | UserYoutubeCountOutputTypeArgs
+  export type QuestionCategoryInclude = {
+    Question?: boolean | QuestionCategory$QuestionArgs
+    RoundQuiz?: boolean | QuestionCategory$RoundQuizArgs
+    _count?: boolean | QuestionCategoryCountOutputTypeArgs
   }
 
-  export type UserYoutubeGetPayload<S extends boolean | null | undefined | UserYoutubeArgs> =
+  export type QuestionCategoryGetPayload<S extends boolean | null | undefined | QuestionCategoryArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserYoutube :
+    S extends true ? QuestionCategory :
     S extends undefined ? never :
-    S extends { include: any } & (UserYoutubeArgs | UserYoutubeFindManyArgs)
-    ? UserYoutube  & {
+    S extends { include: any } & (QuestionCategoryArgs | QuestionCategoryFindManyArgs)
+    ? QuestionCategory  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'chanel' ? Array < ChanelGetPayload<S['include'][P]>>  :
-        P extends 'Comment' ? Array < CommentGetPayload<S['include'][P]>>  :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['include'][P]>>  :
-        P extends 'permission' ? Array < PermissionGetPayload<S['include'][P]>>  :
-        P extends '_count' ? UserYoutubeCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'Question' ? Array < QuestionGetPayload<S['include'][P]>>  :
+        P extends 'RoundQuiz' ? Array < RoundQuizGetPayload<S['include'][P]>>  :
+        P extends '_count' ? QuestionCategoryCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (UserYoutubeArgs | UserYoutubeFindManyArgs)
+    : S extends { select: any } & (QuestionCategoryArgs | QuestionCategoryFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'chanel' ? Array < ChanelGetPayload<S['select'][P]>>  :
-        P extends 'Comment' ? Array < CommentGetPayload<S['select'][P]>>  :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['select'][P]>>  :
-        P extends 'permission' ? Array < PermissionGetPayload<S['select'][P]>>  :
-        P extends '_count' ? UserYoutubeCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof UserYoutube ? UserYoutube[P] : never
+        P extends 'Question' ? Array < QuestionGetPayload<S['select'][P]>>  :
+        P extends 'RoundQuiz' ? Array < RoundQuizGetPayload<S['select'][P]>>  :
+        P extends '_count' ? QuestionCategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof QuestionCategory ? QuestionCategory[P] : never
   } 
-      : UserYoutube
+      : QuestionCategory
 
 
-  type UserYoutubeCountArgs = 
-    Omit<UserYoutubeFindManyArgs, 'select' | 'include'> & {
-      select?: UserYoutubeCountAggregateInputType | true
+  type QuestionCategoryCountArgs = 
+    Omit<QuestionCategoryFindManyArgs, 'select' | 'include'> & {
+      select?: QuestionCategoryCountAggregateInputType | true
     }
 
-  export interface UserYoutubeDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface QuestionCategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one UserYoutube that matches the filter.
-     * @param {UserYoutubeFindUniqueArgs} args - Arguments to find a UserYoutube
+     * Find zero or one QuestionCategory that matches the filter.
+     * @param {QuestionCategoryFindUniqueArgs} args - Arguments to find a QuestionCategory
      * @example
-     * // Get one UserYoutube
-     * const userYoutube = await prisma.userYoutube.findUnique({
+     * // Get one QuestionCategory
+     * const questionCategory = await prisma.questionCategory.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends UserYoutubeFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, UserYoutubeFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UserYoutube'> extends True ? Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>> : Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | null, null>
+    findUnique<T extends QuestionCategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuestionCategoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'QuestionCategory'> extends True ? Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>> : Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T> | null, null>
 
     /**
-     * Find one UserYoutube that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one QuestionCategory that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {UserYoutubeFindUniqueOrThrowArgs} args - Arguments to find a UserYoutube
+     * @param {QuestionCategoryFindUniqueOrThrowArgs} args - Arguments to find a QuestionCategory
      * @example
-     * // Get one UserYoutube
-     * const userYoutube = await prisma.userYoutube.findUniqueOrThrow({
+     * // Get one QuestionCategory
+     * const questionCategory = await prisma.questionCategory.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends UserYoutubeFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, UserYoutubeFindUniqueOrThrowArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    findUniqueOrThrow<T extends QuestionCategoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuestionCategoryFindUniqueOrThrowArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Find the first UserYoutube that matches the filter.
+     * Find the first QuestionCategory that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeFindFirstArgs} args - Arguments to find a UserYoutube
+     * @param {QuestionCategoryFindFirstArgs} args - Arguments to find a QuestionCategory
      * @example
-     * // Get one UserYoutube
-     * const userYoutube = await prisma.userYoutube.findFirst({
+     * // Get one QuestionCategory
+     * const questionCategory = await prisma.questionCategory.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends UserYoutubeFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, UserYoutubeFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UserYoutube'> extends True ? Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>> : Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | null, null>
+    findFirst<T extends QuestionCategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuestionCategoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'QuestionCategory'> extends True ? Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>> : Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T> | null, null>
 
     /**
-     * Find the first UserYoutube that matches the filter or
+     * Find the first QuestionCategory that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeFindFirstOrThrowArgs} args - Arguments to find a UserYoutube
+     * @param {QuestionCategoryFindFirstOrThrowArgs} args - Arguments to find a QuestionCategory
      * @example
-     * // Get one UserYoutube
-     * const userYoutube = await prisma.userYoutube.findFirstOrThrow({
+     * // Get one QuestionCategory
+     * const questionCategory = await prisma.questionCategory.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends UserYoutubeFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, UserYoutubeFindFirstOrThrowArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    findFirstOrThrow<T extends QuestionCategoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuestionCategoryFindFirstOrThrowArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Find zero or more UserYoutubes that matches the filter.
+     * Find zero or more QuestionCategories that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {QuestionCategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all UserYoutubes
-     * const userYoutubes = await prisma.userYoutube.findMany()
+     * // Get all QuestionCategories
+     * const questionCategories = await prisma.questionCategory.findMany()
      * 
-     * // Get first 10 UserYoutubes
-     * const userYoutubes = await prisma.userYoutube.findMany({ take: 10 })
+     * // Get first 10 QuestionCategories
+     * const questionCategories = await prisma.questionCategory.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const userYoutubeWithIdOnly = await prisma.userYoutube.findMany({ select: { id: true } })
+     * const questionCategoryWithIdOnly = await prisma.questionCategory.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends UserYoutubeFindManyArgs>(
-      args?: SelectSubset<T, UserYoutubeFindManyArgs>
-    ): Prisma.PrismaPromise<Array<UserYoutubeGetPayload<T>>>
+    findMany<T extends QuestionCategoryFindManyArgs>(
+      args?: SelectSubset<T, QuestionCategoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuestionCategoryGetPayload<T>>>
 
     /**
-     * Create a UserYoutube.
-     * @param {UserYoutubeCreateArgs} args - Arguments to create a UserYoutube.
+     * Create a QuestionCategory.
+     * @param {QuestionCategoryCreateArgs} args - Arguments to create a QuestionCategory.
      * @example
-     * // Create one UserYoutube
-     * const UserYoutube = await prisma.userYoutube.create({
+     * // Create one QuestionCategory
+     * const QuestionCategory = await prisma.questionCategory.create({
      *   data: {
-     *     // ... data to create a UserYoutube
+     *     // ... data to create a QuestionCategory
      *   }
      * })
      * 
     **/
-    create<T extends UserYoutubeCreateArgs>(
-      args: SelectSubset<T, UserYoutubeCreateArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    create<T extends QuestionCategoryCreateArgs>(
+      args: SelectSubset<T, QuestionCategoryCreateArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Create many UserYoutubes.
-     *     @param {UserYoutubeCreateManyArgs} args - Arguments to create many UserYoutubes.
+     * Create many QuestionCategories.
+     *     @param {QuestionCategoryCreateManyArgs} args - Arguments to create many QuestionCategories.
      *     @example
-     *     // Create many UserYoutubes
-     *     const userYoutube = await prisma.userYoutube.createMany({
+     *     // Create many QuestionCategories
+     *     const questionCategory = await prisma.questionCategory.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends UserYoutubeCreateManyArgs>(
-      args?: SelectSubset<T, UserYoutubeCreateManyArgs>
+    createMany<T extends QuestionCategoryCreateManyArgs>(
+      args?: SelectSubset<T, QuestionCategoryCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a UserYoutube.
-     * @param {UserYoutubeDeleteArgs} args - Arguments to delete one UserYoutube.
+     * Delete a QuestionCategory.
+     * @param {QuestionCategoryDeleteArgs} args - Arguments to delete one QuestionCategory.
      * @example
-     * // Delete one UserYoutube
-     * const UserYoutube = await prisma.userYoutube.delete({
+     * // Delete one QuestionCategory
+     * const QuestionCategory = await prisma.questionCategory.delete({
      *   where: {
-     *     // ... filter to delete one UserYoutube
+     *     // ... filter to delete one QuestionCategory
      *   }
      * })
      * 
     **/
-    delete<T extends UserYoutubeDeleteArgs>(
-      args: SelectSubset<T, UserYoutubeDeleteArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    delete<T extends QuestionCategoryDeleteArgs>(
+      args: SelectSubset<T, QuestionCategoryDeleteArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Update one UserYoutube.
-     * @param {UserYoutubeUpdateArgs} args - Arguments to update one UserYoutube.
+     * Update one QuestionCategory.
+     * @param {QuestionCategoryUpdateArgs} args - Arguments to update one QuestionCategory.
      * @example
-     * // Update one UserYoutube
-     * const userYoutube = await prisma.userYoutube.update({
+     * // Update one QuestionCategory
+     * const questionCategory = await prisma.questionCategory.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1510,34 +1458,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends UserYoutubeUpdateArgs>(
-      args: SelectSubset<T, UserYoutubeUpdateArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    update<T extends QuestionCategoryUpdateArgs>(
+      args: SelectSubset<T, QuestionCategoryUpdateArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Delete zero or more UserYoutubes.
-     * @param {UserYoutubeDeleteManyArgs} args - Arguments to filter UserYoutubes to delete.
+     * Delete zero or more QuestionCategories.
+     * @param {QuestionCategoryDeleteManyArgs} args - Arguments to filter QuestionCategories to delete.
      * @example
-     * // Delete a few UserYoutubes
-     * const { count } = await prisma.userYoutube.deleteMany({
+     * // Delete a few QuestionCategories
+     * const { count } = await prisma.questionCategory.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends UserYoutubeDeleteManyArgs>(
-      args?: SelectSubset<T, UserYoutubeDeleteManyArgs>
+    deleteMany<T extends QuestionCategoryDeleteManyArgs>(
+      args?: SelectSubset<T, QuestionCategoryDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more UserYoutubes.
+     * Update zero or more QuestionCategories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {QuestionCategoryUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many UserYoutubes
-     * const userYoutube = await prisma.userYoutube.updateMany({
+     * // Update many QuestionCategories
+     * const questionCategory = await prisma.questionCategory.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1547,59 +1495,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends UserYoutubeUpdateManyArgs>(
-      args: SelectSubset<T, UserYoutubeUpdateManyArgs>
+    updateMany<T extends QuestionCategoryUpdateManyArgs>(
+      args: SelectSubset<T, QuestionCategoryUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one UserYoutube.
-     * @param {UserYoutubeUpsertArgs} args - Arguments to update or create a UserYoutube.
+     * Create or update one QuestionCategory.
+     * @param {QuestionCategoryUpsertArgs} args - Arguments to update or create a QuestionCategory.
      * @example
-     * // Update or create a UserYoutube
-     * const userYoutube = await prisma.userYoutube.upsert({
+     * // Update or create a QuestionCategory
+     * const questionCategory = await prisma.questionCategory.upsert({
      *   create: {
-     *     // ... data to create a UserYoutube
+     *     // ... data to create a QuestionCategory
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the UserYoutube we want to update
+     *     // ... the filter for the QuestionCategory we want to update
      *   }
      * })
     **/
-    upsert<T extends UserYoutubeUpsertArgs>(
-      args: SelectSubset<T, UserYoutubeUpsertArgs>
-    ): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T>>
+    upsert<T extends QuestionCategoryUpsertArgs>(
+      args: SelectSubset<T, QuestionCategoryUpsertArgs>
+    ): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T>>
 
     /**
-     * Count the number of UserYoutubes.
+     * Count the number of QuestionCategories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeCountArgs} args - Arguments to filter UserYoutubes to count.
+     * @param {QuestionCategoryCountArgs} args - Arguments to filter QuestionCategories to count.
      * @example
-     * // Count the number of UserYoutubes
-     * const count = await prisma.userYoutube.count({
+     * // Count the number of QuestionCategories
+     * const count = await prisma.questionCategory.count({
      *   where: {
-     *     // ... the filter for the UserYoutubes we want to count
+     *     // ... the filter for the QuestionCategories we want to count
      *   }
      * })
     **/
-    count<T extends UserYoutubeCountArgs>(
-      args?: Subset<T, UserYoutubeCountArgs>,
+    count<T extends QuestionCategoryCountArgs>(
+      args?: Subset<T, QuestionCategoryCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], UserYoutubeCountAggregateOutputType>
+          : GetScalarType<T['select'], QuestionCategoryCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a UserYoutube.
+     * Allows you to perform aggregations operations on a QuestionCategory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {QuestionCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1619,13 +1567,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends UserYoutubeAggregateArgs>(args: Subset<T, UserYoutubeAggregateArgs>): Prisma.PrismaPromise<GetUserYoutubeAggregateType<T>>
+    aggregate<T extends QuestionCategoryAggregateArgs>(args: Subset<T, QuestionCategoryAggregateArgs>): Prisma.PrismaPromise<GetQuestionCategoryAggregateType<T>>
 
     /**
-     * Group by UserYoutube.
+     * Group by QuestionCategory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserYoutubeGroupByArgs} args - Group by arguments.
+     * @param {QuestionCategoryGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1640,14 +1588,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends UserYoutubeGroupByArgs,
+      T extends QuestionCategoryGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserYoutubeGroupByArgs['orderBy'] }
-        : { orderBy?: UserYoutubeGroupByArgs['orderBy'] },
+        ? { orderBy: QuestionCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: QuestionCategoryGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1696,17 +1644,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, UserYoutubeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserYoutubeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, QuestionCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuestionCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for UserYoutube.
+   * The delegate class that acts as a "Promise-like" for QuestionCategory.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__UserYoutubeClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__QuestionCategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -1721,13 +1669,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    chanel<T extends UserYoutube$chanelArgs= {}>(args?: Subset<T, UserYoutube$chanelArgs>): Prisma.PrismaPromise<Array<ChanelGetPayload<T>>| Null>;
+    Question<T extends QuestionCategory$QuestionArgs= {}>(args?: Subset<T, QuestionCategory$QuestionArgs>): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>| Null>;
 
-    Comment<T extends UserYoutube$CommentArgs= {}>(args?: Subset<T, UserYoutube$CommentArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
-
-    userToChanel<T extends UserYoutube$userToChanelArgs= {}>(args?: Subset<T, UserYoutube$userToChanelArgs>): Prisma.PrismaPromise<Array<UserToChanelGetPayload<T>>| Null>;
-
-    permission<T extends UserYoutube$permissionArgs= {}>(args?: Subset<T, UserYoutube$permissionArgs>): Prisma.PrismaPromise<Array<PermissionGetPayload<T>>| Null>;
+    RoundQuiz<T extends QuestionCategory$RoundQuizArgs= {}>(args?: Subset<T, QuestionCategory$RoundQuizArgs>): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1757,27 +1701,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * UserYoutube base type for findUnique actions
+   * QuestionCategory base type for findUnique actions
    */
-  export type UserYoutubeFindUniqueArgsBase = {
+  export type QuestionCategoryFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter, which UserYoutube to fetch.
+     * Filter, which QuestionCategory to fetch.
      */
-    where: UserYoutubeWhereUniqueInput
+    where: QuestionCategoryWhereUniqueInput
   }
 
   /**
-   * UserYoutube findUnique
+   * QuestionCategory findUnique
    */
-  export interface UserYoutubeFindUniqueArgs extends UserYoutubeFindUniqueArgsBase {
+  export interface QuestionCategoryFindUniqueArgs extends QuestionCategoryFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -1787,76 +1731,76 @@ export namespace Prisma {
       
 
   /**
-   * UserYoutube findUniqueOrThrow
+   * QuestionCategory findUniqueOrThrow
    */
-  export type UserYoutubeFindUniqueOrThrowArgs = {
+  export type QuestionCategoryFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter, which UserYoutube to fetch.
+     * Filter, which QuestionCategory to fetch.
      */
-    where: UserYoutubeWhereUniqueInput
+    where: QuestionCategoryWhereUniqueInput
   }
 
 
   /**
-   * UserYoutube base type for findFirst actions
+   * QuestionCategory base type for findFirst actions
    */
-  export type UserYoutubeFindFirstArgsBase = {
+  export type QuestionCategoryFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter, which UserYoutube to fetch.
+     * Filter, which QuestionCategory to fetch.
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserYoutubes to fetch.
+     * Determine the order of QuestionCategories to fetch.
      */
-    orderBy?: Enumerable<UserYoutubeOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserYoutubes.
+     * Sets the position for searching for QuestionCategories.
      */
-    cursor?: UserYoutubeWhereUniqueInput
+    cursor?: QuestionCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserYoutubes from the position of the cursor.
+     * Take `±n` QuestionCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserYoutubes.
+     * Skip the first `n` QuestionCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserYoutubes.
+     * Filter by unique combinations of QuestionCategories.
      */
-    distinct?: Enumerable<UserYoutubeScalarFieldEnum>
+    distinct?: Enumerable<QuestionCategoryScalarFieldEnum>
   }
 
   /**
-   * UserYoutube findFirst
+   * QuestionCategory findFirst
    */
-  export interface UserYoutubeFindFirstArgs extends UserYoutubeFindFirstArgsBase {
+  export interface QuestionCategoryFindFirstArgs extends QuestionCategoryFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -1866,724 +1810,2670 @@ export namespace Prisma {
       
 
   /**
-   * UserYoutube findFirstOrThrow
+   * QuestionCategory findFirstOrThrow
    */
-  export type UserYoutubeFindFirstOrThrowArgs = {
+  export type QuestionCategoryFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter, which UserYoutube to fetch.
+     * Filter, which QuestionCategory to fetch.
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserYoutubes to fetch.
+     * Determine the order of QuestionCategories to fetch.
      */
-    orderBy?: Enumerable<UserYoutubeOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for UserYoutubes.
+     * Sets the position for searching for QuestionCategories.
      */
-    cursor?: UserYoutubeWhereUniqueInput
+    cursor?: QuestionCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserYoutubes from the position of the cursor.
+     * Take `±n` QuestionCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserYoutubes.
+     * Skip the first `n` QuestionCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of UserYoutubes.
+     * Filter by unique combinations of QuestionCategories.
      */
-    distinct?: Enumerable<UserYoutubeScalarFieldEnum>
+    distinct?: Enumerable<QuestionCategoryScalarFieldEnum>
   }
 
 
   /**
-   * UserYoutube findMany
+   * QuestionCategory findMany
    */
-  export type UserYoutubeFindManyArgs = {
+  export type QuestionCategoryFindManyArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter, which UserYoutubes to fetch.
+     * Filter, which QuestionCategories to fetch.
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of UserYoutubes to fetch.
+     * Determine the order of QuestionCategories to fetch.
      */
-    orderBy?: Enumerable<UserYoutubeOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing UserYoutubes.
+     * Sets the position for listing QuestionCategories.
      */
-    cursor?: UserYoutubeWhereUniqueInput
+    cursor?: QuestionCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` UserYoutubes from the position of the cursor.
+     * Take `±n` QuestionCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` UserYoutubes.
+     * Skip the first `n` QuestionCategories.
      */
     skip?: number
-    distinct?: Enumerable<UserYoutubeScalarFieldEnum>
+    distinct?: Enumerable<QuestionCategoryScalarFieldEnum>
   }
 
 
   /**
-   * UserYoutube create
+   * QuestionCategory create
    */
-  export type UserYoutubeCreateArgs = {
+  export type QuestionCategoryCreateArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * The data needed to create a UserYoutube.
+     * The data needed to create a QuestionCategory.
      */
-    data: XOR<UserYoutubeCreateInput, UserYoutubeUncheckedCreateInput>
+    data: XOR<QuestionCategoryCreateInput, QuestionCategoryUncheckedCreateInput>
   }
 
 
   /**
-   * UserYoutube createMany
+   * QuestionCategory createMany
    */
-  export type UserYoutubeCreateManyArgs = {
+  export type QuestionCategoryCreateManyArgs = {
     /**
-     * The data used to create many UserYoutubes.
+     * The data used to create many QuestionCategories.
      */
-    data: Enumerable<UserYoutubeCreateManyInput>
+    data: Enumerable<QuestionCategoryCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * UserYoutube update
+   * QuestionCategory update
    */
-  export type UserYoutubeUpdateArgs = {
+  export type QuestionCategoryUpdateArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * The data needed to update a UserYoutube.
+     * The data needed to update a QuestionCategory.
      */
-    data: XOR<UserYoutubeUpdateInput, UserYoutubeUncheckedUpdateInput>
+    data: XOR<QuestionCategoryUpdateInput, QuestionCategoryUncheckedUpdateInput>
     /**
-     * Choose, which UserYoutube to update.
+     * Choose, which QuestionCategory to update.
      */
-    where: UserYoutubeWhereUniqueInput
+    where: QuestionCategoryWhereUniqueInput
   }
 
 
   /**
-   * UserYoutube updateMany
+   * QuestionCategory updateMany
    */
-  export type UserYoutubeUpdateManyArgs = {
+  export type QuestionCategoryUpdateManyArgs = {
     /**
-     * The data used to update UserYoutubes.
+     * The data used to update QuestionCategories.
      */
-    data: XOR<UserYoutubeUpdateManyMutationInput, UserYoutubeUncheckedUpdateManyInput>
+    data: XOR<QuestionCategoryUpdateManyMutationInput, QuestionCategoryUncheckedUpdateManyInput>
     /**
-     * Filter which UserYoutubes to update
+     * Filter which QuestionCategories to update
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
   }
 
 
   /**
-   * UserYoutube upsert
+   * QuestionCategory upsert
    */
-  export type UserYoutubeUpsertArgs = {
+  export type QuestionCategoryUpsertArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * The filter to search for the UserYoutube to update in case it exists.
+     * The filter to search for the QuestionCategory to update in case it exists.
      */
-    where: UserYoutubeWhereUniqueInput
+    where: QuestionCategoryWhereUniqueInput
     /**
-     * In case the UserYoutube found by the `where` argument doesn't exist, create a new UserYoutube with this data.
+     * In case the QuestionCategory found by the `where` argument doesn't exist, create a new QuestionCategory with this data.
      */
-    create: XOR<UserYoutubeCreateInput, UserYoutubeUncheckedCreateInput>
+    create: XOR<QuestionCategoryCreateInput, QuestionCategoryUncheckedCreateInput>
     /**
-     * In case the UserYoutube was found with the provided `where` argument, update it with this data.
+     * In case the QuestionCategory was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<UserYoutubeUpdateInput, UserYoutubeUncheckedUpdateInput>
+    update: XOR<QuestionCategoryUpdateInput, QuestionCategoryUncheckedUpdateInput>
   }
 
 
   /**
-   * UserYoutube delete
+   * QuestionCategory delete
    */
-  export type UserYoutubeDeleteArgs = {
+  export type QuestionCategoryDeleteArgs = {
     /**
-     * Select specific fields to fetch from the UserYoutube
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserYoutubeSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
     /**
-     * Filter which UserYoutube to delete.
+     * Filter which QuestionCategory to delete.
      */
-    where: UserYoutubeWhereUniqueInput
+    where: QuestionCategoryWhereUniqueInput
   }
 
 
   /**
-   * UserYoutube deleteMany
+   * QuestionCategory deleteMany
    */
-  export type UserYoutubeDeleteManyArgs = {
+  export type QuestionCategoryDeleteManyArgs = {
     /**
-     * Filter which UserYoutubes to delete
+     * Filter which QuestionCategories to delete
      */
-    where?: UserYoutubeWhereInput
+    where?: QuestionCategoryWhereInput
   }
 
 
   /**
-   * UserYoutube.chanel
+   * QuestionCategory.Question
    */
-  export type UserYoutube$chanelArgs = {
+  export type QuestionCategory$QuestionArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the Question
      */
-    select?: ChanelSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
-    where?: ChanelWhereInput
-    orderBy?: Enumerable<ChanelOrderByWithRelationInput>
-    cursor?: ChanelWhereUniqueInput
+    include?: QuestionInclude | null
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    cursor?: QuestionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<ChanelScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
 
   /**
-   * UserYoutube.Comment
+   * QuestionCategory.RoundQuiz
    */
-  export type UserYoutube$CommentArgs = {
+  export type QuestionCategory$RoundQuizArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
-    where?: CommentWhereInput
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
-    cursor?: CommentWhereUniqueInput
+    include?: RoundQuizInclude | null
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
+    cursor?: RoundQuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<CommentScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * UserYoutube.userToChanel
+   * QuestionCategory without action
    */
-  export type UserYoutube$userToChanelArgs = {
+  export type QuestionCategoryArgs = {
     /**
-     * Select specific fields to fetch from the UserToChanel
+     * Select specific fields to fetch from the QuestionCategory
      */
-    select?: UserToChanelSelect | null
+    select?: QuestionCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserToChanelInclude | null
-    where?: UserToChanelWhereInput
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    cursor?: UserToChanelWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-
-  /**
-   * UserYoutube.permission
-   */
-  export type UserYoutube$permissionArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    where?: PermissionWhereInput
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    cursor?: PermissionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PermissionScalarFieldEnum>
-  }
-
-
-  /**
-   * UserYoutube without action
-   */
-  export type UserYoutubeArgs = {
-    /**
-     * Select specific fields to fetch from the UserYoutube
-     */
-    select?: UserYoutubeSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserYoutubeInclude | null
+    include?: QuestionCategoryInclude | null
   }
 
 
 
   /**
-   * Model Chanel
+   * Model Question
    */
 
 
-  export type AggregateChanel = {
-    _count: ChanelCountAggregateOutputType | null
-    _avg: ChanelAvgAggregateOutputType | null
-    _sum: ChanelSumAggregateOutputType | null
-    _min: ChanelMinAggregateOutputType | null
-    _max: ChanelMaxAggregateOutputType | null
+  export type AggregateQuestion = {
+    _count: QuestionCountAggregateOutputType | null
+    _avg: QuestionAvgAggregateOutputType | null
+    _sum: QuestionSumAggregateOutputType | null
+    _min: QuestionMinAggregateOutputType | null
+    _max: QuestionMaxAggregateOutputType | null
   }
 
-  export type ChanelAvgAggregateOutputType = {
+  export type QuestionAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
+    questionCategoryId: number | null
+    answerId: number | null
   }
 
-  export type ChanelSumAggregateOutputType = {
+  export type QuestionSumAggregateOutputType = {
     id: number | null
-    userId: number | null
+    questionCategoryId: number | null
+    answerId: number | null
   }
 
-  export type ChanelMinAggregateOutputType = {
+  export type QuestionMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    description: string | null
+    questionCategoryId: number | null
+    textQuestion: string | null
+    answerId: number | null
     createAt: Date | null
     updateAt: Date | null
-    userId: number | null
   }
 
-  export type ChanelMaxAggregateOutputType = {
+  export type QuestionMaxAggregateOutputType = {
     id: number | null
-    name: string | null
-    description: string | null
+    questionCategoryId: number | null
+    textQuestion: string | null
+    answerId: number | null
     createAt: Date | null
     updateAt: Date | null
-    userId: number | null
   }
 
-  export type ChanelCountAggregateOutputType = {
+  export type QuestionCountAggregateOutputType = {
+    id: number
+    questionCategoryId: number
+    textQuestion: number
+    answerId: number
+    createAt: number
+    updateAt: number
+    _all: number
+  }
+
+
+  export type QuestionAvgAggregateInputType = {
+    id?: true
+    questionCategoryId?: true
+    answerId?: true
+  }
+
+  export type QuestionSumAggregateInputType = {
+    id?: true
+    questionCategoryId?: true
+    answerId?: true
+  }
+
+  export type QuestionMinAggregateInputType = {
+    id?: true
+    questionCategoryId?: true
+    textQuestion?: true
+    answerId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type QuestionMaxAggregateInputType = {
+    id?: true
+    questionCategoryId?: true
+    textQuestion?: true
+    answerId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type QuestionCountAggregateInputType = {
+    id?: true
+    questionCategoryId?: true
+    textQuestion?: true
+    answerId?: true
+    createAt?: true
+    updateAt?: true
+    _all?: true
+  }
+
+  export type QuestionAggregateArgs = {
+    /**
+     * Filter which Question to aggregate.
+     */
+    where?: QuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Questions to fetch.
+     */
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Questions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Questions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Questions
+    **/
+    _count?: true | QuestionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: QuestionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: QuestionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuestionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuestionMaxAggregateInputType
+  }
+
+  export type GetQuestionAggregateType<T extends QuestionAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuestion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuestion[P]>
+      : GetScalarType<T[P], AggregateQuestion[P]>
+  }
+
+
+
+
+  export type QuestionGroupByArgs = {
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithAggregationInput>
+    by: QuestionScalarFieldEnum[]
+    having?: QuestionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuestionCountAggregateInputType | true
+    _avg?: QuestionAvgAggregateInputType
+    _sum?: QuestionSumAggregateInputType
+    _min?: QuestionMinAggregateInputType
+    _max?: QuestionMaxAggregateInputType
+  }
+
+
+  export type QuestionGroupByOutputType = {
+    id: number
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
+    createAt: Date
+    updateAt: Date
+    _count: QuestionCountAggregateOutputType | null
+    _avg: QuestionAvgAggregateOutputType | null
+    _sum: QuestionSumAggregateOutputType | null
+    _min: QuestionMinAggregateOutputType | null
+    _max: QuestionMaxAggregateOutputType | null
+  }
+
+  type GetQuestionGroupByPayload<T extends QuestionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<QuestionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuestionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], QuestionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuestionSelect = {
+    id?: boolean
+    questionCategories?: boolean | QuestionCategoryArgs
+    questionCategoryId?: boolean
+    textQuestion?: boolean
+    answer?: boolean | ChoiceArgs
+    answerId?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+    choice?: boolean | Question$choiceArgs
+    RoundDetail?: boolean | Question$RoundDetailArgs
+    _count?: boolean | QuestionCountOutputTypeArgs
+  }
+
+
+  export type QuestionInclude = {
+    questionCategories?: boolean | QuestionCategoryArgs
+    answer?: boolean | ChoiceArgs
+    choice?: boolean | Question$choiceArgs
+    RoundDetail?: boolean | Question$RoundDetailArgs
+    _count?: boolean | QuestionCountOutputTypeArgs
+  }
+
+  export type QuestionGetPayload<S extends boolean | null | undefined | QuestionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Question :
+    S extends undefined ? never :
+    S extends { include: any } & (QuestionArgs | QuestionFindManyArgs)
+    ? Question  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'questionCategories' ? QuestionCategoryGetPayload<S['include'][P]> :
+        P extends 'answer' ? ChoiceGetPayload<S['include'][P]> :
+        P extends 'choice' ? Array < ChoiceGetPayload<S['include'][P]>>  :
+        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['include'][P]>>  :
+        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (QuestionArgs | QuestionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'questionCategories' ? QuestionCategoryGetPayload<S['select'][P]> :
+        P extends 'answer' ? ChoiceGetPayload<S['select'][P]> :
+        P extends 'choice' ? Array < ChoiceGetPayload<S['select'][P]>>  :
+        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['select'][P]>>  :
+        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Question ? Question[P] : never
+  } 
+      : Question
+
+
+  type QuestionCountArgs = 
+    Omit<QuestionFindManyArgs, 'select' | 'include'> & {
+      select?: QuestionCountAggregateInputType | true
+    }
+
+  export interface QuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Question that matches the filter.
+     * @param {QuestionFindUniqueArgs} args - Arguments to find a Question
+     * @example
+     * // Get one Question
+     * const question = await prisma.question.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends QuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuestionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
+
+    /**
+     * Find one Question that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {QuestionFindUniqueOrThrowArgs} args - Arguments to find a Question
+     * @example
+     * // Get one Question
+     * const question = await prisma.question.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends QuestionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuestionFindUniqueOrThrowArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Find the first Question that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionFindFirstArgs} args - Arguments to find a Question
+     * @example
+     * // Get one Question
+     * const question = await prisma.question.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends QuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuestionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
+
+    /**
+     * Find the first Question that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionFindFirstOrThrowArgs} args - Arguments to find a Question
+     * @example
+     * // Get one Question
+     * const question = await prisma.question.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends QuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuestionFindFirstOrThrowArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Find zero or more Questions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Questions
+     * const questions = await prisma.question.findMany()
+     * 
+     * // Get first 10 Questions
+     * const questions = await prisma.question.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const questionWithIdOnly = await prisma.question.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends QuestionFindManyArgs>(
+      args?: SelectSubset<T, QuestionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>>
+
+    /**
+     * Create a Question.
+     * @param {QuestionCreateArgs} args - Arguments to create a Question.
+     * @example
+     * // Create one Question
+     * const Question = await prisma.question.create({
+     *   data: {
+     *     // ... data to create a Question
+     *   }
+     * })
+     * 
+    **/
+    create<T extends QuestionCreateArgs>(
+      args: SelectSubset<T, QuestionCreateArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Create many Questions.
+     *     @param {QuestionCreateManyArgs} args - Arguments to create many Questions.
+     *     @example
+     *     // Create many Questions
+     *     const question = await prisma.question.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends QuestionCreateManyArgs>(
+      args?: SelectSubset<T, QuestionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Question.
+     * @param {QuestionDeleteArgs} args - Arguments to delete one Question.
+     * @example
+     * // Delete one Question
+     * const Question = await prisma.question.delete({
+     *   where: {
+     *     // ... filter to delete one Question
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends QuestionDeleteArgs>(
+      args: SelectSubset<T, QuestionDeleteArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Update one Question.
+     * @param {QuestionUpdateArgs} args - Arguments to update one Question.
+     * @example
+     * // Update one Question
+     * const question = await prisma.question.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends QuestionUpdateArgs>(
+      args: SelectSubset<T, QuestionUpdateArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Delete zero or more Questions.
+     * @param {QuestionDeleteManyArgs} args - Arguments to filter Questions to delete.
+     * @example
+     * // Delete a few Questions
+     * const { count } = await prisma.question.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends QuestionDeleteManyArgs>(
+      args?: SelectSubset<T, QuestionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Questions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Questions
+     * const question = await prisma.question.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends QuestionUpdateManyArgs>(
+      args: SelectSubset<T, QuestionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Question.
+     * @param {QuestionUpsertArgs} args - Arguments to update or create a Question.
+     * @example
+     * // Update or create a Question
+     * const question = await prisma.question.upsert({
+     *   create: {
+     *     // ... data to create a Question
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Question we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends QuestionUpsertArgs>(
+      args: SelectSubset<T, QuestionUpsertArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+
+    /**
+     * Count the number of Questions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionCountArgs} args - Arguments to filter Questions to count.
+     * @example
+     * // Count the number of Questions
+     * const count = await prisma.question.count({
+     *   where: {
+     *     // ... the filter for the Questions we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuestionCountArgs>(
+      args?: Subset<T, QuestionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuestionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Question.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuestionAggregateArgs>(args: Subset<T, QuestionAggregateArgs>): Prisma.PrismaPromise<GetQuestionAggregateType<T>>
+
+    /**
+     * Group by Question.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuestionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuestionGroupByArgs['orderBy'] }
+        : { orderBy?: QuestionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Question.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__QuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    questionCategories<T extends QuestionCategoryArgs= {}>(args?: Subset<T, QuestionCategoryArgs>): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T> | Null>;
+
+    answer<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    choice<T extends Question$choiceArgs= {}>(args?: Subset<T, Question$choiceArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
+
+    RoundDetail<T extends Question$RoundDetailArgs= {}>(args?: Subset<T, Question$RoundDetailArgs>): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Question base type for findUnique actions
+   */
+  export type QuestionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter, which Question to fetch.
+     */
+    where: QuestionWhereUniqueInput
+  }
+
+  /**
+   * Question findUnique
+   */
+  export interface QuestionFindUniqueArgs extends QuestionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Question findUniqueOrThrow
+   */
+  export type QuestionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter, which Question to fetch.
+     */
+    where: QuestionWhereUniqueInput
+  }
+
+
+  /**
+   * Question base type for findFirst actions
+   */
+  export type QuestionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter, which Question to fetch.
+     */
+    where?: QuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Questions to fetch.
+     */
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Questions.
+     */
+    cursor?: QuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Questions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Questions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Questions.
+     */
+    distinct?: Enumerable<QuestionScalarFieldEnum>
+  }
+
+  /**
+   * Question findFirst
+   */
+  export interface QuestionFindFirstArgs extends QuestionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Question findFirstOrThrow
+   */
+  export type QuestionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter, which Question to fetch.
+     */
+    where?: QuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Questions to fetch.
+     */
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Questions.
+     */
+    cursor?: QuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Questions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Questions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Questions.
+     */
+    distinct?: Enumerable<QuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * Question findMany
+   */
+  export type QuestionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter, which Questions to fetch.
+     */
+    where?: QuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Questions to fetch.
+     */
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Questions.
+     */
+    cursor?: QuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Questions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Questions.
+     */
+    skip?: number
+    distinct?: Enumerable<QuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * Question create
+   */
+  export type QuestionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * The data needed to create a Question.
+     */
+    data: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
+  }
+
+
+  /**
+   * Question createMany
+   */
+  export type QuestionCreateManyArgs = {
+    /**
+     * The data used to create many Questions.
+     */
+    data: Enumerable<QuestionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Question update
+   */
+  export type QuestionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * The data needed to update a Question.
+     */
+    data: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
+    /**
+     * Choose, which Question to update.
+     */
+    where: QuestionWhereUniqueInput
+  }
+
+
+  /**
+   * Question updateMany
+   */
+  export type QuestionUpdateManyArgs = {
+    /**
+     * The data used to update Questions.
+     */
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyInput>
+    /**
+     * Filter which Questions to update
+     */
+    where?: QuestionWhereInput
+  }
+
+
+  /**
+   * Question upsert
+   */
+  export type QuestionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * The filter to search for the Question to update in case it exists.
+     */
+    where: QuestionWhereUniqueInput
+    /**
+     * In case the Question found by the `where` argument doesn't exist, create a new Question with this data.
+     */
+    create: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
+    /**
+     * In case the Question was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Question delete
+   */
+  export type QuestionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+    /**
+     * Filter which Question to delete.
+     */
+    where: QuestionWhereUniqueInput
+  }
+
+
+  /**
+   * Question deleteMany
+   */
+  export type QuestionDeleteManyArgs = {
+    /**
+     * Filter which Questions to delete
+     */
+    where?: QuestionWhereInput
+  }
+
+
+  /**
+   * Question.choice
+   */
+  export type Question$choiceArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    cursor?: ChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Question.RoundDetail
+   */
+  export type Question$RoundDetailArgs = {
+    /**
+     * Select specific fields to fetch from the RoundDetail
+     */
+    select?: RoundDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundDetailInclude | null
+    where?: RoundDetailWhereInput
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    cursor?: RoundDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * Question without action
+   */
+  export type QuestionArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
+  }
+
+
+
+  /**
+   * Model Choice
+   */
+
+
+  export type AggregateChoice = {
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
+  }
+
+  export type ChoiceAvgAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+  }
+
+  export type ChoiceSumAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+  }
+
+  export type ChoiceMinAggregateOutputType = {
+    id: number | null
+    choiceName: string | null
+    questionId: number | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type ChoiceMaxAggregateOutputType = {
+    id: number | null
+    choiceName: string | null
+    questionId: number | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type ChoiceCountAggregateOutputType = {
+    id: number
+    choiceName: number
+    questionId: number
+    createAt: number
+    updateAt: number
+    _all: number
+  }
+
+
+  export type ChoiceAvgAggregateInputType = {
+    id?: true
+    questionId?: true
+  }
+
+  export type ChoiceSumAggregateInputType = {
+    id?: true
+    questionId?: true
+  }
+
+  export type ChoiceMinAggregateInputType = {
+    id?: true
+    choiceName?: true
+    questionId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type ChoiceMaxAggregateInputType = {
+    id?: true
+    choiceName?: true
+    questionId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type ChoiceCountAggregateInputType = {
+    id?: true
+    choiceName?: true
+    questionId?: true
+    createAt?: true
+    updateAt?: true
+    _all?: true
+  }
+
+  export type ChoiceAggregateArgs = {
+    /**
+     * Filter which Choice to aggregate.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Choices
+    **/
+    _count?: true | ChoiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChoiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChoiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChoiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChoiceMaxAggregateInputType
+  }
+
+  export type GetChoiceAggregateType<T extends ChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateChoice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChoice[P]>
+      : GetScalarType<T[P], AggregateChoice[P]>
+  }
+
+
+
+
+  export type ChoiceGroupByArgs = {
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithAggregationInput>
+    by: ChoiceScalarFieldEnum[]
+    having?: ChoiceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChoiceCountAggregateInputType | true
+    _avg?: ChoiceAvgAggregateInputType
+    _sum?: ChoiceSumAggregateInputType
+    _min?: ChoiceMinAggregateInputType
+    _max?: ChoiceMaxAggregateInputType
+  }
+
+
+  export type ChoiceGroupByOutputType = {
+    id: number
+    choiceName: string
+    questionId: number | null
+    createAt: Date
+    updateAt: Date
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
+  }
+
+  type GetChoiceGroupByPayload<T extends ChoiceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<ChoiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChoiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChoiceSelect = {
+    id?: boolean
+    choiceName?: boolean
+    question?: boolean | QuestionArgs
+    questionId?: boolean
+    questionAnswer?: boolean | QuestionArgs
+    createAt?: boolean
+    updateAt?: boolean
+  }
+
+
+  export type ChoiceInclude = {
+    question?: boolean | QuestionArgs
+    questionAnswer?: boolean | QuestionArgs
+  }
+
+  export type ChoiceGetPayload<S extends boolean | null | undefined | ChoiceArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Choice :
+    S extends undefined ? never :
+    S extends { include: any } & (ChoiceArgs | ChoiceFindManyArgs)
+    ? Choice  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'question' ? QuestionGetPayload<S['include'][P]> | null :
+        P extends 'questionAnswer' ? QuestionGetPayload<S['include'][P]> | null :  never
+  } 
+    : S extends { select: any } & (ChoiceArgs | ChoiceFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'question' ? QuestionGetPayload<S['select'][P]> | null :
+        P extends 'questionAnswer' ? QuestionGetPayload<S['select'][P]> | null :  P extends keyof Choice ? Choice[P] : never
+  } 
+      : Choice
+
+
+  type ChoiceCountArgs = 
+    Omit<ChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: ChoiceCountAggregateInputType | true
+    }
+
+  export interface ChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Choice that matches the filter.
+     * @param {ChoiceFindUniqueArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends ChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, ChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find one Choice that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {ChoiceFindUniqueOrThrowArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends ChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindUniqueOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Find the first Choice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindFirstArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends ChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, ChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find the first Choice that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindFirstOrThrowArgs} args - Arguments to find a Choice
+     * @example
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends ChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindFirstOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Find zero or more Choices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Choices
+     * const choices = await prisma.choice.findMany()
+     * 
+     * // Get first 10 Choices
+     * const choices = await prisma.choice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const choiceWithIdOnly = await prisma.choice.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends ChoiceFindManyArgs>(
+      args?: SelectSubset<T, ChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>>
+
+    /**
+     * Create a Choice.
+     * @param {ChoiceCreateArgs} args - Arguments to create a Choice.
+     * @example
+     * // Create one Choice
+     * const Choice = await prisma.choice.create({
+     *   data: {
+     *     // ... data to create a Choice
+     *   }
+     * })
+     * 
+    **/
+    create<T extends ChoiceCreateArgs>(
+      args: SelectSubset<T, ChoiceCreateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Create many Choices.
+     *     @param {ChoiceCreateManyArgs} args - Arguments to create many Choices.
+     *     @example
+     *     // Create many Choices
+     *     const choice = await prisma.choice.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends ChoiceCreateManyArgs>(
+      args?: SelectSubset<T, ChoiceCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Choice.
+     * @param {ChoiceDeleteArgs} args - Arguments to delete one Choice.
+     * @example
+     * // Delete one Choice
+     * const Choice = await prisma.choice.delete({
+     *   where: {
+     *     // ... filter to delete one Choice
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends ChoiceDeleteArgs>(
+      args: SelectSubset<T, ChoiceDeleteArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Update one Choice.
+     * @param {ChoiceUpdateArgs} args - Arguments to update one Choice.
+     * @example
+     * // Update one Choice
+     * const choice = await prisma.choice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends ChoiceUpdateArgs>(
+      args: SelectSubset<T, ChoiceUpdateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Delete zero or more Choices.
+     * @param {ChoiceDeleteManyArgs} args - Arguments to filter Choices to delete.
+     * @example
+     * // Delete a few Choices
+     * const { count } = await prisma.choice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends ChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, ChoiceDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Choices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Choices
+     * const choice = await prisma.choice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends ChoiceUpdateManyArgs>(
+      args: SelectSubset<T, ChoiceUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Choice.
+     * @param {ChoiceUpsertArgs} args - Arguments to update or create a Choice.
+     * @example
+     * // Update or create a Choice
+     * const choice = await prisma.choice.upsert({
+     *   create: {
+     *     // ... data to create a Choice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Choice we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends ChoiceUpsertArgs>(
+      args: SelectSubset<T, ChoiceUpsertArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
+
+    /**
+     * Count the number of Choices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceCountArgs} args - Arguments to filter Choices to count.
+     * @example
+     * // Count the number of Choices
+     * const count = await prisma.choice.count({
+     *   where: {
+     *     // ... the filter for the Choices we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChoiceCountArgs>(
+      args?: Subset<T, ChoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Choice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChoiceAggregateArgs>(args: Subset<T, ChoiceAggregateArgs>): Prisma.PrismaPromise<GetChoiceAggregateType<T>>
+
+    /**
+     * Group by Choice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: ChoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Choice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__ChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
+
+    questionAnswer<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Choice base type for findUnique actions
+   */
+  export type ChoiceFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+  /**
+   * Choice findUnique
+   */
+  export interface ChoiceFindUniqueArgs extends ChoiceFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Choice findUniqueOrThrow
+   */
+  export type ChoiceFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice base type for findFirst actions
+   */
+  export type ChoiceFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Choices.
+     */
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+  /**
+   * Choice findFirst
+   */
+  export interface ChoiceFindFirstArgs extends ChoiceFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Choice findFirstOrThrow
+   */
+  export type ChoiceFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choice to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Choices.
+     */
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice findMany
+   */
+  export type ChoiceFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter, which Choices to fetch.
+     */
+    where?: ChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Choices to fetch.
+     */
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Choices.
+     */
+    cursor?: ChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Choices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Choices.
+     */
+    skip?: number
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice create
+   */
+  export type ChoiceCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The data needed to create a Choice.
+     */
+    data: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
+  }
+
+
+  /**
+   * Choice createMany
+   */
+  export type ChoiceCreateManyArgs = {
+    /**
+     * The data used to create many Choices.
+     */
+    data: Enumerable<ChoiceCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Choice update
+   */
+  export type ChoiceUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The data needed to update a Choice.
+     */
+    data: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
+    /**
+     * Choose, which Choice to update.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice updateMany
+   */
+  export type ChoiceUpdateManyArgs = {
+    /**
+     * The data used to update Choices.
+     */
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which Choices to update
+     */
+    where?: ChoiceWhereInput
+  }
+
+
+  /**
+   * Choice upsert
+   */
+  export type ChoiceUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * The filter to search for the Choice to update in case it exists.
+     */
+    where: ChoiceWhereUniqueInput
+    /**
+     * In case the Choice found by the `where` argument doesn't exist, create a new Choice with this data.
+     */
+    create: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
+    /**
+     * In case the Choice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Choice delete
+   */
+  export type ChoiceDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+    /**
+     * Filter which Choice to delete.
+     */
+    where: ChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * Choice deleteMany
+   */
+  export type ChoiceDeleteManyArgs = {
+    /**
+     * Filter which Choices to delete
+     */
+    where?: ChoiceWhereInput
+  }
+
+
+  /**
+   * Choice without action
+   */
+  export type ChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
+  }
+
+
+
+  /**
+   * Model User
+   */
+
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type UserCountAggregateOutputType = {
     id: number
     name: number
-    description: number
     createAt: number
     updateAt: number
-    userId: number
     _all: number
   }
 
 
-  export type ChanelAvgAggregateInputType = {
+  export type UserAvgAggregateInputType = {
     id?: true
-    userId?: true
   }
 
-  export type ChanelSumAggregateInputType = {
+  export type UserSumAggregateInputType = {
     id?: true
-    userId?: true
   }
 
-  export type ChanelMinAggregateInputType = {
+  export type UserMinAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     createAt?: true
     updateAt?: true
-    userId?: true
   }
 
-  export type ChanelMaxAggregateInputType = {
+  export type UserMaxAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     createAt?: true
     updateAt?: true
-    userId?: true
   }
 
-  export type ChanelCountAggregateInputType = {
+  export type UserCountAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     createAt?: true
     updateAt?: true
-    userId?: true
     _all?: true
   }
 
-  export type ChanelAggregateArgs = {
+  export type UserAggregateArgs = {
     /**
-     * Filter which Chanel to aggregate.
+     * Filter which User to aggregate.
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chanels to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: Enumerable<ChanelOrderByWithRelationInput>
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: ChanelWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chanels from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chanels.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Chanels
+     * Count returned Users
     **/
-    _count?: true | ChanelCountAggregateInputType
+    _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: ChanelAvgAggregateInputType
+    _avg?: UserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: ChanelSumAggregateInputType
+    _sum?: UserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: ChanelMinAggregateInputType
+    _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: ChanelMaxAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
-  export type GetChanelAggregateType<T extends ChanelAggregateArgs> = {
-        [P in keyof T & keyof AggregateChanel]: P extends '_count' | 'count'
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateChanel[P]>
-      : GetScalarType<T[P], AggregateChanel[P]>
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
   }
 
 
 
 
-  export type ChanelGroupByArgs = {
-    where?: ChanelWhereInput
-    orderBy?: Enumerable<ChanelOrderByWithAggregationInput>
-    by: ChanelScalarFieldEnum[]
-    having?: ChanelScalarWhereWithAggregatesInput
+  export type UserGroupByArgs = {
+    where?: UserWhereInput
+    orderBy?: Enumerable<UserOrderByWithAggregationInput>
+    by: UserScalarFieldEnum[]
+    having?: UserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: ChanelCountAggregateInputType | true
-    _avg?: ChanelAvgAggregateInputType
-    _sum?: ChanelSumAggregateInputType
-    _min?: ChanelMinAggregateInputType
-    _max?: ChanelMaxAggregateInputType
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
   }
 
 
-  export type ChanelGroupByOutputType = {
+  export type UserGroupByOutputType = {
     id: number
     name: string
-    description: string
     createAt: Date
     updateAt: Date
-    userId: number
-    _count: ChanelCountAggregateOutputType | null
-    _avg: ChanelAvgAggregateOutputType | null
-    _sum: ChanelSumAggregateOutputType | null
-    _min: ChanelMinAggregateOutputType | null
-    _max: ChanelMaxAggregateOutputType | null
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  type GetChanelGroupByPayload<T extends ChanelGroupByArgs> = Prisma.PrismaPromise<
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<ChanelGroupByOutputType, T['by']> &
+      PickArray<UserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof ChanelGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], ChanelGroupByOutputType[P]>
-            : GetScalarType<T[P], ChanelGroupByOutputType[P]>
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type ChanelSelect = {
+  export type UserSelect = {
     id?: boolean
     name?: boolean
-    videos?: boolean | Chanel$videosArgs
-    description?: boolean
-    user?: boolean | UserYoutubeArgs
     createAt?: boolean
     updateAt?: boolean
-    userToChanel?: boolean | Chanel$userToChanelArgs
-    userId?: boolean
-    Permission?: boolean | Chanel$PermissionArgs
-    _count?: boolean | ChanelCountOutputTypeArgs
+    RoundQuiz?: boolean | User$RoundQuizArgs
+    _count?: boolean | UserCountOutputTypeArgs
   }
 
 
-  export type ChanelInclude = {
-    videos?: boolean | Chanel$videosArgs
-    user?: boolean | UserYoutubeArgs
-    userToChanel?: boolean | Chanel$userToChanelArgs
-    Permission?: boolean | Chanel$PermissionArgs
-    _count?: boolean | ChanelCountOutputTypeArgs
+  export type UserInclude = {
+    RoundQuiz?: boolean | User$RoundQuizArgs
+    _count?: boolean | UserCountOutputTypeArgs
   }
 
-  export type ChanelGetPayload<S extends boolean | null | undefined | ChanelArgs> =
+  export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Chanel :
+    S extends true ? User :
     S extends undefined ? never :
-    S extends { include: any } & (ChanelArgs | ChanelFindManyArgs)
-    ? Chanel  & {
+    S extends { include: any } & (UserArgs | UserFindManyArgs)
+    ? User  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'videos' ? Array < VideoGetPayload<S['include'][P]>>  :
-        P extends 'user' ? UserYoutubeGetPayload<S['include'][P]> :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['include'][P]>>  :
-        P extends 'Permission' ? Array < PermissionGetPayload<S['include'][P]>>  :
-        P extends '_count' ? ChanelCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'RoundQuiz' ? Array < RoundQuizGetPayload<S['include'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (ChanelArgs | ChanelFindManyArgs)
+    : S extends { select: any } & (UserArgs | UserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'videos' ? Array < VideoGetPayload<S['select'][P]>>  :
-        P extends 'user' ? UserYoutubeGetPayload<S['select'][P]> :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['select'][P]>>  :
-        P extends 'Permission' ? Array < PermissionGetPayload<S['select'][P]>>  :
-        P extends '_count' ? ChanelCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Chanel ? Chanel[P] : never
+        P extends 'RoundQuiz' ? Array < RoundQuizGetPayload<S['select'][P]>>  :
+        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
   } 
-      : Chanel
+      : User
 
 
-  type ChanelCountArgs = 
-    Omit<ChanelFindManyArgs, 'select' | 'include'> & {
-      select?: ChanelCountAggregateInputType | true
+  type UserCountArgs = 
+    Omit<UserFindManyArgs, 'select' | 'include'> & {
+      select?: UserCountAggregateInputType | true
     }
 
-  export interface ChanelDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface UserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Chanel that matches the filter.
-     * @param {ChanelFindUniqueArgs} args - Arguments to find a Chanel
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
      * @example
-     * // Get one Chanel
-     * const chanel = await prisma.chanel.findUnique({
+     * // Get one User
+     * const user = await prisma.user.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends ChanelFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, ChanelFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Chanel'> extends True ? Prisma__ChanelClient<ChanelGetPayload<T>> : Prisma__ChanelClient<ChanelGetPayload<T> | null, null>
+    findUnique<T extends UserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, UserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
 
     /**
-     * Find one Chanel that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {ChanelFindUniqueOrThrowArgs} args - Arguments to find a Chanel
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Chanel
-     * const chanel = await prisma.chanel.findUniqueOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends ChanelFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ChanelFindUniqueOrThrowArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, UserFindUniqueOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Find the first Chanel that matches the filter.
+     * Find the first User that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelFindFirstArgs} args - Arguments to find a Chanel
+     * @param {UserFindFirstArgs} args - Arguments to find a User
      * @example
-     * // Get one Chanel
-     * const chanel = await prisma.chanel.findFirst({
+     * // Get one User
+     * const user = await prisma.user.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends ChanelFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, ChanelFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Chanel'> extends True ? Prisma__ChanelClient<ChanelGetPayload<T>> : Prisma__ChanelClient<ChanelGetPayload<T> | null, null>
+    findFirst<T extends UserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, UserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
 
     /**
-     * Find the first Chanel that matches the filter or
+     * Find the first User that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelFindFirstOrThrowArgs} args - Arguments to find a Chanel
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
      * @example
-     * // Get one Chanel
-     * const chanel = await prisma.chanel.findFirstOrThrow({
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends ChanelFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ChanelFindFirstOrThrowArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, UserFindFirstOrThrowArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Find zero or more Chanels that matches the filter.
+     * Find zero or more Users that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {UserFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Chanels
-     * const chanels = await prisma.chanel.findMany()
+     * // Get all Users
+     * const users = await prisma.user.findMany()
      * 
-     * // Get first 10 Chanels
-     * const chanels = await prisma.chanel.findMany({ take: 10 })
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const chanelWithIdOnly = await prisma.chanel.findMany({ select: { id: true } })
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends ChanelFindManyArgs>(
-      args?: SelectSubset<T, ChanelFindManyArgs>
-    ): Prisma.PrismaPromise<Array<ChanelGetPayload<T>>>
+    findMany<T extends UserFindManyArgs>(
+      args?: SelectSubset<T, UserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<UserGetPayload<T>>>
 
     /**
-     * Create a Chanel.
-     * @param {ChanelCreateArgs} args - Arguments to create a Chanel.
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
      * @example
-     * // Create one Chanel
-     * const Chanel = await prisma.chanel.create({
+     * // Create one User
+     * const User = await prisma.user.create({
      *   data: {
-     *     // ... data to create a Chanel
+     *     // ... data to create a User
      *   }
      * })
      * 
     **/
-    create<T extends ChanelCreateArgs>(
-      args: SelectSubset<T, ChanelCreateArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    create<T extends UserCreateArgs>(
+      args: SelectSubset<T, UserCreateArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Create many Chanels.
-     *     @param {ChanelCreateManyArgs} args - Arguments to create many Chanels.
+     * Create many Users.
+     *     @param {UserCreateManyArgs} args - Arguments to create many Users.
      *     @example
-     *     // Create many Chanels
-     *     const chanel = await prisma.chanel.createMany({
+     *     // Create many Users
+     *     const user = await prisma.user.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends ChanelCreateManyArgs>(
-      args?: SelectSubset<T, ChanelCreateManyArgs>
+    createMany<T extends UserCreateManyArgs>(
+      args?: SelectSubset<T, UserCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Chanel.
-     * @param {ChanelDeleteArgs} args - Arguments to delete one Chanel.
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
      * @example
-     * // Delete one Chanel
-     * const Chanel = await prisma.chanel.delete({
+     * // Delete one User
+     * const User = await prisma.user.delete({
      *   where: {
-     *     // ... filter to delete one Chanel
+     *     // ... filter to delete one User
      *   }
      * })
      * 
     **/
-    delete<T extends ChanelDeleteArgs>(
-      args: SelectSubset<T, ChanelDeleteArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    delete<T extends UserDeleteArgs>(
+      args: SelectSubset<T, UserDeleteArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Update one Chanel.
-     * @param {ChanelUpdateArgs} args - Arguments to update one Chanel.
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
      * @example
-     * // Update one Chanel
-     * const chanel = await prisma.chanel.update({
+     * // Update one User
+     * const user = await prisma.user.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2593,34 +4483,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends ChanelUpdateArgs>(
-      args: SelectSubset<T, ChanelUpdateArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    update<T extends UserUpdateArgs>(
+      args: SelectSubset<T, UserUpdateArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Delete zero or more Chanels.
-     * @param {ChanelDeleteManyArgs} args - Arguments to filter Chanels to delete.
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
      * @example
-     * // Delete a few Chanels
-     * const { count } = await prisma.chanel.deleteMany({
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends ChanelDeleteManyArgs>(
-      args?: SelectSubset<T, ChanelDeleteManyArgs>
+    deleteMany<T extends UserDeleteManyArgs>(
+      args?: SelectSubset<T, UserDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Chanels.
+     * Update zero or more Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Chanels
-     * const chanel = await prisma.chanel.updateMany({
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2630,59 +4520,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends ChanelUpdateManyArgs>(
-      args: SelectSubset<T, ChanelUpdateManyArgs>
+    updateMany<T extends UserUpdateManyArgs>(
+      args: SelectSubset<T, UserUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Chanel.
-     * @param {ChanelUpsertArgs} args - Arguments to update or create a Chanel.
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
      * @example
-     * // Update or create a Chanel
-     * const chanel = await prisma.chanel.upsert({
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
      *   create: {
-     *     // ... data to create a Chanel
+     *     // ... data to create a User
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Chanel we want to update
+     *     // ... the filter for the User we want to update
      *   }
      * })
     **/
-    upsert<T extends ChanelUpsertArgs>(
-      args: SelectSubset<T, ChanelUpsertArgs>
-    ): Prisma__ChanelClient<ChanelGetPayload<T>>
+    upsert<T extends UserUpsertArgs>(
+      args: SelectSubset<T, UserUpsertArgs>
+    ): Prisma__UserClient<UserGetPayload<T>>
 
     /**
-     * Count the number of Chanels.
+     * Count the number of Users.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelCountArgs} args - Arguments to filter Chanels to count.
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
      * @example
-     * // Count the number of Chanels
-     * const count = await prisma.chanel.count({
+     * // Count the number of Users
+     * const count = await prisma.user.count({
      *   where: {
-     *     // ... the filter for the Chanels we want to count
+     *     // ... the filter for the Users we want to count
      *   }
      * })
     **/
-    count<T extends ChanelCountArgs>(
-      args?: Subset<T, ChanelCountArgs>,
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], ChanelCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Chanel.
+     * Allows you to perform aggregations operations on a User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2702,13 +4592,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends ChanelAggregateArgs>(args: Subset<T, ChanelAggregateArgs>): Prisma.PrismaPromise<GetChanelAggregateType<T>>
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
-     * Group by Chanel.
+     * Group by User.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {ChanelGroupByArgs} args - Group by arguments.
+     * @param {UserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2723,14 +4613,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends ChanelGroupByArgs,
+      T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ChanelGroupByArgs['orderBy'] }
-        : { orderBy?: ChanelGroupByArgs['orderBy'] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2779,17 +4669,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, ChanelGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChanelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Chanel.
+   * The delegate class that acts as a "Promise-like" for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__ChanelClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__UserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -2804,13 +4694,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    videos<T extends Chanel$videosArgs= {}>(args?: Subset<T, Chanel$videosArgs>): Prisma.PrismaPromise<Array<VideoGetPayload<T>>| Null>;
-
-    user<T extends UserYoutubeArgs= {}>(args?: Subset<T, UserYoutubeArgs>): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | Null>;
-
-    userToChanel<T extends Chanel$userToChanelArgs= {}>(args?: Subset<T, Chanel$userToChanelArgs>): Prisma.PrismaPromise<Array<UserToChanelGetPayload<T>>| Null>;
-
-    Permission<T extends Chanel$PermissionArgs= {}>(args?: Subset<T, Chanel$PermissionArgs>): Prisma.PrismaPromise<Array<PermissionGetPayload<T>>| Null>;
+    RoundQuiz<T extends User$RoundQuizArgs= {}>(args?: Subset<T, User$RoundQuizArgs>): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -2840,27 +4724,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Chanel base type for findUnique actions
+   * User base type for findUnique actions
    */
-  export type ChanelFindUniqueArgsBase = {
+  export type UserFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter, which Chanel to fetch.
+     * Filter, which User to fetch.
      */
-    where: ChanelWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
   /**
-   * Chanel findUnique
+   * User findUnique
    */
-  export interface ChanelFindUniqueArgs extends ChanelFindUniqueArgsBase {
+  export interface UserFindUniqueArgs extends UserFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -2870,76 +4754,76 @@ export namespace Prisma {
       
 
   /**
-   * Chanel findUniqueOrThrow
+   * User findUniqueOrThrow
    */
-  export type ChanelFindUniqueOrThrowArgs = {
+  export type UserFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter, which Chanel to fetch.
+     * Filter, which User to fetch.
      */
-    where: ChanelWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
 
   /**
-   * Chanel base type for findFirst actions
+   * User base type for findFirst actions
    */
-  export type ChanelFindFirstArgsBase = {
+  export type UserFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter, which Chanel to fetch.
+     * Filter, which User to fetch.
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chanels to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: Enumerable<ChanelOrderByWithRelationInput>
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Chanels.
+     * Sets the position for searching for Users.
      */
-    cursor?: ChanelWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chanels from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chanels.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Chanels.
+     * Filter by unique combinations of Users.
      */
-    distinct?: Enumerable<ChanelScalarFieldEnum>
+    distinct?: Enumerable<UserScalarFieldEnum>
   }
 
   /**
-   * Chanel findFirst
+   * User findFirst
    */
-  export interface ChanelFindFirstArgs extends ChanelFindFirstArgsBase {
+  export interface UserFindFirstArgs extends UserFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -2949,687 +4833,665 @@ export namespace Prisma {
       
 
   /**
-   * Chanel findFirstOrThrow
+   * User findFirstOrThrow
    */
-  export type ChanelFindFirstOrThrowArgs = {
+  export type UserFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter, which Chanel to fetch.
+     * Filter, which User to fetch.
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chanels to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: Enumerable<ChanelOrderByWithRelationInput>
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Chanels.
+     * Sets the position for searching for Users.
      */
-    cursor?: ChanelWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chanels from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chanels.
+     * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Chanels.
+     * Filter by unique combinations of Users.
      */
-    distinct?: Enumerable<ChanelScalarFieldEnum>
+    distinct?: Enumerable<UserScalarFieldEnum>
   }
 
 
   /**
-   * Chanel findMany
+   * User findMany
    */
-  export type ChanelFindManyArgs = {
+  export type UserFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter, which Chanels to fetch.
+     * Filter, which Users to fetch.
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Chanels to fetch.
+     * Determine the order of Users to fetch.
      */
-    orderBy?: Enumerable<ChanelOrderByWithRelationInput>
+    orderBy?: Enumerable<UserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Chanels.
+     * Sets the position for listing Users.
      */
-    cursor?: ChanelWhereUniqueInput
+    cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Chanels from the position of the cursor.
+     * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Chanels.
+     * Skip the first `n` Users.
      */
     skip?: number
-    distinct?: Enumerable<ChanelScalarFieldEnum>
+    distinct?: Enumerable<UserScalarFieldEnum>
   }
 
 
   /**
-   * Chanel create
+   * User create
    */
-  export type ChanelCreateArgs = {
+  export type UserCreateArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * The data needed to create a Chanel.
+     * The data needed to create a User.
      */
-    data: XOR<ChanelCreateInput, ChanelUncheckedCreateInput>
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
 
   /**
-   * Chanel createMany
+   * User createMany
    */
-  export type ChanelCreateManyArgs = {
+  export type UserCreateManyArgs = {
     /**
-     * The data used to create many Chanels.
+     * The data used to create many Users.
      */
-    data: Enumerable<ChanelCreateManyInput>
+    data: Enumerable<UserCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Chanel update
+   * User update
    */
-  export type ChanelUpdateArgs = {
+  export type UserUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * The data needed to update a Chanel.
+     * The data needed to update a User.
      */
-    data: XOR<ChanelUpdateInput, ChanelUncheckedUpdateInput>
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
     /**
-     * Choose, which Chanel to update.
+     * Choose, which User to update.
      */
-    where: ChanelWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
 
   /**
-   * Chanel updateMany
+   * User updateMany
    */
-  export type ChanelUpdateManyArgs = {
+  export type UserUpdateManyArgs = {
     /**
-     * The data used to update Chanels.
+     * The data used to update Users.
      */
-    data: XOR<ChanelUpdateManyMutationInput, ChanelUncheckedUpdateManyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
     /**
-     * Filter which Chanels to update
+     * Filter which Users to update
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
   }
 
 
   /**
-   * Chanel upsert
+   * User upsert
    */
-  export type ChanelUpsertArgs = {
+  export type UserUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * The filter to search for the Chanel to update in case it exists.
+     * The filter to search for the User to update in case it exists.
      */
-    where: ChanelWhereUniqueInput
+    where: UserWhereUniqueInput
     /**
-     * In case the Chanel found by the `where` argument doesn't exist, create a new Chanel with this data.
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
      */
-    create: XOR<ChanelCreateInput, ChanelUncheckedCreateInput>
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
     /**
-     * In case the Chanel was found with the provided `where` argument, update it with this data.
+     * In case the User was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<ChanelUpdateInput, ChanelUncheckedUpdateInput>
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
   }
 
 
   /**
-   * Chanel delete
+   * User delete
    */
-  export type ChanelDeleteArgs = {
+  export type UserDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Chanel
+     * Select specific fields to fetch from the User
      */
-    select?: ChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
     /**
-     * Filter which Chanel to delete.
+     * Filter which User to delete.
      */
-    where: ChanelWhereUniqueInput
+    where: UserWhereUniqueInput
   }
 
 
   /**
-   * Chanel deleteMany
+   * User deleteMany
    */
-  export type ChanelDeleteManyArgs = {
+  export type UserDeleteManyArgs = {
     /**
-     * Filter which Chanels to delete
+     * Filter which Users to delete
      */
-    where?: ChanelWhereInput
+    where?: UserWhereInput
   }
 
 
   /**
-   * Chanel.videos
+   * User.RoundQuiz
    */
-  export type Chanel$videosArgs = {
+  export type User$RoundQuizArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: VideoSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
-    where?: VideoWhereInput
-    orderBy?: Enumerable<VideoOrderByWithRelationInput>
-    cursor?: VideoWhereUniqueInput
+    include?: RoundQuizInclude | null
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
+    cursor?: RoundQuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<VideoScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * Chanel.userToChanel
+   * User without action
    */
-  export type Chanel$userToChanelArgs = {
+  export type UserArgs = {
     /**
-     * Select specific fields to fetch from the UserToChanel
+     * Select specific fields to fetch from the User
      */
-    select?: UserToChanelSelect | null
+    select?: UserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: UserToChanelInclude | null
-    where?: UserToChanelWhereInput
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    cursor?: UserToChanelWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-
-  /**
-   * Chanel.Permission
-   */
-  export type Chanel$PermissionArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    where?: PermissionWhereInput
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    cursor?: PermissionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PermissionScalarFieldEnum>
-  }
-
-
-  /**
-   * Chanel without action
-   */
-  export type ChanelArgs = {
-    /**
-     * Select specific fields to fetch from the Chanel
-     */
-    select?: ChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ChanelInclude | null
+    include?: UserInclude | null
   }
 
 
 
   /**
-   * Model Comment
+   * Model RoundQuiz
    */
 
 
-  export type AggregateComment = {
-    _count: CommentCountAggregateOutputType | null
-    _avg: CommentAvgAggregateOutputType | null
-    _sum: CommentSumAggregateOutputType | null
-    _min: CommentMinAggregateOutputType | null
-    _max: CommentMaxAggregateOutputType | null
+  export type AggregateRoundQuiz = {
+    _count: RoundQuizCountAggregateOutputType | null
+    _avg: RoundQuizAvgAggregateOutputType | null
+    _sum: RoundQuizSumAggregateOutputType | null
+    _min: RoundQuizMinAggregateOutputType | null
+    _max: RoundQuizMaxAggregateOutputType | null
   }
 
-  export type CommentAvgAggregateOutputType = {
+  export type RoundQuizAvgAggregateOutputType = {
     id: number | null
+    questionCategoryId: number | null
+    score: number | null
     userId: number | null
-    videoId: number | null
   }
 
-  export type CommentSumAggregateOutputType = {
+  export type RoundQuizSumAggregateOutputType = {
     id: number | null
+    questionCategoryId: number | null
+    score: number | null
     userId: number | null
-    videoId: number | null
   }
 
-  export type CommentMinAggregateOutputType = {
+  export type RoundQuizMinAggregateOutputType = {
     id: number | null
+    questionCategoryId: number | null
+    score: number | null
     userId: number | null
-    videoId: number | null
     createAt: Date | null
     updateAt: Date | null
   }
 
-  export type CommentMaxAggregateOutputType = {
+  export type RoundQuizMaxAggregateOutputType = {
     id: number | null
+    questionCategoryId: number | null
+    score: number | null
     userId: number | null
-    videoId: number | null
     createAt: Date | null
     updateAt: Date | null
   }
 
-  export type CommentCountAggregateOutputType = {
+  export type RoundQuizCountAggregateOutputType = {
     id: number
+    questionCategoryId: number
+    score: number
     userId: number
-    videoId: number
     createAt: number
     updateAt: number
     _all: number
   }
 
 
-  export type CommentAvgAggregateInputType = {
+  export type RoundQuizAvgAggregateInputType = {
     id?: true
+    questionCategoryId?: true
+    score?: true
     userId?: true
-    videoId?: true
   }
 
-  export type CommentSumAggregateInputType = {
+  export type RoundQuizSumAggregateInputType = {
     id?: true
+    questionCategoryId?: true
+    score?: true
     userId?: true
-    videoId?: true
   }
 
-  export type CommentMinAggregateInputType = {
+  export type RoundQuizMinAggregateInputType = {
     id?: true
+    questionCategoryId?: true
+    score?: true
     userId?: true
-    videoId?: true
     createAt?: true
     updateAt?: true
   }
 
-  export type CommentMaxAggregateInputType = {
+  export type RoundQuizMaxAggregateInputType = {
     id?: true
+    questionCategoryId?: true
+    score?: true
     userId?: true
-    videoId?: true
     createAt?: true
     updateAt?: true
   }
 
-  export type CommentCountAggregateInputType = {
+  export type RoundQuizCountAggregateInputType = {
     id?: true
+    questionCategoryId?: true
+    score?: true
     userId?: true
-    videoId?: true
     createAt?: true
     updateAt?: true
     _all?: true
   }
 
-  export type CommentAggregateArgs = {
+  export type RoundQuizAggregateArgs = {
     /**
-     * Filter which Comment to aggregate.
+     * Filter which RoundQuiz to aggregate.
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Comments to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: CommentWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Comments from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Comments.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Comments
+     * Count returned RoundQuizs
     **/
-    _count?: true | CommentCountAggregateInputType
+    _count?: true | RoundQuizCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: CommentAvgAggregateInputType
+    _avg?: RoundQuizAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: CommentSumAggregateInputType
+    _sum?: RoundQuizSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: CommentMinAggregateInputType
+    _min?: RoundQuizMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: CommentMaxAggregateInputType
+    _max?: RoundQuizMaxAggregateInputType
   }
 
-  export type GetCommentAggregateType<T extends CommentAggregateArgs> = {
-        [P in keyof T & keyof AggregateComment]: P extends '_count' | 'count'
+  export type GetRoundQuizAggregateType<T extends RoundQuizAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundQuiz]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateComment[P]>
-      : GetScalarType<T[P], AggregateComment[P]>
+        : GetScalarType<T[P], AggregateRoundQuiz[P]>
+      : GetScalarType<T[P], AggregateRoundQuiz[P]>
   }
 
 
 
 
-  export type CommentGroupByArgs = {
-    where?: CommentWhereInput
-    orderBy?: Enumerable<CommentOrderByWithAggregationInput>
-    by: CommentScalarFieldEnum[]
-    having?: CommentScalarWhereWithAggregatesInput
+  export type RoundQuizGroupByArgs = {
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithAggregationInput>
+    by: RoundQuizScalarFieldEnum[]
+    having?: RoundQuizScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: CommentCountAggregateInputType | true
-    _avg?: CommentAvgAggregateInputType
-    _sum?: CommentSumAggregateInputType
-    _min?: CommentMinAggregateInputType
-    _max?: CommentMaxAggregateInputType
+    _count?: RoundQuizCountAggregateInputType | true
+    _avg?: RoundQuizAvgAggregateInputType
+    _sum?: RoundQuizSumAggregateInputType
+    _min?: RoundQuizMinAggregateInputType
+    _max?: RoundQuizMaxAggregateInputType
   }
 
 
-  export type CommentGroupByOutputType = {
+  export type RoundQuizGroupByOutputType = {
     id: number
+    questionCategoryId: number
+    score: number
     userId: number
-    videoId: number
     createAt: Date
     updateAt: Date
-    _count: CommentCountAggregateOutputType | null
-    _avg: CommentAvgAggregateOutputType | null
-    _sum: CommentSumAggregateOutputType | null
-    _min: CommentMinAggregateOutputType | null
-    _max: CommentMaxAggregateOutputType | null
+    _count: RoundQuizCountAggregateOutputType | null
+    _avg: RoundQuizAvgAggregateOutputType | null
+    _sum: RoundQuizSumAggregateOutputType | null
+    _min: RoundQuizMinAggregateOutputType | null
+    _max: RoundQuizMaxAggregateOutputType | null
   }
 
-  type GetCommentGroupByPayload<T extends CommentGroupByArgs> = Prisma.PrismaPromise<
+  type GetRoundQuizGroupByPayload<T extends RoundQuizGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<CommentGroupByOutputType, T['by']> &
+      PickArray<RoundQuizGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof CommentGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RoundQuizGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], CommentGroupByOutputType[P]>
-            : GetScalarType<T[P], CommentGroupByOutputType[P]>
+              : GetScalarType<T[P], RoundQuizGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundQuizGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type CommentSelect = {
+  export type RoundQuizSelect = {
     id?: boolean
-    user?: boolean | UserYoutubeArgs
+    questionCategories?: boolean | QuestionCategoryArgs
+    questionCategoryId?: boolean
+    score?: boolean
+    user?: boolean | UserArgs
     userId?: boolean
-    video?: boolean | VideoArgs
-    videoId?: boolean
     createAt?: boolean
     updateAt?: boolean
+    RoundDetail?: boolean | RoundQuiz$RoundDetailArgs
+    _count?: boolean | RoundQuizCountOutputTypeArgs
   }
 
 
-  export type CommentInclude = {
-    user?: boolean | UserYoutubeArgs
-    video?: boolean | VideoArgs
+  export type RoundQuizInclude = {
+    questionCategories?: boolean | QuestionCategoryArgs
+    user?: boolean | UserArgs
+    RoundDetail?: boolean | RoundQuiz$RoundDetailArgs
+    _count?: boolean | RoundQuizCountOutputTypeArgs
   }
 
-  export type CommentGetPayload<S extends boolean | null | undefined | CommentArgs> =
+  export type RoundQuizGetPayload<S extends boolean | null | undefined | RoundQuizArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Comment :
+    S extends true ? RoundQuiz :
     S extends undefined ? never :
-    S extends { include: any } & (CommentArgs | CommentFindManyArgs)
-    ? Comment  & {
+    S extends { include: any } & (RoundQuizArgs | RoundQuizFindManyArgs)
+    ? RoundQuiz  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? UserYoutubeGetPayload<S['include'][P]> :
-        P extends 'video' ? VideoGetPayload<S['include'][P]> :  never
+        P extends 'questionCategories' ? QuestionCategoryGetPayload<S['include'][P]> :
+        P extends 'user' ? UserGetPayload<S['include'][P]> :
+        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['include'][P]>>  :
+        P extends '_count' ? RoundQuizCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (CommentArgs | CommentFindManyArgs)
+    : S extends { select: any } & (RoundQuizArgs | RoundQuizFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? UserYoutubeGetPayload<S['select'][P]> :
-        P extends 'video' ? VideoGetPayload<S['select'][P]> :  P extends keyof Comment ? Comment[P] : never
+        P extends 'questionCategories' ? QuestionCategoryGetPayload<S['select'][P]> :
+        P extends 'user' ? UserGetPayload<S['select'][P]> :
+        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['select'][P]>>  :
+        P extends '_count' ? RoundQuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof RoundQuiz ? RoundQuiz[P] : never
   } 
-      : Comment
+      : RoundQuiz
 
 
-  type CommentCountArgs = 
-    Omit<CommentFindManyArgs, 'select' | 'include'> & {
-      select?: CommentCountAggregateInputType | true
+  type RoundQuizCountArgs = 
+    Omit<RoundQuizFindManyArgs, 'select' | 'include'> & {
+      select?: RoundQuizCountAggregateInputType | true
     }
 
-  export interface CommentDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface RoundQuizDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Comment that matches the filter.
-     * @param {CommentFindUniqueArgs} args - Arguments to find a Comment
+     * Find zero or one RoundQuiz that matches the filter.
+     * @param {RoundQuizFindUniqueArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one Comment
-     * const comment = await prisma.comment.findUnique({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends CommentFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, CommentFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Comment'> extends True ? Prisma__CommentClient<CommentGetPayload<T>> : Prisma__CommentClient<CommentGetPayload<T> | null, null>
+    findUnique<T extends RoundQuizFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundQuizFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuiz'> extends True ? Prisma__RoundQuizClient<RoundQuizGetPayload<T>> : Prisma__RoundQuizClient<RoundQuizGetPayload<T> | null, null>
 
     /**
-     * Find one Comment that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one RoundQuiz that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {CommentFindUniqueOrThrowArgs} args - Arguments to find a Comment
+     * @param {RoundQuizFindUniqueOrThrowArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one Comment
-     * const comment = await prisma.comment.findUniqueOrThrow({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends CommentFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, CommentFindUniqueOrThrowArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    findUniqueOrThrow<T extends RoundQuizFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuizFindUniqueOrThrowArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Find the first Comment that matches the filter.
+     * Find the first RoundQuiz that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentFindFirstArgs} args - Arguments to find a Comment
+     * @param {RoundQuizFindFirstArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one Comment
-     * const comment = await prisma.comment.findFirst({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends CommentFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, CommentFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Comment'> extends True ? Prisma__CommentClient<CommentGetPayload<T>> : Prisma__CommentClient<CommentGetPayload<T> | null, null>
+    findFirst<T extends RoundQuizFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundQuizFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuiz'> extends True ? Prisma__RoundQuizClient<RoundQuizGetPayload<T>> : Prisma__RoundQuizClient<RoundQuizGetPayload<T> | null, null>
 
     /**
-     * Find the first Comment that matches the filter or
+     * Find the first RoundQuiz that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentFindFirstOrThrowArgs} args - Arguments to find a Comment
+     * @param {RoundQuizFindFirstOrThrowArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one Comment
-     * const comment = await prisma.comment.findFirstOrThrow({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends CommentFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, CommentFindFirstOrThrowArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    findFirstOrThrow<T extends RoundQuizFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuizFindFirstOrThrowArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Find zero or more Comments that matches the filter.
+     * Find zero or more RoundQuizs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {RoundQuizFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Comments
-     * const comments = await prisma.comment.findMany()
+     * // Get all RoundQuizs
+     * const roundQuizs = await prisma.roundQuiz.findMany()
      * 
-     * // Get first 10 Comments
-     * const comments = await prisma.comment.findMany({ take: 10 })
+     * // Get first 10 RoundQuizs
+     * const roundQuizs = await prisma.roundQuiz.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const commentWithIdOnly = await prisma.comment.findMany({ select: { id: true } })
+     * const roundQuizWithIdOnly = await prisma.roundQuiz.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends CommentFindManyArgs>(
-      args?: SelectSubset<T, CommentFindManyArgs>
-    ): Prisma.PrismaPromise<Array<CommentGetPayload<T>>>
+    findMany<T extends RoundQuizFindManyArgs>(
+      args?: SelectSubset<T, RoundQuizFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>>
 
     /**
-     * Create a Comment.
-     * @param {CommentCreateArgs} args - Arguments to create a Comment.
+     * Create a RoundQuiz.
+     * @param {RoundQuizCreateArgs} args - Arguments to create a RoundQuiz.
      * @example
-     * // Create one Comment
-     * const Comment = await prisma.comment.create({
+     * // Create one RoundQuiz
+     * const RoundQuiz = await prisma.roundQuiz.create({
      *   data: {
-     *     // ... data to create a Comment
+     *     // ... data to create a RoundQuiz
      *   }
      * })
      * 
     **/
-    create<T extends CommentCreateArgs>(
-      args: SelectSubset<T, CommentCreateArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    create<T extends RoundQuizCreateArgs>(
+      args: SelectSubset<T, RoundQuizCreateArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Create many Comments.
-     *     @param {CommentCreateManyArgs} args - Arguments to create many Comments.
+     * Create many RoundQuizs.
+     *     @param {RoundQuizCreateManyArgs} args - Arguments to create many RoundQuizs.
      *     @example
-     *     // Create many Comments
-     *     const comment = await prisma.comment.createMany({
+     *     // Create many RoundQuizs
+     *     const roundQuiz = await prisma.roundQuiz.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends CommentCreateManyArgs>(
-      args?: SelectSubset<T, CommentCreateManyArgs>
+    createMany<T extends RoundQuizCreateManyArgs>(
+      args?: SelectSubset<T, RoundQuizCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Comment.
-     * @param {CommentDeleteArgs} args - Arguments to delete one Comment.
+     * Delete a RoundQuiz.
+     * @param {RoundQuizDeleteArgs} args - Arguments to delete one RoundQuiz.
      * @example
-     * // Delete one Comment
-     * const Comment = await prisma.comment.delete({
+     * // Delete one RoundQuiz
+     * const RoundQuiz = await prisma.roundQuiz.delete({
      *   where: {
-     *     // ... filter to delete one Comment
+     *     // ... filter to delete one RoundQuiz
      *   }
      * })
      * 
     **/
-    delete<T extends CommentDeleteArgs>(
-      args: SelectSubset<T, CommentDeleteArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    delete<T extends RoundQuizDeleteArgs>(
+      args: SelectSubset<T, RoundQuizDeleteArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Update one Comment.
-     * @param {CommentUpdateArgs} args - Arguments to update one Comment.
+     * Update one RoundQuiz.
+     * @param {RoundQuizUpdateArgs} args - Arguments to update one RoundQuiz.
      * @example
-     * // Update one Comment
-     * const comment = await prisma.comment.update({
+     * // Update one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3639,34 +5501,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends CommentUpdateArgs>(
-      args: SelectSubset<T, CommentUpdateArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    update<T extends RoundQuizUpdateArgs>(
+      args: SelectSubset<T, RoundQuizUpdateArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Delete zero or more Comments.
-     * @param {CommentDeleteManyArgs} args - Arguments to filter Comments to delete.
+     * Delete zero or more RoundQuizs.
+     * @param {RoundQuizDeleteManyArgs} args - Arguments to filter RoundQuizs to delete.
      * @example
-     * // Delete a few Comments
-     * const { count } = await prisma.comment.deleteMany({
+     * // Delete a few RoundQuizs
+     * const { count } = await prisma.roundQuiz.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends CommentDeleteManyArgs>(
-      args?: SelectSubset<T, CommentDeleteManyArgs>
+    deleteMany<T extends RoundQuizDeleteManyArgs>(
+      args?: SelectSubset<T, RoundQuizDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Comments.
+     * Update zero or more RoundQuizs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RoundQuizUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Comments
-     * const comment = await prisma.comment.updateMany({
+     * // Update many RoundQuizs
+     * const roundQuiz = await prisma.roundQuiz.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3676,59 +5538,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends CommentUpdateManyArgs>(
-      args: SelectSubset<T, CommentUpdateManyArgs>
+    updateMany<T extends RoundQuizUpdateManyArgs>(
+      args: SelectSubset<T, RoundQuizUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Comment.
-     * @param {CommentUpsertArgs} args - Arguments to update or create a Comment.
+     * Create or update one RoundQuiz.
+     * @param {RoundQuizUpsertArgs} args - Arguments to update or create a RoundQuiz.
      * @example
-     * // Update or create a Comment
-     * const comment = await prisma.comment.upsert({
+     * // Update or create a RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.upsert({
      *   create: {
-     *     // ... data to create a Comment
+     *     // ... data to create a RoundQuiz
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Comment we want to update
+     *     // ... the filter for the RoundQuiz we want to update
      *   }
      * })
     **/
-    upsert<T extends CommentUpsertArgs>(
-      args: SelectSubset<T, CommentUpsertArgs>
-    ): Prisma__CommentClient<CommentGetPayload<T>>
+    upsert<T extends RoundQuizUpsertArgs>(
+      args: SelectSubset<T, RoundQuizUpsertArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Count the number of Comments.
+     * Count the number of RoundQuizs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentCountArgs} args - Arguments to filter Comments to count.
+     * @param {RoundQuizCountArgs} args - Arguments to filter RoundQuizs to count.
      * @example
-     * // Count the number of Comments
-     * const count = await prisma.comment.count({
+     * // Count the number of RoundQuizs
+     * const count = await prisma.roundQuiz.count({
      *   where: {
-     *     // ... the filter for the Comments we want to count
+     *     // ... the filter for the RoundQuizs we want to count
      *   }
      * })
     **/
-    count<T extends CommentCountArgs>(
-      args?: Subset<T, CommentCountArgs>,
+    count<T extends RoundQuizCountArgs>(
+      args?: Subset<T, RoundQuizCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], CommentCountAggregateOutputType>
+          : GetScalarType<T['select'], RoundQuizCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Comment.
+     * Allows you to perform aggregations operations on a RoundQuiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RoundQuizAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3748,13 +5610,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends CommentAggregateArgs>(args: Subset<T, CommentAggregateArgs>): Prisma.PrismaPromise<GetCommentAggregateType<T>>
+    aggregate<T extends RoundQuizAggregateArgs>(args: Subset<T, RoundQuizAggregateArgs>): Prisma.PrismaPromise<GetRoundQuizAggregateType<T>>
 
     /**
-     * Group by Comment.
+     * Group by RoundQuiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {CommentGroupByArgs} args - Group by arguments.
+     * @param {RoundQuizGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3769,14 +5631,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends CommentGroupByArgs,
+      T extends RoundQuizGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CommentGroupByArgs['orderBy'] }
-        : { orderBy?: CommentGroupByArgs['orderBy'] },
+        ? { orderBy: RoundQuizGroupByArgs['orderBy'] }
+        : { orderBy?: RoundQuizGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3825,17 +5687,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, CommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RoundQuizGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuizGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Comment.
+   * The delegate class that acts as a "Promise-like" for RoundQuiz.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__CommentClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__RoundQuizClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -3850,9 +5712,11 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    user<T extends UserYoutubeArgs= {}>(args?: Subset<T, UserYoutubeArgs>): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | Null>;
+    questionCategories<T extends QuestionCategoryArgs= {}>(args?: Subset<T, QuestionCategoryArgs>): Prisma__QuestionCategoryClient<QuestionCategoryGetPayload<T> | Null>;
 
-    video<T extends VideoArgs= {}>(args?: Subset<T, VideoArgs>): Prisma__VideoClient<VideoGetPayload<T> | Null>;
+    user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
+
+    RoundDetail<T extends RoundQuiz$RoundDetailArgs= {}>(args?: Subset<T, RoundQuiz$RoundDetailArgs>): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3882,27 +5746,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Comment base type for findUnique actions
+   * RoundQuiz base type for findUnique actions
    */
-  export type CommentFindUniqueArgsBase = {
+  export type RoundQuizFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter, which Comment to fetch.
+     * Filter, which RoundQuiz to fetch.
      */
-    where: CommentWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
   /**
-   * Comment findUnique
+   * RoundQuiz findUnique
    */
-  export interface CommentFindUniqueArgs extends CommentFindUniqueArgsBase {
+  export interface RoundQuizFindUniqueArgs extends RoundQuizFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -3912,76 +5776,76 @@ export namespace Prisma {
       
 
   /**
-   * Comment findUniqueOrThrow
+   * RoundQuiz findUniqueOrThrow
    */
-  export type CommentFindUniqueOrThrowArgs = {
+  export type RoundQuizFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter, which Comment to fetch.
+     * Filter, which RoundQuiz to fetch.
      */
-    where: CommentWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * Comment base type for findFirst actions
+   * RoundQuiz base type for findFirst actions
    */
-  export type CommentFindFirstArgsBase = {
+  export type RoundQuizFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter, which Comment to fetch.
+     * Filter, which RoundQuiz to fetch.
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Comments to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Comments.
+     * Sets the position for searching for RoundQuizs.
      */
-    cursor?: CommentWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Comments from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Comments.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Comments.
+     * Filter by unique combinations of RoundQuizs.
      */
-    distinct?: Enumerable<CommentScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
   /**
-   * Comment findFirst
+   * RoundQuiz findFirst
    */
-  export interface CommentFindFirstArgs extends CommentFindFirstArgsBase {
+  export interface RoundQuizFindFirstArgs extends RoundQuizFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -3991,640 +5855,677 @@ export namespace Prisma {
       
 
   /**
-   * Comment findFirstOrThrow
+   * RoundQuiz findFirstOrThrow
    */
-  export type CommentFindFirstOrThrowArgs = {
+  export type RoundQuizFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter, which Comment to fetch.
+     * Filter, which RoundQuiz to fetch.
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Comments to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Comments.
+     * Sets the position for searching for RoundQuizs.
      */
-    cursor?: CommentWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Comments from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Comments.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Comments.
+     * Filter by unique combinations of RoundQuizs.
      */
-    distinct?: Enumerable<CommentScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * Comment findMany
+   * RoundQuiz findMany
    */
-  export type CommentFindManyArgs = {
+  export type RoundQuizFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter, which Comments to fetch.
+     * Filter, which RoundQuizs to fetch.
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Comments to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Comments.
+     * Sets the position for listing RoundQuizs.
      */
-    cursor?: CommentWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Comments from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Comments.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
-    distinct?: Enumerable<CommentScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * Comment create
+   * RoundQuiz create
    */
-  export type CommentCreateArgs = {
+  export type RoundQuizCreateArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * The data needed to create a Comment.
+     * The data needed to create a RoundQuiz.
      */
-    data: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+    data: XOR<RoundQuizCreateInput, RoundQuizUncheckedCreateInput>
   }
 
 
   /**
-   * Comment createMany
+   * RoundQuiz createMany
    */
-  export type CommentCreateManyArgs = {
+  export type RoundQuizCreateManyArgs = {
     /**
-     * The data used to create many Comments.
+     * The data used to create many RoundQuizs.
      */
-    data: Enumerable<CommentCreateManyInput>
+    data: Enumerable<RoundQuizCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Comment update
+   * RoundQuiz update
    */
-  export type CommentUpdateArgs = {
+  export type RoundQuizUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * The data needed to update a Comment.
+     * The data needed to update a RoundQuiz.
      */
-    data: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+    data: XOR<RoundQuizUpdateInput, RoundQuizUncheckedUpdateInput>
     /**
-     * Choose, which Comment to update.
+     * Choose, which RoundQuiz to update.
      */
-    where: CommentWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * Comment updateMany
+   * RoundQuiz updateMany
    */
-  export type CommentUpdateManyArgs = {
+  export type RoundQuizUpdateManyArgs = {
     /**
-     * The data used to update Comments.
+     * The data used to update RoundQuizs.
      */
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyInput>
     /**
-     * Filter which Comments to update
+     * Filter which RoundQuizs to update
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
   }
 
 
   /**
-   * Comment upsert
+   * RoundQuiz upsert
    */
-  export type CommentUpsertArgs = {
+  export type RoundQuizUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * The filter to search for the Comment to update in case it exists.
+     * The filter to search for the RoundQuiz to update in case it exists.
      */
-    where: CommentWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
     /**
-     * In case the Comment found by the `where` argument doesn't exist, create a new Comment with this data.
+     * In case the RoundQuiz found by the `where` argument doesn't exist, create a new RoundQuiz with this data.
      */
-    create: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+    create: XOR<RoundQuizCreateInput, RoundQuizUncheckedCreateInput>
     /**
-     * In case the Comment was found with the provided `where` argument, update it with this data.
+     * In case the RoundQuiz was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+    update: XOR<RoundQuizUpdateInput, RoundQuizUncheckedUpdateInput>
   }
 
 
   /**
-   * Comment delete
+   * RoundQuiz delete
    */
-  export type CommentDeleteArgs = {
+  export type RoundQuizDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: CommentSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter which Comment to delete.
+     * Filter which RoundQuiz to delete.
      */
-    where: CommentWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * Comment deleteMany
+   * RoundQuiz deleteMany
    */
-  export type CommentDeleteManyArgs = {
+  export type RoundQuizDeleteManyArgs = {
     /**
-     * Filter which Comments to delete
+     * Filter which RoundQuizs to delete
      */
-    where?: CommentWhereInput
+    where?: RoundQuizWhereInput
   }
 
 
   /**
-   * Comment without action
+   * RoundQuiz.RoundDetail
    */
-  export type CommentArgs = {
+  export type RoundQuiz$RoundDetailArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: CommentSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
+    include?: RoundDetailInclude | null
+    where?: RoundDetailWhereInput
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    cursor?: RoundDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuiz without action
+   */
+  export type RoundQuizArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuiz
+     */
+    select?: RoundQuizSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuizInclude | null
   }
 
 
 
   /**
-   * Model Video
+   * Model RoundDetail
    */
 
 
-  export type AggregateVideo = {
-    _count: VideoCountAggregateOutputType | null
-    _avg: VideoAvgAggregateOutputType | null
-    _sum: VideoSumAggregateOutputType | null
-    _min: VideoMinAggregateOutputType | null
-    _max: VideoMaxAggregateOutputType | null
+  export type AggregateRoundDetail = {
+    _count: RoundDetailCountAggregateOutputType | null
+    _avg: RoundDetailAvgAggregateOutputType | null
+    _sum: RoundDetailSumAggregateOutputType | null
+    _min: RoundDetailMinAggregateOutputType | null
+    _max: RoundDetailMaxAggregateOutputType | null
   }
 
-  export type VideoAvgAggregateOutputType = {
+  export type RoundDetailAvgAggregateOutputType = {
     id: number | null
-    chanelId: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    questionOrder: number | null
+    userChoose: number | null
   }
 
-  export type VideoSumAggregateOutputType = {
+  export type RoundDetailSumAggregateOutputType = {
     id: number | null
-    chanelId: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    questionOrder: number | null
+    userChoose: number | null
   }
 
-  export type VideoMinAggregateOutputType = {
+  export type RoundDetailMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    description: string | null
-    url: string | null
+    roundQuizId: number | null
+    questionId: number | null
+    questionOrder: number | null
+    userChoose: number | null
+    result: boolean | null
     createAt: Date | null
     updateAt: Date | null
-    chanelId: number | null
   }
 
-  export type VideoMaxAggregateOutputType = {
+  export type RoundDetailMaxAggregateOutputType = {
     id: number | null
-    name: string | null
-    description: string | null
-    url: string | null
+    roundQuizId: number | null
+    questionId: number | null
+    questionOrder: number | null
+    userChoose: number | null
+    result: boolean | null
     createAt: Date | null
     updateAt: Date | null
-    chanelId: number | null
   }
 
-  export type VideoCountAggregateOutputType = {
+  export type RoundDetailCountAggregateOutputType = {
     id: number
-    name: number
-    description: number
-    url: number
+    roundQuizId: number
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: number
     createAt: number
     updateAt: number
-    chanelId: number
     _all: number
   }
 
 
-  export type VideoAvgAggregateInputType = {
+  export type RoundDetailAvgAggregateInputType = {
     id?: true
-    chanelId?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
   }
 
-  export type VideoSumAggregateInputType = {
+  export type RoundDetailSumAggregateInputType = {
     id?: true
-    chanelId?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
   }
 
-  export type VideoMinAggregateInputType = {
+  export type RoundDetailMinAggregateInputType = {
     id?: true
-    name?: true
-    description?: true
-    url?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
+    result?: true
     createAt?: true
     updateAt?: true
-    chanelId?: true
   }
 
-  export type VideoMaxAggregateInputType = {
+  export type RoundDetailMaxAggregateInputType = {
     id?: true
-    name?: true
-    description?: true
-    url?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
+    result?: true
     createAt?: true
     updateAt?: true
-    chanelId?: true
   }
 
-  export type VideoCountAggregateInputType = {
+  export type RoundDetailCountAggregateInputType = {
     id?: true
-    name?: true
-    description?: true
-    url?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
+    result?: true
     createAt?: true
     updateAt?: true
-    chanelId?: true
     _all?: true
   }
 
-  export type VideoAggregateArgs = {
+  export type RoundDetailAggregateArgs = {
     /**
-     * Filter which Video to aggregate.
+     * Filter which RoundDetail to aggregate.
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of RoundDetails to fetch.
      */
-    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: RoundDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` RoundDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` RoundDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Videos
+     * Count returned RoundDetails
     **/
-    _count?: true | VideoCountAggregateInputType
+    _count?: true | RoundDetailCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: VideoAvgAggregateInputType
+    _avg?: RoundDetailAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: VideoSumAggregateInputType
+    _sum?: RoundDetailSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: VideoMinAggregateInputType
+    _min?: RoundDetailMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: VideoMaxAggregateInputType
+    _max?: RoundDetailMaxAggregateInputType
   }
 
-  export type GetVideoAggregateType<T extends VideoAggregateArgs> = {
-        [P in keyof T & keyof AggregateVideo]: P extends '_count' | 'count'
+  export type GetRoundDetailAggregateType<T extends RoundDetailAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundDetail]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateVideo[P]>
-      : GetScalarType<T[P], AggregateVideo[P]>
+        : GetScalarType<T[P], AggregateRoundDetail[P]>
+      : GetScalarType<T[P], AggregateRoundDetail[P]>
   }
 
 
 
 
-  export type VideoGroupByArgs = {
-    where?: VideoWhereInput
-    orderBy?: Enumerable<VideoOrderByWithAggregationInput>
-    by: VideoScalarFieldEnum[]
-    having?: VideoScalarWhereWithAggregatesInput
+  export type RoundDetailGroupByArgs = {
+    where?: RoundDetailWhereInput
+    orderBy?: Enumerable<RoundDetailOrderByWithAggregationInput>
+    by: RoundDetailScalarFieldEnum[]
+    having?: RoundDetailScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: VideoCountAggregateInputType | true
-    _avg?: VideoAvgAggregateInputType
-    _sum?: VideoSumAggregateInputType
-    _min?: VideoMinAggregateInputType
-    _max?: VideoMaxAggregateInputType
+    _count?: RoundDetailCountAggregateInputType | true
+    _avg?: RoundDetailAvgAggregateInputType
+    _sum?: RoundDetailSumAggregateInputType
+    _min?: RoundDetailMinAggregateInputType
+    _max?: RoundDetailMaxAggregateInputType
   }
 
 
-  export type VideoGroupByOutputType = {
+  export type RoundDetailGroupByOutputType = {
     id: number
-    name: string
-    description: string
-    url: string
+    roundQuizId: number
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt: Date
     updateAt: Date
-    chanelId: number | null
-    _count: VideoCountAggregateOutputType | null
-    _avg: VideoAvgAggregateOutputType | null
-    _sum: VideoSumAggregateOutputType | null
-    _min: VideoMinAggregateOutputType | null
-    _max: VideoMaxAggregateOutputType | null
+    _count: RoundDetailCountAggregateOutputType | null
+    _avg: RoundDetailAvgAggregateOutputType | null
+    _sum: RoundDetailSumAggregateOutputType | null
+    _min: RoundDetailMinAggregateOutputType | null
+    _max: RoundDetailMaxAggregateOutputType | null
   }
 
-  type GetVideoGroupByPayload<T extends VideoGroupByArgs> = Prisma.PrismaPromise<
+  type GetRoundDetailGroupByPayload<T extends RoundDetailGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<VideoGroupByOutputType, T['by']> &
+      PickArray<RoundDetailGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof VideoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RoundDetailGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], VideoGroupByOutputType[P]>
-            : GetScalarType<T[P], VideoGroupByOutputType[P]>
+              : GetScalarType<T[P], RoundDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundDetailGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type VideoSelect = {
+  export type RoundDetailSelect = {
     id?: boolean
-    name?: boolean
-    description?: boolean
-    comments?: boolean | Video$commentsArgs
-    url?: boolean
+    roundQuiz?: boolean | RoundQuizArgs
+    roundQuizId?: boolean
+    question?: boolean | QuestionArgs
+    questionId?: boolean
+    questionOrder?: boolean
+    userChoose?: boolean
+    result?: boolean
     createAt?: boolean
     updateAt?: boolean
-    Chanel?: boolean | ChanelArgs
-    chanelId?: boolean
-    _count?: boolean | VideoCountOutputTypeArgs
   }
 
 
-  export type VideoInclude = {
-    comments?: boolean | Video$commentsArgs
-    Chanel?: boolean | ChanelArgs
-    _count?: boolean | VideoCountOutputTypeArgs
+  export type RoundDetailInclude = {
+    roundQuiz?: boolean | RoundQuizArgs
+    question?: boolean | QuestionArgs
   }
 
-  export type VideoGetPayload<S extends boolean | null | undefined | VideoArgs> =
+  export type RoundDetailGetPayload<S extends boolean | null | undefined | RoundDetailArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Video :
+    S extends true ? RoundDetail :
     S extends undefined ? never :
-    S extends { include: any } & (VideoArgs | VideoFindManyArgs)
-    ? Video  & {
+    S extends { include: any } & (RoundDetailArgs | RoundDetailFindManyArgs)
+    ? RoundDetail  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'comments' ? Array < CommentGetPayload<S['include'][P]>>  :
-        P extends 'Chanel' ? ChanelGetPayload<S['include'][P]> | null :
-        P extends '_count' ? VideoCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'roundQuiz' ? RoundQuizGetPayload<S['include'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (VideoArgs | VideoFindManyArgs)
+    : S extends { select: any } & (RoundDetailArgs | RoundDetailFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'comments' ? Array < CommentGetPayload<S['select'][P]>>  :
-        P extends 'Chanel' ? ChanelGetPayload<S['select'][P]> | null :
-        P extends '_count' ? VideoCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Video ? Video[P] : never
+        P extends 'roundQuiz' ? RoundQuizGetPayload<S['select'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['select'][P]> :  P extends keyof RoundDetail ? RoundDetail[P] : never
   } 
-      : Video
+      : RoundDetail
 
 
-  type VideoCountArgs = 
-    Omit<VideoFindManyArgs, 'select' | 'include'> & {
-      select?: VideoCountAggregateInputType | true
+  type RoundDetailCountArgs = 
+    Omit<RoundDetailFindManyArgs, 'select' | 'include'> & {
+      select?: RoundDetailCountAggregateInputType | true
     }
 
-  export interface VideoDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface RoundDetailDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Video that matches the filter.
-     * @param {VideoFindUniqueArgs} args - Arguments to find a Video
+     * Find zero or one RoundDetail that matches the filter.
+     * @param {RoundDetailFindUniqueArgs} args - Arguments to find a RoundDetail
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findUnique({
+     * // Get one RoundDetail
+     * const roundDetail = await prisma.roundDetail.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends VideoFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, VideoFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Video'> extends True ? Prisma__VideoClient<VideoGetPayload<T>> : Prisma__VideoClient<VideoGetPayload<T> | null, null>
+    findUnique<T extends RoundDetailFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundDetailFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundDetail'> extends True ? Prisma__RoundDetailClient<RoundDetailGetPayload<T>> : Prisma__RoundDetailClient<RoundDetailGetPayload<T> | null, null>
 
     /**
-     * Find one Video that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one RoundDetail that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {VideoFindUniqueOrThrowArgs} args - Arguments to find a Video
+     * @param {RoundDetailFindUniqueOrThrowArgs} args - Arguments to find a RoundDetail
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findUniqueOrThrow({
+     * // Get one RoundDetail
+     * const roundDetail = await prisma.roundDetail.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends VideoFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, VideoFindUniqueOrThrowArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    findUniqueOrThrow<T extends RoundDetailFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundDetailFindUniqueOrThrowArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Find the first Video that matches the filter.
+     * Find the first RoundDetail that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindFirstArgs} args - Arguments to find a Video
+     * @param {RoundDetailFindFirstArgs} args - Arguments to find a RoundDetail
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findFirst({
+     * // Get one RoundDetail
+     * const roundDetail = await prisma.roundDetail.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends VideoFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, VideoFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Video'> extends True ? Prisma__VideoClient<VideoGetPayload<T>> : Prisma__VideoClient<VideoGetPayload<T> | null, null>
+    findFirst<T extends RoundDetailFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundDetailFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundDetail'> extends True ? Prisma__RoundDetailClient<RoundDetailGetPayload<T>> : Prisma__RoundDetailClient<RoundDetailGetPayload<T> | null, null>
 
     /**
-     * Find the first Video that matches the filter or
+     * Find the first RoundDetail that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindFirstOrThrowArgs} args - Arguments to find a Video
+     * @param {RoundDetailFindFirstOrThrowArgs} args - Arguments to find a RoundDetail
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findFirstOrThrow({
+     * // Get one RoundDetail
+     * const roundDetail = await prisma.roundDetail.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends VideoFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, VideoFindFirstOrThrowArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    findFirstOrThrow<T extends RoundDetailFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundDetailFindFirstOrThrowArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Find zero or more Videos that matches the filter.
+     * Find zero or more RoundDetails that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {RoundDetailFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Videos
-     * const videos = await prisma.video.findMany()
+     * // Get all RoundDetails
+     * const roundDetails = await prisma.roundDetail.findMany()
      * 
-     * // Get first 10 Videos
-     * const videos = await prisma.video.findMany({ take: 10 })
+     * // Get first 10 RoundDetails
+     * const roundDetails = await prisma.roundDetail.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const videoWithIdOnly = await prisma.video.findMany({ select: { id: true } })
+     * const roundDetailWithIdOnly = await prisma.roundDetail.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends VideoFindManyArgs>(
-      args?: SelectSubset<T, VideoFindManyArgs>
-    ): Prisma.PrismaPromise<Array<VideoGetPayload<T>>>
+    findMany<T extends RoundDetailFindManyArgs>(
+      args?: SelectSubset<T, RoundDetailFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>>
 
     /**
-     * Create a Video.
-     * @param {VideoCreateArgs} args - Arguments to create a Video.
+     * Create a RoundDetail.
+     * @param {RoundDetailCreateArgs} args - Arguments to create a RoundDetail.
      * @example
-     * // Create one Video
-     * const Video = await prisma.video.create({
+     * // Create one RoundDetail
+     * const RoundDetail = await prisma.roundDetail.create({
      *   data: {
-     *     // ... data to create a Video
+     *     // ... data to create a RoundDetail
      *   }
      * })
      * 
     **/
-    create<T extends VideoCreateArgs>(
-      args: SelectSubset<T, VideoCreateArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    create<T extends RoundDetailCreateArgs>(
+      args: SelectSubset<T, RoundDetailCreateArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Create many Videos.
-     *     @param {VideoCreateManyArgs} args - Arguments to create many Videos.
+     * Create many RoundDetails.
+     *     @param {RoundDetailCreateManyArgs} args - Arguments to create many RoundDetails.
      *     @example
-     *     // Create many Videos
-     *     const video = await prisma.video.createMany({
+     *     // Create many RoundDetails
+     *     const roundDetail = await prisma.roundDetail.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends VideoCreateManyArgs>(
-      args?: SelectSubset<T, VideoCreateManyArgs>
+    createMany<T extends RoundDetailCreateManyArgs>(
+      args?: SelectSubset<T, RoundDetailCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Video.
-     * @param {VideoDeleteArgs} args - Arguments to delete one Video.
+     * Delete a RoundDetail.
+     * @param {RoundDetailDeleteArgs} args - Arguments to delete one RoundDetail.
      * @example
-     * // Delete one Video
-     * const Video = await prisma.video.delete({
+     * // Delete one RoundDetail
+     * const RoundDetail = await prisma.roundDetail.delete({
      *   where: {
-     *     // ... filter to delete one Video
+     *     // ... filter to delete one RoundDetail
      *   }
      * })
      * 
     **/
-    delete<T extends VideoDeleteArgs>(
-      args: SelectSubset<T, VideoDeleteArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    delete<T extends RoundDetailDeleteArgs>(
+      args: SelectSubset<T, RoundDetailDeleteArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Update one Video.
-     * @param {VideoUpdateArgs} args - Arguments to update one Video.
+     * Update one RoundDetail.
+     * @param {RoundDetailUpdateArgs} args - Arguments to update one RoundDetail.
      * @example
-     * // Update one Video
-     * const video = await prisma.video.update({
+     * // Update one RoundDetail
+     * const roundDetail = await prisma.roundDetail.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4634,34 +6535,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends VideoUpdateArgs>(
-      args: SelectSubset<T, VideoUpdateArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    update<T extends RoundDetailUpdateArgs>(
+      args: SelectSubset<T, RoundDetailUpdateArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Delete zero or more Videos.
-     * @param {VideoDeleteManyArgs} args - Arguments to filter Videos to delete.
+     * Delete zero or more RoundDetails.
+     * @param {RoundDetailDeleteManyArgs} args - Arguments to filter RoundDetails to delete.
      * @example
-     * // Delete a few Videos
-     * const { count } = await prisma.video.deleteMany({
+     * // Delete a few RoundDetails
+     * const { count } = await prisma.roundDetail.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends VideoDeleteManyArgs>(
-      args?: SelectSubset<T, VideoDeleteManyArgs>
+    deleteMany<T extends RoundDetailDeleteManyArgs>(
+      args?: SelectSubset<T, RoundDetailDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Videos.
+     * Update zero or more RoundDetails.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RoundDetailUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Videos
-     * const video = await prisma.video.updateMany({
+     * // Update many RoundDetails
+     * const roundDetail = await prisma.roundDetail.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4671,59 +6572,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends VideoUpdateManyArgs>(
-      args: SelectSubset<T, VideoUpdateManyArgs>
+    updateMany<T extends RoundDetailUpdateManyArgs>(
+      args: SelectSubset<T, RoundDetailUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Video.
-     * @param {VideoUpsertArgs} args - Arguments to update or create a Video.
+     * Create or update one RoundDetail.
+     * @param {RoundDetailUpsertArgs} args - Arguments to update or create a RoundDetail.
      * @example
-     * // Update or create a Video
-     * const video = await prisma.video.upsert({
+     * // Update or create a RoundDetail
+     * const roundDetail = await prisma.roundDetail.upsert({
      *   create: {
-     *     // ... data to create a Video
+     *     // ... data to create a RoundDetail
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Video we want to update
+     *     // ... the filter for the RoundDetail we want to update
      *   }
      * })
     **/
-    upsert<T extends VideoUpsertArgs>(
-      args: SelectSubset<T, VideoUpsertArgs>
-    ): Prisma__VideoClient<VideoGetPayload<T>>
+    upsert<T extends RoundDetailUpsertArgs>(
+      args: SelectSubset<T, RoundDetailUpsertArgs>
+    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
 
     /**
-     * Count the number of Videos.
+     * Count the number of RoundDetails.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoCountArgs} args - Arguments to filter Videos to count.
+     * @param {RoundDetailCountArgs} args - Arguments to filter RoundDetails to count.
      * @example
-     * // Count the number of Videos
-     * const count = await prisma.video.count({
+     * // Count the number of RoundDetails
+     * const count = await prisma.roundDetail.count({
      *   where: {
-     *     // ... the filter for the Videos we want to count
+     *     // ... the filter for the RoundDetails we want to count
      *   }
      * })
     **/
-    count<T extends VideoCountArgs>(
-      args?: Subset<T, VideoCountArgs>,
+    count<T extends RoundDetailCountArgs>(
+      args?: Subset<T, RoundDetailCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], VideoCountAggregateOutputType>
+          : GetScalarType<T['select'], RoundDetailCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Video.
+     * Allows you to perform aggregations operations on a RoundDetail.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RoundDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4743,13 +6644,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends VideoAggregateArgs>(args: Subset<T, VideoAggregateArgs>): Prisma.PrismaPromise<GetVideoAggregateType<T>>
+    aggregate<T extends RoundDetailAggregateArgs>(args: Subset<T, RoundDetailAggregateArgs>): Prisma.PrismaPromise<GetRoundDetailAggregateType<T>>
 
     /**
-     * Group by Video.
+     * Group by RoundDetail.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoGroupByArgs} args - Group by arguments.
+     * @param {RoundDetailGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4764,14 +6665,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends VideoGroupByArgs,
+      T extends RoundDetailGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: VideoGroupByArgs['orderBy'] }
-        : { orderBy?: VideoGroupByArgs['orderBy'] },
+        ? { orderBy: RoundDetailGroupByArgs['orderBy'] }
+        : { orderBy?: RoundDetailGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4820,17 +6721,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, VideoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RoundDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Video.
+   * The delegate class that acts as a "Promise-like" for RoundDetail.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__VideoClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__RoundDetailClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -4845,9 +6746,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    comments<T extends Video$commentsArgs= {}>(args?: Subset<T, Video$commentsArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
+    roundQuiz<T extends RoundQuizArgs= {}>(args?: Subset<T, RoundQuizArgs>): Prisma__RoundQuizClient<RoundQuizGetPayload<T> | Null>;
 
-    Chanel<T extends ChanelArgs= {}>(args?: Subset<T, ChanelArgs>): Prisma__ChanelClient<ChanelGetPayload<T> | Null>;
+    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -4877,27 +6778,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Video base type for findUnique actions
+   * RoundDetail base type for findUnique actions
    */
-  export type VideoFindUniqueArgsBase = {
+  export type RoundDetailFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which RoundDetail to fetch.
      */
-    where: VideoWhereUniqueInput
+    where: RoundDetailWhereUniqueInput
   }
 
   /**
-   * Video findUnique
+   * RoundDetail findUnique
    */
-  export interface VideoFindUniqueArgs extends VideoFindUniqueArgsBase {
+  export interface RoundDetailFindUniqueArgs extends RoundDetailFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -4907,76 +6808,76 @@ export namespace Prisma {
       
 
   /**
-   * Video findUniqueOrThrow
+   * RoundDetail findUniqueOrThrow
    */
-  export type VideoFindUniqueOrThrowArgs = {
+  export type RoundDetailFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which RoundDetail to fetch.
      */
-    where: VideoWhereUniqueInput
+    where: RoundDetailWhereUniqueInput
   }
 
 
   /**
-   * Video base type for findFirst actions
+   * RoundDetail base type for findFirst actions
    */
-  export type VideoFindFirstArgsBase = {
+  export type RoundDetailFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which RoundDetail to fetch.
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of RoundDetails to fetch.
      */
-    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Videos.
+     * Sets the position for searching for RoundDetails.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: RoundDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` RoundDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` RoundDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Videos.
+     * Filter by unique combinations of RoundDetails.
      */
-    distinct?: Enumerable<VideoScalarFieldEnum>
+    distinct?: Enumerable<RoundDetailScalarFieldEnum>
   }
 
   /**
-   * Video findFirst
+   * RoundDetail findFirst
    */
-  export interface VideoFindFirstArgs extends VideoFindFirstArgsBase {
+  export interface RoundDetailFindFirstArgs extends RoundDetailFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -4986,2296 +6887,236 @@ export namespace Prisma {
       
 
   /**
-   * Video findFirstOrThrow
+   * RoundDetail findFirstOrThrow
    */
-  export type VideoFindFirstOrThrowArgs = {
+  export type RoundDetailFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which RoundDetail to fetch.
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of RoundDetails to fetch.
      */
-    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Videos.
+     * Sets the position for searching for RoundDetails.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: RoundDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` RoundDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` RoundDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Videos.
+     * Filter by unique combinations of RoundDetails.
      */
-    distinct?: Enumerable<VideoScalarFieldEnum>
+    distinct?: Enumerable<RoundDetailScalarFieldEnum>
   }
 
 
   /**
-   * Video findMany
+   * RoundDetail findMany
    */
-  export type VideoFindManyArgs = {
+  export type RoundDetailFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter, which Videos to fetch.
+     * Filter, which RoundDetails to fetch.
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of RoundDetails to fetch.
      */
-    orderBy?: Enumerable<VideoOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Videos.
+     * Sets the position for listing RoundDetails.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: RoundDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` RoundDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` RoundDetails.
      */
     skip?: number
-    distinct?: Enumerable<VideoScalarFieldEnum>
+    distinct?: Enumerable<RoundDetailScalarFieldEnum>
   }
 
 
   /**
-   * Video create
+   * RoundDetail create
    */
-  export type VideoCreateArgs = {
+  export type RoundDetailCreateArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * The data needed to create a Video.
+     * The data needed to create a RoundDetail.
      */
-    data: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    data: XOR<RoundDetailCreateInput, RoundDetailUncheckedCreateInput>
   }
 
 
   /**
-   * Video createMany
+   * RoundDetail createMany
    */
-  export type VideoCreateManyArgs = {
+  export type RoundDetailCreateManyArgs = {
     /**
-     * The data used to create many Videos.
+     * The data used to create many RoundDetails.
      */
-    data: Enumerable<VideoCreateManyInput>
+    data: Enumerable<RoundDetailCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Video update
+   * RoundDetail update
    */
-  export type VideoUpdateArgs = {
+  export type RoundDetailUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * The data needed to update a Video.
+     * The data needed to update a RoundDetail.
      */
-    data: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    data: XOR<RoundDetailUpdateInput, RoundDetailUncheckedUpdateInput>
     /**
-     * Choose, which Video to update.
+     * Choose, which RoundDetail to update.
      */
-    where: VideoWhereUniqueInput
+    where: RoundDetailWhereUniqueInput
   }
 
 
   /**
-   * Video updateMany
+   * RoundDetail updateMany
    */
-  export type VideoUpdateManyArgs = {
+  export type RoundDetailUpdateManyArgs = {
     /**
-     * The data used to update Videos.
+     * The data used to update RoundDetails.
      */
-    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyInput>
     /**
-     * Filter which Videos to update
+     * Filter which RoundDetails to update
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
   }
 
 
   /**
-   * Video upsert
+   * RoundDetail upsert
    */
-  export type VideoUpsertArgs = {
+  export type RoundDetailUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * The filter to search for the Video to update in case it exists.
+     * The filter to search for the RoundDetail to update in case it exists.
      */
-    where: VideoWhereUniqueInput
+    where: RoundDetailWhereUniqueInput
     /**
-     * In case the Video found by the `where` argument doesn't exist, create a new Video with this data.
+     * In case the RoundDetail found by the `where` argument doesn't exist, create a new RoundDetail with this data.
      */
-    create: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    create: XOR<RoundDetailCreateInput, RoundDetailUncheckedCreateInput>
     /**
-     * In case the Video was found with the provided `where` argument, update it with this data.
+     * In case the RoundDetail was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    update: XOR<RoundDetailUpdateInput, RoundDetailUncheckedUpdateInput>
   }
 
 
   /**
-   * Video delete
+   * RoundDetail delete
    */
-  export type VideoDeleteArgs = {
+  export type RoundDetailDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: VideoSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: VideoInclude | null
+    include?: RoundDetailInclude | null
     /**
-     * Filter which Video to delete.
+     * Filter which RoundDetail to delete.
      */
-    where: VideoWhereUniqueInput
+    where: RoundDetailWhereUniqueInput
   }
 
 
   /**
-   * Video deleteMany
+   * RoundDetail deleteMany
    */
-  export type VideoDeleteManyArgs = {
+  export type RoundDetailDeleteManyArgs = {
     /**
-     * Filter which Videos to delete
+     * Filter which RoundDetails to delete
      */
-    where?: VideoWhereInput
+    where?: RoundDetailWhereInput
   }
 
 
   /**
-   * Video.comments
+   * RoundDetail without action
    */
-  export type Video$commentsArgs = {
+  export type RoundDetailArgs = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the RoundDetail
      */
-    select?: CommentSelect | null
+    select?: RoundDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: CommentInclude | null
-    where?: CommentWhereInput
-    orderBy?: Enumerable<CommentOrderByWithRelationInput>
-    cursor?: CommentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<CommentScalarFieldEnum>
-  }
-
-
-  /**
-   * Video without action
-   */
-  export type VideoArgs = {
-    /**
-     * Select specific fields to fetch from the Video
-     */
-    select?: VideoSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: VideoInclude | null
-  }
-
-
-
-  /**
-   * Model Permission
-   */
-
-
-  export type AggregatePermission = {
-    _count: PermissionCountAggregateOutputType | null
-    _avg: PermissionAvgAggregateOutputType | null
-    _sum: PermissionSumAggregateOutputType | null
-    _min: PermissionMinAggregateOutputType | null
-    _max: PermissionMaxAggregateOutputType | null
-  }
-
-  export type PermissionAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    chanelId: number | null
-  }
-
-  export type PermissionSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    chanelId: number | null
-  }
-
-  export type PermissionMinAggregateOutputType = {
-    id: number | null
-    role: RoleEnum | null
-    edit: boolean | null
-    post: boolean | null
-    delete: boolean | null
-    upload: boolean | null
-    createAt: Date | null
-    updateAt: Date | null
-    userId: number | null
-    chanelId: number | null
-  }
-
-  export type PermissionMaxAggregateOutputType = {
-    id: number | null
-    role: RoleEnum | null
-    edit: boolean | null
-    post: boolean | null
-    delete: boolean | null
-    upload: boolean | null
-    createAt: Date | null
-    updateAt: Date | null
-    userId: number | null
-    chanelId: number | null
-  }
-
-  export type PermissionCountAggregateOutputType = {
-    id: number
-    role: number
-    edit: number
-    post: number
-    delete: number
-    upload: number
-    createAt: number
-    updateAt: number
-    userId: number
-    chanelId: number
-    _all: number
-  }
-
-
-  export type PermissionAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    chanelId?: true
-  }
-
-  export type PermissionSumAggregateInputType = {
-    id?: true
-    userId?: true
-    chanelId?: true
-  }
-
-  export type PermissionMinAggregateInputType = {
-    id?: true
-    role?: true
-    edit?: true
-    post?: true
-    delete?: true
-    upload?: true
-    createAt?: true
-    updateAt?: true
-    userId?: true
-    chanelId?: true
-  }
-
-  export type PermissionMaxAggregateInputType = {
-    id?: true
-    role?: true
-    edit?: true
-    post?: true
-    delete?: true
-    upload?: true
-    createAt?: true
-    updateAt?: true
-    userId?: true
-    chanelId?: true
-  }
-
-  export type PermissionCountAggregateInputType = {
-    id?: true
-    role?: true
-    edit?: true
-    post?: true
-    delete?: true
-    upload?: true
-    createAt?: true
-    updateAt?: true
-    userId?: true
-    chanelId?: true
-    _all?: true
-  }
-
-  export type PermissionAggregateArgs = {
-    /**
-     * Filter which Permission to aggregate.
-     */
-    where?: PermissionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Permissions to fetch.
-     */
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PermissionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Permissions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Permissions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Permissions
-    **/
-    _count?: true | PermissionCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PermissionAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PermissionSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PermissionMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PermissionMaxAggregateInputType
-  }
-
-  export type GetPermissionAggregateType<T extends PermissionAggregateArgs> = {
-        [P in keyof T & keyof AggregatePermission]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePermission[P]>
-      : GetScalarType<T[P], AggregatePermission[P]>
-  }
-
-
-
-
-  export type PermissionGroupByArgs = {
-    where?: PermissionWhereInput
-    orderBy?: Enumerable<PermissionOrderByWithAggregationInput>
-    by: PermissionScalarFieldEnum[]
-    having?: PermissionScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PermissionCountAggregateInputType | true
-    _avg?: PermissionAvgAggregateInputType
-    _sum?: PermissionSumAggregateInputType
-    _min?: PermissionMinAggregateInputType
-    _max?: PermissionMaxAggregateInputType
-  }
-
-
-  export type PermissionGroupByOutputType = {
-    id: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt: Date
-    updateAt: Date
-    userId: number | null
-    chanelId: number | null
-    _count: PermissionCountAggregateOutputType | null
-    _avg: PermissionAvgAggregateOutputType | null
-    _sum: PermissionSumAggregateOutputType | null
-    _min: PermissionMinAggregateOutputType | null
-    _max: PermissionMaxAggregateOutputType | null
-  }
-
-  type GetPermissionGroupByPayload<T extends PermissionGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<PermissionGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PermissionGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PermissionGroupByOutputType[P]>
-            : GetScalarType<T[P], PermissionGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PermissionSelect = {
-    id?: boolean
-    role?: boolean
-    edit?: boolean
-    post?: boolean
-    delete?: boolean
-    upload?: boolean
-    createAt?: boolean
-    updateAt?: boolean
-    User?: boolean | UserYoutubeArgs
-    userId?: boolean
-    Chanel?: boolean | ChanelArgs
-    chanelId?: boolean
-    userToChanel?: boolean | Permission$userToChanelArgs
-    _count?: boolean | PermissionCountOutputTypeArgs
-  }
-
-
-  export type PermissionInclude = {
-    User?: boolean | UserYoutubeArgs
-    Chanel?: boolean | ChanelArgs
-    userToChanel?: boolean | Permission$userToChanelArgs
-    _count?: boolean | PermissionCountOutputTypeArgs
-  }
-
-  export type PermissionGetPayload<S extends boolean | null | undefined | PermissionArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Permission :
-    S extends undefined ? never :
-    S extends { include: any } & (PermissionArgs | PermissionFindManyArgs)
-    ? Permission  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'User' ? UserYoutubeGetPayload<S['include'][P]> | null :
-        P extends 'Chanel' ? ChanelGetPayload<S['include'][P]> | null :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['include'][P]>>  :
-        P extends '_count' ? PermissionCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (PermissionArgs | PermissionFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'User' ? UserYoutubeGetPayload<S['select'][P]> | null :
-        P extends 'Chanel' ? ChanelGetPayload<S['select'][P]> | null :
-        P extends 'userToChanel' ? Array < UserToChanelGetPayload<S['select'][P]>>  :
-        P extends '_count' ? PermissionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Permission ? Permission[P] : never
-  } 
-      : Permission
-
-
-  type PermissionCountArgs = 
-    Omit<PermissionFindManyArgs, 'select' | 'include'> & {
-      select?: PermissionCountAggregateInputType | true
-    }
-
-  export interface PermissionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one Permission that matches the filter.
-     * @param {PermissionFindUniqueArgs} args - Arguments to find a Permission
-     * @example
-     * // Get one Permission
-     * const permission = await prisma.permission.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends PermissionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, PermissionFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Permission'> extends True ? Prisma__PermissionClient<PermissionGetPayload<T>> : Prisma__PermissionClient<PermissionGetPayload<T> | null, null>
-
-    /**
-     * Find one Permission that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {PermissionFindUniqueOrThrowArgs} args - Arguments to find a Permission
-     * @example
-     * // Get one Permission
-     * const permission = await prisma.permission.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends PermissionFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, PermissionFindUniqueOrThrowArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Find the first Permission that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionFindFirstArgs} args - Arguments to find a Permission
-     * @example
-     * // Get one Permission
-     * const permission = await prisma.permission.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends PermissionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, PermissionFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Permission'> extends True ? Prisma__PermissionClient<PermissionGetPayload<T>> : Prisma__PermissionClient<PermissionGetPayload<T> | null, null>
-
-    /**
-     * Find the first Permission that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionFindFirstOrThrowArgs} args - Arguments to find a Permission
-     * @example
-     * // Get one Permission
-     * const permission = await prisma.permission.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends PermissionFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, PermissionFindFirstOrThrowArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Find zero or more Permissions that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Permissions
-     * const permissions = await prisma.permission.findMany()
-     * 
-     * // Get first 10 Permissions
-     * const permissions = await prisma.permission.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const permissionWithIdOnly = await prisma.permission.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends PermissionFindManyArgs>(
-      args?: SelectSubset<T, PermissionFindManyArgs>
-    ): Prisma.PrismaPromise<Array<PermissionGetPayload<T>>>
-
-    /**
-     * Create a Permission.
-     * @param {PermissionCreateArgs} args - Arguments to create a Permission.
-     * @example
-     * // Create one Permission
-     * const Permission = await prisma.permission.create({
-     *   data: {
-     *     // ... data to create a Permission
-     *   }
-     * })
-     * 
-    **/
-    create<T extends PermissionCreateArgs>(
-      args: SelectSubset<T, PermissionCreateArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Create many Permissions.
-     *     @param {PermissionCreateManyArgs} args - Arguments to create many Permissions.
-     *     @example
-     *     // Create many Permissions
-     *     const permission = await prisma.permission.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends PermissionCreateManyArgs>(
-      args?: SelectSubset<T, PermissionCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Permission.
-     * @param {PermissionDeleteArgs} args - Arguments to delete one Permission.
-     * @example
-     * // Delete one Permission
-     * const Permission = await prisma.permission.delete({
-     *   where: {
-     *     // ... filter to delete one Permission
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends PermissionDeleteArgs>(
-      args: SelectSubset<T, PermissionDeleteArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Update one Permission.
-     * @param {PermissionUpdateArgs} args - Arguments to update one Permission.
-     * @example
-     * // Update one Permission
-     * const permission = await prisma.permission.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends PermissionUpdateArgs>(
-      args: SelectSubset<T, PermissionUpdateArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Delete zero or more Permissions.
-     * @param {PermissionDeleteManyArgs} args - Arguments to filter Permissions to delete.
-     * @example
-     * // Delete a few Permissions
-     * const { count } = await prisma.permission.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends PermissionDeleteManyArgs>(
-      args?: SelectSubset<T, PermissionDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Permissions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Permissions
-     * const permission = await prisma.permission.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends PermissionUpdateManyArgs>(
-      args: SelectSubset<T, PermissionUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Permission.
-     * @param {PermissionUpsertArgs} args - Arguments to update or create a Permission.
-     * @example
-     * // Update or create a Permission
-     * const permission = await prisma.permission.upsert({
-     *   create: {
-     *     // ... data to create a Permission
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Permission we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends PermissionUpsertArgs>(
-      args: SelectSubset<T, PermissionUpsertArgs>
-    ): Prisma__PermissionClient<PermissionGetPayload<T>>
-
-    /**
-     * Count the number of Permissions.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionCountArgs} args - Arguments to filter Permissions to count.
-     * @example
-     * // Count the number of Permissions
-     * const count = await prisma.permission.count({
-     *   where: {
-     *     // ... the filter for the Permissions we want to count
-     *   }
-     * })
-    **/
-    count<T extends PermissionCountArgs>(
-      args?: Subset<T, PermissionCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PermissionCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Permission.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PermissionAggregateArgs>(args: Subset<T, PermissionAggregateArgs>): Prisma.PrismaPromise<GetPermissionAggregateType<T>>
-
-    /**
-     * Group by Permission.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PermissionGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PermissionGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PermissionGroupByArgs['orderBy'] }
-        : { orderBy?: PermissionGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Permission.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__PermissionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    User<T extends UserYoutubeArgs= {}>(args?: Subset<T, UserYoutubeArgs>): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | Null>;
-
-    Chanel<T extends ChanelArgs= {}>(args?: Subset<T, ChanelArgs>): Prisma__ChanelClient<ChanelGetPayload<T> | Null>;
-
-    userToChanel<T extends Permission$userToChanelArgs= {}>(args?: Subset<T, Permission$userToChanelArgs>): Prisma.PrismaPromise<Array<UserToChanelGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * Permission base type for findUnique actions
-   */
-  export type PermissionFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter, which Permission to fetch.
-     */
-    where: PermissionWhereUniqueInput
-  }
-
-  /**
-   * Permission findUnique
-   */
-  export interface PermissionFindUniqueArgs extends PermissionFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Permission findUniqueOrThrow
-   */
-  export type PermissionFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter, which Permission to fetch.
-     */
-    where: PermissionWhereUniqueInput
-  }
-
-
-  /**
-   * Permission base type for findFirst actions
-   */
-  export type PermissionFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter, which Permission to fetch.
-     */
-    where?: PermissionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Permissions to fetch.
-     */
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Permissions.
-     */
-    cursor?: PermissionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Permissions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Permissions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Permissions.
-     */
-    distinct?: Enumerable<PermissionScalarFieldEnum>
-  }
-
-  /**
-   * Permission findFirst
-   */
-  export interface PermissionFindFirstArgs extends PermissionFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Permission findFirstOrThrow
-   */
-  export type PermissionFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter, which Permission to fetch.
-     */
-    where?: PermissionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Permissions to fetch.
-     */
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Permissions.
-     */
-    cursor?: PermissionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Permissions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Permissions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Permissions.
-     */
-    distinct?: Enumerable<PermissionScalarFieldEnum>
-  }
-
-
-  /**
-   * Permission findMany
-   */
-  export type PermissionFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter, which Permissions to fetch.
-     */
-    where?: PermissionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Permissions to fetch.
-     */
-    orderBy?: Enumerable<PermissionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Permissions.
-     */
-    cursor?: PermissionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Permissions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Permissions.
-     */
-    skip?: number
-    distinct?: Enumerable<PermissionScalarFieldEnum>
-  }
-
-
-  /**
-   * Permission create
-   */
-  export type PermissionCreateArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * The data needed to create a Permission.
-     */
-    data: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
-  }
-
-
-  /**
-   * Permission createMany
-   */
-  export type PermissionCreateManyArgs = {
-    /**
-     * The data used to create many Permissions.
-     */
-    data: Enumerable<PermissionCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * Permission update
-   */
-  export type PermissionUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * The data needed to update a Permission.
-     */
-    data: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
-    /**
-     * Choose, which Permission to update.
-     */
-    where: PermissionWhereUniqueInput
-  }
-
-
-  /**
-   * Permission updateMany
-   */
-  export type PermissionUpdateManyArgs = {
-    /**
-     * The data used to update Permissions.
-     */
-    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyInput>
-    /**
-     * Filter which Permissions to update
-     */
-    where?: PermissionWhereInput
-  }
-
-
-  /**
-   * Permission upsert
-   */
-  export type PermissionUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * The filter to search for the Permission to update in case it exists.
-     */
-    where: PermissionWhereUniqueInput
-    /**
-     * In case the Permission found by the `where` argument doesn't exist, create a new Permission with this data.
-     */
-    create: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
-    /**
-     * In case the Permission was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
-  }
-
-
-  /**
-   * Permission delete
-   */
-  export type PermissionDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-    /**
-     * Filter which Permission to delete.
-     */
-    where: PermissionWhereUniqueInput
-  }
-
-
-  /**
-   * Permission deleteMany
-   */
-  export type PermissionDeleteManyArgs = {
-    /**
-     * Filter which Permissions to delete
-     */
-    where?: PermissionWhereInput
-  }
-
-
-  /**
-   * Permission.userToChanel
-   */
-  export type Permission$userToChanelArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    where?: UserToChanelWhereInput
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    cursor?: UserToChanelWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-
-  /**
-   * Permission without action
-   */
-  export type PermissionArgs = {
-    /**
-     * Select specific fields to fetch from the Permission
-     */
-    select?: PermissionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PermissionInclude | null
-  }
-
-
-
-  /**
-   * Model UserToChanel
-   */
-
-
-  export type AggregateUserToChanel = {
-    _count: UserToChanelCountAggregateOutputType | null
-    _avg: UserToChanelAvgAggregateOutputType | null
-    _sum: UserToChanelSumAggregateOutputType | null
-    _min: UserToChanelMinAggregateOutputType | null
-    _max: UserToChanelMaxAggregateOutputType | null
-  }
-
-  export type UserToChanelAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    chanelId: number | null
-    permissionId: number | null
-  }
-
-  export type UserToChanelSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    chanelId: number | null
-    permissionId: number | null
-  }
-
-  export type UserToChanelMinAggregateOutputType = {
-    id: number | null
-    role: RoleEnum | null
-    userId: number | null
-    chanelId: number | null
-    permissionId: number | null
-  }
-
-  export type UserToChanelMaxAggregateOutputType = {
-    id: number | null
-    role: RoleEnum | null
-    userId: number | null
-    chanelId: number | null
-    permissionId: number | null
-  }
-
-  export type UserToChanelCountAggregateOutputType = {
-    id: number
-    role: number
-    userId: number
-    chanelId: number
-    permissionId: number
-    _all: number
-  }
-
-
-  export type UserToChanelAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    chanelId?: true
-    permissionId?: true
-  }
-
-  export type UserToChanelSumAggregateInputType = {
-    id?: true
-    userId?: true
-    chanelId?: true
-    permissionId?: true
-  }
-
-  export type UserToChanelMinAggregateInputType = {
-    id?: true
-    role?: true
-    userId?: true
-    chanelId?: true
-    permissionId?: true
-  }
-
-  export type UserToChanelMaxAggregateInputType = {
-    id?: true
-    role?: true
-    userId?: true
-    chanelId?: true
-    permissionId?: true
-  }
-
-  export type UserToChanelCountAggregateInputType = {
-    id?: true
-    role?: true
-    userId?: true
-    chanelId?: true
-    permissionId?: true
-    _all?: true
-  }
-
-  export type UserToChanelAggregateArgs = {
-    /**
-     * Filter which UserToChanel to aggregate.
-     */
-    where?: UserToChanelWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserToChanels to fetch.
-     */
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: UserToChanelWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserToChanels from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserToChanels.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned UserToChanels
-    **/
-    _count?: true | UserToChanelCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: UserToChanelAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserToChanelSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserToChanelMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserToChanelMaxAggregateInputType
-  }
-
-  export type GetUserToChanelAggregateType<T extends UserToChanelAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserToChanel]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUserToChanel[P]>
-      : GetScalarType<T[P], AggregateUserToChanel[P]>
-  }
-
-
-
-
-  export type UserToChanelGroupByArgs = {
-    where?: UserToChanelWhereInput
-    orderBy?: Enumerable<UserToChanelOrderByWithAggregationInput>
-    by: UserToChanelScalarFieldEnum[]
-    having?: UserToChanelScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserToChanelCountAggregateInputType | true
-    _avg?: UserToChanelAvgAggregateInputType
-    _sum?: UserToChanelSumAggregateInputType
-    _min?: UserToChanelMinAggregateInputType
-    _max?: UserToChanelMaxAggregateInputType
-  }
-
-
-  export type UserToChanelGroupByOutputType = {
-    id: number
-    role: RoleEnum
-    userId: number
-    chanelId: number
-    permissionId: number
-    _count: UserToChanelCountAggregateOutputType | null
-    _avg: UserToChanelAvgAggregateOutputType | null
-    _sum: UserToChanelSumAggregateOutputType | null
-    _min: UserToChanelMinAggregateOutputType | null
-    _max: UserToChanelMaxAggregateOutputType | null
-  }
-
-  type GetUserToChanelGroupByPayload<T extends UserToChanelGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<UserToChanelGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserToChanelGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserToChanelGroupByOutputType[P]>
-            : GetScalarType<T[P], UserToChanelGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type UserToChanelSelect = {
-    id?: boolean
-    role?: boolean
-    user?: boolean | UserYoutubeArgs
-    userId?: boolean
-    chanel?: boolean | ChanelArgs
-    chanelId?: boolean
-    permission?: boolean | PermissionArgs
-    permissionId?: boolean
-  }
-
-
-  export type UserToChanelInclude = {
-    user?: boolean | UserYoutubeArgs
-    chanel?: boolean | ChanelArgs
-    permission?: boolean | PermissionArgs
-  }
-
-  export type UserToChanelGetPayload<S extends boolean | null | undefined | UserToChanelArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserToChanel :
-    S extends undefined ? never :
-    S extends { include: any } & (UserToChanelArgs | UserToChanelFindManyArgs)
-    ? UserToChanel  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? UserYoutubeGetPayload<S['include'][P]> :
-        P extends 'chanel' ? ChanelGetPayload<S['include'][P]> :
-        P extends 'permission' ? PermissionGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (UserToChanelArgs | UserToChanelFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? UserYoutubeGetPayload<S['select'][P]> :
-        P extends 'chanel' ? ChanelGetPayload<S['select'][P]> :
-        P extends 'permission' ? PermissionGetPayload<S['select'][P]> :  P extends keyof UserToChanel ? UserToChanel[P] : never
-  } 
-      : UserToChanel
-
-
-  type UserToChanelCountArgs = 
-    Omit<UserToChanelFindManyArgs, 'select' | 'include'> & {
-      select?: UserToChanelCountAggregateInputType | true
-    }
-
-  export interface UserToChanelDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one UserToChanel that matches the filter.
-     * @param {UserToChanelFindUniqueArgs} args - Arguments to find a UserToChanel
-     * @example
-     * // Get one UserToChanel
-     * const userToChanel = await prisma.userToChanel.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends UserToChanelFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, UserToChanelFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'UserToChanel'> extends True ? Prisma__UserToChanelClient<UserToChanelGetPayload<T>> : Prisma__UserToChanelClient<UserToChanelGetPayload<T> | null, null>
-
-    /**
-     * Find one UserToChanel that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {UserToChanelFindUniqueOrThrowArgs} args - Arguments to find a UserToChanel
-     * @example
-     * // Get one UserToChanel
-     * const userToChanel = await prisma.userToChanel.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends UserToChanelFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, UserToChanelFindUniqueOrThrowArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Find the first UserToChanel that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelFindFirstArgs} args - Arguments to find a UserToChanel
-     * @example
-     * // Get one UserToChanel
-     * const userToChanel = await prisma.userToChanel.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends UserToChanelFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, UserToChanelFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'UserToChanel'> extends True ? Prisma__UserToChanelClient<UserToChanelGetPayload<T>> : Prisma__UserToChanelClient<UserToChanelGetPayload<T> | null, null>
-
-    /**
-     * Find the first UserToChanel that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelFindFirstOrThrowArgs} args - Arguments to find a UserToChanel
-     * @example
-     * // Get one UserToChanel
-     * const userToChanel = await prisma.userToChanel.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends UserToChanelFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, UserToChanelFindFirstOrThrowArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Find zero or more UserToChanels that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all UserToChanels
-     * const userToChanels = await prisma.userToChanel.findMany()
-     * 
-     * // Get first 10 UserToChanels
-     * const userToChanels = await prisma.userToChanel.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const userToChanelWithIdOnly = await prisma.userToChanel.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends UserToChanelFindManyArgs>(
-      args?: SelectSubset<T, UserToChanelFindManyArgs>
-    ): Prisma.PrismaPromise<Array<UserToChanelGetPayload<T>>>
-
-    /**
-     * Create a UserToChanel.
-     * @param {UserToChanelCreateArgs} args - Arguments to create a UserToChanel.
-     * @example
-     * // Create one UserToChanel
-     * const UserToChanel = await prisma.userToChanel.create({
-     *   data: {
-     *     // ... data to create a UserToChanel
-     *   }
-     * })
-     * 
-    **/
-    create<T extends UserToChanelCreateArgs>(
-      args: SelectSubset<T, UserToChanelCreateArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Create many UserToChanels.
-     *     @param {UserToChanelCreateManyArgs} args - Arguments to create many UserToChanels.
-     *     @example
-     *     // Create many UserToChanels
-     *     const userToChanel = await prisma.userToChanel.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends UserToChanelCreateManyArgs>(
-      args?: SelectSubset<T, UserToChanelCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a UserToChanel.
-     * @param {UserToChanelDeleteArgs} args - Arguments to delete one UserToChanel.
-     * @example
-     * // Delete one UserToChanel
-     * const UserToChanel = await prisma.userToChanel.delete({
-     *   where: {
-     *     // ... filter to delete one UserToChanel
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends UserToChanelDeleteArgs>(
-      args: SelectSubset<T, UserToChanelDeleteArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Update one UserToChanel.
-     * @param {UserToChanelUpdateArgs} args - Arguments to update one UserToChanel.
-     * @example
-     * // Update one UserToChanel
-     * const userToChanel = await prisma.userToChanel.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends UserToChanelUpdateArgs>(
-      args: SelectSubset<T, UserToChanelUpdateArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Delete zero or more UserToChanels.
-     * @param {UserToChanelDeleteManyArgs} args - Arguments to filter UserToChanels to delete.
-     * @example
-     * // Delete a few UserToChanels
-     * const { count } = await prisma.userToChanel.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends UserToChanelDeleteManyArgs>(
-      args?: SelectSubset<T, UserToChanelDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more UserToChanels.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many UserToChanels
-     * const userToChanel = await prisma.userToChanel.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends UserToChanelUpdateManyArgs>(
-      args: SelectSubset<T, UserToChanelUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one UserToChanel.
-     * @param {UserToChanelUpsertArgs} args - Arguments to update or create a UserToChanel.
-     * @example
-     * // Update or create a UserToChanel
-     * const userToChanel = await prisma.userToChanel.upsert({
-     *   create: {
-     *     // ... data to create a UserToChanel
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the UserToChanel we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends UserToChanelUpsertArgs>(
-      args: SelectSubset<T, UserToChanelUpsertArgs>
-    ): Prisma__UserToChanelClient<UserToChanelGetPayload<T>>
-
-    /**
-     * Count the number of UserToChanels.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelCountArgs} args - Arguments to filter UserToChanels to count.
-     * @example
-     * // Count the number of UserToChanels
-     * const count = await prisma.userToChanel.count({
-     *   where: {
-     *     // ... the filter for the UserToChanels we want to count
-     *   }
-     * })
-    **/
-    count<T extends UserToChanelCountArgs>(
-      args?: Subset<T, UserToChanelCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserToChanelCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a UserToChanel.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserToChanelAggregateArgs>(args: Subset<T, UserToChanelAggregateArgs>): Prisma.PrismaPromise<GetUserToChanelAggregateType<T>>
-
-    /**
-     * Group by UserToChanel.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserToChanelGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends UserToChanelGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserToChanelGroupByArgs['orderBy'] }
-        : { orderBy?: UserToChanelGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, UserToChanelGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserToChanelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for UserToChanel.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__UserToChanelClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    user<T extends UserYoutubeArgs= {}>(args?: Subset<T, UserYoutubeArgs>): Prisma__UserYoutubeClient<UserYoutubeGetPayload<T> | Null>;
-
-    chanel<T extends ChanelArgs= {}>(args?: Subset<T, ChanelArgs>): Prisma__ChanelClient<ChanelGetPayload<T> | Null>;
-
-    permission<T extends PermissionArgs= {}>(args?: Subset<T, PermissionArgs>): Prisma__PermissionClient<PermissionGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * UserToChanel base type for findUnique actions
-   */
-  export type UserToChanelFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter, which UserToChanel to fetch.
-     */
-    where: UserToChanelWhereUniqueInput
-  }
-
-  /**
-   * UserToChanel findUnique
-   */
-  export interface UserToChanelFindUniqueArgs extends UserToChanelFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * UserToChanel findUniqueOrThrow
-   */
-  export type UserToChanelFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter, which UserToChanel to fetch.
-     */
-    where: UserToChanelWhereUniqueInput
-  }
-
-
-  /**
-   * UserToChanel base type for findFirst actions
-   */
-  export type UserToChanelFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter, which UserToChanel to fetch.
-     */
-    where?: UserToChanelWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserToChanels to fetch.
-     */
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserToChanels.
-     */
-    cursor?: UserToChanelWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserToChanels from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserToChanels.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserToChanels.
-     */
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-  /**
-   * UserToChanel findFirst
-   */
-  export interface UserToChanelFindFirstArgs extends UserToChanelFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * UserToChanel findFirstOrThrow
-   */
-  export type UserToChanelFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter, which UserToChanel to fetch.
-     */
-    where?: UserToChanelWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserToChanels to fetch.
-     */
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for UserToChanels.
-     */
-    cursor?: UserToChanelWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserToChanels from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserToChanels.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of UserToChanels.
-     */
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-
-  /**
-   * UserToChanel findMany
-   */
-  export type UserToChanelFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter, which UserToChanels to fetch.
-     */
-    where?: UserToChanelWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of UserToChanels to fetch.
-     */
-    orderBy?: Enumerable<UserToChanelOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing UserToChanels.
-     */
-    cursor?: UserToChanelWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` UserToChanels from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` UserToChanels.
-     */
-    skip?: number
-    distinct?: Enumerable<UserToChanelScalarFieldEnum>
-  }
-
-
-  /**
-   * UserToChanel create
-   */
-  export type UserToChanelCreateArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * The data needed to create a UserToChanel.
-     */
-    data: XOR<UserToChanelCreateInput, UserToChanelUncheckedCreateInput>
-  }
-
-
-  /**
-   * UserToChanel createMany
-   */
-  export type UserToChanelCreateManyArgs = {
-    /**
-     * The data used to create many UserToChanels.
-     */
-    data: Enumerable<UserToChanelCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * UserToChanel update
-   */
-  export type UserToChanelUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * The data needed to update a UserToChanel.
-     */
-    data: XOR<UserToChanelUpdateInput, UserToChanelUncheckedUpdateInput>
-    /**
-     * Choose, which UserToChanel to update.
-     */
-    where: UserToChanelWhereUniqueInput
-  }
-
-
-  /**
-   * UserToChanel updateMany
-   */
-  export type UserToChanelUpdateManyArgs = {
-    /**
-     * The data used to update UserToChanels.
-     */
-    data: XOR<UserToChanelUpdateManyMutationInput, UserToChanelUncheckedUpdateManyInput>
-    /**
-     * Filter which UserToChanels to update
-     */
-    where?: UserToChanelWhereInput
-  }
-
-
-  /**
-   * UserToChanel upsert
-   */
-  export type UserToChanelUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * The filter to search for the UserToChanel to update in case it exists.
-     */
-    where: UserToChanelWhereUniqueInput
-    /**
-     * In case the UserToChanel found by the `where` argument doesn't exist, create a new UserToChanel with this data.
-     */
-    create: XOR<UserToChanelCreateInput, UserToChanelUncheckedCreateInput>
-    /**
-     * In case the UserToChanel was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserToChanelUpdateInput, UserToChanelUncheckedUpdateInput>
-  }
-
-
-  /**
-   * UserToChanel delete
-   */
-  export type UserToChanelDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
-    /**
-     * Filter which UserToChanel to delete.
-     */
-    where: UserToChanelWhereUniqueInput
-  }
-
-
-  /**
-   * UserToChanel deleteMany
-   */
-  export type UserToChanelDeleteManyArgs = {
-    /**
-     * Filter which UserToChanels to delete
-     */
-    where?: UserToChanelWhereInput
-  }
-
-
-  /**
-   * UserToChanel without action
-   */
-  export type UserToChanelArgs = {
-    /**
-     * Select specific fields to fetch from the UserToChanel
-     */
-    select?: UserToChanelSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserToChanelInclude | null
+    include?: RoundDetailInclude | null
   }
 
 
@@ -7287,43 +7128,15 @@ export namespace Prisma {
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
-  export const ChanelScalarFieldEnum: {
+  export const ChoiceScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    description: 'description',
-    createAt: 'createAt',
-    updateAt: 'updateAt',
-    userId: 'userId'
-  };
-
-  export type ChanelScalarFieldEnum = (typeof ChanelScalarFieldEnum)[keyof typeof ChanelScalarFieldEnum]
-
-
-  export const CommentScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    videoId: 'videoId',
+    choiceName: 'choiceName',
+    questionId: 'questionId',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
 
-  export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
-
-
-  export const PermissionScalarFieldEnum: {
-    id: 'id',
-    role: 'role',
-    edit: 'edit',
-    post: 'post',
-    delete: 'delete',
-    upload: 'upload',
-    createAt: 'createAt',
-    updateAt: 'updateAt',
-    userId: 'userId',
-    chanelId: 'chanelId'
-  };
-
-  export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+  export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
 
 
   export const QueryMode: {
@@ -7332,6 +7145,54 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const QuestionCategoryScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type QuestionCategoryScalarFieldEnum = (typeof QuestionCategoryScalarFieldEnum)[keyof typeof QuestionCategoryScalarFieldEnum]
+
+
+  export const QuestionScalarFieldEnum: {
+    id: 'id',
+    questionCategoryId: 'questionCategoryId',
+    textQuestion: 'textQuestion',
+    answerId: 'answerId',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+  export const RoundDetailScalarFieldEnum: {
+    id: 'id',
+    roundQuizId: 'roundQuizId',
+    questionId: 'questionId',
+    questionOrder: 'questionOrder',
+    userChoose: 'userChoose',
+    result: 'result',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type RoundDetailScalarFieldEnum = (typeof RoundDetailScalarFieldEnum)[keyof typeof RoundDetailScalarFieldEnum]
+
+
+  export const RoundQuizScalarFieldEnum: {
+    id: 'id',
+    questionCategoryId: 'questionCategoryId',
+    score: 'score',
+    userId: 'userId',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type RoundQuizScalarFieldEnum = (typeof RoundQuizScalarFieldEnum)[keyof typeof RoundQuizScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7352,40 +7213,14 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const UserToChanelScalarFieldEnum: {
-    id: 'id',
-    role: 'role',
-    userId: 'userId',
-    chanelId: 'chanelId',
-    permissionId: 'permissionId'
-  };
-
-  export type UserToChanelScalarFieldEnum = (typeof UserToChanelScalarFieldEnum)[keyof typeof UserToChanelScalarFieldEnum]
-
-
-  export const UserYoutubeScalarFieldEnum: {
+  export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    email: 'email',
-    imageProfile: 'imageProfile',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
 
-  export type UserYoutubeScalarFieldEnum = (typeof UserYoutubeScalarFieldEnum)[keyof typeof UserYoutubeScalarFieldEnum]
-
-
-  export const VideoScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    description: 'description',
-    url: 'url',
-    createAt: 'createAt',
-    updateAt: 'updateAt',
-    chanelId: 'chanelId'
-  };
-
-  export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   /**
@@ -7393,766 +7228,687 @@ export namespace Prisma {
    */
 
 
-  export type UserYoutubeWhereInput = {
-    AND?: Enumerable<UserYoutubeWhereInput>
-    OR?: Enumerable<UserYoutubeWhereInput>
-    NOT?: Enumerable<UserYoutubeWhereInput>
+  export type QuestionCategoryWhereInput = {
+    AND?: Enumerable<QuestionCategoryWhereInput>
+    OR?: Enumerable<QuestionCategoryWhereInput>
+    NOT?: Enumerable<QuestionCategoryWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    email?: StringFilter | string
-    imageProfile?: StringFilter | string
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    chanel?: ChanelListRelationFilter
-    Comment?: CommentListRelationFilter
-    userToChanel?: UserToChanelListRelationFilter
-    permission?: PermissionListRelationFilter
+    Question?: QuestionListRelationFilter
+    RoundQuiz?: RoundQuizListRelationFilter
   }
 
-  export type UserYoutubeOrderByWithRelationInput = {
+  export type QuestionCategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    imageProfile?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    chanel?: ChanelOrderByRelationAggregateInput
-    Comment?: CommentOrderByRelationAggregateInput
-    userToChanel?: UserToChanelOrderByRelationAggregateInput
-    permission?: PermissionOrderByRelationAggregateInput
+    Question?: QuestionOrderByRelationAggregateInput
+    RoundQuiz?: RoundQuizOrderByRelationAggregateInput
   }
 
-  export type UserYoutubeWhereUniqueInput = {
+  export type QuestionCategoryWhereUniqueInput = {
     id?: number
   }
 
-  export type UserYoutubeOrderByWithAggregationInput = {
+  export type QuestionCategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    imageProfile?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    _count?: UserYoutubeCountOrderByAggregateInput
-    _avg?: UserYoutubeAvgOrderByAggregateInput
-    _max?: UserYoutubeMaxOrderByAggregateInput
-    _min?: UserYoutubeMinOrderByAggregateInput
-    _sum?: UserYoutubeSumOrderByAggregateInput
+    _count?: QuestionCategoryCountOrderByAggregateInput
+    _avg?: QuestionCategoryAvgOrderByAggregateInput
+    _max?: QuestionCategoryMaxOrderByAggregateInput
+    _min?: QuestionCategoryMinOrderByAggregateInput
+    _sum?: QuestionCategorySumOrderByAggregateInput
   }
 
-  export type UserYoutubeScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<UserYoutubeScalarWhereWithAggregatesInput>
-    OR?: Enumerable<UserYoutubeScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<UserYoutubeScalarWhereWithAggregatesInput>
+  export type QuestionCategoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuestionCategoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuestionCategoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuestionCategoryScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    email?: StringWithAggregatesFilter | string
-    imageProfile?: StringWithAggregatesFilter | string
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type ChanelWhereInput = {
-    AND?: Enumerable<ChanelWhereInput>
-    OR?: Enumerable<ChanelWhereInput>
-    NOT?: Enumerable<ChanelWhereInput>
+  export type QuestionWhereInput = {
+    AND?: Enumerable<QuestionWhereInput>
+    OR?: Enumerable<QuestionWhereInput>
+    NOT?: Enumerable<QuestionWhereInput>
+    id?: IntFilter | number
+    questionCategories?: XOR<QuestionCategoryRelationFilter, QuestionCategoryWhereInput>
+    questionCategoryId?: IntFilter | number
+    textQuestion?: StringFilter | string
+    answer?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    answerId?: IntFilter | number
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+    choice?: ChoiceListRelationFilter
+    RoundDetail?: RoundDetailListRelationFilter
+  }
+
+  export type QuestionOrderByWithRelationInput = {
+    id?: SortOrder
+    questionCategories?: QuestionCategoryOrderByWithRelationInput
+    questionCategoryId?: SortOrder
+    textQuestion?: SortOrder
+    answer?: ChoiceOrderByWithRelationInput
+    answerId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    choice?: ChoiceOrderByRelationAggregateInput
+    RoundDetail?: RoundDetailOrderByRelationAggregateInput
+  }
+
+  export type QuestionWhereUniqueInput = {
+    id?: number
+    answerId?: number
+  }
+
+  export type QuestionOrderByWithAggregationInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    textQuestion?: SortOrder
+    answerId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    _count?: QuestionCountOrderByAggregateInput
+    _avg?: QuestionAvgOrderByAggregateInput
+    _max?: QuestionMaxOrderByAggregateInput
+    _min?: QuestionMinOrderByAggregateInput
+    _sum?: QuestionSumOrderByAggregateInput
+  }
+
+  export type QuestionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    questionCategoryId?: IntWithAggregatesFilter | number
+    textQuestion?: StringWithAggregatesFilter | string
+    answerId?: IntWithAggregatesFilter | number
+    createAt?: DateTimeWithAggregatesFilter | Date | string
+    updateAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type ChoiceWhereInput = {
+    AND?: Enumerable<ChoiceWhereInput>
+    OR?: Enumerable<ChoiceWhereInput>
+    NOT?: Enumerable<ChoiceWhereInput>
+    id?: IntFilter | number
+    choiceName?: StringFilter | string
+    question?: XOR<QuestionRelationFilter, QuestionWhereInput> | null
+    questionId?: IntNullableFilter | number | null
+    questionAnswer?: XOR<QuestionRelationFilter, QuestionWhereInput> | null
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+  }
+
+  export type ChoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    choiceName?: SortOrder
+    question?: QuestionOrderByWithRelationInput
+    questionId?: SortOrder
+    questionAnswer?: QuestionOrderByWithRelationInput
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type ChoiceWhereUniqueInput = {
+    id?: number
+  }
+
+  export type ChoiceOrderByWithAggregationInput = {
+    id?: SortOrder
+    choiceName?: SortOrder
+    questionId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    _count?: ChoiceCountOrderByAggregateInput
+    _avg?: ChoiceAvgOrderByAggregateInput
+    _max?: ChoiceMaxOrderByAggregateInput
+    _min?: ChoiceMinOrderByAggregateInput
+    _sum?: ChoiceSumOrderByAggregateInput
+  }
+
+  export type ChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    choiceName?: StringWithAggregatesFilter | string
+    questionId?: IntNullableWithAggregatesFilter | number | null
+    createAt?: DateTimeWithAggregatesFilter | Date | string
+    updateAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type UserWhereInput = {
+    AND?: Enumerable<UserWhereInput>
+    OR?: Enumerable<UserWhereInput>
+    NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    videos?: VideoListRelationFilter
-    description?: StringFilter | string
-    user?: XOR<UserYoutubeRelationFilter, UserYoutubeWhereInput>
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    userToChanel?: UserToChanelListRelationFilter
-    userId?: IntFilter | number
-    Permission?: PermissionListRelationFilter
+    RoundQuiz?: RoundQuizListRelationFilter
   }
 
-  export type ChanelOrderByWithRelationInput = {
+  export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    videos?: VideoOrderByRelationAggregateInput
-    description?: SortOrder
-    user?: UserYoutubeOrderByWithRelationInput
     createAt?: SortOrder
     updateAt?: SortOrder
-    userToChanel?: UserToChanelOrderByRelationAggregateInput
-    userId?: SortOrder
-    Permission?: PermissionOrderByRelationAggregateInput
+    RoundQuiz?: RoundQuizOrderByRelationAggregateInput
   }
 
-  export type ChanelWhereUniqueInput = {
+  export type UserWhereUniqueInput = {
     id?: number
   }
 
-  export type ChanelOrderByWithAggregationInput = {
+  export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    userId?: SortOrder
-    _count?: ChanelCountOrderByAggregateInput
-    _avg?: ChanelAvgOrderByAggregateInput
-    _max?: ChanelMaxOrderByAggregateInput
-    _min?: ChanelMinOrderByAggregateInput
-    _sum?: ChanelSumOrderByAggregateInput
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
-  export type ChanelScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<ChanelScalarWhereWithAggregatesInput>
-    OR?: Enumerable<ChanelScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<ChanelScalarWhereWithAggregatesInput>
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<UserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<UserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    description?: StringWithAggregatesFilter | string
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
-    userId?: IntWithAggregatesFilter | number
   }
 
-  export type CommentWhereInput = {
-    AND?: Enumerable<CommentWhereInput>
-    OR?: Enumerable<CommentWhereInput>
-    NOT?: Enumerable<CommentWhereInput>
+  export type RoundQuizWhereInput = {
+    AND?: Enumerable<RoundQuizWhereInput>
+    OR?: Enumerable<RoundQuizWhereInput>
+    NOT?: Enumerable<RoundQuizWhereInput>
     id?: IntFilter | number
-    user?: XOR<UserYoutubeRelationFilter, UserYoutubeWhereInput>
+    questionCategories?: XOR<QuestionCategoryRelationFilter, QuestionCategoryWhereInput>
+    questionCategoryId?: IntFilter | number
+    score?: IntFilter | number
+    user?: XOR<UserRelationFilter, UserWhereInput>
     userId?: IntFilter | number
-    video?: XOR<VideoRelationFilter, VideoWhereInput>
-    videoId?: IntFilter | number
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
+    RoundDetail?: RoundDetailListRelationFilter
   }
 
-  export type CommentOrderByWithRelationInput = {
+  export type RoundQuizOrderByWithRelationInput = {
     id?: SortOrder
-    user?: UserYoutubeOrderByWithRelationInput
+    questionCategories?: QuestionCategoryOrderByWithRelationInput
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    user?: UserOrderByWithRelationInput
     userId?: SortOrder
-    video?: VideoOrderByWithRelationInput
-    videoId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
+    RoundDetail?: RoundDetailOrderByRelationAggregateInput
   }
 
-  export type CommentWhereUniqueInput = {
+  export type RoundQuizWhereUniqueInput = {
     id?: number
   }
 
-  export type CommentOrderByWithAggregationInput = {
+  export type RoundQuizOrderByWithAggregationInput = {
     id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
     userId?: SortOrder
-    videoId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    _count?: CommentCountOrderByAggregateInput
-    _avg?: CommentAvgOrderByAggregateInput
-    _max?: CommentMaxOrderByAggregateInput
-    _min?: CommentMinOrderByAggregateInput
-    _sum?: CommentSumOrderByAggregateInput
+    _count?: RoundQuizCountOrderByAggregateInput
+    _avg?: RoundQuizAvgOrderByAggregateInput
+    _max?: RoundQuizMaxOrderByAggregateInput
+    _min?: RoundQuizMinOrderByAggregateInput
+    _sum?: RoundQuizSumOrderByAggregateInput
   }
 
-  export type CommentScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<CommentScalarWhereWithAggregatesInput>
-    OR?: Enumerable<CommentScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<CommentScalarWhereWithAggregatesInput>
+  export type RoundQuizScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    questionCategoryId?: IntWithAggregatesFilter | number
+    score?: IntWithAggregatesFilter | number
     userId?: IntWithAggregatesFilter | number
-    videoId?: IntWithAggregatesFilter | number
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type VideoWhereInput = {
-    AND?: Enumerable<VideoWhereInput>
-    OR?: Enumerable<VideoWhereInput>
-    NOT?: Enumerable<VideoWhereInput>
+  export type RoundDetailWhereInput = {
+    AND?: Enumerable<RoundDetailWhereInput>
+    OR?: Enumerable<RoundDetailWhereInput>
+    NOT?: Enumerable<RoundDetailWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    description?: StringFilter | string
-    comments?: CommentListRelationFilter
-    url?: StringFilter | string
+    roundQuiz?: XOR<RoundQuizRelationFilter, RoundQuizWhereInput>
+    roundQuizId?: IntFilter | number
+    question?: XOR<QuestionRelationFilter, QuestionWhereInput>
+    questionId?: IntFilter | number
+    questionOrder?: IntFilter | number
+    userChoose?: IntFilter | number
+    result?: BoolFilter | boolean
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    Chanel?: XOR<ChanelRelationFilter, ChanelWhereInput> | null
-    chanelId?: IntNullableFilter | number | null
   }
 
-  export type VideoOrderByWithRelationInput = {
+  export type RoundDetailOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    comments?: CommentOrderByRelationAggregateInput
-    url?: SortOrder
+    roundQuiz?: RoundQuizOrderByWithRelationInput
+    roundQuizId?: SortOrder
+    question?: QuestionOrderByWithRelationInput
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    Chanel?: ChanelOrderByWithRelationInput
-    chanelId?: SortOrder
   }
 
-  export type VideoWhereUniqueInput = {
+  export type RoundDetailWhereUniqueInput = {
     id?: number
   }
 
-  export type VideoOrderByWithAggregationInput = {
+  export type RoundDetailOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    chanelId?: SortOrder
-    _count?: VideoCountOrderByAggregateInput
-    _avg?: VideoAvgOrderByAggregateInput
-    _max?: VideoMaxOrderByAggregateInput
-    _min?: VideoMinOrderByAggregateInput
-    _sum?: VideoSumOrderByAggregateInput
+    _count?: RoundDetailCountOrderByAggregateInput
+    _avg?: RoundDetailAvgOrderByAggregateInput
+    _max?: RoundDetailMaxOrderByAggregateInput
+    _min?: RoundDetailMinOrderByAggregateInput
+    _sum?: RoundDetailSumOrderByAggregateInput
   }
 
-  export type VideoScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<VideoScalarWhereWithAggregatesInput>
-    OR?: Enumerable<VideoScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<VideoScalarWhereWithAggregatesInput>
+  export type RoundDetailScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    description?: StringWithAggregatesFilter | string
-    url?: StringWithAggregatesFilter | string
+    roundQuizId?: IntWithAggregatesFilter | number
+    questionId?: IntWithAggregatesFilter | number
+    questionOrder?: IntWithAggregatesFilter | number
+    userChoose?: IntWithAggregatesFilter | number
+    result?: BoolWithAggregatesFilter | boolean
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
-    chanelId?: IntNullableWithAggregatesFilter | number | null
   }
 
-  export type PermissionWhereInput = {
-    AND?: Enumerable<PermissionWhereInput>
-    OR?: Enumerable<PermissionWhereInput>
-    NOT?: Enumerable<PermissionWhereInput>
-    id?: IntFilter | number
-    role?: EnumRoleEnumFilter | RoleEnum
-    edit?: BoolFilter | boolean
-    post?: BoolFilter | boolean
-    delete?: BoolFilter | boolean
-    upload?: BoolFilter | boolean
-    createAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    User?: XOR<UserYoutubeRelationFilter, UserYoutubeWhereInput> | null
-    userId?: IntNullableFilter | number | null
-    Chanel?: XOR<ChanelRelationFilter, ChanelWhereInput> | null
-    chanelId?: IntNullableFilter | number | null
-    userToChanel?: UserToChanelListRelationFilter
-  }
-
-  export type PermissionOrderByWithRelationInput = {
-    id?: SortOrder
-    role?: SortOrder
-    edit?: SortOrder
-    post?: SortOrder
-    delete?: SortOrder
-    upload?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    User?: UserYoutubeOrderByWithRelationInput
-    userId?: SortOrder
-    Chanel?: ChanelOrderByWithRelationInput
-    chanelId?: SortOrder
-    userToChanel?: UserToChanelOrderByRelationAggregateInput
-  }
-
-  export type PermissionWhereUniqueInput = {
-    id?: number
-  }
-
-  export type PermissionOrderByWithAggregationInput = {
-    id?: SortOrder
-    role?: SortOrder
-    edit?: SortOrder
-    post?: SortOrder
-    delete?: SortOrder
-    upload?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    _count?: PermissionCountOrderByAggregateInput
-    _avg?: PermissionAvgOrderByAggregateInput
-    _max?: PermissionMaxOrderByAggregateInput
-    _min?: PermissionMinOrderByAggregateInput
-    _sum?: PermissionSumOrderByAggregateInput
-  }
-
-  export type PermissionScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<PermissionScalarWhereWithAggregatesInput>
-    OR?: Enumerable<PermissionScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<PermissionScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    role?: EnumRoleEnumWithAggregatesFilter | RoleEnum
-    edit?: BoolWithAggregatesFilter | boolean
-    post?: BoolWithAggregatesFilter | boolean
-    delete?: BoolWithAggregatesFilter | boolean
-    upload?: BoolWithAggregatesFilter | boolean
-    createAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-    userId?: IntNullableWithAggregatesFilter | number | null
-    chanelId?: IntNullableWithAggregatesFilter | number | null
-  }
-
-  export type UserToChanelWhereInput = {
-    AND?: Enumerable<UserToChanelWhereInput>
-    OR?: Enumerable<UserToChanelWhereInput>
-    NOT?: Enumerable<UserToChanelWhereInput>
-    id?: IntFilter | number
-    role?: EnumRoleEnumFilter | RoleEnum
-    user?: XOR<UserYoutubeRelationFilter, UserYoutubeWhereInput>
-    userId?: IntFilter | number
-    chanel?: XOR<ChanelRelationFilter, ChanelWhereInput>
-    chanelId?: IntFilter | number
-    permission?: XOR<PermissionRelationFilter, PermissionWhereInput>
-    permissionId?: IntFilter | number
-  }
-
-  export type UserToChanelOrderByWithRelationInput = {
-    id?: SortOrder
-    role?: SortOrder
-    user?: UserYoutubeOrderByWithRelationInput
-    userId?: SortOrder
-    chanel?: ChanelOrderByWithRelationInput
-    chanelId?: SortOrder
-    permission?: PermissionOrderByWithRelationInput
-    permissionId?: SortOrder
-  }
-
-  export type UserToChanelWhereUniqueInput = {
-    id?: number
-  }
-
-  export type UserToChanelOrderByWithAggregationInput = {
-    id?: SortOrder
-    role?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
-    _count?: UserToChanelCountOrderByAggregateInput
-    _avg?: UserToChanelAvgOrderByAggregateInput
-    _max?: UserToChanelMaxOrderByAggregateInput
-    _min?: UserToChanelMinOrderByAggregateInput
-    _sum?: UserToChanelSumOrderByAggregateInput
-  }
-
-  export type UserToChanelScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<UserToChanelScalarWhereWithAggregatesInput>
-    OR?: Enumerable<UserToChanelScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<UserToChanelScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    role?: EnumRoleEnumWithAggregatesFilter | RoleEnum
-    userId?: IntWithAggregatesFilter | number
-    chanelId?: IntWithAggregatesFilter | number
-    permissionId?: IntWithAggregatesFilter | number
-  }
-
-  export type UserYoutubeCreateInput = {
+  export type QuestionCategoryCreateInput = {
     name: string
-    email: string
-    imageProfile: string
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelCreateNestedManyWithoutUserInput
-    Comment?: CommentCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutUserInput
-    permission?: PermissionCreateNestedManyWithoutUserInput
+    Question?: QuestionCreateNestedManyWithoutQuestionCategoriesInput
+    RoundQuiz?: RoundQuizCreateNestedManyWithoutQuestionCategoriesInput
   }
 
-  export type UserYoutubeUncheckedCreateInput = {
+  export type QuestionCategoryUncheckedCreateInput = {
     id?: number
     name: string
-    email: string
-    imageProfile: string
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelUncheckedCreateNestedManyWithoutUserInput
-    Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutUserInput
-    permission?: PermissionUncheckedCreateNestedManyWithoutUserInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutQuestionCategoriesInput
+    RoundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuestionCategoriesInput
   }
 
-  export type UserYoutubeUpdateInput = {
+  export type QuestionCategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUpdateManyWithoutUserNestedInput
-    Comment?: CommentUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutUserNestedInput
-    permission?: PermissionUpdateManyWithoutUserNestedInput
+    Question?: QuestionUpdateManyWithoutQuestionCategoriesNestedInput
+    RoundQuiz?: RoundQuizUpdateManyWithoutQuestionCategoriesNestedInput
   }
 
-  export type UserYoutubeUncheckedUpdateInput = {
+  export type QuestionCategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUncheckedUpdateManyWithoutUserNestedInput
-    Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutUserNestedInput
-    permission?: PermissionUncheckedUpdateManyWithoutUserNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutQuestionCategoriesNestedInput
+    RoundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuestionCategoriesNestedInput
   }
 
-  export type UserYoutubeCreateManyInput = {
+  export type QuestionCategoryCreateManyInput = {
     id?: number
     name: string
-    email: string
-    imageProfile: string
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type UserYoutubeUpdateManyMutationInput = {
+  export type QuestionCategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserYoutubeUncheckedUpdateManyInput = {
+  export type QuestionCategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChanelCreateInput = {
-    name: string
-    videos?: VideoCreateNestedManyWithoutChanelInput
-    description: string
-    user: UserYoutubeCreateNestedOneWithoutChanelInput
+  export type QuestionCreateInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
+    textQuestion: string
+    answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelCreateNestedManyWithoutChanelInput
-    Permission?: PermissionCreateNestedManyWithoutChanelInput
+    choice?: ChoiceCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
   }
 
-  export type ChanelUncheckedCreateInput = {
+  export type QuestionUncheckedCreateInput = {
     id?: number
-    name: string
-    videos?: VideoUncheckedCreateNestedManyWithoutChanelInput
-    description: string
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutChanelInput
+    choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionUpdateInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionCreateManyInput = {
+    id?: number
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type QuestionUpdateManyMutationInput = {
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateInput = {
+    choiceName: string
+    question?: QuestionCreateNestedOneWithoutChoiceInput
+    questionAnswer?: QuestionCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateInput = {
+    id?: number
+    choiceName: string
+    questionId?: number | null
+    questionAnswer?: QuestionUncheckedCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUpdateInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    question?: QuestionUpdateOneWithoutChoiceNestedInput
+    questionAnswer?: QuestionUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionId?: NullableIntFieldUpdateOperationsInput | number | null
+    questionAnswer?: QuestionUncheckedUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateManyInput = {
+    id?: number
+    choiceName: string
+    questionId?: number | null
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUpdateManyMutationInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionId?: NullableIntFieldUpdateOperationsInput | number | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateInput = {
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuiz?: RoundQuizCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: number
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuiz?: RoundQuizUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuiz?: RoundQuizUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id?: number
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuizCreateInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutRoundQuizInput
+    score: number
+    user: UserCreateNestedOneWithoutRoundQuizInput
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
+  }
+
+  export type RoundQuizUncheckedCreateInput = {
+    id?: number
+    questionCategoryId: number
+    score: number
     userId: number
-    Permission?: PermissionUncheckedCreateNestedManyWithoutChanelInput
-  }
-
-  export type ChanelUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    user?: UserYoutubeUpdateOneRequiredWithoutChanelNestedInput
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUpdateManyWithoutChanelNestedInput
-    Permission?: PermissionUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUncheckedUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutChanelNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
-    Permission?: PermissionUncheckedUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelCreateManyInput = {
-    id?: number
-    name: string
-    description: string
     createAt?: Date | string
     updateAt?: Date | string
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+  }
+
+  export type RoundQuizUpdateInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput
+    score?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizCreateManyInput = {
+    id?: number
+    questionCategoryId: number
+    score: number
     userId: number
+    createAt?: Date | string
+    updateAt?: Date | string
   }
 
-  export type ChanelUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+  export type RoundQuizUpdateManyMutationInput = {
+    score?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChanelUncheckedUpdateManyInput = {
+  export type RoundQuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentCreateInput = {
-    user: UserYoutubeCreateNestedOneWithoutCommentInput
-    video: VideoCreateNestedOneWithoutCommentsInput
+  export type RoundDetailCreateInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundDetailInput
+    question: QuestionCreateNestedOneWithoutRoundDetailInput
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type CommentUncheckedCreateInput = {
+  export type RoundDetailUncheckedCreateInput = {
     id?: number
-    userId: number
-    videoId: number
+    roundQuizId: number
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type CommentUpdateInput = {
-    user?: UserYoutubeUpdateOneRequiredWithoutCommentNestedInput
-    video?: VideoUpdateOneRequiredWithoutCommentsNestedInput
+  export type RoundDetailUpdateInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundDetailNestedInput
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentUncheckedUpdateInput = {
+  export type RoundDetailUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    videoId?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentCreateManyInput = {
+  export type RoundDetailCreateManyInput = {
     id?: number
-    userId: number
-    videoId: number
+    roundQuizId: number
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type CommentUpdateManyMutationInput = {
+  export type RoundDetailUpdateManyMutationInput = {
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CommentUncheckedUpdateManyInput = {
+  export type RoundDetailUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    videoId?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoCreateInput = {
-    name: string
-    description: string
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    Chanel?: ChanelCreateNestedOneWithoutVideosInput
-  }
-
-  export type VideoUncheckedCreateInput = {
-    id?: number
-    name: string
-    description: string
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanelId?: number | null
-  }
-
-  export type VideoUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Chanel?: ChanelUpdateOneWithoutVideosNestedInput
-  }
-
-  export type VideoUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type VideoCreateManyInput = {
-    id?: number
-    name: string
-    description: string
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanelId?: number | null
-  }
-
-  export type VideoUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type PermissionCreateInput = {
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    User?: UserYoutubeCreateNestedOneWithoutPermissionInput
-    Chanel?: ChanelCreateNestedOneWithoutPermissionInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionUncheckedCreateInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId?: number | null
-    chanelId?: number | null
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionUpdateInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserYoutubeUpdateOneWithoutPermissionNestedInput
-    Chanel?: ChanelUpdateOneWithoutPermissionNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type PermissionUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type PermissionCreateManyInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId?: number | null
-    chanelId?: number | null
-  }
-
-  export type PermissionUpdateManyMutationInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PermissionUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type UserToChanelCreateInput = {
-    role: RoleEnum
-    user: UserYoutubeCreateNestedOneWithoutUserToChanelInput
-    chanel: ChanelCreateNestedOneWithoutUserToChanelInput
-    permission: PermissionCreateNestedOneWithoutUserToChanelInput
-  }
-
-  export type UserToChanelUncheckedCreateInput = {
-    id?: number
-    role: RoleEnum
-    userId: number
-    chanelId: number
-    permissionId: number
-  }
-
-  export type UserToChanelUpdateInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    user?: UserYoutubeUpdateOneRequiredWithoutUserToChanelNestedInput
-    chanel?: ChanelUpdateOneRequiredWithoutUserToChanelNestedInput
-    permission?: PermissionUpdateOneRequiredWithoutUserToChanelNestedInput
-  }
-
-  export type UserToChanelUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    userId?: IntFieldUpdateOperationsInput | number
-    chanelId?: IntFieldUpdateOperationsInput | number
-    permissionId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type UserToChanelCreateManyInput = {
-    id?: number
-    role: RoleEnum
-    userId: number
-    chanelId: number
-    permissionId: number
-  }
-
-  export type UserToChanelUpdateManyMutationInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-  }
-
-  export type UserToChanelUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    userId?: IntFieldUpdateOperationsInput | number
-    chanelId?: IntFieldUpdateOperationsInput | number
-    permissionId?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter = {
@@ -8192,78 +7948,52 @@ export namespace Prisma {
     not?: NestedDateTimeFilter | Date | string
   }
 
-  export type ChanelListRelationFilter = {
-    every?: ChanelWhereInput
-    some?: ChanelWhereInput
-    none?: ChanelWhereInput
+  export type QuestionListRelationFilter = {
+    every?: QuestionWhereInput
+    some?: QuestionWhereInput
+    none?: QuestionWhereInput
   }
 
-  export type CommentListRelationFilter = {
-    every?: CommentWhereInput
-    some?: CommentWhereInput
-    none?: CommentWhereInput
+  export type RoundQuizListRelationFilter = {
+    every?: RoundQuizWhereInput
+    some?: RoundQuizWhereInput
+    none?: RoundQuizWhereInput
   }
 
-  export type UserToChanelListRelationFilter = {
-    every?: UserToChanelWhereInput
-    some?: UserToChanelWhereInput
-    none?: UserToChanelWhereInput
-  }
-
-  export type PermissionListRelationFilter = {
-    every?: PermissionWhereInput
-    some?: PermissionWhereInput
-    none?: PermissionWhereInput
-  }
-
-  export type ChanelOrderByRelationAggregateInput = {
+  export type QuestionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CommentOrderByRelationAggregateInput = {
+  export type RoundQuizOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type UserToChanelOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PermissionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserYoutubeCountOrderByAggregateInput = {
+  export type QuestionCategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    imageProfile?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type UserYoutubeAvgOrderByAggregateInput = {
+  export type QuestionCategoryAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type UserYoutubeMaxOrderByAggregateInput = {
+  export type QuestionCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    imageProfile?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type UserYoutubeMinOrderByAggregateInput = {
+  export type QuestionCategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    email?: SortOrder
-    imageProfile?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type UserYoutubeSumOrderByAggregateInput = {
+  export type QuestionCategorySumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -8315,102 +8045,78 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type VideoListRelationFilter = {
-    every?: VideoWhereInput
-    some?: VideoWhereInput
-    none?: VideoWhereInput
+  export type QuestionCategoryRelationFilter = {
+    is?: QuestionCategoryWhereInput
+    isNot?: QuestionCategoryWhereInput
   }
 
-  export type UserYoutubeRelationFilter = {
-    is?: UserYoutubeWhereInput
-    isNot?: UserYoutubeWhereInput
+  export type ChoiceRelationFilter = {
+    is?: ChoiceWhereInput
+    isNot?: ChoiceWhereInput
   }
 
-  export type VideoOrderByRelationAggregateInput = {
+  export type ChoiceListRelationFilter = {
+    every?: ChoiceWhereInput
+    some?: ChoiceWhereInput
+    none?: ChoiceWhereInput
+  }
+
+  export type RoundDetailListRelationFilter = {
+    every?: RoundDetailWhereInput
+    some?: RoundDetailWhereInput
+    none?: RoundDetailWhereInput
+  }
+
+  export type ChoiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type ChanelCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    userId?: SortOrder
+  export type RoundDetailOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
-  export type ChanelAvgOrderByAggregateInput = {
+  export type QuestionCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ChanelMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ChanelMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ChanelSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type VideoRelationFilter = {
-    is?: VideoWhereInput
-    isNot?: VideoWhereInput
-  }
-
-  export type CommentCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    videoId?: SortOrder
+    questionCategoryId?: SortOrder
+    textQuestion?: SortOrder
+    answerId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type CommentAvgOrderByAggregateInput = {
+  export type QuestionAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    videoId?: SortOrder
+    questionCategoryId?: SortOrder
+    answerId?: SortOrder
   }
 
-  export type CommentMaxOrderByAggregateInput = {
+  export type QuestionMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    videoId?: SortOrder
+    questionCategoryId?: SortOrder
+    textQuestion?: SortOrder
+    answerId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type CommentMinOrderByAggregateInput = {
+  export type QuestionMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    videoId?: SortOrder
+    questionCategoryId?: SortOrder
+    textQuestion?: SortOrder
+    answerId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
-  export type CommentSumOrderByAggregateInput = {
+  export type QuestionSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    videoId?: SortOrder
+    questionCategoryId?: SortOrder
+    answerId?: SortOrder
   }
 
-  export type ChanelRelationFilter = {
-    is?: ChanelWhereInput
-    isNot?: ChanelWhereInput
+  export type QuestionRelationFilter = {
+    is?: QuestionWhereInput
+    isNot?: QuestionWhereInput
   }
 
   export type IntNullableFilter = {
@@ -8424,44 +8130,38 @@ export namespace Prisma {
     not?: NestedIntNullableFilter | number | null
   }
 
-  export type VideoCountOrderByAggregateInput = {
+  export type ChoiceCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
+    choiceName?: SortOrder
+    questionId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type VideoAvgOrderByAggregateInput = {
+  export type ChoiceAvgOrderByAggregateInput = {
     id?: SortOrder
-    chanelId?: SortOrder
+    questionId?: SortOrder
   }
 
-  export type VideoMaxOrderByAggregateInput = {
+  export type ChoiceMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
+    choiceName?: SortOrder
+    questionId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type VideoMinOrderByAggregateInput = {
+  export type ChoiceMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
+    choiceName?: SortOrder
+    questionId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type VideoSumOrderByAggregateInput = {
+  export type ChoiceSumOrderByAggregateInput = {
     id?: SortOrder
-    chanelId?: SortOrder
+    questionId?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter = {
@@ -8480,11 +8180,84 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter
   }
 
-  export type EnumRoleEnumFilter = {
-    equals?: RoleEnum
-    in?: Enumerable<RoleEnum>
-    notIn?: Enumerable<RoleEnum>
-    not?: NestedEnumRoleEnumFilter | RoleEnum
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type RoundQuizCountOrderByAggregateInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    userId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuizAvgOrderByAggregateInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RoundQuizMaxOrderByAggregateInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    userId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuizMinOrderByAggregateInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    userId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuizSumOrderByAggregateInput = {
+    id?: SortOrder
+    questionCategoryId?: SortOrder
+    score?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RoundQuizRelationFilter = {
+    is?: RoundQuizWhereInput
+    isNot?: RoundQuizWhereInput
   }
 
   export type BoolFilter = {
@@ -8492,65 +8265,53 @@ export namespace Prisma {
     not?: NestedBoolFilter | boolean
   }
 
-  export type PermissionCountOrderByAggregateInput = {
+  export type RoundDetailCountOrderByAggregateInput = {
     id?: SortOrder
-    role?: SortOrder
-    edit?: SortOrder
-    post?: SortOrder
-    delete?: SortOrder
-    upload?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type PermissionAvgOrderByAggregateInput = {
+  export type RoundDetailAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
   }
 
-  export type PermissionMaxOrderByAggregateInput = {
+  export type RoundDetailMaxOrderByAggregateInput = {
     id?: SortOrder
-    role?: SortOrder
-    edit?: SortOrder
-    post?: SortOrder
-    delete?: SortOrder
-    upload?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type PermissionMinOrderByAggregateInput = {
+  export type RoundDetailMinOrderByAggregateInput = {
     id?: SortOrder
-    role?: SortOrder
-    edit?: SortOrder
-    post?: SortOrder
-    delete?: SortOrder
-    upload?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
   }
 
-  export type PermissionSumOrderByAggregateInput = {
+  export type RoundDetailSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-  }
-
-  export type EnumRoleEnumWithAggregatesFilter = {
-    equals?: RoleEnum
-    in?: Enumerable<RoleEnum>
-    notIn?: Enumerable<RoleEnum>
-    not?: NestedEnumRoleEnumWithAggregatesFilter | RoleEnum
-    _count?: NestedIntFilter
-    _min?: NestedEnumRoleEnumFilter
-    _max?: NestedEnumRoleEnumFilter
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
   }
 
   export type BoolWithAggregatesFilter = {
@@ -8561,103 +8322,32 @@ export namespace Prisma {
     _max?: NestedBoolFilter
   }
 
-  export type PermissionRelationFilter = {
-    is?: PermissionWhereInput
-    isNot?: PermissionWhereInput
+  export type QuestionCreateNestedManyWithoutQuestionCategoriesInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutQuestionCategoriesInput>, Enumerable<QuestionUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutQuestionCategoriesInput>
+    createMany?: QuestionCreateManyQuestionCategoriesInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
-  export type UserToChanelCountOrderByAggregateInput = {
-    id?: SortOrder
-    role?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
+  export type RoundQuizCreateNestedManyWithoutQuestionCategoriesInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuestionCategoriesInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuestionCategoriesInput>
+    createMany?: RoundQuizCreateManyQuestionCategoriesInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type UserToChanelAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
+  export type QuestionUncheckedCreateNestedManyWithoutQuestionCategoriesInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutQuestionCategoriesInput>, Enumerable<QuestionUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutQuestionCategoriesInput>
+    createMany?: QuestionCreateManyQuestionCategoriesInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
-  export type UserToChanelMaxOrderByAggregateInput = {
-    id?: SortOrder
-    role?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
-  }
-
-  export type UserToChanelMinOrderByAggregateInput = {
-    id?: SortOrder
-    role?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
-  }
-
-  export type UserToChanelSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    chanelId?: SortOrder
-    permissionId?: SortOrder
-  }
-
-  export type ChanelCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<ChanelCreateWithoutUserInput>, Enumerable<ChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ChanelCreateOrConnectWithoutUserInput>
-    createMany?: ChanelCreateManyUserInputEnvelope
-    connect?: Enumerable<ChanelWhereUniqueInput>
-  }
-
-  export type CommentCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutUserInput>, Enumerable<CommentUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutUserInput>
-    createMany?: CommentCreateManyUserInputEnvelope
-    connect?: Enumerable<CommentWhereUniqueInput>
-  }
-
-  export type UserToChanelCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutUserInput>, Enumerable<UserToChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutUserInput>
-    createMany?: UserToChanelCreateManyUserInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-  }
-
-  export type PermissionCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutUserInput>, Enumerable<PermissionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutUserInput>
-    createMany?: PermissionCreateManyUserInputEnvelope
-    connect?: Enumerable<PermissionWhereUniqueInput>
-  }
-
-  export type ChanelUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<ChanelCreateWithoutUserInput>, Enumerable<ChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ChanelCreateOrConnectWithoutUserInput>
-    createMany?: ChanelCreateManyUserInputEnvelope
-    connect?: Enumerable<ChanelWhereUniqueInput>
-  }
-
-  export type CommentUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutUserInput>, Enumerable<CommentUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutUserInput>
-    createMany?: CommentCreateManyUserInputEnvelope
-    connect?: Enumerable<CommentWhereUniqueInput>
-  }
-
-  export type UserToChanelUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutUserInput>, Enumerable<UserToChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutUserInput>
-    createMany?: UserToChanelCreateManyUserInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-  }
-
-  export type PermissionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutUserInput>, Enumerable<PermissionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutUserInput>
-    createMany?: PermissionCreateManyUserInputEnvelope
-    connect?: Enumerable<PermissionWhereUniqueInput>
+  export type RoundQuizUncheckedCreateNestedManyWithoutQuestionCategoriesInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuestionCategoriesInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuestionCategoriesInput>
+    createMany?: RoundQuizCreateManyQuestionCategoriesInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8668,60 +8358,32 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type ChanelUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<ChanelCreateWithoutUserInput>, Enumerable<ChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ChanelCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<ChanelUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: ChanelCreateManyUserInputEnvelope
-    set?: Enumerable<ChanelWhereUniqueInput>
-    disconnect?: Enumerable<ChanelWhereUniqueInput>
-    delete?: Enumerable<ChanelWhereUniqueInput>
-    connect?: Enumerable<ChanelWhereUniqueInput>
-    update?: Enumerable<ChanelUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<ChanelUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<ChanelScalarWhereInput>
+  export type QuestionUpdateManyWithoutQuestionCategoriesNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutQuestionCategoriesInput>, Enumerable<QuestionUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutQuestionCategoriesInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutQuestionCategoriesInput>
+    createMany?: QuestionCreateManyQuestionCategoriesInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutQuestionCategoriesInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutQuestionCategoriesInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
   }
 
-  export type CommentUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutUserInput>, Enumerable<CommentUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: CommentCreateManyUserInputEnvelope
-    set?: Enumerable<CommentWhereUniqueInput>
-    disconnect?: Enumerable<CommentWhereUniqueInput>
-    delete?: Enumerable<CommentWhereUniqueInput>
-    connect?: Enumerable<CommentWhereUniqueInput>
-    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<CommentScalarWhereInput>
-  }
-
-  export type UserToChanelUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutUserInput>, Enumerable<UserToChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: UserToChanelCreateManyUserInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
-  }
-
-  export type PermissionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutUserInput>, Enumerable<PermissionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PermissionUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PermissionCreateManyUserInputEnvelope
-    set?: Enumerable<PermissionWhereUniqueInput>
-    disconnect?: Enumerable<PermissionWhereUniqueInput>
-    delete?: Enumerable<PermissionWhereUniqueInput>
-    connect?: Enumerable<PermissionWhereUniqueInput>
-    update?: Enumerable<PermissionUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PermissionUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PermissionScalarWhereInput>
+  export type RoundQuizUpdateManyWithoutQuestionCategoriesNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuestionCategoriesInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuestionCategoriesInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutQuestionCategoriesInput>
+    createMany?: RoundQuizCreateManyQuestionCategoriesInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutQuestionCategoriesInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutQuestionCategoriesInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -8732,286 +8394,182 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ChanelUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<ChanelCreateWithoutUserInput>, Enumerable<ChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<ChanelCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<ChanelUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: ChanelCreateManyUserInputEnvelope
-    set?: Enumerable<ChanelWhereUniqueInput>
-    disconnect?: Enumerable<ChanelWhereUniqueInput>
-    delete?: Enumerable<ChanelWhereUniqueInput>
-    connect?: Enumerable<ChanelWhereUniqueInput>
-    update?: Enumerable<ChanelUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<ChanelUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<ChanelScalarWhereInput>
+  export type QuestionUncheckedUpdateManyWithoutQuestionCategoriesNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutQuestionCategoriesInput>, Enumerable<QuestionUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutQuestionCategoriesInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutQuestionCategoriesInput>
+    createMany?: QuestionCreateManyQuestionCategoriesInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutQuestionCategoriesInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutQuestionCategoriesInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
   }
 
-  export type CommentUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutUserInput>, Enumerable<CommentUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: CommentCreateManyUserInputEnvelope
-    set?: Enumerable<CommentWhereUniqueInput>
-    disconnect?: Enumerable<CommentWhereUniqueInput>
-    delete?: Enumerable<CommentWhereUniqueInput>
-    connect?: Enumerable<CommentWhereUniqueInput>
-    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<CommentScalarWhereInput>
+  export type RoundQuizUncheckedUpdateManyWithoutQuestionCategoriesNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuestionCategoriesInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuestionCategoriesInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutQuestionCategoriesInput>
+    createMany?: RoundQuizCreateManyQuestionCategoriesInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutQuestionCategoriesInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutQuestionCategoriesInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type UserToChanelUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutUserInput>, Enumerable<UserToChanelUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: UserToChanelCreateManyUserInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
+  export type QuestionCategoryCreateNestedOneWithoutQuestionInput = {
+    create?: XOR<QuestionCategoryCreateWithoutQuestionInput, QuestionCategoryUncheckedCreateWithoutQuestionInput>
+    connectOrCreate?: QuestionCategoryCreateOrConnectWithoutQuestionInput
+    connect?: QuestionCategoryWhereUniqueInput
   }
 
-  export type PermissionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutUserInput>, Enumerable<PermissionUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PermissionUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PermissionCreateManyUserInputEnvelope
-    set?: Enumerable<PermissionWhereUniqueInput>
-    disconnect?: Enumerable<PermissionWhereUniqueInput>
-    delete?: Enumerable<PermissionWhereUniqueInput>
-    connect?: Enumerable<PermissionWhereUniqueInput>
-    update?: Enumerable<PermissionUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PermissionUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PermissionScalarWhereInput>
+  export type ChoiceCreateNestedOneWithoutQuestionAnswerInput = {
+    create?: XOR<ChoiceCreateWithoutQuestionAnswerInput, ChoiceUncheckedCreateWithoutQuestionAnswerInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutQuestionAnswerInput
+    connect?: ChoiceWhereUniqueInput
   }
 
-  export type VideoCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<VideoCreateWithoutChanelInput>, Enumerable<VideoUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutChanelInput>
-    createMany?: VideoCreateManyChanelInputEnvelope
-    connect?: Enumerable<VideoWhereUniqueInput>
+  export type ChoiceCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
+    createMany?: ChoiceCreateManyQuestionInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type UserYoutubeCreateNestedOneWithoutChanelInput = {
-    create?: XOR<UserYoutubeCreateWithoutChanelInput, UserYoutubeUncheckedCreateWithoutChanelInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutChanelInput
-    connect?: UserYoutubeWhereUniqueInput
+  export type RoundDetailCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
   }
 
-  export type UserToChanelCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutChanelInput>, Enumerable<UserToChanelUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutChanelInput>
-    createMany?: UserToChanelCreateManyChanelInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
+  export type ChoiceUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
+    createMany?: ChoiceCreateManyQuestionInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type PermissionCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutChanelInput>, Enumerable<PermissionUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutChanelInput>
-    createMany?: PermissionCreateManyChanelInputEnvelope
-    connect?: Enumerable<PermissionWhereUniqueInput>
+  export type RoundDetailUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
   }
 
-  export type VideoUncheckedCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<VideoCreateWithoutChanelInput>, Enumerable<VideoUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutChanelInput>
-    createMany?: VideoCreateManyChanelInputEnvelope
-    connect?: Enumerable<VideoWhereUniqueInput>
+  export type QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput = {
+    create?: XOR<QuestionCategoryCreateWithoutQuestionInput, QuestionCategoryUncheckedCreateWithoutQuestionInput>
+    connectOrCreate?: QuestionCategoryCreateOrConnectWithoutQuestionInput
+    upsert?: QuestionCategoryUpsertWithoutQuestionInput
+    connect?: QuestionCategoryWhereUniqueInput
+    update?: XOR<QuestionCategoryUpdateWithoutQuestionInput, QuestionCategoryUncheckedUpdateWithoutQuestionInput>
   }
 
-  export type UserToChanelUncheckedCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutChanelInput>, Enumerable<UserToChanelUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutChanelInput>
-    createMany?: UserToChanelCreateManyChanelInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
+  export type ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput = {
+    create?: XOR<ChoiceCreateWithoutQuestionAnswerInput, ChoiceUncheckedCreateWithoutQuestionAnswerInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutQuestionAnswerInput
+    upsert?: ChoiceUpsertWithoutQuestionAnswerInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutQuestionAnswerInput, ChoiceUncheckedUpdateWithoutQuestionAnswerInput>
   }
 
-  export type PermissionUncheckedCreateNestedManyWithoutChanelInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutChanelInput>, Enumerable<PermissionUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutChanelInput>
-    createMany?: PermissionCreateManyChanelInputEnvelope
-    connect?: Enumerable<PermissionWhereUniqueInput>
+  export type ChoiceUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: ChoiceCreateManyQuestionInputEnvelope
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type VideoUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<VideoCreateWithoutChanelInput>, Enumerable<VideoUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: VideoCreateManyChanelInputEnvelope
-    set?: Enumerable<VideoWhereUniqueInput>
-    disconnect?: Enumerable<VideoWhereUniqueInput>
-    delete?: Enumerable<VideoWhereUniqueInput>
-    connect?: Enumerable<VideoWhereUniqueInput>
-    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<VideoScalarWhereInput>
+  export type RoundDetailUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
+    delete?: Enumerable<RoundDetailWhereUniqueInput>
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
   }
 
-  export type UserYoutubeUpdateOneRequiredWithoutChanelNestedInput = {
-    create?: XOR<UserYoutubeCreateWithoutChanelInput, UserYoutubeUncheckedCreateWithoutChanelInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutChanelInput
-    upsert?: UserYoutubeUpsertWithoutChanelInput
-    connect?: UserYoutubeWhereUniqueInput
-    update?: XOR<UserYoutubeUpdateWithoutChanelInput, UserYoutubeUncheckedUpdateWithoutChanelInput>
+  export type ChoiceUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: ChoiceCreateManyQuestionInputEnvelope
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type UserToChanelUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutChanelInput>, Enumerable<UserToChanelUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: UserToChanelCreateManyChanelInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
+  export type RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
+    delete?: Enumerable<RoundDetailWhereUniqueInput>
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
   }
 
-  export type PermissionUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutChanelInput>, Enumerable<PermissionUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<PermissionUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: PermissionCreateManyChanelInputEnvelope
-    set?: Enumerable<PermissionWhereUniqueInput>
-    disconnect?: Enumerable<PermissionWhereUniqueInput>
-    delete?: Enumerable<PermissionWhereUniqueInput>
-    connect?: Enumerable<PermissionWhereUniqueInput>
-    update?: Enumerable<PermissionUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<PermissionUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<PermissionScalarWhereInput>
+  export type QuestionCreateNestedOneWithoutChoiceInput = {
+    create?: XOR<QuestionCreateWithoutChoiceInput, QuestionUncheckedCreateWithoutChoiceInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutChoiceInput
+    connect?: QuestionWhereUniqueInput
   }
 
-  export type VideoUncheckedUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<VideoCreateWithoutChanelInput>, Enumerable<VideoUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<VideoCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<VideoUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: VideoCreateManyChanelInputEnvelope
-    set?: Enumerable<VideoWhereUniqueInput>
-    disconnect?: Enumerable<VideoWhereUniqueInput>
-    delete?: Enumerable<VideoWhereUniqueInput>
-    connect?: Enumerable<VideoWhereUniqueInput>
-    update?: Enumerable<VideoUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<VideoUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<VideoScalarWhereInput>
+  export type QuestionCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutAnswerInput
+    connect?: QuestionWhereUniqueInput
   }
 
-  export type UserToChanelUncheckedUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutChanelInput>, Enumerable<UserToChanelUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: UserToChanelCreateManyChanelInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
+  export type QuestionUncheckedCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutAnswerInput
+    connect?: QuestionWhereUniqueInput
   }
 
-  export type PermissionUncheckedUpdateManyWithoutChanelNestedInput = {
-    create?: XOR<Enumerable<PermissionCreateWithoutChanelInput>, Enumerable<PermissionUncheckedCreateWithoutChanelInput>>
-    connectOrCreate?: Enumerable<PermissionCreateOrConnectWithoutChanelInput>
-    upsert?: Enumerable<PermissionUpsertWithWhereUniqueWithoutChanelInput>
-    createMany?: PermissionCreateManyChanelInputEnvelope
-    set?: Enumerable<PermissionWhereUniqueInput>
-    disconnect?: Enumerable<PermissionWhereUniqueInput>
-    delete?: Enumerable<PermissionWhereUniqueInput>
-    connect?: Enumerable<PermissionWhereUniqueInput>
-    update?: Enumerable<PermissionUpdateWithWhereUniqueWithoutChanelInput>
-    updateMany?: Enumerable<PermissionUpdateManyWithWhereWithoutChanelInput>
-    deleteMany?: Enumerable<PermissionScalarWhereInput>
-  }
-
-  export type UserYoutubeCreateNestedOneWithoutCommentInput = {
-    create?: XOR<UserYoutubeCreateWithoutCommentInput, UserYoutubeUncheckedCreateWithoutCommentInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutCommentInput
-    connect?: UserYoutubeWhereUniqueInput
-  }
-
-  export type VideoCreateNestedOneWithoutCommentsInput = {
-    create?: XOR<VideoCreateWithoutCommentsInput, VideoUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutCommentsInput
-    connect?: VideoWhereUniqueInput
-  }
-
-  export type UserYoutubeUpdateOneRequiredWithoutCommentNestedInput = {
-    create?: XOR<UserYoutubeCreateWithoutCommentInput, UserYoutubeUncheckedCreateWithoutCommentInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutCommentInput
-    upsert?: UserYoutubeUpsertWithoutCommentInput
-    connect?: UserYoutubeWhereUniqueInput
-    update?: XOR<UserYoutubeUpdateWithoutCommentInput, UserYoutubeUncheckedUpdateWithoutCommentInput>
-  }
-
-  export type VideoUpdateOneRequiredWithoutCommentsNestedInput = {
-    create?: XOR<VideoCreateWithoutCommentsInput, VideoUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutCommentsInput
-    upsert?: VideoUpsertWithoutCommentsInput
-    connect?: VideoWhereUniqueInput
-    update?: XOR<VideoUpdateWithoutCommentsInput, VideoUncheckedUpdateWithoutCommentsInput>
-  }
-
-  export type CommentCreateNestedManyWithoutVideoInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutVideoInput>, Enumerable<CommentUncheckedCreateWithoutVideoInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutVideoInput>
-    createMany?: CommentCreateManyVideoInputEnvelope
-    connect?: Enumerable<CommentWhereUniqueInput>
-  }
-
-  export type ChanelCreateNestedOneWithoutVideosInput = {
-    create?: XOR<ChanelCreateWithoutVideosInput, ChanelUncheckedCreateWithoutVideosInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutVideosInput
-    connect?: ChanelWhereUniqueInput
-  }
-
-  export type CommentUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutVideoInput>, Enumerable<CommentUncheckedCreateWithoutVideoInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutVideoInput>
-    createMany?: CommentCreateManyVideoInputEnvelope
-    connect?: Enumerable<CommentWhereUniqueInput>
-  }
-
-  export type CommentUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutVideoInput>, Enumerable<CommentUncheckedCreateWithoutVideoInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutVideoInput>
-    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutVideoInput>
-    createMany?: CommentCreateManyVideoInputEnvelope
-    set?: Enumerable<CommentWhereUniqueInput>
-    disconnect?: Enumerable<CommentWhereUniqueInput>
-    delete?: Enumerable<CommentWhereUniqueInput>
-    connect?: Enumerable<CommentWhereUniqueInput>
-    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutVideoInput>
-    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutVideoInput>
-    deleteMany?: Enumerable<CommentScalarWhereInput>
-  }
-
-  export type ChanelUpdateOneWithoutVideosNestedInput = {
-    create?: XOR<ChanelCreateWithoutVideosInput, ChanelUncheckedCreateWithoutVideosInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutVideosInput
-    upsert?: ChanelUpsertWithoutVideosInput
+  export type QuestionUpdateOneWithoutChoiceNestedInput = {
+    create?: XOR<QuestionCreateWithoutChoiceInput, QuestionUncheckedCreateWithoutChoiceInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutChoiceInput
+    upsert?: QuestionUpsertWithoutChoiceInput
     disconnect?: boolean
     delete?: boolean
-    connect?: ChanelWhereUniqueInput
-    update?: XOR<ChanelUpdateWithoutVideosInput, ChanelUncheckedUpdateWithoutVideosInput>
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutChoiceInput, QuestionUncheckedUpdateWithoutChoiceInput>
   }
 
-  export type CommentUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<Enumerable<CommentCreateWithoutVideoInput>, Enumerable<CommentUncheckedCreateWithoutVideoInput>>
-    connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutVideoInput>
-    upsert?: Enumerable<CommentUpsertWithWhereUniqueWithoutVideoInput>
-    createMany?: CommentCreateManyVideoInputEnvelope
-    set?: Enumerable<CommentWhereUniqueInput>
-    disconnect?: Enumerable<CommentWhereUniqueInput>
-    delete?: Enumerable<CommentWhereUniqueInput>
-    connect?: Enumerable<CommentWhereUniqueInput>
-    update?: Enumerable<CommentUpdateWithWhereUniqueWithoutVideoInput>
-    updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutVideoInput>
-    deleteMany?: Enumerable<CommentScalarWhereInput>
+  export type QuestionUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutAnswerInput
+    upsert?: QuestionUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -9022,128 +8580,158 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserYoutubeCreateNestedOneWithoutPermissionInput = {
-    create?: XOR<UserYoutubeCreateWithoutPermissionInput, UserYoutubeUncheckedCreateWithoutPermissionInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutPermissionInput
-    connect?: UserYoutubeWhereUniqueInput
+  export type QuestionUncheckedUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutAnswerInput
+    upsert?: QuestionUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type ChanelCreateNestedOneWithoutPermissionInput = {
-    create?: XOR<ChanelCreateWithoutPermissionInput, ChanelUncheckedCreateWithoutPermissionInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutPermissionInput
-    connect?: ChanelWhereUniqueInput
+  export type RoundQuizCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutUserInput>, Enumerable<RoundQuizUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutUserInput>
+    createMany?: RoundQuizCreateManyUserInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type UserToChanelCreateNestedManyWithoutPermissionInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutPermissionInput>, Enumerable<UserToChanelUncheckedCreateWithoutPermissionInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutPermissionInput>
-    createMany?: UserToChanelCreateManyPermissionInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
+  export type RoundQuizUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutUserInput>, Enumerable<RoundQuizUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutUserInput>
+    createMany?: RoundQuizCreateManyUserInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type UserToChanelUncheckedCreateNestedManyWithoutPermissionInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutPermissionInput>, Enumerable<UserToChanelUncheckedCreateWithoutPermissionInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutPermissionInput>
-    createMany?: UserToChanelCreateManyPermissionInputEnvelope
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
+  export type RoundQuizUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutUserInput>, Enumerable<RoundQuizUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: RoundQuizCreateManyUserInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type EnumRoleEnumFieldUpdateOperationsInput = {
-    set?: RoleEnum
+  export type RoundQuizUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutUserInput>, Enumerable<RoundQuizUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: RoundQuizCreateManyUserInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
+  }
+
+  export type QuestionCategoryCreateNestedOneWithoutRoundQuizInput = {
+    create?: XOR<QuestionCategoryCreateWithoutRoundQuizInput, QuestionCategoryUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: QuestionCategoryCreateOrConnectWithoutRoundQuizInput
+    connect?: QuestionCategoryWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutRoundQuizInput = {
+    create?: XOR<UserCreateWithoutRoundQuizInput, UserUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoundQuizInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type RoundDetailCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  }
+
+  export type RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  }
+
+  export type QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput = {
+    create?: XOR<QuestionCategoryCreateWithoutRoundQuizInput, QuestionCategoryUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: QuestionCategoryCreateOrConnectWithoutRoundQuizInput
+    upsert?: QuestionCategoryUpsertWithoutRoundQuizInput
+    connect?: QuestionCategoryWhereUniqueInput
+    update?: XOR<QuestionCategoryUpdateWithoutRoundQuizInput, QuestionCategoryUncheckedUpdateWithoutRoundQuizInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutRoundQuizNestedInput = {
+    create?: XOR<UserCreateWithoutRoundQuizInput, UserUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRoundQuizInput
+    upsert?: UserUpsertWithoutRoundQuizInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<UserUpdateWithoutRoundQuizInput, UserUncheckedUpdateWithoutRoundQuizInput>
+  }
+
+  export type RoundDetailUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
+    delete?: Enumerable<RoundDetailWhereUniqueInput>
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  }
+
+  export type RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
+    delete?: Enumerable<RoundDetailWhereUniqueInput>
+    connect?: Enumerable<RoundDetailWhereUniqueInput>
+    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  }
+
+  export type RoundQuizCreateNestedOneWithoutRoundDetailInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundDetailInput
+    connect?: RoundQuizWhereUniqueInput
+  }
+
+  export type QuestionCreateNestedOneWithoutRoundDetailInput = {
+    create?: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundDetailInput
+    connect?: QuestionWhereUniqueInput
+  }
+
+  export type RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundDetailInput
+    upsert?: RoundQuizUpsertWithoutRoundDetailInput
+    connect?: RoundQuizWhereUniqueInput
+    update?: XOR<RoundQuizUpdateWithoutRoundDetailInput, RoundQuizUncheckedUpdateWithoutRoundDetailInput>
+  }
+
+  export type QuestionUpdateOneRequiredWithoutRoundDetailNestedInput = {
+    create?: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundDetailInput
+    upsert?: QuestionUpsertWithoutRoundDetailInput
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutRoundDetailInput, QuestionUncheckedUpdateWithoutRoundDetailInput>
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type UserYoutubeUpdateOneWithoutPermissionNestedInput = {
-    create?: XOR<UserYoutubeCreateWithoutPermissionInput, UserYoutubeUncheckedCreateWithoutPermissionInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutPermissionInput
-    upsert?: UserYoutubeUpsertWithoutPermissionInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: UserYoutubeWhereUniqueInput
-    update?: XOR<UserYoutubeUpdateWithoutPermissionInput, UserYoutubeUncheckedUpdateWithoutPermissionInput>
-  }
-
-  export type ChanelUpdateOneWithoutPermissionNestedInput = {
-    create?: XOR<ChanelCreateWithoutPermissionInput, ChanelUncheckedCreateWithoutPermissionInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutPermissionInput
-    upsert?: ChanelUpsertWithoutPermissionInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: ChanelWhereUniqueInput
-    update?: XOR<ChanelUpdateWithoutPermissionInput, ChanelUncheckedUpdateWithoutPermissionInput>
-  }
-
-  export type UserToChanelUpdateManyWithoutPermissionNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutPermissionInput>, Enumerable<UserToChanelUncheckedCreateWithoutPermissionInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutPermissionInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutPermissionInput>
-    createMany?: UserToChanelCreateManyPermissionInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutPermissionInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutPermissionInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
-  }
-
-  export type UserToChanelUncheckedUpdateManyWithoutPermissionNestedInput = {
-    create?: XOR<Enumerable<UserToChanelCreateWithoutPermissionInput>, Enumerable<UserToChanelUncheckedCreateWithoutPermissionInput>>
-    connectOrCreate?: Enumerable<UserToChanelCreateOrConnectWithoutPermissionInput>
-    upsert?: Enumerable<UserToChanelUpsertWithWhereUniqueWithoutPermissionInput>
-    createMany?: UserToChanelCreateManyPermissionInputEnvelope
-    set?: Enumerable<UserToChanelWhereUniqueInput>
-    disconnect?: Enumerable<UserToChanelWhereUniqueInput>
-    delete?: Enumerable<UserToChanelWhereUniqueInput>
-    connect?: Enumerable<UserToChanelWhereUniqueInput>
-    update?: Enumerable<UserToChanelUpdateWithWhereUniqueWithoutPermissionInput>
-    updateMany?: Enumerable<UserToChanelUpdateManyWithWhereWithoutPermissionInput>
-    deleteMany?: Enumerable<UserToChanelScalarWhereInput>
-  }
-
-  export type UserYoutubeCreateNestedOneWithoutUserToChanelInput = {
-    create?: XOR<UserYoutubeCreateWithoutUserToChanelInput, UserYoutubeUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutUserToChanelInput
-    connect?: UserYoutubeWhereUniqueInput
-  }
-
-  export type ChanelCreateNestedOneWithoutUserToChanelInput = {
-    create?: XOR<ChanelCreateWithoutUserToChanelInput, ChanelUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutUserToChanelInput
-    connect?: ChanelWhereUniqueInput
-  }
-
-  export type PermissionCreateNestedOneWithoutUserToChanelInput = {
-    create?: XOR<PermissionCreateWithoutUserToChanelInput, PermissionUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: PermissionCreateOrConnectWithoutUserToChanelInput
-    connect?: PermissionWhereUniqueInput
-  }
-
-  export type UserYoutubeUpdateOneRequiredWithoutUserToChanelNestedInput = {
-    create?: XOR<UserYoutubeCreateWithoutUserToChanelInput, UserYoutubeUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: UserYoutubeCreateOrConnectWithoutUserToChanelInput
-    upsert?: UserYoutubeUpsertWithoutUserToChanelInput
-    connect?: UserYoutubeWhereUniqueInput
-    update?: XOR<UserYoutubeUpdateWithoutUserToChanelInput, UserYoutubeUncheckedUpdateWithoutUserToChanelInput>
-  }
-
-  export type ChanelUpdateOneRequiredWithoutUserToChanelNestedInput = {
-    create?: XOR<ChanelCreateWithoutUserToChanelInput, ChanelUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: ChanelCreateOrConnectWithoutUserToChanelInput
-    upsert?: ChanelUpsertWithoutUserToChanelInput
-    connect?: ChanelWhereUniqueInput
-    update?: XOR<ChanelUpdateWithoutUserToChanelInput, ChanelUncheckedUpdateWithoutUserToChanelInput>
-  }
-
-  export type PermissionUpdateOneRequiredWithoutUserToChanelNestedInput = {
-    create?: XOR<PermissionCreateWithoutUserToChanelInput, PermissionUncheckedCreateWithoutUserToChanelInput>
-    connectOrCreate?: PermissionCreateOrConnectWithoutUserToChanelInput
-    upsert?: PermissionUpsertWithoutUserToChanelInput
-    connect?: PermissionWhereUniqueInput
-    update?: XOR<PermissionUpdateWithoutUserToChanelInput, PermissionUncheckedUpdateWithoutUserToChanelInput>
   }
 
   export type NestedIntFilter = {
@@ -9278,26 +8866,9 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
-  export type NestedEnumRoleEnumFilter = {
-    equals?: RoleEnum
-    in?: Enumerable<RoleEnum>
-    notIn?: Enumerable<RoleEnum>
-    not?: NestedEnumRoleEnumFilter | RoleEnum
-  }
-
   export type NestedBoolFilter = {
     equals?: boolean
     not?: NestedBoolFilter | boolean
-  }
-
-  export type NestedEnumRoleEnumWithAggregatesFilter = {
-    equals?: RoleEnum
-    in?: Enumerable<RoleEnum>
-    notIn?: Enumerable<RoleEnum>
-    not?: NestedEnumRoleEnumWithAggregatesFilter | RoleEnum
-    _count?: NestedIntFilter
-    _min?: NestedEnumRoleEnumFilter
-    _max?: NestedEnumRoleEnumFilter
   }
 
   export type NestedBoolWithAggregatesFilter = {
@@ -9308,1225 +8879,849 @@ export namespace Prisma {
     _max?: NestedBoolFilter
   }
 
-  export type ChanelCreateWithoutUserInput = {
-    name: string
-    videos?: VideoCreateNestedManyWithoutChanelInput
-    description: string
+  export type QuestionCreateWithoutQuestionCategoriesInput = {
+    textQuestion: string
+    answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelCreateNestedManyWithoutChanelInput
-    Permission?: PermissionCreateNestedManyWithoutChanelInput
+    choice?: ChoiceCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
   }
 
-  export type ChanelUncheckedCreateWithoutUserInput = {
+  export type QuestionUncheckedCreateWithoutQuestionCategoriesInput = {
     id?: number
-    name: string
-    videos?: VideoUncheckedCreateNestedManyWithoutChanelInput
-    description: string
+    textQuestion: string
+    answerId: number
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutChanelInput
-    Permission?: PermissionUncheckedCreateNestedManyWithoutChanelInput
+    choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type ChanelCreateOrConnectWithoutUserInput = {
-    where: ChanelWhereUniqueInput
-    create: XOR<ChanelCreateWithoutUserInput, ChanelUncheckedCreateWithoutUserInput>
+  export type QuestionCreateOrConnectWithoutQuestionCategoriesInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutQuestionCategoriesInput, QuestionUncheckedCreateWithoutQuestionCategoriesInput>
   }
 
-  export type ChanelCreateManyUserInputEnvelope = {
-    data: Enumerable<ChanelCreateManyUserInput>
+  export type QuestionCreateManyQuestionCategoriesInputEnvelope = {
+    data: Enumerable<QuestionCreateManyQuestionCategoriesInput>
     skipDuplicates?: boolean
   }
 
-  export type CommentCreateWithoutUserInput = {
-    video: VideoCreateNestedOneWithoutCommentsInput
+  export type RoundQuizCreateWithoutQuestionCategoriesInput = {
+    score: number
+    user: UserCreateNestedOneWithoutRoundQuizInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type CommentUncheckedCreateWithoutUserInput = {
+  export type RoundQuizUncheckedCreateWithoutQuestionCategoriesInput = {
     id?: number
-    videoId: number
+    score: number
+    userId: number
     createAt?: Date | string
     updateAt?: Date | string
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type CommentCreateOrConnectWithoutUserInput = {
-    where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
+  export type RoundQuizCreateOrConnectWithoutQuestionCategoriesInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutQuestionCategoriesInput, RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>
   }
 
-  export type CommentCreateManyUserInputEnvelope = {
-    data: Enumerable<CommentCreateManyUserInput>
+  export type RoundQuizCreateManyQuestionCategoriesInputEnvelope = {
+    data: Enumerable<RoundQuizCreateManyQuestionCategoriesInput>
     skipDuplicates?: boolean
   }
 
-  export type UserToChanelCreateWithoutUserInput = {
-    role: RoleEnum
-    chanel: ChanelCreateNestedOneWithoutUserToChanelInput
-    permission: PermissionCreateNestedOneWithoutUserToChanelInput
+  export type QuestionUpsertWithWhereUniqueWithoutQuestionCategoriesInput = {
+    where: QuestionWhereUniqueInput
+    update: XOR<QuestionUpdateWithoutQuestionCategoriesInput, QuestionUncheckedUpdateWithoutQuestionCategoriesInput>
+    create: XOR<QuestionCreateWithoutQuestionCategoriesInput, QuestionUncheckedCreateWithoutQuestionCategoriesInput>
   }
 
-  export type UserToChanelUncheckedCreateWithoutUserInput = {
-    id?: number
-    role: RoleEnum
-    chanelId: number
-    permissionId: number
+  export type QuestionUpdateWithWhereUniqueWithoutQuestionCategoriesInput = {
+    where: QuestionWhereUniqueInput
+    data: XOR<QuestionUpdateWithoutQuestionCategoriesInput, QuestionUncheckedUpdateWithoutQuestionCategoriesInput>
   }
 
-  export type UserToChanelCreateOrConnectWithoutUserInput = {
-    where: UserToChanelWhereUniqueInput
-    create: XOR<UserToChanelCreateWithoutUserInput, UserToChanelUncheckedCreateWithoutUserInput>
+  export type QuestionUpdateManyWithWhereWithoutQuestionCategoriesInput = {
+    where: QuestionScalarWhereInput
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutQuestionInput>
   }
 
-  export type UserToChanelCreateManyUserInputEnvelope = {
-    data: Enumerable<UserToChanelCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PermissionCreateWithoutUserInput = {
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    Chanel?: ChanelCreateNestedOneWithoutPermissionInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionUncheckedCreateWithoutUserInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanelId?: number | null
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionCreateOrConnectWithoutUserInput = {
-    where: PermissionWhereUniqueInput
-    create: XOR<PermissionCreateWithoutUserInput, PermissionUncheckedCreateWithoutUserInput>
-  }
-
-  export type PermissionCreateManyUserInputEnvelope = {
-    data: Enumerable<PermissionCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type ChanelUpsertWithWhereUniqueWithoutUserInput = {
-    where: ChanelWhereUniqueInput
-    update: XOR<ChanelUpdateWithoutUserInput, ChanelUncheckedUpdateWithoutUserInput>
-    create: XOR<ChanelCreateWithoutUserInput, ChanelUncheckedCreateWithoutUserInput>
-  }
-
-  export type ChanelUpdateWithWhereUniqueWithoutUserInput = {
-    where: ChanelWhereUniqueInput
-    data: XOR<ChanelUpdateWithoutUserInput, ChanelUncheckedUpdateWithoutUserInput>
-  }
-
-  export type ChanelUpdateManyWithWhereWithoutUserInput = {
-    where: ChanelScalarWhereInput
-    data: XOR<ChanelUpdateManyMutationInput, ChanelUncheckedUpdateManyWithoutChanelInput>
-  }
-
-  export type ChanelScalarWhereInput = {
-    AND?: Enumerable<ChanelScalarWhereInput>
-    OR?: Enumerable<ChanelScalarWhereInput>
-    NOT?: Enumerable<ChanelScalarWhereInput>
+  export type QuestionScalarWhereInput = {
+    AND?: Enumerable<QuestionScalarWhereInput>
+    OR?: Enumerable<QuestionScalarWhereInput>
+    NOT?: Enumerable<QuestionScalarWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    description?: StringFilter | string
+    questionCategoryId?: IntFilter | number
+    textQuestion?: StringFilter | string
+    answerId?: IntFilter | number
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
+  }
+
+  export type RoundQuizUpsertWithWhereUniqueWithoutQuestionCategoriesInput = {
+    where: RoundQuizWhereUniqueInput
+    update: XOR<RoundQuizUpdateWithoutQuestionCategoriesInput, RoundQuizUncheckedUpdateWithoutQuestionCategoriesInput>
+    create: XOR<RoundQuizCreateWithoutQuestionCategoriesInput, RoundQuizUncheckedCreateWithoutQuestionCategoriesInput>
+  }
+
+  export type RoundQuizUpdateWithWhereUniqueWithoutQuestionCategoriesInput = {
+    where: RoundQuizWhereUniqueInput
+    data: XOR<RoundQuizUpdateWithoutQuestionCategoriesInput, RoundQuizUncheckedUpdateWithoutQuestionCategoriesInput>
+  }
+
+  export type RoundQuizUpdateManyWithWhereWithoutQuestionCategoriesInput = {
+    where: RoundQuizScalarWhereInput
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyWithoutRoundQuizInput>
+  }
+
+  export type RoundQuizScalarWhereInput = {
+    AND?: Enumerable<RoundQuizScalarWhereInput>
+    OR?: Enumerable<RoundQuizScalarWhereInput>
+    NOT?: Enumerable<RoundQuizScalarWhereInput>
+    id?: IntFilter | number
+    questionCategoryId?: IntFilter | number
+    score?: IntFilter | number
     userId?: IntFilter | number
-  }
-
-  export type CommentUpsertWithWhereUniqueWithoutUserInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
-    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
-  }
-
-  export type CommentUpdateWithWhereUniqueWithoutUserInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CommentUpdateManyWithWhereWithoutUserInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutCommentInput>
-  }
-
-  export type CommentScalarWhereInput = {
-    AND?: Enumerable<CommentScalarWhereInput>
-    OR?: Enumerable<CommentScalarWhereInput>
-    NOT?: Enumerable<CommentScalarWhereInput>
-    id?: IntFilter | number
-    userId?: IntFilter | number
-    videoId?: IntFilter | number
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
   }
 
-  export type UserToChanelUpsertWithWhereUniqueWithoutUserInput = {
-    where: UserToChanelWhereUniqueInput
-    update: XOR<UserToChanelUpdateWithoutUserInput, UserToChanelUncheckedUpdateWithoutUserInput>
-    create: XOR<UserToChanelCreateWithoutUserInput, UserToChanelUncheckedCreateWithoutUserInput>
+  export type QuestionCategoryCreateWithoutQuestionInput = {
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuiz?: RoundQuizCreateNestedManyWithoutQuestionCategoriesInput
   }
 
-  export type UserToChanelUpdateWithWhereUniqueWithoutUserInput = {
-    where: UserToChanelWhereUniqueInput
-    data: XOR<UserToChanelUpdateWithoutUserInput, UserToChanelUncheckedUpdateWithoutUserInput>
+  export type QuestionCategoryUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuestionCategoriesInput
   }
 
-  export type UserToChanelUpdateManyWithWhereWithoutUserInput = {
-    where: UserToChanelScalarWhereInput
-    data: XOR<UserToChanelUpdateManyMutationInput, UserToChanelUncheckedUpdateManyWithoutUserToChanelInput>
+  export type QuestionCategoryCreateOrConnectWithoutQuestionInput = {
+    where: QuestionCategoryWhereUniqueInput
+    create: XOR<QuestionCategoryCreateWithoutQuestionInput, QuestionCategoryUncheckedCreateWithoutQuestionInput>
   }
 
-  export type UserToChanelScalarWhereInput = {
-    AND?: Enumerable<UserToChanelScalarWhereInput>
-    OR?: Enumerable<UserToChanelScalarWhereInput>
-    NOT?: Enumerable<UserToChanelScalarWhereInput>
+  export type ChoiceCreateWithoutQuestionAnswerInput = {
+    choiceName: string
+    question?: QuestionCreateNestedOneWithoutChoiceInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutQuestionAnswerInput = {
+    id?: number
+    choiceName: string
+    questionId?: number | null
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutQuestionAnswerInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutQuestionAnswerInput, ChoiceUncheckedCreateWithoutQuestionAnswerInput>
+  }
+
+  export type ChoiceCreateWithoutQuestionInput = {
+    choiceName: string
+    questionAnswer?: QuestionCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    choiceName: string
+    questionAnswer?: QuestionUncheckedCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutQuestionInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutQuestionInput, ChoiceUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type ChoiceCreateManyQuestionInputEnvelope = {
+    data: Enumerable<ChoiceCreateManyQuestionInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RoundDetailCreateWithoutQuestionInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundDetailInput
+    questionOrder: number
+    userChoose: number
+    result: boolean
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundDetailUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    roundQuizId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundDetailCreateOrConnectWithoutQuestionInput = {
+    where: RoundDetailWhereUniqueInput
+    create: XOR<RoundDetailCreateWithoutQuestionInput, RoundDetailUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type RoundDetailCreateManyQuestionInputEnvelope = {
+    data: Enumerable<RoundDetailCreateManyQuestionInput>
+    skipDuplicates?: boolean
+  }
+
+  export type QuestionCategoryUpsertWithoutQuestionInput = {
+    update: XOR<QuestionCategoryUpdateWithoutQuestionInput, QuestionCategoryUncheckedUpdateWithoutQuestionInput>
+    create: XOR<QuestionCategoryCreateWithoutQuestionInput, QuestionCategoryUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type QuestionCategoryUpdateWithoutQuestionInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuiz?: RoundQuizUpdateManyWithoutQuestionCategoriesNestedInput
+  }
+
+  export type QuestionCategoryUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuestionCategoriesNestedInput
+  }
+
+  export type ChoiceUpsertWithoutQuestionAnswerInput = {
+    update: XOR<ChoiceUpdateWithoutQuestionAnswerInput, ChoiceUncheckedUpdateWithoutQuestionAnswerInput>
+    create: XOR<ChoiceCreateWithoutQuestionAnswerInput, ChoiceUncheckedCreateWithoutQuestionAnswerInput>
+  }
+
+  export type ChoiceUpdateWithoutQuestionAnswerInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    question?: QuestionUpdateOneWithoutChoiceNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutQuestionAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionId?: NullableIntFieldUpdateOperationsInput | number | null
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: ChoiceWhereUniqueInput
+    update: XOR<ChoiceUpdateWithoutQuestionInput, ChoiceUncheckedUpdateWithoutQuestionInput>
+    create: XOR<ChoiceCreateWithoutQuestionInput, ChoiceUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type ChoiceUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: ChoiceWhereUniqueInput
+    data: XOR<ChoiceUpdateWithoutQuestionInput, ChoiceUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type ChoiceUpdateManyWithWhereWithoutQuestionInput = {
+    where: ChoiceScalarWhereInput
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutChoiceInput>
+  }
+
+  export type ChoiceScalarWhereInput = {
+    AND?: Enumerable<ChoiceScalarWhereInput>
+    OR?: Enumerable<ChoiceScalarWhereInput>
+    NOT?: Enumerable<ChoiceScalarWhereInput>
     id?: IntFilter | number
-    role?: EnumRoleEnumFilter | RoleEnum
-    userId?: IntFilter | number
-    chanelId?: IntFilter | number
-    permissionId?: IntFilter | number
-  }
-
-  export type PermissionUpsertWithWhereUniqueWithoutUserInput = {
-    where: PermissionWhereUniqueInput
-    update: XOR<PermissionUpdateWithoutUserInput, PermissionUncheckedUpdateWithoutUserInput>
-    create: XOR<PermissionCreateWithoutUserInput, PermissionUncheckedCreateWithoutUserInput>
-  }
-
-  export type PermissionUpdateWithWhereUniqueWithoutUserInput = {
-    where: PermissionWhereUniqueInput
-    data: XOR<PermissionUpdateWithoutUserInput, PermissionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type PermissionUpdateManyWithWhereWithoutUserInput = {
-    where: PermissionScalarWhereInput
-    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyWithoutPermissionInput>
-  }
-
-  export type PermissionScalarWhereInput = {
-    AND?: Enumerable<PermissionScalarWhereInput>
-    OR?: Enumerable<PermissionScalarWhereInput>
-    NOT?: Enumerable<PermissionScalarWhereInput>
-    id?: IntFilter | number
-    role?: EnumRoleEnumFilter | RoleEnum
-    edit?: BoolFilter | boolean
-    post?: BoolFilter | boolean
-    delete?: BoolFilter | boolean
-    upload?: BoolFilter | boolean
+    choiceName?: StringFilter | string
+    questionId?: IntNullableFilter | number | null
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    userId?: IntNullableFilter | number | null
-    chanelId?: IntNullableFilter | number | null
   }
 
-  export type VideoCreateWithoutChanelInput = {
-    name: string
-    description: string
-    comments?: CommentCreateNestedManyWithoutVideoInput
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
+  export type RoundDetailUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: RoundDetailWhereUniqueInput
+    update: XOR<RoundDetailUpdateWithoutQuestionInput, RoundDetailUncheckedUpdateWithoutQuestionInput>
+    create: XOR<RoundDetailCreateWithoutQuestionInput, RoundDetailUncheckedCreateWithoutQuestionInput>
   }
 
-  export type VideoUncheckedCreateWithoutChanelInput = {
-    id?: number
-    name: string
-    description: string
-    comments?: CommentUncheckedCreateNestedManyWithoutVideoInput
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
+  export type RoundDetailUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: RoundDetailWhereUniqueInput
+    data: XOR<RoundDetailUpdateWithoutQuestionInput, RoundDetailUncheckedUpdateWithoutQuestionInput>
   }
 
-  export type VideoCreateOrConnectWithoutChanelInput = {
-    where: VideoWhereUniqueInput
-    create: XOR<VideoCreateWithoutChanelInput, VideoUncheckedCreateWithoutChanelInput>
+  export type RoundDetailUpdateManyWithWhereWithoutQuestionInput = {
+    where: RoundDetailScalarWhereInput
+    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyWithoutRoundDetailInput>
   }
 
-  export type VideoCreateManyChanelInputEnvelope = {
-    data: Enumerable<VideoCreateManyChanelInput>
-    skipDuplicates?: boolean
-  }
-
-  export type UserYoutubeCreateWithoutChanelInput = {
-    name: string
-    email: string
-    imageProfile: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    Comment?: CommentCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutUserInput
-    permission?: PermissionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserYoutubeUncheckedCreateWithoutChanelInput = {
-    id?: number
-    name: string
-    email: string
-    imageProfile: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutUserInput
-    permission?: PermissionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserYoutubeCreateOrConnectWithoutChanelInput = {
-    where: UserYoutubeWhereUniqueInput
-    create: XOR<UserYoutubeCreateWithoutChanelInput, UserYoutubeUncheckedCreateWithoutChanelInput>
-  }
-
-  export type UserToChanelCreateWithoutChanelInput = {
-    role: RoleEnum
-    user: UserYoutubeCreateNestedOneWithoutUserToChanelInput
-    permission: PermissionCreateNestedOneWithoutUserToChanelInput
-  }
-
-  export type UserToChanelUncheckedCreateWithoutChanelInput = {
-    id?: number
-    role: RoleEnum
-    userId: number
-    permissionId: number
-  }
-
-  export type UserToChanelCreateOrConnectWithoutChanelInput = {
-    where: UserToChanelWhereUniqueInput
-    create: XOR<UserToChanelCreateWithoutChanelInput, UserToChanelUncheckedCreateWithoutChanelInput>
-  }
-
-  export type UserToChanelCreateManyChanelInputEnvelope = {
-    data: Enumerable<UserToChanelCreateManyChanelInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PermissionCreateWithoutChanelInput = {
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    User?: UserYoutubeCreateNestedOneWithoutPermissionInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionUncheckedCreateWithoutChanelInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId?: number | null
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutPermissionInput
-  }
-
-  export type PermissionCreateOrConnectWithoutChanelInput = {
-    where: PermissionWhereUniqueInput
-    create: XOR<PermissionCreateWithoutChanelInput, PermissionUncheckedCreateWithoutChanelInput>
-  }
-
-  export type PermissionCreateManyChanelInputEnvelope = {
-    data: Enumerable<PermissionCreateManyChanelInput>
-    skipDuplicates?: boolean
-  }
-
-  export type VideoUpsertWithWhereUniqueWithoutChanelInput = {
-    where: VideoWhereUniqueInput
-    update: XOR<VideoUpdateWithoutChanelInput, VideoUncheckedUpdateWithoutChanelInput>
-    create: XOR<VideoCreateWithoutChanelInput, VideoUncheckedCreateWithoutChanelInput>
-  }
-
-  export type VideoUpdateWithWhereUniqueWithoutChanelInput = {
-    where: VideoWhereUniqueInput
-    data: XOR<VideoUpdateWithoutChanelInput, VideoUncheckedUpdateWithoutChanelInput>
-  }
-
-  export type VideoUpdateManyWithWhereWithoutChanelInput = {
-    where: VideoScalarWhereInput
-    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutVideosInput>
-  }
-
-  export type VideoScalarWhereInput = {
-    AND?: Enumerable<VideoScalarWhereInput>
-    OR?: Enumerable<VideoScalarWhereInput>
-    NOT?: Enumerable<VideoScalarWhereInput>
+  export type RoundDetailScalarWhereInput = {
+    AND?: Enumerable<RoundDetailScalarWhereInput>
+    OR?: Enumerable<RoundDetailScalarWhereInput>
+    NOT?: Enumerable<RoundDetailScalarWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    description?: StringFilter | string
-    url?: StringFilter | string
+    roundQuizId?: IntFilter | number
+    questionId?: IntFilter | number
+    questionOrder?: IntFilter | number
+    userChoose?: IntFilter | number
+    result?: BoolFilter | boolean
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    chanelId?: IntNullableFilter | number | null
   }
 
-  export type UserYoutubeUpsertWithoutChanelInput = {
-    update: XOR<UserYoutubeUpdateWithoutChanelInput, UserYoutubeUncheckedUpdateWithoutChanelInput>
-    create: XOR<UserYoutubeCreateWithoutChanelInput, UserYoutubeUncheckedCreateWithoutChanelInput>
-  }
-
-  export type UserYoutubeUpdateWithoutChanelInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutUserNestedInput
-    permission?: PermissionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserYoutubeUncheckedUpdateWithoutChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutUserNestedInput
-    permission?: PermissionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserToChanelUpsertWithWhereUniqueWithoutChanelInput = {
-    where: UserToChanelWhereUniqueInput
-    update: XOR<UserToChanelUpdateWithoutChanelInput, UserToChanelUncheckedUpdateWithoutChanelInput>
-    create: XOR<UserToChanelCreateWithoutChanelInput, UserToChanelUncheckedCreateWithoutChanelInput>
-  }
-
-  export type UserToChanelUpdateWithWhereUniqueWithoutChanelInput = {
-    where: UserToChanelWhereUniqueInput
-    data: XOR<UserToChanelUpdateWithoutChanelInput, UserToChanelUncheckedUpdateWithoutChanelInput>
-  }
-
-  export type UserToChanelUpdateManyWithWhereWithoutChanelInput = {
-    where: UserToChanelScalarWhereInput
-    data: XOR<UserToChanelUpdateManyMutationInput, UserToChanelUncheckedUpdateManyWithoutUserToChanelInput>
-  }
-
-  export type PermissionUpsertWithWhereUniqueWithoutChanelInput = {
-    where: PermissionWhereUniqueInput
-    update: XOR<PermissionUpdateWithoutChanelInput, PermissionUncheckedUpdateWithoutChanelInput>
-    create: XOR<PermissionCreateWithoutChanelInput, PermissionUncheckedCreateWithoutChanelInput>
-  }
-
-  export type PermissionUpdateWithWhereUniqueWithoutChanelInput = {
-    where: PermissionWhereUniqueInput
-    data: XOR<PermissionUpdateWithoutChanelInput, PermissionUncheckedUpdateWithoutChanelInput>
-  }
-
-  export type PermissionUpdateManyWithWhereWithoutChanelInput = {
-    where: PermissionScalarWhereInput
-    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyWithoutPermissionInput>
-  }
-
-  export type UserYoutubeCreateWithoutCommentInput = {
-    name: string
-    email: string
-    imageProfile: string
+  export type QuestionCreateWithoutChoiceInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
+    textQuestion: string
+    answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutUserInput
-    permission?: PermissionCreateNestedManyWithoutUserInput
+    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
   }
 
-  export type UserYoutubeUncheckedCreateWithoutCommentInput = {
+  export type QuestionUncheckedCreateWithoutChoiceInput = {
     id?: number
-    name: string
-    email: string
-    imageProfile: string
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelUncheckedCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutUserInput
-    permission?: PermissionUncheckedCreateNestedManyWithoutUserInput
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type UserYoutubeCreateOrConnectWithoutCommentInput = {
-    where: UserYoutubeWhereUniqueInput
-    create: XOR<UserYoutubeCreateWithoutCommentInput, UserYoutubeUncheckedCreateWithoutCommentInput>
+  export type QuestionCreateOrConnectWithoutChoiceInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutChoiceInput, QuestionUncheckedCreateWithoutChoiceInput>
   }
 
-  export type VideoCreateWithoutCommentsInput = {
-    name: string
-    description: string
-    url: string
+  export type QuestionCreateWithoutAnswerInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
+    textQuestion: string
     createAt?: Date | string
     updateAt?: Date | string
-    Chanel?: ChanelCreateNestedOneWithoutVideosInput
+    choice?: ChoiceCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
   }
 
-  export type VideoUncheckedCreateWithoutCommentsInput = {
+  export type QuestionUncheckedCreateWithoutAnswerInput = {
     id?: number
-    name: string
-    description: string
-    url: string
+    questionCategoryId: number
+    textQuestion: string
     createAt?: Date | string
     updateAt?: Date | string
-    chanelId?: number | null
+    choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type VideoCreateOrConnectWithoutCommentsInput = {
-    where: VideoWhereUniqueInput
-    create: XOR<VideoCreateWithoutCommentsInput, VideoUncheckedCreateWithoutCommentsInput>
+  export type QuestionCreateOrConnectWithoutAnswerInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
   }
 
-  export type UserYoutubeUpsertWithoutCommentInput = {
-    update: XOR<UserYoutubeUpdateWithoutCommentInput, UserYoutubeUncheckedUpdateWithoutCommentInput>
-    create: XOR<UserYoutubeCreateWithoutCommentInput, UserYoutubeUncheckedCreateWithoutCommentInput>
+  export type QuestionUpsertWithoutChoiceInput = {
+    update: XOR<QuestionUpdateWithoutChoiceInput, QuestionUncheckedUpdateWithoutChoiceInput>
+    create: XOR<QuestionCreateWithoutChoiceInput, QuestionUncheckedCreateWithoutChoiceInput>
   }
 
-  export type UserYoutubeUpdateWithoutCommentInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
+  export type QuestionUpdateWithoutChoiceInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutUserNestedInput
-    permission?: PermissionUpdateManyWithoutUserNestedInput
+    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
   }
 
-  export type UserYoutubeUncheckedUpdateWithoutCommentInput = {
+  export type QuestionUncheckedUpdateWithoutChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUncheckedUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutUserNestedInput
-    permission?: PermissionUncheckedUpdateManyWithoutUserNestedInput
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
-  export type VideoUpsertWithoutCommentsInput = {
-    update: XOR<VideoUpdateWithoutCommentsInput, VideoUncheckedUpdateWithoutCommentsInput>
-    create: XOR<VideoCreateWithoutCommentsInput, VideoUncheckedCreateWithoutCommentsInput>
+  export type QuestionUpsertWithoutAnswerInput = {
+    update: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
+    create: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
   }
 
-  export type VideoUpdateWithoutCommentsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+  export type QuestionUpdateWithoutAnswerInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
+    textQuestion?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Chanel?: ChanelUpdateOneWithoutVideosNestedInput
+    choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
   }
 
-  export type VideoUncheckedUpdateWithoutCommentsInput = {
+  export type QuestionUncheckedUpdateWithoutAnswerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
+    choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
-  export type CommentCreateWithoutVideoInput = {
-    user: UserYoutubeCreateNestedOneWithoutCommentInput
+  export type RoundQuizCreateWithoutUserInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutRoundQuizInput
+    score: number
     createAt?: Date | string
     updateAt?: Date | string
+    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type CommentUncheckedCreateWithoutVideoInput = {
+  export type RoundQuizUncheckedCreateWithoutUserInput = {
     id?: number
-    userId: number
+    questionCategoryId: number
+    score: number
     createAt?: Date | string
     updateAt?: Date | string
+    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type CommentCreateOrConnectWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    create: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput>
+  export type RoundQuizCreateOrConnectWithoutUserInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutUserInput, RoundQuizUncheckedCreateWithoutUserInput>
   }
 
-  export type CommentCreateManyVideoInputEnvelope = {
-    data: Enumerable<CommentCreateManyVideoInput>
+  export type RoundQuizCreateManyUserInputEnvelope = {
+    data: Enumerable<RoundQuizCreateManyUserInput>
     skipDuplicates?: boolean
   }
 
-  export type ChanelCreateWithoutVideosInput = {
-    name: string
-    description: string
-    user: UserYoutubeCreateNestedOneWithoutChanelInput
-    createAt?: Date | string
-    updateAt?: Date | string
-    userToChanel?: UserToChanelCreateNestedManyWithoutChanelInput
-    Permission?: PermissionCreateNestedManyWithoutChanelInput
+  export type RoundQuizUpsertWithWhereUniqueWithoutUserInput = {
+    where: RoundQuizWhereUniqueInput
+    update: XOR<RoundQuizUpdateWithoutUserInput, RoundQuizUncheckedUpdateWithoutUserInput>
+    create: XOR<RoundQuizCreateWithoutUserInput, RoundQuizUncheckedCreateWithoutUserInput>
   }
 
-  export type ChanelUncheckedCreateWithoutVideosInput = {
+  export type RoundQuizUpdateWithWhereUniqueWithoutUserInput = {
+    where: RoundQuizWhereUniqueInput
+    data: XOR<RoundQuizUpdateWithoutUserInput, RoundQuizUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RoundQuizUpdateManyWithWhereWithoutUserInput = {
+    where: RoundQuizScalarWhereInput
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyWithoutRoundQuizInput>
+  }
+
+  export type QuestionCategoryCreateWithoutRoundQuizInput = {
+    name: string
+    createAt?: Date | string
+    updateAt?: Date | string
+    Question?: QuestionCreateNestedManyWithoutQuestionCategoriesInput
+  }
+
+  export type QuestionCategoryUncheckedCreateWithoutRoundQuizInput = {
     id?: number
     name: string
-    description: string
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutChanelInput
-    userId: number
-    Permission?: PermissionUncheckedCreateNestedManyWithoutChanelInput
+    Question?: QuestionUncheckedCreateNestedManyWithoutQuestionCategoriesInput
   }
 
-  export type ChanelCreateOrConnectWithoutVideosInput = {
-    where: ChanelWhereUniqueInput
-    create: XOR<ChanelCreateWithoutVideosInput, ChanelUncheckedCreateWithoutVideosInput>
+  export type QuestionCategoryCreateOrConnectWithoutRoundQuizInput = {
+    where: QuestionCategoryWhereUniqueInput
+    create: XOR<QuestionCategoryCreateWithoutRoundQuizInput, QuestionCategoryUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type CommentUpsertWithWhereUniqueWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutVideoInput, CommentUncheckedUpdateWithoutVideoInput>
-    create: XOR<CommentCreateWithoutVideoInput, CommentUncheckedCreateWithoutVideoInput>
-  }
-
-  export type CommentUpdateWithWhereUniqueWithoutVideoInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutVideoInput, CommentUncheckedUpdateWithoutVideoInput>
-  }
-
-  export type CommentUpdateManyWithWhereWithoutVideoInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutCommentsInput>
-  }
-
-  export type ChanelUpsertWithoutVideosInput = {
-    update: XOR<ChanelUpdateWithoutVideosInput, ChanelUncheckedUpdateWithoutVideosInput>
-    create: XOR<ChanelCreateWithoutVideosInput, ChanelUncheckedCreateWithoutVideosInput>
-  }
-
-  export type ChanelUpdateWithoutVideosInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    user?: UserYoutubeUpdateOneRequiredWithoutChanelNestedInput
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUpdateManyWithoutChanelNestedInput
-    Permission?: PermissionUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelUncheckedUpdateWithoutVideosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutChanelNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
-    Permission?: PermissionUncheckedUpdateManyWithoutChanelNestedInput
-  }
-
-  export type UserYoutubeCreateWithoutPermissionInput = {
+  export type UserCreateWithoutRoundQuizInput = {
     name: string
-    email: string
-    imageProfile: string
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelCreateNestedManyWithoutUserInput
-    Comment?: CommentCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelCreateNestedManyWithoutUserInput
   }
 
-  export type UserYoutubeUncheckedCreateWithoutPermissionInput = {
+  export type UserUncheckedCreateWithoutRoundQuizInput = {
     id?: number
     name: string
-    email: string
-    imageProfile: string
     createAt?: Date | string
     updateAt?: Date | string
-    chanel?: ChanelUncheckedCreateNestedManyWithoutUserInput
-    Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserYoutubeCreateOrConnectWithoutPermissionInput = {
-    where: UserYoutubeWhereUniqueInput
-    create: XOR<UserYoutubeCreateWithoutPermissionInput, UserYoutubeUncheckedCreateWithoutPermissionInput>
+  export type UserCreateOrConnectWithoutRoundQuizInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRoundQuizInput, UserUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type ChanelCreateWithoutPermissionInput = {
-    name: string
-    videos?: VideoCreateNestedManyWithoutChanelInput
-    description: string
-    user: UserYoutubeCreateNestedOneWithoutChanelInput
+  export type RoundDetailCreateWithoutRoundQuizInput = {
+    question: QuestionCreateNestedOneWithoutRoundDetailInput
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelCreateNestedManyWithoutChanelInput
   }
 
-  export type ChanelUncheckedCreateWithoutPermissionInput = {
+  export type RoundDetailUncheckedCreateWithoutRoundQuizInput = {
     id?: number
-    name: string
-    videos?: VideoUncheckedCreateNestedManyWithoutChanelInput
-    description: string
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
     createAt?: Date | string
     updateAt?: Date | string
-    userToChanel?: UserToChanelUncheckedCreateNestedManyWithoutChanelInput
-    userId: number
   }
 
-  export type ChanelCreateOrConnectWithoutPermissionInput = {
-    where: ChanelWhereUniqueInput
-    create: XOR<ChanelCreateWithoutPermissionInput, ChanelUncheckedCreateWithoutPermissionInput>
+  export type RoundDetailCreateOrConnectWithoutRoundQuizInput = {
+    where: RoundDetailWhereUniqueInput
+    create: XOR<RoundDetailCreateWithoutRoundQuizInput, RoundDetailUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type UserToChanelCreateWithoutPermissionInput = {
-    role: RoleEnum
-    user: UserYoutubeCreateNestedOneWithoutUserToChanelInput
-    chanel: ChanelCreateNestedOneWithoutUserToChanelInput
-  }
-
-  export type UserToChanelUncheckedCreateWithoutPermissionInput = {
-    id?: number
-    role: RoleEnum
-    userId: number
-    chanelId: number
-  }
-
-  export type UserToChanelCreateOrConnectWithoutPermissionInput = {
-    where: UserToChanelWhereUniqueInput
-    create: XOR<UserToChanelCreateWithoutPermissionInput, UserToChanelUncheckedCreateWithoutPermissionInput>
-  }
-
-  export type UserToChanelCreateManyPermissionInputEnvelope = {
-    data: Enumerable<UserToChanelCreateManyPermissionInput>
+  export type RoundDetailCreateManyRoundQuizInputEnvelope = {
+    data: Enumerable<RoundDetailCreateManyRoundQuizInput>
     skipDuplicates?: boolean
   }
 
-  export type UserYoutubeUpsertWithoutPermissionInput = {
-    update: XOR<UserYoutubeUpdateWithoutPermissionInput, UserYoutubeUncheckedUpdateWithoutPermissionInput>
-    create: XOR<UserYoutubeCreateWithoutPermissionInput, UserYoutubeUncheckedCreateWithoutPermissionInput>
+  export type QuestionCategoryUpsertWithoutRoundQuizInput = {
+    update: XOR<QuestionCategoryUpdateWithoutRoundQuizInput, QuestionCategoryUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<QuestionCategoryCreateWithoutRoundQuizInput, QuestionCategoryUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type UserYoutubeUpdateWithoutPermissionInput = {
+  export type QuestionCategoryUpdateWithoutRoundQuizInput = {
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUpdateManyWithoutUserNestedInput
-    Comment?: CommentUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutUserNestedInput
+    Question?: QuestionUpdateManyWithoutQuestionCategoriesNestedInput
   }
 
-  export type UserYoutubeUncheckedUpdateWithoutPermissionInput = {
+  export type QuestionCategoryUncheckedUpdateWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUncheckedUpdateManyWithoutUserNestedInput
-    Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutUserNestedInput
+    Question?: QuestionUncheckedUpdateManyWithoutQuestionCategoriesNestedInput
   }
 
-  export type ChanelUpsertWithoutPermissionInput = {
-    update: XOR<ChanelUpdateWithoutPermissionInput, ChanelUncheckedUpdateWithoutPermissionInput>
-    create: XOR<ChanelCreateWithoutPermissionInput, ChanelUncheckedCreateWithoutPermissionInput>
+  export type UserUpsertWithoutRoundQuizInput = {
+    update: XOR<UserUpdateWithoutRoundQuizInput, UserUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<UserCreateWithoutRoundQuizInput, UserUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type ChanelUpdateWithoutPermissionInput = {
+  export type UserUpdateWithoutRoundQuizInput = {
     name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    user?: UserYoutubeUpdateOneRequiredWithoutChanelNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUpdateManyWithoutChanelNestedInput
   }
 
-  export type ChanelUncheckedUpdateWithoutPermissionInput = {
+  export type UserUncheckedUpdateWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUncheckedUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutChanelNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UserToChanelUpsertWithWhereUniqueWithoutPermissionInput = {
-    where: UserToChanelWhereUniqueInput
-    update: XOR<UserToChanelUpdateWithoutPermissionInput, UserToChanelUncheckedUpdateWithoutPermissionInput>
-    create: XOR<UserToChanelCreateWithoutPermissionInput, UserToChanelUncheckedCreateWithoutPermissionInput>
+  export type RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundDetailWhereUniqueInput
+    update: XOR<RoundDetailUpdateWithoutRoundQuizInput, RoundDetailUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<RoundDetailCreateWithoutRoundQuizInput, RoundDetailUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type UserToChanelUpdateWithWhereUniqueWithoutPermissionInput = {
-    where: UserToChanelWhereUniqueInput
-    data: XOR<UserToChanelUpdateWithoutPermissionInput, UserToChanelUncheckedUpdateWithoutPermissionInput>
+  export type RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundDetailWhereUniqueInput
+    data: XOR<RoundDetailUpdateWithoutRoundQuizInput, RoundDetailUncheckedUpdateWithoutRoundQuizInput>
   }
 
-  export type UserToChanelUpdateManyWithWhereWithoutPermissionInput = {
-    where: UserToChanelScalarWhereInput
-    data: XOR<UserToChanelUpdateManyMutationInput, UserToChanelUncheckedUpdateManyWithoutUserToChanelInput>
+  export type RoundDetailUpdateManyWithWhereWithoutRoundQuizInput = {
+    where: RoundDetailScalarWhereInput
+    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyWithoutRoundDetailInput>
   }
 
-  export type UserYoutubeCreateWithoutUserToChanelInput = {
-    name: string
-    email: string
-    imageProfile: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanel?: ChanelCreateNestedManyWithoutUserInput
-    Comment?: CommentCreateNestedManyWithoutUserInput
-    permission?: PermissionCreateNestedManyWithoutUserInput
-  }
-
-  export type UserYoutubeUncheckedCreateWithoutUserToChanelInput = {
-    id?: number
-    name: string
-    email: string
-    imageProfile: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanel?: ChanelUncheckedCreateNestedManyWithoutUserInput
-    Comment?: CommentUncheckedCreateNestedManyWithoutUserInput
-    permission?: PermissionUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserYoutubeCreateOrConnectWithoutUserToChanelInput = {
-    where: UserYoutubeWhereUniqueInput
-    create: XOR<UserYoutubeCreateWithoutUserToChanelInput, UserYoutubeUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type ChanelCreateWithoutUserToChanelInput = {
-    name: string
-    videos?: VideoCreateNestedManyWithoutChanelInput
-    description: string
-    user: UserYoutubeCreateNestedOneWithoutChanelInput
-    createAt?: Date | string
-    updateAt?: Date | string
-    Permission?: PermissionCreateNestedManyWithoutChanelInput
-  }
-
-  export type ChanelUncheckedCreateWithoutUserToChanelInput = {
-    id?: number
-    name: string
-    videos?: VideoUncheckedCreateNestedManyWithoutChanelInput
-    description: string
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId: number
-    Permission?: PermissionUncheckedCreateNestedManyWithoutChanelInput
-  }
-
-  export type ChanelCreateOrConnectWithoutUserToChanelInput = {
-    where: ChanelWhereUniqueInput
-    create: XOR<ChanelCreateWithoutUserToChanelInput, ChanelUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type PermissionCreateWithoutUserToChanelInput = {
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    User?: UserYoutubeCreateNestedOneWithoutPermissionInput
-    Chanel?: ChanelCreateNestedOneWithoutPermissionInput
-  }
-
-  export type PermissionUncheckedCreateWithoutUserToChanelInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId?: number | null
-    chanelId?: number | null
-  }
-
-  export type PermissionCreateOrConnectWithoutUserToChanelInput = {
-    where: PermissionWhereUniqueInput
-    create: XOR<PermissionCreateWithoutUserToChanelInput, PermissionUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type UserYoutubeUpsertWithoutUserToChanelInput = {
-    update: XOR<UserYoutubeUpdateWithoutUserToChanelInput, UserYoutubeUncheckedUpdateWithoutUserToChanelInput>
-    create: XOR<UserYoutubeCreateWithoutUserToChanelInput, UserYoutubeUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type UserYoutubeUpdateWithoutUserToChanelInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUpdateManyWithoutUserNestedInput
-    Comment?: CommentUpdateManyWithoutUserNestedInput
-    permission?: PermissionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserYoutubeUncheckedUpdateWithoutUserToChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    imageProfile?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanel?: ChanelUncheckedUpdateManyWithoutUserNestedInput
-    Comment?: CommentUncheckedUpdateManyWithoutUserNestedInput
-    permission?: PermissionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type ChanelUpsertWithoutUserToChanelInput = {
-    update: XOR<ChanelUpdateWithoutUserToChanelInput, ChanelUncheckedUpdateWithoutUserToChanelInput>
-    create: XOR<ChanelCreateWithoutUserToChanelInput, ChanelUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type ChanelUpdateWithoutUserToChanelInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    user?: UserYoutubeUpdateOneRequiredWithoutChanelNestedInput
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Permission?: PermissionUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelUncheckedUpdateWithoutUserToChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUncheckedUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    Permission?: PermissionUncheckedUpdateManyWithoutChanelNestedInput
-  }
-
-  export type PermissionUpsertWithoutUserToChanelInput = {
-    update: XOR<PermissionUpdateWithoutUserToChanelInput, PermissionUncheckedUpdateWithoutUserToChanelInput>
-    create: XOR<PermissionCreateWithoutUserToChanelInput, PermissionUncheckedCreateWithoutUserToChanelInput>
-  }
-
-  export type PermissionUpdateWithoutUserToChanelInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserYoutubeUpdateOneWithoutPermissionNestedInput
-    Chanel?: ChanelUpdateOneWithoutPermissionNestedInput
-  }
-
-  export type PermissionUncheckedUpdateWithoutUserToChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type ChanelCreateManyUserInput = {
-    id?: number
-    name: string
-    description: string
+  export type RoundQuizCreateWithoutRoundDetailInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutRoundQuizInput
+    score: number
+    user: UserCreateNestedOneWithoutRoundQuizInput
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type CommentCreateManyUserInput = {
+  export type RoundQuizUncheckedCreateWithoutRoundDetailInput = {
     id?: number
-    videoId: number
-    createAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type UserToChanelCreateManyUserInput = {
-    id?: number
-    role: RoleEnum
-    chanelId: number
-    permissionId: number
-  }
-
-  export type PermissionCreateManyUserInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    chanelId?: number | null
-  }
-
-  export type ChanelUpdateWithoutUserInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUpdateManyWithoutChanelNestedInput
-    Permission?: PermissionUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    videos?: VideoUncheckedUpdateManyWithoutChanelNestedInput
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutChanelNestedInput
-    Permission?: PermissionUncheckedUpdateManyWithoutChanelNestedInput
-  }
-
-  export type ChanelUncheckedUpdateManyWithoutChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CommentUpdateWithoutUserInput = {
-    video?: VideoUpdateOneRequiredWithoutCommentsNestedInput
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CommentUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    videoId?: IntFieldUpdateOperationsInput | number
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CommentUncheckedUpdateManyWithoutCommentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    videoId?: IntFieldUpdateOperationsInput | number
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserToChanelUpdateWithoutUserInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    chanel?: ChanelUpdateOneRequiredWithoutUserToChanelNestedInput
-    permission?: PermissionUpdateOneRequiredWithoutUserToChanelNestedInput
-  }
-
-  export type UserToChanelUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    chanelId?: IntFieldUpdateOperationsInput | number
-    permissionId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type UserToChanelUncheckedUpdateManyWithoutUserToChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    chanelId?: IntFieldUpdateOperationsInput | number
-    permissionId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PermissionUpdateWithoutUserInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Chanel?: ChanelUpdateOneWithoutPermissionNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type PermissionUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type PermissionUncheckedUpdateManyWithoutPermissionInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    chanelId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type VideoCreateManyChanelInput = {
-    id?: number
-    name: string
-    description: string
-    url: string
-    createAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type UserToChanelCreateManyChanelInput = {
-    id?: number
-    role: RoleEnum
-    userId: number
-    permissionId: number
-  }
-
-  export type PermissionCreateManyChanelInput = {
-    id?: number
-    role: RoleEnum
-    edit: boolean
-    post: boolean
-    delete: boolean
-    upload: boolean
-    createAt?: Date | string
-    updateAt?: Date | string
-    userId?: number | null
-  }
-
-  export type VideoUpdateWithoutChanelInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUpdateManyWithoutVideoNestedInput
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoUncheckedUpdateWithoutChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    comments?: CommentUncheckedUpdateManyWithoutVideoNestedInput
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoUncheckedUpdateManyWithoutVideosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    url?: StringFieldUpdateOperationsInput | string
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserToChanelUpdateWithoutChanelInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    user?: UserYoutubeUpdateOneRequiredWithoutUserToChanelNestedInput
-    permission?: PermissionUpdateOneRequiredWithoutUserToChanelNestedInput
-  }
-
-  export type UserToChanelUncheckedUpdateWithoutChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    userId?: IntFieldUpdateOperationsInput | number
-    permissionId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PermissionUpdateWithoutChanelInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    User?: UserYoutubeUpdateOneWithoutPermissionNestedInput
-    userToChanel?: UserToChanelUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type PermissionUncheckedUpdateWithoutChanelInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    edit?: BoolFieldUpdateOperationsInput | boolean
-    post?: BoolFieldUpdateOperationsInput | boolean
-    delete?: BoolFieldUpdateOperationsInput | boolean
-    upload?: BoolFieldUpdateOperationsInput | boolean
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
-    userToChanel?: UserToChanelUncheckedUpdateManyWithoutPermissionNestedInput
-  }
-
-  export type CommentCreateManyVideoInput = {
-    id?: number
+    questionCategoryId: number
+    score: number
     userId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type CommentUpdateWithoutVideoInput = {
-    user?: UserYoutubeUpdateOneRequiredWithoutCommentNestedInput
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundQuizCreateOrConnectWithoutRoundDetailInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
   }
 
-  export type CommentUncheckedUpdateWithoutVideoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type QuestionCreateWithoutRoundDetailInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
+    textQuestion: string
+    answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+    choice?: ChoiceCreateNestedManyWithoutQuestionInput
   }
 
-  export type CommentUncheckedUpdateManyWithoutCommentsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserToChanelCreateManyPermissionInput = {
+  export type QuestionUncheckedCreateWithoutRoundDetailInput = {
     id?: number
-    role: RoleEnum
-    userId: number
-    chanelId: number
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type UserToChanelUpdateWithoutPermissionInput = {
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
-    user?: UserYoutubeUpdateOneRequiredWithoutUserToChanelNestedInput
-    chanel?: ChanelUpdateOneRequiredWithoutUserToChanelNestedInput
+  export type QuestionCreateOrConnectWithoutRoundDetailInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
   }
 
-  export type UserToChanelUncheckedUpdateWithoutPermissionInput = {
+  export type RoundQuizUpsertWithoutRoundDetailInput = {
+    update: XOR<RoundQuizUpdateWithoutRoundDetailInput, RoundQuizUncheckedUpdateWithoutRoundDetailInput>
+    create: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
+  }
+
+  export type RoundQuizUpdateWithoutRoundDetailInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput
+    score?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuizUncheckedUpdateWithoutRoundDetailInput = {
     id?: IntFieldUpdateOperationsInput | number
-    role?: EnumRoleEnumFieldUpdateOperationsInput | RoleEnum
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    chanelId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUpsertWithoutRoundDetailInput = {
+    update: XOR<QuestionUpdateWithoutRoundDetailInput, QuestionUncheckedUpdateWithoutRoundDetailInput>
+    create: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
+  }
+
+  export type QuestionUpdateWithoutRoundDetailInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutRoundDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionCreateManyQuestionCategoriesInput = {
+    id?: number
+    textQuestion: string
+    answerId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuizCreateManyQuestionCategoriesInput = {
+    id?: number
+    score: number
+    userId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type QuestionUpdateWithoutQuestionCategoriesInput = {
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutQuestionCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuizUpdateWithoutQuestionCategoriesInput = {
+    score?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizUncheckedUpdateWithoutQuestionCategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizUncheckedUpdateManyWithoutRoundQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceCreateManyQuestionInput = {
+    id?: number
+    choiceName: string
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundDetailCreateManyQuestionInput = {
+    id?: number
+    roundQuizId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUpdateWithoutQuestionInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionAnswer?: QuestionUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionAnswer?: QuestionUncheckedUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateManyWithoutChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundDetailUpdateWithoutQuestionInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundDetailUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundDetailUncheckedUpdateManyWithoutRoundDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuizCreateManyUserInput = {
+    id?: number
+    questionCategoryId: number
+    score: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuizUpdateWithoutUserInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput
+    score?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundDetailCreateManyRoundQuizInput = {
+    id?: number
+    questionId: number
+    questionOrder: number
+    userChoose: number
+    result: boolean
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundDetailUpdateWithoutRoundQuizInput = {
+    question?: QuestionUpdateOneRequiredWithoutRoundDetailNestedInput
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundDetailUncheckedUpdateWithoutRoundQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    questionOrder?: IntFieldUpdateOperationsInput | number
+    userChoose?: IntFieldUpdateOperationsInput | number
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

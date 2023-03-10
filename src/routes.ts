@@ -1,16 +1,23 @@
+// import {
+//   createCategoryHandler,
+//   createMenuHandler,
+//   createOrderHandler,
+//   createOrderItemHandler,
+//   getCategoriesHandler,
+//   getMenuHandler,
+//   getOrderHandler,
+//   getOrdersHandler,
+//   updateCategoryHandler,
+//   updateMenuHandler,
+//   updateOrderHandler,
+// } from "./BinKitchen";
 import {
   createCategoryHandler,
-  createMenuHandler,
-  createOrderHandler,
-  createOrderItemHandler,
-  getCategoriesHandler,
-  getMenuHandler,
-  getOrderHandler,
-  getOrdersHandler,
-  updateCategoryHandler,
-  updateMenuHandler,
-  updateOrderHandler,
-} from "./BinKitchen";
+  createQuizHandle,
+  getAllCategoryHandle,
+  getQuizbyCategoryHandle,
+  submitQuizHandler,
+} from "./QuestionQuiz";
 import {
   functionHelloAtHandler,
   functionHelloSumHandler,
@@ -28,16 +35,16 @@ import {
   setSecretFromOtherServer,
   updateTeacherHandler,
 } from "./sqlWorkshop/handler/index";
-import {
-  createTaskOneHandler,
-  createTasksHandler,
-  deleteTaskHandler,
-  findUniqueHandler,
-  getTaskUniqueOrThrowHandler,
-  getTasksHandler,
-  updateTaskHandler,
-  updateTaskOneHandler,
-} from "./todoList/todoList.handler";
+// import {
+//   createTaskOneHandler,
+//   createTasksHandler,
+//   deleteTaskHandler,
+//   findUniqueHandler,
+//   getTaskUniqueOrThrowHandler,
+//   getTasksHandler,
+//   updateTaskHandler,
+//   updateTaskOneHandler,
+// } from "./todoList/todoList.handler";
 
 export const AppRoutes = [
   {
@@ -124,103 +131,128 @@ export const AppRoutes = [
   //------ secret message from boeing --------
 
   //------ todolist --------
-  {
-    path: "/todolist/createTask",
-    method: "post",
-    action: createTasksHandler,
-  },
-  {
-    path: "/todolist/createTaskOne",
-    method: "post",
-    action: createTaskOneHandler,
-  },
-  {
-    path: "/todolist/getTasks",
-    method: "post",
-    action: getTasksHandler,
-  },
-  {
-    path: "/todoList/updateTask",
-    method: "post",
-    action: updateTaskHandler,
-  },
-  {
-    path: "/todoList/updateTaskOne",
-    method: "post",
-    action: updateTaskOneHandler,
-  },
-  {
-    path: "/todoList/deleteTask",
-    method: "post",
-    action: deleteTaskHandler,
-  },
-  {
-    path: "/todoList/getTaskUnique",
-    method: "post",
-    action: findUniqueHandler,
-  },
-  {
-    path: "/todoList/getTaskUniqueOrThrowHandler",
-    method: "post",
-    action: getTaskUniqueOrThrowHandler,
-  },
+  // {
+  //   path: "/todolist/createTask",
+  //   method: "post",
+  //   action: createTasksHandler,
+  // },
+  // {
+  //   path: "/todolist/createTaskOne",
+  //   method: "post",
+  //   action: createTaskOneHandler,
+  // },
+  // {
+  //   path: "/todolist/getTasks",
+  //   method: "post",
+  //   action: getTasksHandler,
+  // },
+  // {
+  //   path: "/todoList/updateTask",
+  //   method: "post",
+  //   action: updateTaskHandler,
+  // },
+  // {
+  //   path: "/todoList/updateTaskOne",
+  //   method: "post",
+  //   action: updateTaskOneHandler,
+  // },
+  // {
+  //   path: "/todoList/deleteTask",
+  //   method: "post",
+  //   action: deleteTaskHandler,
+  // },
+  // {
+  //   path: "/todoList/getTaskUnique",
+  //   method: "post",
+  //   action: findUniqueHandler,
+  // },
+  // {
+  //   path: "/todoList/getTaskUniqueOrThrowHandler",
+  //   method: "post",
+  //   action: getTaskUniqueOrThrowHandler,
+  // },
 
   //------ bin kitchen --------
 
+  // {
+  //   path: "/binkitchen/createCategory",
+  //   method: "post",
+  //   action: createCategoryHandler,
+  // },
+  // {
+  //   path: "/binkitchen/getCategories",
+  //   method: "post",
+  //   action: getCategoriesHandler,
+  // },
+  // {
+  //   path: "/binkitchen/createMenu",
+  //   method: "post",
+  //   action: createMenuHandler,
+  // },
+  // {
+  //   path: "/binkitchen/createOrder",
+  //   method: "post",
+  //   action: createOrderHandler,
+  // },
+  // {
+  //   path: "/binkitchen/createOrderItem",
+  //   method: "post",
+  //   action: createOrderItemHandler,
+  // },
+  // {
+  //   path: "/binkitchen/updateOrder",
+  //   method: "post",
+  //   action: updateOrderHandler,
+  // },
+  // {
+  //   path: "/binkitchen/getOrders",
+  //   method: "post",
+  //   action: getOrdersHandler,
+  // },
+  // {
+  //   path: "/binkitchen/getOrder",
+  //   method: "post",
+  //   action: getOrderHandler,
+  // },
+
+  // {
+  //   path: "/binkitchen/updateMenu",
+  //   method: "post",
+  //   action: updateMenuHandler,
+  // },
+  // {
+  //   path: "/binkitchen/getMenus",
+  //   method: "post",
+  //   action: getMenuHandler,
+  // },
+  // {
+  //   path: "/binkitchen/updateCategory",
+  //   method: "post",
+  //   action: updateCategoryHandler,
+  // },
   {
-    path: "/binkitchen/createCategory",
+    path: "/questionquiz/createCategory",
     method: "post",
     action: createCategoryHandler,
   },
   {
-    path: "/binkitchen/getCategories",
+    path: "/questionquiz/getAllCategory",
     method: "post",
-    action: getCategoriesHandler,
+    action: getAllCategoryHandle,
   },
   {
-    path: "/binkitchen/createMenu",
+    path: "/questionquiz/createQuiz",
     method: "post",
-    action: createMenuHandler,
+    action: createQuizHandle,
   },
   {
-    path: "/binkitchen/createOrder",
+    path: "/questionquiz/getQuizbyCategory",
     method: "post",
-    action: createOrderHandler,
+    action: getQuizbyCategoryHandle,
   },
   {
-    path: "/binkitchen/createOrderItem",
+    path: "/questionquiz/submitQuiz",
     method: "post",
-    action: createOrderItemHandler,
-  },
-  {
-    path: "/binkitchen/updateOrder",
-    method: "post",
-    action: updateOrderHandler,
-  },
-  {
-    path: "/binkitchen/getOrders",
-    method: "post",
-    action: getOrdersHandler,
-  },
-  {
-    path: "/binkitchen/getOrder",
-    method: "post",
-    action: getOrderHandler,
-  },
-
-  {
-    path: "/binkitchen/updateMenu",
-    method: "post",
-    action: updateMenuHandler,
-  },
-  {
-    path: "/binkitchen/getMenus",
-    method: "post",
-    action: getMenuHandler,
-  },
-  {
-    path: "/binkitchen/updateCategory",
-    method: "post",
-    action: updateCategoryHandler,
+    action: submitQuizHandler,
   },
 ];

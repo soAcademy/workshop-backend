@@ -1,7 +1,7 @@
-// //ชื่อโมเดลปกติจะตั้งเป็น singular
-// //แล้วชื่อตัวแปรค่อยเป็น plural
-// //แล้วชื่อตัวแปรให้เป็น camelCase หมด
-// //ใน 1 table มี relation ได้แบบเดียว
+// // //ชื่อโมเดลปกติจะตั้งเป็น singular
+// // //แล้วชื่อตัวแปรค่อยเป็น plural
+// // //แล้วชื่อตัวแปรให้เป็น camelCase หมด
+// // //ใน 1 table มี relation ได้แบบเดียว
 
 // model Category {
 //   id       Int        @id @default(autoincrement())

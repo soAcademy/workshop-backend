@@ -86,10 +86,10 @@
 // }
 
 // //----------------------------------------------------------------
-// //ชื่อโมเดลปกติจะตั้งเป็น singular
-// //แล้วชื่อตัวแปรค่อยเป็น plural
-// //แล้วชื่อตัวแปรให้เป็น camelCase หมด
-// //ใน 1 table มี relation ได้แบบเดียว
+// // //ชื่อโมเดลปกติจะตั้งเป็น singular
+// // //แล้วชื่อตัวแปรค่อยเป็น plural
+// // //แล้วชื่อตัวแปรให้เป็น camelCase หมด
+// // //ใน 1 table มี relation ได้แบบเดียว
 
 // model Category {
 //   id       Int        @id @default(autoincrement())
@@ -144,6 +144,138 @@
 //   createAt      DateTime        @default(now())
 //   updateAt      DateTime        @updatedAt
 //   roundQuestion RoundQuestion[]
+// }
+// model BoeingWash {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+// }
+
+// model BranchWash {
+//   id               Int                   @id @default(autoincrement())
+//   owner            String
+//   tel              Int
+//   address          String
+//   area             Int
+//   createAt         DateTime              @default(now())
+//   updateAt         DateTime              @updatedAt
+//   MachineAtBranchs MachineAtBranchWash[]
+// }
+
+// model MachineWash {
+//   id               Int                   @id @default(autoincrement())
+//   brand            String
+//   size             Int
+//   type             String
+//   model            String
+//   year             Int
+//   insurances       InsuranceWash[]
+//   createAt         DateTime              @default(now())
+//   updateAt         DateTime              @updatedAt
+//   MachineAtBranchs MachineAtBranchWash[]
+//   MachineToProgram MachineToProgram[]
+//   maintainance     maintainance[]
+//   histories        HistoryWash[]
+// }
+
+// model MachineAtBranchWash {
+//   id        Int         @id @default(autoincrement())
+//   machine   MachineWash @relation(fields: [machineId], references: [id])
+//   machineId Int
+//   branch    BranchWash  @relation(fields: [branchId], references: [id])
+//   branchId  Int
+//   createAt  DateTime    @default(now())
+//   updateAt  DateTime    @updatedAt
+// }
+
+// model InsuranceWash {
+//   id            Int           @id @default(autoincrement())
+//   startTime     DateTime
+//   endTime       DateTime
+//   remainingTime DateTime
+//   createAt      DateTime      @default(now())
+//   updateAt      DateTime      @updatedAt
+//   Machine       MachineWash[]
+// }
+
+// model CategoryProgramWash {
+//   id       Int           @id @default(autoincrement())
+//   name     String
+//   createAt DateTime      @default(now())
+//   updateAt DateTime      @updatedAt
+//   program  ProgramWash[]
+// }
+
+// model ProgramWash {
+//   id                    Int                 @id @default(autoincrement())
+//   categoryProgramWash   CategoryProgramWash @relation(fields: [categoryProgramWashId], references: [id])
+//   categoryProgramWashId Int
+//   price                 Int
+//   duration              DateTime
+//   weight                Int
+//   createAt              DateTime            @default(now())
+//   updateAt              DateTime            @updatedAt
+//   MachineToProgram      MachineToProgram[]
+//   history               HistoryWash[]
+// }
+
+// model MachineToProgram {
+//   id            Int         @id @default(autoincrement())
+//   machineWash   MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId Int
+//   programWash   ProgramWash @relation(fields: [programWashId], references: [id])
+//   programWashId Int
+//   createAt      DateTime    @default(now())
+//   updateAt      DateTime    @updatedAt
+// }
+
+// model maintainance {
+//   id             Int         @id @default(autoincrement())
+//   round          Int
+//   dateUseMachine DateTime
+//   levelDamage    Int
+//   cause          String
+//   machanicName   String
+//   machineWash    MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId  Int
+//   createAt       DateTime    @default(now())
+//   updateAt       DateTime    @updatedAt
+// }
+
+// model userWash {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   tel          Int
+//   balance      Int
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   HistoryWash  HistoryWash[]
+//   topUpHistory topUpHistory[]
+// }
+
+// model HistoryWash {
+//   id            Int         @id @default(autoincrement())
+//   machineWash   MachineWash @relation(fields: [machineWashId], references: [id])
+//   machineWashId Int
+//   programWash   ProgramWash @relation(fields: [programWashId], references: [id])
+//   programWashId Int
+//   startWashAt   DateTime
+//   endWashAt     DateTime
+//   price         Int
+//   userWash      userWash    @relation(fields: [userWashId], references: [id])
+//   userWashId    Int
+//   createAt      DateTime    @default(now())
+//   updateAt      DateTime    @updatedAt
+// }
+
+// model topUpHistory {
+//   id         Int      @id @default(autoincrement())
+//   userWash   userWash @relation(fields: [userWashId], references: [id])
+//   userWashId Int
+//   topUpValue Int
+//   createAt   DateTime @default(now())
+//   updateAt   DateTime @updatedAt
 // }
 // model User {
 //   id                   Int                @id @default(autoincrement())
@@ -252,6 +384,18 @@
 // // Relation
 // // - From
 // // - To
+// model University {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+// }
+
+// model Book {
+//   id   Int    @id @default(autoincrement())
+//   name String
+//   isbn Int
+// }
 // model User {
 //   id                Int            @id @default(autoincrement())
 //   name              String         @unique
@@ -321,95 +465,94 @@
 // }
 
 // //กรณีที่ไป relate Table เดิมซ้ำกันสองรอบ relation string
-model UserYoutube {
-  id           Int            @id @default(autoincrement())
-  name         String
-  email        String
-  imageProfile String
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  chanel       Chanel[]
-  Comment      Comment[]
-  userToChanel UserToChanel[]
-  permission   Permission[]
-}
+// model UserYoutube {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   email        String
+//   imageProfile String
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   chanel       Chanel[]
+//   Comment      Comment[]
+//   userToChanel UserToChanel[]
+//   permission   Permission[]
+// }
 
-model Chanel {
-  id           Int            @id @default(autoincrement())
-  name         String
-  // user         User           @relation(fields: [userId], references: [id])
-  // userId       Int
-  videos       Video[]
-  description  String
-  user         UserYoutube    @relation(fields: [userId], references: [id])
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  userToChanel UserToChanel[]
-  // permission   Permission[]
-  userId       Int
-  Permission   Permission[]
-}
+// model Chanel {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   // user         User           @relation(fields: [userId], references: [id])
+//   // userId       Int
+//   videos       Video[]
+//   description  String
+//   user         UserYoutube    @relation(fields: [userId], references: [id])
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   userToChanel UserToChanel[]
+//   // permission   Permission[]
+//   userId       Int
+//   Permission   Permission[]
+// }
 
-enum RoleEnum {
-  Admin
-  Editor
-  Creater
-}
+// enum RoleEnum {
+//   Admin
+//   Editor
+//   Creater
+// }
 
-enum FeelingEnum {
-  like
-  unlike
-}
+// enum FeelingEnum {
+//   like
+//   unlike
+// }
 
-model Comment {
-  id       Int         @id @default(autoincrement())
-  user     UserYoutube @relation(fields: [userId], references: [id])
-  userId   Int
-  video    Video       @relation(fields: [videoId], references: [id])
-  videoId  Int
-  createAt DateTime    @default(now())
-  updateAt DateTime    @updatedAt
-}
+// model Comment {
+//   id       Int         @id @default(autoincrement())
+//   user     UserYoutube @relation(fields: [userId], references: [id])
+//   userId   Int
+//   video    Video       @relation(fields: [videoId], references: [id])
+//   videoId  Int
+//   createAt DateTime    @default(now())
+//   updateAt DateTime    @updatedAt
+// }
 
-model Video {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  comments    Comment[]
-  url         String
-  createAt    DateTime  @default(now())
-  updateAt    DateTime  @updatedAt
-  Chanel      Chanel?   @relation(fields: [chanelId], references: [id])
-  chanelId    Int?
-}
+// model Video {
+//   id          Int       @id @default(autoincrement())
+//   name        String
+//   description String
+//   comments    Comment[]
+//   url         String
+//   createAt    DateTime  @default(now())
+//   updateAt    DateTime  @updatedAt
+//   Chanel      Chanel?   @relation(fields: [chanelId], references: [id])
+//   chanelId    Int?
+// }
 
-model Permission {
-  id           Int            @id @default(autoincrement())
-  role         RoleEnum
-  edit         Boolean
-  post         Boolean
-  delete       Boolean
-  upload       Boolean
-  createAt     DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  User         UserYoutube?   @relation(fields: [userId], references: [id])
-  userId       Int?
-  Chanel       Chanel?        @relation(fields: [chanelId], references: [id])
-  chanelId     Int?
-  userToChanel UserToChanel[]
-}
+// model Permission {
+//   id           Int            @id @default(autoincrement())
+//   role         RoleEnum
+//   edit         Boolean
+//   post         Boolean
+//   delete       Boolean
+//   upload       Boolean
+//   createAt     DateTime       @default(now())
+//   updateAt     DateTime       @updatedAt
+//   User         UserYoutube?   @relation(fields: [userId], references: [id])
+//   userId       Int?
+//   Chanel       Chanel?        @relation(fields: [chanelId], references: [id])
+//   chanelId     Int?
+//   userToChanel UserToChanel[]
+// }
 
-model UserToChanel {
-  id           Int         @id @default(autoincrement())
-  role         RoleEnum
-  user         UserYoutube @relation(fields: [userId], references: [id])
-  userId       Int
-  chanel       Chanel      @relation(fields: [chanelId], references: [id])
-  chanelId     Int
-  permission   Permission  @relation(fields: [permissionId], references: [id])
-  permissionId Int
-}
-
+// model UserToChanel {
+//   id           Int         @id @default(autoincrement())
+//   role         RoleEnum
+//   user         UserYoutube @relation(fields: [userId], references: [id])
+//   userId       Int
+//   chanel       Chanel      @relation(fields: [chanelId], references: [id])
+//   chanelId     Int
+//   permission   Permission  @relation(fields: [permissionId], references: [id])
+//   permissionId Int
+// }
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -420,7 +563,70 @@ generator client {
   binaryTargets = ["native", "darwin-arm64", "debian-openssl-1.1.x"]
   output        = "../prisma/client"
 }
+model QuestionCategory {
+  id        Int         @id @default(autoincrement())
+  name      String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  Question  Question[]
+  RoundQuiz RoundQuiz[]
+}
 
+model Question {
+  id                 Int              @id @default(autoincrement())
+  questionCategories QuestionCategory @relation(fields: [questionCategoryId], references: [id])
+  questionCategoryId Int
+  textQuestion       String
+  answer             Choice           @relation("questionAnswer", fields: [answerId], references: [id])
+  answerId           Int              @unique
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @updatedAt
+  choice             Choice[]
+  RoundDetail        RoundDetail[]
+}
+
+model Choice {
+  id             Int       @id @default(autoincrement())
+  choiceName     String
+  question       Question? @relation(fields: [questionId], references: [id])
+  questionId     Int?
+  questionAnswer Question? @relation("questionAnswer")
+  createAt       DateTime  @default(now())
+  updateAt       DateTime  @updatedAt
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  RoundQuiz RoundQuiz[]
+}
+
+model RoundQuiz {
+  id                 Int              @id @default(autoincrement())
+  questionCategories QuestionCategory @relation(fields: [questionCategoryId], references: [id])
+  questionCategoryId Int
+  score              Int
+  user               User             @relation(fields: [userId], references: [id])
+  userId             Int
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @updatedAt
+  RoundDetail        RoundDetail[]
+}
+
+model RoundDetail {
+  id            Int       @id @default(autoincrement())
+  roundQuiz     RoundQuiz @relation(fields: [roundQuizId], references: [id])
+  roundQuizId   Int
+  question      Question  @relation(fields: [questionId], references: [id])
+  questionId    Int
+  questionOrder Int
+  userChoose    Int
+  result        Boolean
+  createAt      DateTime  @default(now())
+  updateAt      DateTime  @updatedAt
+}
 // model TodoList {
 //   id        Int      @id @default(autoincrement())
 //   task      String
