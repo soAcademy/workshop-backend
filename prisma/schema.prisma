@@ -51,6 +51,7 @@ model QuizCategory {
   id        Int      @id @default(autoincrement())
   name      String
   quizzes   Quiz[]
+  rounds    Round[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -87,11 +88,13 @@ model Quiz {
 }
 
 model Round {
-  id              Int      @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
+  category        QuizCategory @relation(fields: [quizCategoryId], references: [id])
+  quizCategoryId  Int
   quizzes         Quiz[]
   selectedChoices Choice[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
 
   @@schema("binquiz")
 }

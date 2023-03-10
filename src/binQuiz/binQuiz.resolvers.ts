@@ -1,5 +1,9 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateCategory, ICreateQuiz } from "./binQuiz.interfaces";
+import {
+  ICreateCategory,
+  ICreateQuiz,
+  ICreateRound,
+} from "./binQuiz.interfaces";
 
 export const prisma = new PrismaClient();
 
@@ -42,3 +46,21 @@ export const getQuizzes = () => {
     },
   });
 };
+
+export const getQuizzesByCategory = (args: { categoryId: number }) => {
+  return prisma.quiz.findMany({
+    select: {
+      category: {
+        select: {
+          name: true,
+        },
+      },
+      questionText: true,
+      correctChoice: { select: { answerText: true } },
+      otherChoices: { select: { answerText: true } },
+    },
+    where: { category: { id: args.categoryId } },
+  });
+};
+
+export const createRound = (args: ICreateRound) => {};

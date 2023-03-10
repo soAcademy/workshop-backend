@@ -19,3 +19,10 @@ export const CreateQuizCodec = t.type({
 });
 
 export interface ICreateQuiz extends t.TypeOf<typeof CreateQuizCodec> {}
+
+export const CreateRoundCodec = t.type({
+  quizCategoryId: t.number,
+  quizzes: t.array(CreateQuizCodec),
+});
+
+export interface ICreateRound extends t.TypeOf<typeof CreateRoundCodec> {}

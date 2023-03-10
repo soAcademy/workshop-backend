@@ -315,6 +315,7 @@ exports.Prisma.RequestRecordScalarFieldEnum = makeEnum({
 
 exports.Prisma.RoundScalarFieldEnum = makeEnum({
   id: 'id',
+  quizCategoryId: 'quizCategoryId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });

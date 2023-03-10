@@ -5,7 +5,28 @@ import {
   createQuiz,
   getCategories,
   getQuizzes,
+  getQuizzesByCategory,
 } from "./binQuiz.resolvers";
+
+const randInt = (n: number) => Math.floor(Math.random() * n);
+
+const shuffle = (a: Array<any>) => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = randInt(i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+};
+
+const shuffleInPlace = (a: Array<any>) => {
+  shuffle(a);
+  return a;
+};
+
+// const shuffleCopy = (a: Array<any>) => {
+//   a = a.slice();
+//   shuffle(a);
+//   return a;
+// };
 
 export const createQuizCategoryHandler = async (
   req: Request,
@@ -68,5 +89,53 @@ export const getQuizzesHandler = async (req: Request, res: Response) => {
     res.status(500).json({
       error: String(e),
     });
+  }
+};
+
+export const getQuizzesByCategoryHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const args = req?.body;
+  if (typeof args.categoryId === "number") {
+    try {
+      const result = await getQuizzesByCategory({
+        categoryId: args.categoryId,
+      });
+      res.status(200).json(result);
+    } catch (e) {
+      res.status(500).json({
+        error: String(e),
+      });
+    }
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+  }
+};
+
+// https://codereview.stackexchange.com/a/266389
+
+export const getRandomizedQuizzesByCategoryHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const args = req?.body;
+  if (typeof args.categoryId === "number") {
+    try {
+      const result = await getQuizzesByCategory({
+        categoryId: args.categoryId,
+      });
+      const randomizedResult = shuffleInPlace(result).map((result) => ({
+        questionText: result.questionText,
+        Choices: shuffleInPlace([...result.otherChoices, result.correctChoice]),
+      }));
+      res.status(200).json(randomizedResult);
+    } catch (e) {
+      res.status(500).json({
+        error: String(e),
+      });
+    }
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
   }
 };
