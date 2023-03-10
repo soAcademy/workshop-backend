@@ -82,9 +82,9 @@ export const submitQuestionHandler = async (req: Request, res: Response) => {
   }
 };
 
-export const getResultsHandler = (req: Request, res: Response) => {
+export const getResultsHandler = async (req: Request, res: Response) => {
   try {
-    const result = getResults();
+    const result = await getResults();
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json({ error: String(err) });

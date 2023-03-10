@@ -117,8 +117,7 @@ export const submitQuestion = async (args: {
   }
 };
 
-export const getResults = () => {
+export const getResults = () =>
   prisma.quizRound.findMany({
     orderBy: { id: "asc" },
   });
-};
