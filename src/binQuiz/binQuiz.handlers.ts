@@ -126,10 +126,30 @@ export const getRandomizedQuizzesByCategoryHandler = async (
         categoryId: args.categoryId,
       });
       const randomizedResult = shuffleInPlace(result).map((result) => ({
-        questionText: result.questionText,
-        Choices: shuffleInPlace([...result.otherChoices, result.correctChoice]),
+        question: result.questionText,
+        answers: shuffleInPlace([
+          ...result.otherChoices.map((choice: { answerText: string }) => ({
+            answerText: choice.answerText,
+            isCorrect: false,
+          })),
+          {
+            answerText: result.correctChoice.answerText,
+            isCorrect: true,
+          },
+        ]),
+        // .map((choice) => choice.answerText),
       }));
-      res.status(200).json(randomizedResult);
+      const correctAnswers = randomizedResult.map((result) =>
+        result.answers.findIndex((answer) => answer.isCorrect === true)
+      );
+      // console.log(correctAnswers);
+      res.status(200).json(
+        randomizedResult.map((result, idx) => ({
+          question: result.question,
+          answers: result.answers.map((choice) => choice.answerText),
+          answer: correctAnswers[idx],
+        }))
+      );
     } catch (e) {
       res.status(500).json({
         error: String(e),
