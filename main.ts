@@ -8,6 +8,7 @@ import { FoodOrderingRoutes } from "./src/FoodOrderingAPI";
 import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import cors from "cors";
+import { TriviaRoutes } from "./src/TriviaAPI";
 
 dotenv.config();
 
@@ -62,37 +63,37 @@ app.use(
 );
 
 // UPLOAD IMAGE END POINT
-app.post(
-  "/uploadImg",
-  upload.single("image"),
-  async (req: Request, res: Response) => {
-    if (!req.file) {
-      return res.status(400).send("No file uploaded.");
-    }
-    console.log("req?.files", req.file.buffer);
-    const file = req.file;
-    const fileExt = file?.originalname.split(".").pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
-    const fileBuffer = file.buffer;
+// app.post(
+//   "/uploadImg",
+//   upload.single("image"),
+//   async (req: Request, res: Response) => {
+//     if (!req.file) {
+//       return res.status(400).send("No file uploaded.");
+//     }
+//     console.log("req?.files", req.file.buffer);
+//     const file = req.file;
+//     const fileExt = file?.originalname.split(".").pop();
+//     const fileName = `${Date.now()}.${fileExt}`;
+//     const filePath = `${fileName}`;
+//     const fileBuffer = file.buffer;
 
-    if (supabase) {
-      const { data, error: uploadError } = await supabase.storage
-        .from("food-images")
-        .upload(filePath, fileBuffer);
+//     if (supabase) {
+//       const { data, error: uploadError } = await supabase.storage
+//         .from("food-images")
+//         .upload(filePath, fileBuffer);
 
-      if (uploadError) {
-        throw uploadError;
-      }
+//       if (uploadError) {
+//         throw uploadError;
+//       }
 
-      const url = await supabase.storage
-        .from("food-images")
-        .getPublicUrl(data.path);
-      const imageUrl = url.data.publicUrl;
-      res.send(imageUrl);
-    }
-  }
-);
+//       const url = await supabase.storage
+//         .from("food-images")
+//         .getPublicUrl(data.path);
+//       const imageUrl = url.data.publicUrl;
+//       res.send(imageUrl);
+//     }
+//   }
+// );
 
 app.get("/hello", (req: Request, res: Response) => {
   res.send(__dirname + "");
@@ -126,12 +127,19 @@ app.get("/hello", (req: Request, res: Response) => {
 //   );
 // });
 
-FoodOrderingRoutes.map((route) => {
+// FoodOrderingRoutes.map((route) => {
+//   app[route.method as keyof Application](
+//     route.path,
+//     (req: Request, res: Response) => route.action(req, res)
+//   );
+// });
+
+TriviaRoutes.map(route=>{
   app[route.method as keyof Application](
     route.path,
     (req: Request, res: Response) => route.action(req, res)
-  );
-});
+  )
+})
 
 app.listen(5555, () => {
   console.log("Server started on port 5555");
