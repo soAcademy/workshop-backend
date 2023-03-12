@@ -10,7 +10,7 @@ model QuizCategory {
 model QuizQuestion {
   id                 Int           @id @default(autoincrement())
   name               String        @unique
-  answer             QuizChoice    @relation("quizAnswer", fields: [quizChoiceId], references: [id])
+  answer             QuizChoice    @relation("quizAnswer", fields: [quizAnswerChoiceId], references: [id])
   category           QuizCategory? @relation(fields: [quizCategoryId], references: [id])
   quizCategoryId     Int?
   quizAnswerChoiceId Int           @unique
@@ -18,7 +18,6 @@ model QuizQuestion {
   updatedAt          DateTime      @default(now())
   quizChoices        QuizChoice[]
   quizRecords        QuizRecord[]
-  quizChoiceId       Int           @unique
 }
 
 model QuizChoice {

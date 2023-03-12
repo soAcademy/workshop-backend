@@ -322,8 +322,7 @@ exports.Prisma.QuizQuestionScalarFieldEnum = makeEnum({
   quizCategoryId: 'quizCategoryId',
   quizAnswerChoiceId: 'quizAnswerChoiceId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  quizChoiceId: 'quizChoiceId'
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.QuizRecordScalarFieldEnum = makeEnum({

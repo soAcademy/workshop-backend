@@ -327,7 +327,6 @@ export type QuizQuestion = {
   quizAnswerChoiceId: number
   createdAt: Date
   updatedAt: Date
-  quizChoiceId: number
 }
 
 /**
@@ -26406,14 +26405,12 @@ export namespace Prisma {
     id: number | null
     quizCategoryId: number | null
     quizAnswerChoiceId: number | null
-    quizChoiceId: number | null
   }
 
   export type QuizQuestionSumAggregateOutputType = {
     id: number | null
     quizCategoryId: number | null
     quizAnswerChoiceId: number | null
-    quizChoiceId: number | null
   }
 
   export type QuizQuestionMinAggregateOutputType = {
@@ -26423,7 +26420,6 @@ export namespace Prisma {
     quizAnswerChoiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    quizChoiceId: number | null
   }
 
   export type QuizQuestionMaxAggregateOutputType = {
@@ -26433,7 +26429,6 @@ export namespace Prisma {
     quizAnswerChoiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    quizChoiceId: number | null
   }
 
   export type QuizQuestionCountAggregateOutputType = {
@@ -26443,7 +26438,6 @@ export namespace Prisma {
     quizAnswerChoiceId: number
     createdAt: number
     updatedAt: number
-    quizChoiceId: number
     _all: number
   }
 
@@ -26452,14 +26446,12 @@ export namespace Prisma {
     id?: true
     quizCategoryId?: true
     quizAnswerChoiceId?: true
-    quizChoiceId?: true
   }
 
   export type QuizQuestionSumAggregateInputType = {
     id?: true
     quizCategoryId?: true
     quizAnswerChoiceId?: true
-    quizChoiceId?: true
   }
 
   export type QuizQuestionMinAggregateInputType = {
@@ -26469,7 +26461,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
-    quizChoiceId?: true
   }
 
   export type QuizQuestionMaxAggregateInputType = {
@@ -26479,7 +26470,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
-    quizChoiceId?: true
   }
 
   export type QuizQuestionCountAggregateInputType = {
@@ -26489,7 +26479,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
-    quizChoiceId?: true
     _all?: true
   }
 
@@ -26587,7 +26576,6 @@ export namespace Prisma {
     quizAnswerChoiceId: number
     createdAt: Date
     updatedAt: Date
-    quizChoiceId: number
     _count: QuizQuestionCountAggregateOutputType | null
     _avg: QuizQuestionAvgAggregateOutputType | null
     _sum: QuizQuestionSumAggregateOutputType | null
@@ -26620,7 +26608,6 @@ export namespace Prisma {
     updatedAt?: boolean
     quizChoices?: boolean | QuizQuestion$quizChoicesArgs
     quizRecords?: boolean | QuizQuestion$quizRecordsArgs
-    quizChoiceId?: boolean
     _count?: boolean | QuizQuestionCountOutputTypeArgs
   }
 
@@ -46965,8 +46952,7 @@ export namespace Prisma {
     quizCategoryId: 'quizCategoryId',
     quizAnswerChoiceId: 'quizAnswerChoiceId',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    quizChoiceId: 'quizChoiceId'
+    updatedAt: 'updatedAt'
   };
 
   export type QuizQuestionScalarFieldEnum = (typeof QuizQuestionScalarFieldEnum)[keyof typeof QuizQuestionScalarFieldEnum]
@@ -48540,7 +48526,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
     quizChoices?: QuizChoiceListRelationFilter
     quizRecords?: QuizRecordListRelationFilter
-    quizChoiceId?: IntFilter | number
   }
 
   export type QuizQuestionOrderByWithRelationInput = {
@@ -48554,14 +48539,12 @@ export namespace Prisma {
     updatedAt?: SortOrder
     quizChoices?: QuizChoiceOrderByRelationAggregateInput
     quizRecords?: QuizRecordOrderByRelationAggregateInput
-    quizChoiceId?: SortOrder
   }
 
   export type QuizQuestionWhereUniqueInput = {
     id?: number
     name?: string
     quizAnswerChoiceId?: number
-    quizChoiceId?: number
   }
 
   export type QuizQuestionOrderByWithAggregationInput = {
@@ -48571,7 +48554,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    quizChoiceId?: SortOrder
     _count?: QuizQuestionCountOrderByAggregateInput
     _avg?: QuizQuestionAvgOrderByAggregateInput
     _max?: QuizQuestionMaxOrderByAggregateInput
@@ -48589,7 +48571,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    quizChoiceId?: IntWithAggregatesFilter | number
   }
 
   export type QuizChoiceWhereInput = {
@@ -51164,7 +51145,6 @@ export namespace Prisma {
     name: string
     answer: QuizChoiceCreateNestedOneWithoutQuizAnswerInput
     category?: QuizCategoryCreateNestedOneWithoutQuizQuestionInput
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceCreateNestedManyWithoutQuestionInput
@@ -51180,14 +51160,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     quizChoices?: QuizChoiceUncheckedCreateNestedManyWithoutQuestionInput
     quizRecords?: QuizRecordUncheckedCreateNestedManyWithoutQuestionInput
-    quizChoiceId: number
   }
 
   export type QuizQuestionUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     answer?: QuizChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
     category?: QuizCategoryUpdateOneWithoutQuizQuestionNestedInput
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUpdateManyWithoutQuestionNestedInput
@@ -51203,7 +51181,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUncheckedUpdateManyWithoutQuestionNestedInput
     quizRecords?: QuizRecordUncheckedUpdateManyWithoutQuestionNestedInput
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuizQuestionCreateManyInput = {
@@ -51213,12 +51190,10 @@ export namespace Prisma {
     quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizChoiceId: number
   }
 
   export type QuizQuestionUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -51230,7 +51205,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuizChoiceCreateInput = {
@@ -53754,14 +53728,12 @@ export namespace Prisma {
     quizAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    quizChoiceId?: SortOrder
   }
 
   export type QuizQuestionAvgOrderByAggregateInput = {
     id?: SortOrder
     quizCategoryId?: SortOrder
     quizAnswerChoiceId?: SortOrder
-    quizChoiceId?: SortOrder
   }
 
   export type QuizQuestionMaxOrderByAggregateInput = {
@@ -53771,7 +53743,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    quizChoiceId?: SortOrder
   }
 
   export type QuizQuestionMinOrderByAggregateInput = {
@@ -53781,14 +53752,12 @@ export namespace Prisma {
     quizAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    quizChoiceId?: SortOrder
   }
 
   export type QuizQuestionSumOrderByAggregateInput = {
     id?: SortOrder
     quizCategoryId?: SortOrder
     quizAnswerChoiceId?: SortOrder
-    quizChoiceId?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter = {
@@ -60618,7 +60587,6 @@ export namespace Prisma {
   export type QuizQuestionCreateWithoutCategoryInput = {
     name: string
     answer: QuizChoiceCreateNestedOneWithoutQuizAnswerInput
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceCreateNestedManyWithoutQuestionInput
@@ -60633,7 +60601,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     quizChoices?: QuizChoiceUncheckedCreateNestedManyWithoutQuestionInput
     quizRecords?: QuizRecordUncheckedCreateNestedManyWithoutQuestionInput
-    quizChoiceId: number
   }
 
   export type QuizQuestionCreateOrConnectWithoutCategoryInput = {
@@ -60699,7 +60666,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    quizChoiceId?: IntFilter | number
   }
 
   export type QuizRoundUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -60925,7 +60891,6 @@ export namespace Prisma {
     name: string
     answer: QuizChoiceCreateNestedOneWithoutQuizAnswerInput
     category?: QuizCategoryCreateNestedOneWithoutQuizQuestionInput
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizRecords?: QuizRecordCreateNestedManyWithoutQuestionInput
@@ -60939,7 +60904,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     quizRecords?: QuizRecordUncheckedCreateNestedManyWithoutQuestionInput
-    quizChoiceId: number
   }
 
   export type QuizQuestionCreateOrConnectWithoutQuizChoicesInput = {
@@ -60975,7 +60939,6 @@ export namespace Prisma {
   export type QuizQuestionCreateWithoutAnswerInput = {
     name: string
     category?: QuizCategoryCreateNestedOneWithoutQuizQuestionInput
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceCreateNestedManyWithoutQuestionInput
@@ -60986,7 +60949,6 @@ export namespace Prisma {
     id?: number
     name: string
     quizCategoryId?: number | null
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceUncheckedCreateNestedManyWithoutQuestionInput
@@ -61007,7 +60969,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     answer?: QuizChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
     category?: QuizCategoryUpdateOneWithoutQuizQuestionNestedInput
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizRecords?: QuizRecordUpdateManyWithoutQuestionNestedInput
@@ -61021,7 +60982,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizRecords?: QuizRecordUncheckedUpdateManyWithoutQuestionNestedInput
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuizRecordUpsertWithWhereUniqueWithoutPlayerChoiceInput = {
@@ -61048,7 +61008,6 @@ export namespace Prisma {
   export type QuizQuestionUpdateWithoutAnswerInput = {
     name?: StringFieldUpdateOperationsInput | string
     category?: QuizCategoryUpdateOneWithoutQuizQuestionNestedInput
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUpdateManyWithoutQuestionNestedInput
@@ -61059,7 +61018,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     quizCategoryId?: NullableIntFieldUpdateOperationsInput | number | null
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUncheckedUpdateManyWithoutQuestionNestedInput
@@ -61195,7 +61153,6 @@ export namespace Prisma {
     name: string
     answer: QuizChoiceCreateNestedOneWithoutQuizAnswerInput
     category?: QuizCategoryCreateNestedOneWithoutQuizQuestionInput
-    quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceCreateNestedManyWithoutQuestionInput
@@ -61209,7 +61166,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     quizChoices?: QuizChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    quizChoiceId: number
   }
 
   export type QuizQuestionCreateOrConnectWithoutQuizRecordsInput = {
@@ -61270,7 +61226,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     answer?: QuizChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
     category?: QuizCategoryUpdateOneWithoutQuizQuestionNestedInput
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUpdateManyWithoutQuestionNestedInput
@@ -61284,7 +61239,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterPostCreateWithoutUserInput = {
@@ -64180,7 +64134,6 @@ export namespace Prisma {
     quizAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    quizChoiceId: number
   }
 
   export type QuizRoundCreateManyCategoryInput = {
@@ -64194,7 +64147,6 @@ export namespace Prisma {
   export type QuizQuestionUpdateWithoutCategoryInput = {
     name?: StringFieldUpdateOperationsInput | string
     answer?: QuizChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
-    quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUpdateManyWithoutQuestionNestedInput
@@ -64209,7 +64161,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     quizChoices?: QuizChoiceUncheckedUpdateManyWithoutQuestionNestedInput
     quizRecords?: QuizRecordUncheckedUpdateManyWithoutQuestionNestedInput
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuizQuestionUncheckedUpdateManyWithoutQuizQuestionInput = {
@@ -64218,7 +64169,6 @@ export namespace Prisma {
     quizAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
   export type QuizRoundUpdateWithoutCategoryInput = {

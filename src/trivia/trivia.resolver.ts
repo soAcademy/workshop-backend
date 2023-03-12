@@ -1,7 +1,6 @@
 import { PrismaClient } from "../../prisma/client";
 import {
   ICreateQuizCategory,
-  ICreateManyQuizzes,
   ICreateQuiz,
   IGetQuiz,
   ISubmitQuiz,
@@ -22,7 +21,6 @@ export const createQuiz = (args: ICreateQuiz) =>
   prisma.quizQuestion.create({
     data: {
       name: args.name,
-      quizAnswerChoiceId: args.quizAnswerChoiceId,
       answer: {
         create: {
           choice: args.answer,
@@ -38,16 +36,6 @@ export const createQuiz = (args: ICreateQuiz) =>
       },
     },
   });
-
-// export const createManyQuizzes = (args: ICreateManyQuizzes) =>
-// prisma.quizQuestion.createMany({
-//   data: args.map((r) => ({
-//     id: r.id,
-//     name: r.name,
-//     answerId: r.answerId,
-//     quizCategoryId: r.category,
-//   })),
-// });
 
 export const getQuiz = async (args: IGetQuiz) => {
   const quizzes = await prisma.quizQuestion.findMany({
@@ -93,7 +81,7 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
     },
   });
   const totalScore = args.quizRecords.reduce((acc, r) => {
-    const findQuiz = quizzes.find((s) => s.id === r.quizQuestionId); //finding the quiz question object in the quizzes array using its id,
+    const findQuiz = quizzes.find((s) => s.id === r.quizQuestionId); //finds the corresponding quiz question object in the quizzes array using its id property  (check each object in the array)
     const isCorrect = findQuiz?.quizAnswerChoiceId === r.choice; //checking if the quizAnswerChoiceId property of the object matches the user's answer
     return acc + (isCorrect ? 1 : 0); //If the user's answer matches the correct answer, the accumulator is incremented by 1, otherwise, it remains unchanged.
   }, 0);

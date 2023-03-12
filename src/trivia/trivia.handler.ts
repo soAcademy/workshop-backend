@@ -1,8 +1,23 @@
 import express, { Application, Request, Response } from "express";
-import { createQuizCategoryCodec, createQuizCodec, getQuizCodec, submitQuizCodec } from "./trivia.interface";
-import { createQuizCategory, createQuiz, getCategories, getQuiz, submitQuiz, getResults } from "./trivia.resolver";
+import {
+  createQuizCategoryCodec,
+  createQuizCodec,
+  getQuizCodec,
+  submitQuizCodec,
+} from "./trivia.interface";
+import {
+  createQuizCategory,
+  createQuiz,
+  getCategories,
+  getQuiz,
+  submitQuiz,
+  getResults,
+} from "./trivia.resolver";
 
-export const createQuizCategoryHandler = async (req: Request, res: Response) => {
+export const createQuizCategoryHandler = async (
+  req: Request,
+  res: Response
+) => {
   try {
     if (createQuizCategoryCodec.decode(req?.body)._tag === "Right") {
       const response = await createQuizCategory(req?.body);
@@ -91,6 +106,3 @@ export const getResultsHandler = async (req: Request, res: Response) => {
     });
   }
 };
-
-
-

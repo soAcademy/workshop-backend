@@ -16,7 +16,7 @@ import {
   deleteTeacherHandler,
 } from "./sql";
 import { createManyTasksHandler, createTaskHandler, deleteManyTasksHandler, deleteTaskHandler, findUniqueOrThrowTaskHandler, findUniqueTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
-import { createQuizCategoryHandler, createQuizHandler, getQuizHandler, getResultsHandler, submitQuizHandler } from "./trivia/trivia.handler";
+import { createManyQuizzesHandler, createQuizCategoryHandler, createQuizHandler, getQuizHandler, getResultsHandler, submitQuizHandler } from "./trivia/trivia.handler";
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -212,5 +212,10 @@ export const AppRoutes = [
     path: "/trivia/getResults",
     method: "post",
     action: getResultsHandler,
+  },
+  {
+    path: "/trivia/createManyQuizzes",
+    method: "post",
+    action: createManyQuizzesHandler,
   },
 ];

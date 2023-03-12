@@ -9,25 +9,12 @@ export interface ICreateQuizCategory
 
 export const createQuizCodec = t.type({
   name: t.string,
-  quizAnswerChoiceId: t.number,
   answer: t.string,
   quizChoices: t.array(t.type({ choice: t.string })),
   category: t.number,
 });
 
 export interface ICreateQuiz extends t.TypeOf<typeof createQuizCodec> {}
-
-export const createManyQuizzesCodec = t.array(
-  t.type({
-    id: t.number,
-    name: t.string,
-    answerId: t.number,
-    category: t.number,
-  })
-);
-
-export interface ICreateManyQuizzes
-  extends t.TypeOf<typeof createManyQuizzesCodec> {}
 
 export const getQuizCodec = t.type({
   categoryId: t.number,
