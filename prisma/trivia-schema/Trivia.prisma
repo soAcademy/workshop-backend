@@ -1,7 +1,7 @@
 model User {
-  id   Int    @id @default(autoincrement())
-  name String
-  bestScore Int
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  bestScore Int      @default(0)
   games     Game[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -9,7 +9,7 @@ model User {
 
 model Category {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   questions Question[]
   games     Game[]
   createdAt DateTime   @default(now())
@@ -23,21 +23,21 @@ model Question {
   categoryId     Int
   rounds         Round[]
   choices        Choice[]  @relation("QuestionChoice")
-  answerChoice   Choice?   @relation("QuestionAnswer", fields: [answerChoiceId], references: [id])
+  answer         Choice    @relation("QuestionAnswer", fields: [answerChoiceId], references: [id])
   answerChoiceId Int       @unique
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }
 
 model Choice {
-  id              Int        @id @default(autoincrement())
-  choice          String
-  rounds          Round[]
-  questionId      Int?
-  question        Question?  @relation("QuestionChoice", fields: [questionId], references: [id])
-  questionAnswers Question[] @relation("QuestionAnswer")
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  id             Int       @id @default(autoincrement())
+  choice         String
+  rounds         Round[]
+  question       Question? @relation("QuestionChoice", fields: [questionId], references: [id])
+  questionId     Int?
+  questionAnswer Question? @relation("QuestionAnswer")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model Round {
