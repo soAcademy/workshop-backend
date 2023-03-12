@@ -71,16 +71,29 @@ export type RoundQuiz = {
 }
 
 /**
- * Model RoundDetail
+ * Model RoundQuestionDetail
  * 
  */
-export type RoundDetail = {
+export type RoundQuestionDetail = {
   id: number
   roundQuizId: number
   questionId: number
   questionOrder: number
-  userChoose: number
+  userChoose: number | null
   result: boolean
+  createAt: Date
+  updateAt: Date
+}
+
+/**
+ * Model RoundQuestionChoiceDetail
+ * 
+ */
+export type RoundQuestionChoiceDetail = {
+  id: number
+  roundQuizId: number
+  questionId: number
+  choiceId: number
   createAt: Date
   updateAt: Date
 }
@@ -254,14 +267,24 @@ export class PrismaClient<
   get roundQuiz(): Prisma.RoundQuizDelegate<GlobalReject>;
 
   /**
-   * `prisma.roundDetail`: Exposes CRUD operations for the **RoundDetail** model.
+   * `prisma.roundQuestionDetail`: Exposes CRUD operations for the **RoundQuestionDetail** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more RoundDetails
-    * const roundDetails = await prisma.roundDetail.findMany()
+    * // Fetch zero or more RoundQuestionDetails
+    * const roundQuestionDetails = await prisma.roundQuestionDetail.findMany()
     * ```
     */
-  get roundDetail(): Prisma.RoundDetailDelegate<GlobalReject>;
+  get roundQuestionDetail(): Prisma.RoundQuestionDetailDelegate<GlobalReject>;
+
+  /**
+   * `prisma.roundQuestionChoiceDetail`: Exposes CRUD operations for the **RoundQuestionChoiceDetail** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RoundQuestionChoiceDetails
+    * const roundQuestionChoiceDetails = await prisma.roundQuestionChoiceDetail.findMany()
+    * ```
+    */
+  get roundQuestionChoiceDetail(): Prisma.RoundQuestionChoiceDetailDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -736,7 +759,8 @@ export namespace Prisma {
     Choice: 'Choice',
     User: 'User',
     RoundQuiz: 'RoundQuiz',
-    RoundDetail: 'RoundDetail'
+    RoundQuestionDetail: 'RoundQuestionDetail',
+    RoundQuestionChoiceDetail: 'RoundQuestionChoiceDetail'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -949,12 +973,14 @@ export namespace Prisma {
 
   export type QuestionCountOutputType = {
     choice: number
-    RoundDetail: number
+    RoundQuestionDetail: number
+    RoundQuestionChoiceDetail: number
   }
 
   export type QuestionCountOutputTypeSelect = {
     choice?: boolean
-    RoundDetail?: boolean
+    RoundQuestionDetail?: boolean
+    RoundQuestionChoiceDetail?: boolean
   }
 
   export type QuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | QuestionCountOutputTypeArgs> =
@@ -983,6 +1009,49 @@ export namespace Prisma {
      * Select specific fields to fetch from the QuestionCountOutputType
      */
     select?: QuestionCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type ChoiceCountOutputType
+   */
+
+
+  export type ChoiceCountOutputType = {
+    RoundQuestionChoiceDetail: number
+  }
+
+  export type ChoiceCountOutputTypeSelect = {
+    RoundQuestionChoiceDetail?: boolean
+  }
+
+  export type ChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | ChoiceCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? ChoiceCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (ChoiceCountOutputTypeArgs)
+    ? ChoiceCountOutputType 
+    : S extends { select: any } & (ChoiceCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof ChoiceCountOutputType ? ChoiceCountOutputType[P] : never
+  } 
+      : ChoiceCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * ChoiceCountOutputType without action
+   */
+  export type ChoiceCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the ChoiceCountOutputType
+     */
+    select?: ChoiceCountOutputTypeSelect | null
   }
 
 
@@ -1036,11 +1105,13 @@ export namespace Prisma {
 
 
   export type RoundQuizCountOutputType = {
-    RoundDetail: number
+    RoundQuestionDetail: number
+    RoundQuestionChoiceDetail: number
   }
 
   export type RoundQuizCountOutputTypeSelect = {
-    RoundDetail?: boolean
+    RoundQuestionDetail?: boolean
+    RoundQuestionChoiceDetail?: boolean
   }
 
   export type RoundQuizCountOutputTypeGetPayload<S extends boolean | null | undefined | RoundQuizCountOutputTypeArgs> =
@@ -2305,7 +2376,8 @@ export namespace Prisma {
     createAt?: boolean
     updateAt?: boolean
     choice?: boolean | Question$choiceArgs
-    RoundDetail?: boolean | Question$RoundDetailArgs
+    RoundQuestionDetail?: boolean | Question$RoundQuestionDetailArgs
+    RoundQuestionChoiceDetail?: boolean | Question$RoundQuestionChoiceDetailArgs
     _count?: boolean | QuestionCountOutputTypeArgs
   }
 
@@ -2314,7 +2386,8 @@ export namespace Prisma {
     questionCategories?: boolean | QuestionCategoryArgs
     answer?: boolean | ChoiceArgs
     choice?: boolean | Question$choiceArgs
-    RoundDetail?: boolean | Question$RoundDetailArgs
+    RoundQuestionDetail?: boolean | Question$RoundQuestionDetailArgs
+    RoundQuestionChoiceDetail?: boolean | Question$RoundQuestionChoiceDetailArgs
     _count?: boolean | QuestionCountOutputTypeArgs
   }
 
@@ -2328,7 +2401,8 @@ export namespace Prisma {
         P extends 'questionCategories' ? QuestionCategoryGetPayload<S['include'][P]> :
         P extends 'answer' ? ChoiceGetPayload<S['include'][P]> :
         P extends 'choice' ? Array < ChoiceGetPayload<S['include'][P]>>  :
-        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['include'][P]>>  :
+        P extends 'RoundQuestionDetail' ? Array < RoundQuestionDetailGetPayload<S['include'][P]>>  :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['include'][P]>>  :
         P extends '_count' ? QuestionCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (QuestionArgs | QuestionFindManyArgs)
@@ -2337,7 +2411,8 @@ export namespace Prisma {
         P extends 'questionCategories' ? QuestionCategoryGetPayload<S['select'][P]> :
         P extends 'answer' ? ChoiceGetPayload<S['select'][P]> :
         P extends 'choice' ? Array < ChoiceGetPayload<S['select'][P]>>  :
-        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['select'][P]>>  :
+        P extends 'RoundQuestionDetail' ? Array < RoundQuestionDetailGetPayload<S['select'][P]>>  :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['select'][P]>>  :
         P extends '_count' ? QuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Question ? Question[P] : never
   } 
       : Question
@@ -2716,7 +2791,9 @@ export namespace Prisma {
 
     choice<T extends Question$choiceArgs= {}>(args?: Subset<T, Question$choiceArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
 
-    RoundDetail<T extends Question$RoundDetailArgs= {}>(args?: Subset<T, Question$RoundDetailArgs>): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>| Null>;
+    RoundQuestionDetail<T extends Question$RoundQuestionDetailArgs= {}>(args?: Subset<T, Question$RoundQuestionDetailArgs>): Prisma.PrismaPromise<Array<RoundQuestionDetailGetPayload<T>>| Null>;
+
+    RoundQuestionChoiceDetail<T extends Question$RoundQuestionChoiceDetailArgs= {}>(args?: Subset<T, Question$RoundQuestionChoiceDetailArgs>): Prisma.PrismaPromise<Array<RoundQuestionChoiceDetailGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3095,23 +3172,44 @@ export namespace Prisma {
 
 
   /**
-   * Question.RoundDetail
+   * Question.RoundQuestionDetail
    */
-  export type Question$RoundDetailArgs = {
+  export type Question$RoundQuestionDetailArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
-    where?: RoundDetailWhereInput
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
-    cursor?: RoundDetailWhereUniqueInput
+    include?: RoundQuestionDetailInclude | null
+    where?: RoundQuestionDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
+    cursor?: RoundQuestionDetailWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+    distinct?: Enumerable<RoundQuestionDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * Question.RoundQuestionChoiceDetail
+   */
+  export type Question$RoundQuestionChoiceDetailArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    where?: RoundQuestionChoiceDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
   }
 
 
@@ -3337,12 +3435,16 @@ export namespace Prisma {
     questionAnswer?: boolean | QuestionArgs
     createAt?: boolean
     updateAt?: boolean
+    RoundQuestionChoiceDetail?: boolean | Choice$RoundQuestionChoiceDetailArgs
+    _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
 
   export type ChoiceInclude = {
     question?: boolean | QuestionArgs
     questionAnswer?: boolean | QuestionArgs
+    RoundQuestionChoiceDetail?: boolean | Choice$RoundQuestionChoiceDetailArgs
+    _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
   export type ChoiceGetPayload<S extends boolean | null | undefined | ChoiceArgs> =
@@ -3353,13 +3455,17 @@ export namespace Prisma {
     ? Choice  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'question' ? QuestionGetPayload<S['include'][P]> | null :
-        P extends 'questionAnswer' ? QuestionGetPayload<S['include'][P]> | null :  never
+        P extends 'questionAnswer' ? QuestionGetPayload<S['include'][P]> | null :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['include'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (ChoiceArgs | ChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'question' ? QuestionGetPayload<S['select'][P]> | null :
-        P extends 'questionAnswer' ? QuestionGetPayload<S['select'][P]> | null :  P extends keyof Choice ? Choice[P] : never
+        P extends 'questionAnswer' ? QuestionGetPayload<S['select'][P]> | null :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['select'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Choice ? Choice[P] : never
   } 
       : Choice
 
@@ -3735,6 +3841,8 @@ export namespace Prisma {
 
     questionAnswer<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
 
+    RoundQuestionChoiceDetail<T extends Choice$RoundQuestionChoiceDetailArgs= {}>(args?: Subset<T, Choice$RoundQuestionChoiceDetailArgs>): Prisma.PrismaPromise<Array<RoundQuestionChoiceDetailGetPayload<T>>| Null>;
+
     private get _document();
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4087,6 +4195,27 @@ export namespace Prisma {
      * Filter which Choices to delete
      */
     where?: ChoiceWhereInput
+  }
+
+
+  /**
+   * Choice.RoundQuestionChoiceDetail
+   */
+  export type Choice$RoundQuestionChoiceDetailArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    where?: RoundQuestionChoiceDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
   }
 
 
@@ -5310,7 +5439,8 @@ export namespace Prisma {
     userId?: boolean
     createAt?: boolean
     updateAt?: boolean
-    RoundDetail?: boolean | RoundQuiz$RoundDetailArgs
+    RoundQuestionDetail?: boolean | RoundQuiz$RoundQuestionDetailArgs
+    RoundQuestionChoiceDetail?: boolean | RoundQuiz$RoundQuestionChoiceDetailArgs
     _count?: boolean | RoundQuizCountOutputTypeArgs
   }
 
@@ -5318,7 +5448,8 @@ export namespace Prisma {
   export type RoundQuizInclude = {
     questionCategories?: boolean | QuestionCategoryArgs
     user?: boolean | UserArgs
-    RoundDetail?: boolean | RoundQuiz$RoundDetailArgs
+    RoundQuestionDetail?: boolean | RoundQuiz$RoundQuestionDetailArgs
+    RoundQuestionChoiceDetail?: boolean | RoundQuiz$RoundQuestionChoiceDetailArgs
     _count?: boolean | RoundQuizCountOutputTypeArgs
   }
 
@@ -5331,7 +5462,8 @@ export namespace Prisma {
     [P in TruthyKeys<S['include']>]:
         P extends 'questionCategories' ? QuestionCategoryGetPayload<S['include'][P]> :
         P extends 'user' ? UserGetPayload<S['include'][P]> :
-        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['include'][P]>>  :
+        P extends 'RoundQuestionDetail' ? Array < RoundQuestionDetailGetPayload<S['include'][P]>>  :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['include'][P]>>  :
         P extends '_count' ? RoundQuizCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (RoundQuizArgs | RoundQuizFindManyArgs)
@@ -5339,7 +5471,8 @@ export namespace Prisma {
     [P in TruthyKeys<S['select']>]:
         P extends 'questionCategories' ? QuestionCategoryGetPayload<S['select'][P]> :
         P extends 'user' ? UserGetPayload<S['select'][P]> :
-        P extends 'RoundDetail' ? Array < RoundDetailGetPayload<S['select'][P]>>  :
+        P extends 'RoundQuestionDetail' ? Array < RoundQuestionDetailGetPayload<S['select'][P]>>  :
+        P extends 'RoundQuestionChoiceDetail' ? Array < RoundQuestionChoiceDetailGetPayload<S['select'][P]>>  :
         P extends '_count' ? RoundQuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof RoundQuiz ? RoundQuiz[P] : never
   } 
       : RoundQuiz
@@ -5716,7 +5849,9 @@ export namespace Prisma {
 
     user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
 
-    RoundDetail<T extends RoundQuiz$RoundDetailArgs= {}>(args?: Subset<T, RoundQuiz$RoundDetailArgs>): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>| Null>;
+    RoundQuestionDetail<T extends RoundQuiz$RoundQuestionDetailArgs= {}>(args?: Subset<T, RoundQuiz$RoundQuestionDetailArgs>): Prisma.PrismaPromise<Array<RoundQuestionDetailGetPayload<T>>| Null>;
+
+    RoundQuestionChoiceDetail<T extends RoundQuiz$RoundQuestionChoiceDetailArgs= {}>(args?: Subset<T, RoundQuiz$RoundQuestionChoiceDetailArgs>): Prisma.PrismaPromise<Array<RoundQuestionChoiceDetailGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -6074,23 +6209,44 @@ export namespace Prisma {
 
 
   /**
-   * RoundQuiz.RoundDetail
+   * RoundQuiz.RoundQuestionDetail
    */
-  export type RoundQuiz$RoundDetailArgs = {
+  export type RoundQuiz$RoundQuestionDetailArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
-    where?: RoundDetailWhereInput
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
-    cursor?: RoundDetailWhereUniqueInput
+    include?: RoundQuestionDetailInclude | null
+    where?: RoundQuestionDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
+    cursor?: RoundQuestionDetailWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+    distinct?: Enumerable<RoundQuestionDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuiz.RoundQuestionChoiceDetail
+   */
+  export type RoundQuiz$RoundQuestionChoiceDetailArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    where?: RoundQuestionChoiceDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
   }
 
 
@@ -6111,19 +6267,19 @@ export namespace Prisma {
 
 
   /**
-   * Model RoundDetail
+   * Model RoundQuestionDetail
    */
 
 
-  export type AggregateRoundDetail = {
-    _count: RoundDetailCountAggregateOutputType | null
-    _avg: RoundDetailAvgAggregateOutputType | null
-    _sum: RoundDetailSumAggregateOutputType | null
-    _min: RoundDetailMinAggregateOutputType | null
-    _max: RoundDetailMaxAggregateOutputType | null
+  export type AggregateRoundQuestionDetail = {
+    _count: RoundQuestionDetailCountAggregateOutputType | null
+    _avg: RoundQuestionDetailAvgAggregateOutputType | null
+    _sum: RoundQuestionDetailSumAggregateOutputType | null
+    _min: RoundQuestionDetailMinAggregateOutputType | null
+    _max: RoundQuestionDetailMaxAggregateOutputType | null
   }
 
-  export type RoundDetailAvgAggregateOutputType = {
+  export type RoundQuestionDetailAvgAggregateOutputType = {
     id: number | null
     roundQuizId: number | null
     questionId: number | null
@@ -6131,7 +6287,7 @@ export namespace Prisma {
     userChoose: number | null
   }
 
-  export type RoundDetailSumAggregateOutputType = {
+  export type RoundQuestionDetailSumAggregateOutputType = {
     id: number | null
     roundQuizId: number | null
     questionId: number | null
@@ -6139,18 +6295,7 @@ export namespace Prisma {
     userChoose: number | null
   }
 
-  export type RoundDetailMinAggregateOutputType = {
-    id: number | null
-    roundQuizId: number | null
-    questionId: number | null
-    questionOrder: number | null
-    userChoose: number | null
-    result: boolean | null
-    createAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type RoundDetailMaxAggregateOutputType = {
+  export type RoundQuestionDetailMinAggregateOutputType = {
     id: number | null
     roundQuizId: number | null
     questionId: number | null
@@ -6161,7 +6306,18 @@ export namespace Prisma {
     updateAt: Date | null
   }
 
-  export type RoundDetailCountAggregateOutputType = {
+  export type RoundQuestionDetailMaxAggregateOutputType = {
+    id: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    questionOrder: number | null
+    userChoose: number | null
+    result: boolean | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type RoundQuestionDetailCountAggregateOutputType = {
     id: number
     roundQuizId: number
     questionId: number
@@ -6174,7 +6330,7 @@ export namespace Prisma {
   }
 
 
-  export type RoundDetailAvgAggregateInputType = {
+  export type RoundQuestionDetailAvgAggregateInputType = {
     id?: true
     roundQuizId?: true
     questionId?: true
@@ -6182,7 +6338,7 @@ export namespace Prisma {
     userChoose?: true
   }
 
-  export type RoundDetailSumAggregateInputType = {
+  export type RoundQuestionDetailSumAggregateInputType = {
     id?: true
     roundQuizId?: true
     questionId?: true
@@ -6190,18 +6346,7 @@ export namespace Prisma {
     userChoose?: true
   }
 
-  export type RoundDetailMinAggregateInputType = {
-    id?: true
-    roundQuizId?: true
-    questionId?: true
-    questionOrder?: true
-    userChoose?: true
-    result?: true
-    createAt?: true
-    updateAt?: true
-  }
-
-  export type RoundDetailMaxAggregateInputType = {
+  export type RoundQuestionDetailMinAggregateInputType = {
     id?: true
     roundQuizId?: true
     questionId?: true
@@ -6212,7 +6357,18 @@ export namespace Prisma {
     updateAt?: true
   }
 
-  export type RoundDetailCountAggregateInputType = {
+  export type RoundQuestionDetailMaxAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    questionOrder?: true
+    userChoose?: true
+    result?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type RoundQuestionDetailCountAggregateInputType = {
     id?: true
     roundQuizId?: true
     questionId?: true
@@ -6224,124 +6380,124 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type RoundDetailAggregateArgs = {
+  export type RoundQuestionDetailAggregateArgs = {
     /**
-     * Filter which RoundDetail to aggregate.
+     * Filter which RoundQuestionDetail to aggregate.
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RoundDetails to fetch.
+     * Determine the order of RoundQuestionDetails to fetch.
      */
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RoundDetailWhereUniqueInput
+    cursor?: RoundQuestionDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RoundDetails from the position of the cursor.
+     * Take `±n` RoundQuestionDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RoundDetails.
+     * Skip the first `n` RoundQuestionDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned RoundDetails
+     * Count returned RoundQuestionDetails
     **/
-    _count?: true | RoundDetailCountAggregateInputType
+    _count?: true | RoundQuestionDetailCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: RoundDetailAvgAggregateInputType
+    _avg?: RoundQuestionDetailAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: RoundDetailSumAggregateInputType
+    _sum?: RoundQuestionDetailSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RoundDetailMinAggregateInputType
+    _min?: RoundQuestionDetailMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RoundDetailMaxAggregateInputType
+    _max?: RoundQuestionDetailMaxAggregateInputType
   }
 
-  export type GetRoundDetailAggregateType<T extends RoundDetailAggregateArgs> = {
-        [P in keyof T & keyof AggregateRoundDetail]: P extends '_count' | 'count'
+  export type GetRoundQuestionDetailAggregateType<T extends RoundQuestionDetailAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundQuestionDetail]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRoundDetail[P]>
-      : GetScalarType<T[P], AggregateRoundDetail[P]>
+        : GetScalarType<T[P], AggregateRoundQuestionDetail[P]>
+      : GetScalarType<T[P], AggregateRoundQuestionDetail[P]>
   }
 
 
 
 
-  export type RoundDetailGroupByArgs = {
-    where?: RoundDetailWhereInput
-    orderBy?: Enumerable<RoundDetailOrderByWithAggregationInput>
-    by: RoundDetailScalarFieldEnum[]
-    having?: RoundDetailScalarWhereWithAggregatesInput
+  export type RoundQuestionDetailGroupByArgs = {
+    where?: RoundQuestionDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithAggregationInput>
+    by: RoundQuestionDetailScalarFieldEnum[]
+    having?: RoundQuestionDetailScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RoundDetailCountAggregateInputType | true
-    _avg?: RoundDetailAvgAggregateInputType
-    _sum?: RoundDetailSumAggregateInputType
-    _min?: RoundDetailMinAggregateInputType
-    _max?: RoundDetailMaxAggregateInputType
+    _count?: RoundQuestionDetailCountAggregateInputType | true
+    _avg?: RoundQuestionDetailAvgAggregateInputType
+    _sum?: RoundQuestionDetailSumAggregateInputType
+    _min?: RoundQuestionDetailMinAggregateInputType
+    _max?: RoundQuestionDetailMaxAggregateInputType
   }
 
 
-  export type RoundDetailGroupByOutputType = {
+  export type RoundQuestionDetailGroupByOutputType = {
     id: number
     roundQuizId: number
     questionId: number
     questionOrder: number
-    userChoose: number
+    userChoose: number | null
     result: boolean
     createAt: Date
     updateAt: Date
-    _count: RoundDetailCountAggregateOutputType | null
-    _avg: RoundDetailAvgAggregateOutputType | null
-    _sum: RoundDetailSumAggregateOutputType | null
-    _min: RoundDetailMinAggregateOutputType | null
-    _max: RoundDetailMaxAggregateOutputType | null
+    _count: RoundQuestionDetailCountAggregateOutputType | null
+    _avg: RoundQuestionDetailAvgAggregateOutputType | null
+    _sum: RoundQuestionDetailSumAggregateOutputType | null
+    _min: RoundQuestionDetailMinAggregateOutputType | null
+    _max: RoundQuestionDetailMaxAggregateOutputType | null
   }
 
-  type GetRoundDetailGroupByPayload<T extends RoundDetailGroupByArgs> = Prisma.PrismaPromise<
+  type GetRoundQuestionDetailGroupByPayload<T extends RoundQuestionDetailGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<RoundDetailGroupByOutputType, T['by']> &
+      PickArray<RoundQuestionDetailGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RoundDetailGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RoundQuestionDetailGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RoundDetailGroupByOutputType[P]>
-            : GetScalarType<T[P], RoundDetailGroupByOutputType[P]>
+              : GetScalarType<T[P], RoundQuestionDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundQuestionDetailGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RoundDetailSelect = {
+  export type RoundQuestionDetailSelect = {
     id?: boolean
     roundQuiz?: boolean | RoundQuizArgs
     roundQuizId?: boolean
@@ -6355,177 +6511,177 @@ export namespace Prisma {
   }
 
 
-  export type RoundDetailInclude = {
+  export type RoundQuestionDetailInclude = {
     roundQuiz?: boolean | RoundQuizArgs
     question?: boolean | QuestionArgs
   }
 
-  export type RoundDetailGetPayload<S extends boolean | null | undefined | RoundDetailArgs> =
+  export type RoundQuestionDetailGetPayload<S extends boolean | null | undefined | RoundQuestionDetailArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? RoundDetail :
+    S extends true ? RoundQuestionDetail :
     S extends undefined ? never :
-    S extends { include: any } & (RoundDetailArgs | RoundDetailFindManyArgs)
-    ? RoundDetail  & {
+    S extends { include: any } & (RoundQuestionDetailArgs | RoundQuestionDetailFindManyArgs)
+    ? RoundQuestionDetail  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'roundQuiz' ? RoundQuizGetPayload<S['include'][P]> :
         P extends 'question' ? QuestionGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (RoundDetailArgs | RoundDetailFindManyArgs)
+    : S extends { select: any } & (RoundQuestionDetailArgs | RoundQuestionDetailFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'roundQuiz' ? RoundQuizGetPayload<S['select'][P]> :
-        P extends 'question' ? QuestionGetPayload<S['select'][P]> :  P extends keyof RoundDetail ? RoundDetail[P] : never
+        P extends 'question' ? QuestionGetPayload<S['select'][P]> :  P extends keyof RoundQuestionDetail ? RoundQuestionDetail[P] : never
   } 
-      : RoundDetail
+      : RoundQuestionDetail
 
 
-  type RoundDetailCountArgs = 
-    Omit<RoundDetailFindManyArgs, 'select' | 'include'> & {
-      select?: RoundDetailCountAggregateInputType | true
+  type RoundQuestionDetailCountArgs = 
+    Omit<RoundQuestionDetailFindManyArgs, 'select' | 'include'> & {
+      select?: RoundQuestionDetailCountAggregateInputType | true
     }
 
-  export interface RoundDetailDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface RoundQuestionDetailDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one RoundDetail that matches the filter.
-     * @param {RoundDetailFindUniqueArgs} args - Arguments to find a RoundDetail
+     * Find zero or one RoundQuestionDetail that matches the filter.
+     * @param {RoundQuestionDetailFindUniqueArgs} args - Arguments to find a RoundQuestionDetail
      * @example
-     * // Get one RoundDetail
-     * const roundDetail = await prisma.roundDetail.findUnique({
+     * // Get one RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends RoundDetailFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, RoundDetailFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundDetail'> extends True ? Prisma__RoundDetailClient<RoundDetailGetPayload<T>> : Prisma__RoundDetailClient<RoundDetailGetPayload<T> | null, null>
+    findUnique<T extends RoundQuestionDetailFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundQuestionDetailFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuestionDetail'> extends True ? Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>> : Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T> | null, null>
 
     /**
-     * Find one RoundDetail that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one RoundQuestionDetail that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {RoundDetailFindUniqueOrThrowArgs} args - Arguments to find a RoundDetail
+     * @param {RoundQuestionDetailFindUniqueOrThrowArgs} args - Arguments to find a RoundQuestionDetail
      * @example
-     * // Get one RoundDetail
-     * const roundDetail = await prisma.roundDetail.findUniqueOrThrow({
+     * // Get one RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends RoundDetailFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, RoundDetailFindUniqueOrThrowArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    findUniqueOrThrow<T extends RoundQuestionDetailFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionDetailFindUniqueOrThrowArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Find the first RoundDetail that matches the filter.
+     * Find the first RoundQuestionDetail that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailFindFirstArgs} args - Arguments to find a RoundDetail
+     * @param {RoundQuestionDetailFindFirstArgs} args - Arguments to find a RoundQuestionDetail
      * @example
-     * // Get one RoundDetail
-     * const roundDetail = await prisma.roundDetail.findFirst({
+     * // Get one RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends RoundDetailFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, RoundDetailFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundDetail'> extends True ? Prisma__RoundDetailClient<RoundDetailGetPayload<T>> : Prisma__RoundDetailClient<RoundDetailGetPayload<T> | null, null>
+    findFirst<T extends RoundQuestionDetailFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundQuestionDetailFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuestionDetail'> extends True ? Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>> : Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T> | null, null>
 
     /**
-     * Find the first RoundDetail that matches the filter or
+     * Find the first RoundQuestionDetail that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailFindFirstOrThrowArgs} args - Arguments to find a RoundDetail
+     * @param {RoundQuestionDetailFindFirstOrThrowArgs} args - Arguments to find a RoundQuestionDetail
      * @example
-     * // Get one RoundDetail
-     * const roundDetail = await prisma.roundDetail.findFirstOrThrow({
+     * // Get one RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends RoundDetailFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, RoundDetailFindFirstOrThrowArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    findFirstOrThrow<T extends RoundQuestionDetailFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionDetailFindFirstOrThrowArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Find zero or more RoundDetails that matches the filter.
+     * Find zero or more RoundQuestionDetails that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {RoundQuestionDetailFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all RoundDetails
-     * const roundDetails = await prisma.roundDetail.findMany()
+     * // Get all RoundQuestionDetails
+     * const roundQuestionDetails = await prisma.roundQuestionDetail.findMany()
      * 
-     * // Get first 10 RoundDetails
-     * const roundDetails = await prisma.roundDetail.findMany({ take: 10 })
+     * // Get first 10 RoundQuestionDetails
+     * const roundQuestionDetails = await prisma.roundQuestionDetail.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const roundDetailWithIdOnly = await prisma.roundDetail.findMany({ select: { id: true } })
+     * const roundQuestionDetailWithIdOnly = await prisma.roundQuestionDetail.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends RoundDetailFindManyArgs>(
-      args?: SelectSubset<T, RoundDetailFindManyArgs>
-    ): Prisma.PrismaPromise<Array<RoundDetailGetPayload<T>>>
+    findMany<T extends RoundQuestionDetailFindManyArgs>(
+      args?: SelectSubset<T, RoundQuestionDetailFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundQuestionDetailGetPayload<T>>>
 
     /**
-     * Create a RoundDetail.
-     * @param {RoundDetailCreateArgs} args - Arguments to create a RoundDetail.
+     * Create a RoundQuestionDetail.
+     * @param {RoundQuestionDetailCreateArgs} args - Arguments to create a RoundQuestionDetail.
      * @example
-     * // Create one RoundDetail
-     * const RoundDetail = await prisma.roundDetail.create({
+     * // Create one RoundQuestionDetail
+     * const RoundQuestionDetail = await prisma.roundQuestionDetail.create({
      *   data: {
-     *     // ... data to create a RoundDetail
+     *     // ... data to create a RoundQuestionDetail
      *   }
      * })
      * 
     **/
-    create<T extends RoundDetailCreateArgs>(
-      args: SelectSubset<T, RoundDetailCreateArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    create<T extends RoundQuestionDetailCreateArgs>(
+      args: SelectSubset<T, RoundQuestionDetailCreateArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Create many RoundDetails.
-     *     @param {RoundDetailCreateManyArgs} args - Arguments to create many RoundDetails.
+     * Create many RoundQuestionDetails.
+     *     @param {RoundQuestionDetailCreateManyArgs} args - Arguments to create many RoundQuestionDetails.
      *     @example
-     *     // Create many RoundDetails
-     *     const roundDetail = await prisma.roundDetail.createMany({
+     *     // Create many RoundQuestionDetails
+     *     const roundQuestionDetail = await prisma.roundQuestionDetail.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends RoundDetailCreateManyArgs>(
-      args?: SelectSubset<T, RoundDetailCreateManyArgs>
+    createMany<T extends RoundQuestionDetailCreateManyArgs>(
+      args?: SelectSubset<T, RoundQuestionDetailCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a RoundDetail.
-     * @param {RoundDetailDeleteArgs} args - Arguments to delete one RoundDetail.
+     * Delete a RoundQuestionDetail.
+     * @param {RoundQuestionDetailDeleteArgs} args - Arguments to delete one RoundQuestionDetail.
      * @example
-     * // Delete one RoundDetail
-     * const RoundDetail = await prisma.roundDetail.delete({
+     * // Delete one RoundQuestionDetail
+     * const RoundQuestionDetail = await prisma.roundQuestionDetail.delete({
      *   where: {
-     *     // ... filter to delete one RoundDetail
+     *     // ... filter to delete one RoundQuestionDetail
      *   }
      * })
      * 
     **/
-    delete<T extends RoundDetailDeleteArgs>(
-      args: SelectSubset<T, RoundDetailDeleteArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    delete<T extends RoundQuestionDetailDeleteArgs>(
+      args: SelectSubset<T, RoundQuestionDetailDeleteArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Update one RoundDetail.
-     * @param {RoundDetailUpdateArgs} args - Arguments to update one RoundDetail.
+     * Update one RoundQuestionDetail.
+     * @param {RoundQuestionDetailUpdateArgs} args - Arguments to update one RoundQuestionDetail.
      * @example
-     * // Update one RoundDetail
-     * const roundDetail = await prisma.roundDetail.update({
+     * // Update one RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6535,34 +6691,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends RoundDetailUpdateArgs>(
-      args: SelectSubset<T, RoundDetailUpdateArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    update<T extends RoundQuestionDetailUpdateArgs>(
+      args: SelectSubset<T, RoundQuestionDetailUpdateArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Delete zero or more RoundDetails.
-     * @param {RoundDetailDeleteManyArgs} args - Arguments to filter RoundDetails to delete.
+     * Delete zero or more RoundQuestionDetails.
+     * @param {RoundQuestionDetailDeleteManyArgs} args - Arguments to filter RoundQuestionDetails to delete.
      * @example
-     * // Delete a few RoundDetails
-     * const { count } = await prisma.roundDetail.deleteMany({
+     * // Delete a few RoundQuestionDetails
+     * const { count } = await prisma.roundQuestionDetail.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends RoundDetailDeleteManyArgs>(
-      args?: SelectSubset<T, RoundDetailDeleteManyArgs>
+    deleteMany<T extends RoundQuestionDetailDeleteManyArgs>(
+      args?: SelectSubset<T, RoundQuestionDetailDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RoundDetails.
+     * Update zero or more RoundQuestionDetails.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RoundQuestionDetailUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many RoundDetails
-     * const roundDetail = await prisma.roundDetail.updateMany({
+     * // Update many RoundQuestionDetails
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6572,59 +6728,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends RoundDetailUpdateManyArgs>(
-      args: SelectSubset<T, RoundDetailUpdateManyArgs>
+    updateMany<T extends RoundQuestionDetailUpdateManyArgs>(
+      args: SelectSubset<T, RoundQuestionDetailUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one RoundDetail.
-     * @param {RoundDetailUpsertArgs} args - Arguments to update or create a RoundDetail.
+     * Create or update one RoundQuestionDetail.
+     * @param {RoundQuestionDetailUpsertArgs} args - Arguments to update or create a RoundQuestionDetail.
      * @example
-     * // Update or create a RoundDetail
-     * const roundDetail = await prisma.roundDetail.upsert({
+     * // Update or create a RoundQuestionDetail
+     * const roundQuestionDetail = await prisma.roundQuestionDetail.upsert({
      *   create: {
-     *     // ... data to create a RoundDetail
+     *     // ... data to create a RoundQuestionDetail
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the RoundDetail we want to update
+     *     // ... the filter for the RoundQuestionDetail we want to update
      *   }
      * })
     **/
-    upsert<T extends RoundDetailUpsertArgs>(
-      args: SelectSubset<T, RoundDetailUpsertArgs>
-    ): Prisma__RoundDetailClient<RoundDetailGetPayload<T>>
+    upsert<T extends RoundQuestionDetailUpsertArgs>(
+      args: SelectSubset<T, RoundQuestionDetailUpsertArgs>
+    ): Prisma__RoundQuestionDetailClient<RoundQuestionDetailGetPayload<T>>
 
     /**
-     * Count the number of RoundDetails.
+     * Count the number of RoundQuestionDetails.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailCountArgs} args - Arguments to filter RoundDetails to count.
+     * @param {RoundQuestionDetailCountArgs} args - Arguments to filter RoundQuestionDetails to count.
      * @example
-     * // Count the number of RoundDetails
-     * const count = await prisma.roundDetail.count({
+     * // Count the number of RoundQuestionDetails
+     * const count = await prisma.roundQuestionDetail.count({
      *   where: {
-     *     // ... the filter for the RoundDetails we want to count
+     *     // ... the filter for the RoundQuestionDetails we want to count
      *   }
      * })
     **/
-    count<T extends RoundDetailCountArgs>(
-      args?: Subset<T, RoundDetailCountArgs>,
+    count<T extends RoundQuestionDetailCountArgs>(
+      args?: Subset<T, RoundQuestionDetailCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RoundDetailCountAggregateOutputType>
+          : GetScalarType<T['select'], RoundQuestionDetailCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a RoundDetail.
+     * Allows you to perform aggregations operations on a RoundQuestionDetail.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RoundQuestionDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -6644,13 +6800,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RoundDetailAggregateArgs>(args: Subset<T, RoundDetailAggregateArgs>): Prisma.PrismaPromise<GetRoundDetailAggregateType<T>>
+    aggregate<T extends RoundQuestionDetailAggregateArgs>(args: Subset<T, RoundQuestionDetailAggregateArgs>): Prisma.PrismaPromise<GetRoundQuestionDetailAggregateType<T>>
 
     /**
-     * Group by RoundDetail.
+     * Group by RoundQuestionDetail.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundDetailGroupByArgs} args - Group by arguments.
+     * @param {RoundQuestionDetailGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -6665,14 +6821,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RoundDetailGroupByArgs,
+      T extends RoundQuestionDetailGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RoundDetailGroupByArgs['orderBy'] }
-        : { orderBy?: RoundDetailGroupByArgs['orderBy'] },
+        ? { orderBy: RoundQuestionDetailGroupByArgs['orderBy'] }
+        : { orderBy?: RoundQuestionDetailGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -6721,17 +6877,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RoundDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RoundQuestionDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuestionDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for RoundDetail.
+   * The delegate class that acts as a "Promise-like" for RoundQuestionDetail.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__RoundDetailClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__RoundQuestionDetailClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -6778,27 +6934,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * RoundDetail base type for findUnique actions
+   * RoundQuestionDetail base type for findUnique actions
    */
-  export type RoundDetailFindUniqueArgsBase = {
+  export type RoundQuestionDetailFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter, which RoundDetail to fetch.
+     * Filter, which RoundQuestionDetail to fetch.
      */
-    where: RoundDetailWhereUniqueInput
+    where: RoundQuestionDetailWhereUniqueInput
   }
 
   /**
-   * RoundDetail findUnique
+   * RoundQuestionDetail findUnique
    */
-  export interface RoundDetailFindUniqueArgs extends RoundDetailFindUniqueArgsBase {
+  export interface RoundQuestionDetailFindUniqueArgs extends RoundQuestionDetailFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -6808,76 +6964,76 @@ export namespace Prisma {
       
 
   /**
-   * RoundDetail findUniqueOrThrow
+   * RoundQuestionDetail findUniqueOrThrow
    */
-  export type RoundDetailFindUniqueOrThrowArgs = {
+  export type RoundQuestionDetailFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter, which RoundDetail to fetch.
+     * Filter, which RoundQuestionDetail to fetch.
      */
-    where: RoundDetailWhereUniqueInput
+    where: RoundQuestionDetailWhereUniqueInput
   }
 
 
   /**
-   * RoundDetail base type for findFirst actions
+   * RoundQuestionDetail base type for findFirst actions
    */
-  export type RoundDetailFindFirstArgsBase = {
+  export type RoundQuestionDetailFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter, which RoundDetail to fetch.
+     * Filter, which RoundQuestionDetail to fetch.
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RoundDetails to fetch.
+     * Determine the order of RoundQuestionDetails to fetch.
      */
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RoundDetails.
+     * Sets the position for searching for RoundQuestionDetails.
      */
-    cursor?: RoundDetailWhereUniqueInput
+    cursor?: RoundQuestionDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RoundDetails from the position of the cursor.
+     * Take `±n` RoundQuestionDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RoundDetails.
+     * Skip the first `n` RoundQuestionDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RoundDetails.
+     * Filter by unique combinations of RoundQuestionDetails.
      */
-    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+    distinct?: Enumerable<RoundQuestionDetailScalarFieldEnum>
   }
 
   /**
-   * RoundDetail findFirst
+   * RoundQuestionDetail findFirst
    */
-  export interface RoundDetailFindFirstArgs extends RoundDetailFindFirstArgsBase {
+  export interface RoundQuestionDetailFindFirstArgs extends RoundQuestionDetailFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -6887,236 +7043,1233 @@ export namespace Prisma {
       
 
   /**
-   * RoundDetail findFirstOrThrow
+   * RoundQuestionDetail findFirstOrThrow
    */
-  export type RoundDetailFindFirstOrThrowArgs = {
+  export type RoundQuestionDetailFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter, which RoundDetail to fetch.
+     * Filter, which RoundQuestionDetail to fetch.
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RoundDetails to fetch.
+     * Determine the order of RoundQuestionDetails to fetch.
      */
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RoundDetails.
+     * Sets the position for searching for RoundQuestionDetails.
      */
-    cursor?: RoundDetailWhereUniqueInput
+    cursor?: RoundQuestionDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RoundDetails from the position of the cursor.
+     * Take `±n` RoundQuestionDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RoundDetails.
+     * Skip the first `n` RoundQuestionDetails.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RoundDetails.
+     * Filter by unique combinations of RoundQuestionDetails.
      */
-    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+    distinct?: Enumerable<RoundQuestionDetailScalarFieldEnum>
   }
 
 
   /**
-   * RoundDetail findMany
+   * RoundQuestionDetail findMany
    */
-  export type RoundDetailFindManyArgs = {
+  export type RoundQuestionDetailFindManyArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter, which RoundDetails to fetch.
+     * Filter, which RoundQuestionDetails to fetch.
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RoundDetails to fetch.
+     * Determine the order of RoundQuestionDetails to fetch.
      */
-    orderBy?: Enumerable<RoundDetailOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuestionDetailOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing RoundDetails.
+     * Sets the position for listing RoundQuestionDetails.
      */
-    cursor?: RoundDetailWhereUniqueInput
+    cursor?: RoundQuestionDetailWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RoundDetails from the position of the cursor.
+     * Take `±n` RoundQuestionDetails from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RoundDetails.
+     * Skip the first `n` RoundQuestionDetails.
      */
     skip?: number
-    distinct?: Enumerable<RoundDetailScalarFieldEnum>
+    distinct?: Enumerable<RoundQuestionDetailScalarFieldEnum>
   }
 
 
   /**
-   * RoundDetail create
+   * RoundQuestionDetail create
    */
-  export type RoundDetailCreateArgs = {
+  export type RoundQuestionDetailCreateArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * The data needed to create a RoundDetail.
+     * The data needed to create a RoundQuestionDetail.
      */
-    data: XOR<RoundDetailCreateInput, RoundDetailUncheckedCreateInput>
+    data: XOR<RoundQuestionDetailCreateInput, RoundQuestionDetailUncheckedCreateInput>
   }
 
 
   /**
-   * RoundDetail createMany
+   * RoundQuestionDetail createMany
    */
-  export type RoundDetailCreateManyArgs = {
+  export type RoundQuestionDetailCreateManyArgs = {
     /**
-     * The data used to create many RoundDetails.
+     * The data used to create many RoundQuestionDetails.
      */
-    data: Enumerable<RoundDetailCreateManyInput>
+    data: Enumerable<RoundQuestionDetailCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * RoundDetail update
+   * RoundQuestionDetail update
    */
-  export type RoundDetailUpdateArgs = {
+  export type RoundQuestionDetailUpdateArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * The data needed to update a RoundDetail.
+     * The data needed to update a RoundQuestionDetail.
      */
-    data: XOR<RoundDetailUpdateInput, RoundDetailUncheckedUpdateInput>
+    data: XOR<RoundQuestionDetailUpdateInput, RoundQuestionDetailUncheckedUpdateInput>
     /**
-     * Choose, which RoundDetail to update.
+     * Choose, which RoundQuestionDetail to update.
      */
-    where: RoundDetailWhereUniqueInput
+    where: RoundQuestionDetailWhereUniqueInput
   }
 
 
   /**
-   * RoundDetail updateMany
+   * RoundQuestionDetail updateMany
    */
-  export type RoundDetailUpdateManyArgs = {
+  export type RoundQuestionDetailUpdateManyArgs = {
     /**
-     * The data used to update RoundDetails.
+     * The data used to update RoundQuestionDetails.
      */
-    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyInput>
+    data: XOR<RoundQuestionDetailUpdateManyMutationInput, RoundQuestionDetailUncheckedUpdateManyInput>
     /**
-     * Filter which RoundDetails to update
+     * Filter which RoundQuestionDetails to update
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
   }
 
 
   /**
-   * RoundDetail upsert
+   * RoundQuestionDetail upsert
    */
-  export type RoundDetailUpsertArgs = {
+  export type RoundQuestionDetailUpsertArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * The filter to search for the RoundDetail to update in case it exists.
+     * The filter to search for the RoundQuestionDetail to update in case it exists.
      */
-    where: RoundDetailWhereUniqueInput
+    where: RoundQuestionDetailWhereUniqueInput
     /**
-     * In case the RoundDetail found by the `where` argument doesn't exist, create a new RoundDetail with this data.
+     * In case the RoundQuestionDetail found by the `where` argument doesn't exist, create a new RoundQuestionDetail with this data.
      */
-    create: XOR<RoundDetailCreateInput, RoundDetailUncheckedCreateInput>
+    create: XOR<RoundQuestionDetailCreateInput, RoundQuestionDetailUncheckedCreateInput>
     /**
-     * In case the RoundDetail was found with the provided `where` argument, update it with this data.
+     * In case the RoundQuestionDetail was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<RoundDetailUpdateInput, RoundDetailUncheckedUpdateInput>
+    update: XOR<RoundQuestionDetailUpdateInput, RoundQuestionDetailUncheckedUpdateInput>
   }
 
 
   /**
-   * RoundDetail delete
+   * RoundQuestionDetail delete
    */
-  export type RoundDetailDeleteArgs = {
+  export type RoundQuestionDetailDeleteArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
     /**
-     * Filter which RoundDetail to delete.
+     * Filter which RoundQuestionDetail to delete.
      */
-    where: RoundDetailWhereUniqueInput
+    where: RoundQuestionDetailWhereUniqueInput
   }
 
 
   /**
-   * RoundDetail deleteMany
+   * RoundQuestionDetail deleteMany
    */
-  export type RoundDetailDeleteManyArgs = {
+  export type RoundQuestionDetailDeleteManyArgs = {
     /**
-     * Filter which RoundDetails to delete
+     * Filter which RoundQuestionDetails to delete
      */
-    where?: RoundDetailWhereInput
+    where?: RoundQuestionDetailWhereInput
   }
 
 
   /**
-   * RoundDetail without action
+   * RoundQuestionDetail without action
    */
-  export type RoundDetailArgs = {
+  export type RoundQuestionDetailArgs = {
     /**
-     * Select specific fields to fetch from the RoundDetail
+     * Select specific fields to fetch from the RoundQuestionDetail
      */
-    select?: RoundDetailSelect | null
+    select?: RoundQuestionDetailSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundDetailInclude | null
+    include?: RoundQuestionDetailInclude | null
+  }
+
+
+
+  /**
+   * Model RoundQuestionChoiceDetail
+   */
+
+
+  export type AggregateRoundQuestionChoiceDetail = {
+    _count: RoundQuestionChoiceDetailCountAggregateOutputType | null
+    _avg: RoundQuestionChoiceDetailAvgAggregateOutputType | null
+    _sum: RoundQuestionChoiceDetailSumAggregateOutputType | null
+    _min: RoundQuestionChoiceDetailMinAggregateOutputType | null
+    _max: RoundQuestionChoiceDetailMaxAggregateOutputType | null
+  }
+
+  export type RoundQuestionChoiceDetailAvgAggregateOutputType = {
+    id: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    choiceId: number | null
+  }
+
+  export type RoundQuestionChoiceDetailSumAggregateOutputType = {
+    id: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    choiceId: number | null
+  }
+
+  export type RoundQuestionChoiceDetailMinAggregateOutputType = {
+    id: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    choiceId: number | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type RoundQuestionChoiceDetailMaxAggregateOutputType = {
+    id: number | null
+    roundQuizId: number | null
+    questionId: number | null
+    choiceId: number | null
+    createAt: Date | null
+    updateAt: Date | null
+  }
+
+  export type RoundQuestionChoiceDetailCountAggregateOutputType = {
+    id: number
+    roundQuizId: number
+    questionId: number
+    choiceId: number
+    createAt: number
+    updateAt: number
+    _all: number
+  }
+
+
+  export type RoundQuestionChoiceDetailAvgAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    choiceId?: true
+  }
+
+  export type RoundQuestionChoiceDetailSumAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    choiceId?: true
+  }
+
+  export type RoundQuestionChoiceDetailMinAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    choiceId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type RoundQuestionChoiceDetailMaxAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    choiceId?: true
+    createAt?: true
+    updateAt?: true
+  }
+
+  export type RoundQuestionChoiceDetailCountAggregateInputType = {
+    id?: true
+    roundQuizId?: true
+    questionId?: true
+    choiceId?: true
+    createAt?: true
+    updateAt?: true
+    _all?: true
+  }
+
+  export type RoundQuestionChoiceDetailAggregateArgs = {
+    /**
+     * Filter which RoundQuestionChoiceDetail to aggregate.
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestionChoiceDetails to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestionChoiceDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestionChoiceDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RoundQuestionChoiceDetails
+    **/
+    _count?: true | RoundQuestionChoiceDetailCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoundQuestionChoiceDetailAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoundQuestionChoiceDetailSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoundQuestionChoiceDetailMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoundQuestionChoiceDetailMaxAggregateInputType
+  }
+
+  export type GetRoundQuestionChoiceDetailAggregateType<T extends RoundQuestionChoiceDetailAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundQuestionChoiceDetail]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRoundQuestionChoiceDetail[P]>
+      : GetScalarType<T[P], AggregateRoundQuestionChoiceDetail[P]>
+  }
+
+
+
+
+  export type RoundQuestionChoiceDetailGroupByArgs = {
+    where?: RoundQuestionChoiceDetailWhereInput
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithAggregationInput>
+    by: RoundQuestionChoiceDetailScalarFieldEnum[]
+    having?: RoundQuestionChoiceDetailScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoundQuestionChoiceDetailCountAggregateInputType | true
+    _avg?: RoundQuestionChoiceDetailAvgAggregateInputType
+    _sum?: RoundQuestionChoiceDetailSumAggregateInputType
+    _min?: RoundQuestionChoiceDetailMinAggregateInputType
+    _max?: RoundQuestionChoiceDetailMaxAggregateInputType
+  }
+
+
+  export type RoundQuestionChoiceDetailGroupByOutputType = {
+    id: number
+    roundQuizId: number
+    questionId: number
+    choiceId: number
+    createAt: Date
+    updateAt: Date
+    _count: RoundQuestionChoiceDetailCountAggregateOutputType | null
+    _avg: RoundQuestionChoiceDetailAvgAggregateOutputType | null
+    _sum: RoundQuestionChoiceDetailSumAggregateOutputType | null
+    _min: RoundQuestionChoiceDetailMinAggregateOutputType | null
+    _max: RoundQuestionChoiceDetailMaxAggregateOutputType | null
+  }
+
+  type GetRoundQuestionChoiceDetailGroupByPayload<T extends RoundQuestionChoiceDetailGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RoundQuestionChoiceDetailGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoundQuestionChoiceDetailGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoundQuestionChoiceDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundQuestionChoiceDetailGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoundQuestionChoiceDetailSelect = {
+    id?: boolean
+    roundQuiz?: boolean | RoundQuizArgs
+    roundQuizId?: boolean
+    question?: boolean | QuestionArgs
+    questionId?: boolean
+    choice?: boolean | ChoiceArgs
+    choiceId?: boolean
+    createAt?: boolean
+    updateAt?: boolean
+  }
+
+
+  export type RoundQuestionChoiceDetailInclude = {
+    roundQuiz?: boolean | RoundQuizArgs
+    question?: boolean | QuestionArgs
+    choice?: boolean | ChoiceArgs
+  }
+
+  export type RoundQuestionChoiceDetailGetPayload<S extends boolean | null | undefined | RoundQuestionChoiceDetailArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RoundQuestionChoiceDetail :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundQuestionChoiceDetailArgs | RoundQuestionChoiceDetailFindManyArgs)
+    ? RoundQuestionChoiceDetail  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'roundQuiz' ? RoundQuizGetPayload<S['include'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['include'][P]> :
+        P extends 'choice' ? ChoiceGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (RoundQuestionChoiceDetailArgs | RoundQuestionChoiceDetailFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'roundQuiz' ? RoundQuizGetPayload<S['select'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['select'][P]> :
+        P extends 'choice' ? ChoiceGetPayload<S['select'][P]> :  P extends keyof RoundQuestionChoiceDetail ? RoundQuestionChoiceDetail[P] : never
+  } 
+      : RoundQuestionChoiceDetail
+
+
+  type RoundQuestionChoiceDetailCountArgs = 
+    Omit<RoundQuestionChoiceDetailFindManyArgs, 'select' | 'include'> & {
+      select?: RoundQuestionChoiceDetailCountAggregateInputType | true
+    }
+
+  export interface RoundQuestionChoiceDetailDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one RoundQuestionChoiceDetail that matches the filter.
+     * @param {RoundQuestionChoiceDetailFindUniqueArgs} args - Arguments to find a RoundQuestionChoiceDetail
+     * @example
+     * // Get one RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RoundQuestionChoiceDetailFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuestionChoiceDetail'> extends True ? Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>> : Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T> | null, null>
+
+    /**
+     * Find one RoundQuestionChoiceDetail that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RoundQuestionChoiceDetailFindUniqueOrThrowArgs} args - Arguments to find a RoundQuestionChoiceDetail
+     * @example
+     * // Get one RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RoundQuestionChoiceDetailFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailFindUniqueOrThrowArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Find the first RoundQuestionChoiceDetail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailFindFirstArgs} args - Arguments to find a RoundQuestionChoiceDetail
+     * @example
+     * // Get one RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RoundQuestionChoiceDetailFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuestionChoiceDetail'> extends True ? Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>> : Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T> | null, null>
+
+    /**
+     * Find the first RoundQuestionChoiceDetail that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailFindFirstOrThrowArgs} args - Arguments to find a RoundQuestionChoiceDetail
+     * @example
+     * // Get one RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RoundQuestionChoiceDetailFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailFindFirstOrThrowArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Find zero or more RoundQuestionChoiceDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RoundQuestionChoiceDetails
+     * const roundQuestionChoiceDetails = await prisma.roundQuestionChoiceDetail.findMany()
+     * 
+     * // Get first 10 RoundQuestionChoiceDetails
+     * const roundQuestionChoiceDetails = await prisma.roundQuestionChoiceDetail.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roundQuestionChoiceDetailWithIdOnly = await prisma.roundQuestionChoiceDetail.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends RoundQuestionChoiceDetailFindManyArgs>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundQuestionChoiceDetailGetPayload<T>>>
+
+    /**
+     * Create a RoundQuestionChoiceDetail.
+     * @param {RoundQuestionChoiceDetailCreateArgs} args - Arguments to create a RoundQuestionChoiceDetail.
+     * @example
+     * // Create one RoundQuestionChoiceDetail
+     * const RoundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.create({
+     *   data: {
+     *     // ... data to create a RoundQuestionChoiceDetail
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RoundQuestionChoiceDetailCreateArgs>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailCreateArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Create many RoundQuestionChoiceDetails.
+     *     @param {RoundQuestionChoiceDetailCreateManyArgs} args - Arguments to create many RoundQuestionChoiceDetails.
+     *     @example
+     *     // Create many RoundQuestionChoiceDetails
+     *     const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RoundQuestionChoiceDetailCreateManyArgs>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RoundQuestionChoiceDetail.
+     * @param {RoundQuestionChoiceDetailDeleteArgs} args - Arguments to delete one RoundQuestionChoiceDetail.
+     * @example
+     * // Delete one RoundQuestionChoiceDetail
+     * const RoundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.delete({
+     *   where: {
+     *     // ... filter to delete one RoundQuestionChoiceDetail
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RoundQuestionChoiceDetailDeleteArgs>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailDeleteArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Update one RoundQuestionChoiceDetail.
+     * @param {RoundQuestionChoiceDetailUpdateArgs} args - Arguments to update one RoundQuestionChoiceDetail.
+     * @example
+     * // Update one RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RoundQuestionChoiceDetailUpdateArgs>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailUpdateArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Delete zero or more RoundQuestionChoiceDetails.
+     * @param {RoundQuestionChoiceDetailDeleteManyArgs} args - Arguments to filter RoundQuestionChoiceDetails to delete.
+     * @example
+     * // Delete a few RoundQuestionChoiceDetails
+     * const { count } = await prisma.roundQuestionChoiceDetail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RoundQuestionChoiceDetailDeleteManyArgs>(
+      args?: SelectSubset<T, RoundQuestionChoiceDetailDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RoundQuestionChoiceDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RoundQuestionChoiceDetails
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RoundQuestionChoiceDetailUpdateManyArgs>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RoundQuestionChoiceDetail.
+     * @param {RoundQuestionChoiceDetailUpsertArgs} args - Arguments to update or create a RoundQuestionChoiceDetail.
+     * @example
+     * // Update or create a RoundQuestionChoiceDetail
+     * const roundQuestionChoiceDetail = await prisma.roundQuestionChoiceDetail.upsert({
+     *   create: {
+     *     // ... data to create a RoundQuestionChoiceDetail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RoundQuestionChoiceDetail we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RoundQuestionChoiceDetailUpsertArgs>(
+      args: SelectSubset<T, RoundQuestionChoiceDetailUpsertArgs>
+    ): Prisma__RoundQuestionChoiceDetailClient<RoundQuestionChoiceDetailGetPayload<T>>
+
+    /**
+     * Count the number of RoundQuestionChoiceDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailCountArgs} args - Arguments to filter RoundQuestionChoiceDetails to count.
+     * @example
+     * // Count the number of RoundQuestionChoiceDetails
+     * const count = await prisma.roundQuestionChoiceDetail.count({
+     *   where: {
+     *     // ... the filter for the RoundQuestionChoiceDetails we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoundQuestionChoiceDetailCountArgs>(
+      args?: Subset<T, RoundQuestionChoiceDetailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoundQuestionChoiceDetailCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RoundQuestionChoiceDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoundQuestionChoiceDetailAggregateArgs>(args: Subset<T, RoundQuestionChoiceDetailAggregateArgs>): Prisma.PrismaPromise<GetRoundQuestionChoiceDetailAggregateType<T>>
+
+    /**
+     * Group by RoundQuestionChoiceDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionChoiceDetailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoundQuestionChoiceDetailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoundQuestionChoiceDetailGroupByArgs['orderBy'] }
+        : { orderBy?: RoundQuestionChoiceDetailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoundQuestionChoiceDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuestionChoiceDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RoundQuestionChoiceDetail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__RoundQuestionChoiceDetailClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    roundQuiz<T extends RoundQuizArgs= {}>(args?: Subset<T, RoundQuizArgs>): Prisma__RoundQuizClient<RoundQuizGetPayload<T> | Null>;
+
+    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
+
+    choice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RoundQuestionChoiceDetail base type for findUnique actions
+   */
+  export type RoundQuestionChoiceDetailFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter, which RoundQuestionChoiceDetail to fetch.
+     */
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+  }
+
+  /**
+   * RoundQuestionChoiceDetail findUnique
+   */
+  export interface RoundQuestionChoiceDetailFindUniqueArgs extends RoundQuestionChoiceDetailFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundQuestionChoiceDetail findUniqueOrThrow
+   */
+  export type RoundQuestionChoiceDetailFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter, which RoundQuestionChoiceDetail to fetch.
+     */
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail base type for findFirst actions
+   */
+  export type RoundQuestionChoiceDetailFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter, which RoundQuestionChoiceDetail to fetch.
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestionChoiceDetails to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundQuestionChoiceDetails.
+     */
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestionChoiceDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestionChoiceDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundQuestionChoiceDetails.
+     */
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
+  }
+
+  /**
+   * RoundQuestionChoiceDetail findFirst
+   */
+  export interface RoundQuestionChoiceDetailFindFirstArgs extends RoundQuestionChoiceDetailFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundQuestionChoiceDetail findFirstOrThrow
+   */
+  export type RoundQuestionChoiceDetailFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter, which RoundQuestionChoiceDetail to fetch.
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestionChoiceDetails to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundQuestionChoiceDetails.
+     */
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestionChoiceDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestionChoiceDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundQuestionChoiceDetails.
+     */
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail findMany
+   */
+  export type RoundQuestionChoiceDetailFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter, which RoundQuestionChoiceDetails to fetch.
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestionChoiceDetails to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionChoiceDetailOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RoundQuestionChoiceDetails.
+     */
+    cursor?: RoundQuestionChoiceDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestionChoiceDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestionChoiceDetails.
+     */
+    skip?: number
+    distinct?: Enumerable<RoundQuestionChoiceDetailScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail create
+   */
+  export type RoundQuestionChoiceDetailCreateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * The data needed to create a RoundQuestionChoiceDetail.
+     */
+    data: XOR<RoundQuestionChoiceDetailCreateInput, RoundQuestionChoiceDetailUncheckedCreateInput>
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail createMany
+   */
+  export type RoundQuestionChoiceDetailCreateManyArgs = {
+    /**
+     * The data used to create many RoundQuestionChoiceDetails.
+     */
+    data: Enumerable<RoundQuestionChoiceDetailCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail update
+   */
+  export type RoundQuestionChoiceDetailUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * The data needed to update a RoundQuestionChoiceDetail.
+     */
+    data: XOR<RoundQuestionChoiceDetailUpdateInput, RoundQuestionChoiceDetailUncheckedUpdateInput>
+    /**
+     * Choose, which RoundQuestionChoiceDetail to update.
+     */
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail updateMany
+   */
+  export type RoundQuestionChoiceDetailUpdateManyArgs = {
+    /**
+     * The data used to update RoundQuestionChoiceDetails.
+     */
+    data: XOR<RoundQuestionChoiceDetailUpdateManyMutationInput, RoundQuestionChoiceDetailUncheckedUpdateManyInput>
+    /**
+     * Filter which RoundQuestionChoiceDetails to update
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail upsert
+   */
+  export type RoundQuestionChoiceDetailUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * The filter to search for the RoundQuestionChoiceDetail to update in case it exists.
+     */
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    /**
+     * In case the RoundQuestionChoiceDetail found by the `where` argument doesn't exist, create a new RoundQuestionChoiceDetail with this data.
+     */
+    create: XOR<RoundQuestionChoiceDetailCreateInput, RoundQuestionChoiceDetailUncheckedCreateInput>
+    /**
+     * In case the RoundQuestionChoiceDetail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoundQuestionChoiceDetailUpdateInput, RoundQuestionChoiceDetailUncheckedUpdateInput>
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail delete
+   */
+  export type RoundQuestionChoiceDetailDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
+    /**
+     * Filter which RoundQuestionChoiceDetail to delete.
+     */
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail deleteMany
+   */
+  export type RoundQuestionChoiceDetailDeleteManyArgs = {
+    /**
+     * Filter which RoundQuestionChoiceDetails to delete
+     */
+    where?: RoundQuestionChoiceDetailWhereInput
+  }
+
+
+  /**
+   * RoundQuestionChoiceDetail without action
+   */
+  export type RoundQuestionChoiceDetailArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionChoiceDetail
+     */
+    select?: RoundQuestionChoiceDetailSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionChoiceDetailInclude | null
   }
 
 
@@ -7169,7 +8322,19 @@ export namespace Prisma {
   export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
 
 
-  export const RoundDetailScalarFieldEnum: {
+  export const RoundQuestionChoiceDetailScalarFieldEnum: {
+    id: 'id',
+    roundQuizId: 'roundQuizId',
+    questionId: 'questionId',
+    choiceId: 'choiceId',
+    createAt: 'createAt',
+    updateAt: 'updateAt'
+  };
+
+  export type RoundQuestionChoiceDetailScalarFieldEnum = (typeof RoundQuestionChoiceDetailScalarFieldEnum)[keyof typeof RoundQuestionChoiceDetailScalarFieldEnum]
+
+
+  export const RoundQuestionDetailScalarFieldEnum: {
     id: 'id',
     roundQuizId: 'roundQuizId',
     questionId: 'questionId',
@@ -7180,7 +8345,7 @@ export namespace Prisma {
     updateAt: 'updateAt'
   };
 
-  export type RoundDetailScalarFieldEnum = (typeof RoundDetailScalarFieldEnum)[keyof typeof RoundDetailScalarFieldEnum]
+  export type RoundQuestionDetailScalarFieldEnum = (typeof RoundQuestionDetailScalarFieldEnum)[keyof typeof RoundQuestionDetailScalarFieldEnum]
 
 
   export const RoundQuizScalarFieldEnum: {
@@ -7288,7 +8453,8 @@ export namespace Prisma {
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
     choice?: ChoiceListRelationFilter
-    RoundDetail?: RoundDetailListRelationFilter
+    RoundQuestionDetail?: RoundQuestionDetailListRelationFilter
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailListRelationFilter
   }
 
   export type QuestionOrderByWithRelationInput = {
@@ -7301,7 +8467,8 @@ export namespace Prisma {
     createAt?: SortOrder
     updateAt?: SortOrder
     choice?: ChoiceOrderByRelationAggregateInput
-    RoundDetail?: RoundDetailOrderByRelationAggregateInput
+    RoundQuestionDetail?: RoundQuestionDetailOrderByRelationAggregateInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailOrderByRelationAggregateInput
   }
 
   export type QuestionWhereUniqueInput = {
@@ -7346,6 +8513,7 @@ export namespace Prisma {
     questionAnswer?: XOR<QuestionRelationFilter, QuestionWhereInput> | null
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailListRelationFilter
   }
 
   export type ChoiceOrderByWithRelationInput = {
@@ -7356,6 +8524,7 @@ export namespace Prisma {
     questionAnswer?: QuestionOrderByWithRelationInput
     createAt?: SortOrder
     updateAt?: SortOrder
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailOrderByRelationAggregateInput
   }
 
   export type ChoiceWhereUniqueInput = {
@@ -7443,7 +8612,8 @@ export namespace Prisma {
     userId?: IntFilter | number
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    RoundDetail?: RoundDetailListRelationFilter
+    RoundQuestionDetail?: RoundQuestionDetailListRelationFilter
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailListRelationFilter
   }
 
   export type RoundQuizOrderByWithRelationInput = {
@@ -7455,7 +8625,8 @@ export namespace Prisma {
     userId?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    RoundDetail?: RoundDetailOrderByRelationAggregateInput
+    RoundQuestionDetail?: RoundQuestionDetailOrderByRelationAggregateInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailOrderByRelationAggregateInput
   }
 
   export type RoundQuizWhereUniqueInput = {
@@ -7488,23 +8659,23 @@ export namespace Prisma {
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type RoundDetailWhereInput = {
-    AND?: Enumerable<RoundDetailWhereInput>
-    OR?: Enumerable<RoundDetailWhereInput>
-    NOT?: Enumerable<RoundDetailWhereInput>
+  export type RoundQuestionDetailWhereInput = {
+    AND?: Enumerable<RoundQuestionDetailWhereInput>
+    OR?: Enumerable<RoundQuestionDetailWhereInput>
+    NOT?: Enumerable<RoundQuestionDetailWhereInput>
     id?: IntFilter | number
     roundQuiz?: XOR<RoundQuizRelationFilter, RoundQuizWhereInput>
     roundQuizId?: IntFilter | number
     question?: XOR<QuestionRelationFilter, QuestionWhereInput>
     questionId?: IntFilter | number
     questionOrder?: IntFilter | number
-    userChoose?: IntFilter | number
+    userChoose?: IntNullableFilter | number | null
     result?: BoolFilter | boolean
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
   }
 
-  export type RoundDetailOrderByWithRelationInput = {
+  export type RoundQuestionDetailOrderByWithRelationInput = {
     id?: SortOrder
     roundQuiz?: RoundQuizOrderByWithRelationInput
     roundQuizId?: SortOrder
@@ -7517,11 +8688,11 @@ export namespace Prisma {
     updateAt?: SortOrder
   }
 
-  export type RoundDetailWhereUniqueInput = {
+  export type RoundQuestionDetailWhereUniqueInput = {
     id?: number
   }
 
-  export type RoundDetailOrderByWithAggregationInput = {
+  export type RoundQuestionDetailOrderByWithAggregationInput = {
     id?: SortOrder
     roundQuizId?: SortOrder
     questionId?: SortOrder
@@ -7530,23 +8701,80 @@ export namespace Prisma {
     result?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
-    _count?: RoundDetailCountOrderByAggregateInput
-    _avg?: RoundDetailAvgOrderByAggregateInput
-    _max?: RoundDetailMaxOrderByAggregateInput
-    _min?: RoundDetailMinOrderByAggregateInput
-    _sum?: RoundDetailSumOrderByAggregateInput
+    _count?: RoundQuestionDetailCountOrderByAggregateInput
+    _avg?: RoundQuestionDetailAvgOrderByAggregateInput
+    _max?: RoundQuestionDetailMaxOrderByAggregateInput
+    _min?: RoundQuestionDetailMinOrderByAggregateInput
+    _sum?: RoundQuestionDetailSumOrderByAggregateInput
   }
 
-  export type RoundDetailScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
-    OR?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<RoundDetailScalarWhereWithAggregatesInput>
+  export type RoundQuestionDetailScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundQuestionDetailScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundQuestionDetailScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundQuestionDetailScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     roundQuizId?: IntWithAggregatesFilter | number
     questionId?: IntWithAggregatesFilter | number
     questionOrder?: IntWithAggregatesFilter | number
-    userChoose?: IntWithAggregatesFilter | number
+    userChoose?: IntNullableWithAggregatesFilter | number | null
     result?: BoolWithAggregatesFilter | boolean
+    createAt?: DateTimeWithAggregatesFilter | Date | string
+    updateAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailWhereInput = {
+    AND?: Enumerable<RoundQuestionChoiceDetailWhereInput>
+    OR?: Enumerable<RoundQuestionChoiceDetailWhereInput>
+    NOT?: Enumerable<RoundQuestionChoiceDetailWhereInput>
+    id?: IntFilter | number
+    roundQuiz?: XOR<RoundQuizRelationFilter, RoundQuizWhereInput>
+    roundQuizId?: IntFilter | number
+    question?: XOR<QuestionRelationFilter, QuestionWhereInput>
+    questionId?: IntFilter | number
+    choice?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    choiceId?: IntFilter | number
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailOrderByWithRelationInput = {
+    id?: SortOrder
+    roundQuiz?: RoundQuizOrderByWithRelationInput
+    roundQuizId?: SortOrder
+    question?: QuestionOrderByWithRelationInput
+    questionId?: SortOrder
+    choice?: ChoiceOrderByWithRelationInput
+    choiceId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailWhereUniqueInput = {
+    id?: number
+  }
+
+  export type RoundQuestionChoiceDetailOrderByWithAggregationInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+    _count?: RoundQuestionChoiceDetailCountOrderByAggregateInput
+    _avg?: RoundQuestionChoiceDetailAvgOrderByAggregateInput
+    _max?: RoundQuestionChoiceDetailMaxOrderByAggregateInput
+    _min?: RoundQuestionChoiceDetailMinOrderByAggregateInput
+    _sum?: RoundQuestionChoiceDetailSumOrderByAggregateInput
+  }
+
+  export type RoundQuestionChoiceDetailScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundQuestionChoiceDetailScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundQuestionChoiceDetailScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundQuestionChoiceDetailScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    roundQuizId?: IntWithAggregatesFilter | number
+    questionId?: IntWithAggregatesFilter | number
+    choiceId?: IntWithAggregatesFilter | number
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -7612,7 +8840,8 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateInput = {
@@ -7623,7 +8852,8 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUpdateInput = {
@@ -7633,7 +8863,8 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateInput = {
@@ -7644,7 +8875,8 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionCreateManyInput = {
@@ -7677,6 +8909,7 @@ export namespace Prisma {
     questionAnswer?: QuestionCreateNestedOneWithoutAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUncheckedCreateInput = {
@@ -7686,6 +8919,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUncheckedCreateNestedOneWithoutAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUpdateInput = {
@@ -7694,6 +8928,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUpdateOneWithoutAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateInput = {
@@ -7703,6 +8938,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUncheckedUpdateOneWithoutAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceCreateManyInput = {
@@ -7783,7 +9019,8 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutRoundQuizInput
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizUncheckedCreateInput = {
@@ -7793,7 +9030,8 @@ export namespace Prisma {
     userId: number
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizUpdateInput = {
@@ -7802,7 +9040,8 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutRoundQuizNestedInput
   }
 
   export type RoundQuizUncheckedUpdateInput = {
@@ -7812,7 +9051,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
   }
 
   export type RoundQuizCreateManyInput = {
@@ -7839,74 +9079,131 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailCreateInput = {
-    roundQuiz: RoundQuizCreateNestedOneWithoutRoundDetailInput
-    question: QuestionCreateNestedOneWithoutRoundDetailInput
+  export type RoundQuestionDetailCreateInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundQuestionDetailInput
+    question: QuestionCreateNestedOneWithoutRoundQuestionDetailInput
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUncheckedCreateInput = {
+  export type RoundQuestionDetailUncheckedCreateInput = {
     id?: number
     roundQuizId: number
     questionId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUpdateInput = {
-    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput
-    question?: QuestionUpdateOneRequiredWithoutRoundDetailNestedInput
+  export type RoundQuestionDetailUpdateInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundQuestionDetailNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionDetailNestedInput
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUncheckedUpdateInput = {
+  export type RoundQuestionDetailUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     roundQuizId?: IntFieldUpdateOperationsInput | number
     questionId?: IntFieldUpdateOperationsInput | number
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailCreateManyInput = {
+  export type RoundQuestionDetailCreateManyInput = {
     id?: number
     roundQuizId: number
     questionId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUpdateManyMutationInput = {
+  export type RoundQuestionDetailUpdateManyMutationInput = {
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUncheckedUpdateManyInput = {
+  export type RoundQuestionDetailUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     roundQuizId?: IntFieldUpdateOperationsInput | number
     questionId?: IntFieldUpdateOperationsInput | number
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    question: QuestionCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    choice: ChoiceCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateInput = {
+    id?: number
+    roundQuizId: number
+    questionId: number
+    choiceId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpdateInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    choice?: ChoiceUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyInput = {
+    id?: number
+    roundQuizId: number
+    questionId: number
+    choiceId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpdateManyMutationInput = {
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8061,17 +9358,27 @@ export namespace Prisma {
     none?: ChoiceWhereInput
   }
 
-  export type RoundDetailListRelationFilter = {
-    every?: RoundDetailWhereInput
-    some?: RoundDetailWhereInput
-    none?: RoundDetailWhereInput
+  export type RoundQuestionDetailListRelationFilter = {
+    every?: RoundQuestionDetailWhereInput
+    some?: RoundQuestionDetailWhereInput
+    none?: RoundQuestionDetailWhereInput
+  }
+
+  export type RoundQuestionChoiceDetailListRelationFilter = {
+    every?: RoundQuestionChoiceDetailWhereInput
+    some?: RoundQuestionChoiceDetailWhereInput
+    none?: RoundQuestionChoiceDetailWhereInput
   }
 
   export type ChoiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type RoundDetailOrderByRelationAggregateInput = {
+  export type RoundQuestionDetailOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8265,7 +9572,7 @@ export namespace Prisma {
     not?: NestedBoolFilter | boolean
   }
 
-  export type RoundDetailCountOrderByAggregateInput = {
+  export type RoundQuestionDetailCountOrderByAggregateInput = {
     id?: SortOrder
     roundQuizId?: SortOrder
     questionId?: SortOrder
@@ -8276,7 +9583,7 @@ export namespace Prisma {
     updateAt?: SortOrder
   }
 
-  export type RoundDetailAvgOrderByAggregateInput = {
+  export type RoundQuestionDetailAvgOrderByAggregateInput = {
     id?: SortOrder
     roundQuizId?: SortOrder
     questionId?: SortOrder
@@ -8284,18 +9591,7 @@ export namespace Prisma {
     userChoose?: SortOrder
   }
 
-  export type RoundDetailMaxOrderByAggregateInput = {
-    id?: SortOrder
-    roundQuizId?: SortOrder
-    questionId?: SortOrder
-    questionOrder?: SortOrder
-    userChoose?: SortOrder
-    result?: SortOrder
-    createAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type RoundDetailMinOrderByAggregateInput = {
+  export type RoundQuestionDetailMaxOrderByAggregateInput = {
     id?: SortOrder
     roundQuizId?: SortOrder
     questionId?: SortOrder
@@ -8306,7 +9602,18 @@ export namespace Prisma {
     updateAt?: SortOrder
   }
 
-  export type RoundDetailSumOrderByAggregateInput = {
+  export type RoundQuestionDetailMinOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    questionOrder?: SortOrder
+    userChoose?: SortOrder
+    result?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuestionDetailSumOrderByAggregateInput = {
     id?: SortOrder
     roundQuizId?: SortOrder
     questionId?: SortOrder
@@ -8320,6 +9627,47 @@ export namespace Prisma {
     _count?: NestedIntFilter
     _min?: NestedBoolFilter
     _max?: NestedBoolFilter
+  }
+
+  export type RoundQuestionChoiceDetailCountOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailAvgOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailMaxOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailMinOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
+    createAt?: SortOrder
+    updateAt?: SortOrder
+  }
+
+  export type RoundQuestionChoiceDetailSumOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuizId?: SortOrder
+    questionId?: SortOrder
+    choiceId?: SortOrder
   }
 
   export type QuestionCreateNestedManyWithoutQuestionCategoriesInput = {
@@ -8441,11 +9789,18 @@ export namespace Prisma {
     connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type RoundDetailCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
-    createMany?: RoundDetailCreateManyQuestionInputEnvelope
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  export type RoundQuestionDetailCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+  }
+
+  export type RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
   }
 
   export type ChoiceUncheckedCreateNestedManyWithoutQuestionInput = {
@@ -8455,11 +9810,18 @@ export namespace Prisma {
     connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type RoundDetailUncheckedCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
-    createMany?: RoundDetailCreateManyQuestionInputEnvelope
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  export type RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
   }
 
   export type QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput = {
@@ -8492,18 +9854,32 @@ export namespace Prisma {
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type RoundDetailUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: RoundDetailCreateManyQuestionInputEnvelope
-    set?: Enumerable<RoundDetailWhereUniqueInput>
-    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
-    delete?: Enumerable<RoundDetailWhereUniqueInput>
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
-    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutQuestionInput>
-    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  export type RoundQuestionDetailUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionDetailScalarWhereInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
   }
 
   export type ChoiceUncheckedUpdateManyWithoutQuestionNestedInput = {
@@ -8520,18 +9896,32 @@ export namespace Prisma {
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutQuestionInput>, Enumerable<RoundDetailUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: RoundDetailCreateManyQuestionInputEnvelope
-    set?: Enumerable<RoundDetailWhereUniqueInput>
-    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
-    delete?: Enumerable<RoundDetailWhereUniqueInput>
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
-    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutQuestionInput>
-    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  export type RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionDetailScalarWhereInput>
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutQuestionInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
   }
 
   export type QuestionCreateNestedOneWithoutChoiceInput = {
@@ -8546,10 +9936,24 @@ export namespace Prisma {
     connect?: QuestionWhereUniqueInput
   }
 
+  export type RoundQuestionChoiceDetailCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutChoiceInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+  }
+
   export type QuestionUncheckedCreateNestedOneWithoutAnswerInput = {
     create?: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
     connectOrCreate?: QuestionCreateOrConnectWithoutAnswerInput
     connect?: QuestionWhereUniqueInput
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutChoiceInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
   }
 
   export type QuestionUpdateOneWithoutChoiceNestedInput = {
@@ -8572,6 +9976,20 @@ export namespace Prisma {
     update?: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
   }
 
+  export type RoundQuestionChoiceDetailUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutChoiceInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -8588,6 +10006,20 @@ export namespace Prisma {
     delete?: boolean
     connect?: QuestionWhereUniqueInput
     update?: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutChoiceInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
   }
 
   export type RoundQuizCreateNestedManyWithoutUserInput = {
@@ -8644,18 +10076,32 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type RoundDetailCreateNestedManyWithoutRoundQuizInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
-    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  export type RoundQuestionDetailCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundQuestionDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
   }
 
-  export type RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
-    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
+  export type RoundQuestionChoiceDetailCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+  }
+
+  export type RoundQuestionDetailUncheckedCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundQuestionDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutRoundQuizInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutRoundQuizInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyRoundQuizInputEnvelope
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
   }
 
   export type QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput = {
@@ -8674,64 +10120,134 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutRoundQuizInput, UserUncheckedUpdateWithoutRoundQuizInput>
   }
 
-  export type RoundDetailUpdateManyWithoutRoundQuizNestedInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
-    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
-    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
-    set?: Enumerable<RoundDetailWhereUniqueInput>
-    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
-    delete?: Enumerable<RoundDetailWhereUniqueInput>
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
-    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
-    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutRoundQuizInput>
-    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  export type RoundQuestionDetailUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundQuestionDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundQuestionDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundQuestionDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundQuestionDetailScalarWhereInput>
   }
 
-  export type RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput = {
-    create?: XOR<Enumerable<RoundDetailCreateWithoutRoundQuizInput>, Enumerable<RoundDetailUncheckedCreateWithoutRoundQuizInput>>
-    connectOrCreate?: Enumerable<RoundDetailCreateOrConnectWithoutRoundQuizInput>
-    upsert?: Enumerable<RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
-    createMany?: RoundDetailCreateManyRoundQuizInputEnvelope
-    set?: Enumerable<RoundDetailWhereUniqueInput>
-    disconnect?: Enumerable<RoundDetailWhereUniqueInput>
-    delete?: Enumerable<RoundDetailWhereUniqueInput>
-    connect?: Enumerable<RoundDetailWhereUniqueInput>
-    update?: Enumerable<RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
-    updateMany?: Enumerable<RoundDetailUpdateManyWithWhereWithoutRoundQuizInput>
-    deleteMany?: Enumerable<RoundDetailScalarWhereInput>
+  export type RoundQuestionChoiceDetailUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
   }
 
-  export type RoundQuizCreateNestedOneWithoutRoundDetailInput = {
-    create?: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
-    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundDetailInput
+  export type RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundQuestionDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundQuestionDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundQuestionDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundQuestionDetailScalarWhereInput>
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput>, Enumerable<RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuestionChoiceDetailCreateOrConnectWithoutRoundQuizInput>
+    upsert?: Enumerable<RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutRoundQuizInput>
+    createMany?: RoundQuestionChoiceDetailCreateManyRoundQuizInputEnvelope
+    set?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionChoiceDetailWhereUniqueInput>
+    update?: Enumerable<RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutRoundQuizInput>
+    updateMany?: Enumerable<RoundQuestionChoiceDetailUpdateManyWithWhereWithoutRoundQuizInput>
+    deleteMany?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
+  }
+
+  export type RoundQuizCreateNestedOneWithoutRoundQuestionDetailInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundQuestionDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundQuestionDetailInput
     connect?: RoundQuizWhereUniqueInput
   }
 
-  export type QuestionCreateNestedOneWithoutRoundDetailInput = {
-    create?: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutRoundDetailInput
+  export type QuestionCreateNestedOneWithoutRoundQuestionDetailInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionDetailInput, QuestionUncheckedCreateWithoutRoundQuestionDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionDetailInput
     connect?: QuestionWhereUniqueInput
   }
 
-  export type RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput = {
-    create?: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
-    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundDetailInput
-    upsert?: RoundQuizUpsertWithoutRoundDetailInput
+  export type RoundQuizUpdateOneRequiredWithoutRoundQuestionDetailNestedInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundQuestionDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundQuestionDetailInput
+    upsert?: RoundQuizUpsertWithoutRoundQuestionDetailInput
     connect?: RoundQuizWhereUniqueInput
-    update?: XOR<RoundQuizUpdateWithoutRoundDetailInput, RoundQuizUncheckedUpdateWithoutRoundDetailInput>
+    update?: XOR<RoundQuizUpdateWithoutRoundQuestionDetailInput, RoundQuizUncheckedUpdateWithoutRoundQuestionDetailInput>
   }
 
-  export type QuestionUpdateOneRequiredWithoutRoundDetailNestedInput = {
-    create?: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutRoundDetailInput
-    upsert?: QuestionUpsertWithoutRoundDetailInput
+  export type QuestionUpdateOneRequiredWithoutRoundQuestionDetailNestedInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionDetailInput, QuestionUncheckedCreateWithoutRoundQuestionDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionDetailInput
+    upsert?: QuestionUpsertWithoutRoundQuestionDetailInput
     connect?: QuestionWhereUniqueInput
-    update?: XOR<QuestionUpdateWithoutRoundDetailInput, QuestionUncheckedUpdateWithoutRoundDetailInput>
+    update?: XOR<QuestionUpdateWithoutRoundQuestionDetailInput, QuestionUncheckedUpdateWithoutRoundQuestionDetailInput>
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type RoundQuizCreateNestedOneWithoutRoundQuestionChoiceDetailInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    connect?: RoundQuizWhereUniqueInput
+  }
+
+  export type QuestionCreateNestedOneWithoutRoundQuestionChoiceDetailInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    connect?: QuestionWhereUniqueInput
+  }
+
+  export type ChoiceCreateNestedOneWithoutRoundQuestionChoiceDetailInput = {
+    create?: XOR<ChoiceCreateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    connect?: ChoiceWhereUniqueInput
+  }
+
+  export type RoundQuizUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput = {
+    create?: XOR<RoundQuizCreateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: RoundQuizCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    upsert?: RoundQuizUpsertWithoutRoundQuestionChoiceDetailInput
+    connect?: RoundQuizWhereUniqueInput
+    update?: XOR<RoundQuizUpdateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type QuestionUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    upsert?: QuestionUpsertWithoutRoundQuestionChoiceDetailInput
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type ChoiceUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput = {
+    create?: XOR<ChoiceCreateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuestionChoiceDetailInput
+    upsert?: ChoiceUpsertWithoutRoundQuestionChoiceDetailInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
   }
 
   export type NestedIntFilter = {
@@ -8885,7 +10401,8 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateWithoutQuestionCategoriesInput = {
@@ -8895,7 +10412,8 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionCreateOrConnectWithoutQuestionCategoriesInput = {
@@ -8913,7 +10431,8 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutRoundQuizInput
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizUncheckedCreateWithoutQuestionCategoriesInput = {
@@ -8922,7 +10441,8 @@ export namespace Prisma {
     userId: number
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizCreateOrConnectWithoutQuestionCategoriesInput = {
@@ -9016,6 +10536,7 @@ export namespace Prisma {
     question?: QuestionCreateNestedOneWithoutChoiceInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUncheckedCreateWithoutQuestionAnswerInput = {
@@ -9024,6 +10545,7 @@ export namespace Prisma {
     questionId?: number | null
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceCreateOrConnectWithoutQuestionAnswerInput = {
@@ -9036,6 +10558,7 @@ export namespace Prisma {
     questionAnswer?: QuestionCreateNestedOneWithoutAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUncheckedCreateWithoutQuestionInput = {
@@ -9044,6 +10567,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUncheckedCreateNestedOneWithoutAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceCreateOrConnectWithoutQuestionInput = {
@@ -9056,32 +10580,57 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type RoundDetailCreateWithoutQuestionInput = {
-    roundQuiz: RoundQuizCreateNestedOneWithoutRoundDetailInput
+  export type RoundQuestionDetailCreateWithoutQuestionInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundQuestionDetailInput
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUncheckedCreateWithoutQuestionInput = {
+  export type RoundQuestionDetailUncheckedCreateWithoutQuestionInput = {
     id?: number
     roundQuizId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailCreateOrConnectWithoutQuestionInput = {
-    where: RoundDetailWhereUniqueInput
-    create: XOR<RoundDetailCreateWithoutQuestionInput, RoundDetailUncheckedCreateWithoutQuestionInput>
+  export type RoundQuestionDetailCreateOrConnectWithoutQuestionInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    create: XOR<RoundQuestionDetailCreateWithoutQuestionInput, RoundQuestionDetailUncheckedCreateWithoutQuestionInput>
   }
 
-  export type RoundDetailCreateManyQuestionInputEnvelope = {
-    data: Enumerable<RoundDetailCreateManyQuestionInput>
+  export type RoundQuestionDetailCreateManyQuestionInputEnvelope = {
+    data: Enumerable<RoundQuestionDetailCreateManyQuestionInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RoundQuestionChoiceDetailCreateWithoutQuestionInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    choice: ChoiceCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    roundQuizId: number
+    choiceId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateOrConnectWithoutQuestionInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutQuestionInput, RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyQuestionInputEnvelope = {
+    data: Enumerable<RoundQuestionChoiceDetailCreateManyQuestionInput>
     skipDuplicates?: boolean
   }
 
@@ -9115,6 +10664,7 @@ export namespace Prisma {
     question?: QuestionUpdateOneWithoutChoiceNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateWithoutQuestionAnswerInput = {
@@ -9123,6 +10673,7 @@ export namespace Prisma {
     questionId?: NullableIntFieldUpdateOperationsInput | number | null
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUpsertWithWhereUniqueWithoutQuestionInput = {
@@ -9152,32 +10703,60 @@ export namespace Prisma {
     updateAt?: DateTimeFilter | Date | string
   }
 
-  export type RoundDetailUpsertWithWhereUniqueWithoutQuestionInput = {
-    where: RoundDetailWhereUniqueInput
-    update: XOR<RoundDetailUpdateWithoutQuestionInput, RoundDetailUncheckedUpdateWithoutQuestionInput>
-    create: XOR<RoundDetailCreateWithoutQuestionInput, RoundDetailUncheckedCreateWithoutQuestionInput>
+  export type RoundQuestionDetailUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    update: XOR<RoundQuestionDetailUpdateWithoutQuestionInput, RoundQuestionDetailUncheckedUpdateWithoutQuestionInput>
+    create: XOR<RoundQuestionDetailCreateWithoutQuestionInput, RoundQuestionDetailUncheckedCreateWithoutQuestionInput>
   }
 
-  export type RoundDetailUpdateWithWhereUniqueWithoutQuestionInput = {
-    where: RoundDetailWhereUniqueInput
-    data: XOR<RoundDetailUpdateWithoutQuestionInput, RoundDetailUncheckedUpdateWithoutQuestionInput>
+  export type RoundQuestionDetailUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    data: XOR<RoundQuestionDetailUpdateWithoutQuestionInput, RoundQuestionDetailUncheckedUpdateWithoutQuestionInput>
   }
 
-  export type RoundDetailUpdateManyWithWhereWithoutQuestionInput = {
-    where: RoundDetailScalarWhereInput
-    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyWithoutRoundDetailInput>
+  export type RoundQuestionDetailUpdateManyWithWhereWithoutQuestionInput = {
+    where: RoundQuestionDetailScalarWhereInput
+    data: XOR<RoundQuestionDetailUpdateManyMutationInput, RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuestionDetailInput>
   }
 
-  export type RoundDetailScalarWhereInput = {
-    AND?: Enumerable<RoundDetailScalarWhereInput>
-    OR?: Enumerable<RoundDetailScalarWhereInput>
-    NOT?: Enumerable<RoundDetailScalarWhereInput>
+  export type RoundQuestionDetailScalarWhereInput = {
+    AND?: Enumerable<RoundQuestionDetailScalarWhereInput>
+    OR?: Enumerable<RoundQuestionDetailScalarWhereInput>
+    NOT?: Enumerable<RoundQuestionDetailScalarWhereInput>
     id?: IntFilter | number
     roundQuizId?: IntFilter | number
     questionId?: IntFilter | number
     questionOrder?: IntFilter | number
-    userChoose?: IntFilter | number
+    userChoose?: IntNullableFilter | number | null
     result?: BoolFilter | boolean
+    createAt?: DateTimeFilter | Date | string
+    updateAt?: DateTimeFilter | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    update: XOR<RoundQuestionChoiceDetailUpdateWithoutQuestionInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutQuestionInput>
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutQuestionInput, RoundQuestionChoiceDetailUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    data: XOR<RoundQuestionChoiceDetailUpdateWithoutQuestionInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateManyWithWhereWithoutQuestionInput = {
+    where: RoundQuestionChoiceDetailScalarWhereInput
+    data: XOR<RoundQuestionChoiceDetailUpdateManyMutationInput, RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type RoundQuestionChoiceDetailScalarWhereInput = {
+    AND?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
+    OR?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
+    NOT?: Enumerable<RoundQuestionChoiceDetailScalarWhereInput>
+    id?: IntFilter | number
+    roundQuizId?: IntFilter | number
+    questionId?: IntFilter | number
+    choiceId?: IntFilter | number
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
   }
@@ -9188,7 +10767,8 @@ export namespace Prisma {
     answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateWithoutChoiceInput = {
@@ -9198,7 +10778,8 @@ export namespace Prisma {
     answerId: number
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionCreateOrConnectWithoutChoiceInput = {
@@ -9212,7 +10793,8 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateWithoutAnswerInput = {
@@ -9222,12 +10804,38 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionCreateOrConnectWithoutAnswerInput = {
     where: QuestionWhereUniqueInput
     create: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type RoundQuestionChoiceDetailCreateWithoutChoiceInput = {
+    roundQuiz: RoundQuizCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    question: QuestionCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput = {
+    id?: number
+    roundQuizId: number
+    questionId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateOrConnectWithoutChoiceInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutChoiceInput, RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyChoiceInputEnvelope = {
+    data: Enumerable<RoundQuestionChoiceDetailCreateManyChoiceInput>
+    skipDuplicates?: boolean
   }
 
   export type QuestionUpsertWithoutChoiceInput = {
@@ -9241,7 +10849,8 @@ export namespace Prisma {
     answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateWithoutChoiceInput = {
@@ -9251,7 +10860,8 @@ export namespace Prisma {
     answerId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUpsertWithoutAnswerInput = {
@@ -9265,7 +10875,8 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateWithoutAnswerInput = {
@@ -9275,7 +10886,24 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutChoiceInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    update: XOR<RoundQuestionChoiceDetailUpdateWithoutChoiceInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutChoiceInput>
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutChoiceInput, RoundQuestionChoiceDetailUncheckedCreateWithoutChoiceInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutChoiceInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    data: XOR<RoundQuestionChoiceDetailUpdateWithoutChoiceInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutChoiceInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateManyWithWhereWithoutChoiceInput = {
+    where: RoundQuestionChoiceDetailScalarWhereInput
+    data: XOR<RoundQuestionChoiceDetailUpdateManyMutationInput, RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuestionChoiceDetailInput>
   }
 
   export type RoundQuizCreateWithoutUserInput = {
@@ -9283,7 +10911,8 @@ export namespace Prisma {
     score: number
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizUncheckedCreateWithoutUserInput = {
@@ -9292,7 +10921,8 @@ export namespace Prisma {
     score: number
     createAt?: Date | string
     updateAt?: Date | string
-    RoundDetail?: RoundDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
   export type RoundQuizCreateOrConnectWithoutUserInput = {
@@ -9359,32 +10989,57 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutRoundQuizInput, UserUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type RoundDetailCreateWithoutRoundQuizInput = {
-    question: QuestionCreateNestedOneWithoutRoundDetailInput
+  export type RoundQuestionDetailCreateWithoutRoundQuizInput = {
+    question: QuestionCreateNestedOneWithoutRoundQuestionDetailInput
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUncheckedCreateWithoutRoundQuizInput = {
+  export type RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput = {
     id?: number
     questionId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailCreateOrConnectWithoutRoundQuizInput = {
-    where: RoundDetailWhereUniqueInput
-    create: XOR<RoundDetailCreateWithoutRoundQuizInput, RoundDetailUncheckedCreateWithoutRoundQuizInput>
+  export type RoundQuestionDetailCreateOrConnectWithoutRoundQuizInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    create: XOR<RoundQuestionDetailCreateWithoutRoundQuizInput, RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type RoundDetailCreateManyRoundQuizInputEnvelope = {
-    data: Enumerable<RoundDetailCreateManyRoundQuizInput>
+  export type RoundQuestionDetailCreateManyRoundQuizInputEnvelope = {
+    data: Enumerable<RoundQuestionDetailCreateManyRoundQuizInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RoundQuestionChoiceDetailCreateWithoutRoundQuizInput = {
+    question: QuestionCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    choice: ChoiceCreateNestedOneWithoutRoundQuestionChoiceDetailInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput = {
+    id?: number
+    questionId: number
+    choiceId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateOrConnectWithoutRoundQuizInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput, RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyRoundQuizInputEnvelope = {
+    data: Enumerable<RoundQuestionChoiceDetailCreateManyRoundQuizInput>
     skipDuplicates?: boolean
   }
 
@@ -9426,54 +11081,73 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUpsertWithWhereUniqueWithoutRoundQuizInput = {
-    where: RoundDetailWhereUniqueInput
-    update: XOR<RoundDetailUpdateWithoutRoundQuizInput, RoundDetailUncheckedUpdateWithoutRoundQuizInput>
-    create: XOR<RoundDetailCreateWithoutRoundQuizInput, RoundDetailUncheckedCreateWithoutRoundQuizInput>
+  export type RoundQuestionDetailUpsertWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    update: XOR<RoundQuestionDetailUpdateWithoutRoundQuizInput, RoundQuestionDetailUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<RoundQuestionDetailCreateWithoutRoundQuizInput, RoundQuestionDetailUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type RoundDetailUpdateWithWhereUniqueWithoutRoundQuizInput = {
-    where: RoundDetailWhereUniqueInput
-    data: XOR<RoundDetailUpdateWithoutRoundQuizInput, RoundDetailUncheckedUpdateWithoutRoundQuizInput>
+  export type RoundQuestionDetailUpdateWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundQuestionDetailWhereUniqueInput
+    data: XOR<RoundQuestionDetailUpdateWithoutRoundQuizInput, RoundQuestionDetailUncheckedUpdateWithoutRoundQuizInput>
   }
 
-  export type RoundDetailUpdateManyWithWhereWithoutRoundQuizInput = {
-    where: RoundDetailScalarWhereInput
-    data: XOR<RoundDetailUpdateManyMutationInput, RoundDetailUncheckedUpdateManyWithoutRoundDetailInput>
+  export type RoundQuestionDetailUpdateManyWithWhereWithoutRoundQuizInput = {
+    where: RoundQuestionDetailScalarWhereInput
+    data: XOR<RoundQuestionDetailUpdateManyMutationInput, RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuestionDetailInput>
   }
 
-  export type RoundQuizCreateWithoutRoundDetailInput = {
+  export type RoundQuestionChoiceDetailUpsertWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    update: XOR<RoundQuestionChoiceDetailUpdateWithoutRoundQuizInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<RoundQuestionChoiceDetailCreateWithoutRoundQuizInput, RoundQuestionChoiceDetailUncheckedCreateWithoutRoundQuizInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithWhereUniqueWithoutRoundQuizInput = {
+    where: RoundQuestionChoiceDetailWhereUniqueInput
+    data: XOR<RoundQuestionChoiceDetailUpdateWithoutRoundQuizInput, RoundQuestionChoiceDetailUncheckedUpdateWithoutRoundQuizInput>
+  }
+
+  export type RoundQuestionChoiceDetailUpdateManyWithWhereWithoutRoundQuizInput = {
+    where: RoundQuestionChoiceDetailScalarWhereInput
+    data: XOR<RoundQuestionChoiceDetailUpdateManyMutationInput, RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type RoundQuizCreateWithoutRoundQuestionDetailInput = {
     questionCategories: QuestionCategoryCreateNestedOneWithoutRoundQuizInput
     score: number
     user: UserCreateNestedOneWithoutRoundQuizInput
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type RoundQuizUncheckedCreateWithoutRoundDetailInput = {
+  export type RoundQuizUncheckedCreateWithoutRoundQuestionDetailInput = {
     id?: number
     questionCategoryId: number
     score: number
     userId: number
     createAt?: Date | string
     updateAt?: Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutRoundQuizInput
   }
 
-  export type RoundQuizCreateOrConnectWithoutRoundDetailInput = {
+  export type RoundQuizCreateOrConnectWithoutRoundQuestionDetailInput = {
     where: RoundQuizWhereUniqueInput
-    create: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
+    create: XOR<RoundQuizCreateWithoutRoundQuestionDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionDetailInput>
   }
 
-  export type QuestionCreateWithoutRoundDetailInput = {
+  export type QuestionCreateWithoutRoundQuestionDetailInput = {
     questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
     textQuestion: string
     answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailCreateNestedManyWithoutQuestionInput
   }
 
-  export type QuestionUncheckedCreateWithoutRoundDetailInput = {
+  export type QuestionUncheckedCreateWithoutRoundQuestionDetailInput = {
     id?: number
     questionCategoryId: number
     textQuestion: string
@@ -9481,50 +11155,54 @@ export namespace Prisma {
     createAt?: Date | string
     updateAt?: Date | string
     choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type QuestionCreateOrConnectWithoutRoundDetailInput = {
+  export type QuestionCreateOrConnectWithoutRoundQuestionDetailInput = {
     where: QuestionWhereUniqueInput
-    create: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
+    create: XOR<QuestionCreateWithoutRoundQuestionDetailInput, QuestionUncheckedCreateWithoutRoundQuestionDetailInput>
   }
 
-  export type RoundQuizUpsertWithoutRoundDetailInput = {
-    update: XOR<RoundQuizUpdateWithoutRoundDetailInput, RoundQuizUncheckedUpdateWithoutRoundDetailInput>
-    create: XOR<RoundQuizCreateWithoutRoundDetailInput, RoundQuizUncheckedCreateWithoutRoundDetailInput>
+  export type RoundQuizUpsertWithoutRoundQuestionDetailInput = {
+    update: XOR<RoundQuizUpdateWithoutRoundQuestionDetailInput, RoundQuizUncheckedUpdateWithoutRoundQuestionDetailInput>
+    create: XOR<RoundQuizCreateWithoutRoundQuestionDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionDetailInput>
   }
 
-  export type RoundQuizUpdateWithoutRoundDetailInput = {
+  export type RoundQuizUpdateWithoutRoundQuestionDetailInput = {
     questionCategories?: QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput
     score?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutRoundQuizNestedInput
   }
 
-  export type RoundQuizUncheckedUpdateWithoutRoundDetailInput = {
+  export type RoundQuizUncheckedUpdateWithoutRoundQuestionDetailInput = {
     id?: IntFieldUpdateOperationsInput | number
     questionCategoryId?: IntFieldUpdateOperationsInput | number
     score?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
   }
 
-  export type QuestionUpsertWithoutRoundDetailInput = {
-    update: XOR<QuestionUpdateWithoutRoundDetailInput, QuestionUncheckedUpdateWithoutRoundDetailInput>
-    create: XOR<QuestionCreateWithoutRoundDetailInput, QuestionUncheckedCreateWithoutRoundDetailInput>
+  export type QuestionUpsertWithoutRoundQuestionDetailInput = {
+    update: XOR<QuestionUpdateWithoutRoundQuestionDetailInput, QuestionUncheckedUpdateWithoutRoundQuestionDetailInput>
+    create: XOR<QuestionCreateWithoutRoundQuestionDetailInput, QuestionUncheckedCreateWithoutRoundQuestionDetailInput>
   }
 
-  export type QuestionUpdateWithoutRoundDetailInput = {
+  export type QuestionUpdateWithoutRoundQuestionDetailInput = {
     questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
     textQuestion?: StringFieldUpdateOperationsInput | string
     answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput
   }
 
-  export type QuestionUncheckedUpdateWithoutRoundDetailInput = {
+  export type QuestionUncheckedUpdateWithoutRoundQuestionDetailInput = {
     id?: IntFieldUpdateOperationsInput | number
     questionCategoryId?: IntFieldUpdateOperationsInput | number
     textQuestion?: StringFieldUpdateOperationsInput | string
@@ -9532,6 +11210,151 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type RoundQuizCreateWithoutRoundQuestionChoiceDetailInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutRoundQuizInput
+    score: number
+    user: UserCreateNestedOneWithoutRoundQuizInput
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutRoundQuizInput
+  }
+
+  export type RoundQuizUncheckedCreateWithoutRoundQuestionChoiceDetailInput = {
+    id?: number
+    questionCategoryId: number
+    score: number
+    userId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutRoundQuizInput
+  }
+
+  export type RoundQuizCreateOrConnectWithoutRoundQuestionChoiceDetailInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type QuestionCreateWithoutRoundQuestionChoiceDetailInput = {
+    questionCategories: QuestionCategoryCreateNestedOneWithoutQuestionInput
+    textQuestion: string
+    answer: ChoiceCreateNestedOneWithoutQuestionAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+    choice?: ChoiceCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionUncheckedCreateWithoutRoundQuestionChoiceDetailInput = {
+    id?: number
+    questionCategoryId: number
+    textQuestion: string
+    answerId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+    choice?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionCreateOrConnectWithoutRoundQuestionChoiceDetailInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type ChoiceCreateWithoutRoundQuestionChoiceDetailInput = {
+    choiceName: string
+    question?: QuestionCreateNestedOneWithoutChoiceInput
+    questionAnswer?: QuestionCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceUncheckedCreateWithoutRoundQuestionChoiceDetailInput = {
+    id?: number
+    choiceName: string
+    questionId?: number | null
+    questionAnswer?: QuestionUncheckedCreateNestedOneWithoutAnswerInput
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutRoundQuestionChoiceDetailInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type RoundQuizUpsertWithoutRoundQuestionChoiceDetailInput = {
+    update: XOR<RoundQuizUpdateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
+    create: XOR<RoundQuizCreateWithoutRoundQuestionChoiceDetailInput, RoundQuizUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type RoundQuizUpdateWithoutRoundQuestionChoiceDetailInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutRoundQuizNestedInput
+    score?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type RoundQuizUncheckedUpdateWithoutRoundQuestionChoiceDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    score?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+  }
+
+  export type QuestionUpsertWithoutRoundQuestionChoiceDetailInput = {
+    update: XOR<QuestionUpdateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
+    create: XOR<QuestionCreateWithoutRoundQuestionChoiceDetailInput, QuestionUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type QuestionUpdateWithoutRoundQuestionChoiceDetailInput = {
+    questionCategories?: QuestionCategoryUpdateOneRequiredWithoutQuestionNestedInput
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuestionAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutRoundQuestionChoiceDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionCategoryId?: IntFieldUpdateOperationsInput | number
+    textQuestion?: StringFieldUpdateOperationsInput | string
+    answerId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type ChoiceUpsertWithoutRoundQuestionChoiceDetailInput = {
+    update: XOR<ChoiceUpdateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedUpdateWithoutRoundQuestionChoiceDetailInput>
+    create: XOR<ChoiceCreateWithoutRoundQuestionChoiceDetailInput, ChoiceUncheckedCreateWithoutRoundQuestionChoiceDetailInput>
+  }
+
+  export type ChoiceUpdateWithoutRoundQuestionChoiceDetailInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    question?: QuestionUpdateOneWithoutChoiceNestedInput
+    questionAnswer?: QuestionUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutRoundQuestionChoiceDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    questionId?: NullableIntFieldUpdateOperationsInput | number | null
+    questionAnswer?: QuestionUncheckedUpdateOneWithoutAnswerNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type QuestionCreateManyQuestionCategoriesInput = {
@@ -9556,7 +11379,8 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateWithoutQuestionCategoriesInput = {
@@ -9566,7 +11390,8 @@ export namespace Prisma {
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
     choice?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutQuestionNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateManyWithoutQuestionInput = {
@@ -9582,7 +11407,8 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutRoundQuizNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutRoundQuizNestedInput
   }
 
   export type RoundQuizUncheckedUpdateWithoutQuestionCategoriesInput = {
@@ -9591,7 +11417,8 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
   }
 
   export type RoundQuizUncheckedUpdateManyWithoutRoundQuizInput = {
@@ -9609,12 +11436,20 @@ export namespace Prisma {
     updateAt?: Date | string
   }
 
-  export type RoundDetailCreateManyQuestionInput = {
+  export type RoundQuestionDetailCreateManyQuestionInput = {
     id?: number
     roundQuizId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyQuestionInput = {
+    id?: number
+    roundQuizId: number
+    choiceId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -9624,6 +11459,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUpdateOneWithoutAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateWithoutQuestionInput = {
@@ -9632,6 +11468,7 @@ export namespace Prisma {
     questionAnswer?: QuestionUncheckedUpdateOneWithoutAnswerNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateManyWithoutChoiceInput = {
@@ -9641,31 +11478,77 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUpdateWithoutQuestionInput = {
-    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundDetailNestedInput
+  export type RoundQuestionDetailUpdateWithoutQuestionInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundQuestionDetailNestedInput
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUncheckedUpdateWithoutQuestionInput = {
+  export type RoundQuestionDetailUncheckedUpdateWithoutQuestionInput = {
     id?: IntFieldUpdateOperationsInput | number
     roundQuizId?: IntFieldUpdateOperationsInput | number
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUncheckedUpdateManyWithoutRoundDetailInput = {
+  export type RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuestionDetailInput = {
     id?: IntFieldUpdateOperationsInput | number
     roundQuizId?: IntFieldUpdateOperationsInput | number
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithoutQuestionInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    choice?: ChoiceUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuestionChoiceDetailInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailCreateManyChoiceInput = {
+    id?: number
+    roundQuizId: number
+    questionId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithoutChoiceInput = {
+    roundQuiz?: RoundQuizUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateWithoutChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuizId?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9683,7 +11566,8 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUpdateManyWithoutRoundQuizNestedInput
   }
 
   export type RoundQuizUncheckedUpdateWithoutUserInput = {
@@ -9692,34 +11576,58 @@ export namespace Prisma {
     score?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    RoundDetail?: RoundDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionDetail?: RoundQuestionDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
+    RoundQuestionChoiceDetail?: RoundQuestionChoiceDetailUncheckedUpdateManyWithoutRoundQuizNestedInput
   }
 
-  export type RoundDetailCreateManyRoundQuizInput = {
+  export type RoundQuestionDetailCreateManyRoundQuizInput = {
     id?: number
     questionId: number
     questionOrder: number
-    userChoose: number
+    userChoose?: number | null
     result: boolean
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type RoundDetailUpdateWithoutRoundQuizInput = {
-    question?: QuestionUpdateOneRequiredWithoutRoundDetailNestedInput
+  export type RoundQuestionChoiceDetailCreateManyRoundQuizInput = {
+    id?: number
+    questionId: number
+    choiceId: number
+    createAt?: Date | string
+    updateAt?: Date | string
+  }
+
+  export type RoundQuestionDetailUpdateWithoutRoundQuizInput = {
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionDetailNestedInput
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundDetailUncheckedUpdateWithoutRoundQuizInput = {
+  export type RoundQuestionDetailUncheckedUpdateWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     questionId?: IntFieldUpdateOperationsInput | number
     questionOrder?: IntFieldUpdateOperationsInput | number
-    userChoose?: IntFieldUpdateOperationsInput | number
+    userChoose?: NullableIntFieldUpdateOperationsInput | number | null
     result?: BoolFieldUpdateOperationsInput | boolean
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUpdateWithoutRoundQuizInput = {
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    choice?: ChoiceUpdateOneRequiredWithoutRoundQuestionChoiceDetailNestedInput
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionChoiceDetailUncheckedUpdateWithoutRoundQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

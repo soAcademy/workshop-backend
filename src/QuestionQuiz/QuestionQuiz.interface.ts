@@ -25,9 +25,26 @@ export interface ICreateQuizCodec extends t.TypeOf<typeof createQuizCodec> {}
 //--------------------------------------------------------
 export const getQuizbyCategoryCodec = t.type({
   categoryId: t.number,
+  userId: t.number,
 });
 
 export interface IGetQuizbyCategoryCodec
   extends t.TypeOf<typeof getQuizbyCategoryCodec> {}
+
+//---------------------------------------------------------
+
+export const submitQuizCodec = t.type({
+  userId: t.number,
+  roundQuizId: t.number,
+  categoryId: t.number,
+  questions: t.array(
+    t.type({
+      questionId: t.number,
+      userChoose: t.number,
+    })
+  ),
+});
+
+export interface ISubmitQuiz extends t.TypeOf<typeof submitQuizCodec> {}
 
 //---------------------------------------------------------

@@ -118,7 +118,16 @@ exports.Prisma.QuestionScalarFieldEnum = makeEnum({
   updateAt: 'updateAt'
 });
 
-exports.Prisma.RoundDetailScalarFieldEnum = makeEnum({
+exports.Prisma.RoundQuestionChoiceDetailScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundQuizId: 'roundQuizId',
+  questionId: 'questionId',
+  choiceId: 'choiceId',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+});
+
+exports.Prisma.RoundQuestionDetailScalarFieldEnum = makeEnum({
   id: 'id',
   roundQuizId: 'roundQuizId',
   questionId: 'questionId',
@@ -164,7 +173,8 @@ exports.Prisma.ModelName = makeEnum({
   Choice: 'Choice',
   User: 'User',
   RoundQuiz: 'RoundQuiz',
-  RoundDetail: 'RoundDetail'
+  RoundQuestionDetail: 'RoundQuestionDetail',
+  RoundQuestionChoiceDetail: 'RoundQuestionChoiceDetail'
 });
 
 /**
