@@ -39,6 +39,16 @@ import {
   updateMenuHandler,
   updateOrderHandler,
 } from "./korKitchen/korKitchen.handler";
+import {
+  createQuizCategoryHandler,
+  createQuizHandler,
+  createRoundHandler,
+  createUserHandler,
+  getQuizHandler,
+  getResultsHandler,
+  submitQuizHandler,
+  // submitQuizHandler,
+} from "./Trivia/trivia.handler";
 
 export const AppRoutes = [
   {
@@ -205,5 +215,40 @@ export const AppRoutes = [
     path: "/deleteMenu",
     method: "post",
     action: deleteMenuHandler,
+  },
+  {
+    path: "/createQuizCategory",
+    method: "post",
+    action: createQuizCategoryHandler,
+  },
+  {
+    path: "/createQuiz",
+    method: "post",
+    action: createQuizHandler,
+  },
+  {
+    path: "/getQuiz",
+    method: "post",
+    action: getQuizHandler,
+  },
+  {
+    path: "/submitQuiz",
+    method: "post",
+    action: submitQuizHandler,
+  },
+  {
+    path: "/createUser",
+    method: "post",
+    action: createUserHandler,
+  },
+  {
+    path: "/createRound",
+    method: "post",
+    action: createRoundHandler,
+  },
+  {
+    path: "/getResults",
+    method: "post",
+    action: getResultsHandler
   }
 ];

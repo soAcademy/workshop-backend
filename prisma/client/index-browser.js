@@ -374,20 +374,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name'
+  category: 'category'
 });
 
 exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
   id: 'id',
-  quizId: 'quizId',
-  name: 'name'
+  choice: 'choice',
+  quizId: 'quizId'
 });
 
 exports.Prisma.TriviaQuestionScalarFieldEnum = makeEnum({
   id: 'id',
+  quiz: 'quiz',
   categoryId: 'categoryId',
-  name: 'name',
-  answerID: 'answerID'
+  triviaAnswerChoiceId: 'triviaAnswerChoiceId'
 });
 
 exports.Prisma.TriviaRoundQuestionScalarFieldEnum = makeEnum({
@@ -400,10 +400,17 @@ exports.Prisma.TriviaRoundQuestionScalarFieldEnum = makeEnum({
 
 exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
   id: 'id',
-  user: 'user',
   categoryId: 'categoryId',
   totalResult: 'totalResult',
-  createAt: 'createAt'
+  createAt: 'createAt',
+  userId: 'userId',
+  roundNo: 'roundNo'
+});
+
+exports.Prisma.TriviaUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  user: 'user',
+  avatar: 'avatar'
 });
 
 exports.Prisma.TwitterCommentScalarFieldEnum = makeEnum({
@@ -675,6 +682,7 @@ exports.Prisma.ModelName = makeEnum({
   TriviaChoice: 'TriviaChoice',
   TriviaRoundQuestion: 'TriviaRoundQuestion',
   TriviaRound: 'TriviaRound',
+  TriviaUser: 'TriviaUser',
   TwitterUser: 'TwitterUser',
   TwitterFollow: 'TwitterFollow',
   TwitterPost: 'TwitterPost',
