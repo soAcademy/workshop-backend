@@ -55,6 +55,7 @@ export const getQuestions = async (args: IGetQuestions) => {
       question: true,
       category: {
         select: {
+          id: true,
           name: true,
         },
       },
@@ -84,6 +85,7 @@ export const getQuestions = async (args: IGetQuestions) => {
       () => 0.5 - Math.random()
     ),
     category: question.category?.name,
+    categoryId: question.category?.id
   }));
 };
 
