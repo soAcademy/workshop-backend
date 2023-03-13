@@ -2,6 +2,7 @@ import {
   createCategory,
   createQuiz,
   getCategories,
+  getCorrectChoiceByQuiz,
   getQuizzes,
   getQuizzesByCategory,
   sumNumbers,
@@ -9,6 +10,7 @@ import {
 
 describe("Trivia", () => {
   let category1Id: number;
+  let quiz1Id: number;
 
   test("should do a summation of two numbers correctly", () => {
     const result1 = sumNumbers({ number1: 10, number2: 20 });
@@ -54,6 +56,7 @@ describe("Trivia", () => {
     };
     const result = await createQuiz(data);
     console.log("createQuiz", result);
+    quiz1Id = result.id;
     expect(result.questionText === data.questionText).toBe(true);
   });
 
@@ -67,5 +70,11 @@ describe("Trivia", () => {
     const result = await getQuizzesByCategory({ categoryId: category1Id });
     console.log("getQuizzesByCategory", result);
     expect(result.length > 0).toBe(true);
+  });
+
+  it("should get the correct choice for a given quiz", async () => {
+    const result = await getCorrectChoiceByQuiz({ id: quiz1Id });
+    console.log("getCorrectChoiceByQuiz", result);
+    expect(result?.correctChoice.id).not.toBeNull;
   });
 });
