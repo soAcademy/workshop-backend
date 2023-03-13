@@ -89,8 +89,8 @@ model TodoList {
 model TriviaQuiz {
   id                   Int            @id @default(autoincrement())
   quiz                 String
-  answer               TriviaChoice   @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
   choices              TriviaChoice[]
+  answer               TriviaChoice   @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
   triviaAnswerChoiceId Int            @unique
   category             TriviaCategory @relation(fields: [triviaCategoryId], references: [id])
   triviaCategoryId     Int

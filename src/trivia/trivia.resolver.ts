@@ -2,6 +2,15 @@ import { PrismaClient } from "../../prisma/client";
 
 export const prisma = new PrismaClient();
 
+export const sumNumber = (args: {x: number, y: number}) => args.x + args.y;
+
+export const createQuizCategory = (args: {category: string}) =>
+prisma.triviaCategory.create({
+  data: {
+    category: args.category
+  }
+})
+
 export const createQuiz = (args: {
   quiz: string;
   answer: string;
@@ -25,6 +34,10 @@ export const createQuiz = (args: {
         },
       },
     },
+    include: {
+      answer: true,
+      choices: true
+    }
   });
 
 interface IGetQuiz {
@@ -80,4 +93,19 @@ export const getQuiz = async (args: IGetQuiz) => {
 //    const result = await prisma.triviaRound.create({
 
 //    })
+
+//    return {
+//     score: 10,
+//     quizes: [
+//       {
+//         id: 100,
+//         answer: true
+//       },
+//       {
+//         id: 100,
+//         answer: false
+//       }
+//     ]
+//     ]
+//    }
 // }

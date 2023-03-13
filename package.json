@@ -7,7 +7,9 @@
     "prisma:merge": "cat prisma/schema/**.prisma > prisma/schema.prisma",
     "prisma:format": "yarn pnpify prisma format --schema prisma/schema.prisma",
     "prisma:migrate": "yarn pnpify prisma migrate dev --name init --schema prisma/schema.prisma",
-    "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma"
+    "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma",
+    "test": "jest --verbose",
+    "test:trivia": "jest -- src/trivia"
   },
   "dependencies": {
     "@prisma/client": "4.10.1",
