@@ -1,0 +1,90 @@
+model Branch {
+  id       Int       @id @default(autoincrement())
+  name     String
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  machines Machine[]
+}
+
+model Machine {
+  id                Int                @id @default(autoincrement())
+  branch            Branch             @relation(fields: [branchId], references: [id])
+  branchId          Int
+  serialNo          String
+  brand             String
+  size              String
+  type              String
+  model             String
+  year              Int
+  warranty          DateTime
+  createAt          DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+  programOnMachines ProgramOnMachine[]
+  mantainances      Mantainance[]
+}
+
+model Program {
+  id                Int                @id @default(autoincrement())
+  detail            String
+  price             Float
+  timeUsage         Float
+  createAt          DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+  programOnMachines ProgramOnMachine[]
+}
+
+model ProgramOnMachine {
+  id        Int       @id @default(autoincrement())
+  machine   Machine   @relation(fields: [machineId], references: [id])
+  machineId Int
+  program   Program   @relation(fields: [programId], references: [id])
+  programId Int
+  createAt  DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  histories History[]
+}
+
+model Mantainance {
+  id        Int      @id @default(autoincrement())
+  machine   Machine  @relation(fields: [machineId], references: [id])
+  machineId Int
+  time      DateTime
+  damage    String
+  behavior  String
+  response  String
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  phone     String
+  createAt  DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  wallets   Wallet[]
+  histories History[]
+}
+
+model Wallet {
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+  time     DateTime
+  value    Float
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model History {
+  id                 Int              @id @default(autoincrement())
+  user               User             @relation(fields: [userId], references: [id])
+  userId             Int
+  programOnMachine   ProgramOnMachine @relation(fields: [programOnMachineId], references: [id])
+  programOnMachineId Int
+  start              DateTime
+  finish             DateTime
+  price              Float
+  createAt           DateTime         @default(now())
+  updateAt           DateTime         @updatedAt
+}

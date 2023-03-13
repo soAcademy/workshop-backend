@@ -71,7 +71,8 @@ export const createMenu = (args: ICreateMenu) =>
   });
 
 // 5. Get Menus
-export const getMenus = () => prisma.menu.findMany();
+export const getMenus = () =>
+  prisma.menu.findMany({ include: { category: true } });
 
 // export const UpdateMenu = t.intersection([
 //   t.type({
@@ -127,8 +128,10 @@ export const CreateOrderCodec = t.type({
 });
 export interface ICreateOrder extends t.TypeOf<typeof CreateOrderCodec> {}
 // 7. Create Order
-export const createOrder = (args: ICreateOrder) =>
-  prisma.order.create({
+export const createOrder = (args: ICreateOrder) => {
+  console.log(args);
+
+  return prisma.order.create({
     data: {
       status: args.status,
       tableId: args.tableId,
@@ -141,6 +144,7 @@ export const createOrder = (args: ICreateOrder) =>
       },
     },
   });
+};
 
 // 8. Get Orders
 export const getOrders = () =>
@@ -150,13 +154,13 @@ export const getOrders = () =>
     },
   });
 
-export const getOrderCodec = t.type({ id: t.number });
+export const getOrderCodec = t.type({ tableId: t.number });
 export interface IGetOrder extends t.TypeOf<typeof getOrderCodec> {}
 // 9. Get order
 export const getOrder = (args: IGetOrder) =>
-  prisma.order.findUnique({
+  prisma.order.findMany({
     where: {
-      id: args.id,
+      tableId: args.tableId,
     },
     include: {
       items: { include: { menu: true } },

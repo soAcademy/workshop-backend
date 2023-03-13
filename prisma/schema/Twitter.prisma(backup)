@@ -1,0 +1,74 @@
+model User {
+  id            Int             @id @default(autoincrement())
+  username      String
+  image         String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  posts         Post[]
+  replies       Reply[]
+  directMsgFrom DirectMessage[] @relation("directMsgFrom")
+  directMsgTo   DirectMessage[] @relation("directMsgTo")
+  followings    UserRelation[]  @relation("followings")
+  followers     UserRelation[]  @relation("followers")
+}
+
+model UserRelation {
+  id        Int      @id @default(autoincrement())
+  from      User     @relation("followings", fields: [fromId], references: [id])
+  fromId    Int
+  to        User     @relation("followers", fields: [toId], references: [id])
+  toId      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id             Int             @id @default(autoincrement())
+  user           User            @relation(fields: [userId], references: [id])
+  userId         Int
+  detail         String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  replies        Reply[]
+  hashtagOnPosts HashtagOnPost[]
+}
+
+model Reply {
+  id           Int      @id @default(autoincrement())
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       Int
+  userReply    User     @relation(fields: [userId], references: [id])
+  userId       Int
+  replyMessage String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Hashtag {
+  id             Int             @id @default(autoincrement())
+  topic          String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  hashtagOnPosts HashtagOnPost[]
+}
+
+model HashtagOnPost {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   Hashtag  @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DirectMessage {
+  id        Int      @id @default(autoincrement())
+  from      User     @relation("directMsgFrom", fields: [fromId], references: [id])
+  fromId    Int
+  to        User     @relation("directMsgTo", fields: [toId], references: [id])
+  toId      Int
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

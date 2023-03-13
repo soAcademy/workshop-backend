@@ -96,30 +96,16 @@ exports.Prisma.CategoryScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.MenuScalarFieldEnum = makeEnum({
+exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  answer: 'answer',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PlayerScalarFieldEnum = makeEnum({
   id: 'id',
   name: 'name',
-  image: 'image',
-  price: 'price',
-  categoryId: 'categoryId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.OrderItemScalarFieldEnum = makeEnum({
-  id: 'id',
-  menuId: 'menuId',
-  orderId: 'orderId',
-  quantity: 'quantity',
-  totalPrice: 'totalPrice',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.OrderScalarFieldEnum = makeEnum({
-  id: 'id',
-  status: 'status',
-  tableId: 'tableId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -127,6 +113,41 @@ exports.Prisma.OrderScalarFieldEnum = makeEnum({
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
+});
+
+exports.Prisma.QuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  categoryId: 'categoryId',
+  question: 'question',
+  choiceId: 'choiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.RoundChooseChoiceScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundQuestionsId: 'roundQuestionsId',
+  choicesId: 'choicesId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.RoundQuestionScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundsId: 'roundsId',
+  questionsId: 'questionsId',
+  chooseChoice: 'chooseChoice',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.RoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  playerName: 'playerName',
+  round: 'round',
+  score: 'score',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.SortOrder = makeEnum({
@@ -144,9 +165,12 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.ModelName = makeEnum({
   Category: 'Category',
-  Menu: 'Menu',
-  Order: 'Order',
-  OrderItem: 'OrderItem'
+  Question: 'Question',
+  Choice: 'Choice',
+  Player: 'Player',
+  Round: 'Round',
+  RoundQuestion: 'RoundQuestion',
+  RoundChooseChoice: 'RoundChooseChoice'
 });
 
 /**

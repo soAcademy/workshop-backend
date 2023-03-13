@@ -1,0 +1,158 @@
+model User {
+  id                    Int            @id @default(autoincrement())
+  username              String
+  profileImage          String?
+  coverImage            String?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  userRelationMyselfs   UserRelation[] @relation("myself")
+  userRelationMyFriends UserRelation[] @relation("friend")
+  posts                 Post[]
+  reactions             Reaction[]
+  replies               Reply[]
+  members               Member[]
+  fromMsgs              Message[]      @relation("msgFrom")
+  toMsgs                Message[]      @relation("msgTo")
+  shareFroms            ShareTo[]      @relation("shareFrom")
+  shareTos              ShareTo[]      @relation("shareTo")
+}
+
+model UserRelation {
+  id             Int      @id @default(autoincrement())
+  myself         User     @relation("myself", fields: [myselfUserId], references: [id])
+  myselfUserId   Int
+  myFriend       User     @relation("friend", fields: [myFriendUserId], references: [id])
+  myFriendUserId Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Post {
+  id              Int              @id @default(autoincrement())
+  user            User             @relation(fields: [userId], references: [id])
+  userId          Int
+  detail          String
+  media           String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  hashtagOnPosts  HashtagOnPost[]
+  locationOnPosts LocationOnPost[]
+  reactions       Reaction[]
+  replies         Reply[]
+  shareTos        ShareTo[]
+}
+
+model Hashtag {
+  id             Int             @id @default(autoincrement())
+  detail         String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  hashtagOnPosts HashtagOnPost[]
+}
+
+model HashtagOnPost {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   Hashtag  @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Location {
+  id              Int              @id @default(autoincrement())
+  name            String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  locationOnPosts LocationOnPost[]
+}
+
+model LocationOnPost {
+  id         Int      @id @default(autoincrement())
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model TypeReaction {
+  id        Int        @id @default(autoincrement())
+  detail    String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  reactions Reaction[]
+}
+
+model Reaction {
+  id             Int          @id @default(autoincrement())
+  post           Post         @relation(fields: [postId], references: [id])
+  postId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  type           TypeReaction @relation(fields: [typeReactionId], references: [id])
+  typeReactionId Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Reply {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  detail    String?
+  media     String?
+  // ReplyTo  Reply?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Group {
+  id        Int       @id @default(autoincrement())
+  name      String
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  members   Member[]
+  shareTos  ShareTo[]
+}
+// Group To User
+model Member {
+  id        Int      @id @default(autoincrement())
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  from      User     @relation("msgFrom", fields: [fromId], references: [id])
+  fromId    Int
+  to        User     @relation("msgTo", fields: [toId], references: [id])
+  toId      Int
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ShareTo {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  from      User?    @relation("shareFrom", fields: [fromId], references: [id])
+  fromId    Int?
+  to        User?    @relation("shareTo", fields: [toId], references: [id])
+  toId      Int?
+  group     Group?   @relation(fields: [groupId], references: [id])
+  groupId   Int?
+  // replies Reply[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

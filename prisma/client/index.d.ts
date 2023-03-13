@@ -22,41 +22,74 @@ export type Category = {
 }
 
 /**
- * Model Menu
+ * Model Question
  * 
  */
-export type Menu = {
+export type Question = {
+  id: number
+  categoryId: number
+  question: string
+  choiceId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Choice
+ * 
+ */
+export type Choice = {
+  id: number
+  answer: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model Player
+ * 
+ */
+export type Player = {
   id: number
   name: string
-  image: string
-  price: number
-  categoryId: number
   createdAt: Date
   updatedAt: Date
 }
 
 /**
- * Model Order
+ * Model Round
  * 
  */
-export type Order = {
+export type Round = {
   id: number
-  status: string
-  tableId: number
+  playerName: string
+  round: string
+  score: number
   createdAt: Date
   updatedAt: Date
 }
 
 /**
- * Model OrderItem
+ * Model RoundQuestion
  * 
  */
-export type OrderItem = {
+export type RoundQuestion = {
   id: number
-  menuId: number
-  orderId: number
-  quantity: number
-  totalPrice: number
+  roundsId: number
+  questionsId: number
+  chooseChoice: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model RoundChooseChoice
+ * 
+ */
+export type RoundChooseChoice = {
+  id: number
+  roundQuestionsId: number
+  choicesId: number
   createdAt: Date
   updatedAt: Date
 }
@@ -190,34 +223,64 @@ export class PrismaClient<
   get category(): Prisma.CategoryDelegate<GlobalReject>;
 
   /**
-   * `prisma.menu`: Exposes CRUD operations for the **Menu** model.
+   * `prisma.question`: Exposes CRUD operations for the **Question** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Menus
-    * const menus = await prisma.menu.findMany()
+    * // Fetch zero or more Questions
+    * const questions = await prisma.question.findMany()
     * ```
     */
-  get menu(): Prisma.MenuDelegate<GlobalReject>;
+  get question(): Prisma.QuestionDelegate<GlobalReject>;
 
   /**
-   * `prisma.order`: Exposes CRUD operations for the **Order** model.
+   * `prisma.choice`: Exposes CRUD operations for the **Choice** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Orders
-    * const orders = await prisma.order.findMany()
+    * // Fetch zero or more Choices
+    * const choices = await prisma.choice.findMany()
     * ```
     */
-  get order(): Prisma.OrderDelegate<GlobalReject>;
+  get choice(): Prisma.ChoiceDelegate<GlobalReject>;
 
   /**
-   * `prisma.orderItem`: Exposes CRUD operations for the **OrderItem** model.
+   * `prisma.player`: Exposes CRUD operations for the **Player** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more OrderItems
-    * const orderItems = await prisma.orderItem.findMany()
+    * // Fetch zero or more Players
+    * const players = await prisma.player.findMany()
     * ```
     */
-  get orderItem(): Prisma.OrderItemDelegate<GlobalReject>;
+  get player(): Prisma.PlayerDelegate<GlobalReject>;
+
+  /**
+   * `prisma.round`: Exposes CRUD operations for the **Round** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rounds
+    * const rounds = await prisma.round.findMany()
+    * ```
+    */
+  get round(): Prisma.RoundDelegate<GlobalReject>;
+
+  /**
+   * `prisma.roundQuestion`: Exposes CRUD operations for the **RoundQuestion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RoundQuestions
+    * const roundQuestions = await prisma.roundQuestion.findMany()
+    * ```
+    */
+  get roundQuestion(): Prisma.RoundQuestionDelegate<GlobalReject>;
+
+  /**
+   * `prisma.roundChooseChoice`: Exposes CRUD operations for the **RoundChooseChoice** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RoundChooseChoices
+    * const roundChooseChoices = await prisma.roundChooseChoice.findMany()
+    * ```
+    */
+  get roundChooseChoice(): Prisma.RoundChooseChoiceDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -688,9 +751,12 @@ export namespace Prisma {
 
   export const ModelName: {
     Category: 'Category',
-    Menu: 'Menu',
-    Order: 'Order',
-    OrderItem: 'OrderItem'
+    Question: 'Question',
+    Choice: 'Choice',
+    Player: 'Player',
+    Round: 'Round',
+    RoundQuestion: 'RoundQuestion',
+    RoundChooseChoice: 'RoundChooseChoice'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -857,11 +923,11 @@ export namespace Prisma {
 
 
   export type CategoryCountOutputType = {
-    menus: number
+    questions: number
   }
 
   export type CategoryCountOutputTypeSelect = {
-    menus?: boolean
+    questions?: boolean
   }
 
   export type CategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | CategoryCountOutputTypeArgs> =
@@ -895,30 +961,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type MenuCountOutputType
+   * Count Type QuestionCountOutputType
    */
 
 
-  export type MenuCountOutputType = {
-    OrderItem: number
+  export type QuestionCountOutputType = {
+    choices: number
+    roundQuestion: number
   }
 
-  export type MenuCountOutputTypeSelect = {
-    OrderItem?: boolean
+  export type QuestionCountOutputTypeSelect = {
+    choices?: boolean
+    roundQuestion?: boolean
   }
 
-  export type MenuCountOutputTypeGetPayload<S extends boolean | null | undefined | MenuCountOutputTypeArgs> =
+  export type QuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | QuestionCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? MenuCountOutputType :
+    S extends true ? QuestionCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (MenuCountOutputTypeArgs)
-    ? MenuCountOutputType 
-    : S extends { select: any } & (MenuCountOutputTypeArgs)
+    S extends { include: any } & (QuestionCountOutputTypeArgs)
+    ? QuestionCountOutputType 
+    : S extends { select: any } & (QuestionCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof MenuCountOutputType ? MenuCountOutputType[P] : never
+    P extends keyof QuestionCountOutputType ? QuestionCountOutputType[P] : never
   } 
-      : MenuCountOutputType
+      : QuestionCountOutputType
 
 
 
@@ -926,42 +994,46 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * MenuCountOutputType without action
+   * QuestionCountOutputType without action
    */
-  export type MenuCountOutputTypeArgs = {
+  export type QuestionCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the MenuCountOutputType
+     * Select specific fields to fetch from the QuestionCountOutputType
      */
-    select?: MenuCountOutputTypeSelect | null
+    select?: QuestionCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type OrderCountOutputType
+   * Count Type ChoiceCountOutputType
    */
 
 
-  export type OrderCountOutputType = {
-    items: number
+  export type ChoiceCountOutputType = {
+    questions: number
+    answerToQuestion: number
+    roundChooseChoice: number
   }
 
-  export type OrderCountOutputTypeSelect = {
-    items?: boolean
+  export type ChoiceCountOutputTypeSelect = {
+    questions?: boolean
+    answerToQuestion?: boolean
+    roundChooseChoice?: boolean
   }
 
-  export type OrderCountOutputTypeGetPayload<S extends boolean | null | undefined | OrderCountOutputTypeArgs> =
+  export type ChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | ChoiceCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? OrderCountOutputType :
+    S extends true ? ChoiceCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (OrderCountOutputTypeArgs)
-    ? OrderCountOutputType 
-    : S extends { select: any } & (OrderCountOutputTypeArgs)
+    S extends { include: any } & (ChoiceCountOutputTypeArgs)
+    ? ChoiceCountOutputType 
+    : S extends { select: any } & (ChoiceCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof OrderCountOutputType ? OrderCountOutputType[P] : never
+    P extends keyof ChoiceCountOutputType ? ChoiceCountOutputType[P] : never
   } 
-      : OrderCountOutputType
+      : ChoiceCountOutputType
 
 
 
@@ -969,13 +1041,142 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * OrderCountOutputType without action
+   * ChoiceCountOutputType without action
    */
-  export type OrderCountOutputTypeArgs = {
+  export type ChoiceCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the OrderCountOutputType
+     * Select specific fields to fetch from the ChoiceCountOutputType
      */
-    select?: OrderCountOutputTypeSelect | null
+    select?: ChoiceCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type PlayerCountOutputType
+   */
+
+
+  export type PlayerCountOutputType = {
+    rounds: number
+  }
+
+  export type PlayerCountOutputTypeSelect = {
+    rounds?: boolean
+  }
+
+  export type PlayerCountOutputTypeGetPayload<S extends boolean | null | undefined | PlayerCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? PlayerCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (PlayerCountOutputTypeArgs)
+    ? PlayerCountOutputType 
+    : S extends { select: any } & (PlayerCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof PlayerCountOutputType ? PlayerCountOutputType[P] : never
+  } 
+      : PlayerCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the PlayerCountOutputType
+     */
+    select?: PlayerCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type RoundCountOutputType
+   */
+
+
+  export type RoundCountOutputType = {
+    roundQuestions: number
+  }
+
+  export type RoundCountOutputTypeSelect = {
+    roundQuestions?: boolean
+  }
+
+  export type RoundCountOutputTypeGetPayload<S extends boolean | null | undefined | RoundCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RoundCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundCountOutputTypeArgs)
+    ? RoundCountOutputType 
+    : S extends { select: any } & (RoundCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof RoundCountOutputType ? RoundCountOutputType[P] : never
+  } 
+      : RoundCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RoundCountOutputType without action
+   */
+  export type RoundCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the RoundCountOutputType
+     */
+    select?: RoundCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type RoundQuestionCountOutputType
+   */
+
+
+  export type RoundQuestionCountOutputType = {
+    roundChooseChoice: number
+  }
+
+  export type RoundQuestionCountOutputTypeSelect = {
+    roundChooseChoice?: boolean
+  }
+
+  export type RoundQuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | RoundQuestionCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RoundQuestionCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundQuestionCountOutputTypeArgs)
+    ? RoundQuestionCountOutputType 
+    : S extends { select: any } & (RoundQuestionCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof RoundQuestionCountOutputType ? RoundQuestionCountOutputType[P] : never
+  } 
+      : RoundQuestionCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RoundQuestionCountOutputType without action
+   */
+  export type RoundQuestionCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestionCountOutputType
+     */
+    select?: RoundQuestionCountOutputTypeSelect | null
   }
 
 
@@ -1174,7 +1375,7 @@ export namespace Prisma {
   export type CategorySelect = {
     id?: boolean
     name?: boolean
-    menus?: boolean | Category$menusArgs
+    questions?: boolean | Category$questionsArgs
     createdAt?: boolean
     updatedAt?: boolean
     _count?: boolean | CategoryCountOutputTypeArgs
@@ -1182,7 +1383,7 @@ export namespace Prisma {
 
 
   export type CategoryInclude = {
-    menus?: boolean | Category$menusArgs
+    questions?: boolean | Category$questionsArgs
     _count?: boolean | CategoryCountOutputTypeArgs
   }
 
@@ -1193,13 +1394,13 @@ export namespace Prisma {
     S extends { include: any } & (CategoryArgs | CategoryFindManyArgs)
     ? Category  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'menus' ? Array < MenuGetPayload<S['include'][P]>>  :
+        P extends 'questions' ? Array < QuestionGetPayload<S['include'][P]>>  :
         P extends '_count' ? CategoryCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (CategoryArgs | CategoryFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'menus' ? Array < MenuGetPayload<S['select'][P]>>  :
+        P extends 'questions' ? Array < QuestionGetPayload<S['select'][P]>>  :
         P extends '_count' ? CategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Category ? Category[P] : never
   } 
       : Category
@@ -1572,7 +1773,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    menus<T extends Category$menusArgs= {}>(args?: Subset<T, Category$menusArgs>): Prisma.PrismaPromise<Array<MenuGetPayload<T>>| Null>;
+    questions<T extends Category$questionsArgs= {}>(args?: Subset<T, Category$questionsArgs>): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1930,23 +2131,23 @@ export namespace Prisma {
 
 
   /**
-   * Category.menus
+   * Category.questions
    */
-  export type Category$menusArgs = {
+  export type Category$questionsArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
-    where?: MenuWhereInput
-    orderBy?: Enumerable<MenuOrderByWithRelationInput>
-    cursor?: MenuWhereUniqueInput
+    include?: QuestionInclude | null
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    cursor?: QuestionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<MenuScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
 
@@ -1967,409 +2168,409 @@ export namespace Prisma {
 
 
   /**
-   * Model Menu
+   * Model Question
    */
 
 
-  export type AggregateMenu = {
-    _count: MenuCountAggregateOutputType | null
-    _avg: MenuAvgAggregateOutputType | null
-    _sum: MenuSumAggregateOutputType | null
-    _min: MenuMinAggregateOutputType | null
-    _max: MenuMaxAggregateOutputType | null
+  export type AggregateQuestion = {
+    _count: QuestionCountAggregateOutputType | null
+    _avg: QuestionAvgAggregateOutputType | null
+    _sum: QuestionSumAggregateOutputType | null
+    _min: QuestionMinAggregateOutputType | null
+    _max: QuestionMaxAggregateOutputType | null
   }
 
-  export type MenuAvgAggregateOutputType = {
+  export type QuestionAvgAggregateOutputType = {
     id: number | null
-    price: number | null
     categoryId: number | null
+    choiceId: number | null
   }
 
-  export type MenuSumAggregateOutputType = {
+  export type QuestionSumAggregateOutputType = {
     id: number | null
-    price: number | null
     categoryId: number | null
+    choiceId: number | null
   }
 
-  export type MenuMinAggregateOutputType = {
+  export type QuestionMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    image: string | null
-    price: number | null
     categoryId: number | null
+    question: string | null
+    choiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type MenuMaxAggregateOutputType = {
+  export type QuestionMaxAggregateOutputType = {
     id: number | null
-    name: string | null
-    image: string | null
-    price: number | null
     categoryId: number | null
+    question: string | null
+    choiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type MenuCountAggregateOutputType = {
+  export type QuestionCountAggregateOutputType = {
     id: number
-    name: number
-    image: number
-    price: number
     categoryId: number
+    question: number
+    choiceId: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type MenuAvgAggregateInputType = {
+  export type QuestionAvgAggregateInputType = {
     id?: true
-    price?: true
     categoryId?: true
+    choiceId?: true
   }
 
-  export type MenuSumAggregateInputType = {
+  export type QuestionSumAggregateInputType = {
     id?: true
-    price?: true
     categoryId?: true
+    choiceId?: true
   }
 
-  export type MenuMinAggregateInputType = {
+  export type QuestionMinAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    price?: true
     categoryId?: true
+    question?: true
+    choiceId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type MenuMaxAggregateInputType = {
+  export type QuestionMaxAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    price?: true
     categoryId?: true
+    question?: true
+    choiceId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type MenuCountAggregateInputType = {
+  export type QuestionCountAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    price?: true
     categoryId?: true
+    question?: true
+    choiceId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type MenuAggregateArgs = {
+  export type QuestionAggregateArgs = {
     /**
-     * Filter which Menu to aggregate.
+     * Filter which Question to aggregate.
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Menus to fetch.
+     * Determine the order of Questions to fetch.
      */
-    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: MenuWhereUniqueInput
+    cursor?: QuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Menus from the position of the cursor.
+     * Take `±n` Questions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Menus.
+     * Skip the first `n` Questions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Menus
+     * Count returned Questions
     **/
-    _count?: true | MenuCountAggregateInputType
+    _count?: true | QuestionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: MenuAvgAggregateInputType
+    _avg?: QuestionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: MenuSumAggregateInputType
+    _sum?: QuestionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: MenuMinAggregateInputType
+    _min?: QuestionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: MenuMaxAggregateInputType
+    _max?: QuestionMaxAggregateInputType
   }
 
-  export type GetMenuAggregateType<T extends MenuAggregateArgs> = {
-        [P in keyof T & keyof AggregateMenu]: P extends '_count' | 'count'
+  export type GetQuestionAggregateType<T extends QuestionAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuestion]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateMenu[P]>
-      : GetScalarType<T[P], AggregateMenu[P]>
+        : GetScalarType<T[P], AggregateQuestion[P]>
+      : GetScalarType<T[P], AggregateQuestion[P]>
   }
 
 
 
 
-  export type MenuGroupByArgs = {
-    where?: MenuWhereInput
-    orderBy?: Enumerable<MenuOrderByWithAggregationInput>
-    by: MenuScalarFieldEnum[]
-    having?: MenuScalarWhereWithAggregatesInput
+  export type QuestionGroupByArgs = {
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithAggregationInput>
+    by: QuestionScalarFieldEnum[]
+    having?: QuestionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: MenuCountAggregateInputType | true
-    _avg?: MenuAvgAggregateInputType
-    _sum?: MenuSumAggregateInputType
-    _min?: MenuMinAggregateInputType
-    _max?: MenuMaxAggregateInputType
+    _count?: QuestionCountAggregateInputType | true
+    _avg?: QuestionAvgAggregateInputType
+    _sum?: QuestionSumAggregateInputType
+    _min?: QuestionMinAggregateInputType
+    _max?: QuestionMaxAggregateInputType
   }
 
 
-  export type MenuGroupByOutputType = {
+  export type QuestionGroupByOutputType = {
     id: number
-    name: string
-    image: string
-    price: number
     categoryId: number
+    question: string
+    choiceId: number
     createdAt: Date
     updatedAt: Date
-    _count: MenuCountAggregateOutputType | null
-    _avg: MenuAvgAggregateOutputType | null
-    _sum: MenuSumAggregateOutputType | null
-    _min: MenuMinAggregateOutputType | null
-    _max: MenuMaxAggregateOutputType | null
+    _count: QuestionCountAggregateOutputType | null
+    _avg: QuestionAvgAggregateOutputType | null
+    _sum: QuestionSumAggregateOutputType | null
+    _min: QuestionMinAggregateOutputType | null
+    _max: QuestionMaxAggregateOutputType | null
   }
 
-  type GetMenuGroupByPayload<T extends MenuGroupByArgs> = Prisma.PrismaPromise<
+  type GetQuestionGroupByPayload<T extends QuestionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<MenuGroupByOutputType, T['by']> &
+      PickArray<QuestionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof MenuGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof QuestionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], MenuGroupByOutputType[P]>
-            : GetScalarType<T[P], MenuGroupByOutputType[P]>
+              : GetScalarType<T[P], QuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], QuestionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type MenuSelect = {
+  export type QuestionSelect = {
     id?: boolean
-    name?: boolean
-    image?: boolean
-    price?: boolean
     category?: boolean | CategoryArgs
-    OrderItem?: boolean | Menu$OrderItemArgs
     categoryId?: boolean
+    question?: boolean
+    answer?: boolean | ChoiceArgs
+    choiceId?: boolean
+    choices?: boolean | Question$choicesArgs
     createdAt?: boolean
     updatedAt?: boolean
-    _count?: boolean | MenuCountOutputTypeArgs
+    roundQuestion?: boolean | Question$roundQuestionArgs
+    _count?: boolean | QuestionCountOutputTypeArgs
   }
 
 
-  export type MenuInclude = {
+  export type QuestionInclude = {
     category?: boolean | CategoryArgs
-    OrderItem?: boolean | Menu$OrderItemArgs
-    _count?: boolean | MenuCountOutputTypeArgs
+    answer?: boolean | ChoiceArgs
+    choices?: boolean | Question$choicesArgs
+    roundQuestion?: boolean | Question$roundQuestionArgs
+    _count?: boolean | QuestionCountOutputTypeArgs
   }
 
-  export type MenuGetPayload<S extends boolean | null | undefined | MenuArgs> =
+  export type QuestionGetPayload<S extends boolean | null | undefined | QuestionArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Menu :
+    S extends true ? Question :
     S extends undefined ? never :
-    S extends { include: any } & (MenuArgs | MenuFindManyArgs)
-    ? Menu  & {
+    S extends { include: any } & (QuestionArgs | QuestionFindManyArgs)
+    ? Question  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'category' ? CategoryGetPayload<S['include'][P]> :
-        P extends 'OrderItem' ? Array < OrderItemGetPayload<S['include'][P]>>  :
-        P extends '_count' ? MenuCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'answer' ? ChoiceGetPayload<S['include'][P]> :
+        P extends 'choices' ? Array < ChoiceGetPayload<S['include'][P]>>  :
+        P extends 'roundQuestion' ? Array < RoundQuestionGetPayload<S['include'][P]>>  :
+        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (MenuArgs | MenuFindManyArgs)
+    : S extends { select: any } & (QuestionArgs | QuestionFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'category' ? CategoryGetPayload<S['select'][P]> :
-        P extends 'OrderItem' ? Array < OrderItemGetPayload<S['select'][P]>>  :
-        P extends '_count' ? MenuCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Menu ? Menu[P] : never
+        P extends 'answer' ? ChoiceGetPayload<S['select'][P]> :
+        P extends 'choices' ? Array < ChoiceGetPayload<S['select'][P]>>  :
+        P extends 'roundQuestion' ? Array < RoundQuestionGetPayload<S['select'][P]>>  :
+        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Question ? Question[P] : never
   } 
-      : Menu
+      : Question
 
 
-  type MenuCountArgs = 
-    Omit<MenuFindManyArgs, 'select' | 'include'> & {
-      select?: MenuCountAggregateInputType | true
+  type QuestionCountArgs = 
+    Omit<QuestionFindManyArgs, 'select' | 'include'> & {
+      select?: QuestionCountAggregateInputType | true
     }
 
-  export interface MenuDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface QuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Menu that matches the filter.
-     * @param {MenuFindUniqueArgs} args - Arguments to find a Menu
+     * Find zero or one Question that matches the filter.
+     * @param {QuestionFindUniqueArgs} args - Arguments to find a Question
      * @example
-     * // Get one Menu
-     * const menu = await prisma.menu.findUnique({
+     * // Get one Question
+     * const question = await prisma.question.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends MenuFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, MenuFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Menu'> extends True ? Prisma__MenuClient<MenuGetPayload<T>> : Prisma__MenuClient<MenuGetPayload<T> | null, null>
+    findUnique<T extends QuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuestionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
 
     /**
-     * Find one Menu that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Question that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {MenuFindUniqueOrThrowArgs} args - Arguments to find a Menu
+     * @param {QuestionFindUniqueOrThrowArgs} args - Arguments to find a Question
      * @example
-     * // Get one Menu
-     * const menu = await prisma.menu.findUniqueOrThrow({
+     * // Get one Question
+     * const question = await prisma.question.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends MenuFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, MenuFindUniqueOrThrowArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    findUniqueOrThrow<T extends QuestionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuestionFindUniqueOrThrowArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Find the first Menu that matches the filter.
+     * Find the first Question that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuFindFirstArgs} args - Arguments to find a Menu
+     * @param {QuestionFindFirstArgs} args - Arguments to find a Question
      * @example
-     * // Get one Menu
-     * const menu = await prisma.menu.findFirst({
+     * // Get one Question
+     * const question = await prisma.question.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends MenuFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, MenuFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Menu'> extends True ? Prisma__MenuClient<MenuGetPayload<T>> : Prisma__MenuClient<MenuGetPayload<T> | null, null>
+    findFirst<T extends QuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuestionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
 
     /**
-     * Find the first Menu that matches the filter or
+     * Find the first Question that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuFindFirstOrThrowArgs} args - Arguments to find a Menu
+     * @param {QuestionFindFirstOrThrowArgs} args - Arguments to find a Question
      * @example
-     * // Get one Menu
-     * const menu = await prisma.menu.findFirstOrThrow({
+     * // Get one Question
+     * const question = await prisma.question.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends MenuFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, MenuFindFirstOrThrowArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    findFirstOrThrow<T extends QuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuestionFindFirstOrThrowArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Find zero or more Menus that matches the filter.
+     * Find zero or more Questions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {QuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Menus
-     * const menus = await prisma.menu.findMany()
+     * // Get all Questions
+     * const questions = await prisma.question.findMany()
      * 
-     * // Get first 10 Menus
-     * const menus = await prisma.menu.findMany({ take: 10 })
+     * // Get first 10 Questions
+     * const questions = await prisma.question.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const menuWithIdOnly = await prisma.menu.findMany({ select: { id: true } })
+     * const questionWithIdOnly = await prisma.question.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends MenuFindManyArgs>(
-      args?: SelectSubset<T, MenuFindManyArgs>
-    ): Prisma.PrismaPromise<Array<MenuGetPayload<T>>>
+    findMany<T extends QuestionFindManyArgs>(
+      args?: SelectSubset<T, QuestionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>>
 
     /**
-     * Create a Menu.
-     * @param {MenuCreateArgs} args - Arguments to create a Menu.
+     * Create a Question.
+     * @param {QuestionCreateArgs} args - Arguments to create a Question.
      * @example
-     * // Create one Menu
-     * const Menu = await prisma.menu.create({
+     * // Create one Question
+     * const Question = await prisma.question.create({
      *   data: {
-     *     // ... data to create a Menu
+     *     // ... data to create a Question
      *   }
      * })
      * 
     **/
-    create<T extends MenuCreateArgs>(
-      args: SelectSubset<T, MenuCreateArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    create<T extends QuestionCreateArgs>(
+      args: SelectSubset<T, QuestionCreateArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Create many Menus.
-     *     @param {MenuCreateManyArgs} args - Arguments to create many Menus.
+     * Create many Questions.
+     *     @param {QuestionCreateManyArgs} args - Arguments to create many Questions.
      *     @example
-     *     // Create many Menus
-     *     const menu = await prisma.menu.createMany({
+     *     // Create many Questions
+     *     const question = await prisma.question.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends MenuCreateManyArgs>(
-      args?: SelectSubset<T, MenuCreateManyArgs>
+    createMany<T extends QuestionCreateManyArgs>(
+      args?: SelectSubset<T, QuestionCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Menu.
-     * @param {MenuDeleteArgs} args - Arguments to delete one Menu.
+     * Delete a Question.
+     * @param {QuestionDeleteArgs} args - Arguments to delete one Question.
      * @example
-     * // Delete one Menu
-     * const Menu = await prisma.menu.delete({
+     * // Delete one Question
+     * const Question = await prisma.question.delete({
      *   where: {
-     *     // ... filter to delete one Menu
+     *     // ... filter to delete one Question
      *   }
      * })
      * 
     **/
-    delete<T extends MenuDeleteArgs>(
-      args: SelectSubset<T, MenuDeleteArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    delete<T extends QuestionDeleteArgs>(
+      args: SelectSubset<T, QuestionDeleteArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Update one Menu.
-     * @param {MenuUpdateArgs} args - Arguments to update one Menu.
+     * Update one Question.
+     * @param {QuestionUpdateArgs} args - Arguments to update one Question.
      * @example
-     * // Update one Menu
-     * const menu = await prisma.menu.update({
+     * // Update one Question
+     * const question = await prisma.question.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2379,34 +2580,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends MenuUpdateArgs>(
-      args: SelectSubset<T, MenuUpdateArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    update<T extends QuestionUpdateArgs>(
+      args: SelectSubset<T, QuestionUpdateArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Delete zero or more Menus.
-     * @param {MenuDeleteManyArgs} args - Arguments to filter Menus to delete.
+     * Delete zero or more Questions.
+     * @param {QuestionDeleteManyArgs} args - Arguments to filter Questions to delete.
      * @example
-     * // Delete a few Menus
-     * const { count } = await prisma.menu.deleteMany({
+     * // Delete a few Questions
+     * const { count } = await prisma.question.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends MenuDeleteManyArgs>(
-      args?: SelectSubset<T, MenuDeleteManyArgs>
+    deleteMany<T extends QuestionDeleteManyArgs>(
+      args?: SelectSubset<T, QuestionDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Menus.
+     * Update zero or more Questions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {QuestionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Menus
-     * const menu = await prisma.menu.updateMany({
+     * // Update many Questions
+     * const question = await prisma.question.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2416,59 +2617,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends MenuUpdateManyArgs>(
-      args: SelectSubset<T, MenuUpdateManyArgs>
+    updateMany<T extends QuestionUpdateManyArgs>(
+      args: SelectSubset<T, QuestionUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Menu.
-     * @param {MenuUpsertArgs} args - Arguments to update or create a Menu.
+     * Create or update one Question.
+     * @param {QuestionUpsertArgs} args - Arguments to update or create a Question.
      * @example
-     * // Update or create a Menu
-     * const menu = await prisma.menu.upsert({
+     * // Update or create a Question
+     * const question = await prisma.question.upsert({
      *   create: {
-     *     // ... data to create a Menu
+     *     // ... data to create a Question
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Menu we want to update
+     *     // ... the filter for the Question we want to update
      *   }
      * })
     **/
-    upsert<T extends MenuUpsertArgs>(
-      args: SelectSubset<T, MenuUpsertArgs>
-    ): Prisma__MenuClient<MenuGetPayload<T>>
+    upsert<T extends QuestionUpsertArgs>(
+      args: SelectSubset<T, QuestionUpsertArgs>
+    ): Prisma__QuestionClient<QuestionGetPayload<T>>
 
     /**
-     * Count the number of Menus.
+     * Count the number of Questions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuCountArgs} args - Arguments to filter Menus to count.
+     * @param {QuestionCountArgs} args - Arguments to filter Questions to count.
      * @example
-     * // Count the number of Menus
-     * const count = await prisma.menu.count({
+     * // Count the number of Questions
+     * const count = await prisma.question.count({
      *   where: {
-     *     // ... the filter for the Menus we want to count
+     *     // ... the filter for the Questions we want to count
      *   }
      * })
     **/
-    count<T extends MenuCountArgs>(
-      args?: Subset<T, MenuCountArgs>,
+    count<T extends QuestionCountArgs>(
+      args?: Subset<T, QuestionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], MenuCountAggregateOutputType>
+          : GetScalarType<T['select'], QuestionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Menu.
+     * Allows you to perform aggregations operations on a Question.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {QuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2488,13 +2689,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends MenuAggregateArgs>(args: Subset<T, MenuAggregateArgs>): Prisma.PrismaPromise<GetMenuAggregateType<T>>
+    aggregate<T extends QuestionAggregateArgs>(args: Subset<T, QuestionAggregateArgs>): Prisma.PrismaPromise<GetQuestionAggregateType<T>>
 
     /**
-     * Group by Menu.
+     * Group by Question.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MenuGroupByArgs} args - Group by arguments.
+     * @param {QuestionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2509,14 +2710,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends MenuGroupByArgs,
+      T extends QuestionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MenuGroupByArgs['orderBy'] }
-        : { orderBy?: MenuGroupByArgs['orderBy'] },
+        ? { orderBy: QuestionGroupByArgs['orderBy'] }
+        : { orderBy?: QuestionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2565,17 +2766,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, MenuGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMenuGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, QuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Menu.
+   * The delegate class that acts as a "Promise-like" for Question.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__MenuClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__QuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -2592,7 +2793,11 @@ export namespace Prisma {
 
     category<T extends CategoryArgs= {}>(args?: Subset<T, CategoryArgs>): Prisma__CategoryClient<CategoryGetPayload<T> | Null>;
 
-    OrderItem<T extends Menu$OrderItemArgs= {}>(args?: Subset<T, Menu$OrderItemArgs>): Prisma.PrismaPromise<Array<OrderItemGetPayload<T>>| Null>;
+    answer<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    choices<T extends Question$choicesArgs= {}>(args?: Subset<T, Question$choicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
+
+    roundQuestion<T extends Question$roundQuestionArgs= {}>(args?: Subset<T, Question$roundQuestionArgs>): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -2622,27 +2827,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Menu base type for findUnique actions
+   * Question base type for findUnique actions
    */
-  export type MenuFindUniqueArgsBase = {
+  export type QuestionFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter, which Menu to fetch.
+     * Filter, which Question to fetch.
      */
-    where: MenuWhereUniqueInput
+    where: QuestionWhereUniqueInput
   }
 
   /**
-   * Menu findUnique
+   * Question findUnique
    */
-  export interface MenuFindUniqueArgs extends MenuFindUniqueArgsBase {
+  export interface QuestionFindUniqueArgs extends QuestionFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -2652,76 +2857,76 @@ export namespace Prisma {
       
 
   /**
-   * Menu findUniqueOrThrow
+   * Question findUniqueOrThrow
    */
-  export type MenuFindUniqueOrThrowArgs = {
+  export type QuestionFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter, which Menu to fetch.
+     * Filter, which Question to fetch.
      */
-    where: MenuWhereUniqueInput
+    where: QuestionWhereUniqueInput
   }
 
 
   /**
-   * Menu base type for findFirst actions
+   * Question base type for findFirst actions
    */
-  export type MenuFindFirstArgsBase = {
+  export type QuestionFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter, which Menu to fetch.
+     * Filter, which Question to fetch.
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Menus to fetch.
+     * Determine the order of Questions to fetch.
      */
-    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Menus.
+     * Sets the position for searching for Questions.
      */
-    cursor?: MenuWhereUniqueInput
+    cursor?: QuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Menus from the position of the cursor.
+     * Take `±n` Questions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Menus.
+     * Skip the first `n` Questions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Menus.
+     * Filter by unique combinations of Questions.
      */
-    distinct?: Enumerable<MenuScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
   /**
-   * Menu findFirst
+   * Question findFirst
    */
-  export interface MenuFindFirstArgs extends MenuFindFirstArgsBase {
+  export interface QuestionFindFirstArgs extends QuestionFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -2731,641 +2936,658 @@ export namespace Prisma {
       
 
   /**
-   * Menu findFirstOrThrow
+   * Question findFirstOrThrow
    */
-  export type MenuFindFirstOrThrowArgs = {
+  export type QuestionFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter, which Menu to fetch.
+     * Filter, which Question to fetch.
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Menus to fetch.
+     * Determine the order of Questions to fetch.
      */
-    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Menus.
+     * Sets the position for searching for Questions.
      */
-    cursor?: MenuWhereUniqueInput
+    cursor?: QuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Menus from the position of the cursor.
+     * Take `±n` Questions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Menus.
+     * Skip the first `n` Questions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Menus.
+     * Filter by unique combinations of Questions.
      */
-    distinct?: Enumerable<MenuScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
 
   /**
-   * Menu findMany
+   * Question findMany
    */
-  export type MenuFindManyArgs = {
+  export type QuestionFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter, which Menus to fetch.
+     * Filter, which Questions to fetch.
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Menus to fetch.
+     * Determine the order of Questions to fetch.
      */
-    orderBy?: Enumerable<MenuOrderByWithRelationInput>
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Menus.
+     * Sets the position for listing Questions.
      */
-    cursor?: MenuWhereUniqueInput
+    cursor?: QuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Menus from the position of the cursor.
+     * Take `±n` Questions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Menus.
+     * Skip the first `n` Questions.
      */
     skip?: number
-    distinct?: Enumerable<MenuScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
 
   /**
-   * Menu create
+   * Question create
    */
-  export type MenuCreateArgs = {
+  export type QuestionCreateArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * The data needed to create a Menu.
+     * The data needed to create a Question.
      */
-    data: XOR<MenuCreateInput, MenuUncheckedCreateInput>
+    data: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
   }
 
 
   /**
-   * Menu createMany
+   * Question createMany
    */
-  export type MenuCreateManyArgs = {
+  export type QuestionCreateManyArgs = {
     /**
-     * The data used to create many Menus.
+     * The data used to create many Questions.
      */
-    data: Enumerable<MenuCreateManyInput>
+    data: Enumerable<QuestionCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Menu update
+   * Question update
    */
-  export type MenuUpdateArgs = {
+  export type QuestionUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * The data needed to update a Menu.
+     * The data needed to update a Question.
      */
-    data: XOR<MenuUpdateInput, MenuUncheckedUpdateInput>
+    data: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
     /**
-     * Choose, which Menu to update.
+     * Choose, which Question to update.
      */
-    where: MenuWhereUniqueInput
+    where: QuestionWhereUniqueInput
   }
 
 
   /**
-   * Menu updateMany
+   * Question updateMany
    */
-  export type MenuUpdateManyArgs = {
+  export type QuestionUpdateManyArgs = {
     /**
-     * The data used to update Menus.
+     * The data used to update Questions.
      */
-    data: XOR<MenuUpdateManyMutationInput, MenuUncheckedUpdateManyInput>
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyInput>
     /**
-     * Filter which Menus to update
+     * Filter which Questions to update
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
   }
 
 
   /**
-   * Menu upsert
+   * Question upsert
    */
-  export type MenuUpsertArgs = {
+  export type QuestionUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * The filter to search for the Menu to update in case it exists.
+     * The filter to search for the Question to update in case it exists.
      */
-    where: MenuWhereUniqueInput
+    where: QuestionWhereUniqueInput
     /**
-     * In case the Menu found by the `where` argument doesn't exist, create a new Menu with this data.
+     * In case the Question found by the `where` argument doesn't exist, create a new Question with this data.
      */
-    create: XOR<MenuCreateInput, MenuUncheckedCreateInput>
+    create: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
     /**
-     * In case the Menu was found with the provided `where` argument, update it with this data.
+     * In case the Question was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<MenuUpdateInput, MenuUncheckedUpdateInput>
+    update: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
   }
 
 
   /**
-   * Menu delete
+   * Question delete
    */
-  export type MenuDeleteArgs = {
+  export type QuestionDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the Question
      */
-    select?: MenuSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: QuestionInclude | null
     /**
-     * Filter which Menu to delete.
+     * Filter which Question to delete.
      */
-    where: MenuWhereUniqueInput
+    where: QuestionWhereUniqueInput
   }
 
 
   /**
-   * Menu deleteMany
+   * Question deleteMany
    */
-  export type MenuDeleteManyArgs = {
+  export type QuestionDeleteManyArgs = {
     /**
-     * Filter which Menus to delete
+     * Filter which Questions to delete
      */
-    where?: MenuWhereInput
+    where?: QuestionWhereInput
   }
 
 
   /**
-   * Menu.OrderItem
+   * Question.choices
    */
-  export type Menu$OrderItemArgs = {
+  export type Question$choicesArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderItemSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
-    where?: OrderItemWhereInput
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
-    cursor?: OrderItemWhereUniqueInput
+    include?: ChoiceInclude | null
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
+    cursor?: ChoiceWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<OrderItemScalarFieldEnum>
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
   }
 
 
   /**
-   * Menu without action
+   * Question.roundQuestion
    */
-  export type MenuArgs = {
+  export type Question$roundQuestionArgs = {
     /**
-     * Select specific fields to fetch from the Menu
+     * Select specific fields to fetch from the RoundQuestion
      */
-    select?: MenuSelect | null
+    select?: RoundQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: MenuInclude | null
+    include?: RoundQuestionInclude | null
+    where?: RoundQuestionWhereInput
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    cursor?: RoundQuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * Question without action
+   */
+  export type QuestionArgs = {
+    /**
+     * Select specific fields to fetch from the Question
+     */
+    select?: QuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: QuestionInclude | null
   }
 
 
 
   /**
-   * Model Order
+   * Model Choice
    */
 
 
-  export type AggregateOrder = {
-    _count: OrderCountAggregateOutputType | null
-    _avg: OrderAvgAggregateOutputType | null
-    _sum: OrderSumAggregateOutputType | null
-    _min: OrderMinAggregateOutputType | null
-    _max: OrderMaxAggregateOutputType | null
+  export type AggregateChoice = {
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
   }
 
-  export type OrderAvgAggregateOutputType = {
+  export type ChoiceAvgAggregateOutputType = {
     id: number | null
-    tableId: number | null
   }
 
-  export type OrderSumAggregateOutputType = {
+  export type ChoiceSumAggregateOutputType = {
     id: number | null
-    tableId: number | null
   }
 
-  export type OrderMinAggregateOutputType = {
+  export type ChoiceMinAggregateOutputType = {
     id: number | null
-    status: string | null
-    tableId: number | null
+    answer: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type OrderMaxAggregateOutputType = {
+  export type ChoiceMaxAggregateOutputType = {
     id: number | null
-    status: string | null
-    tableId: number | null
+    answer: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type OrderCountAggregateOutputType = {
+  export type ChoiceCountAggregateOutputType = {
     id: number
-    status: number
-    tableId: number
+    answer: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type OrderAvgAggregateInputType = {
+  export type ChoiceAvgAggregateInputType = {
     id?: true
-    tableId?: true
   }
 
-  export type OrderSumAggregateInputType = {
+  export type ChoiceSumAggregateInputType = {
     id?: true
-    tableId?: true
   }
 
-  export type OrderMinAggregateInputType = {
+  export type ChoiceMinAggregateInputType = {
     id?: true
-    status?: true
-    tableId?: true
+    answer?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type OrderMaxAggregateInputType = {
+  export type ChoiceMaxAggregateInputType = {
     id?: true
-    status?: true
-    tableId?: true
+    answer?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type OrderCountAggregateInputType = {
+  export type ChoiceCountAggregateInputType = {
     id?: true
-    status?: true
-    tableId?: true
+    answer?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type OrderAggregateArgs = {
+  export type ChoiceAggregateArgs = {
     /**
-     * Filter which Order to aggregate.
+     * Filter which Choice to aggregate.
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Orders to fetch.
+     * Determine the order of Choices to fetch.
      */
-    orderBy?: Enumerable<OrderOrderByWithRelationInput>
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: OrderWhereUniqueInput
+    cursor?: ChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Orders from the position of the cursor.
+     * Take `±n` Choices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Orders.
+     * Skip the first `n` Choices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Orders
+     * Count returned Choices
     **/
-    _count?: true | OrderCountAggregateInputType
+    _count?: true | ChoiceCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: OrderAvgAggregateInputType
+    _avg?: ChoiceAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: OrderSumAggregateInputType
+    _sum?: ChoiceSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: OrderMinAggregateInputType
+    _min?: ChoiceMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: OrderMaxAggregateInputType
+    _max?: ChoiceMaxAggregateInputType
   }
 
-  export type GetOrderAggregateType<T extends OrderAggregateArgs> = {
-        [P in keyof T & keyof AggregateOrder]: P extends '_count' | 'count'
+  export type GetChoiceAggregateType<T extends ChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateChoice]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateOrder[P]>
-      : GetScalarType<T[P], AggregateOrder[P]>
+        : GetScalarType<T[P], AggregateChoice[P]>
+      : GetScalarType<T[P], AggregateChoice[P]>
   }
 
 
 
 
-  export type OrderGroupByArgs = {
-    where?: OrderWhereInput
-    orderBy?: Enumerable<OrderOrderByWithAggregationInput>
-    by: OrderScalarFieldEnum[]
-    having?: OrderScalarWhereWithAggregatesInput
+  export type ChoiceGroupByArgs = {
+    where?: ChoiceWhereInput
+    orderBy?: Enumerable<ChoiceOrderByWithAggregationInput>
+    by: ChoiceScalarFieldEnum[]
+    having?: ChoiceScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: OrderCountAggregateInputType | true
-    _avg?: OrderAvgAggregateInputType
-    _sum?: OrderSumAggregateInputType
-    _min?: OrderMinAggregateInputType
-    _max?: OrderMaxAggregateInputType
+    _count?: ChoiceCountAggregateInputType | true
+    _avg?: ChoiceAvgAggregateInputType
+    _sum?: ChoiceSumAggregateInputType
+    _min?: ChoiceMinAggregateInputType
+    _max?: ChoiceMaxAggregateInputType
   }
 
 
-  export type OrderGroupByOutputType = {
+  export type ChoiceGroupByOutputType = {
     id: number
-    status: string
-    tableId: number
+    answer: string
     createdAt: Date
     updatedAt: Date
-    _count: OrderCountAggregateOutputType | null
-    _avg: OrderAvgAggregateOutputType | null
-    _sum: OrderSumAggregateOutputType | null
-    _min: OrderMinAggregateOutputType | null
-    _max: OrderMaxAggregateOutputType | null
+    _count: ChoiceCountAggregateOutputType | null
+    _avg: ChoiceAvgAggregateOutputType | null
+    _sum: ChoiceSumAggregateOutputType | null
+    _min: ChoiceMinAggregateOutputType | null
+    _max: ChoiceMaxAggregateOutputType | null
   }
 
-  type GetOrderGroupByPayload<T extends OrderGroupByArgs> = Prisma.PrismaPromise<
+  type GetChoiceGroupByPayload<T extends ChoiceGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<OrderGroupByOutputType, T['by']> &
+      PickArray<ChoiceGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof OrderGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ChoiceGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], OrderGroupByOutputType[P]>
-            : GetScalarType<T[P], OrderGroupByOutputType[P]>
+              : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], ChoiceGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type OrderSelect = {
+  export type ChoiceSelect = {
     id?: boolean
-    status?: boolean
-    tableId?: boolean
-    items?: boolean | Order$itemsArgs
+    questions?: boolean | Choice$questionsArgs
+    answerToQuestion?: boolean | Choice$answerToQuestionArgs
+    answer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    _count?: boolean | OrderCountOutputTypeArgs
+    roundChooseChoice?: boolean | Choice$roundChooseChoiceArgs
+    _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
 
-  export type OrderInclude = {
-    items?: boolean | Order$itemsArgs
-    _count?: boolean | OrderCountOutputTypeArgs
+  export type ChoiceInclude = {
+    questions?: boolean | Choice$questionsArgs
+    answerToQuestion?: boolean | Choice$answerToQuestionArgs
+    roundChooseChoice?: boolean | Choice$roundChooseChoiceArgs
+    _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
-  export type OrderGetPayload<S extends boolean | null | undefined | OrderArgs> =
+  export type ChoiceGetPayload<S extends boolean | null | undefined | ChoiceArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Order :
+    S extends true ? Choice :
     S extends undefined ? never :
-    S extends { include: any } & (OrderArgs | OrderFindManyArgs)
-    ? Order  & {
+    S extends { include: any } & (ChoiceArgs | ChoiceFindManyArgs)
+    ? Choice  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'items' ? Array < OrderItemGetPayload<S['include'][P]>>  :
-        P extends '_count' ? OrderCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'questions' ? Array < QuestionGetPayload<S['include'][P]>>  :
+        P extends 'answerToQuestion' ? Array < QuestionGetPayload<S['include'][P]>>  :
+        P extends 'roundChooseChoice' ? Array < RoundChooseChoiceGetPayload<S['include'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (OrderArgs | OrderFindManyArgs)
+    : S extends { select: any } & (ChoiceArgs | ChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'items' ? Array < OrderItemGetPayload<S['select'][P]>>  :
-        P extends '_count' ? OrderCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Order ? Order[P] : never
+        P extends 'questions' ? Array < QuestionGetPayload<S['select'][P]>>  :
+        P extends 'answerToQuestion' ? Array < QuestionGetPayload<S['select'][P]>>  :
+        P extends 'roundChooseChoice' ? Array < RoundChooseChoiceGetPayload<S['select'][P]>>  :
+        P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Choice ? Choice[P] : never
   } 
-      : Order
+      : Choice
 
 
-  type OrderCountArgs = 
-    Omit<OrderFindManyArgs, 'select' | 'include'> & {
-      select?: OrderCountAggregateInputType | true
+  type ChoiceCountArgs = 
+    Omit<ChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: ChoiceCountAggregateInputType | true
     }
 
-  export interface OrderDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface ChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Order that matches the filter.
-     * @param {OrderFindUniqueArgs} args - Arguments to find a Order
+     * Find zero or one Choice that matches the filter.
+     * @param {ChoiceFindUniqueArgs} args - Arguments to find a Choice
      * @example
-     * // Get one Order
-     * const order = await prisma.order.findUnique({
+     * // Get one Choice
+     * const choice = await prisma.choice.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends OrderFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, OrderFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Order'> extends True ? Prisma__OrderClient<OrderGetPayload<T>> : Prisma__OrderClient<OrderGetPayload<T> | null, null>
+    findUnique<T extends ChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, ChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
 
     /**
-     * Find one Order that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Choice that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {OrderFindUniqueOrThrowArgs} args - Arguments to find a Order
+     * @param {ChoiceFindUniqueOrThrowArgs} args - Arguments to find a Choice
      * @example
-     * // Get one Order
-     * const order = await prisma.order.findUniqueOrThrow({
+     * // Get one Choice
+     * const choice = await prisma.choice.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends OrderFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, OrderFindUniqueOrThrowArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    findUniqueOrThrow<T extends ChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindUniqueOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Find the first Order that matches the filter.
+     * Find the first Choice that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderFindFirstArgs} args - Arguments to find a Order
+     * @param {ChoiceFindFirstArgs} args - Arguments to find a Choice
      * @example
-     * // Get one Order
-     * const order = await prisma.order.findFirst({
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends OrderFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, OrderFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Order'> extends True ? Prisma__OrderClient<OrderGetPayload<T>> : Prisma__OrderClient<OrderGetPayload<T> | null, null>
+    findFirst<T extends ChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, ChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Choice'> extends True ? Prisma__ChoiceClient<ChoiceGetPayload<T>> : Prisma__ChoiceClient<ChoiceGetPayload<T> | null, null>
 
     /**
-     * Find the first Order that matches the filter or
+     * Find the first Choice that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderFindFirstOrThrowArgs} args - Arguments to find a Order
+     * @param {ChoiceFindFirstOrThrowArgs} args - Arguments to find a Choice
      * @example
-     * // Get one Order
-     * const order = await prisma.order.findFirstOrThrow({
+     * // Get one Choice
+     * const choice = await prisma.choice.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends OrderFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, OrderFindFirstOrThrowArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    findFirstOrThrow<T extends ChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, ChoiceFindFirstOrThrowArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Find zero or more Orders that matches the filter.
+     * Find zero or more Choices that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {ChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Orders
-     * const orders = await prisma.order.findMany()
+     * // Get all Choices
+     * const choices = await prisma.choice.findMany()
      * 
-     * // Get first 10 Orders
-     * const orders = await prisma.order.findMany({ take: 10 })
+     * // Get first 10 Choices
+     * const choices = await prisma.choice.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const orderWithIdOnly = await prisma.order.findMany({ select: { id: true } })
+     * const choiceWithIdOnly = await prisma.choice.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends OrderFindManyArgs>(
-      args?: SelectSubset<T, OrderFindManyArgs>
-    ): Prisma.PrismaPromise<Array<OrderGetPayload<T>>>
+    findMany<T extends ChoiceFindManyArgs>(
+      args?: SelectSubset<T, ChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>>
 
     /**
-     * Create a Order.
-     * @param {OrderCreateArgs} args - Arguments to create a Order.
+     * Create a Choice.
+     * @param {ChoiceCreateArgs} args - Arguments to create a Choice.
      * @example
-     * // Create one Order
-     * const Order = await prisma.order.create({
+     * // Create one Choice
+     * const Choice = await prisma.choice.create({
      *   data: {
-     *     // ... data to create a Order
+     *     // ... data to create a Choice
      *   }
      * })
      * 
     **/
-    create<T extends OrderCreateArgs>(
-      args: SelectSubset<T, OrderCreateArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    create<T extends ChoiceCreateArgs>(
+      args: SelectSubset<T, ChoiceCreateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Create many Orders.
-     *     @param {OrderCreateManyArgs} args - Arguments to create many Orders.
+     * Create many Choices.
+     *     @param {ChoiceCreateManyArgs} args - Arguments to create many Choices.
      *     @example
-     *     // Create many Orders
-     *     const order = await prisma.order.createMany({
+     *     // Create many Choices
+     *     const choice = await prisma.choice.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends OrderCreateManyArgs>(
-      args?: SelectSubset<T, OrderCreateManyArgs>
+    createMany<T extends ChoiceCreateManyArgs>(
+      args?: SelectSubset<T, ChoiceCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Order.
-     * @param {OrderDeleteArgs} args - Arguments to delete one Order.
+     * Delete a Choice.
+     * @param {ChoiceDeleteArgs} args - Arguments to delete one Choice.
      * @example
-     * // Delete one Order
-     * const Order = await prisma.order.delete({
+     * // Delete one Choice
+     * const Choice = await prisma.choice.delete({
      *   where: {
-     *     // ... filter to delete one Order
+     *     // ... filter to delete one Choice
      *   }
      * })
      * 
     **/
-    delete<T extends OrderDeleteArgs>(
-      args: SelectSubset<T, OrderDeleteArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    delete<T extends ChoiceDeleteArgs>(
+      args: SelectSubset<T, ChoiceDeleteArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Update one Order.
-     * @param {OrderUpdateArgs} args - Arguments to update one Order.
+     * Update one Choice.
+     * @param {ChoiceUpdateArgs} args - Arguments to update one Choice.
      * @example
-     * // Update one Order
-     * const order = await prisma.order.update({
+     * // Update one Choice
+     * const choice = await prisma.choice.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3375,34 +3597,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends OrderUpdateArgs>(
-      args: SelectSubset<T, OrderUpdateArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    update<T extends ChoiceUpdateArgs>(
+      args: SelectSubset<T, ChoiceUpdateArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Delete zero or more Orders.
-     * @param {OrderDeleteManyArgs} args - Arguments to filter Orders to delete.
+     * Delete zero or more Choices.
+     * @param {ChoiceDeleteManyArgs} args - Arguments to filter Choices to delete.
      * @example
-     * // Delete a few Orders
-     * const { count } = await prisma.order.deleteMany({
+     * // Delete a few Choices
+     * const { count } = await prisma.choice.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends OrderDeleteManyArgs>(
-      args?: SelectSubset<T, OrderDeleteManyArgs>
+    deleteMany<T extends ChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, ChoiceDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Orders.
+     * Update zero or more Choices.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ChoiceUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Orders
-     * const order = await prisma.order.updateMany({
+     * // Update many Choices
+     * const choice = await prisma.choice.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3412,59 +3634,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends OrderUpdateManyArgs>(
-      args: SelectSubset<T, OrderUpdateManyArgs>
+    updateMany<T extends ChoiceUpdateManyArgs>(
+      args: SelectSubset<T, ChoiceUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Order.
-     * @param {OrderUpsertArgs} args - Arguments to update or create a Order.
+     * Create or update one Choice.
+     * @param {ChoiceUpsertArgs} args - Arguments to update or create a Choice.
      * @example
-     * // Update or create a Order
-     * const order = await prisma.order.upsert({
+     * // Update or create a Choice
+     * const choice = await prisma.choice.upsert({
      *   create: {
-     *     // ... data to create a Order
+     *     // ... data to create a Choice
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Order we want to update
+     *     // ... the filter for the Choice we want to update
      *   }
      * })
     **/
-    upsert<T extends OrderUpsertArgs>(
-      args: SelectSubset<T, OrderUpsertArgs>
-    ): Prisma__OrderClient<OrderGetPayload<T>>
+    upsert<T extends ChoiceUpsertArgs>(
+      args: SelectSubset<T, ChoiceUpsertArgs>
+    ): Prisma__ChoiceClient<ChoiceGetPayload<T>>
 
     /**
-     * Count the number of Orders.
+     * Count the number of Choices.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderCountArgs} args - Arguments to filter Orders to count.
+     * @param {ChoiceCountArgs} args - Arguments to filter Choices to count.
      * @example
-     * // Count the number of Orders
-     * const count = await prisma.order.count({
+     * // Count the number of Choices
+     * const count = await prisma.choice.count({
      *   where: {
-     *     // ... the filter for the Orders we want to count
+     *     // ... the filter for the Choices we want to count
      *   }
      * })
     **/
-    count<T extends OrderCountArgs>(
-      args?: Subset<T, OrderCountArgs>,
+    count<T extends ChoiceCountArgs>(
+      args?: Subset<T, ChoiceCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], OrderCountAggregateOutputType>
+          : GetScalarType<T['select'], ChoiceCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Order.
+     * Allows you to perform aggregations operations on a Choice.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3484,13 +3706,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends OrderAggregateArgs>(args: Subset<T, OrderAggregateArgs>): Prisma.PrismaPromise<GetOrderAggregateType<T>>
+    aggregate<T extends ChoiceAggregateArgs>(args: Subset<T, ChoiceAggregateArgs>): Prisma.PrismaPromise<GetChoiceAggregateType<T>>
 
     /**
-     * Group by Order.
+     * Group by Choice.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderGroupByArgs} args - Group by arguments.
+     * @param {ChoiceGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3505,14 +3727,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends OrderGroupByArgs,
+      T extends ChoiceGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: OrderGroupByArgs['orderBy'] }
-        : { orderBy?: OrderGroupByArgs['orderBy'] },
+        ? { orderBy: ChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: ChoiceGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3561,17 +3783,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, OrderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Order.
+   * The delegate class that acts as a "Promise-like" for Choice.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__OrderClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__ChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -3586,7 +3808,11 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    items<T extends Order$itemsArgs= {}>(args?: Subset<T, Order$itemsArgs>): Prisma.PrismaPromise<Array<OrderItemGetPayload<T>>| Null>;
+    questions<T extends Choice$questionsArgs= {}>(args?: Subset<T, Choice$questionsArgs>): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>| Null>;
+
+    answerToQuestion<T extends Choice$answerToQuestionArgs= {}>(args?: Subset<T, Choice$answerToQuestionArgs>): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>| Null>;
+
+    roundChooseChoice<T extends Choice$roundChooseChoiceArgs= {}>(args?: Subset<T, Choice$roundChooseChoiceArgs>): Prisma.PrismaPromise<Array<RoundChooseChoiceGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3616,27 +3842,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Order base type for findUnique actions
+   * Choice base type for findUnique actions
    */
-  export type OrderFindUniqueArgsBase = {
+  export type ChoiceFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter, which Order to fetch.
+     * Filter, which Choice to fetch.
      */
-    where: OrderWhereUniqueInput
+    where: ChoiceWhereUniqueInput
   }
 
   /**
-   * Order findUnique
+   * Choice findUnique
    */
-  export interface OrderFindUniqueArgs extends OrderFindUniqueArgsBase {
+  export interface ChoiceFindUniqueArgs extends ChoiceFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -3646,76 +3872,76 @@ export namespace Prisma {
       
 
   /**
-   * Order findUniqueOrThrow
+   * Choice findUniqueOrThrow
    */
-  export type OrderFindUniqueOrThrowArgs = {
+  export type ChoiceFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter, which Order to fetch.
+     * Filter, which Choice to fetch.
      */
-    where: OrderWhereUniqueInput
+    where: ChoiceWhereUniqueInput
   }
 
 
   /**
-   * Order base type for findFirst actions
+   * Choice base type for findFirst actions
    */
-  export type OrderFindFirstArgsBase = {
+  export type ChoiceFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter, which Order to fetch.
+     * Filter, which Choice to fetch.
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Orders to fetch.
+     * Determine the order of Choices to fetch.
      */
-    orderBy?: Enumerable<OrderOrderByWithRelationInput>
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Orders.
+     * Sets the position for searching for Choices.
      */
-    cursor?: OrderWhereUniqueInput
+    cursor?: ChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Orders from the position of the cursor.
+     * Take `±n` Choices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Orders.
+     * Skip the first `n` Choices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Orders.
+     * Filter by unique combinations of Choices.
      */
-    distinct?: Enumerable<OrderScalarFieldEnum>
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
   }
 
   /**
-   * Order findFirst
+   * Choice findFirst
    */
-  export interface OrderFindFirstArgs extends OrderFindFirstArgsBase {
+  export interface ChoiceFindFirstArgs extends ChoiceFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -3725,669 +3951,671 @@ export namespace Prisma {
       
 
   /**
-   * Order findFirstOrThrow
+   * Choice findFirstOrThrow
    */
-  export type OrderFindFirstOrThrowArgs = {
+  export type ChoiceFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter, which Order to fetch.
+     * Filter, which Choice to fetch.
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Orders to fetch.
+     * Determine the order of Choices to fetch.
      */
-    orderBy?: Enumerable<OrderOrderByWithRelationInput>
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Orders.
+     * Sets the position for searching for Choices.
      */
-    cursor?: OrderWhereUniqueInput
+    cursor?: ChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Orders from the position of the cursor.
+     * Take `±n` Choices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Orders.
+     * Skip the first `n` Choices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Orders.
+     * Filter by unique combinations of Choices.
      */
-    distinct?: Enumerable<OrderScalarFieldEnum>
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
   }
 
 
   /**
-   * Order findMany
+   * Choice findMany
    */
-  export type OrderFindManyArgs = {
+  export type ChoiceFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter, which Orders to fetch.
+     * Filter, which Choices to fetch.
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Orders to fetch.
+     * Determine the order of Choices to fetch.
      */
-    orderBy?: Enumerable<OrderOrderByWithRelationInput>
+    orderBy?: Enumerable<ChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Orders.
+     * Sets the position for listing Choices.
      */
-    cursor?: OrderWhereUniqueInput
+    cursor?: ChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Orders from the position of the cursor.
+     * Take `±n` Choices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Orders.
+     * Skip the first `n` Choices.
      */
     skip?: number
-    distinct?: Enumerable<OrderScalarFieldEnum>
+    distinct?: Enumerable<ChoiceScalarFieldEnum>
   }
 
 
   /**
-   * Order create
+   * Choice create
    */
-  export type OrderCreateArgs = {
+  export type ChoiceCreateArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * The data needed to create a Order.
+     * The data needed to create a Choice.
      */
-    data: XOR<OrderCreateInput, OrderUncheckedCreateInput>
+    data: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
   }
 
 
   /**
-   * Order createMany
+   * Choice createMany
    */
-  export type OrderCreateManyArgs = {
+  export type ChoiceCreateManyArgs = {
     /**
-     * The data used to create many Orders.
+     * The data used to create many Choices.
      */
-    data: Enumerable<OrderCreateManyInput>
+    data: Enumerable<ChoiceCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Order update
+   * Choice update
    */
-  export type OrderUpdateArgs = {
+  export type ChoiceUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * The data needed to update a Order.
+     * The data needed to update a Choice.
      */
-    data: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>
+    data: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
     /**
-     * Choose, which Order to update.
+     * Choose, which Choice to update.
      */
-    where: OrderWhereUniqueInput
+    where: ChoiceWhereUniqueInput
   }
 
 
   /**
-   * Order updateMany
+   * Choice updateMany
    */
-  export type OrderUpdateManyArgs = {
+  export type ChoiceUpdateManyArgs = {
     /**
-     * The data used to update Orders.
+     * The data used to update Choices.
      */
-    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyInput>
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyInput>
     /**
-     * Filter which Orders to update
+     * Filter which Choices to update
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
   }
 
 
   /**
-   * Order upsert
+   * Choice upsert
    */
-  export type OrderUpsertArgs = {
+  export type ChoiceUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * The filter to search for the Order to update in case it exists.
+     * The filter to search for the Choice to update in case it exists.
      */
-    where: OrderWhereUniqueInput
+    where: ChoiceWhereUniqueInput
     /**
-     * In case the Order found by the `where` argument doesn't exist, create a new Order with this data.
+     * In case the Choice found by the `where` argument doesn't exist, create a new Choice with this data.
      */
-    create: XOR<OrderCreateInput, OrderUncheckedCreateInput>
+    create: XOR<ChoiceCreateInput, ChoiceUncheckedCreateInput>
     /**
-     * In case the Order was found with the provided `where` argument, update it with this data.
+     * In case the Choice was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>
+    update: XOR<ChoiceUpdateInput, ChoiceUncheckedUpdateInput>
   }
 
 
   /**
-   * Order delete
+   * Choice delete
    */
-  export type OrderDeleteArgs = {
+  export type ChoiceDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Choice
      */
-    select?: OrderSelect | null
+    select?: ChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: ChoiceInclude | null
     /**
-     * Filter which Order to delete.
+     * Filter which Choice to delete.
      */
-    where: OrderWhereUniqueInput
+    where: ChoiceWhereUniqueInput
   }
 
 
   /**
-   * Order deleteMany
+   * Choice deleteMany
    */
-  export type OrderDeleteManyArgs = {
+  export type ChoiceDeleteManyArgs = {
     /**
-     * Filter which Orders to delete
+     * Filter which Choices to delete
      */
-    where?: OrderWhereInput
+    where?: ChoiceWhereInput
   }
 
 
   /**
-   * Order.items
+   * Choice.questions
    */
-  export type Order$itemsArgs = {
+  export type Choice$questionsArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Question
      */
-    select?: OrderItemSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
-    where?: OrderItemWhereInput
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
-    cursor?: OrderItemWhereUniqueInput
+    include?: QuestionInclude | null
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    cursor?: QuestionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<OrderItemScalarFieldEnum>
+    distinct?: Enumerable<QuestionScalarFieldEnum>
   }
 
 
   /**
-   * Order without action
+   * Choice.answerToQuestion
    */
-  export type OrderArgs = {
+  export type Choice$answerToQuestionArgs = {
     /**
-     * Select specific fields to fetch from the Order
+     * Select specific fields to fetch from the Question
      */
-    select?: OrderSelect | null
+    select?: QuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderInclude | null
+    include?: QuestionInclude | null
+    where?: QuestionWhereInput
+    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    cursor?: QuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<QuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice.roundChooseChoice
+   */
+  export type Choice$roundChooseChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    where?: RoundChooseChoiceWhereInput
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundChooseChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * Choice without action
+   */
+  export type ChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the Choice
+     */
+    select?: ChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ChoiceInclude | null
   }
 
 
 
   /**
-   * Model OrderItem
+   * Model Player
    */
 
 
-  export type AggregateOrderItem = {
-    _count: OrderItemCountAggregateOutputType | null
-    _avg: OrderItemAvgAggregateOutputType | null
-    _sum: OrderItemSumAggregateOutputType | null
-    _min: OrderItemMinAggregateOutputType | null
-    _max: OrderItemMaxAggregateOutputType | null
+  export type AggregatePlayer = {
+    _count: PlayerCountAggregateOutputType | null
+    _avg: PlayerAvgAggregateOutputType | null
+    _sum: PlayerSumAggregateOutputType | null
+    _min: PlayerMinAggregateOutputType | null
+    _max: PlayerMaxAggregateOutputType | null
   }
 
-  export type OrderItemAvgAggregateOutputType = {
+  export type PlayerAvgAggregateOutputType = {
     id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
   }
 
-  export type OrderItemSumAggregateOutputType = {
+  export type PlayerSumAggregateOutputType = {
     id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
   }
 
-  export type OrderItemMinAggregateOutputType = {
+  export type PlayerMinAggregateOutputType = {
     id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type OrderItemMaxAggregateOutputType = {
+  export type PlayerMaxAggregateOutputType = {
     id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
+    name: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type OrderItemCountAggregateOutputType = {
+  export type PlayerCountAggregateOutputType = {
     id: number
-    menuId: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    name: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type OrderItemAvgAggregateInputType = {
+  export type PlayerAvgAggregateInputType = {
     id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
   }
 
-  export type OrderItemSumAggregateInputType = {
+  export type PlayerSumAggregateInputType = {
     id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
   }
 
-  export type OrderItemMinAggregateInputType = {
+  export type PlayerMinAggregateInputType = {
     id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type OrderItemMaxAggregateInputType = {
+  export type PlayerMaxAggregateInputType = {
     id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type OrderItemCountAggregateInputType = {
+  export type PlayerCountAggregateInputType = {
     id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
+    name?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type OrderItemAggregateArgs = {
+  export type PlayerAggregateArgs = {
     /**
-     * Filter which OrderItem to aggregate.
+     * Filter which Player to aggregate.
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of OrderItems to fetch.
+     * Determine the order of Players to fetch.
      */
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
+    orderBy?: Enumerable<PlayerOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: OrderItemWhereUniqueInput
+    cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` OrderItems from the position of the cursor.
+     * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` OrderItems.
+     * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned OrderItems
+     * Count returned Players
     **/
-    _count?: true | OrderItemCountAggregateInputType
+    _count?: true | PlayerCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: OrderItemAvgAggregateInputType
+    _avg?: PlayerAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: OrderItemSumAggregateInputType
+    _sum?: PlayerSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: OrderItemMinAggregateInputType
+    _min?: PlayerMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: OrderItemMaxAggregateInputType
+    _max?: PlayerMaxAggregateInputType
   }
 
-  export type GetOrderItemAggregateType<T extends OrderItemAggregateArgs> = {
-        [P in keyof T & keyof AggregateOrderItem]: P extends '_count' | 'count'
+  export type GetPlayerAggregateType<T extends PlayerAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlayer]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateOrderItem[P]>
-      : GetScalarType<T[P], AggregateOrderItem[P]>
+        : GetScalarType<T[P], AggregatePlayer[P]>
+      : GetScalarType<T[P], AggregatePlayer[P]>
   }
 
 
 
 
-  export type OrderItemGroupByArgs = {
-    where?: OrderItemWhereInput
-    orderBy?: Enumerable<OrderItemOrderByWithAggregationInput>
-    by: OrderItemScalarFieldEnum[]
-    having?: OrderItemScalarWhereWithAggregatesInput
+  export type PlayerGroupByArgs = {
+    where?: PlayerWhereInput
+    orderBy?: Enumerable<PlayerOrderByWithAggregationInput>
+    by: PlayerScalarFieldEnum[]
+    having?: PlayerScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: OrderItemCountAggregateInputType | true
-    _avg?: OrderItemAvgAggregateInputType
-    _sum?: OrderItemSumAggregateInputType
-    _min?: OrderItemMinAggregateInputType
-    _max?: OrderItemMaxAggregateInputType
+    _count?: PlayerCountAggregateInputType | true
+    _avg?: PlayerAvgAggregateInputType
+    _sum?: PlayerSumAggregateInputType
+    _min?: PlayerMinAggregateInputType
+    _max?: PlayerMaxAggregateInputType
   }
 
 
-  export type OrderItemGroupByOutputType = {
+  export type PlayerGroupByOutputType = {
     id: number
-    menuId: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    name: string
     createdAt: Date
     updatedAt: Date
-    _count: OrderItemCountAggregateOutputType | null
-    _avg: OrderItemAvgAggregateOutputType | null
-    _sum: OrderItemSumAggregateOutputType | null
-    _min: OrderItemMinAggregateOutputType | null
-    _max: OrderItemMaxAggregateOutputType | null
+    _count: PlayerCountAggregateOutputType | null
+    _avg: PlayerAvgAggregateOutputType | null
+    _sum: PlayerSumAggregateOutputType | null
+    _min: PlayerMinAggregateOutputType | null
+    _max: PlayerMaxAggregateOutputType | null
   }
 
-  type GetOrderItemGroupByPayload<T extends OrderItemGroupByArgs> = Prisma.PrismaPromise<
+  type GetPlayerGroupByPayload<T extends PlayerGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<OrderItemGroupByOutputType, T['by']> &
+      PickArray<PlayerGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof OrderItemGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PlayerGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], OrderItemGroupByOutputType[P]>
-            : GetScalarType<T[P], OrderItemGroupByOutputType[P]>
+              : GetScalarType<T[P], PlayerGroupByOutputType[P]>
+            : GetScalarType<T[P], PlayerGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type OrderItemSelect = {
+  export type PlayerSelect = {
     id?: boolean
-    menu?: boolean | MenuArgs
-    menuId?: boolean
-    order?: boolean | OrderArgs
-    orderId?: boolean
-    quantity?: boolean
-    totalPrice?: boolean
+    name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    rounds?: boolean | Player$roundsArgs
+    _count?: boolean | PlayerCountOutputTypeArgs
   }
 
 
-  export type OrderItemInclude = {
-    menu?: boolean | MenuArgs
-    order?: boolean | OrderArgs
+  export type PlayerInclude = {
+    rounds?: boolean | Player$roundsArgs
+    _count?: boolean | PlayerCountOutputTypeArgs
   }
 
-  export type OrderItemGetPayload<S extends boolean | null | undefined | OrderItemArgs> =
+  export type PlayerGetPayload<S extends boolean | null | undefined | PlayerArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? OrderItem :
+    S extends true ? Player :
     S extends undefined ? never :
-    S extends { include: any } & (OrderItemArgs | OrderItemFindManyArgs)
-    ? OrderItem  & {
+    S extends { include: any } & (PlayerArgs | PlayerFindManyArgs)
+    ? Player  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'menu' ? MenuGetPayload<S['include'][P]> :
-        P extends 'order' ? OrderGetPayload<S['include'][P]> :  never
+        P extends 'rounds' ? Array < RoundGetPayload<S['include'][P]>>  :
+        P extends '_count' ? PlayerCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (OrderItemArgs | OrderItemFindManyArgs)
+    : S extends { select: any } & (PlayerArgs | PlayerFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'menu' ? MenuGetPayload<S['select'][P]> :
-        P extends 'order' ? OrderGetPayload<S['select'][P]> :  P extends keyof OrderItem ? OrderItem[P] : never
+        P extends 'rounds' ? Array < RoundGetPayload<S['select'][P]>>  :
+        P extends '_count' ? PlayerCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Player ? Player[P] : never
   } 
-      : OrderItem
+      : Player
 
 
-  type OrderItemCountArgs = 
-    Omit<OrderItemFindManyArgs, 'select' | 'include'> & {
-      select?: OrderItemCountAggregateInputType | true
+  type PlayerCountArgs = 
+    Omit<PlayerFindManyArgs, 'select' | 'include'> & {
+      select?: PlayerCountAggregateInputType | true
     }
 
-  export interface OrderItemDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface PlayerDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one OrderItem that matches the filter.
-     * @param {OrderItemFindUniqueArgs} args - Arguments to find a OrderItem
+     * Find zero or one Player that matches the filter.
+     * @param {PlayerFindUniqueArgs} args - Arguments to find a Player
      * @example
-     * // Get one OrderItem
-     * const orderItem = await prisma.orderItem.findUnique({
+     * // Get one Player
+     * const player = await prisma.player.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends OrderItemFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, OrderItemFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'OrderItem'> extends True ? Prisma__OrderItemClient<OrderItemGetPayload<T>> : Prisma__OrderItemClient<OrderItemGetPayload<T> | null, null>
+    findUnique<T extends PlayerFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, PlayerFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Player'> extends True ? Prisma__PlayerClient<PlayerGetPayload<T>> : Prisma__PlayerClient<PlayerGetPayload<T> | null, null>
 
     /**
-     * Find one OrderItem that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Player that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {OrderItemFindUniqueOrThrowArgs} args - Arguments to find a OrderItem
+     * @param {PlayerFindUniqueOrThrowArgs} args - Arguments to find a Player
      * @example
-     * // Get one OrderItem
-     * const orderItem = await prisma.orderItem.findUniqueOrThrow({
+     * // Get one Player
+     * const player = await prisma.player.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends OrderItemFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, OrderItemFindUniqueOrThrowArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    findUniqueOrThrow<T extends PlayerFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, PlayerFindUniqueOrThrowArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Find the first OrderItem that matches the filter.
+     * Find the first Player that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemFindFirstArgs} args - Arguments to find a OrderItem
+     * @param {PlayerFindFirstArgs} args - Arguments to find a Player
      * @example
-     * // Get one OrderItem
-     * const orderItem = await prisma.orderItem.findFirst({
+     * // Get one Player
+     * const player = await prisma.player.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends OrderItemFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, OrderItemFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'OrderItem'> extends True ? Prisma__OrderItemClient<OrderItemGetPayload<T>> : Prisma__OrderItemClient<OrderItemGetPayload<T> | null, null>
+    findFirst<T extends PlayerFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, PlayerFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Player'> extends True ? Prisma__PlayerClient<PlayerGetPayload<T>> : Prisma__PlayerClient<PlayerGetPayload<T> | null, null>
 
     /**
-     * Find the first OrderItem that matches the filter or
+     * Find the first Player that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemFindFirstOrThrowArgs} args - Arguments to find a OrderItem
+     * @param {PlayerFindFirstOrThrowArgs} args - Arguments to find a Player
      * @example
-     * // Get one OrderItem
-     * const orderItem = await prisma.orderItem.findFirstOrThrow({
+     * // Get one Player
+     * const player = await prisma.player.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends OrderItemFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, OrderItemFindFirstOrThrowArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    findFirstOrThrow<T extends PlayerFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, PlayerFindFirstOrThrowArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Find zero or more OrderItems that matches the filter.
+     * Find zero or more Players that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {PlayerFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all OrderItems
-     * const orderItems = await prisma.orderItem.findMany()
+     * // Get all Players
+     * const players = await prisma.player.findMany()
      * 
-     * // Get first 10 OrderItems
-     * const orderItems = await prisma.orderItem.findMany({ take: 10 })
+     * // Get first 10 Players
+     * const players = await prisma.player.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const orderItemWithIdOnly = await prisma.orderItem.findMany({ select: { id: true } })
+     * const playerWithIdOnly = await prisma.player.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends OrderItemFindManyArgs>(
-      args?: SelectSubset<T, OrderItemFindManyArgs>
-    ): Prisma.PrismaPromise<Array<OrderItemGetPayload<T>>>
+    findMany<T extends PlayerFindManyArgs>(
+      args?: SelectSubset<T, PlayerFindManyArgs>
+    ): Prisma.PrismaPromise<Array<PlayerGetPayload<T>>>
 
     /**
-     * Create a OrderItem.
-     * @param {OrderItemCreateArgs} args - Arguments to create a OrderItem.
+     * Create a Player.
+     * @param {PlayerCreateArgs} args - Arguments to create a Player.
      * @example
-     * // Create one OrderItem
-     * const OrderItem = await prisma.orderItem.create({
+     * // Create one Player
+     * const Player = await prisma.player.create({
      *   data: {
-     *     // ... data to create a OrderItem
+     *     // ... data to create a Player
      *   }
      * })
      * 
     **/
-    create<T extends OrderItemCreateArgs>(
-      args: SelectSubset<T, OrderItemCreateArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    create<T extends PlayerCreateArgs>(
+      args: SelectSubset<T, PlayerCreateArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Create many OrderItems.
-     *     @param {OrderItemCreateManyArgs} args - Arguments to create many OrderItems.
+     * Create many Players.
+     *     @param {PlayerCreateManyArgs} args - Arguments to create many Players.
      *     @example
-     *     // Create many OrderItems
-     *     const orderItem = await prisma.orderItem.createMany({
+     *     // Create many Players
+     *     const player = await prisma.player.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends OrderItemCreateManyArgs>(
-      args?: SelectSubset<T, OrderItemCreateManyArgs>
+    createMany<T extends PlayerCreateManyArgs>(
+      args?: SelectSubset<T, PlayerCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a OrderItem.
-     * @param {OrderItemDeleteArgs} args - Arguments to delete one OrderItem.
+     * Delete a Player.
+     * @param {PlayerDeleteArgs} args - Arguments to delete one Player.
      * @example
-     * // Delete one OrderItem
-     * const OrderItem = await prisma.orderItem.delete({
+     * // Delete one Player
+     * const Player = await prisma.player.delete({
      *   where: {
-     *     // ... filter to delete one OrderItem
+     *     // ... filter to delete one Player
      *   }
      * })
      * 
     **/
-    delete<T extends OrderItemDeleteArgs>(
-      args: SelectSubset<T, OrderItemDeleteArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    delete<T extends PlayerDeleteArgs>(
+      args: SelectSubset<T, PlayerDeleteArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Update one OrderItem.
-     * @param {OrderItemUpdateArgs} args - Arguments to update one OrderItem.
+     * Update one Player.
+     * @param {PlayerUpdateArgs} args - Arguments to update one Player.
      * @example
-     * // Update one OrderItem
-     * const orderItem = await prisma.orderItem.update({
+     * // Update one Player
+     * const player = await prisma.player.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4397,34 +4625,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends OrderItemUpdateArgs>(
-      args: SelectSubset<T, OrderItemUpdateArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    update<T extends PlayerUpdateArgs>(
+      args: SelectSubset<T, PlayerUpdateArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Delete zero or more OrderItems.
-     * @param {OrderItemDeleteManyArgs} args - Arguments to filter OrderItems to delete.
+     * Delete zero or more Players.
+     * @param {PlayerDeleteManyArgs} args - Arguments to filter Players to delete.
      * @example
-     * // Delete a few OrderItems
-     * const { count } = await prisma.orderItem.deleteMany({
+     * // Delete a few Players
+     * const { count } = await prisma.player.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends OrderItemDeleteManyArgs>(
-      args?: SelectSubset<T, OrderItemDeleteManyArgs>
+    deleteMany<T extends PlayerDeleteManyArgs>(
+      args?: SelectSubset<T, PlayerDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more OrderItems.
+     * Update zero or more Players.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PlayerUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many OrderItems
-     * const orderItem = await prisma.orderItem.updateMany({
+     * // Update many Players
+     * const player = await prisma.player.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4434,59 +4662,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends OrderItemUpdateManyArgs>(
-      args: SelectSubset<T, OrderItemUpdateManyArgs>
+    updateMany<T extends PlayerUpdateManyArgs>(
+      args: SelectSubset<T, PlayerUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one OrderItem.
-     * @param {OrderItemUpsertArgs} args - Arguments to update or create a OrderItem.
+     * Create or update one Player.
+     * @param {PlayerUpsertArgs} args - Arguments to update or create a Player.
      * @example
-     * // Update or create a OrderItem
-     * const orderItem = await prisma.orderItem.upsert({
+     * // Update or create a Player
+     * const player = await prisma.player.upsert({
      *   create: {
-     *     // ... data to create a OrderItem
+     *     // ... data to create a Player
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the OrderItem we want to update
+     *     // ... the filter for the Player we want to update
      *   }
      * })
     **/
-    upsert<T extends OrderItemUpsertArgs>(
-      args: SelectSubset<T, OrderItemUpsertArgs>
-    ): Prisma__OrderItemClient<OrderItemGetPayload<T>>
+    upsert<T extends PlayerUpsertArgs>(
+      args: SelectSubset<T, PlayerUpsertArgs>
+    ): Prisma__PlayerClient<PlayerGetPayload<T>>
 
     /**
-     * Count the number of OrderItems.
+     * Count the number of Players.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemCountArgs} args - Arguments to filter OrderItems to count.
+     * @param {PlayerCountArgs} args - Arguments to filter Players to count.
      * @example
-     * // Count the number of OrderItems
-     * const count = await prisma.orderItem.count({
+     * // Count the number of Players
+     * const count = await prisma.player.count({
      *   where: {
-     *     // ... the filter for the OrderItems we want to count
+     *     // ... the filter for the Players we want to count
      *   }
      * })
     **/
-    count<T extends OrderItemCountArgs>(
-      args?: Subset<T, OrderItemCountArgs>,
+    count<T extends PlayerCountArgs>(
+      args?: Subset<T, PlayerCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], OrderItemCountAggregateOutputType>
+          : GetScalarType<T['select'], PlayerCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a OrderItem.
+     * Allows you to perform aggregations operations on a Player.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PlayerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4506,13 +4734,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends OrderItemAggregateArgs>(args: Subset<T, OrderItemAggregateArgs>): Prisma.PrismaPromise<GetOrderItemAggregateType<T>>
+    aggregate<T extends PlayerAggregateArgs>(args: Subset<T, PlayerAggregateArgs>): Prisma.PrismaPromise<GetPlayerAggregateType<T>>
 
     /**
-     * Group by OrderItem.
+     * Group by Player.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {OrderItemGroupByArgs} args - Group by arguments.
+     * @param {PlayerGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4527,14 +4755,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends OrderItemGroupByArgs,
+      T extends PlayerGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: OrderItemGroupByArgs['orderBy'] }
-        : { orderBy?: OrderItemGroupByArgs['orderBy'] },
+        ? { orderBy: PlayerGroupByArgs['orderBy'] }
+        : { orderBy?: PlayerGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4583,17 +4811,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, OrderItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PlayerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlayerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for OrderItem.
+   * The delegate class that acts as a "Promise-like" for Player.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__OrderItemClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__PlayerClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -4608,9 +4836,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    menu<T extends MenuArgs= {}>(args?: Subset<T, MenuArgs>): Prisma__MenuClient<MenuGetPayload<T> | Null>;
-
-    order<T extends OrderArgs= {}>(args?: Subset<T, OrderArgs>): Prisma__OrderClient<OrderGetPayload<T> | Null>;
+    rounds<T extends Player$roundsArgs= {}>(args?: Subset<T, Player$roundsArgs>): Prisma.PrismaPromise<Array<RoundGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -4640,27 +4866,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * OrderItem base type for findUnique actions
+   * Player base type for findUnique actions
    */
-  export type OrderItemFindUniqueArgsBase = {
+  export type PlayerFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter, which OrderItem to fetch.
+     * Filter, which Player to fetch.
      */
-    where: OrderItemWhereUniqueInput
+    where: PlayerWhereUniqueInput
   }
 
   /**
-   * OrderItem findUnique
+   * Player findUnique
    */
-  export interface OrderItemFindUniqueArgs extends OrderItemFindUniqueArgsBase {
+  export interface PlayerFindUniqueArgs extends PlayerFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -4670,76 +4896,76 @@ export namespace Prisma {
       
 
   /**
-   * OrderItem findUniqueOrThrow
+   * Player findUniqueOrThrow
    */
-  export type OrderItemFindUniqueOrThrowArgs = {
+  export type PlayerFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter, which OrderItem to fetch.
+     * Filter, which Player to fetch.
      */
-    where: OrderItemWhereUniqueInput
+    where: PlayerWhereUniqueInput
   }
 
 
   /**
-   * OrderItem base type for findFirst actions
+   * Player base type for findFirst actions
    */
-  export type OrderItemFindFirstArgsBase = {
+  export type PlayerFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter, which OrderItem to fetch.
+     * Filter, which Player to fetch.
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of OrderItems to fetch.
+     * Determine the order of Players to fetch.
      */
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
+    orderBy?: Enumerable<PlayerOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for OrderItems.
+     * Sets the position for searching for Players.
      */
-    cursor?: OrderItemWhereUniqueInput
+    cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` OrderItems from the position of the cursor.
+     * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` OrderItems.
+     * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of OrderItems.
+     * Filter by unique combinations of Players.
      */
-    distinct?: Enumerable<OrderItemScalarFieldEnum>
+    distinct?: Enumerable<PlayerScalarFieldEnum>
   }
 
   /**
-   * OrderItem findFirst
+   * Player findFirst
    */
-  export interface OrderItemFindFirstArgs extends OrderItemFindFirstArgsBase {
+  export interface PlayerFindFirstArgs extends PlayerFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -4749,236 +4975,3266 @@ export namespace Prisma {
       
 
   /**
-   * OrderItem findFirstOrThrow
+   * Player findFirstOrThrow
    */
-  export type OrderItemFindFirstOrThrowArgs = {
+  export type PlayerFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter, which OrderItem to fetch.
+     * Filter, which Player to fetch.
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of OrderItems to fetch.
+     * Determine the order of Players to fetch.
      */
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
+    orderBy?: Enumerable<PlayerOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for OrderItems.
+     * Sets the position for searching for Players.
      */
-    cursor?: OrderItemWhereUniqueInput
+    cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` OrderItems from the position of the cursor.
+     * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` OrderItems.
+     * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of OrderItems.
+     * Filter by unique combinations of Players.
      */
-    distinct?: Enumerable<OrderItemScalarFieldEnum>
+    distinct?: Enumerable<PlayerScalarFieldEnum>
   }
 
 
   /**
-   * OrderItem findMany
+   * Player findMany
    */
-  export type OrderItemFindManyArgs = {
+  export type PlayerFindManyArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter, which OrderItems to fetch.
+     * Filter, which Players to fetch.
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of OrderItems to fetch.
+     * Determine the order of Players to fetch.
      */
-    orderBy?: Enumerable<OrderItemOrderByWithRelationInput>
+    orderBy?: Enumerable<PlayerOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing OrderItems.
+     * Sets the position for listing Players.
      */
-    cursor?: OrderItemWhereUniqueInput
+    cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` OrderItems from the position of the cursor.
+     * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` OrderItems.
+     * Skip the first `n` Players.
      */
     skip?: number
-    distinct?: Enumerable<OrderItemScalarFieldEnum>
+    distinct?: Enumerable<PlayerScalarFieldEnum>
   }
 
 
   /**
-   * OrderItem create
+   * Player create
    */
-  export type OrderItemCreateArgs = {
+  export type PlayerCreateArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * The data needed to create a OrderItem.
+     * The data needed to create a Player.
      */
-    data: XOR<OrderItemCreateInput, OrderItemUncheckedCreateInput>
+    data: XOR<PlayerCreateInput, PlayerUncheckedCreateInput>
   }
 
 
   /**
-   * OrderItem createMany
+   * Player createMany
    */
-  export type OrderItemCreateManyArgs = {
+  export type PlayerCreateManyArgs = {
     /**
-     * The data used to create many OrderItems.
+     * The data used to create many Players.
      */
-    data: Enumerable<OrderItemCreateManyInput>
+    data: Enumerable<PlayerCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * OrderItem update
+   * Player update
    */
-  export type OrderItemUpdateArgs = {
+  export type PlayerUpdateArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * The data needed to update a OrderItem.
+     * The data needed to update a Player.
      */
-    data: XOR<OrderItemUpdateInput, OrderItemUncheckedUpdateInput>
+    data: XOR<PlayerUpdateInput, PlayerUncheckedUpdateInput>
     /**
-     * Choose, which OrderItem to update.
+     * Choose, which Player to update.
      */
-    where: OrderItemWhereUniqueInput
+    where: PlayerWhereUniqueInput
   }
 
 
   /**
-   * OrderItem updateMany
+   * Player updateMany
    */
-  export type OrderItemUpdateManyArgs = {
+  export type PlayerUpdateManyArgs = {
     /**
-     * The data used to update OrderItems.
+     * The data used to update Players.
      */
-    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyInput>
+    data: XOR<PlayerUpdateManyMutationInput, PlayerUncheckedUpdateManyInput>
     /**
-     * Filter which OrderItems to update
+     * Filter which Players to update
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
   }
 
 
   /**
-   * OrderItem upsert
+   * Player upsert
    */
-  export type OrderItemUpsertArgs = {
+  export type PlayerUpsertArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * The filter to search for the OrderItem to update in case it exists.
+     * The filter to search for the Player to update in case it exists.
      */
-    where: OrderItemWhereUniqueInput
+    where: PlayerWhereUniqueInput
     /**
-     * In case the OrderItem found by the `where` argument doesn't exist, create a new OrderItem with this data.
+     * In case the Player found by the `where` argument doesn't exist, create a new Player with this data.
      */
-    create: XOR<OrderItemCreateInput, OrderItemUncheckedCreateInput>
+    create: XOR<PlayerCreateInput, PlayerUncheckedCreateInput>
     /**
-     * In case the OrderItem was found with the provided `where` argument, update it with this data.
+     * In case the Player was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<OrderItemUpdateInput, OrderItemUncheckedUpdateInput>
+    update: XOR<PlayerUpdateInput, PlayerUncheckedUpdateInput>
   }
 
 
   /**
-   * OrderItem delete
+   * Player delete
    */
-  export type OrderItemDeleteArgs = {
+  export type PlayerDeleteArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Player
      */
-    select?: OrderItemSelect | null
+    select?: PlayerSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: PlayerInclude | null
     /**
-     * Filter which OrderItem to delete.
+     * Filter which Player to delete.
      */
-    where: OrderItemWhereUniqueInput
+    where: PlayerWhereUniqueInput
   }
 
 
   /**
-   * OrderItem deleteMany
+   * Player deleteMany
    */
-  export type OrderItemDeleteManyArgs = {
+  export type PlayerDeleteManyArgs = {
     /**
-     * Filter which OrderItems to delete
+     * Filter which Players to delete
      */
-    where?: OrderItemWhereInput
+    where?: PlayerWhereInput
   }
 
 
   /**
-   * OrderItem without action
+   * Player.rounds
    */
-  export type OrderItemArgs = {
+  export type Player$roundsArgs = {
     /**
-     * Select specific fields to fetch from the OrderItem
+     * Select specific fields to fetch from the Round
      */
-    select?: OrderItemSelect | null
+    select?: RoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: OrderItemInclude | null
+    include?: RoundInclude | null
+    where?: RoundWhereInput
+    orderBy?: Enumerable<RoundOrderByWithRelationInput>
+    cursor?: RoundWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundScalarFieldEnum>
+  }
+
+
+  /**
+   * Player without action
+   */
+  export type PlayerArgs = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: PlayerInclude | null
+  }
+
+
+
+  /**
+   * Model Round
+   */
+
+
+  export type AggregateRound = {
+    _count: RoundCountAggregateOutputType | null
+    _avg: RoundAvgAggregateOutputType | null
+    _sum: RoundSumAggregateOutputType | null
+    _min: RoundMinAggregateOutputType | null
+    _max: RoundMaxAggregateOutputType | null
+  }
+
+  export type RoundAvgAggregateOutputType = {
+    id: number | null
+    score: number | null
+  }
+
+  export type RoundSumAggregateOutputType = {
+    id: number | null
+    score: number | null
+  }
+
+  export type RoundMinAggregateOutputType = {
+    id: number | null
+    playerName: string | null
+    round: string | null
+    score: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundMaxAggregateOutputType = {
+    id: number | null
+    playerName: string | null
+    round: string | null
+    score: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundCountAggregateOutputType = {
+    id: number
+    playerName: number
+    round: number
+    score: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RoundAvgAggregateInputType = {
+    id?: true
+    score?: true
+  }
+
+  export type RoundSumAggregateInputType = {
+    id?: true
+    score?: true
+  }
+
+  export type RoundMinAggregateInputType = {
+    id?: true
+    playerName?: true
+    round?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundMaxAggregateInputType = {
+    id?: true
+    playerName?: true
+    round?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundCountAggregateInputType = {
+    id?: true
+    playerName?: true
+    round?: true
+    score?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RoundAggregateArgs = {
+    /**
+     * Filter which Round to aggregate.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: Enumerable<RoundOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Rounds
+    **/
+    _count?: true | RoundCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoundAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoundSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoundMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoundMaxAggregateInputType
+  }
+
+  export type GetRoundAggregateType<T extends RoundAggregateArgs> = {
+        [P in keyof T & keyof AggregateRound]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRound[P]>
+      : GetScalarType<T[P], AggregateRound[P]>
+  }
+
+
+
+
+  export type RoundGroupByArgs = {
+    where?: RoundWhereInput
+    orderBy?: Enumerable<RoundOrderByWithAggregationInput>
+    by: RoundScalarFieldEnum[]
+    having?: RoundScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoundCountAggregateInputType | true
+    _avg?: RoundAvgAggregateInputType
+    _sum?: RoundSumAggregateInputType
+    _min?: RoundMinAggregateInputType
+    _max?: RoundMaxAggregateInputType
+  }
+
+
+  export type RoundGroupByOutputType = {
+    id: number
+    playerName: string
+    round: string
+    score: number
+    createdAt: Date
+    updatedAt: Date
+    _count: RoundCountAggregateOutputType | null
+    _avg: RoundAvgAggregateOutputType | null
+    _sum: RoundSumAggregateOutputType | null
+    _min: RoundMinAggregateOutputType | null
+    _max: RoundMaxAggregateOutputType | null
+  }
+
+  type GetRoundGroupByPayload<T extends RoundGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RoundGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoundGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoundGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoundSelect = {
+    id?: boolean
+    player?: boolean | PlayerArgs
+    playerName?: boolean
+    round?: boolean
+    score?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    roundQuestions?: boolean | Round$roundQuestionsArgs
+    _count?: boolean | RoundCountOutputTypeArgs
+  }
+
+
+  export type RoundInclude = {
+    player?: boolean | PlayerArgs
+    roundQuestions?: boolean | Round$roundQuestionsArgs
+    _count?: boolean | RoundCountOutputTypeArgs
+  }
+
+  export type RoundGetPayload<S extends boolean | null | undefined | RoundArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? Round :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundArgs | RoundFindManyArgs)
+    ? Round  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'player' ? PlayerGetPayload<S['include'][P]> :
+        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['include'][P]>>  :
+        P extends '_count' ? RoundCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (RoundArgs | RoundFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'player' ? PlayerGetPayload<S['select'][P]> :
+        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['select'][P]>>  :
+        P extends '_count' ? RoundCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Round ? Round[P] : never
+  } 
+      : Round
+
+
+  type RoundCountArgs = 
+    Omit<RoundFindManyArgs, 'select' | 'include'> & {
+      select?: RoundCountAggregateInputType | true
+    }
+
+  export interface RoundDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Round that matches the filter.
+     * @param {RoundFindUniqueArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RoundFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Round'> extends True ? Prisma__RoundClient<RoundGetPayload<T>> : Prisma__RoundClient<RoundGetPayload<T> | null, null>
+
+    /**
+     * Find one Round that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RoundFindUniqueOrThrowArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RoundFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundFindUniqueOrThrowArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Find the first Round that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindFirstArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RoundFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Round'> extends True ? Prisma__RoundClient<RoundGetPayload<T>> : Prisma__RoundClient<RoundGetPayload<T> | null, null>
+
+    /**
+     * Find the first Round that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindFirstOrThrowArgs} args - Arguments to find a Round
+     * @example
+     * // Get one Round
+     * const round = await prisma.round.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RoundFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundFindFirstOrThrowArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Find zero or more Rounds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Rounds
+     * const rounds = await prisma.round.findMany()
+     * 
+     * // Get first 10 Rounds
+     * const rounds = await prisma.round.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roundWithIdOnly = await prisma.round.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends RoundFindManyArgs>(
+      args?: SelectSubset<T, RoundFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundGetPayload<T>>>
+
+    /**
+     * Create a Round.
+     * @param {RoundCreateArgs} args - Arguments to create a Round.
+     * @example
+     * // Create one Round
+     * const Round = await prisma.round.create({
+     *   data: {
+     *     // ... data to create a Round
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RoundCreateArgs>(
+      args: SelectSubset<T, RoundCreateArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Create many Rounds.
+     *     @param {RoundCreateManyArgs} args - Arguments to create many Rounds.
+     *     @example
+     *     // Create many Rounds
+     *     const round = await prisma.round.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RoundCreateManyArgs>(
+      args?: SelectSubset<T, RoundCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Round.
+     * @param {RoundDeleteArgs} args - Arguments to delete one Round.
+     * @example
+     * // Delete one Round
+     * const Round = await prisma.round.delete({
+     *   where: {
+     *     // ... filter to delete one Round
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RoundDeleteArgs>(
+      args: SelectSubset<T, RoundDeleteArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Update one Round.
+     * @param {RoundUpdateArgs} args - Arguments to update one Round.
+     * @example
+     * // Update one Round
+     * const round = await prisma.round.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RoundUpdateArgs>(
+      args: SelectSubset<T, RoundUpdateArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Delete zero or more Rounds.
+     * @param {RoundDeleteManyArgs} args - Arguments to filter Rounds to delete.
+     * @example
+     * // Delete a few Rounds
+     * const { count } = await prisma.round.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RoundDeleteManyArgs>(
+      args?: SelectSubset<T, RoundDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rounds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Rounds
+     * const round = await prisma.round.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RoundUpdateManyArgs>(
+      args: SelectSubset<T, RoundUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Round.
+     * @param {RoundUpsertArgs} args - Arguments to update or create a Round.
+     * @example
+     * // Update or create a Round
+     * const round = await prisma.round.upsert({
+     *   create: {
+     *     // ... data to create a Round
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Round we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RoundUpsertArgs>(
+      args: SelectSubset<T, RoundUpsertArgs>
+    ): Prisma__RoundClient<RoundGetPayload<T>>
+
+    /**
+     * Count the number of Rounds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundCountArgs} args - Arguments to filter Rounds to count.
+     * @example
+     * // Count the number of Rounds
+     * const count = await prisma.round.count({
+     *   where: {
+     *     // ... the filter for the Rounds we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoundCountArgs>(
+      args?: Subset<T, RoundCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoundCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Round.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoundAggregateArgs>(args: Subset<T, RoundAggregateArgs>): Prisma.PrismaPromise<GetRoundAggregateType<T>>
+
+    /**
+     * Group by Round.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoundGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoundGroupByArgs['orderBy'] }
+        : { orderBy?: RoundGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoundGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Round.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__RoundClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    player<T extends PlayerArgs= {}>(args?: Subset<T, PlayerArgs>): Prisma__PlayerClient<PlayerGetPayload<T> | Null>;
+
+    roundQuestions<T extends Round$roundQuestionsArgs= {}>(args?: Subset<T, Round$roundQuestionsArgs>): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * Round base type for findUnique actions
+   */
+  export type RoundFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+  /**
+   * Round findUnique
+   */
+  export interface RoundFindUniqueArgs extends RoundFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Round findUniqueOrThrow
+   */
+  export type RoundFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+
+  /**
+   * Round base type for findFirst actions
+   */
+  export type RoundFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: Enumerable<RoundOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rounds.
+     */
+    distinct?: Enumerable<RoundScalarFieldEnum>
+  }
+
+  /**
+   * Round findFirst
+   */
+  export interface RoundFindFirstArgs extends RoundFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * Round findFirstOrThrow
+   */
+  export type RoundFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter, which Round to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: Enumerable<RoundOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rounds.
+     */
+    distinct?: Enumerable<RoundScalarFieldEnum>
+  }
+
+
+  /**
+   * Round findMany
+   */
+  export type RoundFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter, which Rounds to fetch.
+     */
+    where?: RoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rounds to fetch.
+     */
+    orderBy?: Enumerable<RoundOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Rounds.
+     */
+    cursor?: RoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rounds.
+     */
+    skip?: number
+    distinct?: Enumerable<RoundScalarFieldEnum>
+  }
+
+
+  /**
+   * Round create
+   */
+  export type RoundCreateArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * The data needed to create a Round.
+     */
+    data: XOR<RoundCreateInput, RoundUncheckedCreateInput>
+  }
+
+
+  /**
+   * Round createMany
+   */
+  export type RoundCreateManyArgs = {
+    /**
+     * The data used to create many Rounds.
+     */
+    data: Enumerable<RoundCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Round update
+   */
+  export type RoundUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * The data needed to update a Round.
+     */
+    data: XOR<RoundUpdateInput, RoundUncheckedUpdateInput>
+    /**
+     * Choose, which Round to update.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+
+  /**
+   * Round updateMany
+   */
+  export type RoundUpdateManyArgs = {
+    /**
+     * The data used to update Rounds.
+     */
+    data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyInput>
+    /**
+     * Filter which Rounds to update
+     */
+    where?: RoundWhereInput
+  }
+
+
+  /**
+   * Round upsert
+   */
+  export type RoundUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * The filter to search for the Round to update in case it exists.
+     */
+    where: RoundWhereUniqueInput
+    /**
+     * In case the Round found by the `where` argument doesn't exist, create a new Round with this data.
+     */
+    create: XOR<RoundCreateInput, RoundUncheckedCreateInput>
+    /**
+     * In case the Round was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoundUpdateInput, RoundUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Round delete
+   */
+  export type RoundDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+    /**
+     * Filter which Round to delete.
+     */
+    where: RoundWhereUniqueInput
+  }
+
+
+  /**
+   * Round deleteMany
+   */
+  export type RoundDeleteManyArgs = {
+    /**
+     * Filter which Rounds to delete
+     */
+    where?: RoundWhereInput
+  }
+
+
+  /**
+   * Round.roundQuestions
+   */
+  export type Round$roundQuestionsArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    where?: RoundQuestionWhereInput
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    cursor?: RoundQuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * Round without action
+   */
+  export type RoundArgs = {
+    /**
+     * Select specific fields to fetch from the Round
+     */
+    select?: RoundSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundInclude | null
+  }
+
+
+
+  /**
+   * Model RoundQuestion
+   */
+
+
+  export type AggregateRoundQuestion = {
+    _count: RoundQuestionCountAggregateOutputType | null
+    _avg: RoundQuestionAvgAggregateOutputType | null
+    _sum: RoundQuestionSumAggregateOutputType | null
+    _min: RoundQuestionMinAggregateOutputType | null
+    _max: RoundQuestionMaxAggregateOutputType | null
+  }
+
+  export type RoundQuestionAvgAggregateOutputType = {
+    id: number | null
+    roundsId: number | null
+    questionsId: number | null
+    chooseChoice: number | null
+  }
+
+  export type RoundQuestionSumAggregateOutputType = {
+    id: number | null
+    roundsId: number | null
+    questionsId: number | null
+    chooseChoice: number | null
+  }
+
+  export type RoundQuestionMinAggregateOutputType = {
+    id: number | null
+    roundsId: number | null
+    questionsId: number | null
+    chooseChoice: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundQuestionMaxAggregateOutputType = {
+    id: number | null
+    roundsId: number | null
+    questionsId: number | null
+    chooseChoice: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundQuestionCountAggregateOutputType = {
+    id: number
+    roundsId: number
+    questionsId: number
+    chooseChoice: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RoundQuestionAvgAggregateInputType = {
+    id?: true
+    roundsId?: true
+    questionsId?: true
+    chooseChoice?: true
+  }
+
+  export type RoundQuestionSumAggregateInputType = {
+    id?: true
+    roundsId?: true
+    questionsId?: true
+    chooseChoice?: true
+  }
+
+  export type RoundQuestionMinAggregateInputType = {
+    id?: true
+    roundsId?: true
+    questionsId?: true
+    chooseChoice?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundQuestionMaxAggregateInputType = {
+    id?: true
+    roundsId?: true
+    questionsId?: true
+    chooseChoice?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundQuestionCountAggregateInputType = {
+    id?: true
+    roundsId?: true
+    questionsId?: true
+    chooseChoice?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RoundQuestionAggregateArgs = {
+    /**
+     * Filter which RoundQuestion to aggregate.
+     */
+    where?: RoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RoundQuestions
+    **/
+    _count?: true | RoundQuestionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoundQuestionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoundQuestionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoundQuestionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoundQuestionMaxAggregateInputType
+  }
+
+  export type GetRoundQuestionAggregateType<T extends RoundQuestionAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundQuestion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRoundQuestion[P]>
+      : GetScalarType<T[P], AggregateRoundQuestion[P]>
+  }
+
+
+
+
+  export type RoundQuestionGroupByArgs = {
+    where?: RoundQuestionWhereInput
+    orderBy?: Enumerable<RoundQuestionOrderByWithAggregationInput>
+    by: RoundQuestionScalarFieldEnum[]
+    having?: RoundQuestionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoundQuestionCountAggregateInputType | true
+    _avg?: RoundQuestionAvgAggregateInputType
+    _sum?: RoundQuestionSumAggregateInputType
+    _min?: RoundQuestionMinAggregateInputType
+    _max?: RoundQuestionMaxAggregateInputType
+  }
+
+
+  export type RoundQuestionGroupByOutputType = {
+    id: number
+    roundsId: number
+    questionsId: number
+    chooseChoice: number
+    createdAt: Date
+    updatedAt: Date
+    _count: RoundQuestionCountAggregateOutputType | null
+    _avg: RoundQuestionAvgAggregateOutputType | null
+    _sum: RoundQuestionSumAggregateOutputType | null
+    _min: RoundQuestionMinAggregateOutputType | null
+    _max: RoundQuestionMaxAggregateOutputType | null
+  }
+
+  type GetRoundQuestionGroupByPayload<T extends RoundQuestionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RoundQuestionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoundQuestionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoundQuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundQuestionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoundQuestionSelect = {
+    id?: boolean
+    round?: boolean | RoundArgs
+    roundsId?: boolean
+    question?: boolean | QuestionArgs
+    questionsId?: boolean
+    chooseChoice?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    roundChooseChoice?: boolean | RoundQuestion$roundChooseChoiceArgs
+    _count?: boolean | RoundQuestionCountOutputTypeArgs
+  }
+
+
+  export type RoundQuestionInclude = {
+    round?: boolean | RoundArgs
+    question?: boolean | QuestionArgs
+    roundChooseChoice?: boolean | RoundQuestion$roundChooseChoiceArgs
+    _count?: boolean | RoundQuestionCountOutputTypeArgs
+  }
+
+  export type RoundQuestionGetPayload<S extends boolean | null | undefined | RoundQuestionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RoundQuestion :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundQuestionArgs | RoundQuestionFindManyArgs)
+    ? RoundQuestion  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'round' ? RoundGetPayload<S['include'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['include'][P]> :
+        P extends 'roundChooseChoice' ? Array < RoundChooseChoiceGetPayload<S['include'][P]>>  :
+        P extends '_count' ? RoundQuestionCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (RoundQuestionArgs | RoundQuestionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'round' ? RoundGetPayload<S['select'][P]> :
+        P extends 'question' ? QuestionGetPayload<S['select'][P]> :
+        P extends 'roundChooseChoice' ? Array < RoundChooseChoiceGetPayload<S['select'][P]>>  :
+        P extends '_count' ? RoundQuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof RoundQuestion ? RoundQuestion[P] : never
+  } 
+      : RoundQuestion
+
+
+  type RoundQuestionCountArgs = 
+    Omit<RoundQuestionFindManyArgs, 'select' | 'include'> & {
+      select?: RoundQuestionCountAggregateInputType | true
+    }
+
+  export interface RoundQuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one RoundQuestion that matches the filter.
+     * @param {RoundQuestionFindUniqueArgs} args - Arguments to find a RoundQuestion
+     * @example
+     * // Get one RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RoundQuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundQuestionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuestion'> extends True ? Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>> : Prisma__RoundQuestionClient<RoundQuestionGetPayload<T> | null, null>
+
+    /**
+     * Find one RoundQuestion that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RoundQuestionFindUniqueOrThrowArgs} args - Arguments to find a RoundQuestion
+     * @example
+     * // Get one RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RoundQuestionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionFindUniqueOrThrowArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Find the first RoundQuestion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionFindFirstArgs} args - Arguments to find a RoundQuestion
+     * @example
+     * // Get one RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RoundQuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundQuestionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuestion'> extends True ? Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>> : Prisma__RoundQuestionClient<RoundQuestionGetPayload<T> | null, null>
+
+    /**
+     * Find the first RoundQuestion that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionFindFirstOrThrowArgs} args - Arguments to find a RoundQuestion
+     * @example
+     * // Get one RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RoundQuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuestionFindFirstOrThrowArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Find zero or more RoundQuestions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RoundQuestions
+     * const roundQuestions = await prisma.roundQuestion.findMany()
+     * 
+     * // Get first 10 RoundQuestions
+     * const roundQuestions = await prisma.roundQuestion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roundQuestionWithIdOnly = await prisma.roundQuestion.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends RoundQuestionFindManyArgs>(
+      args?: SelectSubset<T, RoundQuestionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>>
+
+    /**
+     * Create a RoundQuestion.
+     * @param {RoundQuestionCreateArgs} args - Arguments to create a RoundQuestion.
+     * @example
+     * // Create one RoundQuestion
+     * const RoundQuestion = await prisma.roundQuestion.create({
+     *   data: {
+     *     // ... data to create a RoundQuestion
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RoundQuestionCreateArgs>(
+      args: SelectSubset<T, RoundQuestionCreateArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Create many RoundQuestions.
+     *     @param {RoundQuestionCreateManyArgs} args - Arguments to create many RoundQuestions.
+     *     @example
+     *     // Create many RoundQuestions
+     *     const roundQuestion = await prisma.roundQuestion.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RoundQuestionCreateManyArgs>(
+      args?: SelectSubset<T, RoundQuestionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RoundQuestion.
+     * @param {RoundQuestionDeleteArgs} args - Arguments to delete one RoundQuestion.
+     * @example
+     * // Delete one RoundQuestion
+     * const RoundQuestion = await prisma.roundQuestion.delete({
+     *   where: {
+     *     // ... filter to delete one RoundQuestion
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RoundQuestionDeleteArgs>(
+      args: SelectSubset<T, RoundQuestionDeleteArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Update one RoundQuestion.
+     * @param {RoundQuestionUpdateArgs} args - Arguments to update one RoundQuestion.
+     * @example
+     * // Update one RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RoundQuestionUpdateArgs>(
+      args: SelectSubset<T, RoundQuestionUpdateArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Delete zero or more RoundQuestions.
+     * @param {RoundQuestionDeleteManyArgs} args - Arguments to filter RoundQuestions to delete.
+     * @example
+     * // Delete a few RoundQuestions
+     * const { count } = await prisma.roundQuestion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RoundQuestionDeleteManyArgs>(
+      args?: SelectSubset<T, RoundQuestionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RoundQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RoundQuestions
+     * const roundQuestion = await prisma.roundQuestion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RoundQuestionUpdateManyArgs>(
+      args: SelectSubset<T, RoundQuestionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RoundQuestion.
+     * @param {RoundQuestionUpsertArgs} args - Arguments to update or create a RoundQuestion.
+     * @example
+     * // Update or create a RoundQuestion
+     * const roundQuestion = await prisma.roundQuestion.upsert({
+     *   create: {
+     *     // ... data to create a RoundQuestion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RoundQuestion we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RoundQuestionUpsertArgs>(
+      args: SelectSubset<T, RoundQuestionUpsertArgs>
+    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+
+    /**
+     * Count the number of RoundQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionCountArgs} args - Arguments to filter RoundQuestions to count.
+     * @example
+     * // Count the number of RoundQuestions
+     * const count = await prisma.roundQuestion.count({
+     *   where: {
+     *     // ... the filter for the RoundQuestions we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoundQuestionCountArgs>(
+      args?: Subset<T, RoundQuestionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoundQuestionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RoundQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoundQuestionAggregateArgs>(args: Subset<T, RoundQuestionAggregateArgs>): Prisma.PrismaPromise<GetRoundQuestionAggregateType<T>>
+
+    /**
+     * Group by RoundQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundQuestionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoundQuestionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoundQuestionGroupByArgs['orderBy'] }
+        : { orderBy?: RoundQuestionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoundQuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RoundQuestion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__RoundQuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    round<T extends RoundArgs= {}>(args?: Subset<T, RoundArgs>): Prisma__RoundClient<RoundGetPayload<T> | Null>;
+
+    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
+
+    roundChooseChoice<T extends RoundQuestion$roundChooseChoiceArgs= {}>(args?: Subset<T, RoundQuestion$roundChooseChoiceArgs>): Prisma.PrismaPromise<Array<RoundChooseChoiceGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RoundQuestion base type for findUnique actions
+   */
+  export type RoundQuestionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter, which RoundQuestion to fetch.
+     */
+    where: RoundQuestionWhereUniqueInput
+  }
+
+  /**
+   * RoundQuestion findUnique
+   */
+  export interface RoundQuestionFindUniqueArgs extends RoundQuestionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundQuestion findUniqueOrThrow
+   */
+  export type RoundQuestionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter, which RoundQuestion to fetch.
+     */
+    where: RoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestion base type for findFirst actions
+   */
+  export type RoundQuestionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter, which RoundQuestion to fetch.
+     */
+    where?: RoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundQuestions.
+     */
+    cursor?: RoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundQuestions.
+     */
+    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+  }
+
+  /**
+   * RoundQuestion findFirst
+   */
+  export interface RoundQuestionFindFirstArgs extends RoundQuestionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundQuestion findFirstOrThrow
+   */
+  export type RoundQuestionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter, which RoundQuestion to fetch.
+     */
+    where?: RoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundQuestions.
+     */
+    cursor?: RoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundQuestions.
+     */
+    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuestion findMany
+   */
+  export type RoundQuestionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter, which RoundQuestions to fetch.
+     */
+    where?: RoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RoundQuestions.
+     */
+    cursor?: RoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundQuestions.
+     */
+    skip?: number
+    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuestion create
+   */
+  export type RoundQuestionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * The data needed to create a RoundQuestion.
+     */
+    data: XOR<RoundQuestionCreateInput, RoundQuestionUncheckedCreateInput>
+  }
+
+
+  /**
+   * RoundQuestion createMany
+   */
+  export type RoundQuestionCreateManyArgs = {
+    /**
+     * The data used to create many RoundQuestions.
+     */
+    data: Enumerable<RoundQuestionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * RoundQuestion update
+   */
+  export type RoundQuestionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * The data needed to update a RoundQuestion.
+     */
+    data: XOR<RoundQuestionUpdateInput, RoundQuestionUncheckedUpdateInput>
+    /**
+     * Choose, which RoundQuestion to update.
+     */
+    where: RoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestion updateMany
+   */
+  export type RoundQuestionUpdateManyArgs = {
+    /**
+     * The data used to update RoundQuestions.
+     */
+    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyInput>
+    /**
+     * Filter which RoundQuestions to update
+     */
+    where?: RoundQuestionWhereInput
+  }
+
+
+  /**
+   * RoundQuestion upsert
+   */
+  export type RoundQuestionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * The filter to search for the RoundQuestion to update in case it exists.
+     */
+    where: RoundQuestionWhereUniqueInput
+    /**
+     * In case the RoundQuestion found by the `where` argument doesn't exist, create a new RoundQuestion with this data.
+     */
+    create: XOR<RoundQuestionCreateInput, RoundQuestionUncheckedCreateInput>
+    /**
+     * In case the RoundQuestion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoundQuestionUpdateInput, RoundQuestionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * RoundQuestion delete
+   */
+  export type RoundQuestionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+    /**
+     * Filter which RoundQuestion to delete.
+     */
+    where: RoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * RoundQuestion deleteMany
+   */
+  export type RoundQuestionDeleteManyArgs = {
+    /**
+     * Filter which RoundQuestions to delete
+     */
+    where?: RoundQuestionWhereInput
+  }
+
+
+  /**
+   * RoundQuestion.roundChooseChoice
+   */
+  export type RoundQuestion$roundChooseChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    where?: RoundChooseChoiceWhereInput
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<RoundChooseChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundQuestion without action
+   */
+  export type RoundQuestionArgs = {
+    /**
+     * Select specific fields to fetch from the RoundQuestion
+     */
+    select?: RoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundQuestionInclude | null
+  }
+
+
+
+  /**
+   * Model RoundChooseChoice
+   */
+
+
+  export type AggregateRoundChooseChoice = {
+    _count: RoundChooseChoiceCountAggregateOutputType | null
+    _avg: RoundChooseChoiceAvgAggregateOutputType | null
+    _sum: RoundChooseChoiceSumAggregateOutputType | null
+    _min: RoundChooseChoiceMinAggregateOutputType | null
+    _max: RoundChooseChoiceMaxAggregateOutputType | null
+  }
+
+  export type RoundChooseChoiceAvgAggregateOutputType = {
+    id: number | null
+    roundQuestionsId: number | null
+    choicesId: number | null
+  }
+
+  export type RoundChooseChoiceSumAggregateOutputType = {
+    id: number | null
+    roundQuestionsId: number | null
+    choicesId: number | null
+  }
+
+  export type RoundChooseChoiceMinAggregateOutputType = {
+    id: number | null
+    roundQuestionsId: number | null
+    choicesId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundChooseChoiceMaxAggregateOutputType = {
+    id: number | null
+    roundQuestionsId: number | null
+    choicesId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RoundChooseChoiceCountAggregateOutputType = {
+    id: number
+    roundQuestionsId: number
+    choicesId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RoundChooseChoiceAvgAggregateInputType = {
+    id?: true
+    roundQuestionsId?: true
+    choicesId?: true
+  }
+
+  export type RoundChooseChoiceSumAggregateInputType = {
+    id?: true
+    roundQuestionsId?: true
+    choicesId?: true
+  }
+
+  export type RoundChooseChoiceMinAggregateInputType = {
+    id?: true
+    roundQuestionsId?: true
+    choicesId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundChooseChoiceMaxAggregateInputType = {
+    id?: true
+    roundQuestionsId?: true
+    choicesId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RoundChooseChoiceCountAggregateInputType = {
+    id?: true
+    roundQuestionsId?: true
+    choicesId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RoundChooseChoiceAggregateArgs = {
+    /**
+     * Filter which RoundChooseChoice to aggregate.
+     */
+    where?: RoundChooseChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundChooseChoices to fetch.
+     */
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundChooseChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundChooseChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RoundChooseChoices
+    **/
+    _count?: true | RoundChooseChoiceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RoundChooseChoiceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RoundChooseChoiceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RoundChooseChoiceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RoundChooseChoiceMaxAggregateInputType
+  }
+
+  export type GetRoundChooseChoiceAggregateType<T extends RoundChooseChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundChooseChoice]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRoundChooseChoice[P]>
+      : GetScalarType<T[P], AggregateRoundChooseChoice[P]>
+  }
+
+
+
+
+  export type RoundChooseChoiceGroupByArgs = {
+    where?: RoundChooseChoiceWhereInput
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithAggregationInput>
+    by: RoundChooseChoiceScalarFieldEnum[]
+    having?: RoundChooseChoiceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RoundChooseChoiceCountAggregateInputType | true
+    _avg?: RoundChooseChoiceAvgAggregateInputType
+    _sum?: RoundChooseChoiceSumAggregateInputType
+    _min?: RoundChooseChoiceMinAggregateInputType
+    _max?: RoundChooseChoiceMaxAggregateInputType
+  }
+
+
+  export type RoundChooseChoiceGroupByOutputType = {
+    id: number
+    roundQuestionsId: number
+    choicesId: number
+    createdAt: Date
+    updatedAt: Date
+    _count: RoundChooseChoiceCountAggregateOutputType | null
+    _avg: RoundChooseChoiceAvgAggregateOutputType | null
+    _sum: RoundChooseChoiceSumAggregateOutputType | null
+    _min: RoundChooseChoiceMinAggregateOutputType | null
+    _max: RoundChooseChoiceMaxAggregateOutputType | null
+  }
+
+  type GetRoundChooseChoiceGroupByPayload<T extends RoundChooseChoiceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<RoundChooseChoiceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RoundChooseChoiceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RoundChooseChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundChooseChoiceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RoundChooseChoiceSelect = {
+    id?: boolean
+    roundQuestion?: boolean | RoundQuestionArgs
+    roundQuestionsId?: boolean
+    choice?: boolean | ChoiceArgs
+    choicesId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type RoundChooseChoiceInclude = {
+    roundQuestion?: boolean | RoundQuestionArgs
+    choice?: boolean | ChoiceArgs
+  }
+
+  export type RoundChooseChoiceGetPayload<S extends boolean | null | undefined | RoundChooseChoiceArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? RoundChooseChoice :
+    S extends undefined ? never :
+    S extends { include: any } & (RoundChooseChoiceArgs | RoundChooseChoiceFindManyArgs)
+    ? RoundChooseChoice  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'roundQuestion' ? RoundQuestionGetPayload<S['include'][P]> :
+        P extends 'choice' ? ChoiceGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (RoundChooseChoiceArgs | RoundChooseChoiceFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'roundQuestion' ? RoundQuestionGetPayload<S['select'][P]> :
+        P extends 'choice' ? ChoiceGetPayload<S['select'][P]> :  P extends keyof RoundChooseChoice ? RoundChooseChoice[P] : never
+  } 
+      : RoundChooseChoice
+
+
+  type RoundChooseChoiceCountArgs = 
+    Omit<RoundChooseChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: RoundChooseChoiceCountAggregateInputType | true
+    }
+
+  export interface RoundChooseChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one RoundChooseChoice that matches the filter.
+     * @param {RoundChooseChoiceFindUniqueArgs} args - Arguments to find a RoundChooseChoice
+     * @example
+     * // Get one RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends RoundChooseChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundChooseChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundChooseChoice'> extends True ? Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>> : Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find one RoundChooseChoice that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {RoundChooseChoiceFindUniqueOrThrowArgs} args - Arguments to find a RoundChooseChoice
+     * @example
+     * // Get one RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends RoundChooseChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundChooseChoiceFindUniqueOrThrowArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Find the first RoundChooseChoice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceFindFirstArgs} args - Arguments to find a RoundChooseChoice
+     * @example
+     * // Get one RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends RoundChooseChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundChooseChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundChooseChoice'> extends True ? Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>> : Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find the first RoundChooseChoice that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceFindFirstOrThrowArgs} args - Arguments to find a RoundChooseChoice
+     * @example
+     * // Get one RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends RoundChooseChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundChooseChoiceFindFirstOrThrowArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Find zero or more RoundChooseChoices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RoundChooseChoices
+     * const roundChooseChoices = await prisma.roundChooseChoice.findMany()
+     * 
+     * // Get first 10 RoundChooseChoices
+     * const roundChooseChoices = await prisma.roundChooseChoice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const roundChooseChoiceWithIdOnly = await prisma.roundChooseChoice.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends RoundChooseChoiceFindManyArgs>(
+      args?: SelectSubset<T, RoundChooseChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundChooseChoiceGetPayload<T>>>
+
+    /**
+     * Create a RoundChooseChoice.
+     * @param {RoundChooseChoiceCreateArgs} args - Arguments to create a RoundChooseChoice.
+     * @example
+     * // Create one RoundChooseChoice
+     * const RoundChooseChoice = await prisma.roundChooseChoice.create({
+     *   data: {
+     *     // ... data to create a RoundChooseChoice
+     *   }
+     * })
+     * 
+    **/
+    create<T extends RoundChooseChoiceCreateArgs>(
+      args: SelectSubset<T, RoundChooseChoiceCreateArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Create many RoundChooseChoices.
+     *     @param {RoundChooseChoiceCreateManyArgs} args - Arguments to create many RoundChooseChoices.
+     *     @example
+     *     // Create many RoundChooseChoices
+     *     const roundChooseChoice = await prisma.roundChooseChoice.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends RoundChooseChoiceCreateManyArgs>(
+      args?: SelectSubset<T, RoundChooseChoiceCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a RoundChooseChoice.
+     * @param {RoundChooseChoiceDeleteArgs} args - Arguments to delete one RoundChooseChoice.
+     * @example
+     * // Delete one RoundChooseChoice
+     * const RoundChooseChoice = await prisma.roundChooseChoice.delete({
+     *   where: {
+     *     // ... filter to delete one RoundChooseChoice
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends RoundChooseChoiceDeleteArgs>(
+      args: SelectSubset<T, RoundChooseChoiceDeleteArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Update one RoundChooseChoice.
+     * @param {RoundChooseChoiceUpdateArgs} args - Arguments to update one RoundChooseChoice.
+     * @example
+     * // Update one RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends RoundChooseChoiceUpdateArgs>(
+      args: SelectSubset<T, RoundChooseChoiceUpdateArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Delete zero or more RoundChooseChoices.
+     * @param {RoundChooseChoiceDeleteManyArgs} args - Arguments to filter RoundChooseChoices to delete.
+     * @example
+     * // Delete a few RoundChooseChoices
+     * const { count } = await prisma.roundChooseChoice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends RoundChooseChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, RoundChooseChoiceDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RoundChooseChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RoundChooseChoices
+     * const roundChooseChoice = await prisma.roundChooseChoice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends RoundChooseChoiceUpdateManyArgs>(
+      args: SelectSubset<T, RoundChooseChoiceUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one RoundChooseChoice.
+     * @param {RoundChooseChoiceUpsertArgs} args - Arguments to update or create a RoundChooseChoice.
+     * @example
+     * // Update or create a RoundChooseChoice
+     * const roundChooseChoice = await prisma.roundChooseChoice.upsert({
+     *   create: {
+     *     // ... data to create a RoundChooseChoice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RoundChooseChoice we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends RoundChooseChoiceUpsertArgs>(
+      args: SelectSubset<T, RoundChooseChoiceUpsertArgs>
+    ): Prisma__RoundChooseChoiceClient<RoundChooseChoiceGetPayload<T>>
+
+    /**
+     * Count the number of RoundChooseChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceCountArgs} args - Arguments to filter RoundChooseChoices to count.
+     * @example
+     * // Count the number of RoundChooseChoices
+     * const count = await prisma.roundChooseChoice.count({
+     *   where: {
+     *     // ... the filter for the RoundChooseChoices we want to count
+     *   }
+     * })
+    **/
+    count<T extends RoundChooseChoiceCountArgs>(
+      args?: Subset<T, RoundChooseChoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RoundChooseChoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RoundChooseChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RoundChooseChoiceAggregateArgs>(args: Subset<T, RoundChooseChoiceAggregateArgs>): Prisma.PrismaPromise<GetRoundChooseChoiceAggregateType<T>>
+
+    /**
+     * Group by RoundChooseChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RoundChooseChoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RoundChooseChoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RoundChooseChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: RoundChooseChoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RoundChooseChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundChooseChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RoundChooseChoice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__RoundChooseChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    roundQuestion<T extends RoundQuestionArgs= {}>(args?: Subset<T, RoundQuestionArgs>): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T> | Null>;
+
+    choice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * RoundChooseChoice base type for findUnique actions
+   */
+  export type RoundChooseChoiceFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter, which RoundChooseChoice to fetch.
+     */
+    where: RoundChooseChoiceWhereUniqueInput
+  }
+
+  /**
+   * RoundChooseChoice findUnique
+   */
+  export interface RoundChooseChoiceFindUniqueArgs extends RoundChooseChoiceFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundChooseChoice findUniqueOrThrow
+   */
+  export type RoundChooseChoiceFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter, which RoundChooseChoice to fetch.
+     */
+    where: RoundChooseChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * RoundChooseChoice base type for findFirst actions
+   */
+  export type RoundChooseChoiceFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter, which RoundChooseChoice to fetch.
+     */
+    where?: RoundChooseChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundChooseChoices to fetch.
+     */
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundChooseChoices.
+     */
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundChooseChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundChooseChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundChooseChoices.
+     */
+    distinct?: Enumerable<RoundChooseChoiceScalarFieldEnum>
+  }
+
+  /**
+   * RoundChooseChoice findFirst
+   */
+  export interface RoundChooseChoiceFindFirstArgs extends RoundChooseChoiceFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * RoundChooseChoice findFirstOrThrow
+   */
+  export type RoundChooseChoiceFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter, which RoundChooseChoice to fetch.
+     */
+    where?: RoundChooseChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundChooseChoices to fetch.
+     */
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RoundChooseChoices.
+     */
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundChooseChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundChooseChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoundChooseChoices.
+     */
+    distinct?: Enumerable<RoundChooseChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundChooseChoice findMany
+   */
+  export type RoundChooseChoiceFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter, which RoundChooseChoices to fetch.
+     */
+    where?: RoundChooseChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RoundChooseChoices to fetch.
+     */
+    orderBy?: Enumerable<RoundChooseChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RoundChooseChoices.
+     */
+    cursor?: RoundChooseChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RoundChooseChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RoundChooseChoices.
+     */
+    skip?: number
+    distinct?: Enumerable<RoundChooseChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * RoundChooseChoice create
+   */
+  export type RoundChooseChoiceCreateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * The data needed to create a RoundChooseChoice.
+     */
+    data: XOR<RoundChooseChoiceCreateInput, RoundChooseChoiceUncheckedCreateInput>
+  }
+
+
+  /**
+   * RoundChooseChoice createMany
+   */
+  export type RoundChooseChoiceCreateManyArgs = {
+    /**
+     * The data used to create many RoundChooseChoices.
+     */
+    data: Enumerable<RoundChooseChoiceCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * RoundChooseChoice update
+   */
+  export type RoundChooseChoiceUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * The data needed to update a RoundChooseChoice.
+     */
+    data: XOR<RoundChooseChoiceUpdateInput, RoundChooseChoiceUncheckedUpdateInput>
+    /**
+     * Choose, which RoundChooseChoice to update.
+     */
+    where: RoundChooseChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * RoundChooseChoice updateMany
+   */
+  export type RoundChooseChoiceUpdateManyArgs = {
+    /**
+     * The data used to update RoundChooseChoices.
+     */
+    data: XOR<RoundChooseChoiceUpdateManyMutationInput, RoundChooseChoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which RoundChooseChoices to update
+     */
+    where?: RoundChooseChoiceWhereInput
+  }
+
+
+  /**
+   * RoundChooseChoice upsert
+   */
+  export type RoundChooseChoiceUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * The filter to search for the RoundChooseChoice to update in case it exists.
+     */
+    where: RoundChooseChoiceWhereUniqueInput
+    /**
+     * In case the RoundChooseChoice found by the `where` argument doesn't exist, create a new RoundChooseChoice with this data.
+     */
+    create: XOR<RoundChooseChoiceCreateInput, RoundChooseChoiceUncheckedCreateInput>
+    /**
+     * In case the RoundChooseChoice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RoundChooseChoiceUpdateInput, RoundChooseChoiceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * RoundChooseChoice delete
+   */
+  export type RoundChooseChoiceDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
+    /**
+     * Filter which RoundChooseChoice to delete.
+     */
+    where: RoundChooseChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * RoundChooseChoice deleteMany
+   */
+  export type RoundChooseChoiceDeleteManyArgs = {
+    /**
+     * Filter which RoundChooseChoices to delete
+     */
+    where?: RoundChooseChoiceWhereInput
+  }
+
+
+  /**
+   * RoundChooseChoice without action
+   */
+  export type RoundChooseChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the RoundChooseChoice
+     */
+    select?: RoundChooseChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RoundChooseChoiceInclude | null
   }
 
 
@@ -5000,41 +8256,24 @@ export namespace Prisma {
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
-  export const MenuScalarFieldEnum: {
+  export const ChoiceScalarFieldEnum: {
+    id: 'id',
+    answer: 'answer',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
+
+
+  export const PlayerScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    image: 'image',
-    price: 'price',
-    categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type MenuScalarFieldEnum = (typeof MenuScalarFieldEnum)[keyof typeof MenuScalarFieldEnum]
-
-
-  export const OrderItemScalarFieldEnum: {
-    id: 'id',
-    menuId: 'menuId',
-    orderId: 'orderId',
-    quantity: 'quantity',
-    totalPrice: 'totalPrice',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
-
-
-  export const OrderScalarFieldEnum: {
-    id: 'id',
-    status: 'status',
-    tableId: 'tableId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+  export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
   export const QueryMode: {
@@ -5043,6 +8282,53 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const QuestionScalarFieldEnum: {
+    id: 'id',
+    categoryId: 'categoryId',
+    question: 'question',
+    choiceId: 'choiceId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+  export const RoundChooseChoiceScalarFieldEnum: {
+    id: 'id',
+    roundQuestionsId: 'roundQuestionsId',
+    choicesId: 'choicesId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RoundChooseChoiceScalarFieldEnum = (typeof RoundChooseChoiceScalarFieldEnum)[keyof typeof RoundChooseChoiceScalarFieldEnum]
+
+
+  export const RoundQuestionScalarFieldEnum: {
+    id: 'id',
+    roundsId: 'roundsId',
+    questionsId: 'questionsId',
+    chooseChoice: 'chooseChoice',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RoundQuestionScalarFieldEnum = (typeof RoundQuestionScalarFieldEnum)[keyof typeof RoundQuestionScalarFieldEnum]
+
+
+  export const RoundScalarFieldEnum: {
+    id: 'id',
+    playerName: 'playerName',
+    round: 'round',
+    score: 'score',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RoundScalarFieldEnum = (typeof RoundScalarFieldEnum)[keyof typeof RoundScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5074,7 +8360,7 @@ export namespace Prisma {
     NOT?: Enumerable<CategoryWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    menus?: MenuListRelationFilter
+    questions?: QuestionListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -5082,7 +8368,7 @@ export namespace Prisma {
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    menus?: MenuOrderByRelationAggregateInput
+    questions?: QuestionOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5114,176 +8400,326 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type MenuWhereInput = {
-    AND?: Enumerable<MenuWhereInput>
-    OR?: Enumerable<MenuWhereInput>
-    NOT?: Enumerable<MenuWhereInput>
+  export type QuestionWhereInput = {
+    AND?: Enumerable<QuestionWhereInput>
+    OR?: Enumerable<QuestionWhereInput>
+    NOT?: Enumerable<QuestionWhereInput>
+    id?: IntFilter | number
+    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
+    categoryId?: IntFilter | number
+    question?: StringFilter | string
+    answer?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    choiceId?: IntFilter | number
+    choices?: ChoiceListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    roundQuestion?: RoundQuestionListRelationFilter
+  }
+
+  export type QuestionOrderByWithRelationInput = {
+    id?: SortOrder
+    category?: CategoryOrderByWithRelationInput
+    categoryId?: SortOrder
+    question?: SortOrder
+    answer?: ChoiceOrderByWithRelationInput
+    choiceId?: SortOrder
+    choices?: ChoiceOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    roundQuestion?: RoundQuestionOrderByRelationAggregateInput
+  }
+
+  export type QuestionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type QuestionOrderByWithAggregationInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    question?: SortOrder
+    choiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: QuestionCountOrderByAggregateInput
+    _avg?: QuestionAvgOrderByAggregateInput
+    _max?: QuestionMaxOrderByAggregateInput
+    _min?: QuestionMinOrderByAggregateInput
+    _sum?: QuestionSumOrderByAggregateInput
+  }
+
+  export type QuestionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    categoryId?: IntWithAggregatesFilter | number
+    question?: StringWithAggregatesFilter | string
+    choiceId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type ChoiceWhereInput = {
+    AND?: Enumerable<ChoiceWhereInput>
+    OR?: Enumerable<ChoiceWhereInput>
+    NOT?: Enumerable<ChoiceWhereInput>
+    id?: IntFilter | number
+    questions?: QuestionListRelationFilter
+    answerToQuestion?: QuestionListRelationFilter
+    answer?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    roundChooseChoice?: RoundChooseChoiceListRelationFilter
+  }
+
+  export type ChoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    questions?: QuestionOrderByRelationAggregateInput
+    answerToQuestion?: QuestionOrderByRelationAggregateInput
+    answer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    roundChooseChoice?: RoundChooseChoiceOrderByRelationAggregateInput
+  }
+
+  export type ChoiceWhereUniqueInput = {
+    id?: number
+  }
+
+  export type ChoiceOrderByWithAggregationInput = {
+    id?: SortOrder
+    answer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChoiceCountOrderByAggregateInput
+    _avg?: ChoiceAvgOrderByAggregateInput
+    _max?: ChoiceMaxOrderByAggregateInput
+    _min?: ChoiceMinOrderByAggregateInput
+    _sum?: ChoiceSumOrderByAggregateInput
+  }
+
+  export type ChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    answer?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type PlayerWhereInput = {
+    AND?: Enumerable<PlayerWhereInput>
+    OR?: Enumerable<PlayerWhereInput>
+    NOT?: Enumerable<PlayerWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    image?: StringFilter | string
-    price?: FloatFilter | number
-    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
-    OrderItem?: OrderItemListRelationFilter
-    categoryId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
+    rounds?: RoundListRelationFilter
   }
 
-  export type MenuOrderByWithRelationInput = {
+  export type PlayerOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    category?: CategoryOrderByWithRelationInput
-    OrderItem?: OrderItemOrderByRelationAggregateInput
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    rounds?: RoundOrderByRelationAggregateInput
   }
 
-  export type MenuWhereUniqueInput = {
+  export type PlayerWhereUniqueInput = {
     id?: number
+    name?: string
   }
 
-  export type MenuOrderByWithAggregationInput = {
+  export type PlayerOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: MenuCountOrderByAggregateInput
-    _avg?: MenuAvgOrderByAggregateInput
-    _max?: MenuMaxOrderByAggregateInput
-    _min?: MenuMinOrderByAggregateInput
-    _sum?: MenuSumOrderByAggregateInput
+    _count?: PlayerCountOrderByAggregateInput
+    _avg?: PlayerAvgOrderByAggregateInput
+    _max?: PlayerMaxOrderByAggregateInput
+    _min?: PlayerMinOrderByAggregateInput
+    _sum?: PlayerSumOrderByAggregateInput
   }
 
-  export type MenuScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<MenuScalarWhereWithAggregatesInput>
-    OR?: Enumerable<MenuScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<MenuScalarWhereWithAggregatesInput>
+  export type PlayerScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<PlayerScalarWhereWithAggregatesInput>
+    OR?: Enumerable<PlayerScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<PlayerScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    image?: StringWithAggregatesFilter | string
-    price?: FloatWithAggregatesFilter | number
-    categoryId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type OrderWhereInput = {
-    AND?: Enumerable<OrderWhereInput>
-    OR?: Enumerable<OrderWhereInput>
-    NOT?: Enumerable<OrderWhereInput>
+  export type RoundWhereInput = {
+    AND?: Enumerable<RoundWhereInput>
+    OR?: Enumerable<RoundWhereInput>
+    NOT?: Enumerable<RoundWhereInput>
     id?: IntFilter | number
-    status?: StringFilter | string
-    tableId?: IntFilter | number
-    items?: OrderItemListRelationFilter
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    playerName?: StringFilter | string
+    round?: StringFilter | string
+    score?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
+    roundQuestions?: RoundQuestionListRelationFilter
   }
 
-  export type OrderOrderByWithRelationInput = {
+  export type RoundOrderByWithRelationInput = {
     id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    items?: OrderItemOrderByRelationAggregateInput
+    player?: PlayerOrderByWithRelationInput
+    playerName?: SortOrder
+    round?: SortOrder
+    score?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    roundQuestions?: RoundQuestionOrderByRelationAggregateInput
   }
 
-  export type OrderWhereUniqueInput = {
+  export type RoundWhereUniqueInput = {
     id?: number
   }
 
-  export type OrderOrderByWithAggregationInput = {
+  export type RoundOrderByWithAggregationInput = {
     id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
+    playerName?: SortOrder
+    round?: SortOrder
+    score?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: OrderCountOrderByAggregateInput
-    _avg?: OrderAvgOrderByAggregateInput
-    _max?: OrderMaxOrderByAggregateInput
-    _min?: OrderMinOrderByAggregateInput
-    _sum?: OrderSumOrderByAggregateInput
+    _count?: RoundCountOrderByAggregateInput
+    _avg?: RoundAvgOrderByAggregateInput
+    _max?: RoundMaxOrderByAggregateInput
+    _min?: RoundMinOrderByAggregateInput
+    _sum?: RoundSumOrderByAggregateInput
   }
 
-  export type OrderScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<OrderScalarWhereWithAggregatesInput>
-    OR?: Enumerable<OrderScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<OrderScalarWhereWithAggregatesInput>
+  export type RoundScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    status?: StringWithAggregatesFilter | string
-    tableId?: IntWithAggregatesFilter | number
+    playerName?: StringWithAggregatesFilter | string
+    round?: StringWithAggregatesFilter | string
+    score?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type OrderItemWhereInput = {
-    AND?: Enumerable<OrderItemWhereInput>
-    OR?: Enumerable<OrderItemWhereInput>
-    NOT?: Enumerable<OrderItemWhereInput>
+  export type RoundQuestionWhereInput = {
+    AND?: Enumerable<RoundQuestionWhereInput>
+    OR?: Enumerable<RoundQuestionWhereInput>
+    NOT?: Enumerable<RoundQuestionWhereInput>
     id?: IntFilter | number
-    menu?: XOR<MenuRelationFilter, MenuWhereInput>
-    menuId?: IntFilter | number
-    order?: XOR<OrderRelationFilter, OrderWhereInput>
-    orderId?: IntFilter | number
-    quantity?: IntFilter | number
-    totalPrice?: FloatFilter | number
+    round?: XOR<RoundRelationFilter, RoundWhereInput>
+    roundsId?: IntFilter | number
+    question?: XOR<QuestionRelationFilter, QuestionWhereInput>
+    questionsId?: IntFilter | number
+    chooseChoice?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    roundChooseChoice?: RoundChooseChoiceListRelationFilter
+  }
+
+  export type RoundQuestionOrderByWithRelationInput = {
+    id?: SortOrder
+    round?: RoundOrderByWithRelationInput
+    roundsId?: SortOrder
+    question?: QuestionOrderByWithRelationInput
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    roundChooseChoice?: RoundChooseChoiceOrderByRelationAggregateInput
+  }
+
+  export type RoundQuestionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type RoundQuestionOrderByWithAggregationInput = {
+    id?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RoundQuestionCountOrderByAggregateInput
+    _avg?: RoundQuestionAvgOrderByAggregateInput
+    _max?: RoundQuestionMaxOrderByAggregateInput
+    _min?: RoundQuestionMinOrderByAggregateInput
+    _sum?: RoundQuestionSumOrderByAggregateInput
+  }
+
+  export type RoundQuestionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    roundsId?: IntWithAggregatesFilter | number
+    questionsId?: IntWithAggregatesFilter | number
+    chooseChoice?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type RoundChooseChoiceWhereInput = {
+    AND?: Enumerable<RoundChooseChoiceWhereInput>
+    OR?: Enumerable<RoundChooseChoiceWhereInput>
+    NOT?: Enumerable<RoundChooseChoiceWhereInput>
+    id?: IntFilter | number
+    roundQuestion?: XOR<RoundQuestionRelationFilter, RoundQuestionWhereInput>
+    roundQuestionsId?: IntFilter | number
+    choice?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    choicesId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type OrderItemOrderByWithRelationInput = {
+  export type RoundChooseChoiceOrderByWithRelationInput = {
     id?: SortOrder
-    menu?: MenuOrderByWithRelationInput
-    menuId?: SortOrder
-    order?: OrderOrderByWithRelationInput
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundQuestion?: RoundQuestionOrderByWithRelationInput
+    roundQuestionsId?: SortOrder
+    choice?: ChoiceOrderByWithRelationInput
+    choicesId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderItemWhereUniqueInput = {
+  export type RoundChooseChoiceWhereUniqueInput = {
     id?: number
   }
 
-  export type OrderItemOrderByWithAggregationInput = {
+  export type RoundChooseChoiceOrderByWithAggregationInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: OrderItemCountOrderByAggregateInput
-    _avg?: OrderItemAvgOrderByAggregateInput
-    _max?: OrderItemMaxOrderByAggregateInput
-    _min?: OrderItemMinOrderByAggregateInput
-    _sum?: OrderItemSumOrderByAggregateInput
+    _count?: RoundChooseChoiceCountOrderByAggregateInput
+    _avg?: RoundChooseChoiceAvgOrderByAggregateInput
+    _max?: RoundChooseChoiceMaxOrderByAggregateInput
+    _min?: RoundChooseChoiceMinOrderByAggregateInput
+    _sum?: RoundChooseChoiceSumOrderByAggregateInput
   }
 
-  export type OrderItemScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<OrderItemScalarWhereWithAggregatesInput>
-    OR?: Enumerable<OrderItemScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<OrderItemScalarWhereWithAggregatesInput>
+  export type RoundChooseChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundChooseChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundChooseChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundChooseChoiceScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    menuId?: IntWithAggregatesFilter | number
-    orderId?: IntWithAggregatesFilter | number
-    quantity?: IntWithAggregatesFilter | number
-    totalPrice?: FloatWithAggregatesFilter | number
+    roundQuestionsId?: IntWithAggregatesFilter | number
+    choicesId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
   export type CategoryCreateInput = {
     name: string
-    menus?: MenuCreateNestedManyWithoutCategoryInput
+    questions?: QuestionCreateNestedManyWithoutCategoryInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5291,14 +8727,14 @@ export namespace Prisma {
   export type CategoryUncheckedCreateInput = {
     id?: number
     name: string
-    menus?: MenuUncheckedCreateNestedManyWithoutCategoryInput
+    questions?: QuestionUncheckedCreateNestedManyWithoutCategoryInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    menus?: MenuUpdateManyWithoutCategoryNestedInput
+    questions?: QuestionUpdateManyWithoutCategoryNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5306,7 +8742,7 @@ export namespace Prisma {
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    menus?: MenuUncheckedUpdateManyWithoutCategoryNestedInput
+    questions?: QuestionUncheckedUpdateManyWithoutCategoryNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5331,194 +8767,352 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MenuCreateInput = {
-    name: string
-    image: string
-    price: number
-    category: CategoryCreateNestedOneWithoutMenusInput
-    OrderItem?: OrderItemCreateNestedManyWithoutMenuInput
+  export type QuestionCreateInput = {
+    category: CategoryCreateNestedOneWithoutQuestionsInput
+    question: string
+    answer: ChoiceCreateNestedOneWithoutAnswerToQuestionInput
+    choices?: ChoiceCreateNestedManyWithoutQuestionsInput
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundQuestion?: RoundQuestionCreateNestedManyWithoutQuestionInput
   }
 
-  export type MenuUncheckedCreateInput = {
+  export type QuestionUncheckedCreateInput = {
     id?: number
-    name: string
-    image: string
-    price: number
-    OrderItem?: OrderItemUncheckedCreateNestedManyWithoutMenuInput
     categoryId: number
+    question: string
+    choiceId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestion?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionUpdateInput = {
+    category?: CategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutAnswerToQuestionNestedInput
+    choices?: ChoiceUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionCreateManyInput = {
+    id?: number
+    categoryId: number
+    question: string
+    choiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MenuUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    category?: CategoryUpdateOneRequiredWithoutMenusNestedInput
-    OrderItem?: OrderItemUpdateManyWithoutMenuNestedInput
+  export type QuestionUpdateManyMutationInput = {
+    question?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MenuUncheckedUpdateInput = {
+  export type QuestionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    OrderItem?: OrderItemUncheckedUpdateManyWithoutMenuNestedInput
     categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MenuCreateManyInput = {
+  export type ChoiceCreateInput = {
+    questions?: QuestionCreateNestedManyWithoutChoicesInput
+    answerToQuestion?: QuestionCreateNestedManyWithoutAnswerInput
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceUncheckedCreateInput = {
+    id?: number
+    questions?: QuestionUncheckedCreateNestedManyWithoutChoicesInput
+    answerToQuestion?: QuestionUncheckedCreateNestedManyWithoutAnswerInput
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceUpdateInput = {
+    questions?: QuestionUpdateManyWithoutChoicesNestedInput
+    answerToQuestion?: QuestionUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutChoiceNestedInput
+  }
+
+  export type ChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questions?: QuestionUncheckedUpdateManyWithoutChoicesNestedInput
+    answerToQuestion?: QuestionUncheckedUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutChoiceNestedInput
+  }
+
+  export type ChoiceCreateManyInput = {
+    id?: number
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUpdateManyMutationInput = {
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayerCreateInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rounds?: RoundCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateInput = {
     id?: number
     name: string
-    image: string
-    price: number
-    categoryId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    rounds?: RoundUncheckedCreateNestedManyWithoutPlayerInput
   }
 
-  export type MenuUpdateManyMutationInput = {
+  export type PlayerUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rounds?: RoundUpdateManyWithoutPlayerNestedInput
   }
 
-  export type MenuUncheckedUpdateManyInput = {
+  export type PlayerUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    categoryId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rounds?: RoundUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
-  export type OrderCreateInput = {
-    status?: string
-    tableId: number
-    items?: OrderItemCreateNestedManyWithoutOrderInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type OrderUncheckedCreateInput = {
+  export type PlayerCreateManyInput = {
     id?: number
-    status?: string
-    tableId: number
-    items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderUpdateInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    items?: OrderItemUpdateManyWithoutOrderNestedInput
+  export type PlayerUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderUncheckedUpdateInput = {
+  export type PlayerUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderCreateManyInput = {
+  export type RoundCreateInput = {
+    player: PlayerCreateNestedOneWithoutRoundsInput
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestions?: RoundQuestionCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundUncheckedCreateInput = {
     id?: number
-    status?: string
-    tableId: number
+    playerName: string
+    round: string
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutRoundInput
   }
 
-  export type OrderUpdateManyMutationInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
+  export type RoundUpdateInput = {
+    player?: PlayerUpdateOneRequiredWithoutRoundsNestedInput
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestions?: RoundQuestionUpdateManyWithoutRoundNestedInput
   }
 
-  export type OrderUncheckedUpdateManyInput = {
+  export type RoundUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
+    playerName?: StringFieldUpdateOperationsInput | string
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
   }
 
-  export type OrderItemCreateInput = {
-    menu: MenuCreateNestedOneWithoutOrderItemInput
-    order: OrderCreateNestedOneWithoutItemsInput
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type OrderItemUncheckedCreateInput = {
+  export type RoundCreateManyInput = {
     id?: number
-    menuId: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    playerName: string
+    round: string
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderItemUpdateInput = {
-    menu?: MenuUpdateOneRequiredWithoutOrderItemNestedInput
-    order?: OrderUpdateOneRequiredWithoutItemsNestedInput
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+  export type RoundUpdateManyMutationInput = {
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemUncheckedUpdateInput = {
+  export type RoundUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    orderId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+    playerName?: StringFieldUpdateOperationsInput | string
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemCreateManyInput = {
+  export type RoundQuestionCreateInput = {
+    round: RoundCreateNestedOneWithoutRoundQuestionsInput
+    question: QuestionCreateNestedOneWithoutRoundQuestionInput
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionUncheckedCreateInput = {
     id?: number
-    menuId: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    roundsId: number
+    questionsId: number
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionUpdateInput = {
+    round?: RoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionNestedInput
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundsId?: IntFieldUpdateOperationsInput | number
+    questionsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionCreateManyInput = {
+    id?: number
+    roundsId: number
+    questionsId: number
+    chooseChoice: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderItemUpdateManyMutationInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+  export type RoundQuestionUpdateManyMutationInput = {
+    chooseChoice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemUncheckedUpdateManyInput = {
+  export type RoundQuestionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    orderId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+    roundsId?: IntFieldUpdateOperationsInput | number
+    questionsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceCreateInput = {
+    roundQuestion: RoundQuestionCreateNestedOneWithoutRoundChooseChoiceInput
+    choice: ChoiceCreateNestedOneWithoutRoundChooseChoiceInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedCreateInput = {
+    id?: number
+    roundQuestionsId: number
+    choicesId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceUpdateInput = {
+    roundQuestion?: RoundQuestionUpdateOneRequiredWithoutRoundChooseChoiceNestedInput
+    choice?: ChoiceUpdateOneRequiredWithoutRoundChooseChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuestionsId?: IntFieldUpdateOperationsInput | number
+    choicesId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceCreateManyInput = {
+    id?: number
+    roundQuestionsId: number
+    choicesId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuestionsId?: IntFieldUpdateOperationsInput | number
+    choicesId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5549,10 +9143,10 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
-  export type MenuListRelationFilter = {
-    every?: MenuWhereInput
-    some?: MenuWhereInput
-    none?: MenuWhereInput
+  export type QuestionListRelationFilter = {
+    every?: QuestionWhereInput
+    some?: QuestionWhereInput
+    none?: QuestionWhereInput
   }
 
   export type DateTimeFilter = {
@@ -5566,7 +9160,7 @@ export namespace Prisma {
     not?: NestedDateTimeFilter | Date | string
   }
 
-  export type MenuOrderByRelationAggregateInput = {
+  export type QuestionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5647,210 +9241,317 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type FloatFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatFilter | number
-  }
-
   export type CategoryRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
   }
 
-  export type OrderItemListRelationFilter = {
-    every?: OrderItemWhereInput
-    some?: OrderItemWhereInput
-    none?: OrderItemWhereInput
+  export type ChoiceRelationFilter = {
+    is?: ChoiceWhereInput
+    isNot?: ChoiceWhereInput
   }
 
-  export type OrderItemOrderByRelationAggregateInput = {
+  export type ChoiceListRelationFilter = {
+    every?: ChoiceWhereInput
+    some?: ChoiceWhereInput
+    none?: ChoiceWhereInput
+  }
+
+  export type RoundQuestionListRelationFilter = {
+    every?: RoundQuestionWhereInput
+    some?: RoundQuestionWhereInput
+    none?: RoundQuestionWhereInput
+  }
+
+  export type ChoiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type MenuCountOrderByAggregateInput = {
+  export type RoundQuestionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuestionCountOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    question?: SortOrder
+    choiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuestionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    choiceId?: SortOrder
+  }
+
+  export type QuestionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    question?: SortOrder
+    choiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuestionMinOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    question?: SortOrder
+    choiceId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuestionSumOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    choiceId?: SortOrder
+  }
+
+  export type RoundChooseChoiceListRelationFilter = {
+    every?: RoundChooseChoiceWhereInput
+    some?: RoundChooseChoiceWhereInput
+    none?: RoundChooseChoiceWhereInput
+  }
+
+  export type RoundChooseChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    answer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ChoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    answer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    answer?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChoiceSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type RoundListRelationFilter = {
+    every?: RoundWhereInput
+    some?: RoundWhereInput
+    none?: RoundWhereInput
+  }
+
+  export type RoundOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlayerCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type MenuAvgOrderByAggregateInput = {
+  export type PlayerAvgOrderByAggregateInput = {
     id?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
   }
 
-  export type MenuMaxOrderByAggregateInput = {
+  export type PlayerMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type MenuMinOrderByAggregateInput = {
+  export type PlayerMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type MenuSumOrderByAggregateInput = {
+  export type PlayerSumOrderByAggregateInput = {
     id?: SortOrder
-    price?: SortOrder
-    categoryId?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedFloatFilter
-    _min?: NestedFloatFilter
-    _max?: NestedFloatFilter
+  export type PlayerRelationFilter = {
+    is?: PlayerWhereInput
+    isNot?: PlayerWhereInput
   }
 
-  export type OrderCountOrderByAggregateInput = {
+  export type RoundCountOrderByAggregateInput = {
     id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
+    playerName?: SortOrder
+    round?: SortOrder
+    score?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderAvgOrderByAggregateInput = {
+  export type RoundAvgOrderByAggregateInput = {
     id?: SortOrder
-    tableId?: SortOrder
+    score?: SortOrder
   }
 
-  export type OrderMaxOrderByAggregateInput = {
+  export type RoundMaxOrderByAggregateInput = {
     id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
+    playerName?: SortOrder
+    round?: SortOrder
+    score?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderMinOrderByAggregateInput = {
+  export type RoundMinOrderByAggregateInput = {
     id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
+    playerName?: SortOrder
+    round?: SortOrder
+    score?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderSumOrderByAggregateInput = {
+  export type RoundSumOrderByAggregateInput = {
     id?: SortOrder
-    tableId?: SortOrder
+    score?: SortOrder
   }
 
-  export type MenuRelationFilter = {
-    is?: MenuWhereInput
-    isNot?: MenuWhereInput
+  export type RoundRelationFilter = {
+    is?: RoundWhereInput
+    isNot?: RoundWhereInput
   }
 
-  export type OrderRelationFilter = {
-    is?: OrderWhereInput
-    isNot?: OrderWhereInput
+  export type QuestionRelationFilter = {
+    is?: QuestionWhereInput
+    isNot?: QuestionWhereInput
   }
 
-  export type OrderItemCountOrderByAggregateInput = {
+  export type RoundQuestionCountOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderItemAvgOrderByAggregateInput = {
+  export type RoundQuestionAvgOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
   }
 
-  export type OrderItemMaxOrderByAggregateInput = {
+  export type RoundQuestionMaxOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderItemMinOrderByAggregateInput = {
+  export type RoundQuestionMinOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type OrderItemSumOrderByAggregateInput = {
+  export type RoundQuestionSumOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    roundsId?: SortOrder
+    questionsId?: SortOrder
+    chooseChoice?: SortOrder
   }
 
-  export type MenuCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
-    createMany?: MenuCreateManyCategoryInputEnvelope
-    connect?: Enumerable<MenuWhereUniqueInput>
+  export type RoundQuestionRelationFilter = {
+    is?: RoundQuestionWhereInput
+    isNot?: RoundQuestionWhereInput
   }
 
-  export type MenuUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
-    createMany?: MenuCreateManyCategoryInputEnvelope
-    connect?: Enumerable<MenuWhereUniqueInput>
+  export type RoundChooseChoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoundChooseChoiceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
+  }
+
+  export type RoundChooseChoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoundChooseChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RoundChooseChoiceSumOrderByAggregateInput = {
+    id?: SortOrder
+    roundQuestionsId?: SortOrder
+    choicesId?: SortOrder
+  }
+
+  export type QuestionCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutCategoryInput>, Enumerable<QuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCategoryInput>
+    createMany?: QuestionCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
+  }
+
+  export type QuestionUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutCategoryInput>, Enumerable<QuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCategoryInput>
+    createMany?: QuestionCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type MenuUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
-    upsert?: Enumerable<MenuUpsertWithWhereUniqueWithoutCategoryInput>
-    createMany?: MenuCreateManyCategoryInputEnvelope
-    set?: Enumerable<MenuWhereUniqueInput>
-    disconnect?: Enumerable<MenuWhereUniqueInput>
-    delete?: Enumerable<MenuWhereUniqueInput>
-    connect?: Enumerable<MenuWhereUniqueInput>
-    update?: Enumerable<MenuUpdateWithWhereUniqueWithoutCategoryInput>
-    updateMany?: Enumerable<MenuUpdateManyWithWhereWithoutCategoryInput>
-    deleteMany?: Enumerable<MenuScalarWhereInput>
+  export type QuestionUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutCategoryInput>, Enumerable<QuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuestionCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -5865,152 +9566,444 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type MenuUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Enumerable<MenuCreateWithoutCategoryInput>, Enumerable<MenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<MenuCreateOrConnectWithoutCategoryInput>
-    upsert?: Enumerable<MenuUpsertWithWhereUniqueWithoutCategoryInput>
-    createMany?: MenuCreateManyCategoryInputEnvelope
-    set?: Enumerable<MenuWhereUniqueInput>
-    disconnect?: Enumerable<MenuWhereUniqueInput>
-    delete?: Enumerable<MenuWhereUniqueInput>
-    connect?: Enumerable<MenuWhereUniqueInput>
-    update?: Enumerable<MenuUpdateWithWhereUniqueWithoutCategoryInput>
-    updateMany?: Enumerable<MenuUpdateManyWithWhereWithoutCategoryInput>
-    deleteMany?: Enumerable<MenuScalarWhereInput>
+  export type QuestionUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutCategoryInput>, Enumerable<QuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuestionCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
   }
 
-  export type CategoryCreateNestedOneWithoutMenusInput = {
-    create?: XOR<CategoryCreateWithoutMenusInput, CategoryUncheckedCreateWithoutMenusInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutMenusInput
+  export type CategoryCreateNestedOneWithoutQuestionsInput = {
+    create?: XOR<CategoryCreateWithoutQuestionsInput, CategoryUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutQuestionsInput
     connect?: CategoryWhereUniqueInput
   }
 
-  export type OrderItemCreateNestedManyWithoutMenuInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutMenuInput>, Enumerable<OrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutMenuInput>
-    createMany?: OrderItemCreateManyMenuInputEnvelope
-    connect?: Enumerable<OrderItemWhereUniqueInput>
+  export type ChoiceCreateNestedOneWithoutAnswerToQuestionInput = {
+    create?: XOR<ChoiceCreateWithoutAnswerToQuestionInput, ChoiceUncheckedCreateWithoutAnswerToQuestionInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutAnswerToQuestionInput
+    connect?: ChoiceWhereUniqueInput
   }
 
-  export type OrderItemUncheckedCreateNestedManyWithoutMenuInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutMenuInput>, Enumerable<OrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutMenuInput>
-    createMany?: OrderItemCreateManyMenuInputEnvelope
-    connect?: Enumerable<OrderItemWhereUniqueInput>
+  export type ChoiceCreateNestedManyWithoutQuestionsInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionsInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionsInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionsInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type RoundQuestionCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
   }
 
-  export type CategoryUpdateOneRequiredWithoutMenusNestedInput = {
-    create?: XOR<CategoryCreateWithoutMenusInput, CategoryUncheckedCreateWithoutMenusInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutMenusInput
-    upsert?: CategoryUpsertWithoutMenusInput
+  export type ChoiceUncheckedCreateNestedManyWithoutQuestionsInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionsInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionsInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionsInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+  }
+
+  export type RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
+    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  }
+
+  export type CategoryUpdateOneRequiredWithoutQuestionsNestedInput = {
+    create?: XOR<CategoryCreateWithoutQuestionsInput, CategoryUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutQuestionsInput
+    upsert?: CategoryUpsertWithoutQuestionsInput
     connect?: CategoryWhereUniqueInput
-    update?: XOR<CategoryUpdateWithoutMenusInput, CategoryUncheckedUpdateWithoutMenusInput>
+    update?: XOR<CategoryUpdateWithoutQuestionsInput, CategoryUncheckedUpdateWithoutQuestionsInput>
   }
 
-  export type OrderItemUpdateManyWithoutMenuNestedInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutMenuInput>, Enumerable<OrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutMenuInput>
-    upsert?: Enumerable<OrderItemUpsertWithWhereUniqueWithoutMenuInput>
-    createMany?: OrderItemCreateManyMenuInputEnvelope
-    set?: Enumerable<OrderItemWhereUniqueInput>
-    disconnect?: Enumerable<OrderItemWhereUniqueInput>
-    delete?: Enumerable<OrderItemWhereUniqueInput>
-    connect?: Enumerable<OrderItemWhereUniqueInput>
-    update?: Enumerable<OrderItemUpdateWithWhereUniqueWithoutMenuInput>
-    updateMany?: Enumerable<OrderItemUpdateManyWithWhereWithoutMenuInput>
-    deleteMany?: Enumerable<OrderItemScalarWhereInput>
+  export type ChoiceUpdateOneRequiredWithoutAnswerToQuestionNestedInput = {
+    create?: XOR<ChoiceCreateWithoutAnswerToQuestionInput, ChoiceUncheckedCreateWithoutAnswerToQuestionInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutAnswerToQuestionInput
+    upsert?: ChoiceUpsertWithoutAnswerToQuestionInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutAnswerToQuestionInput, ChoiceUncheckedUpdateWithoutAnswerToQuestionInput>
   }
 
-  export type OrderItemUncheckedUpdateManyWithoutMenuNestedInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutMenuInput>, Enumerable<OrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutMenuInput>
-    upsert?: Enumerable<OrderItemUpsertWithWhereUniqueWithoutMenuInput>
-    createMany?: OrderItemCreateManyMenuInputEnvelope
-    set?: Enumerable<OrderItemWhereUniqueInput>
-    disconnect?: Enumerable<OrderItemWhereUniqueInput>
-    delete?: Enumerable<OrderItemWhereUniqueInput>
-    connect?: Enumerable<OrderItemWhereUniqueInput>
-    update?: Enumerable<OrderItemUpdateWithWhereUniqueWithoutMenuInput>
-    updateMany?: Enumerable<OrderItemUpdateManyWithWhereWithoutMenuInput>
-    deleteMany?: Enumerable<OrderItemScalarWhereInput>
+  export type ChoiceUpdateManyWithoutQuestionsNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionsInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionsInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionsInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionsInput>
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionsInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionsInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type OrderItemCreateNestedManyWithoutOrderInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutOrderInput>, Enumerable<OrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutOrderInput>
-    createMany?: OrderItemCreateManyOrderInputEnvelope
-    connect?: Enumerable<OrderItemWhereUniqueInput>
+  export type RoundQuestionUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
   }
 
-  export type OrderItemUncheckedCreateNestedManyWithoutOrderInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutOrderInput>, Enumerable<OrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutOrderInput>
-    createMany?: OrderItemCreateManyOrderInputEnvelope
-    connect?: Enumerable<OrderItemWhereUniqueInput>
+  export type ChoiceUncheckedUpdateManyWithoutQuestionsNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionsInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionsInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionsInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionsInput>
+    set?: Enumerable<ChoiceWhereUniqueInput>
+    disconnect?: Enumerable<ChoiceWhereUniqueInput>
+    delete?: Enumerable<ChoiceWhereUniqueInput>
+    connect?: Enumerable<ChoiceWhereUniqueInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionsInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionsInput>
+    deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type OrderItemUpdateManyWithoutOrderNestedInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutOrderInput>, Enumerable<OrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutOrderInput>
-    upsert?: Enumerable<OrderItemUpsertWithWhereUniqueWithoutOrderInput>
-    createMany?: OrderItemCreateManyOrderInputEnvelope
-    set?: Enumerable<OrderItemWhereUniqueInput>
-    disconnect?: Enumerable<OrderItemWhereUniqueInput>
-    delete?: Enumerable<OrderItemWhereUniqueInput>
-    connect?: Enumerable<OrderItemWhereUniqueInput>
-    update?: Enumerable<OrderItemUpdateWithWhereUniqueWithoutOrderInput>
-    updateMany?: Enumerable<OrderItemUpdateManyWithWhereWithoutOrderInput>
-    deleteMany?: Enumerable<OrderItemScalarWhereInput>
+  export type RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
+    set?: Enumerable<RoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
   }
 
-  export type OrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
-    create?: XOR<Enumerable<OrderItemCreateWithoutOrderInput>, Enumerable<OrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<OrderItemCreateOrConnectWithoutOrderInput>
-    upsert?: Enumerable<OrderItemUpsertWithWhereUniqueWithoutOrderInput>
-    createMany?: OrderItemCreateManyOrderInputEnvelope
-    set?: Enumerable<OrderItemWhereUniqueInput>
-    disconnect?: Enumerable<OrderItemWhereUniqueInput>
-    delete?: Enumerable<OrderItemWhereUniqueInput>
-    connect?: Enumerable<OrderItemWhereUniqueInput>
-    update?: Enumerable<OrderItemUpdateWithWhereUniqueWithoutOrderInput>
-    updateMany?: Enumerable<OrderItemUpdateManyWithWhereWithoutOrderInput>
-    deleteMany?: Enumerable<OrderItemScalarWhereInput>
+  export type QuestionCreateNestedManyWithoutChoicesInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutChoicesInput>, Enumerable<QuestionUncheckedCreateWithoutChoicesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutChoicesInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
-  export type MenuCreateNestedOneWithoutOrderItemInput = {
-    create?: XOR<MenuCreateWithoutOrderItemInput, MenuUncheckedCreateWithoutOrderItemInput>
-    connectOrCreate?: MenuCreateOrConnectWithoutOrderItemInput
-    connect?: MenuWhereUniqueInput
+  export type QuestionCreateNestedManyWithoutAnswerInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutAnswerInput>, Enumerable<QuestionUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutAnswerInput>
+    createMany?: QuestionCreateManyAnswerInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
-  export type OrderCreateNestedOneWithoutItemsInput = {
-    create?: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
-    connectOrCreate?: OrderCreateOrConnectWithoutItemsInput
-    connect?: OrderWhereUniqueInput
+  export type RoundChooseChoiceCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutChoiceInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundChooseChoiceCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
   }
 
-  export type MenuUpdateOneRequiredWithoutOrderItemNestedInput = {
-    create?: XOR<MenuCreateWithoutOrderItemInput, MenuUncheckedCreateWithoutOrderItemInput>
-    connectOrCreate?: MenuCreateOrConnectWithoutOrderItemInput
-    upsert?: MenuUpsertWithoutOrderItemInput
-    connect?: MenuWhereUniqueInput
-    update?: XOR<MenuUpdateWithoutOrderItemInput, MenuUncheckedUpdateWithoutOrderItemInput>
+  export type QuestionUncheckedCreateNestedManyWithoutChoicesInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutChoicesInput>, Enumerable<QuestionUncheckedCreateWithoutChoicesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutChoicesInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
   }
 
-  export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
-    create?: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
-    connectOrCreate?: OrderCreateOrConnectWithoutItemsInput
-    upsert?: OrderUpsertWithoutItemsInput
-    connect?: OrderWhereUniqueInput
-    update?: XOR<OrderUpdateWithoutItemsInput, OrderUncheckedUpdateWithoutItemsInput>
+  export type QuestionUncheckedCreateNestedManyWithoutAnswerInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutAnswerInput>, Enumerable<QuestionUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutAnswerInput>
+    createMany?: QuestionCreateManyAnswerInputEnvelope
+    connect?: Enumerable<QuestionWhereUniqueInput>
+  }
+
+  export type RoundChooseChoiceUncheckedCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutChoiceInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundChooseChoiceCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+  }
+
+  export type QuestionUpdateManyWithoutChoicesNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutChoicesInput>, Enumerable<QuestionUncheckedCreateWithoutChoicesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutChoicesInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutChoicesInput>
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutChoicesInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutChoicesInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
+  }
+
+  export type QuestionUpdateManyWithoutAnswerNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutAnswerInput>, Enumerable<QuestionUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutAnswerInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutAnswerInput>
+    createMany?: QuestionCreateManyAnswerInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutAnswerInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutAnswerInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
+  }
+
+  export type RoundChooseChoiceUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutChoiceInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundChooseChoiceUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundChooseChoiceCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    disconnect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    delete?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    update?: Enumerable<RoundChooseChoiceUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundChooseChoiceUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundChooseChoiceScalarWhereInput>
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutChoicesNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutChoicesInput>, Enumerable<QuestionUncheckedCreateWithoutChoicesInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutChoicesInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutChoicesInput>
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutChoicesInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutChoicesInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutAnswerNestedInput = {
+    create?: XOR<Enumerable<QuestionCreateWithoutAnswerInput>, Enumerable<QuestionUncheckedCreateWithoutAnswerInput>>
+    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutAnswerInput>
+    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutAnswerInput>
+    createMany?: QuestionCreateManyAnswerInputEnvelope
+    set?: Enumerable<QuestionWhereUniqueInput>
+    disconnect?: Enumerable<QuestionWhereUniqueInput>
+    delete?: Enumerable<QuestionWhereUniqueInput>
+    connect?: Enumerable<QuestionWhereUniqueInput>
+    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutAnswerInput>
+    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutAnswerInput>
+    deleteMany?: Enumerable<QuestionScalarWhereInput>
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutChoiceInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundChooseChoiceUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundChooseChoiceCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    disconnect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    delete?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    update?: Enumerable<RoundChooseChoiceUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundChooseChoiceUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundChooseChoiceScalarWhereInput>
+  }
+
+  export type RoundCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutPlayerInput>, Enumerable<RoundUncheckedCreateWithoutPlayerInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutPlayerInput>
+    createMany?: RoundCreateManyPlayerInputEnvelope
+    connect?: Enumerable<RoundWhereUniqueInput>
+  }
+
+  export type RoundUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutPlayerInput>, Enumerable<RoundUncheckedCreateWithoutPlayerInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutPlayerInput>
+    createMany?: RoundCreateManyPlayerInputEnvelope
+    connect?: Enumerable<RoundWhereUniqueInput>
+  }
+
+  export type RoundUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutPlayerInput>, Enumerable<RoundUncheckedCreateWithoutPlayerInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutPlayerInput>
+    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutPlayerInput>
+    createMany?: RoundCreateManyPlayerInputEnvelope
+    set?: Enumerable<RoundWhereUniqueInput>
+    disconnect?: Enumerable<RoundWhereUniqueInput>
+    delete?: Enumerable<RoundWhereUniqueInput>
+    connect?: Enumerable<RoundWhereUniqueInput>
+    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutPlayerInput>
+    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutPlayerInput>
+    deleteMany?: Enumerable<RoundScalarWhereInput>
+  }
+
+  export type RoundUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutPlayerInput>, Enumerable<RoundUncheckedCreateWithoutPlayerInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutPlayerInput>
+    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutPlayerInput>
+    createMany?: RoundCreateManyPlayerInputEnvelope
+    set?: Enumerable<RoundWhereUniqueInput>
+    disconnect?: Enumerable<RoundWhereUniqueInput>
+    delete?: Enumerable<RoundWhereUniqueInput>
+    connect?: Enumerable<RoundWhereUniqueInput>
+    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutPlayerInput>
+    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutPlayerInput>
+    deleteMany?: Enumerable<RoundScalarWhereInput>
+  }
+
+  export type PlayerCreateNestedOneWithoutRoundsInput = {
+    create?: XOR<PlayerCreateWithoutRoundsInput, PlayerUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutRoundsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type RoundQuestionCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
+    createMany?: RoundQuestionCreateManyRoundInputEnvelope
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  }
+
+  export type RoundQuestionUncheckedCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
+    createMany?: RoundQuestionCreateManyRoundInputEnvelope
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  }
+
+  export type PlayerUpdateOneRequiredWithoutRoundsNestedInput = {
+    create?: XOR<PlayerCreateWithoutRoundsInput, PlayerUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutRoundsInput
+    upsert?: PlayerUpsertWithoutRoundsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<PlayerUpdateWithoutRoundsInput, PlayerUncheckedUpdateWithoutRoundsInput>
+  }
+
+  export type RoundQuestionUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: RoundQuestionCreateManyRoundInputEnvelope
+    set?: Enumerable<RoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  }
+
+  export type RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: RoundQuestionCreateManyRoundInputEnvelope
+    set?: Enumerable<RoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
+    delete?: Enumerable<RoundQuestionWhereUniqueInput>
+    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  }
+
+  export type RoundCreateNestedOneWithoutRoundQuestionsInput = {
+    create?: XOR<RoundCreateWithoutRoundQuestionsInput, RoundUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutRoundQuestionsInput
+    connect?: RoundWhereUniqueInput
+  }
+
+  export type QuestionCreateNestedOneWithoutRoundQuestionInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionInput, QuestionUncheckedCreateWithoutRoundQuestionInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionInput
+    connect?: QuestionWhereUniqueInput
+  }
+
+  export type RoundChooseChoiceCreateNestedManyWithoutRoundQuestionInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutRoundQuestionInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutRoundQuestionInput>
+    createMany?: RoundChooseChoiceCreateManyRoundQuestionInputEnvelope
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+  }
+
+  export type RoundChooseChoiceUncheckedCreateNestedManyWithoutRoundQuestionInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutRoundQuestionInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutRoundQuestionInput>
+    createMany?: RoundChooseChoiceCreateManyRoundQuestionInputEnvelope
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+  }
+
+  export type RoundUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
+    create?: XOR<RoundCreateWithoutRoundQuestionsInput, RoundUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutRoundQuestionsInput
+    upsert?: RoundUpsertWithoutRoundQuestionsInput
+    connect?: RoundWhereUniqueInput
+    update?: XOR<RoundUpdateWithoutRoundQuestionsInput, RoundUncheckedUpdateWithoutRoundQuestionsInput>
+  }
+
+  export type QuestionUpdateOneRequiredWithoutRoundQuestionNestedInput = {
+    create?: XOR<QuestionCreateWithoutRoundQuestionInput, QuestionUncheckedCreateWithoutRoundQuestionInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionInput
+    upsert?: QuestionUpsertWithoutRoundQuestionInput
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<QuestionUpdateWithoutRoundQuestionInput, QuestionUncheckedUpdateWithoutRoundQuestionInput>
+  }
+
+  export type RoundChooseChoiceUpdateManyWithoutRoundQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutRoundQuestionInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutRoundQuestionInput>
+    upsert?: Enumerable<RoundChooseChoiceUpsertWithWhereUniqueWithoutRoundQuestionInput>
+    createMany?: RoundChooseChoiceCreateManyRoundQuestionInputEnvelope
+    set?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    disconnect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    delete?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    update?: Enumerable<RoundChooseChoiceUpdateWithWhereUniqueWithoutRoundQuestionInput>
+    updateMany?: Enumerable<RoundChooseChoiceUpdateManyWithWhereWithoutRoundQuestionInput>
+    deleteMany?: Enumerable<RoundChooseChoiceScalarWhereInput>
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateManyWithoutRoundQuestionNestedInput = {
+    create?: XOR<Enumerable<RoundChooseChoiceCreateWithoutRoundQuestionInput>, Enumerable<RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>>
+    connectOrCreate?: Enumerable<RoundChooseChoiceCreateOrConnectWithoutRoundQuestionInput>
+    upsert?: Enumerable<RoundChooseChoiceUpsertWithWhereUniqueWithoutRoundQuestionInput>
+    createMany?: RoundChooseChoiceCreateManyRoundQuestionInputEnvelope
+    set?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    disconnect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    delete?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    connect?: Enumerable<RoundChooseChoiceWhereUniqueInput>
+    update?: Enumerable<RoundChooseChoiceUpdateWithWhereUniqueWithoutRoundQuestionInput>
+    updateMany?: Enumerable<RoundChooseChoiceUpdateManyWithWhereWithoutRoundQuestionInput>
+    deleteMany?: Enumerable<RoundChooseChoiceScalarWhereInput>
+  }
+
+  export type RoundQuestionCreateNestedOneWithoutRoundChooseChoiceInput = {
+    create?: XOR<RoundQuestionCreateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedCreateWithoutRoundChooseChoiceInput>
+    connectOrCreate?: RoundQuestionCreateOrConnectWithoutRoundChooseChoiceInput
+    connect?: RoundQuestionWhereUniqueInput
+  }
+
+  export type ChoiceCreateNestedOneWithoutRoundChooseChoiceInput = {
+    create?: XOR<ChoiceCreateWithoutRoundChooseChoiceInput, ChoiceUncheckedCreateWithoutRoundChooseChoiceInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundChooseChoiceInput
+    connect?: ChoiceWhereUniqueInput
+  }
+
+  export type RoundQuestionUpdateOneRequiredWithoutRoundChooseChoiceNestedInput = {
+    create?: XOR<RoundQuestionCreateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedCreateWithoutRoundChooseChoiceInput>
+    connectOrCreate?: RoundQuestionCreateOrConnectWithoutRoundChooseChoiceInput
+    upsert?: RoundQuestionUpsertWithoutRoundChooseChoiceInput
+    connect?: RoundQuestionWhereUniqueInput
+    update?: XOR<RoundQuestionUpdateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedUpdateWithoutRoundChooseChoiceInput>
+  }
+
+  export type ChoiceUpdateOneRequiredWithoutRoundChooseChoiceNestedInput = {
+    create?: XOR<ChoiceCreateWithoutRoundChooseChoiceInput, ChoiceUncheckedCreateWithoutRoundChooseChoiceInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundChooseChoiceInput
+    upsert?: ChoiceUpsertWithoutRoundChooseChoiceInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutRoundChooseChoiceInput, ChoiceUncheckedUpdateWithoutRoundChooseChoiceInput>
   }
 
   export type NestedIntFilter = {
@@ -6107,406 +10100,989 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type NestedFloatWithAggregatesFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedFloatFilter
-    _min?: NestedFloatFilter
-    _max?: NestedFloatFilter
-  }
-
-  export type MenuCreateWithoutCategoryInput = {
-    name: string
-    image: string
-    price: number
-    OrderItem?: OrderItemCreateNestedManyWithoutMenuInput
+  export type QuestionCreateWithoutCategoryInput = {
+    question: string
+    answer: ChoiceCreateNestedOneWithoutAnswerToQuestionInput
+    choices?: ChoiceCreateNestedManyWithoutQuestionsInput
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundQuestion?: RoundQuestionCreateNestedManyWithoutQuestionInput
   }
 
-  export type MenuUncheckedCreateWithoutCategoryInput = {
+  export type QuestionUncheckedCreateWithoutCategoryInput = {
     id?: number
-    name: string
-    image: string
-    price: number
-    OrderItem?: OrderItemUncheckedCreateNestedManyWithoutMenuInput
+    question: string
+    choiceId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionsInput
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundQuestion?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type MenuCreateOrConnectWithoutCategoryInput = {
-    where: MenuWhereUniqueInput
-    create: XOR<MenuCreateWithoutCategoryInput, MenuUncheckedCreateWithoutCategoryInput>
+  export type QuestionCreateOrConnectWithoutCategoryInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutCategoryInput, QuestionUncheckedCreateWithoutCategoryInput>
   }
 
-  export type MenuCreateManyCategoryInputEnvelope = {
-    data: Enumerable<MenuCreateManyCategoryInput>
+  export type QuestionCreateManyCategoryInputEnvelope = {
+    data: Enumerable<QuestionCreateManyCategoryInput>
     skipDuplicates?: boolean
   }
 
-  export type MenuUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: MenuWhereUniqueInput
-    update: XOR<MenuUpdateWithoutCategoryInput, MenuUncheckedUpdateWithoutCategoryInput>
-    create: XOR<MenuCreateWithoutCategoryInput, MenuUncheckedCreateWithoutCategoryInput>
+  export type QuestionUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: QuestionWhereUniqueInput
+    update: XOR<QuestionUpdateWithoutCategoryInput, QuestionUncheckedUpdateWithoutCategoryInput>
+    create: XOR<QuestionCreateWithoutCategoryInput, QuestionUncheckedCreateWithoutCategoryInput>
   }
 
-  export type MenuUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: MenuWhereUniqueInput
-    data: XOR<MenuUpdateWithoutCategoryInput, MenuUncheckedUpdateWithoutCategoryInput>
+  export type QuestionUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: QuestionWhereUniqueInput
+    data: XOR<QuestionUpdateWithoutCategoryInput, QuestionUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type MenuUpdateManyWithWhereWithoutCategoryInput = {
-    where: MenuScalarWhereInput
-    data: XOR<MenuUpdateManyMutationInput, MenuUncheckedUpdateManyWithoutMenusInput>
+  export type QuestionUpdateManyWithWhereWithoutCategoryInput = {
+    where: QuestionScalarWhereInput
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutQuestionsInput>
   }
 
-  export type MenuScalarWhereInput = {
-    AND?: Enumerable<MenuScalarWhereInput>
-    OR?: Enumerable<MenuScalarWhereInput>
-    NOT?: Enumerable<MenuScalarWhereInput>
+  export type QuestionScalarWhereInput = {
+    AND?: Enumerable<QuestionScalarWhereInput>
+    OR?: Enumerable<QuestionScalarWhereInput>
+    NOT?: Enumerable<QuestionScalarWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    image?: StringFilter | string
-    price?: FloatFilter | number
     categoryId?: IntFilter | number
+    question?: StringFilter | string
+    choiceId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type CategoryCreateWithoutMenusInput = {
+  export type CategoryCreateWithoutQuestionsInput = {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CategoryUncheckedCreateWithoutMenusInput = {
+  export type CategoryUncheckedCreateWithoutQuestionsInput = {
     id?: number
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CategoryCreateOrConnectWithoutMenusInput = {
+  export type CategoryCreateOrConnectWithoutQuestionsInput = {
     where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutMenusInput, CategoryUncheckedCreateWithoutMenusInput>
+    create: XOR<CategoryCreateWithoutQuestionsInput, CategoryUncheckedCreateWithoutQuestionsInput>
   }
 
-  export type OrderItemCreateWithoutMenuInput = {
-    order: OrderCreateNestedOneWithoutItemsInput
-    quantity: number
-    totalPrice: number
+  export type ChoiceCreateWithoutAnswerToQuestionInput = {
+    questions?: QuestionCreateNestedManyWithoutChoicesInput
+    answer: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutChoiceInput
   }
 
-  export type OrderItemUncheckedCreateWithoutMenuInput = {
+  export type ChoiceUncheckedCreateWithoutAnswerToQuestionInput = {
     id?: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    questions?: QuestionUncheckedCreateNestedManyWithoutChoicesInput
+    answer: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutChoiceInput
   }
 
-  export type OrderItemCreateOrConnectWithoutMenuInput = {
-    where: OrderItemWhereUniqueInput
-    create: XOR<OrderItemCreateWithoutMenuInput, OrderItemUncheckedCreateWithoutMenuInput>
+  export type ChoiceCreateOrConnectWithoutAnswerToQuestionInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutAnswerToQuestionInput, ChoiceUncheckedCreateWithoutAnswerToQuestionInput>
   }
 
-  export type OrderItemCreateManyMenuInputEnvelope = {
-    data: Enumerable<OrderItemCreateManyMenuInput>
+  export type ChoiceCreateWithoutQuestionsInput = {
+    answerToQuestion?: QuestionCreateNestedManyWithoutAnswerInput
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceUncheckedCreateWithoutQuestionsInput = {
+    id?: number
+    answerToQuestion?: QuestionUncheckedCreateNestedManyWithoutAnswerInput
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceCreateOrConnectWithoutQuestionsInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutQuestionsInput, ChoiceUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type RoundQuestionCreateWithoutQuestionInput = {
+    round: RoundCreateNestedOneWithoutRoundQuestionsInput
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    roundsId: number
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionCreateOrConnectWithoutQuestionInput = {
+    where: RoundQuestionWhereUniqueInput
+    create: XOR<RoundQuestionCreateWithoutQuestionInput, RoundQuestionUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type RoundQuestionCreateManyQuestionInputEnvelope = {
+    data: Enumerable<RoundQuestionCreateManyQuestionInput>
     skipDuplicates?: boolean
   }
 
-  export type CategoryUpsertWithoutMenusInput = {
-    update: XOR<CategoryUpdateWithoutMenusInput, CategoryUncheckedUpdateWithoutMenusInput>
-    create: XOR<CategoryCreateWithoutMenusInput, CategoryUncheckedCreateWithoutMenusInput>
+  export type CategoryUpsertWithoutQuestionsInput = {
+    update: XOR<CategoryUpdateWithoutQuestionsInput, CategoryUncheckedUpdateWithoutQuestionsInput>
+    create: XOR<CategoryCreateWithoutQuestionsInput, CategoryUncheckedCreateWithoutQuestionsInput>
   }
 
-  export type CategoryUpdateWithoutMenusInput = {
+  export type CategoryUpdateWithoutQuestionsInput = {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CategoryUncheckedUpdateWithoutMenusInput = {
+  export type CategoryUncheckedUpdateWithoutQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemUpsertWithWhereUniqueWithoutMenuInput = {
-    where: OrderItemWhereUniqueInput
-    update: XOR<OrderItemUpdateWithoutMenuInput, OrderItemUncheckedUpdateWithoutMenuInput>
-    create: XOR<OrderItemCreateWithoutMenuInput, OrderItemUncheckedCreateWithoutMenuInput>
+  export type ChoiceUpsertWithoutAnswerToQuestionInput = {
+    update: XOR<ChoiceUpdateWithoutAnswerToQuestionInput, ChoiceUncheckedUpdateWithoutAnswerToQuestionInput>
+    create: XOR<ChoiceCreateWithoutAnswerToQuestionInput, ChoiceUncheckedCreateWithoutAnswerToQuestionInput>
   }
 
-  export type OrderItemUpdateWithWhereUniqueWithoutMenuInput = {
-    where: OrderItemWhereUniqueInput
-    data: XOR<OrderItemUpdateWithoutMenuInput, OrderItemUncheckedUpdateWithoutMenuInput>
+  export type ChoiceUpdateWithoutAnswerToQuestionInput = {
+    questions?: QuestionUpdateManyWithoutChoicesNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutChoiceNestedInput
   }
 
-  export type OrderItemUpdateManyWithWhereWithoutMenuInput = {
-    where: OrderItemScalarWhereInput
-    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutOrderItemInput>
+  export type ChoiceUncheckedUpdateWithoutAnswerToQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questions?: QuestionUncheckedUpdateManyWithoutChoicesNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
-  export type OrderItemScalarWhereInput = {
-    AND?: Enumerable<OrderItemScalarWhereInput>
-    OR?: Enumerable<OrderItemScalarWhereInput>
-    NOT?: Enumerable<OrderItemScalarWhereInput>
+  export type ChoiceUpsertWithWhereUniqueWithoutQuestionsInput = {
+    where: ChoiceWhereUniqueInput
+    update: XOR<ChoiceUpdateWithoutQuestionsInput, ChoiceUncheckedUpdateWithoutQuestionsInput>
+    create: XOR<ChoiceCreateWithoutQuestionsInput, ChoiceUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type ChoiceUpdateWithWhereUniqueWithoutQuestionsInput = {
+    where: ChoiceWhereUniqueInput
+    data: XOR<ChoiceUpdateWithoutQuestionsInput, ChoiceUncheckedUpdateWithoutQuestionsInput>
+  }
+
+  export type ChoiceUpdateManyWithWhereWithoutQuestionsInput = {
+    where: ChoiceScalarWhereInput
+    data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutChoicesInput>
+  }
+
+  export type ChoiceScalarWhereInput = {
+    AND?: Enumerable<ChoiceScalarWhereInput>
+    OR?: Enumerable<ChoiceScalarWhereInput>
+    NOT?: Enumerable<ChoiceScalarWhereInput>
     id?: IntFilter | number
-    menuId?: IntFilter | number
-    orderId?: IntFilter | number
-    quantity?: IntFilter | number
-    totalPrice?: FloatFilter | number
+    answer?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type OrderItemCreateWithoutOrderInput = {
-    menu: MenuCreateNestedOneWithoutOrderItemInput
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionWhereUniqueInput
+    update: XOR<RoundQuestionUpdateWithoutQuestionInput, RoundQuestionUncheckedUpdateWithoutQuestionInput>
+    create: XOR<RoundQuestionCreateWithoutQuestionInput, RoundQuestionUncheckedCreateWithoutQuestionInput>
   }
 
-  export type OrderItemUncheckedCreateWithoutOrderInput = {
+  export type RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: RoundQuestionWhereUniqueInput
+    data: XOR<RoundQuestionUpdateWithoutQuestionInput, RoundQuestionUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type RoundQuestionUpdateManyWithWhereWithoutQuestionInput = {
+    where: RoundQuestionScalarWhereInput
+    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyWithoutRoundQuestionInput>
+  }
+
+  export type RoundQuestionScalarWhereInput = {
+    AND?: Enumerable<RoundQuestionScalarWhereInput>
+    OR?: Enumerable<RoundQuestionScalarWhereInput>
+    NOT?: Enumerable<RoundQuestionScalarWhereInput>
+    id?: IntFilter | number
+    roundsId?: IntFilter | number
+    questionsId?: IntFilter | number
+    chooseChoice?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type QuestionCreateWithoutChoicesInput = {
+    category: CategoryCreateNestedOneWithoutQuestionsInput
+    question: string
+    answer: ChoiceCreateNestedOneWithoutAnswerToQuestionInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestion?: RoundQuestionCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionUncheckedCreateWithoutChoicesInput = {
     id?: number
-    menuId: number
-    quantity: number
-    totalPrice: number
+    categoryId: number
+    question: string
+    choiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    roundQuestion?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
   }
 
-  export type OrderItemCreateOrConnectWithoutOrderInput = {
-    where: OrderItemWhereUniqueInput
-    create: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput>
+  export type QuestionCreateOrConnectWithoutChoicesInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
   }
 
-  export type OrderItemCreateManyOrderInputEnvelope = {
-    data: Enumerable<OrderItemCreateManyOrderInput>
+  export type QuestionCreateWithoutAnswerInput = {
+    category: CategoryCreateNestedOneWithoutQuestionsInput
+    question: string
+    choices?: ChoiceCreateNestedManyWithoutQuestionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestion?: RoundQuestionCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionUncheckedCreateWithoutAnswerInput = {
+    id?: number
+    categoryId: number
+    question: string
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestion?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+  }
+
+  export type QuestionCreateOrConnectWithoutAnswerInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type QuestionCreateManyAnswerInputEnvelope = {
+    data: Enumerable<QuestionCreateManyAnswerInput>
     skipDuplicates?: boolean
   }
 
-  export type OrderItemUpsertWithWhereUniqueWithoutOrderInput = {
-    where: OrderItemWhereUniqueInput
-    update: XOR<OrderItemUpdateWithoutOrderInput, OrderItemUncheckedUpdateWithoutOrderInput>
-    create: XOR<OrderItemCreateWithoutOrderInput, OrderItemUncheckedCreateWithoutOrderInput>
-  }
-
-  export type OrderItemUpdateWithWhereUniqueWithoutOrderInput = {
-    where: OrderItemWhereUniqueInput
-    data: XOR<OrderItemUpdateWithoutOrderInput, OrderItemUncheckedUpdateWithoutOrderInput>
-  }
-
-  export type OrderItemUpdateManyWithWhereWithoutOrderInput = {
-    where: OrderItemScalarWhereInput
-    data: XOR<OrderItemUpdateManyMutationInput, OrderItemUncheckedUpdateManyWithoutItemsInput>
-  }
-
-  export type MenuCreateWithoutOrderItemInput = {
-    name: string
-    image: string
-    price: number
-    category: CategoryCreateNestedOneWithoutMenusInput
+  export type RoundChooseChoiceCreateWithoutChoiceInput = {
+    roundQuestion: RoundQuestionCreateNestedOneWithoutRoundChooseChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MenuUncheckedCreateWithoutOrderItemInput = {
+  export type RoundChooseChoiceUncheckedCreateWithoutChoiceInput = {
+    id?: number
+    roundQuestionsId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceCreateOrConnectWithoutChoiceInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    create: XOR<RoundChooseChoiceCreateWithoutChoiceInput, RoundChooseChoiceUncheckedCreateWithoutChoiceInput>
+  }
+
+  export type RoundChooseChoiceCreateManyChoiceInputEnvelope = {
+    data: Enumerable<RoundChooseChoiceCreateManyChoiceInput>
+    skipDuplicates?: boolean
+  }
+
+  export type QuestionUpsertWithWhereUniqueWithoutChoicesInput = {
+    where: QuestionWhereUniqueInput
+    update: XOR<QuestionUpdateWithoutChoicesInput, QuestionUncheckedUpdateWithoutChoicesInput>
+    create: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type QuestionUpdateWithWhereUniqueWithoutChoicesInput = {
+    where: QuestionWhereUniqueInput
+    data: XOR<QuestionUpdateWithoutChoicesInput, QuestionUncheckedUpdateWithoutChoicesInput>
+  }
+
+  export type QuestionUpdateManyWithWhereWithoutChoicesInput = {
+    where: QuestionScalarWhereInput
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutQuestionsInput>
+  }
+
+  export type QuestionUpsertWithWhereUniqueWithoutAnswerInput = {
+    where: QuestionWhereUniqueInput
+    update: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
+    create: XOR<QuestionCreateWithoutAnswerInput, QuestionUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type QuestionUpdateWithWhereUniqueWithoutAnswerInput = {
+    where: QuestionWhereUniqueInput
+    data: XOR<QuestionUpdateWithoutAnswerInput, QuestionUncheckedUpdateWithoutAnswerInput>
+  }
+
+  export type QuestionUpdateManyWithWhereWithoutAnswerInput = {
+    where: QuestionScalarWhereInput
+    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutAnswerToQuestionInput>
+  }
+
+  export type RoundChooseChoiceUpsertWithWhereUniqueWithoutChoiceInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    update: XOR<RoundChooseChoiceUpdateWithoutChoiceInput, RoundChooseChoiceUncheckedUpdateWithoutChoiceInput>
+    create: XOR<RoundChooseChoiceCreateWithoutChoiceInput, RoundChooseChoiceUncheckedCreateWithoutChoiceInput>
+  }
+
+  export type RoundChooseChoiceUpdateWithWhereUniqueWithoutChoiceInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    data: XOR<RoundChooseChoiceUpdateWithoutChoiceInput, RoundChooseChoiceUncheckedUpdateWithoutChoiceInput>
+  }
+
+  export type RoundChooseChoiceUpdateManyWithWhereWithoutChoiceInput = {
+    where: RoundChooseChoiceScalarWhereInput
+    data: XOR<RoundChooseChoiceUpdateManyMutationInput, RoundChooseChoiceUncheckedUpdateManyWithoutRoundChooseChoiceInput>
+  }
+
+  export type RoundChooseChoiceScalarWhereInput = {
+    AND?: Enumerable<RoundChooseChoiceScalarWhereInput>
+    OR?: Enumerable<RoundChooseChoiceScalarWhereInput>
+    NOT?: Enumerable<RoundChooseChoiceScalarWhereInput>
+    id?: IntFilter | number
+    roundQuestionsId?: IntFilter | number
+    choicesId?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type RoundCreateWithoutPlayerInput = {
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestions?: RoundQuestionCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutRoundInput
+  }
+
+  export type RoundCreateOrConnectWithoutPlayerInput = {
+    where: RoundWhereUniqueInput
+    create: XOR<RoundCreateWithoutPlayerInput, RoundUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type RoundCreateManyPlayerInputEnvelope = {
+    data: Enumerable<RoundCreateManyPlayerInput>
+    skipDuplicates?: boolean
+  }
+
+  export type RoundUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: RoundWhereUniqueInput
+    update: XOR<RoundUpdateWithoutPlayerInput, RoundUncheckedUpdateWithoutPlayerInput>
+    create: XOR<RoundCreateWithoutPlayerInput, RoundUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type RoundUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: RoundWhereUniqueInput
+    data: XOR<RoundUpdateWithoutPlayerInput, RoundUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type RoundUpdateManyWithWhereWithoutPlayerInput = {
+    where: RoundScalarWhereInput
+    data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyWithoutRoundsInput>
+  }
+
+  export type RoundScalarWhereInput = {
+    AND?: Enumerable<RoundScalarWhereInput>
+    OR?: Enumerable<RoundScalarWhereInput>
+    NOT?: Enumerable<RoundScalarWhereInput>
+    id?: IntFilter | number
+    playerName?: StringFilter | string
+    round?: StringFilter | string
+    score?: IntFilter | number
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type PlayerCreateWithoutRoundsInput = {
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PlayerUncheckedCreateWithoutRoundsInput = {
     id?: number
     name: string
-    image: string
-    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PlayerCreateOrConnectWithoutRoundsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutRoundsInput, PlayerUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type RoundQuestionCreateWithoutRoundInput = {
+    question: QuestionCreateNestedOneWithoutRoundQuestionInput
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionUncheckedCreateWithoutRoundInput = {
+    id?: number
+    questionsId: number
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedCreateNestedManyWithoutRoundQuestionInput
+  }
+
+  export type RoundQuestionCreateOrConnectWithoutRoundInput = {
+    where: RoundQuestionWhereUniqueInput
+    create: XOR<RoundQuestionCreateWithoutRoundInput, RoundQuestionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type RoundQuestionCreateManyRoundInputEnvelope = {
+    data: Enumerable<RoundQuestionCreateManyRoundInput>
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerUpsertWithoutRoundsInput = {
+    update: XOR<PlayerUpdateWithoutRoundsInput, PlayerUncheckedUpdateWithoutRoundsInput>
+    create: XOR<PlayerCreateWithoutRoundsInput, PlayerUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type PlayerUpdateWithoutRoundsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PlayerUncheckedUpdateWithoutRoundsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionUpsertWithWhereUniqueWithoutRoundInput = {
+    where: RoundQuestionWhereUniqueInput
+    update: XOR<RoundQuestionUpdateWithoutRoundInput, RoundQuestionUncheckedUpdateWithoutRoundInput>
+    create: XOR<RoundQuestionCreateWithoutRoundInput, RoundQuestionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type RoundQuestionUpdateWithWhereUniqueWithoutRoundInput = {
+    where: RoundQuestionWhereUniqueInput
+    data: XOR<RoundQuestionUpdateWithoutRoundInput, RoundQuestionUncheckedUpdateWithoutRoundInput>
+  }
+
+  export type RoundQuestionUpdateManyWithWhereWithoutRoundInput = {
+    where: RoundQuestionScalarWhereInput
+    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  }
+
+  export type RoundCreateWithoutRoundQuestionsInput = {
+    player: PlayerCreateNestedOneWithoutRoundsInput
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundUncheckedCreateWithoutRoundQuestionsInput = {
+    id?: number
+    playerName: string
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundCreateOrConnectWithoutRoundQuestionsInput = {
+    where: RoundWhereUniqueInput
+    create: XOR<RoundCreateWithoutRoundQuestionsInput, RoundUncheckedCreateWithoutRoundQuestionsInput>
+  }
+
+  export type QuestionCreateWithoutRoundQuestionInput = {
+    category: CategoryCreateNestedOneWithoutQuestionsInput
+    question: string
+    answer: ChoiceCreateNestedOneWithoutAnswerToQuestionInput
+    choices?: ChoiceCreateNestedManyWithoutQuestionsInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionUncheckedCreateWithoutRoundQuestionInput = {
+    id?: number
     categoryId: number
+    question: string
+    choiceId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MenuCreateOrConnectWithoutOrderItemInput = {
-    where: MenuWhereUniqueInput
-    create: XOR<MenuCreateWithoutOrderItemInput, MenuUncheckedCreateWithoutOrderItemInput>
+  export type QuestionCreateOrConnectWithoutRoundQuestionInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutRoundQuestionInput, QuestionUncheckedCreateWithoutRoundQuestionInput>
   }
 
-  export type OrderCreateWithoutItemsInput = {
-    status?: string
-    tableId: number
+  export type RoundChooseChoiceCreateWithoutRoundQuestionInput = {
+    choice: ChoiceCreateNestedOneWithoutRoundChooseChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderUncheckedCreateWithoutItemsInput = {
+  export type RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput = {
     id?: number
-    status?: string
-    tableId: number
+    choicesId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderCreateOrConnectWithoutItemsInput = {
-    where: OrderWhereUniqueInput
-    create: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
+  export type RoundChooseChoiceCreateOrConnectWithoutRoundQuestionInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    create: XOR<RoundChooseChoiceCreateWithoutRoundQuestionInput, RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>
   }
 
-  export type MenuUpsertWithoutOrderItemInput = {
-    update: XOR<MenuUpdateWithoutOrderItemInput, MenuUncheckedUpdateWithoutOrderItemInput>
-    create: XOR<MenuCreateWithoutOrderItemInput, MenuUncheckedCreateWithoutOrderItemInput>
+  export type RoundChooseChoiceCreateManyRoundQuestionInputEnvelope = {
+    data: Enumerable<RoundChooseChoiceCreateManyRoundQuestionInput>
+    skipDuplicates?: boolean
   }
 
-  export type MenuUpdateWithoutOrderItemInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    category?: CategoryUpdateOneRequiredWithoutMenusNestedInput
+  export type RoundUpsertWithoutRoundQuestionsInput = {
+    update: XOR<RoundUpdateWithoutRoundQuestionsInput, RoundUncheckedUpdateWithoutRoundQuestionsInput>
+    create: XOR<RoundCreateWithoutRoundQuestionsInput, RoundUncheckedCreateWithoutRoundQuestionsInput>
+  }
+
+  export type RoundUpdateWithoutRoundQuestionsInput = {
+    player?: PlayerUpdateOneRequiredWithoutRoundsNestedInput
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MenuUncheckedUpdateWithoutOrderItemInput = {
+  export type RoundUncheckedUpdateWithoutRoundQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    playerName?: StringFieldUpdateOperationsInput | string
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUpsertWithoutRoundQuestionInput = {
+    update: XOR<QuestionUpdateWithoutRoundQuestionInput, QuestionUncheckedUpdateWithoutRoundQuestionInput>
+    create: XOR<QuestionCreateWithoutRoundQuestionInput, QuestionUncheckedCreateWithoutRoundQuestionInput>
+  }
+
+  export type QuestionUpdateWithoutRoundQuestionInput = {
+    category?: CategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutAnswerToQuestionNestedInput
+    choices?: ChoiceUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionUncheckedUpdateWithoutRoundQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
     categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuestionsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderUpsertWithoutItemsInput = {
-    update: XOR<OrderUpdateWithoutItemsInput, OrderUncheckedUpdateWithoutItemsInput>
-    create: XOR<OrderCreateWithoutItemsInput, OrderUncheckedCreateWithoutItemsInput>
+  export type RoundChooseChoiceUpsertWithWhereUniqueWithoutRoundQuestionInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    update: XOR<RoundChooseChoiceUpdateWithoutRoundQuestionInput, RoundChooseChoiceUncheckedUpdateWithoutRoundQuestionInput>
+    create: XOR<RoundChooseChoiceCreateWithoutRoundQuestionInput, RoundChooseChoiceUncheckedCreateWithoutRoundQuestionInput>
   }
 
-  export type OrderUpdateWithoutItemsInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundChooseChoiceUpdateWithWhereUniqueWithoutRoundQuestionInput = {
+    where: RoundChooseChoiceWhereUniqueInput
+    data: XOR<RoundChooseChoiceUpdateWithoutRoundQuestionInput, RoundChooseChoiceUncheckedUpdateWithoutRoundQuestionInput>
   }
 
-  export type OrderUncheckedUpdateWithoutItemsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundChooseChoiceUpdateManyWithWhereWithoutRoundQuestionInput = {
+    where: RoundChooseChoiceScalarWhereInput
+    data: XOR<RoundChooseChoiceUpdateManyMutationInput, RoundChooseChoiceUncheckedUpdateManyWithoutRoundChooseChoiceInput>
   }
 
-  export type MenuCreateManyCategoryInput = {
-    id?: number
-    name: string
-    image: string
-    price: number
+  export type RoundQuestionCreateWithoutRoundChooseChoiceInput = {
+    round: RoundCreateNestedOneWithoutRoundQuestionsInput
+    question: QuestionCreateNestedOneWithoutRoundQuestionInput
+    chooseChoice: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type MenuUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    OrderItem?: OrderItemUpdateManyWithoutMenuNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MenuUncheckedUpdateWithoutCategoryInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    OrderItem?: OrderItemUncheckedUpdateManyWithoutMenuNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MenuUncheckedUpdateManyWithoutMenusInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OrderItemCreateManyMenuInput = {
+  export type RoundQuestionUncheckedCreateWithoutRoundChooseChoiceInput = {
     id?: number
-    orderId: number
-    quantity: number
-    totalPrice: number
+    roundsId: number
+    questionsId: number
+    chooseChoice: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderItemUpdateWithoutMenuInput = {
-    order?: OrderUpdateOneRequiredWithoutItemsNestedInput
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundQuestionCreateOrConnectWithoutRoundChooseChoiceInput = {
+    where: RoundQuestionWhereUniqueInput
+    create: XOR<RoundQuestionCreateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedCreateWithoutRoundChooseChoiceInput>
   }
 
-  export type OrderItemUncheckedUpdateWithoutMenuInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    orderId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OrderItemUncheckedUpdateManyWithoutOrderItemInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    orderId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OrderItemCreateManyOrderInput = {
-    id?: number
-    menuId: number
-    quantity: number
-    totalPrice: number
+  export type ChoiceCreateWithoutRoundChooseChoiceInput = {
+    questions?: QuestionCreateNestedManyWithoutChoicesInput
+    answerToQuestion?: QuestionCreateNestedManyWithoutAnswerInput
+    answer: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type OrderItemUpdateWithoutOrderInput = {
-    menu?: MenuUpdateOneRequiredWithoutOrderItemNestedInput
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+  export type ChoiceUncheckedCreateWithoutRoundChooseChoiceInput = {
+    id?: number
+    questions?: QuestionUncheckedCreateNestedManyWithoutChoicesInput
+    answerToQuestion?: QuestionUncheckedCreateNestedManyWithoutAnswerInput
+    answer: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceCreateOrConnectWithoutRoundChooseChoiceInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutRoundChooseChoiceInput, ChoiceUncheckedCreateWithoutRoundChooseChoiceInput>
+  }
+
+  export type RoundQuestionUpsertWithoutRoundChooseChoiceInput = {
+    update: XOR<RoundQuestionUpdateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedUpdateWithoutRoundChooseChoiceInput>
+    create: XOR<RoundQuestionCreateWithoutRoundChooseChoiceInput, RoundQuestionUncheckedCreateWithoutRoundChooseChoiceInput>
+  }
+
+  export type RoundQuestionUpdateWithoutRoundChooseChoiceInput = {
+    round?: RoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionNestedInput
+    chooseChoice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemUncheckedUpdateWithoutOrderInput = {
+  export type RoundQuestionUncheckedUpdateWithoutRoundChooseChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+    roundsId?: IntFieldUpdateOperationsInput | number
+    questionsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OrderItemUncheckedUpdateManyWithoutItemsInput = {
+  export type ChoiceUpsertWithoutRoundChooseChoiceInput = {
+    update: XOR<ChoiceUpdateWithoutRoundChooseChoiceInput, ChoiceUncheckedUpdateWithoutRoundChooseChoiceInput>
+    create: XOR<ChoiceCreateWithoutRoundChooseChoiceInput, ChoiceUncheckedCreateWithoutRoundChooseChoiceInput>
+  }
+
+  export type ChoiceUpdateWithoutRoundChooseChoiceInput = {
+    questions?: QuestionUpdateManyWithoutChoicesNestedInput
+    answerToQuestion?: QuestionUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChoiceUncheckedUpdateWithoutRoundChooseChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
+    questions?: QuestionUncheckedUpdateManyWithoutChoicesNestedInput
+    answerToQuestion?: QuestionUncheckedUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionCreateManyCategoryInput = {
+    id?: number
+    question: string
+    choiceId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionUpdateWithoutCategoryInput = {
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutAnswerToQuestionNestedInput
+    choices?: ChoiceUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutQuestionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionCreateManyQuestionInput = {
+    id?: number
+    roundsId: number
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChoiceUpdateWithoutQuestionsInput = {
+    answerToQuestion?: QuestionUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutChoiceNestedInput
+  }
+
+  export type ChoiceUncheckedUpdateWithoutQuestionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answerToQuestion?: QuestionUncheckedUpdateManyWithoutAnswerNestedInput
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutChoiceNestedInput
+  }
+
+  export type ChoiceUncheckedUpdateManyWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    answer?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionUpdateWithoutQuestionInput = {
+    round?: RoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionUncheckedUpdateManyWithoutRoundQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionCreateManyAnswerInput = {
+    id?: number
+    categoryId: number
+    question: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceCreateManyChoiceInput = {
+    id?: number
+    roundQuestionsId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionUpdateWithoutChoicesInput = {
+    category?: CategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: ChoiceUpdateOneRequiredWithoutAnswerToQuestionNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choiceId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUpdateWithoutAnswerInput = {
+    category?: CategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    question?: StringFieldUpdateOperationsInput | string
+    choices?: ChoiceUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    choices?: ChoiceUncheckedUpdateManyWithoutQuestionsNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestion?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type QuestionUncheckedUpdateManyWithoutAnswerToQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUpdateWithoutChoiceInput = {
+    roundQuestion?: RoundQuestionUpdateOneRequiredWithoutRoundChooseChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateWithoutChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuestionsId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateManyWithoutRoundChooseChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    roundQuestionsId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundCreateManyPlayerInput = {
+    id?: number
+    round: string
+    score: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundUpdateWithoutPlayerInput = {
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestions?: RoundQuestionUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
+  }
+
+  export type RoundUncheckedUpdateManyWithoutRoundsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    round?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundQuestionCreateManyRoundInput = {
+    id?: number
+    questionsId: number
+    chooseChoice: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundQuestionUpdateWithoutRoundInput = {
+    question?: QuestionUpdateOneRequiredWithoutRoundQuestionNestedInput
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionUncheckedUpdateWithoutRoundInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundChooseChoice?: RoundChooseChoiceUncheckedUpdateManyWithoutRoundQuestionNestedInput
+  }
+
+  export type RoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionsId?: IntFieldUpdateOperationsInput | number
+    chooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceCreateManyRoundQuestionInput = {
+    id?: number
+    choicesId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RoundChooseChoiceUpdateWithoutRoundQuestionInput = {
+    choice?: ChoiceUpdateOneRequiredWithoutRoundChooseChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundChooseChoiceUncheckedUpdateWithoutRoundQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choicesId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

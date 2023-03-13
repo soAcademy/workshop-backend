@@ -1,0 +1,91 @@
+// ยังขาดพวก set
+
+model Products {
+  id                     Int                      @id @default(autoincrement())
+  name                   String                   @unique
+  detail                 String
+  detail2                String
+  image                  String
+  promotion              Boolean
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  Price                  Price[]
+  ProductWithIngredients ProductWithIngredients[]
+  ProductWithFaq         ProductWithFaq[]
+  OrderItems             OrderItems[]
+}
+
+model Price {
+  id         Int      @id @default(autoincrement())
+  products   Products @relation(fields: [productsId], references: [id])
+  productsId Int
+  set        Int
+  price      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Ingredients {
+  id                     Int                      @id @default(autoincrement())
+  name                   String
+  image                  String
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  ProductWithIngredients ProductWithIngredients[]
+}
+
+model ProductWithIngredients {
+  id            Int         @id @default(autoincrement())
+  products      Products    @relation(fields: [productsId], references: [id])
+  productsId    Int
+  ingredients   Ingredients @relation(fields: [ingredientsId], references: [id])
+  ingredientsId Int
+  vloume        Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Faqs {
+  id             Int              @id @default(autoincrement())
+  question       String
+  answer         String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProductWithFaq ProductWithFaq[]
+}
+
+model ProductWithFaq {
+  id         Int      @id @default(autoincrement())
+  products   Products @relation(fields: [productsId], references: [id])
+  productsId Int
+  faqs       Faqs     @relation(fields: [faqsId], references: [id])
+  faqsId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Oders {
+  id         Int          @id @default(autoincrement())
+  name       String
+  phone      String
+  email      String
+  address    String
+  comment    String
+  paidBy     String
+  status     String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  OrderItems OrderItems[]
+}
+
+model OrderItems {
+  id         Int      @id @default(autoincrement())
+  orders     Oders    @relation(fields: [odersId], references: [id])
+  odersId    Int
+  products   Products @relation(fields: [productsId], references: [id])
+  productsId Int
+  amount     Int
+  price      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

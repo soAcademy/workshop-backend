@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { isRight } from "fp-ts/Either";
 import {
   CreateCategoryCodec,
   CreateMenuCodec,

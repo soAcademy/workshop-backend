@@ -1,0 +1,70 @@
+model BookDetail {
+  id         Int        @id @default(autoincrement())
+  isbn       String
+  name       String
+  authors    Author[]
+  categories Category[]
+  createAt   DateTime   @default(now())
+  updateAt   DateTime   @updatedAt
+  books      Book[]
+}
+
+model Author {
+  id          Int          @id @default(autoincrement())
+  name        String
+  bookDetails BookDetail[]
+  createAt    DateTime     @default(now())
+  updateAt    DateTime     @updatedAt
+}
+
+model Category {
+  id          Int          @id @default(autoincrement())
+  name        String
+  bookDetails BookDetail[]
+  createAt    DateTime     @default(now())
+  updateAt    DateTime     @updatedAt
+}
+
+model Book {
+  id            Int           @id @default(autoincrement())
+  bookDetail    BookDetail    @relation(fields: [bookDetailId], references: [id])
+  bookDetailId  Int
+  copyNo        Int
+  createAt      DateTime      @default(now())
+  updateAt      DateTime      @updatedAt
+  bookHistories BookHistory[]
+}
+
+model University {
+  id                Int           @id @default(autoincrement())
+  name              String
+  createAt          DateTime      @default(now())
+  updateAt          DateTime      @updatedAt
+  bookFromHistories BookHistory[] @relation("bookFrom")
+  bookToHistories   BookHistory[] @relation("bookTo")
+}
+
+model Student {
+  id            Int           @id @default(autoincrement())
+  name          String
+  createAt      DateTime      @default(now())
+  updateAt      DateTime      @updatedAt
+  bookHistories BookHistory[]
+}
+
+model BookHistory {
+  id               Int         @id @default(autoincrement())
+  bookid           Book        @relation(fields: [bookId], references: [id])
+  bookId           Int
+  universityFrom   University  @relation("bookFrom", fields: [universityFromId], references: [id])
+  universityFromId Int
+  student          Student?    @relation(fields: [studentId], references: [id])
+  studentId        Int?
+  universityTo     University? @relation("bookTo", fields: [universityToId], references: [id])
+  universityToId   Int?
+  startDate        DateTime
+  endDatePlan      DateTime?
+  endDate          DateTime?
+  createAt         DateTime    @default(now())
+  updateAt         DateTime    @updatedAt
+}

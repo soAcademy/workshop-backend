@@ -1,42 +1,73 @@
 model Category {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  questions Question[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Question {
+  id            Int             @id @default(autoincrement())
+  category      Category        @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  question      String
+  answer        Choice          @relation("answer", fields: [choiceId], references: [id])
+  choiceId      Int
+  choices       Choice[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  roundQuestion RoundQuestion[]
+}
+
+model Choice {
+  id                Int                 @id @default(autoincrement())
+  questions         Question[]
+  answerToQuestion  Question[]          @relation("answer")
+  answer            String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  roundChooseChoice RoundChooseChoice[]
+}
+
+model Player {
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  menus     Menu[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  rounds    Round[]
 }
 
-model Menu {
-  id         Int         @id @default(autoincrement())
-  name       String
-  image      String
-  price      Float
-  category   Category    @relation(fields: [categoryId], references: [id])
-  OrderItem  OrderItem[]
-  categoryId Int
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+model Round {
+  id             Int             @id @default(autoincrement())
+  player         Player          @relation(fields: [playerName], references: [name])
+  playerName     String
+  round          String
+  score          Int
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  roundQuestions RoundQuestion[]
 }
 
-model Order {
-  id        Int         @id @default(autoincrement())
-  status    String      @default("PENDING")
-  tableId   Int
-  items     OrderItem[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+model RoundQuestion {
+  id                Int                 @id @default(autoincrement())
+  round             Round               @relation(fields: [roundsId], references: [id])
+  roundsId          Int
+  question          Question            @relation(fields: [questionsId], references: [id])
+  questionsId       Int
+  chooseChoice      Int
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  roundChooseChoice RoundChooseChoice[]
 }
 
-model OrderItem {
-  id         Int      @id @default(autoincrement())
-  menu       Menu     @relation(fields: [menuId], references: [id])
-  menuId     Int
-  order      Order    @relation(fields: [orderId], references: [id])
-  orderId    Int
-  quantity   Int
-  totalPrice Float
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model RoundChooseChoice {
+  id               Int           @id @default(autoincrement())
+  roundQuestion    RoundQuestion @relation(fields: [roundQuestionsId], references: [id])
+  roundQuestionsId Int
+  choice           Choice        @relation(fields: [choicesId], references: [id])
+  choicesId        Int
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 }
 
 datasource db {
