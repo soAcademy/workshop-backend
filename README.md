@@ -136,5 +136,5 @@ yarn add --dev jest ts-jest @types/jest
 เพิ่มคำสั่งใน package.json -> scripts
 ```
   "test": "jest --verbose",
-  "test:trivia": "jest -- src/trivia"
+  "test:trivia": "jest -- src/trivia" 
 ```
