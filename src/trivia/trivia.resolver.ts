@@ -77,6 +77,18 @@ export const getQuiz = async (args: IGetQuiz) => {
   return result;
 };
 
+const f1 = (args: {x: number, y: number}) => args.x * args.y;
+const f2 = (args: {x: number}) => args.x * 2;
+const f3 = (args: {x: number, y: number}) => {
+  const result = f1(args) + f2({x: args.x})
+  return result;
+}
+
+// const getQuizs = () => {};
+// const calculateTotalScore = (args) => {};
+// const createQuizeRound = (args) => {};
+// const submitQuiz = (args) => {};
+
 // const submitQuiz = async () => {
 //   const quizes = await prisma.triviaQuiz.findMany({
 //     // where: {
@@ -109,3 +121,4 @@ export const getQuiz = async (args: IGetQuiz) => {
 //     ]
 //    }
 // }
+
