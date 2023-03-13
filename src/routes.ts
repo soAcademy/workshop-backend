@@ -233,6 +233,8 @@ export const AppRoutes = [
   //   method: "post",
   //   action: updateCategoryHandler,
   // },
+
+  //------------- questionquiz ----------------
   {
     path: "/questionquiz/createCategory",
     method: "post",
@@ -273,4 +275,5 @@ export const AppRoutes = [
     method: "post",
     action: getStatisticHandler,
   },
+  //------------- questionquiz end ----------------
 ];
