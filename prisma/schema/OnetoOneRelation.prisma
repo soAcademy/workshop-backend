@@ -1,0 +1,12 @@
+model Dew {
+  id    Int    @id @default(autoincrement())
+  name  String
+  kad   Kad    @relation(fields: [kadId], references: [id])
+  kadId Int    @unique
+}
+
+model Kad {
+  id   Int    @id @default(autoincrement())
+  name String
+  Dew  Dew?
+}

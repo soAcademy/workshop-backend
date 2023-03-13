@@ -1,0 +1,70 @@
+model User {
+  id               Int             @id @default(autoincrement())
+  name             String
+  image            String
+  createAt         DateTime        @default(now())
+  updateAt         DateTime        @updatedAt
+  directMessage    DirectMessage[]
+  fromUserRelation UserRelation[]  @relation("FromUserRelation")
+  toUserRelation   UserRelation[]  @relation("ToUserRelation")
+  posts            Post[]
+  replies          Reply[]
+}
+
+model DirectMessage {
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+  message  String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model UserRelation {
+  id       Int      @id @default(autoincrement())
+  from     User     @relation("FromUserRelation", fields: [fromId], references: [id])
+  fromId   Int
+  to       User     @relation("ToUserRelation", fields: [toId], references: [id])
+  toId     Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model HashTag {
+  id              Int            @id @default(autoincrement())
+  name            String
+  createAt        DateTime       @default(now())
+  updateAt        DateTime       @updatedAt
+  postOnHashTag   PostOnHashTag? @relation(fields: [postOnHashTagId], references: [id])
+  postOnHashTagId Int?
+}
+
+model Post {
+  id             Int             @id @default(autoincrement())
+  message        String
+  user           User            @relation(fields: [userId], references: [id])
+  userId         Int
+  postOnHashTags PostOnHashTag[]
+  createAt       DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  replies        Reply[]
+}
+
+model PostOnHashTag {
+  id       Int       @id @default(autoincrement())
+  posts    Post[]
+  hashTags HashTag[]
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+}
+
+model Reply {
+  id       Int      @id @default(autoincrement())
+  message  String
+  user     User     @relation(fields: [userId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id])
+  postId   Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  userId   Int
+}

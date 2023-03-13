@@ -1,0 +1,115 @@
+model MainCompany {
+  id        Int      @id @default(autoincrement())
+  branchIds Branch[]
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Branch {
+  id            Int          @id @default(autoincrement())
+  ownerName     String
+  tel           Int
+  address       String
+  area          Float
+  totolMachine  Int
+  machines      Machine[]
+  mainCompany   MainCompany? @relation(fields: [mainCompanyId], references: [id])
+  mainCompanyId Int?
+  createAt      DateTime     @default(now())
+  updateAt      DateTime     @updatedAt
+}
+
+model Machine {
+  id                Int                @id @default(autoincrement())
+  brand             String
+  size              String
+  category          String
+  model             String
+  mfg               String
+  insurance         String
+  branch            Branch?            @relation(fields: [branchId], references: [id])
+  branchId          Int?
+  repairHistories   RepairHistory[]
+  washHistory       WashHistory?       @relation(fields: [washHistoryId], references: [id])
+  washHistoryId     Int?
+  machineOnPrograms MachineOnProgram[]
+  createAt          DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+}
+
+model Program {
+  id                Int                @id @default(autoincrement())
+  duration          Int
+  price             Int
+  processes         ProcessType[]
+  washHistory       WashHistory?       @relation(fields: [washHistoryId], references: [id])
+  washHistoryId     Int?
+  machineOnPrograms MachineOnProgram[]
+  createAt          DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+}
+
+model MachineOnProgram {
+  id        Int      @id @default(autoincrement())
+  machine   Machine  @relation(fields: [machineId], references: [id])
+  program   Program  @relation(fields: [programId], references: [id])
+  machineId Int
+  programId Int
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model ProcessType {
+  id          Int      @id @default(autoincrement())
+  description String
+  program     Program? @relation(fields: [programId], references: [id])
+  programId   Int?
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model RepairHistory {
+  id             Int          @id @default(autoincrement())
+  time           Int
+  machine        Machine?     @relation(fields: [machineId], references: [id])
+  machineId      Int?
+  detail         RepairDetail @relation(fields: [repairDetailId], references: [id])
+  repairDetailId Int
+  createAt       DateTime     @default(now())
+  updateAt       DateTime     @updatedAt
+}
+
+model RepairDetail {
+  id              Int             @id @default(autoincrement())
+  date            String
+  damage          String
+  cause           String
+  machanics       String
+  createAt        DateTime        @default(now())
+  updateAt        DateTime        @updatedAt
+  repairHistoryId Int
+  RepairHistory   RepairHistory[]
+}
+
+model washUser {
+  id            Int          @id @default(autoincrement())
+  name          String
+  tel           Int
+  balance       Float
+  washHistory   WashHistory? @relation(fields: [washHistoryId], references: [id])
+  washHistoryId Int?
+  createAt      DateTime     @default(now())
+  updateAt      DateTime     @updatedAt
+}
+
+model WashHistory {
+  id       Int        @id @default(autoincrement())
+  date     String
+  price    Int
+  programs Program[]
+  machines Machine[]
+  users    washUser[]
+  createAt DateTime   @default(now())
+  updateAt DateTime   @updatedAt
+}
+

@@ -1,0 +1,74 @@
+model YoutubeUser {
+  id               Int              @id @default(autoincrement())
+  name             String
+  email            String
+  image            String
+  subtoChannels    YoutubeChannel[]
+  commentToVideoes YoutubeCommentToVideo[]
+  UserToChannel    YoutubeUserToChannel[]  @relation("Roles")
+  createAt         DateTime         @default(now())
+  updateAt         DateTime         @updatedAt
+}
+
+model YoutubeRole {
+  id            Int             @id @default(autoincrement())
+  role          String
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  userToChannel YoutubeUserToChannel[]
+}
+
+model YoutubeReaction {
+  id       Int      @id @default(autoincrement())
+  reaction String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  Video    YoutubeVideo[]
+}
+
+model YoutubeVideo {
+  id                Int              @id @default(autoincrement())
+  name              String
+  description       String
+  url               String
+  likeorDislike     YoutubeReaction  @relation(fields: [youtubeReactionId], references: [id])
+  channel           YoutubeChannel?         @relation(fields: [channelId], references: [id])
+  channelId         Int?
+  commentToVideoes  YoutubeCommentToVideo[]
+  createAt          DateTime         @default(now())
+  updateAt          DateTime         @updatedAt
+  youtubeReactionId Int
+}
+
+model YoutubeChannel {
+  id            Int             @id @default(autoincrement())
+  name          String
+  image         String
+  subcribers    YoutubeUser[]
+  playLists     YoutubeVideo[]
+  userToChannel YoutubeUserToChannel[]
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+}
+
+model YoutubeCommentToVideo {
+  id          Int         @id @default(autoincrement())
+  videoId     YoutubeVideo       @relation(fields: [video], references: [id])
+  video       Int
+  comment     String
+  commenter   YoutubeUser @relation(fields: [commenterId], references: [id])
+  commenterId Int
+  createAt    DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+}
+
+model YoutubeUserToChannel {
+  user      YoutubeUser @relation("Roles", fields: [userId], references: [id])
+  userId    Int         @unique
+  channel   YoutubeChannel     @relation(fields: [channelId], references: [id])
+  channelId Int
+  role      YoutubeRole @relation(fields: [roleId], references: [id])
+  roleId    Int
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+}

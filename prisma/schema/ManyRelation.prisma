@@ -1,0 +1,32 @@
+//Model 1  many-to-many
+model BookEx {
+  id                         Int                @id @default(autoincrement())
+  title                      String
+  BookExampleOnAuthorExample BookExOnAuthorEx[]
+}
+
+model AuthorEx {
+  id                         Int                @id @default(autoincrement())
+  name                       String
+  BookExampleOnAuthorExample BookExOnAuthorEx[]
+}
+
+model BookExOnAuthorEx {
+  bookExample     BookEx   @relation(fields: [bookExampleId], references: [id])
+  bookExampleId   Int      @unique
+  authorExample   AuthorEx @relation(fields: [authorExampleId], references: [id])
+  authorExampleId Int
+}
+
+// model 2 many-to-many
+model SeriesTv {
+  id     Int      @id @default(autoincrement())
+  name   String
+  actors Actors[]
+}
+
+model Actors {
+  id       Int        @id @default(autoincrement())
+  name     String
+  seriesTv SeriesTv[]
+}

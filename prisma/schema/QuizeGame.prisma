@@ -1,0 +1,56 @@
+model QuizeCategory {
+  id        Int             @id @default(autoincrement())
+  name      String
+  questions QuizeQuestion[]
+  createAt  DateTime        @default(now())
+  updateAt  DateTime        @updatedAt
+}
+
+model QuizeQuestion {
+  id              Int            @id @default(autoincrement())
+  question        String
+  quizeCategory   QuizeCategory? @relation(fields: [quizeCategoryId], references: [id])
+  quizeCategoryId Int?
+  choices         QuizeChoice[]
+  answer          QuizeAnswer?   @relation(fields: [quizeAnswerId], references: [id])
+  quizeAnswerId   Int?           @unique
+  createAt        DateTime       @default(now())
+  updateAt        DateTime       @updatedAt
+
+  round QuizeGameRound? @relation("Question")
+}
+
+model QuizeChoice {
+  id            Int            @id @default(autoincrement())
+  choice        String
+  quizeQuestion QuizeQuestion? @relation(fields: [questionId], references: [id])
+  questionId    Int?
+  quizeAnswer   QuizeAnswer?
+  createAt      DateTime       @default(now())
+  updateAt      DateTime       @updatedAt
+
+  round QuizeGameRound? @relation("Choice")
+}
+
+model QuizeAnswer {
+  id            Int             @id @default(autoincrement())
+  answer        String
+  quizeQuestion QuizeQuestion?
+  choice        QuizeChoice     @relation(fields: [choiceId], references: [id])
+  choiceId      Int             @unique
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  round         QuizeGameRound? @relation("Answer")
+}
+
+model QuizeGameRound {
+  id         Int           @id @default(autoincrement())
+  user       String
+  score      Int
+  answer     QuizeAnswer   @relation("Answer", fields: [answerId], references: [id])
+  answerId   Int           @unique
+  question   QuizeQuestion @relation("Question", fields: [questionId], references: [id])
+  questionId Int           @unique
+  choice     QuizeChoice   @relation("Choice", fields: [choiceId], references: [id])
+  choiceId   Int           @unique
+}

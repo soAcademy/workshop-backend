@@ -1,0 +1,48 @@
+model QuizeTable {
+  id         Int @id @default(autoincrement())
+  idQuestion Int
+  
+
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Question {
+  id         Int    @id @default(autoincrement())
+  question   String
+  answer     String
+  idCategory Int
+  idAnswer   Int
+  idQuize    Int
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model roundTable {
+  id         Int @id @default(autoincrement())
+  score      Int
+  categoryId Int
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model roundQuestionTable {
+  id           Int @id @default(autoincrement())
+  roundId      Int
+  userAnswerId Int
+  quizId       Int
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
