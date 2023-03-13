@@ -18,6 +18,7 @@ import {
   getAllCategoryHandle,
   getQuizbyCategoryHandle,
   getResultHandler,
+  getStatisticHandler,
   submitQuizHandler,
 } from "./QuestionQuiz";
 import {
@@ -266,5 +267,10 @@ export const AppRoutes = [
     path: "/questionquiz/createUser",
     method: "post",
     action: createUserHandler,
+  },
+  {
+    path: "/questionquiz/getStatistic",
+    method: "post",
+    action: getStatisticHandler,
   },
 ];

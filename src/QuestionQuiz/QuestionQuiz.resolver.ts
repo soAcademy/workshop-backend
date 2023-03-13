@@ -119,6 +119,7 @@ export const getQuizbyCategory = async (args: IGetQuizbyCategoryCodec) => {
       result: false,
     })),
   });
+  //แกะคำถามกับ choice ออกมา
   await prisma.roundQuestionChoiceDetail.createMany({
     data: generatedQuestion.reduce((arr: any, cur) => {
       const choices = cur.choices.map((choice) => ({
@@ -168,6 +169,7 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
       },
     });
 
+  //for ที่ใช้งานกับ await ได้
   for (const key in checkedAnswer) {
     const roundQuizId = checkedAnswer[key].roundQuiz;
     const questionId = checkedAnswer[key].questionId;
@@ -199,4 +201,30 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
   return "Success";
 };
 
-export const getResult = () => prisma.roundQuestionDetail.findMany({});
+// 1 user = many round
+
+export const getStatistic = async (args: { userId: number }) => {
+  const roundquizdata = await prisma.roundQuiz.findMany({});
+  const userByRound = roundquizdata.filter((r) => {
+    return r.userId === args.userId;
+  });
+  return userByRound;
+};
+//เล่นจบ 1 เกมก็ควรรู้เกมของตัวเองที่พึ่งเล่นมาเล่าสุด
+
+export const getResult = async (args: { roundQuizId: number }) => {
+  const roundQuizData = await prisma.roundQuiz.findUnique({
+    where: {
+      id: args.roundQuizId,
+    },
+  });
+  const userAnswer = await prisma.roundQuestionDetail.findMany({});
+  const dataToShowResult = userAnswer.filter((r) => {
+    return r.roundQuizId === roundQuizData?.id;
+  });
+  const sendtoShow = {
+    score: roundQuizData?.score,
+    userAnswer: dataToShowResult,
+  };
+  return sendtoShow;
+};
