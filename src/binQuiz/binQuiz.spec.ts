@@ -1,4 +1,9 @@
-import { createCategory, sumNumbers } from "./binQuiz.resolvers";
+import {
+  createCategory,
+  createQuiz,
+  getQuizzesByCategory,
+  sumNumbers,
+} from "./binQuiz.resolvers";
 
 describe("Trivia", () => {
   let category1Id: number;
@@ -38,5 +43,14 @@ describe("Trivia", () => {
         },
       ],
     };
+    const result = await createQuiz(data);
+    console.log("createQuiz", result);
+    expect(result.questionText === data.questionText).toBe(true);
+  });
+
+  it("should get all quizzes for a given category", async () => {
+    const result = await getQuizzesByCategory({ categoryId: category1Id });
+    console.log("getQuizzesByCategory", result);
+    expect(result.length > 0).toBe(true);
   });
 });
