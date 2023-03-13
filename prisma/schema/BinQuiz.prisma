@@ -11,41 +11,62 @@ model QuizCategory {
 }
 
 model Choice {
-  id                  Int      @id @default(autoincrement())
+  id                  Int            @id @default(autoincrement())
   answerText          String
-  quiz                Quiz?    @relation(name: "otherChoices", fields: [quizId], references: [id])
+  quiz                Quiz?          @relation(name: "otherChoices", fields: [quizId], references: [id])
   quizId              Int?
-  correctChoiceToQuiz Quiz?    @relation(name: "correctChoice")
-  rounds              Round[]
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  correctChoiceToQuiz Quiz?          @relation(name: "correctChoice")
+  // rounds              Round[]
+  shuffledQuizzes     ShuffledQuiz[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
 
   @@schema("binquiz")
 }
 
 model Quiz {
-  id              Int          @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   questionText    String
-  category        QuizCategory @relation(fields: [quizCategoryId], references: [id])
+  category        QuizCategory   @relation(fields: [quizCategoryId], references: [id])
   quizCategoryId  Int
-  correctChoice   Choice       @relation(name: "correctChoice", fields: [correctChoiceId], references: [id])
-  correctChoiceId Int          @unique
-  otherChoices    Choice[]     @relation(name: "otherChoices")
-  rounds          Round[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  correctChoice   Choice         @relation(name: "correctChoice", fields: [correctChoiceId], references: [id])
+  correctChoiceId Int            @unique
+  otherChoices    Choice[]       @relation(name: "otherChoices")
+  // rounds          Round[]
+  shuffledQuizzes ShuffledQuiz[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 
   @@schema("binquiz")
 }
 
 model Round {
-  id              Int          @id @default(autoincrement())
-  category        QuizCategory @relation(fields: [quizCategoryId], references: [id])
+  id              Int            @id @default(autoincrement())
+  category        QuizCategory   @relation(fields: [quizCategoryId], references: [id])
   quizCategoryId  Int
-  quizzes         Quiz[]
-  selectedChoices Choice[]
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  // quizzes         Quiz[]
+  shuffledQuizzes ShuffledQuiz[]
+  // selectedChoices Choice[]
+  // Choice          Choice?        @relation(fields: [choiceId], references: [id])
+  // choiceId        Int?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@schema("binquiz")
+}
+
+model ShuffledQuiz {
+  id          Int      @id @default(autoincrement())
+  round       Round    @relation(fields: [roundId], references: [id])
+  roundId     Int
+  quiz        Quiz     @relation(fields: [quizId], references: [id])
+  quizId      Int
+  choice      Choice   @relation(fields: [choiceId], references: [id])
+  choiceId    Int
+  choiceOrder Int
+  isSelected  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@schema("binquiz")
 }

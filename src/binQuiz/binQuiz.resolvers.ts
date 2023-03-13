@@ -7,6 +7,9 @@ import {
 
 export const prisma = new PrismaClient();
 
+export const sumNumbers = (args: { number1: number; number2: number }) =>
+  args.number1 + args.number2;
+
 export const createCategory = (args: ICreateCategory) => {
   return prisma.quizCategory.create({
     data: {
@@ -63,4 +66,13 @@ export const getQuizzesByCategory = (args: { categoryId: number }) => {
   });
 };
 
-export const createRound = (args: ICreateRound) => {};
+export const createRound = (args: ICreateRound) => {
+  return prisma.round.create({
+    data: {
+      quizCategoryId: args.quizCategoryId,
+      // create: {
+      //   shuffledQuizzes:
+      // }
+    },
+  });
+};

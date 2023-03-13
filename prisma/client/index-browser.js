@@ -320,6 +320,17 @@ exports.Prisma.RoundScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.ShuffledQuizScalarFieldEnum = makeEnum({
+  id: 'id',
+  roundId: 'roundId',
+  quizId: 'quizId',
+  choiceId: 'choiceId',
+  choiceOrder: 'choiceOrder',
+  isSelected: 'isSelected',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.SortOrder = makeEnum({
   asc: 'asc',
   desc: 'desc'
@@ -509,6 +520,7 @@ exports.Prisma.ModelName = makeEnum({
   Choice: 'Choice',
   Quiz: 'Quiz',
   Round: 'Round',
+  ShuffledQuiz: 'ShuffledQuiz',
   BinWashUser: 'BinWashUser',
   Branch: 'Branch',
   WashingMachine: 'WashingMachine',
