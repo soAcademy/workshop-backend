@@ -1,7 +1,10 @@
 import {
   CreateQuestionAndAnswersHandler,
+  GetAllQuestionsHandler,
   GetRoundsHandler,
   SubmitQuizHandler,
+  UpdateAnswerHandler,
+  UpdateQuestionHandler,
   getCategoriesHandler,
   getQuestionsByCategoryHandler,
   getQuestionsHandler,
@@ -37,5 +40,20 @@ export const AppRoutes = [
     path: "/triviaGame/getRounds",
     method: "post",
     action: GetRoundsHandler,
+  },
+  {
+    path: "/triviaGame/getAllQuestions",
+    method: "post",
+    action: GetAllQuestionsHandler,
+  },
+  {
+    path: "/triviaGame/updateQuestion",
+    method: "post",
+    action: UpdateQuestionHandler,
+  },
+  {
+    path: "/triviaGame/updateAnswer",
+    method: "post",
+    action: UpdateAnswerHandler,
   },
 ];

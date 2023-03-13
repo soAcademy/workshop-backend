@@ -30,3 +30,9 @@ export const CreateRoundQuestionCodec = t.type({
 });
 export interface ICreateRoundQuestion
   extends t.TypeOf<typeof CreateRoundQuestionCodec> {}
+
+export const UpdateQuestionCodec = t.type({ id: t.number, question: t.string });
+export interface IUpdateQuestion extends t.TypeOf<typeof UpdateQuestionCodec> {}
+
+export const UpdateAnswerCodec = t.type({ id: t.number, answer: t.string });
+export interface IUpdateAnswer extends t.TypeOf<typeof UpdateAnswerCodec> {}

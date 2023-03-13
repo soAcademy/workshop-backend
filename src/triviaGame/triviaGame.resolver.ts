@@ -4,6 +4,8 @@ import {
   ICreateQuestionAndAnswers,
   ICreateRoundQuestion,
   IGetQuestionsByCategory,
+  IUpdateAnswer,
+  IUpdateQuestion,
 } from "./triviaGame.Interface";
 
 export const prisma = new PrismaClient();
@@ -224,3 +226,42 @@ export const getQuestionsByCategoryUpdate = async (
   });
   console.log(result);
 };
+
+//setting
+export const getAllQuestions = async () =>
+  prisma.question.findMany({
+    orderBy: [
+      {
+        category: {
+          name: "asc",
+        },
+      },
+      { id: "asc" },
+    ],
+    include: {
+      answer: true,
+      category: true,
+      choices: true,
+    },
+  });
+
+//update question
+export const updateQuestion = async (args: IUpdateQuestion) =>
+  prisma.question.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      question: args.question,
+    },
+  });
+//update answer
+export const updateAnswer = async (args: IUpdateAnswer) =>
+  prisma.choice.update({
+    where: {
+      id: args.id,
+    },
+    data: {
+      answer: args.answer,
+    },
+  });
