@@ -17,9 +17,13 @@
     "prisma:format:trivia": "yarn prisma format --schema prisma/triviaschema.prisma",
     "prisma:migrate:trivia": "yarn prisma migrate dev --name init --schema prisma/triviaschema.prisma",
     "prisma:generate:trivia": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
+    "prisma:merge:twitter": "cat prisma/twitter-schema/**.prisma > prisma/twitterschema.prisma",
+    "prisma:format:twitter": "yarn prisma format --schema prisma/twitterschema.prisma",
+    "prisma:migrate:twitter": "yarn prisma migrate dev --name init --schema prisma/twitterschema.prisma",
+    "prisma:generate:twitter": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
     "test": "jest --verbose",
-    "test:trivia": "jest -- src/TriviaAPI"
-
+    "test:trivia": "jest -- src/TriviaAPI",
+    "test:twitter": "jest -- src/TwitterAPI"
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",

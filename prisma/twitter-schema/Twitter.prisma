@@ -1,0 +1,45 @@
+model User {
+  id               Int             @id @default(autoincrement())
+  username         String          @unique
+  profileImage     String?
+  sentMessages     DirectMessage[] @relation("sentMessages")
+  receivedMessages DirectMessage[] @relation("receivedMessages")
+  tweets           Tweet[]         @relation("Tweet")
+  likedTweets      Tweet[]         @relation("LikeTweet")
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  followings       User[]          @relation("Following")
+  followers        User[]          @relation("Following")
+}
+
+model Tweet {
+  id        Int       @id @default(autoincrement())
+  message   String
+  hashtags  Hashtag[]
+  user      User      @relation("Tweet", fields: [userId], references: [id])
+  userId    Int
+  likedBy   User[]    @relation("LikeTweet")
+  replyBy   Tweet[]   @relation("TweetReply")
+  replyTo   Tweet[]   @relation("TweetReply")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Hashtag {
+  id        Int      @id @default(autoincrement())
+  hashtag   String   @unique
+  tweets    Tweet[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DirectMessage {
+  id         Int      @id @default(autoincrement())
+  message    String
+  fromUser   User     @relation("sentMessages", fields: [fromUserId], references: [id])
+  fromUserId Int
+  toUser     User     @relation("receivedMessages", fields: [toUserId], references: [id])
+  toUserId   Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
