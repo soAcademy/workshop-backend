@@ -3,6 +3,8 @@ import { PrismaClient } from "../../prisma/client";
 
 export const prisma = new PrismaClient();
 
+export const sumNumber = (args: {x: number, y: number}) => args.x + args.y;
+
 // CATEGORY
 export const createCategory = (args: { name: string }) =>
   prisma.triviaCategory.create({
@@ -32,6 +34,26 @@ export const createQuiz = (args: {
   choices: { choice: string }[];
 }) =>
   prisma.triviaQuiz.create({
+    data: {
+      quiz: args.quiz,
+      answer: { create: { choice: args.answer } },
+      choices: { create: args.choices },
+      category: {
+        connect: {
+          name: args.categoryName,
+        },
+      },
+    },
+  });
+
+  export const updateQuiz = (args: { quizId: number; quiz: string;
+    answer: string;
+    categoryName: string;
+    choices: { choice: string }[]; }) =>
+  prisma.triviaQuiz.update({
+    where: {
+      id: args.quizId,
+    },
     data: {
       quiz: args.quiz,
       answer: { create: { choice: args.answer } },
