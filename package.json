@@ -33,6 +33,7 @@
     "prisma:migrate": "npx prisma migrate dev --name init --schema prisma/schema.prisma",
     "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma",
     "test": "jest --verbose",
-    "test:binQuiz": "jest -- src/binQuiz"
+    "test:binQuiz": "jest -- src/binQuiz",
+    "test:todoList": "jest -- src/todoList"
   }
 }
