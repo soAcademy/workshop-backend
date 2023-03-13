@@ -1,0 +1,70 @@
+import { PrismaClient } from "../../prisma/client";
+import {
+  ICreateUserPost,
+  IGetPostByHashtag,
+  IGetPostByUser,
+  IGetUserProfile,
+} from "./twitter.interface";
+export const prisma = new PrismaClient();
+
+// getUserProfile
+// createUserPost
+// getHashtags
+// getPostByHashtag (ส่ง hashtag ที่ต้องการไป แล้วแสดง post ทั้งหมด)
+// getPostByUser (แสดงรายละเอียดของ user คนนั้น พร้อม reply)
+
+export const getUserProfile = async (args: IGetUserProfile) =>
+  prisma.user.findUnique({
+    where: {
+      id: args.id,
+    },
+  });
+
+export const createUserPost = async (args: ICreateUserPost) =>
+  prisma.post.create({
+    data: {
+      userId: args.userId,
+      detail: args.detail,
+      hashtagOnPosts: {
+        create: args.hashtags.map((hashtag) => ({
+          hashtag: {
+            connectOrCreate: {
+              create: {
+                topic: hashtag.hashtag,
+              },
+              where: {
+                topic: hashtag.hashtag,
+              },
+            },
+          },
+        })),
+      },
+    },
+  });
+
+export const getHashtags = async () => prisma.hashtag.findMany();
+
+export const getPostByHashtag = async (args: IGetPostByHashtag) =>
+  prisma.post.findMany({
+    where: {
+      hashtagOnPosts: {
+        some: {
+          hashtagId: args.hashtagId,
+        },
+      },
+    },
+  });
+
+export const getPostByUser = async (args: IGetPostByUser) =>
+  prisma.post.findMany({
+    where: {
+      userId: args.userId,
+    },
+    include: {
+      replies: {
+        where: {
+          userId: args.userId,
+        },
+      },
+    },
+  });

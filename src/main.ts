@@ -10,7 +10,8 @@ import express, { Application, Request, Response } from "express";
 import { AppRoutes } from "./routes";
 // import { AppRoutes as TodoListRoutes } from "./todoList/routes"; //todoList
 // import { AppRoutes as binKitchenRoutes } from "./binKitchen/routes"; //binKitchen
-import { AppRoutes as TriviaGame } from "./triviaGame/routes";
+// import { AppRoutes as TriviaGame } from "./triviaGame/routes";
+import { AppRoutes as Twitter } from "./twitter/route";
 import cors from "cors";
 
 const app: Application = express();
@@ -24,12 +25,12 @@ app.use(cors());
 //   res.send("Hello Express2");
 // });
 
-AppRoutes.forEach((route) => {
-  app[route.method as keyof Application](
-    route.path,
-    (req: Request, res: Response) => route.action(req, res)
-  );
-});
+// AppRoutes.forEach((route) => {
+//   app[route.method as keyof Application](
+//     route.path,
+//     (req: Request, res: Response) => route.action(req, res)
+//   );
+// });
 
 // TodoListRoutes.forEach((route) => {
 //   app[route.method as keyof Application](
@@ -45,7 +46,14 @@ AppRoutes.forEach((route) => {
 //   );
 // });
 
-TriviaGame.forEach((route) => {
+// TriviaGame.forEach((route) => {
+//   app[route.method as keyof Application](
+//     route.path,
+//     (req: Request, res: Response) => route.action(req, res)
+//   );
+// });
+
+Twitter.forEach((route) => {
   app[route.method as keyof Application](
     route.path,
     (req: Request, res: Response) => route.action(req, res)

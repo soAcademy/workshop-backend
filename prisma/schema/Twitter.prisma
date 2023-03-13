@@ -46,7 +46,7 @@ model Reply {
 
 model Hashtag {
   id             Int             @id @default(autoincrement())
-  topic          String
+  topic          String          @unique
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   hashtagOnPosts HashtagOnPost[]

@@ -89,23 +89,34 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
-exports.Prisma.CategoryScalarFieldEnum = makeEnum({
+exports.Prisma.DirectMessageScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
+  fromId: 'fromId',
+  toId: 'toId',
+  message: 'message',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.ChoiceScalarFieldEnum = makeEnum({
+exports.Prisma.HashtagOnPostScalarFieldEnum = makeEnum({
   id: 'id',
-  answer: 'answer',
+  postId: 'postId',
+  hashtagId: 'hashtagId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.PlayerScalarFieldEnum = makeEnum({
+exports.Prisma.HashtagScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
+  topic: 'topic',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.PostScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  detail: 'detail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -115,37 +126,11 @@ exports.Prisma.QueryMode = makeEnum({
   insensitive: 'insensitive'
 });
 
-exports.Prisma.QuestionScalarFieldEnum = makeEnum({
+exports.Prisma.ReplyScalarFieldEnum = makeEnum({
   id: 'id',
-  categoryId: 'categoryId',
-  question: 'question',
-  choiceId: 'choiceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.RoundChooseChoiceScalarFieldEnum = makeEnum({
-  id: 'id',
-  roundQuestionsId: 'roundQuestionsId',
-  choicesId: 'choicesId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.RoundQuestionScalarFieldEnum = makeEnum({
-  id: 'id',
-  roundsId: 'roundsId',
-  questionsId: 'questionsId',
-  chooseChoice: 'chooseChoice',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.RoundScalarFieldEnum = makeEnum({
-  id: 'id',
-  playerName: 'playerName',
-  round: 'round',
-  score: 'score',
+  postId: 'postId',
+  userId: 'userId',
+  replyMessage: 'replyMessage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -162,15 +147,31 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserRelationScalarFieldEnum = makeEnum({
+  id: 'id',
+  fromId: 'fromId',
+  toId: 'toId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.UserScalarFieldEnum = makeEnum({
+  id: 'id',
+  username: 'username',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 
 exports.Prisma.ModelName = makeEnum({
-  Category: 'Category',
-  Question: 'Question',
-  Choice: 'Choice',
-  Player: 'Player',
-  Round: 'Round',
-  RoundQuestion: 'RoundQuestion',
-  RoundChooseChoice: 'RoundChooseChoice'
+  User: 'User',
+  UserRelation: 'UserRelation',
+  Post: 'Post',
+  Reply: 'Reply',
+  Hashtag: 'Hashtag',
+  HashtagOnPost: 'HashtagOnPost',
+  DirectMessage: 'DirectMessage'
 });
 
 /**

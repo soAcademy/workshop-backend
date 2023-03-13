@@ -34,6 +34,7 @@
     "prisma:format": "npx prisma format",
     "prisma:migrate": "npx prisma migrate dev --name init --schema prisma/schema.prisma",
     "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma",
-    "test:trivia": "jest -- src/trivia"
+    "test:trivia": "jest -- src/trivia",
+    "test:twitter": "jest -- src/twitter"
   }
 }

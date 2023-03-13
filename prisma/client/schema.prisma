@@ -1,73 +1,76 @@
-model Category {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
-  questions Question[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
-model Question {
+model User {
   id            Int             @id @default(autoincrement())
-  category      Category        @relation(fields: [categoryId], references: [id])
-  categoryId    Int
-  question      String
-  answer        Choice          @relation("answer", fields: [choiceId], references: [id])
-  choiceId      Int
-  choices       Choice[]
+  username      String
+  image         String
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  roundQuestion RoundQuestion[]
+  posts         Post[]
+  replies       Reply[]
+  directMsgFrom DirectMessage[] @relation("directMsgFrom")
+  directMsgTo   DirectMessage[] @relation("directMsgTo")
+  followings    UserRelation[]  @relation("followings")
+  followers     UserRelation[]  @relation("followers")
 }
 
-model Choice {
-  id                Int                 @id @default(autoincrement())
-  questions         Question[]
-  answerToQuestion  Question[]          @relation("answer")
-  answer            String
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  roundChooseChoice RoundChooseChoice[]
-}
-
-model Player {
+model UserRelation {
   id        Int      @id @default(autoincrement())
-  name      String   @unique
+  from      User     @relation("followings", fields: [fromId], references: [id])
+  fromId    Int
+  to        User     @relation("followers", fields: [toId], references: [id])
+  toId      Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  rounds    Round[]
 }
 
-model Round {
+model Post {
   id             Int             @id @default(autoincrement())
-  player         Player          @relation(fields: [playerName], references: [name])
-  playerName     String
-  round          String
-  score          Int
+  user           User            @relation(fields: [userId], references: [id])
+  userId         Int
+  detail         String
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
-  roundQuestions RoundQuestion[]
+  replies        Reply[]
+  hashtagOnPosts HashtagOnPost[]
 }
 
-model RoundQuestion {
-  id                Int                 @id @default(autoincrement())
-  round             Round               @relation(fields: [roundsId], references: [id])
-  roundsId          Int
-  question          Question            @relation(fields: [questionsId], references: [id])
-  questionsId       Int
-  chooseChoice      Int
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  roundChooseChoice RoundChooseChoice[]
+model Reply {
+  id           Int      @id @default(autoincrement())
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       Int
+  userReply    User     @relation(fields: [userId], references: [id])
+  userId       Int
+  replyMessage String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
-model RoundChooseChoice {
-  id               Int           @id @default(autoincrement())
-  roundQuestion    RoundQuestion @relation(fields: [roundQuestionsId], references: [id])
-  roundQuestionsId Int
-  choice           Choice        @relation(fields: [choicesId], references: [id])
-  choicesId        Int
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+model Hashtag {
+  id             Int             @id @default(autoincrement())
+  topic          String          @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  hashtagOnPosts HashtagOnPost[]
+}
+
+model HashtagOnPost {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  hashtag   Hashtag  @relation(fields: [hashtagId], references: [id])
+  hashtagId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DirectMessage {
+  id        Int      @id @default(autoincrement())
+  from      User     @relation("directMsgFrom", fields: [fromId], references: [id])
+  fromId    Int
+  to        User     @relation("directMsgTo", fields: [toId], references: [id])
+  toId      Int
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 datasource db {
