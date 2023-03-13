@@ -186,3 +186,19 @@ DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres?schema=todo
 - getPostByHashtag (ส่ง hashtag ที่ต้องการไป แล้วแสดง post ทั้งหมด)
 - getPostByUser (แสดงรายละเอียดของ user คนนั้น พร้อม reply)
 - 
+
+# 10. Unit test with jest
+ติดตั้ง jest
+```
+yarn add --dev jest ts-jest @types/jest
+```
+
+สร้างไฟล์ jest.config.ts
+
+สร้างไฟล์ trivia.spec.ts
+
+เพิ่มคำสั่งใน package.json -> scripts
+```
+  "test": "jest --verbose",
+  "test:trivia": "jest -- src/trivia"
+```
