@@ -1,6 +1,7 @@
 import {
   createQuizCategoryHandler,
   createQuizHandler,
+  getCorrectChoiceByQuizHandler,
   getQuizCategoriesHandler,
   getQuizzesByCategoryHandler,
   getQuizzesHandler,
@@ -66,6 +67,11 @@ export const AppRoutes = [
     path: "/binQuiz/getRandomizedQuizzesByCategory",
     method: "post",
     action: getRandomizedQuizzesByCategoryHandler,
+  },
+  {
+    path: "/binQuiz/getCorrectChoiceByQuiz",
+    method: "post",
+    action: getCorrectChoiceByQuizHandler,
   },
   {
     path: "/binKitchen/create-category",

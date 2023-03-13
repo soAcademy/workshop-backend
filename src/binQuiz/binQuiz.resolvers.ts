@@ -53,20 +53,31 @@ export const getQuizzes = () => {
 export const getQuizzesByCategory = (args: { categoryId: number }) => {
   return prisma.quiz.findMany({
     select: {
+      id: true,
       category: {
         select: {
           name: true,
         },
       },
       questionText: true,
-      correctChoice: { select: { answerText: true } },
-      otherChoices: { select: { answerText: true } },
+      correctChoice: { select: { id: true, answerText: true } },
+      otherChoices: { select: { id: true, answerText: true } },
     },
     where: { category: { id: args.categoryId } },
   });
 };
 
+export const getCorrectChoiceByQuiz = (args: { id: number }) => {
+  return prisma.quiz.findUnique({
+    select: {
+      correctChoice: { select: { id: true } },
+    },
+    where: { id: args.id },
+  });
+};
+
 export const createRound = (args: ICreateRound) => {
+  // prisma.shuffledQuizzes.create
   return prisma.round.create({
     data: {
       quizCategoryId: args.quizCategoryId,

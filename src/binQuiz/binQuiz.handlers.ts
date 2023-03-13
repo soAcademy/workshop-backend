@@ -4,6 +4,7 @@ import {
   createCategory,
   createQuiz,
   getCategories,
+  getCorrectChoiceByQuiz,
   getQuizzes,
   getQuizzesByCategory,
 } from "./binQuiz.resolvers";
@@ -126,30 +127,58 @@ export const getRandomizedQuizzesByCategoryHandler = async (
         categoryId: args.categoryId,
       });
       const randomizedResult = shuffleInPlace(result).map((result) => ({
+        quizId: result.id,
         question: result.questionText,
         answers: shuffleInPlace([
-          ...result.otherChoices.map((choice: { answerText: string }) => ({
-            answerText: choice.answerText,
-            isCorrect: false,
-          })),
+          ...result.otherChoices.map(
+            (choice: { id: number; answerText: string }) => ({
+              choiceId: choice.id,
+              answerText: choice.answerText,
+              // isCorrect: false,
+            })
+          ),
           {
+            choiceId: result.correctChoice.id,
             answerText: result.correctChoice.answerText,
-            isCorrect: true,
+            // isCorrect: true,
           },
         ]),
         // .map((choice) => choice.answerText),
       }));
-      const correctAnswers = randomizedResult.map((result) =>
-        result.answers.findIndex((answer) => answer.isCorrect === true)
-      );
+      // const correctAnswers = randomizedResult.map((result) =>
+      //   result.answers.findIndex((answer) => answer.isCorrect === true)
+      // );
       // console.log(correctAnswers);
       res.status(200).json(
         randomizedResult.map((result, idx) => ({
+          questionId: result.quizId,
           question: result.question,
-          answers: result.answers.map((choice) => choice.answerText),
-          answer: correctAnswers[idx],
+          answers: result.answers.map((choice) => ({
+            answerId: choice.choiceId,
+            answerText: choice.answerText,
+          })),
+          // answer: correctAnswers[idx],
         }))
       );
+    } catch (e) {
+      res.status(500).json({
+        error: String(e),
+      });
+    }
+  } else {
+    res.status(500).json({ error: "ERROR: invalid request (io-ts codec)" });
+  }
+};
+
+export const getCorrectChoiceByQuizHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const args = req?.body;
+  if (typeof args.quizId === "number") {
+    try {
+      const result = await getCorrectChoiceByQuiz({ id: args.quizId });
+      res.status(200).json({ correctChoiceId: result?.correctChoice.id });
     } catch (e) {
       res.status(500).json({
         error: String(e),
