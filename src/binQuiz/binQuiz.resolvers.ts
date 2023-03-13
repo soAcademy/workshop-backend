@@ -80,10 +80,10 @@ export const createRound = (args: ICreateRound) => {
   // prisma.shuffledQuizzes.create
   return prisma.round.create({
     data: {
-      quizCategoryId: args.quizCategoryId,
-      // create: {
-      //   shuffledQuizzes:
-      // }
+      category: { connect: { id: args.quizCategoryId } },
+      shuffledQuizzes: {
+        create: args.shuffledQuizzes,
+      },
     },
   });
 };

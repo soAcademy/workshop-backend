@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
-import { CreateCategoryCodec, CreateQuizCodec } from "./binQuiz.interfaces";
+import {
+  CreateCategoryCodec,
+  CreateQuizCodec,
+  CreateRoundCodec,
+} from "./binQuiz.interfaces";
 import {
   createCategory,
   createQuiz,
+  createRound,
   getCategories,
   getCorrectChoiceByQuiz,
   getQuizzes,
   getQuizzesByCategory,
 } from "./binQuiz.resolvers";
+
+// https://codereview.stackexchange.com/a/266389
 
 const randInt = (n: number) => Math.floor(Math.random() * n);
 
@@ -114,8 +121,6 @@ export const getQuizzesByCategoryHandler = async (
   }
 };
 
-// https://codereview.stackexchange.com/a/266389
-
 export const getRandomizedQuizzesByCategoryHandler = async (
   req: Request,
   res: Response
@@ -149,17 +154,32 @@ export const getRandomizedQuizzesByCategoryHandler = async (
       //   result.answers.findIndex((answer) => answer.isCorrect === true)
       // );
       // console.log(correctAnswers);
-      res.status(200).json(
-        randomizedResult.map((result, idx) => ({
-          questionId: result.quizId,
-          question: result.question,
-          answers: result.answers.map((choice) => ({
-            answerId: choice.choiceId,
-            answerText: choice.answerText,
-          })),
-          // answer: correctAnswers[idx],
-        }))
-      );
+      const roundForFrontEnd = randomizedResult.map((result, idx) => ({
+        questionId: result.quizId,
+        question: result.question,
+        answers: result.answers.map((choice) => ({
+          answerId: choice.choiceId,
+          answerText: choice.answerText,
+        })),
+        // answer: correctAnswers[idx],
+      }));
+
+      res.status(200).json(roundForFrontEnd);
+
+      const round = {
+        quizCategoryId: args.categoryId,
+        shuffledQuizzes: randomizedResult
+          .map((quiz) =>
+            quiz.answers.map((choice, idx) => ({
+              quizId: quiz.quizId,
+              choiceId: choice.choiceId,
+              choiceOrder: idx + 1,
+            }))
+          )
+          .flat(),
+      };
+
+      const createRoundResult = await createRound(round);
     } catch (e) {
       res.status(500).json({
         error: String(e),

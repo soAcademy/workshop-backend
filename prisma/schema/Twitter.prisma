@@ -1,8 +1,8 @@
 model User {
   id                     Int             @id @default(autoincrement())
   name                   String
-  imageUrl               String
-  bio                    String
+  imageUrl               String?
+  bio                    String?
   followingUserRelations UserRelation[]  @relation("followingUser")
   followedUserRelations  UserRelation[]  @relation("followedUser")
   tweets                 Tweet[]

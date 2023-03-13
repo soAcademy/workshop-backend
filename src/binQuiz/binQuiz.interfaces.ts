@@ -20,9 +20,19 @@ export const CreateQuizCodec = t.type({
 
 export interface ICreateQuiz extends t.TypeOf<typeof CreateQuizCodec> {}
 
+export const CreateShuffledQuizCodec = t.type({
+  // roundId: t.number,
+  quizId: t.number,
+  choiceId: t.number,
+  choiceOrder: t.number,
+});
+
+export interface ICreateShuffledQuiz
+  extends t.TypeOf<typeof CreateShuffledQuizCodec> {}
+
 export const CreateRoundCodec = t.type({
   quizCategoryId: t.number,
-  // quizzes: t.array(CreateQuizCodec),
+  shuffledQuizzes: t.array(CreateShuffledQuizCodec),
 });
 
 export interface ICreateRound extends t.TypeOf<typeof CreateRoundCodec> {}
