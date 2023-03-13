@@ -7,11 +7,13 @@ npx tsc --init
 ```
 
 สร้างไฟล์ .gitignore
+
 ```.gitignore
 node_modules
 ```
 
 เพิ่มรายละเอียดในไฟล์ package.json
+
 ```json
 {
   "name": "workshop-backend",
@@ -21,6 +23,7 @@ node_modules
 ```
 
 เพิ่ม script ใน package.json เพื่อใช้สำหรับ run project
+
 ```json
 {
   ...
@@ -37,11 +40,13 @@ node_modules
 รันคำสั่งต่อไปนี้ เพื่อ start server
 
 - สำหรับการเขียนโค้ดใน local รัน (จะมีการ hot reload ทุกครั้งที่แก้ไขโค้ด)
+
 ```bash
 yarn dev
 ```
 
 - สำหรับการ deploy โค้ดบน server รัน (จะไม่มีการ hot reload)
+
 ```bash
 yarn start
 ```
@@ -64,11 +69,13 @@ yarn start
 
 มักใช้กับ API ที่ส่งข้อมูลจาก client -> server เพื่อสร้าง หรืออัพเดทข้อมูล
 
-แต่สามารถใช้แทน GET Method ได้ ในหลายๆ กรณีเช่น graphql server ใช้ POST Method แทน GET Method  
-  - ข้อดีคือสามารถส่ง query parameters ขนาดใหญ่ได้
-  - ข้อเสียคือไม่สามารถเรียก API Post method ได้จาก Browser URL Bar
+แต่สามารถใช้แทน GET Method ได้ ในหลายๆ กรณีเช่น graphql server ใช้ POST Method แทน GET Method
+
+- ข้อดีคือสามารถส่ง query parameters ขนาดใหญ่ได้
+- ข้อเสียคือไม่สามารถเรียก API Post method ได้จาก Browser URL Bar
 
 การส่งข้อมูลเพิ่มไปใน API จะส่งผ่าน body ในรูปแบบ json เช่น
+
 ```json
 {
   "name": "Bin",
@@ -77,13 +84,13 @@ yarn start
 ```
 
 ## Response
+
 res.send(textData)
 res.json(jsonData)
 res.status(200).send(textData)
 res.status(500).send(textData)
 res.status(200).json(jsonData)
 res.status(500).json(jsonData)
-
 
 ## Status Code
 
@@ -94,6 +101,7 @@ Status Code: 4xx หาข้อมูลไม่เจอ, bad request
 Status Code: 5xx แปลว่า Error
 
 ## Nested Url
+
 เราสามารถทำ API Endpoint ที่ path nested ได้เช่น
 `https://localhost:3000/user/register`
 
@@ -107,7 +115,7 @@ docker-compose up -d
 ```
 
 ติดตั้ง library pg สำหรับต่อ postgres
+
 ```bash
 yarn add pg
 ```
-

@@ -13,6 +13,8 @@ import { id } from "fp-ts/lib/Refinement";
 import { checkPrime } from "crypto";
 export const prisma = new PrismaClient();
 
+export const sumNumber = (args: { x: number; y: number }) => args.x + args.y;
+
 export const getAllCategory = () => prisma.questionCategory.findMany({});
 
 export const createUser = (args: { name: string }) =>
@@ -53,17 +55,17 @@ export const createQuiz = (args: ICreateQuizCodec) =>
 
 //---------------------------------------------------------
 
-export const getQuiz = (args: { questionId: number; choiceId: number }) => {
-  const result = prisma.question.findUnique({
-    where: {
-      id: args.questionId,
-    },
-    include: {
-      choice: true,
-      answer: true,
-    },
-  });
-};
+// export const getQuiz = (args: { questionId: number; choiceId: number }) => {
+//   const result = prisma.question.findUnique({
+//     where: {
+//       id: args.questionId,
+//     },
+//     include: {
+//       choice: true,
+//       answer: true,
+//     },
+//   });
+// };
 
 //ตอนกดเลือก category
 export const getQuizbyCategory = async (args: IGetQuizbyCategoryCodec) => {
@@ -77,10 +79,25 @@ export const getQuizbyCategory = async (args: IGetQuizbyCategoryCodec) => {
     },
   });
   const tempResult = [...result];
+  const roundQuizId = await prisma.roundQuiz.create({
+    data: {
+      score: 0,
+      questionCategoryId: args.categoryId,
+      userId: args.userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+  //add roundQuiz from server but not in database bz in schema it's don't have roundQuizId
+  // for (const key in generatedQuestion) {
+  //   Object.assign(generatedQuestion[key], { roundQuizId: roundQuizId.id });
+  // }
   const generatedQuestion = tempResult
     .sort((a, b) => Math.random() - 0.5)
     .slice(0, 3)
     .map((r) => ({
+      roundQuizId: roundQuizId.id,
       questionId: r.id,
       categoryId: r.questionCategoryId,
       choices: [
@@ -101,16 +118,7 @@ export const getQuizbyCategory = async (args: IGetQuizbyCategoryCodec) => {
     }));
 
   // console.log(JSON.stringify(question, null, 2));
-  const roundQuizId = await prisma.roundQuiz.create({
-    data: {
-      score: 0,
-      questionCategoryId: args.categoryId,
-      userId: args.userId,
-    },
-    select: {
-      id: true,
-    },
-  });
+
   await prisma.roundQuestionDetail.createMany({
     data: generatedQuestion.map((question, index) => ({
       roundQuizId: roundQuizId.id,
@@ -131,12 +139,11 @@ export const getQuizbyCategory = async (args: IGetQuizbyCategoryCodec) => {
       return arr;
     }, []),
   });
-  for (const key in generatedQuestion) {
-    Object.assign(generatedQuestion[key], { roundQuizId: roundQuizId.id });
-  }
+
   return generatedQuestion;
 };
 
+//---------------------------------------------------------------------------
 export const submitQuiz = async (args: ISubmitQuiz) => {
   const allQuestion = await prisma.question.findMany({
     where: {
@@ -198,9 +205,13 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
       score: countedScore,
     },
   });
-  return "Success";
+  return {
+    checkedAnswer,
+    countedScore,
+  };
 };
 
+//---------------------------------------------------------------------------
 // 1 user = many round
 
 export const getStatistic = async (args: { userId: number }) => {
@@ -210,6 +221,8 @@ export const getStatistic = async (args: { userId: number }) => {
   });
   return userByRound;
 };
+//---------------------------------------------------------------------------
+
 //เล่นจบ 1 เกมก็ควรรู้เกมของตัวเองที่พึ่งเล่นมาเล่าสุด
 
 export const getResult = async (args: { roundQuizId: number }) => {

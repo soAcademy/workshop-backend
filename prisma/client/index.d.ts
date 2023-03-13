@@ -17,6 +17,7 @@ type UnwrapTuple<Tuple extends readonly unknown[]> = {
  *
  */
 export type QuestionCategory = {
+  category: string;
   id: number;
   name: string;
   createAt: Date;

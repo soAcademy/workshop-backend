@@ -4,9 +4,7 @@ export const createCategoryCodec = t.type({
   name: t.string,
 });
 
-export interface ICreateCategory extends t.TypeOf<typeof createCategoryCodec> {
-  category: any;
-}
+export interface ICreateCategory extends t.TypeOf<typeof createCategoryCodec> {}
 
 //--------------------------------------------------------
 export const createQuizCodec = t.type({
