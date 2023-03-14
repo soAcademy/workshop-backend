@@ -21,6 +21,10 @@
     "prisma:format:twitter": "yarn prisma format --schema prisma/twitterschema.prisma",
     "prisma:migrate:twitter": "yarn prisma migrate dev --name init --schema prisma/twitterschema.prisma",
     "prisma:generate:twitter": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
+    "prisma:merge:laundry": "cat prisma/laundry-schema/**.prisma > prisma/laundryschema.prisma",
+    "prisma:format:laundry": "yarn prisma format --schema prisma/laundryschema.prisma",
+    "prisma:migrate:laundry": "yarn prisma migrate dev --name init --schema prisma/laundryschema.prisma",
+    "prisma:generate:laundry": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
     "test": "jest --verbose",
     "test:trivia": "jest -- src/TriviaAPI",
     "test:twitter": "jest -- src/TwitterAPI"
