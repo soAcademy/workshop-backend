@@ -28,3 +28,15 @@ export const createTweet = (args: ICreateTweet) => {
     },
   });
 };
+
+export const createUserRelation = (args: {
+  followingUserId: number;
+  followedUserId: number;
+}) => {
+  return prisma.userRelation.create({
+    data: {
+      followingUser: { connect: { id: args.followingUserId } },
+      followedUser: { connect: { id: args.followedUserId } },
+    },
+  });
+};
