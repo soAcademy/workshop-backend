@@ -1,5 +1,9 @@
 import { PrismaClient } from "../../prisma/client";
-import { ICreateTweet, ICreateUser } from "./twitter.interfaces";
+import {
+  ICreateDirectMessage,
+  ICreateTweet,
+  ICreateUser,
+} from "./twitter.interfaces";
 
 export const prisma = new PrismaClient();
 
@@ -37,6 +41,16 @@ export const createUserRelation = (args: {
     data: {
       followingUser: { connect: { id: args.followingUserId } },
       followedUser: { connect: { id: args.followedUserId } },
+    },
+  });
+};
+
+export const CreateDirectMessage = (args: ICreateDirectMessage) => {
+  return prisma.directMessage.create({
+    data: {
+      dmText: args.dmText,
+      fromUser: { connect: { id: args.fromUserId } },
+      toUser: { connect: { id: args.toUserId } },
     },
   });
 };

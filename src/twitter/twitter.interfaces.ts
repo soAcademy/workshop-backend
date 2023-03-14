@@ -28,3 +28,12 @@ export const CreateTweetCodec = t.intersection([
 ]);
 
 export interface ICreateTweet extends t.TypeOf<typeof CreateTweetCodec> {}
+
+export const CreateDirectMessageCodec = t.type({
+  dmText: t.string,
+  fromUserId: t.number,
+  toUserId: t.number,
+});
+
+export interface ICreateDirectMessage
+  extends t.TypeOf<typeof CreateDirectMessageCodec> {}
