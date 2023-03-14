@@ -1,69 +1,72 @@
-// model User {
-//   id                Int            @id @default(autoincrement())
-//   name              String         @unique
-//   profileImage      String
-//   createAt          DateTime       @default(now())
-//   updateAt          DateTime       @updatedAt
-//   reply             Reply[]
-//   fromUserRelations UserRelation[] @relation("FromUserRelation")
-//   toUserRelations   UserRelation[] @relation("ToUserRelation")
-// }
+model User {
+  id                Int            @id @default(autoincrement())
+  name              String         @unique
+  profileImage      String
+  createAt          DateTime       @default(now())
+  updateAt          DateTime       @updatedAt
+  reply             Reply[]
+  fromUserRelations UserRelation[] @relation("FromUserRelation")
+  toUserRelations   UserRelation[] @relation("ToUserRelation")
+  Post              Post[]
+}
 
-// model Post {
-//   id            Int             @id @default(autoincrement())
-//   message       String
-//   createAt      DateTime        @default(now())
-//   updateAt      DateTime        @updatedAt
-//   HashTagOnPost HashTagOnPost[]
-//   reply         Reply[]
-// }
+model Post {
+  id            Int             @id @default(autoincrement())
+  message       String
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  HashTagOnPost HashTagOnPost[]
+  reply         Reply[]
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int
+}
 
-// model DirecMessage {
-//   id       Int      @id @default(autoincrement())
-//   message  String
-//   fromUser String
-//   toUser   String
-//   createAt DateTime @default(now())
-//   updateAt DateTime @updatedAt
-// }
+model DirecMessage {
+  id       Int      @id @default(autoincrement())
+  message  String
+  fromUser String
+  toUser   String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
 
-// model HashTag {
-//   id            Int             @id @default(autoincrement())
-//   name          String
-//   createAt      DateTime        @default(now())
-//   updateAt      DateTime        @updatedAt
-//   HashTagOnPost HashTagOnPost[]
-// }
+model HashTag {
+  id            Int             @id @default(autoincrement())
+  name          String
+  createAt      DateTime        @default(now())
+  updateAt      DateTime        @updatedAt
+  HashTagOnPost HashTagOnPost[]
+}
 
-// model HashTagOnPost {
-//   id        Int      @id @default(autoincrement())
-//   post      Post     @relation(fields: [postId], references: [id])
-//   postId    Int
-//   hashTags  HashTag  @relation(fields: [hashTagId], references: [id])
-//   hashTagId Int
-//   createAt  DateTime @default(now())
-//   updateAt  DateTime @updatedAt
-// }
+model HashTagOnPost {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    Int
+  hashTags  HashTag  @relation(fields: [hashTagId], references: [id])
+  hashTagId Int
+  createAt  DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
 
-// model Reply {
-//   id       Int      @id @default(autoincrement())
-//   posts    Post     @relation(fields: [postId], references: [id])
-//   postId   Int
-//   users    User     @relation(fields: [userId], references: [id])
-//   userId   Int
-//   message  String
-//   createAt DateTime @default(now())
-//   updateAt DateTime @updatedAt
-// }
+model Reply {
+  id       Int      @id @default(autoincrement())
+  posts    Post     @relation(fields: [postId], references: [id])
+  postId   Int
+  users    User     @relation(fields: [userId], references: [id])
+  userId   Int
+  message  String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
 
-// model UserRelation {
-//   id       Int      @id @default(autoincrement())
-//   from     User     @relation("FromUserRelation", fields: [fromId], references: [id])
-//   fromId   Int
-//   to       User     @relation("ToUserRelation", fields: [toId], references: [id])
-//   toId     Int
-//   createAt DateTime @default(now())
-//   updateAt DateTime @updatedAt
-// }
+model UserRelation {
+  id       Int      @id @default(autoincrement())
+  from     User     @relation("FromUserRelation", fields: [fromId], references: [id])
+  fromId   Int
+  to       User     @relation("ToUserRelation", fields: [toId], references: [id])
+  toId     Int
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
 
-// //กรณีที่ไป relate Table เดิมซ้ำกันสองรอบ relation string
+//กรณีที่ไป relate Table เดิมซ้ำกันสองรอบ relation string
