@@ -36,8 +36,14 @@ import {
   getTeachersByNameHandler,
   getTeachersHandler,
 } from "./sql";
+import { getUserProfileHandler } from "./twitter/twitter.handlers";
 
 export const AppRoutes = [
+  {
+    path: "/twitter/user/:id",
+    method: "get",
+    action: getUserProfileHandler,
+  },
   {
     path: "/binQuiz/createCategory",
     method: "post",

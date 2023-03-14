@@ -33,6 +33,23 @@ export const createTweet = (args: ICreateTweet) => {
   });
 };
 
+export const getUserProfile = (args: { id: number }) => {
+  return prisma.user.findUnique({
+    select: {
+      name: true,
+      bio: true,
+      tweets: {
+        select: {
+          tweetText: true,
+          createdAt: true,
+        },
+        orderBy: { createdAt: "desc" },
+      },
+    },
+    where: { id: args.id },
+  });
+};
+
 export const createUserRelation = (args: {
   followingUserId: number;
   followedUserId: number;
