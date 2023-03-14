@@ -11,64 +11,68 @@ type UnwrapTuple<Tuple extends readonly unknown[]> = {
 
 
 /**
- * Model TwitterUser
+ * Model TriviaCategory
  * 
  */
-export type TwitterUser = {
+export type TriviaCategory = {
   id: number
-  name: string
-  image: string
-  join: string
-  createdAt: Date
-  updatedAt: Date
+  category: string
 }
 
 /**
- * Model TwitterFollow
+ * Model TriviaQuestion
  * 
  */
-export type TwitterFollow = {
+export type TriviaQuestion = {
   id: number
-  fromUserId: number
-  toUserId: number
-  createdAt: Date
-  updatedAt: Date
+  quiz: string
+  categoryId: number
+  triviaAnswerChoiceId: number
 }
 
 /**
- * Model TwitterPost
+ * Model TriviaChoice
  * 
  */
-export type TwitterPost = {
+export type TriviaChoice = {
   id: number
-  caption: string
+  choice: string
+  quizId: number | null
+}
+
+/**
+ * Model TriviaRoundQuestion
+ * 
+ */
+export type TriviaRoundQuestion = {
+  id: number
+  quizId: number
+  choiceId: number
+  quizResult: number | null
+  roundId: number
+}
+
+/**
+ * Model TriviaRound
+ * 
+ */
+export type TriviaRound = {
+  id: number
+  categoryId: number
+  totalResult: number
+  createAt: Date
   userId: number
-  createdAt: Date
-  updatedAt: Date
+  roundNo: number
 }
 
 /**
- * Model TwitterDirectMessage
+ * Model TriviaUser
  * 
  */
-export type TwitterDirectMessage = {
+export type TriviaUser = {
   id: number
-  fromUserId: number
-  toUserId: number
-  text: string
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model TwitterHashtag
- * 
- */
-export type TwitterHashtag = {
-  id: number
-  hashtag: string
-  createdAt: Date
-  updatedAt: Date
+  user: string
+  avatar: string
 }
 
 
@@ -79,8 +83,8 @@ export type TwitterHashtag = {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more TwitterUsers
- * const twitterUsers = await prisma.twitterUser.findMany()
+ * // Fetch zero or more TriviaCategories
+ * const triviaCategories = await prisma.triviaCategory.findMany()
  * ```
  *
  * 
@@ -100,8 +104,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more TwitterUsers
-   * const twitterUsers = await prisma.twitterUser.findMany()
+   * // Fetch zero or more TriviaCategories
+   * const triviaCategories = await prisma.triviaCategory.findMany()
    * ```
    *
    * 
@@ -190,54 +194,64 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<this, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => Promise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): Promise<R>
 
       /**
-   * `prisma.twitterUser`: Exposes CRUD operations for the **TwitterUser** model.
+   * `prisma.triviaCategory`: Exposes CRUD operations for the **TriviaCategory** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TwitterUsers
-    * const twitterUsers = await prisma.twitterUser.findMany()
+    * // Fetch zero or more TriviaCategories
+    * const triviaCategories = await prisma.triviaCategory.findMany()
     * ```
     */
-  get twitterUser(): Prisma.TwitterUserDelegate<GlobalReject>;
+  get triviaCategory(): Prisma.TriviaCategoryDelegate<GlobalReject>;
 
   /**
-   * `prisma.twitterFollow`: Exposes CRUD operations for the **TwitterFollow** model.
+   * `prisma.triviaQuestion`: Exposes CRUD operations for the **TriviaQuestion** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TwitterFollows
-    * const twitterFollows = await prisma.twitterFollow.findMany()
+    * // Fetch zero or more TriviaQuestions
+    * const triviaQuestions = await prisma.triviaQuestion.findMany()
     * ```
     */
-  get twitterFollow(): Prisma.TwitterFollowDelegate<GlobalReject>;
+  get triviaQuestion(): Prisma.TriviaQuestionDelegate<GlobalReject>;
 
   /**
-   * `prisma.twitterPost`: Exposes CRUD operations for the **TwitterPost** model.
+   * `prisma.triviaChoice`: Exposes CRUD operations for the **TriviaChoice** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TwitterPosts
-    * const twitterPosts = await prisma.twitterPost.findMany()
+    * // Fetch zero or more TriviaChoices
+    * const triviaChoices = await prisma.triviaChoice.findMany()
     * ```
     */
-  get twitterPost(): Prisma.TwitterPostDelegate<GlobalReject>;
+  get triviaChoice(): Prisma.TriviaChoiceDelegate<GlobalReject>;
 
   /**
-   * `prisma.twitterDirectMessage`: Exposes CRUD operations for the **TwitterDirectMessage** model.
+   * `prisma.triviaRoundQuestion`: Exposes CRUD operations for the **TriviaRoundQuestion** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TwitterDirectMessages
-    * const twitterDirectMessages = await prisma.twitterDirectMessage.findMany()
+    * // Fetch zero or more TriviaRoundQuestions
+    * const triviaRoundQuestions = await prisma.triviaRoundQuestion.findMany()
     * ```
     */
-  get twitterDirectMessage(): Prisma.TwitterDirectMessageDelegate<GlobalReject>;
+  get triviaRoundQuestion(): Prisma.TriviaRoundQuestionDelegate<GlobalReject>;
 
   /**
-   * `prisma.twitterHashtag`: Exposes CRUD operations for the **TwitterHashtag** model.
+   * `prisma.triviaRound`: Exposes CRUD operations for the **TriviaRound** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TwitterHashtags
-    * const twitterHashtags = await prisma.twitterHashtag.findMany()
+    * // Fetch zero or more TriviaRounds
+    * const triviaRounds = await prisma.triviaRound.findMany()
     * ```
     */
-  get twitterHashtag(): Prisma.TwitterHashtagDelegate<GlobalReject>;
+  get triviaRound(): Prisma.TriviaRoundDelegate<GlobalReject>;
+
+  /**
+   * `prisma.triviaUser`: Exposes CRUD operations for the **TriviaUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TriviaUsers
+    * const triviaUsers = await prisma.triviaUser.findMany()
+    * ```
+    */
+  get triviaUser(): Prisma.TriviaUserDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -707,11 +721,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    TwitterUser: 'TwitterUser',
-    TwitterFollow: 'TwitterFollow',
-    TwitterPost: 'TwitterPost',
-    TwitterDirectMessage: 'TwitterDirectMessage',
-    TwitterHashtag: 'TwitterHashtag'
+    TriviaCategory: 'TriviaCategory',
+    TriviaQuestion: 'TriviaQuestion',
+    TriviaChoice: 'TriviaChoice',
+    TriviaRoundQuestion: 'TriviaRoundQuestion',
+    TriviaRound: 'TriviaRound',
+    TriviaUser: 'TriviaUser'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -873,38 +888,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type TwitterUserCountOutputType
+   * Count Type TriviaCategoryCountOutputType
    */
 
 
-  export type TwitterUserCountOutputType = {
-    fromFollowing: number
-    toFollowing: number
-    posts: number
-    fromDirectMessage: number
-    toDirectMessage: number
+  export type TriviaCategoryCountOutputType = {
+    questions: number
+    rounds: number
   }
 
-  export type TwitterUserCountOutputTypeSelect = {
-    fromFollowing?: boolean
-    toFollowing?: boolean
-    posts?: boolean
-    fromDirectMessage?: boolean
-    toDirectMessage?: boolean
+  export type TriviaCategoryCountOutputTypeSelect = {
+    questions?: boolean
+    rounds?: boolean
   }
 
-  export type TwitterUserCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterUserCountOutputTypeArgs> =
+  export type TriviaCategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaCategoryCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterUserCountOutputType :
+    S extends true ? TriviaCategoryCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterUserCountOutputTypeArgs)
-    ? TwitterUserCountOutputType 
-    : S extends { select: any } & (TwitterUserCountOutputTypeArgs)
+    S extends { include: any } & (TriviaCategoryCountOutputTypeArgs)
+    ? TriviaCategoryCountOutputType 
+    : S extends { select: any } & (TriviaCategoryCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof TwitterUserCountOutputType ? TwitterUserCountOutputType[P] : never
+    P extends keyof TriviaCategoryCountOutputType ? TriviaCategoryCountOutputType[P] : never
   } 
-      : TwitterUserCountOutputType
+      : TriviaCategoryCountOutputType
 
 
 
@@ -912,46 +921,44 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterUserCountOutputType without action
+   * TriviaCategoryCountOutputType without action
    */
-  export type TwitterUserCountOutputTypeArgs = {
+  export type TriviaCategoryCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUserCountOutputType
+     * Select specific fields to fetch from the TriviaCategoryCountOutputType
      */
-    select?: TwitterUserCountOutputTypeSelect | null
+    select?: TriviaCategoryCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type TwitterPostCountOutputType
+   * Count Type TriviaQuestionCountOutputType
    */
 
 
-  export type TwitterPostCountOutputType = {
-    hashtags: number
-    replyTo: number
-    replyBy: number
+  export type TriviaQuestionCountOutputType = {
+    roundQuestions: number
+    choices: number
   }
 
-  export type TwitterPostCountOutputTypeSelect = {
-    hashtags?: boolean
-    replyTo?: boolean
-    replyBy?: boolean
+  export type TriviaQuestionCountOutputTypeSelect = {
+    roundQuestions?: boolean
+    choices?: boolean
   }
 
-  export type TwitterPostCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterPostCountOutputTypeArgs> =
+  export type TriviaQuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaQuestionCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterPostCountOutputType :
+    S extends true ? TriviaQuestionCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterPostCountOutputTypeArgs)
-    ? TwitterPostCountOutputType 
-    : S extends { select: any } & (TwitterPostCountOutputTypeArgs)
+    S extends { include: any } & (TriviaQuestionCountOutputTypeArgs)
+    ? TriviaQuestionCountOutputType 
+    : S extends { select: any } & (TriviaQuestionCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof TwitterPostCountOutputType ? TwitterPostCountOutputType[P] : never
+    P extends keyof TriviaQuestionCountOutputType ? TriviaQuestionCountOutputType[P] : never
   } 
-      : TwitterPostCountOutputType
+      : TriviaQuestionCountOutputType
 
 
 
@@ -959,42 +966,42 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterPostCountOutputType without action
+   * TriviaQuestionCountOutputType without action
    */
-  export type TwitterPostCountOutputTypeArgs = {
+  export type TriviaQuestionCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPostCountOutputType
+     * Select specific fields to fetch from the TriviaQuestionCountOutputType
      */
-    select?: TwitterPostCountOutputTypeSelect | null
+    select?: TriviaQuestionCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type TwitterHashtagCountOutputType
+   * Count Type TriviaChoiceCountOutputType
    */
 
 
-  export type TwitterHashtagCountOutputType = {
-    posts: number
+  export type TriviaChoiceCountOutputType = {
+    roundQuestions: number
   }
 
-  export type TwitterHashtagCountOutputTypeSelect = {
-    posts?: boolean
+  export type TriviaChoiceCountOutputTypeSelect = {
+    roundQuestions?: boolean
   }
 
-  export type TwitterHashtagCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterHashtagCountOutputTypeArgs> =
+  export type TriviaChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaChoiceCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterHashtagCountOutputType :
+    S extends true ? TriviaChoiceCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterHashtagCountOutputTypeArgs)
-    ? TwitterHashtagCountOutputType 
-    : S extends { select: any } & (TwitterHashtagCountOutputTypeArgs)
+    S extends { include: any } & (TriviaChoiceCountOutputTypeArgs)
+    ? TriviaChoiceCountOutputType 
+    : S extends { select: any } & (TriviaChoiceCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof TwitterHashtagCountOutputType ? TwitterHashtagCountOutputType[P] : never
+    P extends keyof TriviaChoiceCountOutputType ? TriviaChoiceCountOutputType[P] : never
   } 
-      : TwitterHashtagCountOutputType
+      : TriviaChoiceCountOutputType
 
 
 
@@ -1002,13 +1009,99 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterHashtagCountOutputType without action
+   * TriviaChoiceCountOutputType without action
    */
-  export type TwitterHashtagCountOutputTypeArgs = {
+  export type TriviaChoiceCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the TwitterHashtagCountOutputType
+     * Select specific fields to fetch from the TriviaChoiceCountOutputType
      */
-    select?: TwitterHashtagCountOutputTypeSelect | null
+    select?: TriviaChoiceCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type TriviaRoundCountOutputType
+   */
+
+
+  export type TriviaRoundCountOutputType = {
+    roundQuestions: number
+  }
+
+  export type TriviaRoundCountOutputTypeSelect = {
+    roundQuestions?: boolean
+  }
+
+  export type TriviaRoundCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaRoundCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaRoundCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaRoundCountOutputTypeArgs)
+    ? TriviaRoundCountOutputType 
+    : S extends { select: any } & (TriviaRoundCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof TriviaRoundCountOutputType ? TriviaRoundCountOutputType[P] : never
+  } 
+      : TriviaRoundCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaRoundCountOutputType without action
+   */
+  export type TriviaRoundCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundCountOutputType
+     */
+    select?: TriviaRoundCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type TriviaUserCountOutputType
+   */
+
+
+  export type TriviaUserCountOutputType = {
+    rounds: number
+  }
+
+  export type TriviaUserCountOutputTypeSelect = {
+    rounds?: boolean
+  }
+
+  export type TriviaUserCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaUserCountOutputTypeArgs)
+    ? TriviaUserCountOutputType 
+    : S extends { select: any } & (TriviaUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof TriviaUserCountOutputType ? TriviaUserCountOutputType[P] : never
+  } 
+      : TriviaUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaUserCountOutputType without action
+   */
+  export type TriviaUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaUserCountOutputType
+     */
+    select?: TriviaUserCountOutputTypeSelect | null
   }
 
 
@@ -1018,405 +1111,361 @@ export namespace Prisma {
    */
 
   /**
-   * Model TwitterUser
+   * Model TriviaCategory
    */
 
 
-  export type AggregateTwitterUser = {
-    _count: TwitterUserCountAggregateOutputType | null
-    _avg: TwitterUserAvgAggregateOutputType | null
-    _sum: TwitterUserSumAggregateOutputType | null
-    _min: TwitterUserMinAggregateOutputType | null
-    _max: TwitterUserMaxAggregateOutputType | null
+  export type AggregateTriviaCategory = {
+    _count: TriviaCategoryCountAggregateOutputType | null
+    _avg: TriviaCategoryAvgAggregateOutputType | null
+    _sum: TriviaCategorySumAggregateOutputType | null
+    _min: TriviaCategoryMinAggregateOutputType | null
+    _max: TriviaCategoryMaxAggregateOutputType | null
   }
 
-  export type TwitterUserAvgAggregateOutputType = {
+  export type TriviaCategoryAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type TwitterUserSumAggregateOutputType = {
+  export type TriviaCategorySumAggregateOutputType = {
     id: number | null
   }
 
-  export type TwitterUserMinAggregateOutputType = {
+  export type TriviaCategoryMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    image: string | null
-    join: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    category: string | null
   }
 
-  export type TwitterUserMaxAggregateOutputType = {
+  export type TriviaCategoryMaxAggregateOutputType = {
     id: number | null
-    name: string | null
-    image: string | null
-    join: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    category: string | null
   }
 
-  export type TwitterUserCountAggregateOutputType = {
+  export type TriviaCategoryCountAggregateOutputType = {
     id: number
-    name: number
-    image: number
-    join: number
-    createdAt: number
-    updatedAt: number
+    category: number
     _all: number
   }
 
 
-  export type TwitterUserAvgAggregateInputType = {
+  export type TriviaCategoryAvgAggregateInputType = {
     id?: true
   }
 
-  export type TwitterUserSumAggregateInputType = {
+  export type TriviaCategorySumAggregateInputType = {
     id?: true
   }
 
-  export type TwitterUserMinAggregateInputType = {
+  export type TriviaCategoryMinAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    join?: true
-    createdAt?: true
-    updatedAt?: true
+    category?: true
   }
 
-  export type TwitterUserMaxAggregateInputType = {
+  export type TriviaCategoryMaxAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    join?: true
-    createdAt?: true
-    updatedAt?: true
+    category?: true
   }
 
-  export type TwitterUserCountAggregateInputType = {
+  export type TriviaCategoryCountAggregateInputType = {
     id?: true
-    name?: true
-    image?: true
-    join?: true
-    createdAt?: true
-    updatedAt?: true
+    category?: true
     _all?: true
   }
 
-  export type TwitterUserAggregateArgs = {
+  export type TriviaCategoryAggregateArgs = {
     /**
-     * Filter which TwitterUser to aggregate.
+     * Filter which TriviaCategory to aggregate.
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterUsers to fetch.
+     * Determine the order of TriviaCategories to fetch.
      */
-    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TwitterUserWhereUniqueInput
+    cursor?: TriviaCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterUsers from the position of the cursor.
+     * Take `±n` TriviaCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterUsers.
+     * Skip the first `n` TriviaCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TwitterUsers
+     * Count returned TriviaCategories
     **/
-    _count?: true | TwitterUserCountAggregateInputType
+    _count?: true | TriviaCategoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TwitterUserAvgAggregateInputType
+    _avg?: TriviaCategoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TwitterUserSumAggregateInputType
+    _sum?: TriviaCategorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TwitterUserMinAggregateInputType
+    _min?: TriviaCategoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TwitterUserMaxAggregateInputType
+    _max?: TriviaCategoryMaxAggregateInputType
   }
 
-  export type GetTwitterUserAggregateType<T extends TwitterUserAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterUser]: P extends '_count' | 'count'
+  export type GetTriviaCategoryAggregateType<T extends TriviaCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaCategory]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTwitterUser[P]>
-      : GetScalarType<T[P], AggregateTwitterUser[P]>
+        : GetScalarType<T[P], AggregateTriviaCategory[P]>
+      : GetScalarType<T[P], AggregateTriviaCategory[P]>
   }
 
 
 
 
-  export type TwitterUserGroupByArgs = {
-    where?: TwitterUserWhereInput
-    orderBy?: Enumerable<TwitterUserOrderByWithAggregationInput>
-    by: TwitterUserScalarFieldEnum[]
-    having?: TwitterUserScalarWhereWithAggregatesInput
+  export type TriviaCategoryGroupByArgs = {
+    where?: TriviaCategoryWhereInput
+    orderBy?: Enumerable<TriviaCategoryOrderByWithAggregationInput>
+    by: TriviaCategoryScalarFieldEnum[]
+    having?: TriviaCategoryScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TwitterUserCountAggregateInputType | true
-    _avg?: TwitterUserAvgAggregateInputType
-    _sum?: TwitterUserSumAggregateInputType
-    _min?: TwitterUserMinAggregateInputType
-    _max?: TwitterUserMaxAggregateInputType
+    _count?: TriviaCategoryCountAggregateInputType | true
+    _avg?: TriviaCategoryAvgAggregateInputType
+    _sum?: TriviaCategorySumAggregateInputType
+    _min?: TriviaCategoryMinAggregateInputType
+    _max?: TriviaCategoryMaxAggregateInputType
   }
 
 
-  export type TwitterUserGroupByOutputType = {
+  export type TriviaCategoryGroupByOutputType = {
     id: number
-    name: string
-    image: string
-    join: string
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterUserCountAggregateOutputType | null
-    _avg: TwitterUserAvgAggregateOutputType | null
-    _sum: TwitterUserSumAggregateOutputType | null
-    _min: TwitterUserMinAggregateOutputType | null
-    _max: TwitterUserMaxAggregateOutputType | null
+    category: string
+    _count: TriviaCategoryCountAggregateOutputType | null
+    _avg: TriviaCategoryAvgAggregateOutputType | null
+    _sum: TriviaCategorySumAggregateOutputType | null
+    _min: TriviaCategoryMinAggregateOutputType | null
+    _max: TriviaCategoryMaxAggregateOutputType | null
   }
 
-  type GetTwitterUserGroupByPayload<T extends TwitterUserGroupByArgs> = Prisma.PrismaPromise<
+  type GetTriviaCategoryGroupByPayload<T extends TriviaCategoryGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<TwitterUserGroupByOutputType, T['by']> &
+      PickArray<TriviaCategoryGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TwitterUserGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TriviaCategoryGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TwitterUserGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterUserGroupByOutputType[P]>
+              : GetScalarType<T[P], TriviaCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaCategoryGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TwitterUserSelect = {
+  export type TriviaCategorySelect = {
     id?: boolean
-    name?: boolean
-    image?: boolean
-    join?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    fromFollowing?: boolean | TwitterUser$fromFollowingArgs
-    toFollowing?: boolean | TwitterUser$toFollowingArgs
-    posts?: boolean | TwitterUser$postsArgs
-    fromDirectMessage?: boolean | TwitterUser$fromDirectMessageArgs
-    toDirectMessage?: boolean | TwitterUser$toDirectMessageArgs
-    _count?: boolean | TwitterUserCountOutputTypeArgs
+    category?: boolean
+    questions?: boolean | TriviaCategory$questionsArgs
+    rounds?: boolean | TriviaCategory$roundsArgs
+    _count?: boolean | TriviaCategoryCountOutputTypeArgs
   }
 
 
-  export type TwitterUserInclude = {
-    fromFollowing?: boolean | TwitterUser$fromFollowingArgs
-    toFollowing?: boolean | TwitterUser$toFollowingArgs
-    posts?: boolean | TwitterUser$postsArgs
-    fromDirectMessage?: boolean | TwitterUser$fromDirectMessageArgs
-    toDirectMessage?: boolean | TwitterUser$toDirectMessageArgs
-    _count?: boolean | TwitterUserCountOutputTypeArgs
+  export type TriviaCategoryInclude = {
+    questions?: boolean | TriviaCategory$questionsArgs
+    rounds?: boolean | TriviaCategory$roundsArgs
+    _count?: boolean | TriviaCategoryCountOutputTypeArgs
   }
 
-  export type TwitterUserGetPayload<S extends boolean | null | undefined | TwitterUserArgs> =
+  export type TriviaCategoryGetPayload<S extends boolean | null | undefined | TriviaCategoryArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterUser :
+    S extends true ? TriviaCategory :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterUserArgs | TwitterUserFindManyArgs)
-    ? TwitterUser  & {
+    S extends { include: any } & (TriviaCategoryArgs | TriviaCategoryFindManyArgs)
+    ? TriviaCategory  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'fromFollowing' ? Array < TwitterFollowGetPayload<S['include'][P]>>  :
-        P extends 'toFollowing' ? Array < TwitterFollowGetPayload<S['include'][P]>>  :
-        P extends 'posts' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends 'fromDirectMessage' ? Array < TwitterDirectMessageGetPayload<S['include'][P]>>  :
-        P extends 'toDirectMessage' ? Array < TwitterDirectMessageGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'questions' ? Array < TriviaQuestionGetPayload<S['include'][P]>>  :
+        P extends 'rounds' ? Array < TriviaRoundGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TriviaCategoryCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (TwitterUserArgs | TwitterUserFindManyArgs)
+    : S extends { select: any } & (TriviaCategoryArgs | TriviaCategoryFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'fromFollowing' ? Array < TwitterFollowGetPayload<S['select'][P]>>  :
-        P extends 'toFollowing' ? Array < TwitterFollowGetPayload<S['select'][P]>>  :
-        P extends 'posts' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends 'fromDirectMessage' ? Array < TwitterDirectMessageGetPayload<S['select'][P]>>  :
-        P extends 'toDirectMessage' ? Array < TwitterDirectMessageGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterUser ? TwitterUser[P] : never
+        P extends 'questions' ? Array < TriviaQuestionGetPayload<S['select'][P]>>  :
+        P extends 'rounds' ? Array < TriviaRoundGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TriviaCategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaCategory ? TriviaCategory[P] : never
   } 
-      : TwitterUser
+      : TriviaCategory
 
 
-  type TwitterUserCountArgs = 
-    Omit<TwitterUserFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterUserCountAggregateInputType | true
+  type TriviaCategoryCountArgs = 
+    Omit<TriviaCategoryFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaCategoryCountAggregateInputType | true
     }
 
-  export interface TwitterUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface TriviaCategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one TwitterUser that matches the filter.
-     * @param {TwitterUserFindUniqueArgs} args - Arguments to find a TwitterUser
+     * Find zero or one TriviaCategory that matches the filter.
+     * @param {TriviaCategoryFindUniqueArgs} args - Arguments to find a TriviaCategory
      * @example
-     * // Get one TwitterUser
-     * const twitterUser = await prisma.twitterUser.findUnique({
+     * // Get one TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends TwitterUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterUserFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterUser'> extends True ? Prisma__TwitterUserClient<TwitterUserGetPayload<T>> : Prisma__TwitterUserClient<TwitterUserGetPayload<T> | null, null>
+    findUnique<T extends TriviaCategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaCategoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaCategory'> extends True ? Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>> : Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T> | null, null>
 
     /**
-     * Find one TwitterUser that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one TriviaCategory that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {TwitterUserFindUniqueOrThrowArgs} args - Arguments to find a TwitterUser
+     * @param {TriviaCategoryFindUniqueOrThrowArgs} args - Arguments to find a TriviaCategory
      * @example
-     * // Get one TwitterUser
-     * const twitterUser = await prisma.twitterUser.findUniqueOrThrow({
+     * // Get one TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends TwitterUserFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterUserFindUniqueOrThrowArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    findUniqueOrThrow<T extends TriviaCategoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaCategoryFindUniqueOrThrowArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Find the first TwitterUser that matches the filter.
+     * Find the first TriviaCategory that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserFindFirstArgs} args - Arguments to find a TwitterUser
+     * @param {TriviaCategoryFindFirstArgs} args - Arguments to find a TriviaCategory
      * @example
-     * // Get one TwitterUser
-     * const twitterUser = await prisma.twitterUser.findFirst({
+     * // Get one TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends TwitterUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterUserFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterUser'> extends True ? Prisma__TwitterUserClient<TwitterUserGetPayload<T>> : Prisma__TwitterUserClient<TwitterUserGetPayload<T> | null, null>
+    findFirst<T extends TriviaCategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaCategoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaCategory'> extends True ? Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>> : Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T> | null, null>
 
     /**
-     * Find the first TwitterUser that matches the filter or
+     * Find the first TriviaCategory that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserFindFirstOrThrowArgs} args - Arguments to find a TwitterUser
+     * @param {TriviaCategoryFindFirstOrThrowArgs} args - Arguments to find a TriviaCategory
      * @example
-     * // Get one TwitterUser
-     * const twitterUser = await prisma.twitterUser.findFirstOrThrow({
+     * // Get one TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends TwitterUserFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterUserFindFirstOrThrowArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    findFirstOrThrow<T extends TriviaCategoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaCategoryFindFirstOrThrowArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Find zero or more TwitterUsers that matches the filter.
+     * Find zero or more TriviaCategories that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TriviaCategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TwitterUsers
-     * const twitterUsers = await prisma.twitterUser.findMany()
+     * // Get all TriviaCategories
+     * const triviaCategories = await prisma.triviaCategory.findMany()
      * 
-     * // Get first 10 TwitterUsers
-     * const twitterUsers = await prisma.twitterUser.findMany({ take: 10 })
+     * // Get first 10 TriviaCategories
+     * const triviaCategories = await prisma.triviaCategory.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const twitterUserWithIdOnly = await prisma.twitterUser.findMany({ select: { id: true } })
+     * const triviaCategoryWithIdOnly = await prisma.triviaCategory.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends TwitterUserFindManyArgs>(
-      args?: SelectSubset<T, TwitterUserFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterUserGetPayload<T>>>
+    findMany<T extends TriviaCategoryFindManyArgs>(
+      args?: SelectSubset<T, TriviaCategoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaCategoryGetPayload<T>>>
 
     /**
-     * Create a TwitterUser.
-     * @param {TwitterUserCreateArgs} args - Arguments to create a TwitterUser.
+     * Create a TriviaCategory.
+     * @param {TriviaCategoryCreateArgs} args - Arguments to create a TriviaCategory.
      * @example
-     * // Create one TwitterUser
-     * const TwitterUser = await prisma.twitterUser.create({
+     * // Create one TriviaCategory
+     * const TriviaCategory = await prisma.triviaCategory.create({
      *   data: {
-     *     // ... data to create a TwitterUser
+     *     // ... data to create a TriviaCategory
      *   }
      * })
      * 
     **/
-    create<T extends TwitterUserCreateArgs>(
-      args: SelectSubset<T, TwitterUserCreateArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    create<T extends TriviaCategoryCreateArgs>(
+      args: SelectSubset<T, TriviaCategoryCreateArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Create many TwitterUsers.
-     *     @param {TwitterUserCreateManyArgs} args - Arguments to create many TwitterUsers.
+     * Create many TriviaCategories.
+     *     @param {TriviaCategoryCreateManyArgs} args - Arguments to create many TriviaCategories.
      *     @example
-     *     // Create many TwitterUsers
-     *     const twitterUser = await prisma.twitterUser.createMany({
+     *     // Create many TriviaCategories
+     *     const triviaCategory = await prisma.triviaCategory.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends TwitterUserCreateManyArgs>(
-      args?: SelectSubset<T, TwitterUserCreateManyArgs>
+    createMany<T extends TriviaCategoryCreateManyArgs>(
+      args?: SelectSubset<T, TriviaCategoryCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a TwitterUser.
-     * @param {TwitterUserDeleteArgs} args - Arguments to delete one TwitterUser.
+     * Delete a TriviaCategory.
+     * @param {TriviaCategoryDeleteArgs} args - Arguments to delete one TriviaCategory.
      * @example
-     * // Delete one TwitterUser
-     * const TwitterUser = await prisma.twitterUser.delete({
+     * // Delete one TriviaCategory
+     * const TriviaCategory = await prisma.triviaCategory.delete({
      *   where: {
-     *     // ... filter to delete one TwitterUser
+     *     // ... filter to delete one TriviaCategory
      *   }
      * })
      * 
     **/
-    delete<T extends TwitterUserDeleteArgs>(
-      args: SelectSubset<T, TwitterUserDeleteArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    delete<T extends TriviaCategoryDeleteArgs>(
+      args: SelectSubset<T, TriviaCategoryDeleteArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Update one TwitterUser.
-     * @param {TwitterUserUpdateArgs} args - Arguments to update one TwitterUser.
+     * Update one TriviaCategory.
+     * @param {TriviaCategoryUpdateArgs} args - Arguments to update one TriviaCategory.
      * @example
-     * // Update one TwitterUser
-     * const twitterUser = await prisma.twitterUser.update({
+     * // Update one TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1426,34 +1475,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends TwitterUserUpdateArgs>(
-      args: SelectSubset<T, TwitterUserUpdateArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    update<T extends TriviaCategoryUpdateArgs>(
+      args: SelectSubset<T, TriviaCategoryUpdateArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Delete zero or more TwitterUsers.
-     * @param {TwitterUserDeleteManyArgs} args - Arguments to filter TwitterUsers to delete.
+     * Delete zero or more TriviaCategories.
+     * @param {TriviaCategoryDeleteManyArgs} args - Arguments to filter TriviaCategories to delete.
      * @example
-     * // Delete a few TwitterUsers
-     * const { count } = await prisma.twitterUser.deleteMany({
+     * // Delete a few TriviaCategories
+     * const { count } = await prisma.triviaCategory.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends TwitterUserDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterUserDeleteManyArgs>
+    deleteMany<T extends TriviaCategoryDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaCategoryDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TwitterUsers.
+     * Update zero or more TriviaCategories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TriviaCategoryUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TwitterUsers
-     * const twitterUser = await prisma.twitterUser.updateMany({
+     * // Update many TriviaCategories
+     * const triviaCategory = await prisma.triviaCategory.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1463,59 +1512,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends TwitterUserUpdateManyArgs>(
-      args: SelectSubset<T, TwitterUserUpdateManyArgs>
+    updateMany<T extends TriviaCategoryUpdateManyArgs>(
+      args: SelectSubset<T, TriviaCategoryUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one TwitterUser.
-     * @param {TwitterUserUpsertArgs} args - Arguments to update or create a TwitterUser.
+     * Create or update one TriviaCategory.
+     * @param {TriviaCategoryUpsertArgs} args - Arguments to update or create a TriviaCategory.
      * @example
-     * // Update or create a TwitterUser
-     * const twitterUser = await prisma.twitterUser.upsert({
+     * // Update or create a TriviaCategory
+     * const triviaCategory = await prisma.triviaCategory.upsert({
      *   create: {
-     *     // ... data to create a TwitterUser
+     *     // ... data to create a TriviaCategory
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TwitterUser we want to update
+     *     // ... the filter for the TriviaCategory we want to update
      *   }
      * })
     **/
-    upsert<T extends TwitterUserUpsertArgs>(
-      args: SelectSubset<T, TwitterUserUpsertArgs>
-    ): Prisma__TwitterUserClient<TwitterUserGetPayload<T>>
+    upsert<T extends TriviaCategoryUpsertArgs>(
+      args: SelectSubset<T, TriviaCategoryUpsertArgs>
+    ): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T>>
 
     /**
-     * Count the number of TwitterUsers.
+     * Count the number of TriviaCategories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserCountArgs} args - Arguments to filter TwitterUsers to count.
+     * @param {TriviaCategoryCountArgs} args - Arguments to filter TriviaCategories to count.
      * @example
-     * // Count the number of TwitterUsers
-     * const count = await prisma.twitterUser.count({
+     * // Count the number of TriviaCategories
+     * const count = await prisma.triviaCategory.count({
      *   where: {
-     *     // ... the filter for the TwitterUsers we want to count
+     *     // ... the filter for the TriviaCategories we want to count
      *   }
      * })
     **/
-    count<T extends TwitterUserCountArgs>(
-      args?: Subset<T, TwitterUserCountArgs>,
+    count<T extends TriviaCategoryCountArgs>(
+      args?: Subset<T, TriviaCategoryCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TwitterUserCountAggregateOutputType>
+          : GetScalarType<T['select'], TriviaCategoryCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TwitterUser.
+     * Allows you to perform aggregations operations on a TriviaCategory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TriviaCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1535,13 +1584,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TwitterUserAggregateArgs>(args: Subset<T, TwitterUserAggregateArgs>): Prisma.PrismaPromise<GetTwitterUserAggregateType<T>>
+    aggregate<T extends TriviaCategoryAggregateArgs>(args: Subset<T, TriviaCategoryAggregateArgs>): Prisma.PrismaPromise<GetTriviaCategoryAggregateType<T>>
 
     /**
-     * Group by TwitterUser.
+     * Group by TriviaCategory.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserGroupByArgs} args - Group by arguments.
+     * @param {TriviaCategoryGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1556,14 +1605,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TwitterUserGroupByArgs,
+      T extends TriviaCategoryGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterUserGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterUserGroupByArgs['orderBy'] },
+        ? { orderBy: TriviaCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaCategoryGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1612,17 +1661,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TriviaCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TwitterUser.
+   * The delegate class that acts as a "Promise-like" for TriviaCategory.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__TwitterUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__TriviaCategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -1637,15 +1686,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    fromFollowing<T extends TwitterUser$fromFollowingArgs= {}>(args?: Subset<T, TwitterUser$fromFollowingArgs>): Prisma.PrismaPromise<Array<TwitterFollowGetPayload<T>>| Null>;
+    questions<T extends TriviaCategory$questionsArgs= {}>(args?: Subset<T, TriviaCategory$questionsArgs>): Prisma.PrismaPromise<Array<TriviaQuestionGetPayload<T>>| Null>;
 
-    toFollowing<T extends TwitterUser$toFollowingArgs= {}>(args?: Subset<T, TwitterUser$toFollowingArgs>): Prisma.PrismaPromise<Array<TwitterFollowGetPayload<T>>| Null>;
-
-    posts<T extends TwitterUser$postsArgs= {}>(args?: Subset<T, TwitterUser$postsArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
-
-    fromDirectMessage<T extends TwitterUser$fromDirectMessageArgs= {}>(args?: Subset<T, TwitterUser$fromDirectMessageArgs>): Prisma.PrismaPromise<Array<TwitterDirectMessageGetPayload<T>>| Null>;
-
-    toDirectMessage<T extends TwitterUser$toDirectMessageArgs= {}>(args?: Subset<T, TwitterUser$toDirectMessageArgs>): Prisma.PrismaPromise<Array<TwitterDirectMessageGetPayload<T>>| Null>;
+    rounds<T extends TriviaCategory$roundsArgs= {}>(args?: Subset<T, TriviaCategory$roundsArgs>): Prisma.PrismaPromise<Array<TriviaRoundGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -1675,27 +1718,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterUser base type for findUnique actions
+   * TriviaCategory base type for findUnique actions
    */
-  export type TwitterUserFindUniqueArgsBase = {
+  export type TriviaCategoryFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter, which TwitterUser to fetch.
+     * Filter, which TriviaCategory to fetch.
      */
-    where: TwitterUserWhereUniqueInput
+    where: TriviaCategoryWhereUniqueInput
   }
 
   /**
-   * TwitterUser findUnique
+   * TriviaCategory findUnique
    */
-  export interface TwitterUserFindUniqueArgs extends TwitterUserFindUniqueArgsBase {
+  export interface TriviaCategoryFindUniqueArgs extends TriviaCategoryFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -1705,76 +1748,76 @@ export namespace Prisma {
       
 
   /**
-   * TwitterUser findUniqueOrThrow
+   * TriviaCategory findUniqueOrThrow
    */
-  export type TwitterUserFindUniqueOrThrowArgs = {
+  export type TriviaCategoryFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter, which TwitterUser to fetch.
+     * Filter, which TriviaCategory to fetch.
      */
-    where: TwitterUserWhereUniqueInput
+    where: TriviaCategoryWhereUniqueInput
   }
 
 
   /**
-   * TwitterUser base type for findFirst actions
+   * TriviaCategory base type for findFirst actions
    */
-  export type TwitterUserFindFirstArgsBase = {
+  export type TriviaCategoryFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter, which TwitterUser to fetch.
+     * Filter, which TriviaCategory to fetch.
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterUsers to fetch.
+     * Determine the order of TriviaCategories to fetch.
      */
-    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterUsers.
+     * Sets the position for searching for TriviaCategories.
      */
-    cursor?: TwitterUserWhereUniqueInput
+    cursor?: TriviaCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterUsers from the position of the cursor.
+     * Take `±n` TriviaCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterUsers.
+     * Skip the first `n` TriviaCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterUsers.
+     * Filter by unique combinations of TriviaCategories.
      */
-    distinct?: Enumerable<TwitterUserScalarFieldEnum>
+    distinct?: Enumerable<TriviaCategoryScalarFieldEnum>
   }
 
   /**
-   * TwitterUser findFirst
+   * TriviaCategory findFirst
    */
-  export interface TwitterUserFindFirstArgs extends TwitterUserFindFirstArgsBase {
+  export interface TriviaCategoryFindFirstArgs extends TriviaCategoryFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -1784,729 +1827,670 @@ export namespace Prisma {
       
 
   /**
-   * TwitterUser findFirstOrThrow
+   * TriviaCategory findFirstOrThrow
    */
-  export type TwitterUserFindFirstOrThrowArgs = {
+  export type TriviaCategoryFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter, which TwitterUser to fetch.
+     * Filter, which TriviaCategory to fetch.
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterUsers to fetch.
+     * Determine the order of TriviaCategories to fetch.
      */
-    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterUsers.
+     * Sets the position for searching for TriviaCategories.
      */
-    cursor?: TwitterUserWhereUniqueInput
+    cursor?: TriviaCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterUsers from the position of the cursor.
+     * Take `±n` TriviaCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterUsers.
+     * Skip the first `n` TriviaCategories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterUsers.
+     * Filter by unique combinations of TriviaCategories.
      */
-    distinct?: Enumerable<TwitterUserScalarFieldEnum>
+    distinct?: Enumerable<TriviaCategoryScalarFieldEnum>
   }
 
 
   /**
-   * TwitterUser findMany
+   * TriviaCategory findMany
    */
-  export type TwitterUserFindManyArgs = {
+  export type TriviaCategoryFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter, which TwitterUsers to fetch.
+     * Filter, which TriviaCategories to fetch.
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterUsers to fetch.
+     * Determine the order of TriviaCategories to fetch.
      */
-    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaCategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TwitterUsers.
+     * Sets the position for listing TriviaCategories.
      */
-    cursor?: TwitterUserWhereUniqueInput
+    cursor?: TriviaCategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterUsers from the position of the cursor.
+     * Take `±n` TriviaCategories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterUsers.
+     * Skip the first `n` TriviaCategories.
      */
     skip?: number
-    distinct?: Enumerable<TwitterUserScalarFieldEnum>
+    distinct?: Enumerable<TriviaCategoryScalarFieldEnum>
   }
 
 
   /**
-   * TwitterUser create
+   * TriviaCategory create
    */
-  export type TwitterUserCreateArgs = {
+  export type TriviaCategoryCreateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * The data needed to create a TwitterUser.
+     * The data needed to create a TriviaCategory.
      */
-    data: XOR<TwitterUserCreateInput, TwitterUserUncheckedCreateInput>
+    data: XOR<TriviaCategoryCreateInput, TriviaCategoryUncheckedCreateInput>
   }
 
 
   /**
-   * TwitterUser createMany
+   * TriviaCategory createMany
    */
-  export type TwitterUserCreateManyArgs = {
+  export type TriviaCategoryCreateManyArgs = {
     /**
-     * The data used to create many TwitterUsers.
+     * The data used to create many TriviaCategories.
      */
-    data: Enumerable<TwitterUserCreateManyInput>
+    data: Enumerable<TriviaCategoryCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TwitterUser update
+   * TriviaCategory update
    */
-  export type TwitterUserUpdateArgs = {
+  export type TriviaCategoryUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * The data needed to update a TwitterUser.
+     * The data needed to update a TriviaCategory.
      */
-    data: XOR<TwitterUserUpdateInput, TwitterUserUncheckedUpdateInput>
+    data: XOR<TriviaCategoryUpdateInput, TriviaCategoryUncheckedUpdateInput>
     /**
-     * Choose, which TwitterUser to update.
+     * Choose, which TriviaCategory to update.
      */
-    where: TwitterUserWhereUniqueInput
+    where: TriviaCategoryWhereUniqueInput
   }
 
 
   /**
-   * TwitterUser updateMany
+   * TriviaCategory updateMany
    */
-  export type TwitterUserUpdateManyArgs = {
+  export type TriviaCategoryUpdateManyArgs = {
     /**
-     * The data used to update TwitterUsers.
+     * The data used to update TriviaCategories.
      */
-    data: XOR<TwitterUserUpdateManyMutationInput, TwitterUserUncheckedUpdateManyInput>
+    data: XOR<TriviaCategoryUpdateManyMutationInput, TriviaCategoryUncheckedUpdateManyInput>
     /**
-     * Filter which TwitterUsers to update
+     * Filter which TriviaCategories to update
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
   }
 
 
   /**
-   * TwitterUser upsert
+   * TriviaCategory upsert
    */
-  export type TwitterUserUpsertArgs = {
+  export type TriviaCategoryUpsertArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * The filter to search for the TwitterUser to update in case it exists.
+     * The filter to search for the TriviaCategory to update in case it exists.
      */
-    where: TwitterUserWhereUniqueInput
+    where: TriviaCategoryWhereUniqueInput
     /**
-     * In case the TwitterUser found by the `where` argument doesn't exist, create a new TwitterUser with this data.
+     * In case the TriviaCategory found by the `where` argument doesn't exist, create a new TriviaCategory with this data.
      */
-    create: XOR<TwitterUserCreateInput, TwitterUserUncheckedCreateInput>
+    create: XOR<TriviaCategoryCreateInput, TriviaCategoryUncheckedCreateInput>
     /**
-     * In case the TwitterUser was found with the provided `where` argument, update it with this data.
+     * In case the TriviaCategory was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TwitterUserUpdateInput, TwitterUserUncheckedUpdateInput>
+    update: XOR<TriviaCategoryUpdateInput, TriviaCategoryUncheckedUpdateInput>
   }
 
 
   /**
-   * TwitterUser delete
+   * TriviaCategory delete
    */
-  export type TwitterUserDeleteArgs = {
+  export type TriviaCategoryDeleteArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUser
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterUserSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
     /**
-     * Filter which TwitterUser to delete.
+     * Filter which TriviaCategory to delete.
      */
-    where: TwitterUserWhereUniqueInput
+    where: TriviaCategoryWhereUniqueInput
   }
 
 
   /**
-   * TwitterUser deleteMany
+   * TriviaCategory deleteMany
    */
-  export type TwitterUserDeleteManyArgs = {
+  export type TriviaCategoryDeleteManyArgs = {
     /**
-     * Filter which TwitterUsers to delete
+     * Filter which TriviaCategories to delete
      */
-    where?: TwitterUserWhereInput
+    where?: TriviaCategoryWhereInput
   }
 
 
   /**
-   * TwitterUser.fromFollowing
+   * TriviaCategory.questions
    */
-  export type TwitterUser$fromFollowingArgs = {
+  export type TriviaCategory$questionsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
-    where?: TwitterFollowWhereInput
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
-    cursor?: TwitterFollowWhereUniqueInput
+    include?: TriviaQuestionInclude | null
+    where?: TriviaQuestionWhereInput
+    orderBy?: Enumerable<TriviaQuestionOrderByWithRelationInput>
+    cursor?: TriviaQuestionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterFollowScalarFieldEnum>
+    distinct?: Enumerable<TriviaQuestionScalarFieldEnum>
   }
 
 
   /**
-   * TwitterUser.toFollowing
+   * TriviaCategory.rounds
    */
-  export type TwitterUser$toFollowingArgs = {
+  export type TriviaCategory$roundsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
-    where?: TwitterFollowWhereInput
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
-    cursor?: TwitterFollowWhereUniqueInput
+    include?: TriviaRoundInclude | null
+    where?: TriviaRoundWhereInput
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
+    cursor?: TriviaRoundWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterFollowScalarFieldEnum>
+    distinct?: Enumerable<TriviaRoundScalarFieldEnum>
   }
 
 
   /**
-   * TwitterUser.posts
+   * TriviaCategory without action
    */
-  export type TwitterUser$postsArgs = {
+  export type TriviaCategoryArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaCategory
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaCategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
-    where?: TwitterPostWhereInput
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
-    cursor?: TwitterPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUser.fromDirectMessage
-   */
-  export type TwitterUser$fromDirectMessageArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterDirectMessage
-     */
-    select?: TwitterDirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterDirectMessageInclude | null
-    where?: TwitterDirectMessageWhereInput
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
-    cursor?: TwitterDirectMessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterDirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUser.toDirectMessage
-   */
-  export type TwitterUser$toDirectMessageArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterDirectMessage
-     */
-    select?: TwitterDirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterDirectMessageInclude | null
-    where?: TwitterDirectMessageWhereInput
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
-    cursor?: TwitterDirectMessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterDirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUser without action
-   */
-  export type TwitterUserArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUser
-     */
-    select?: TwitterUserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserInclude | null
+    include?: TriviaCategoryInclude | null
   }
 
 
 
   /**
-   * Model TwitterFollow
+   * Model TriviaQuestion
    */
 
 
-  export type AggregateTwitterFollow = {
-    _count: TwitterFollowCountAggregateOutputType | null
-    _avg: TwitterFollowAvgAggregateOutputType | null
-    _sum: TwitterFollowSumAggregateOutputType | null
-    _min: TwitterFollowMinAggregateOutputType | null
-    _max: TwitterFollowMaxAggregateOutputType | null
+  export type AggregateTriviaQuestion = {
+    _count: TriviaQuestionCountAggregateOutputType | null
+    _avg: TriviaQuestionAvgAggregateOutputType | null
+    _sum: TriviaQuestionSumAggregateOutputType | null
+    _min: TriviaQuestionMinAggregateOutputType | null
+    _max: TriviaQuestionMaxAggregateOutputType | null
   }
 
-  export type TwitterFollowAvgAggregateOutputType = {
+  export type TriviaQuestionAvgAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
+    categoryId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
-  export type TwitterFollowSumAggregateOutputType = {
+  export type TriviaQuestionSumAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
+    categoryId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
-  export type TwitterFollowMinAggregateOutputType = {
+  export type TriviaQuestionMinAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    quiz: string | null
+    categoryId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
-  export type TwitterFollowMaxAggregateOutputType = {
+  export type TriviaQuestionMaxAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    quiz: string | null
+    categoryId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
-  export type TwitterFollowCountAggregateOutputType = {
+  export type TriviaQuestionCountAggregateOutputType = {
     id: number
-    fromUserId: number
-    toUserId: number
-    createdAt: number
-    updatedAt: number
+    quiz: number
+    categoryId: number
+    triviaAnswerChoiceId: number
     _all: number
   }
 
 
-  export type TwitterFollowAvgAggregateInputType = {
+  export type TriviaQuestionAvgAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
+    categoryId?: true
+    triviaAnswerChoiceId?: true
   }
 
-  export type TwitterFollowSumAggregateInputType = {
+  export type TriviaQuestionSumAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
+    categoryId?: true
+    triviaAnswerChoiceId?: true
   }
 
-  export type TwitterFollowMinAggregateInputType = {
+  export type TriviaQuestionMinAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
+    quiz?: true
+    categoryId?: true
+    triviaAnswerChoiceId?: true
   }
 
-  export type TwitterFollowMaxAggregateInputType = {
+  export type TriviaQuestionMaxAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
+    quiz?: true
+    categoryId?: true
+    triviaAnswerChoiceId?: true
   }
 
-  export type TwitterFollowCountAggregateInputType = {
+  export type TriviaQuestionCountAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
+    quiz?: true
+    categoryId?: true
+    triviaAnswerChoiceId?: true
     _all?: true
   }
 
-  export type TwitterFollowAggregateArgs = {
+  export type TriviaQuestionAggregateArgs = {
     /**
-     * Filter which TwitterFollow to aggregate.
+     * Filter which TriviaQuestion to aggregate.
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterFollows to fetch.
+     * Determine the order of TriviaQuestions to fetch.
      */
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaQuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TwitterFollowWhereUniqueInput
+    cursor?: TriviaQuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterFollows from the position of the cursor.
+     * Take `±n` TriviaQuestions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterFollows.
+     * Skip the first `n` TriviaQuestions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TwitterFollows
+     * Count returned TriviaQuestions
     **/
-    _count?: true | TwitterFollowCountAggregateInputType
+    _count?: true | TriviaQuestionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TwitterFollowAvgAggregateInputType
+    _avg?: TriviaQuestionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TwitterFollowSumAggregateInputType
+    _sum?: TriviaQuestionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TwitterFollowMinAggregateInputType
+    _min?: TriviaQuestionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TwitterFollowMaxAggregateInputType
+    _max?: TriviaQuestionMaxAggregateInputType
   }
 
-  export type GetTwitterFollowAggregateType<T extends TwitterFollowAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterFollow]: P extends '_count' | 'count'
+  export type GetTriviaQuestionAggregateType<T extends TriviaQuestionAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaQuestion]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTwitterFollow[P]>
-      : GetScalarType<T[P], AggregateTwitterFollow[P]>
+        : GetScalarType<T[P], AggregateTriviaQuestion[P]>
+      : GetScalarType<T[P], AggregateTriviaQuestion[P]>
   }
 
 
 
 
-  export type TwitterFollowGroupByArgs = {
-    where?: TwitterFollowWhereInput
-    orderBy?: Enumerable<TwitterFollowOrderByWithAggregationInput>
-    by: TwitterFollowScalarFieldEnum[]
-    having?: TwitterFollowScalarWhereWithAggregatesInput
+  export type TriviaQuestionGroupByArgs = {
+    where?: TriviaQuestionWhereInput
+    orderBy?: Enumerable<TriviaQuestionOrderByWithAggregationInput>
+    by: TriviaQuestionScalarFieldEnum[]
+    having?: TriviaQuestionScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TwitterFollowCountAggregateInputType | true
-    _avg?: TwitterFollowAvgAggregateInputType
-    _sum?: TwitterFollowSumAggregateInputType
-    _min?: TwitterFollowMinAggregateInputType
-    _max?: TwitterFollowMaxAggregateInputType
+    _count?: TriviaQuestionCountAggregateInputType | true
+    _avg?: TriviaQuestionAvgAggregateInputType
+    _sum?: TriviaQuestionSumAggregateInputType
+    _min?: TriviaQuestionMinAggregateInputType
+    _max?: TriviaQuestionMaxAggregateInputType
   }
 
 
-  export type TwitterFollowGroupByOutputType = {
+  export type TriviaQuestionGroupByOutputType = {
     id: number
-    fromUserId: number
-    toUserId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterFollowCountAggregateOutputType | null
-    _avg: TwitterFollowAvgAggregateOutputType | null
-    _sum: TwitterFollowSumAggregateOutputType | null
-    _min: TwitterFollowMinAggregateOutputType | null
-    _max: TwitterFollowMaxAggregateOutputType | null
+    quiz: string
+    categoryId: number
+    triviaAnswerChoiceId: number
+    _count: TriviaQuestionCountAggregateOutputType | null
+    _avg: TriviaQuestionAvgAggregateOutputType | null
+    _sum: TriviaQuestionSumAggregateOutputType | null
+    _min: TriviaQuestionMinAggregateOutputType | null
+    _max: TriviaQuestionMaxAggregateOutputType | null
   }
 
-  type GetTwitterFollowGroupByPayload<T extends TwitterFollowGroupByArgs> = Prisma.PrismaPromise<
+  type GetTriviaQuestionGroupByPayload<T extends TriviaQuestionGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<TwitterFollowGroupByOutputType, T['by']> &
+      PickArray<TriviaQuestionGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TwitterFollowGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TriviaQuestionGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TwitterFollowGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterFollowGroupByOutputType[P]>
+              : GetScalarType<T[P], TriviaQuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaQuestionGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TwitterFollowSelect = {
+  export type TriviaQuestionSelect = {
     id?: boolean
-    fromUserId?: boolean
-    toUserId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
+    quiz?: boolean
+    categoryId?: boolean
+    triviaAnswerChoiceId?: boolean
+    category?: boolean | TriviaCategoryArgs
+    roundQuestions?: boolean | TriviaQuestion$roundQuestionsArgs
+    choices?: boolean | TriviaQuestion$choicesArgs
+    answer?: boolean | TriviaChoiceArgs
+    _count?: boolean | TriviaQuestionCountOutputTypeArgs
   }
 
 
-  export type TwitterFollowInclude = {
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
+  export type TriviaQuestionInclude = {
+    category?: boolean | TriviaCategoryArgs
+    roundQuestions?: boolean | TriviaQuestion$roundQuestionsArgs
+    choices?: boolean | TriviaQuestion$choicesArgs
+    answer?: boolean | TriviaChoiceArgs
+    _count?: boolean | TriviaQuestionCountOutputTypeArgs
   }
 
-  export type TwitterFollowGetPayload<S extends boolean | null | undefined | TwitterFollowArgs> =
+  export type TriviaQuestionGetPayload<S extends boolean | null | undefined | TriviaQuestionArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterFollow :
+    S extends true ? TriviaQuestion :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterFollowArgs | TwitterFollowFindManyArgs)
-    ? TwitterFollow  & {
+    S extends { include: any } & (TriviaQuestionArgs | TriviaQuestionFindManyArgs)
+    ? TriviaQuestion  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['include'][P]> :  never
+        P extends 'category' ? TriviaCategoryGetPayload<S['include'][P]> :
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['include'][P]>>  :
+        P extends 'choices' ? Array < TriviaChoiceGetPayload<S['include'][P]>>  :
+        P extends 'answer' ? TriviaChoiceGetPayload<S['include'][P]> :
+        P extends '_count' ? TriviaQuestionCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (TwitterFollowArgs | TwitterFollowFindManyArgs)
+    : S extends { select: any } & (TriviaQuestionArgs | TriviaQuestionFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['select'][P]> :  P extends keyof TwitterFollow ? TwitterFollow[P] : never
+        P extends 'category' ? TriviaCategoryGetPayload<S['select'][P]> :
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['select'][P]>>  :
+        P extends 'choices' ? Array < TriviaChoiceGetPayload<S['select'][P]>>  :
+        P extends 'answer' ? TriviaChoiceGetPayload<S['select'][P]> :
+        P extends '_count' ? TriviaQuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaQuestion ? TriviaQuestion[P] : never
   } 
-      : TwitterFollow
+      : TriviaQuestion
 
 
-  type TwitterFollowCountArgs = 
-    Omit<TwitterFollowFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterFollowCountAggregateInputType | true
+  type TriviaQuestionCountArgs = 
+    Omit<TriviaQuestionFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaQuestionCountAggregateInputType | true
     }
 
-  export interface TwitterFollowDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface TriviaQuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one TwitterFollow that matches the filter.
-     * @param {TwitterFollowFindUniqueArgs} args - Arguments to find a TwitterFollow
+     * Find zero or one TriviaQuestion that matches the filter.
+     * @param {TriviaQuestionFindUniqueArgs} args - Arguments to find a TriviaQuestion
      * @example
-     * // Get one TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.findUnique({
+     * // Get one TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends TwitterFollowFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterFollowFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterFollow'> extends True ? Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>> : Prisma__TwitterFollowClient<TwitterFollowGetPayload<T> | null, null>
+    findUnique<T extends TriviaQuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaQuestionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaQuestion'> extends True ? Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>> : Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T> | null, null>
 
     /**
-     * Find one TwitterFollow that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one TriviaQuestion that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {TwitterFollowFindUniqueOrThrowArgs} args - Arguments to find a TwitterFollow
+     * @param {TriviaQuestionFindUniqueOrThrowArgs} args - Arguments to find a TriviaQuestion
      * @example
-     * // Get one TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.findUniqueOrThrow({
+     * // Get one TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends TwitterFollowFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterFollowFindUniqueOrThrowArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    findUniqueOrThrow<T extends TriviaQuestionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaQuestionFindUniqueOrThrowArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Find the first TwitterFollow that matches the filter.
+     * Find the first TriviaQuestion that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowFindFirstArgs} args - Arguments to find a TwitterFollow
+     * @param {TriviaQuestionFindFirstArgs} args - Arguments to find a TriviaQuestion
      * @example
-     * // Get one TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.findFirst({
+     * // Get one TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends TwitterFollowFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterFollowFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterFollow'> extends True ? Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>> : Prisma__TwitterFollowClient<TwitterFollowGetPayload<T> | null, null>
+    findFirst<T extends TriviaQuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaQuestionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaQuestion'> extends True ? Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>> : Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T> | null, null>
 
     /**
-     * Find the first TwitterFollow that matches the filter or
+     * Find the first TriviaQuestion that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowFindFirstOrThrowArgs} args - Arguments to find a TwitterFollow
+     * @param {TriviaQuestionFindFirstOrThrowArgs} args - Arguments to find a TriviaQuestion
      * @example
-     * // Get one TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.findFirstOrThrow({
+     * // Get one TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends TwitterFollowFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterFollowFindFirstOrThrowArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    findFirstOrThrow<T extends TriviaQuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaQuestionFindFirstOrThrowArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Find zero or more TwitterFollows that matches the filter.
+     * Find zero or more TriviaQuestions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TriviaQuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TwitterFollows
-     * const twitterFollows = await prisma.twitterFollow.findMany()
+     * // Get all TriviaQuestions
+     * const triviaQuestions = await prisma.triviaQuestion.findMany()
      * 
-     * // Get first 10 TwitterFollows
-     * const twitterFollows = await prisma.twitterFollow.findMany({ take: 10 })
+     * // Get first 10 TriviaQuestions
+     * const triviaQuestions = await prisma.triviaQuestion.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const twitterFollowWithIdOnly = await prisma.twitterFollow.findMany({ select: { id: true } })
+     * const triviaQuestionWithIdOnly = await prisma.triviaQuestion.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends TwitterFollowFindManyArgs>(
-      args?: SelectSubset<T, TwitterFollowFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterFollowGetPayload<T>>>
+    findMany<T extends TriviaQuestionFindManyArgs>(
+      args?: SelectSubset<T, TriviaQuestionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaQuestionGetPayload<T>>>
 
     /**
-     * Create a TwitterFollow.
-     * @param {TwitterFollowCreateArgs} args - Arguments to create a TwitterFollow.
+     * Create a TriviaQuestion.
+     * @param {TriviaQuestionCreateArgs} args - Arguments to create a TriviaQuestion.
      * @example
-     * // Create one TwitterFollow
-     * const TwitterFollow = await prisma.twitterFollow.create({
+     * // Create one TriviaQuestion
+     * const TriviaQuestion = await prisma.triviaQuestion.create({
      *   data: {
-     *     // ... data to create a TwitterFollow
+     *     // ... data to create a TriviaQuestion
      *   }
      * })
      * 
     **/
-    create<T extends TwitterFollowCreateArgs>(
-      args: SelectSubset<T, TwitterFollowCreateArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    create<T extends TriviaQuestionCreateArgs>(
+      args: SelectSubset<T, TriviaQuestionCreateArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Create many TwitterFollows.
-     *     @param {TwitterFollowCreateManyArgs} args - Arguments to create many TwitterFollows.
+     * Create many TriviaQuestions.
+     *     @param {TriviaQuestionCreateManyArgs} args - Arguments to create many TriviaQuestions.
      *     @example
-     *     // Create many TwitterFollows
-     *     const twitterFollow = await prisma.twitterFollow.createMany({
+     *     // Create many TriviaQuestions
+     *     const triviaQuestion = await prisma.triviaQuestion.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends TwitterFollowCreateManyArgs>(
-      args?: SelectSubset<T, TwitterFollowCreateManyArgs>
+    createMany<T extends TriviaQuestionCreateManyArgs>(
+      args?: SelectSubset<T, TriviaQuestionCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a TwitterFollow.
-     * @param {TwitterFollowDeleteArgs} args - Arguments to delete one TwitterFollow.
+     * Delete a TriviaQuestion.
+     * @param {TriviaQuestionDeleteArgs} args - Arguments to delete one TriviaQuestion.
      * @example
-     * // Delete one TwitterFollow
-     * const TwitterFollow = await prisma.twitterFollow.delete({
+     * // Delete one TriviaQuestion
+     * const TriviaQuestion = await prisma.triviaQuestion.delete({
      *   where: {
-     *     // ... filter to delete one TwitterFollow
+     *     // ... filter to delete one TriviaQuestion
      *   }
      * })
      * 
     **/
-    delete<T extends TwitterFollowDeleteArgs>(
-      args: SelectSubset<T, TwitterFollowDeleteArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    delete<T extends TriviaQuestionDeleteArgs>(
+      args: SelectSubset<T, TriviaQuestionDeleteArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Update one TwitterFollow.
-     * @param {TwitterFollowUpdateArgs} args - Arguments to update one TwitterFollow.
+     * Update one TriviaQuestion.
+     * @param {TriviaQuestionUpdateArgs} args - Arguments to update one TriviaQuestion.
      * @example
-     * // Update one TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.update({
+     * // Update one TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2516,34 +2500,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends TwitterFollowUpdateArgs>(
-      args: SelectSubset<T, TwitterFollowUpdateArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    update<T extends TriviaQuestionUpdateArgs>(
+      args: SelectSubset<T, TriviaQuestionUpdateArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Delete zero or more TwitterFollows.
-     * @param {TwitterFollowDeleteManyArgs} args - Arguments to filter TwitterFollows to delete.
+     * Delete zero or more TriviaQuestions.
+     * @param {TriviaQuestionDeleteManyArgs} args - Arguments to filter TriviaQuestions to delete.
      * @example
-     * // Delete a few TwitterFollows
-     * const { count } = await prisma.twitterFollow.deleteMany({
+     * // Delete a few TriviaQuestions
+     * const { count } = await prisma.triviaQuestion.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends TwitterFollowDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterFollowDeleteManyArgs>
+    deleteMany<T extends TriviaQuestionDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaQuestionDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TwitterFollows.
+     * Update zero or more TriviaQuestions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TriviaQuestionUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TwitterFollows
-     * const twitterFollow = await prisma.twitterFollow.updateMany({
+     * // Update many TriviaQuestions
+     * const triviaQuestion = await prisma.triviaQuestion.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2553,59 +2537,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends TwitterFollowUpdateManyArgs>(
-      args: SelectSubset<T, TwitterFollowUpdateManyArgs>
+    updateMany<T extends TriviaQuestionUpdateManyArgs>(
+      args: SelectSubset<T, TriviaQuestionUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one TwitterFollow.
-     * @param {TwitterFollowUpsertArgs} args - Arguments to update or create a TwitterFollow.
+     * Create or update one TriviaQuestion.
+     * @param {TriviaQuestionUpsertArgs} args - Arguments to update or create a TriviaQuestion.
      * @example
-     * // Update or create a TwitterFollow
-     * const twitterFollow = await prisma.twitterFollow.upsert({
+     * // Update or create a TriviaQuestion
+     * const triviaQuestion = await prisma.triviaQuestion.upsert({
      *   create: {
-     *     // ... data to create a TwitterFollow
+     *     // ... data to create a TriviaQuestion
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TwitterFollow we want to update
+     *     // ... the filter for the TriviaQuestion we want to update
      *   }
      * })
     **/
-    upsert<T extends TwitterFollowUpsertArgs>(
-      args: SelectSubset<T, TwitterFollowUpsertArgs>
-    ): Prisma__TwitterFollowClient<TwitterFollowGetPayload<T>>
+    upsert<T extends TriviaQuestionUpsertArgs>(
+      args: SelectSubset<T, TriviaQuestionUpsertArgs>
+    ): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T>>
 
     /**
-     * Count the number of TwitterFollows.
+     * Count the number of TriviaQuestions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowCountArgs} args - Arguments to filter TwitterFollows to count.
+     * @param {TriviaQuestionCountArgs} args - Arguments to filter TriviaQuestions to count.
      * @example
-     * // Count the number of TwitterFollows
-     * const count = await prisma.twitterFollow.count({
+     * // Count the number of TriviaQuestions
+     * const count = await prisma.triviaQuestion.count({
      *   where: {
-     *     // ... the filter for the TwitterFollows we want to count
+     *     // ... the filter for the TriviaQuestions we want to count
      *   }
      * })
     **/
-    count<T extends TwitterFollowCountArgs>(
-      args?: Subset<T, TwitterFollowCountArgs>,
+    count<T extends TriviaQuestionCountArgs>(
+      args?: Subset<T, TriviaQuestionCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TwitterFollowCountAggregateOutputType>
+          : GetScalarType<T['select'], TriviaQuestionCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TwitterFollow.
+     * Allows you to perform aggregations operations on a TriviaQuestion.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TriviaQuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2625,13 +2609,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TwitterFollowAggregateArgs>(args: Subset<T, TwitterFollowAggregateArgs>): Prisma.PrismaPromise<GetTwitterFollowAggregateType<T>>
+    aggregate<T extends TriviaQuestionAggregateArgs>(args: Subset<T, TriviaQuestionAggregateArgs>): Prisma.PrismaPromise<GetTriviaQuestionAggregateType<T>>
 
     /**
-     * Group by TwitterFollow.
+     * Group by TriviaQuestion.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterFollowGroupByArgs} args - Group by arguments.
+     * @param {TriviaQuestionGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2646,14 +2630,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TwitterFollowGroupByArgs,
+      T extends TriviaQuestionGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterFollowGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterFollowGroupByArgs['orderBy'] },
+        ? { orderBy: TriviaQuestionGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaQuestionGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2702,17 +2686,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterFollowGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterFollowGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TriviaQuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TwitterFollow.
+   * The delegate class that acts as a "Promise-like" for TriviaQuestion.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__TwitterFollowClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__TriviaQuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -2727,9 +2711,13 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    from<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
+    category<T extends TriviaCategoryArgs= {}>(args?: Subset<T, TriviaCategoryArgs>): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T> | Null>;
 
-    to<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
+    roundQuestions<T extends TriviaQuestion$roundQuestionsArgs= {}>(args?: Subset<T, TriviaQuestion$roundQuestionsArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuestionGetPayload<T>>| Null>;
+
+    choices<T extends TriviaQuestion$choicesArgs= {}>(args?: Subset<T, TriviaQuestion$choicesArgs>): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>| Null>;
+
+    answer<T extends TriviaChoiceArgs= {}>(args?: Subset<T, TriviaChoiceArgs>): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -2759,27 +2747,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterFollow base type for findUnique actions
+   * TriviaQuestion base type for findUnique actions
    */
-  export type TwitterFollowFindUniqueArgsBase = {
+  export type TriviaQuestionFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter, which TwitterFollow to fetch.
+     * Filter, which TriviaQuestion to fetch.
      */
-    where: TwitterFollowWhereUniqueInput
+    where: TriviaQuestionWhereUniqueInput
   }
 
   /**
-   * TwitterFollow findUnique
+   * TriviaQuestion findUnique
    */
-  export interface TwitterFollowFindUniqueArgs extends TwitterFollowFindUniqueArgsBase {
+  export interface TriviaQuestionFindUniqueArgs extends TriviaQuestionFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -2789,76 +2777,76 @@ export namespace Prisma {
       
 
   /**
-   * TwitterFollow findUniqueOrThrow
+   * TriviaQuestion findUniqueOrThrow
    */
-  export type TwitterFollowFindUniqueOrThrowArgs = {
+  export type TriviaQuestionFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter, which TwitterFollow to fetch.
+     * Filter, which TriviaQuestion to fetch.
      */
-    where: TwitterFollowWhereUniqueInput
+    where: TriviaQuestionWhereUniqueInput
   }
 
 
   /**
-   * TwitterFollow base type for findFirst actions
+   * TriviaQuestion base type for findFirst actions
    */
-  export type TwitterFollowFindFirstArgsBase = {
+  export type TriviaQuestionFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter, which TwitterFollow to fetch.
+     * Filter, which TriviaQuestion to fetch.
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterFollows to fetch.
+     * Determine the order of TriviaQuestions to fetch.
      */
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaQuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterFollows.
+     * Sets the position for searching for TriviaQuestions.
      */
-    cursor?: TwitterFollowWhereUniqueInput
+    cursor?: TriviaQuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterFollows from the position of the cursor.
+     * Take `±n` TriviaQuestions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterFollows.
+     * Skip the first `n` TriviaQuestions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterFollows.
+     * Filter by unique combinations of TriviaQuestions.
      */
-    distinct?: Enumerable<TwitterFollowScalarFieldEnum>
+    distinct?: Enumerable<TriviaQuestionScalarFieldEnum>
   }
 
   /**
-   * TwitterFollow findFirst
+   * TriviaQuestion findFirst
    */
-  export interface TwitterFollowFindFirstArgs extends TwitterFollowFindFirstArgsBase {
+  export interface TriviaQuestionFindFirstArgs extends TriviaQuestionFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -2868,632 +2856,2673 @@ export namespace Prisma {
       
 
   /**
-   * TwitterFollow findFirstOrThrow
+   * TriviaQuestion findFirstOrThrow
    */
-  export type TwitterFollowFindFirstOrThrowArgs = {
+  export type TriviaQuestionFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter, which TwitterFollow to fetch.
+     * Filter, which TriviaQuestion to fetch.
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterFollows to fetch.
+     * Determine the order of TriviaQuestions to fetch.
      */
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaQuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterFollows.
+     * Sets the position for searching for TriviaQuestions.
      */
-    cursor?: TwitterFollowWhereUniqueInput
+    cursor?: TriviaQuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterFollows from the position of the cursor.
+     * Take `±n` TriviaQuestions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterFollows.
+     * Skip the first `n` TriviaQuestions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterFollows.
+     * Filter by unique combinations of TriviaQuestions.
      */
-    distinct?: Enumerable<TwitterFollowScalarFieldEnum>
+    distinct?: Enumerable<TriviaQuestionScalarFieldEnum>
   }
 
 
   /**
-   * TwitterFollow findMany
+   * TriviaQuestion findMany
    */
-  export type TwitterFollowFindManyArgs = {
+  export type TriviaQuestionFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter, which TwitterFollows to fetch.
+     * Filter, which TriviaQuestions to fetch.
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterFollows to fetch.
+     * Determine the order of TriviaQuestions to fetch.
      */
-    orderBy?: Enumerable<TwitterFollowOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaQuestionOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TwitterFollows.
+     * Sets the position for listing TriviaQuestions.
      */
-    cursor?: TwitterFollowWhereUniqueInput
+    cursor?: TriviaQuestionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterFollows from the position of the cursor.
+     * Take `±n` TriviaQuestions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterFollows.
+     * Skip the first `n` TriviaQuestions.
      */
     skip?: number
-    distinct?: Enumerable<TwitterFollowScalarFieldEnum>
+    distinct?: Enumerable<TriviaQuestionScalarFieldEnum>
   }
 
 
   /**
-   * TwitterFollow create
+   * TriviaQuestion create
    */
-  export type TwitterFollowCreateArgs = {
+  export type TriviaQuestionCreateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * The data needed to create a TwitterFollow.
+     * The data needed to create a TriviaQuestion.
      */
-    data: XOR<TwitterFollowCreateInput, TwitterFollowUncheckedCreateInput>
+    data: XOR<TriviaQuestionCreateInput, TriviaQuestionUncheckedCreateInput>
   }
 
 
   /**
-   * TwitterFollow createMany
+   * TriviaQuestion createMany
    */
-  export type TwitterFollowCreateManyArgs = {
+  export type TriviaQuestionCreateManyArgs = {
     /**
-     * The data used to create many TwitterFollows.
+     * The data used to create many TriviaQuestions.
      */
-    data: Enumerable<TwitterFollowCreateManyInput>
+    data: Enumerable<TriviaQuestionCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TwitterFollow update
+   * TriviaQuestion update
    */
-  export type TwitterFollowUpdateArgs = {
+  export type TriviaQuestionUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * The data needed to update a TwitterFollow.
+     * The data needed to update a TriviaQuestion.
      */
-    data: XOR<TwitterFollowUpdateInput, TwitterFollowUncheckedUpdateInput>
+    data: XOR<TriviaQuestionUpdateInput, TriviaQuestionUncheckedUpdateInput>
     /**
-     * Choose, which TwitterFollow to update.
+     * Choose, which TriviaQuestion to update.
      */
-    where: TwitterFollowWhereUniqueInput
+    where: TriviaQuestionWhereUniqueInput
   }
 
 
   /**
-   * TwitterFollow updateMany
+   * TriviaQuestion updateMany
    */
-  export type TwitterFollowUpdateManyArgs = {
+  export type TriviaQuestionUpdateManyArgs = {
     /**
-     * The data used to update TwitterFollows.
+     * The data used to update TriviaQuestions.
      */
-    data: XOR<TwitterFollowUpdateManyMutationInput, TwitterFollowUncheckedUpdateManyInput>
+    data: XOR<TriviaQuestionUpdateManyMutationInput, TriviaQuestionUncheckedUpdateManyInput>
     /**
-     * Filter which TwitterFollows to update
+     * Filter which TriviaQuestions to update
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
   }
 
 
   /**
-   * TwitterFollow upsert
+   * TriviaQuestion upsert
    */
-  export type TwitterFollowUpsertArgs = {
+  export type TriviaQuestionUpsertArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * The filter to search for the TwitterFollow to update in case it exists.
+     * The filter to search for the TriviaQuestion to update in case it exists.
      */
-    where: TwitterFollowWhereUniqueInput
+    where: TriviaQuestionWhereUniqueInput
     /**
-     * In case the TwitterFollow found by the `where` argument doesn't exist, create a new TwitterFollow with this data.
+     * In case the TriviaQuestion found by the `where` argument doesn't exist, create a new TriviaQuestion with this data.
      */
-    create: XOR<TwitterFollowCreateInput, TwitterFollowUncheckedCreateInput>
+    create: XOR<TriviaQuestionCreateInput, TriviaQuestionUncheckedCreateInput>
     /**
-     * In case the TwitterFollow was found with the provided `where` argument, update it with this data.
+     * In case the TriviaQuestion was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TwitterFollowUpdateInput, TwitterFollowUncheckedUpdateInput>
+    update: XOR<TriviaQuestionUpdateInput, TriviaQuestionUncheckedUpdateInput>
   }
 
 
   /**
-   * TwitterFollow delete
+   * TriviaQuestion delete
    */
-  export type TwitterFollowDeleteArgs = {
+  export type TriviaQuestionDeleteArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaQuestionInclude | null
     /**
-     * Filter which TwitterFollow to delete.
+     * Filter which TriviaQuestion to delete.
      */
-    where: TwitterFollowWhereUniqueInput
+    where: TriviaQuestionWhereUniqueInput
   }
 
 
   /**
-   * TwitterFollow deleteMany
+   * TriviaQuestion deleteMany
    */
-  export type TwitterFollowDeleteManyArgs = {
+  export type TriviaQuestionDeleteManyArgs = {
     /**
-     * Filter which TwitterFollows to delete
+     * Filter which TriviaQuestions to delete
      */
-    where?: TwitterFollowWhereInput
+    where?: TriviaQuestionWhereInput
   }
 
 
   /**
-   * TwitterFollow without action
+   * TriviaQuestion.roundQuestions
    */
-  export type TwitterFollowArgs = {
+  export type TriviaQuestion$roundQuestionsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterFollow
+     * Select specific fields to fetch from the TriviaRoundQuestion
      */
-    select?: TwitterFollowSelect | null
+    select?: TriviaRoundQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterFollowInclude | null
+    include?: TriviaRoundQuestionInclude | null
+    where?: TriviaRoundQuestionWhereInput
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaQuestion.choices
+   */
+  export type TriviaQuestion$choicesArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    cursor?: TriviaChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaQuestion without action
+   */
+  export type TriviaQuestionArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaQuestion
+     */
+    select?: TriviaQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaQuestionInclude | null
   }
 
 
 
   /**
-   * Model TwitterPost
+   * Model TriviaChoice
    */
 
 
-  export type AggregateTwitterPost = {
-    _count: TwitterPostCountAggregateOutputType | null
-    _avg: TwitterPostAvgAggregateOutputType | null
-    _sum: TwitterPostSumAggregateOutputType | null
-    _min: TwitterPostMinAggregateOutputType | null
-    _max: TwitterPostMaxAggregateOutputType | null
+  export type AggregateTriviaChoice = {
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
   }
 
-  export type TwitterPostAvgAggregateOutputType = {
+  export type TriviaChoiceAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
+    quizId: number | null
   }
 
-  export type TwitterPostSumAggregateOutputType = {
+  export type TriviaChoiceSumAggregateOutputType = {
     id: number | null
-    userId: number | null
+    quizId: number | null
   }
 
-  export type TwitterPostMinAggregateOutputType = {
+  export type TriviaChoiceMinAggregateOutputType = {
     id: number | null
-    caption: string | null
-    userId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    choice: string | null
+    quizId: number | null
   }
 
-  export type TwitterPostMaxAggregateOutputType = {
+  export type TriviaChoiceMaxAggregateOutputType = {
     id: number | null
-    caption: string | null
-    userId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    choice: string | null
+    quizId: number | null
   }
 
-  export type TwitterPostCountAggregateOutputType = {
+  export type TriviaChoiceCountAggregateOutputType = {
     id: number
-    caption: number
-    userId: number
-    createdAt: number
-    updatedAt: number
+    choice: number
+    quizId: number
     _all: number
   }
 
 
-  export type TwitterPostAvgAggregateInputType = {
+  export type TriviaChoiceAvgAggregateInputType = {
     id?: true
-    userId?: true
+    quizId?: true
   }
 
-  export type TwitterPostSumAggregateInputType = {
+  export type TriviaChoiceSumAggregateInputType = {
     id?: true
-    userId?: true
+    quizId?: true
   }
 
-  export type TwitterPostMinAggregateInputType = {
+  export type TriviaChoiceMinAggregateInputType = {
     id?: true
-    caption?: true
-    userId?: true
-    createdAt?: true
-    updatedAt?: true
+    choice?: true
+    quizId?: true
   }
 
-  export type TwitterPostMaxAggregateInputType = {
+  export type TriviaChoiceMaxAggregateInputType = {
     id?: true
-    caption?: true
-    userId?: true
-    createdAt?: true
-    updatedAt?: true
+    choice?: true
+    quizId?: true
   }
 
-  export type TwitterPostCountAggregateInputType = {
+  export type TriviaChoiceCountAggregateInputType = {
     id?: true
-    caption?: true
-    userId?: true
-    createdAt?: true
-    updatedAt?: true
+    choice?: true
+    quizId?: true
     _all?: true
   }
 
-  export type TwitterPostAggregateArgs = {
+  export type TriviaChoiceAggregateArgs = {
     /**
-     * Filter which TwitterPost to aggregate.
+     * Filter which TriviaChoice to aggregate.
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterPosts to fetch.
+     * Determine the order of TriviaChoices to fetch.
      */
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TwitterPostWhereUniqueInput
+    cursor?: TriviaChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterPosts from the position of the cursor.
+     * Take `±n` TriviaChoices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterPosts.
+     * Skip the first `n` TriviaChoices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TwitterPosts
+     * Count returned TriviaChoices
     **/
-    _count?: true | TwitterPostCountAggregateInputType
+    _count?: true | TriviaChoiceCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TwitterPostAvgAggregateInputType
+    _avg?: TriviaChoiceAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TwitterPostSumAggregateInputType
+    _sum?: TriviaChoiceSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TwitterPostMinAggregateInputType
+    _min?: TriviaChoiceMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TwitterPostMaxAggregateInputType
+    _max?: TriviaChoiceMaxAggregateInputType
   }
 
-  export type GetTwitterPostAggregateType<T extends TwitterPostAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterPost]: P extends '_count' | 'count'
+  export type GetTriviaChoiceAggregateType<T extends TriviaChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaChoice]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTwitterPost[P]>
-      : GetScalarType<T[P], AggregateTwitterPost[P]>
+        : GetScalarType<T[P], AggregateTriviaChoice[P]>
+      : GetScalarType<T[P], AggregateTriviaChoice[P]>
   }
 
 
 
 
-  export type TwitterPostGroupByArgs = {
-    where?: TwitterPostWhereInput
-    orderBy?: Enumerable<TwitterPostOrderByWithAggregationInput>
-    by: TwitterPostScalarFieldEnum[]
-    having?: TwitterPostScalarWhereWithAggregatesInput
+  export type TriviaChoiceGroupByArgs = {
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithAggregationInput>
+    by: TriviaChoiceScalarFieldEnum[]
+    having?: TriviaChoiceScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TwitterPostCountAggregateInputType | true
-    _avg?: TwitterPostAvgAggregateInputType
-    _sum?: TwitterPostSumAggregateInputType
-    _min?: TwitterPostMinAggregateInputType
-    _max?: TwitterPostMaxAggregateInputType
+    _count?: TriviaChoiceCountAggregateInputType | true
+    _avg?: TriviaChoiceAvgAggregateInputType
+    _sum?: TriviaChoiceSumAggregateInputType
+    _min?: TriviaChoiceMinAggregateInputType
+    _max?: TriviaChoiceMaxAggregateInputType
   }
 
 
-  export type TwitterPostGroupByOutputType = {
+  export type TriviaChoiceGroupByOutputType = {
     id: number
-    caption: string
-    userId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterPostCountAggregateOutputType | null
-    _avg: TwitterPostAvgAggregateOutputType | null
-    _sum: TwitterPostSumAggregateOutputType | null
-    _min: TwitterPostMinAggregateOutputType | null
-    _max: TwitterPostMaxAggregateOutputType | null
+    choice: string
+    quizId: number | null
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
   }
 
-  type GetTwitterPostGroupByPayload<T extends TwitterPostGroupByArgs> = Prisma.PrismaPromise<
+  type GetTriviaChoiceGroupByPayload<T extends TriviaChoiceGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<TwitterPostGroupByOutputType, T['by']> &
+      PickArray<TriviaChoiceGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TwitterPostGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TriviaChoiceGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TwitterPostGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterPostGroupByOutputType[P]>
+              : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TwitterPostSelect = {
+  export type TriviaChoiceSelect = {
     id?: boolean
-    caption?: boolean
+    choice?: boolean
+    quizId?: boolean
+    roundQuestions?: boolean | TriviaChoice$roundQuestionsArgs
+    quiz?: boolean | TriviaQuestionArgs
+    quizAnswer?: boolean | TriviaQuestionArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+  }
+
+
+  export type TriviaChoiceInclude = {
+    roundQuestions?: boolean | TriviaChoice$roundQuestionsArgs
+    quiz?: boolean | TriviaQuestionArgs
+    quizAnswer?: boolean | TriviaQuestionArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
+  }
+
+  export type TriviaChoiceGetPayload<S extends boolean | null | undefined | TriviaChoiceArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaChoice :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
+    ? TriviaChoice  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['include'][P]>>  :
+        P extends 'quiz' ? TriviaQuestionGetPayload<S['include'][P]> | null :
+        P extends 'quizAnswer' ? TriviaQuestionGetPayload<S['include'][P]> | null :
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['select'][P]>>  :
+        P extends 'quiz' ? TriviaQuestionGetPayload<S['select'][P]> | null :
+        P extends 'quizAnswer' ? TriviaQuestionGetPayload<S['select'][P]> | null :
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaChoice ? TriviaChoice[P] : never
+  } 
+      : TriviaChoice
+
+
+  type TriviaChoiceCountArgs = 
+    Omit<TriviaChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaChoiceCountAggregateInputType | true
+    }
+
+  export interface TriviaChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one TriviaChoice that matches the filter.
+     * @param {TriviaChoiceFindUniqueArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TriviaChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find one TriviaChoice that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TriviaChoiceFindUniqueOrThrowArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TriviaChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindUniqueOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Find the first TriviaChoice that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindFirstArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TriviaChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
+
+    /**
+     * Find the first TriviaChoice that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindFirstOrThrowArgs} args - Arguments to find a TriviaChoice
+     * @example
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TriviaChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Find zero or more TriviaChoices that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany()
+     * 
+     * // Get first 10 TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const triviaChoiceWithIdOnly = await prisma.triviaChoice.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TriviaChoiceFindManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>>
+
+    /**
+     * Create a TriviaChoice.
+     * @param {TriviaChoiceCreateArgs} args - Arguments to create a TriviaChoice.
+     * @example
+     * // Create one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.create({
+     *   data: {
+     *     // ... data to create a TriviaChoice
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TriviaChoiceCreateArgs>(
+      args: SelectSubset<T, TriviaChoiceCreateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Create many TriviaChoices.
+     *     @param {TriviaChoiceCreateManyArgs} args - Arguments to create many TriviaChoices.
+     *     @example
+     *     // Create many TriviaChoices
+     *     const triviaChoice = await prisma.triviaChoice.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TriviaChoiceCreateManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TriviaChoice.
+     * @param {TriviaChoiceDeleteArgs} args - Arguments to delete one TriviaChoice.
+     * @example
+     * // Delete one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.delete({
+     *   where: {
+     *     // ... filter to delete one TriviaChoice
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TriviaChoiceDeleteArgs>(
+      args: SelectSubset<T, TriviaChoiceDeleteArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Update one TriviaChoice.
+     * @param {TriviaChoiceUpdateArgs} args - Arguments to update one TriviaChoice.
+     * @example
+     * // Update one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TriviaChoiceUpdateArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Delete zero or more TriviaChoices.
+     * @param {TriviaChoiceDeleteManyArgs} args - Arguments to filter TriviaChoices to delete.
+     * @example
+     * // Delete a few TriviaChoices
+     * const { count } = await prisma.triviaChoice.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TriviaChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TriviaChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TriviaChoices
+     * const triviaChoice = await prisma.triviaChoice.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TriviaChoiceUpdateManyArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TriviaChoice.
+     * @param {TriviaChoiceUpsertArgs} args - Arguments to update or create a TriviaChoice.
+     * @example
+     * // Update or create a TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.upsert({
+     *   create: {
+     *     // ... data to create a TriviaChoice
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TriviaChoice we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TriviaChoiceUpsertArgs>(
+      args: SelectSubset<T, TriviaChoiceUpsertArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
+
+    /**
+     * Count the number of TriviaChoices.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceCountArgs} args - Arguments to filter TriviaChoices to count.
+     * @example
+     * // Count the number of TriviaChoices
+     * const count = await prisma.triviaChoice.count({
+     *   where: {
+     *     // ... the filter for the TriviaChoices we want to count
+     *   }
+     * })
+    **/
+    count<T extends TriviaChoiceCountArgs>(
+      args?: Subset<T, TriviaChoiceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TriviaChoiceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TriviaChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TriviaChoiceAggregateArgs>(args: Subset<T, TriviaChoiceAggregateArgs>): Prisma.PrismaPromise<GetTriviaChoiceAggregateType<T>>
+
+    /**
+     * Group by TriviaChoice.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaChoiceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TriviaChoiceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TriviaChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaChoiceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TriviaChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TriviaChoice.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TriviaChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    roundQuestions<T extends TriviaChoice$roundQuestionsArgs= {}>(args?: Subset<T, TriviaChoice$roundQuestionsArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuestionGetPayload<T>>| Null>;
+
+    quiz<T extends TriviaQuestionArgs= {}>(args?: Subset<T, TriviaQuestionArgs>): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T> | Null>;
+
+    quizAnswer<T extends TriviaQuestionArgs= {}>(args?: Subset<T, TriviaQuestionArgs>): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaChoice base type for findUnique actions
+   */
+  export type TriviaChoiceFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+  /**
+   * TriviaChoice findUnique
+   */
+  export interface TriviaChoiceFindUniqueArgs extends TriviaChoiceFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaChoice findUniqueOrThrow
+   */
+  export type TriviaChoiceFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice base type for findFirst actions
+   */
+  export type TriviaChoiceFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaChoices.
+     */
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+  /**
+   * TriviaChoice findFirst
+   */
+  export interface TriviaChoiceFindFirstArgs extends TriviaChoiceFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaChoice findFirstOrThrow
+   */
+  export type TriviaChoiceFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoice to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaChoices.
+     */
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice findMany
+   */
+  export type TriviaChoiceFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter, which TriviaChoices to fetch.
+     */
+    where?: TriviaChoiceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaChoices to fetch.
+     */
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TriviaChoices.
+     */
+    cursor?: TriviaChoiceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaChoices from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaChoices.
+     */
+    skip?: number
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice create
+   */
+  export type TriviaChoiceCreateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The data needed to create a TriviaChoice.
+     */
+    data: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
+  }
+
+
+  /**
+   * TriviaChoice createMany
+   */
+  export type TriviaChoiceCreateManyArgs = {
+    /**
+     * The data used to create many TriviaChoices.
+     */
+    data: Enumerable<TriviaChoiceCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * TriviaChoice update
+   */
+  export type TriviaChoiceUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The data needed to update a TriviaChoice.
+     */
+    data: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
+    /**
+     * Choose, which TriviaChoice to update.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice updateMany
+   */
+  export type TriviaChoiceUpdateManyArgs = {
+    /**
+     * The data used to update TriviaChoices.
+     */
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyInput>
+    /**
+     * Filter which TriviaChoices to update
+     */
+    where?: TriviaChoiceWhereInput
+  }
+
+
+  /**
+   * TriviaChoice upsert
+   */
+  export type TriviaChoiceUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * The filter to search for the TriviaChoice to update in case it exists.
+     */
+    where: TriviaChoiceWhereUniqueInput
+    /**
+     * In case the TriviaChoice found by the `where` argument doesn't exist, create a new TriviaChoice with this data.
+     */
+    create: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
+    /**
+     * In case the TriviaChoice was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
+  }
+
+
+  /**
+   * TriviaChoice delete
+   */
+  export type TriviaChoiceDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    /**
+     * Filter which TriviaChoice to delete.
+     */
+    where: TriviaChoiceWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaChoice deleteMany
+   */
+  export type TriviaChoiceDeleteManyArgs = {
+    /**
+     * Filter which TriviaChoices to delete
+     */
+    where?: TriviaChoiceWhereInput
+  }
+
+
+  /**
+   * TriviaChoice.roundQuestions
+   */
+  export type TriviaChoice$roundQuestionsArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    where?: TriviaRoundQuestionWhereInput
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaChoice without action
+   */
+  export type TriviaChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+  }
+
+
+
+  /**
+   * Model TriviaRoundQuestion
+   */
+
+
+  export type AggregateTriviaRoundQuestion = {
+    _count: TriviaRoundQuestionCountAggregateOutputType | null
+    _avg: TriviaRoundQuestionAvgAggregateOutputType | null
+    _sum: TriviaRoundQuestionSumAggregateOutputType | null
+    _min: TriviaRoundQuestionMinAggregateOutputType | null
+    _max: TriviaRoundQuestionMaxAggregateOutputType | null
+  }
+
+  export type TriviaRoundQuestionAvgAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    choiceId: number | null
+    quizResult: number | null
+    roundId: number | null
+  }
+
+  export type TriviaRoundQuestionSumAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    choiceId: number | null
+    quizResult: number | null
+    roundId: number | null
+  }
+
+  export type TriviaRoundQuestionMinAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    choiceId: number | null
+    quizResult: number | null
+    roundId: number | null
+  }
+
+  export type TriviaRoundQuestionMaxAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    choiceId: number | null
+    quizResult: number | null
+    roundId: number | null
+  }
+
+  export type TriviaRoundQuestionCountAggregateOutputType = {
+    id: number
+    quizId: number
+    choiceId: number
+    quizResult: number
+    roundId: number
+    _all: number
+  }
+
+
+  export type TriviaRoundQuestionAvgAggregateInputType = {
+    id?: true
+    quizId?: true
+    choiceId?: true
+    quizResult?: true
+    roundId?: true
+  }
+
+  export type TriviaRoundQuestionSumAggregateInputType = {
+    id?: true
+    quizId?: true
+    choiceId?: true
+    quizResult?: true
+    roundId?: true
+  }
+
+  export type TriviaRoundQuestionMinAggregateInputType = {
+    id?: true
+    quizId?: true
+    choiceId?: true
+    quizResult?: true
+    roundId?: true
+  }
+
+  export type TriviaRoundQuestionMaxAggregateInputType = {
+    id?: true
+    quizId?: true
+    choiceId?: true
+    quizResult?: true
+    roundId?: true
+  }
+
+  export type TriviaRoundQuestionCountAggregateInputType = {
+    id?: true
+    quizId?: true
+    choiceId?: true
+    quizResult?: true
+    roundId?: true
+    _all?: true
+  }
+
+  export type TriviaRoundQuestionAggregateArgs = {
+    /**
+     * Filter which TriviaRoundQuestion to aggregate.
+     */
+    where?: TriviaRoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaRoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaRoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaRoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TriviaRoundQuestions
+    **/
+    _count?: true | TriviaRoundQuestionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TriviaRoundQuestionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TriviaRoundQuestionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TriviaRoundQuestionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TriviaRoundQuestionMaxAggregateInputType
+  }
+
+  export type GetTriviaRoundQuestionAggregateType<T extends TriviaRoundQuestionAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaRoundQuestion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTriviaRoundQuestion[P]>
+      : GetScalarType<T[P], AggregateTriviaRoundQuestion[P]>
+  }
+
+
+
+
+  export type TriviaRoundQuestionGroupByArgs = {
+    where?: TriviaRoundQuestionWhereInput
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithAggregationInput>
+    by: TriviaRoundQuestionScalarFieldEnum[]
+    having?: TriviaRoundQuestionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TriviaRoundQuestionCountAggregateInputType | true
+    _avg?: TriviaRoundQuestionAvgAggregateInputType
+    _sum?: TriviaRoundQuestionSumAggregateInputType
+    _min?: TriviaRoundQuestionMinAggregateInputType
+    _max?: TriviaRoundQuestionMaxAggregateInputType
+  }
+
+
+  export type TriviaRoundQuestionGroupByOutputType = {
+    id: number
+    quizId: number
+    choiceId: number
+    quizResult: number | null
+    roundId: number
+    _count: TriviaRoundQuestionCountAggregateOutputType | null
+    _avg: TriviaRoundQuestionAvgAggregateOutputType | null
+    _sum: TriviaRoundQuestionSumAggregateOutputType | null
+    _min: TriviaRoundQuestionMinAggregateOutputType | null
+    _max: TriviaRoundQuestionMaxAggregateOutputType | null
+  }
+
+  type GetTriviaRoundQuestionGroupByPayload<T extends TriviaRoundQuestionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TriviaRoundQuestionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TriviaRoundQuestionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TriviaRoundQuestionGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaRoundQuestionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TriviaRoundQuestionSelect = {
+    id?: boolean
+    quizId?: boolean
+    choiceId?: boolean
+    quizResult?: boolean
+    roundId?: boolean
+    question?: boolean | TriviaQuestionArgs
+    userChoice?: boolean | TriviaChoiceArgs
+    round?: boolean | TriviaRoundArgs
+  }
+
+
+  export type TriviaRoundQuestionInclude = {
+    question?: boolean | TriviaQuestionArgs
+    userChoice?: boolean | TriviaChoiceArgs
+    round?: boolean | TriviaRoundArgs
+  }
+
+  export type TriviaRoundQuestionGetPayload<S extends boolean | null | undefined | TriviaRoundQuestionArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? TriviaRoundQuestion :
+    S extends undefined ? never :
+    S extends { include: any } & (TriviaRoundQuestionArgs | TriviaRoundQuestionFindManyArgs)
+    ? TriviaRoundQuestion  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'question' ? TriviaQuestionGetPayload<S['include'][P]> :
+        P extends 'userChoice' ? TriviaChoiceGetPayload<S['include'][P]> :
+        P extends 'round' ? TriviaRoundGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (TriviaRoundQuestionArgs | TriviaRoundQuestionFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'question' ? TriviaQuestionGetPayload<S['select'][P]> :
+        P extends 'userChoice' ? TriviaChoiceGetPayload<S['select'][P]> :
+        P extends 'round' ? TriviaRoundGetPayload<S['select'][P]> :  P extends keyof TriviaRoundQuestion ? TriviaRoundQuestion[P] : never
+  } 
+      : TriviaRoundQuestion
+
+
+  type TriviaRoundQuestionCountArgs = 
+    Omit<TriviaRoundQuestionFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaRoundQuestionCountAggregateInputType | true
+    }
+
+  export interface TriviaRoundQuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one TriviaRoundQuestion that matches the filter.
+     * @param {TriviaRoundQuestionFindUniqueArgs} args - Arguments to find a TriviaRoundQuestion
+     * @example
+     * // Get one TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends TriviaRoundQuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaRoundQuestionFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaRoundQuestion'> extends True ? Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>> : Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T> | null, null>
+
+    /**
+     * Find one TriviaRoundQuestion that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {TriviaRoundQuestionFindUniqueOrThrowArgs} args - Arguments to find a TriviaRoundQuestion
+     * @example
+     * // Get one TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends TriviaRoundQuestionFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaRoundQuestionFindUniqueOrThrowArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Find the first TriviaRoundQuestion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionFindFirstArgs} args - Arguments to find a TriviaRoundQuestion
+     * @example
+     * // Get one TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends TriviaRoundQuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaRoundQuestionFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaRoundQuestion'> extends True ? Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>> : Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T> | null, null>
+
+    /**
+     * Find the first TriviaRoundQuestion that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionFindFirstOrThrowArgs} args - Arguments to find a TriviaRoundQuestion
+     * @example
+     * // Get one TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends TriviaRoundQuestionFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaRoundQuestionFindFirstOrThrowArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Find zero or more TriviaRoundQuestions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TriviaRoundQuestions
+     * const triviaRoundQuestions = await prisma.triviaRoundQuestion.findMany()
+     * 
+     * // Get first 10 TriviaRoundQuestions
+     * const triviaRoundQuestions = await prisma.triviaRoundQuestion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const triviaRoundQuestionWithIdOnly = await prisma.triviaRoundQuestion.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends TriviaRoundQuestionFindManyArgs>(
+      args?: SelectSubset<T, TriviaRoundQuestionFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaRoundQuestionGetPayload<T>>>
+
+    /**
+     * Create a TriviaRoundQuestion.
+     * @param {TriviaRoundQuestionCreateArgs} args - Arguments to create a TriviaRoundQuestion.
+     * @example
+     * // Create one TriviaRoundQuestion
+     * const TriviaRoundQuestion = await prisma.triviaRoundQuestion.create({
+     *   data: {
+     *     // ... data to create a TriviaRoundQuestion
+     *   }
+     * })
+     * 
+    **/
+    create<T extends TriviaRoundQuestionCreateArgs>(
+      args: SelectSubset<T, TriviaRoundQuestionCreateArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Create many TriviaRoundQuestions.
+     *     @param {TriviaRoundQuestionCreateManyArgs} args - Arguments to create many TriviaRoundQuestions.
+     *     @example
+     *     // Create many TriviaRoundQuestions
+     *     const triviaRoundQuestion = await prisma.triviaRoundQuestion.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends TriviaRoundQuestionCreateManyArgs>(
+      args?: SelectSubset<T, TriviaRoundQuestionCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TriviaRoundQuestion.
+     * @param {TriviaRoundQuestionDeleteArgs} args - Arguments to delete one TriviaRoundQuestion.
+     * @example
+     * // Delete one TriviaRoundQuestion
+     * const TriviaRoundQuestion = await prisma.triviaRoundQuestion.delete({
+     *   where: {
+     *     // ... filter to delete one TriviaRoundQuestion
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends TriviaRoundQuestionDeleteArgs>(
+      args: SelectSubset<T, TriviaRoundQuestionDeleteArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Update one TriviaRoundQuestion.
+     * @param {TriviaRoundQuestionUpdateArgs} args - Arguments to update one TriviaRoundQuestion.
+     * @example
+     * // Update one TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends TriviaRoundQuestionUpdateArgs>(
+      args: SelectSubset<T, TriviaRoundQuestionUpdateArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Delete zero or more TriviaRoundQuestions.
+     * @param {TriviaRoundQuestionDeleteManyArgs} args - Arguments to filter TriviaRoundQuestions to delete.
+     * @example
+     * // Delete a few TriviaRoundQuestions
+     * const { count } = await prisma.triviaRoundQuestion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends TriviaRoundQuestionDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaRoundQuestionDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TriviaRoundQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TriviaRoundQuestions
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends TriviaRoundQuestionUpdateManyArgs>(
+      args: SelectSubset<T, TriviaRoundQuestionUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TriviaRoundQuestion.
+     * @param {TriviaRoundQuestionUpsertArgs} args - Arguments to update or create a TriviaRoundQuestion.
+     * @example
+     * // Update or create a TriviaRoundQuestion
+     * const triviaRoundQuestion = await prisma.triviaRoundQuestion.upsert({
+     *   create: {
+     *     // ... data to create a TriviaRoundQuestion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TriviaRoundQuestion we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends TriviaRoundQuestionUpsertArgs>(
+      args: SelectSubset<T, TriviaRoundQuestionUpsertArgs>
+    ): Prisma__TriviaRoundQuestionClient<TriviaRoundQuestionGetPayload<T>>
+
+    /**
+     * Count the number of TriviaRoundQuestions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionCountArgs} args - Arguments to filter TriviaRoundQuestions to count.
+     * @example
+     * // Count the number of TriviaRoundQuestions
+     * const count = await prisma.triviaRoundQuestion.count({
+     *   where: {
+     *     // ... the filter for the TriviaRoundQuestions we want to count
+     *   }
+     * })
+    **/
+    count<T extends TriviaRoundQuestionCountArgs>(
+      args?: Subset<T, TriviaRoundQuestionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TriviaRoundQuestionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TriviaRoundQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TriviaRoundQuestionAggregateArgs>(args: Subset<T, TriviaRoundQuestionAggregateArgs>): Prisma.PrismaPromise<GetTriviaRoundQuestionAggregateType<T>>
+
+    /**
+     * Group by TriviaRoundQuestion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TriviaRoundQuestionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TriviaRoundQuestionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TriviaRoundQuestionGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaRoundQuestionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TriviaRoundQuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaRoundQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TriviaRoundQuestion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__TriviaRoundQuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    question<T extends TriviaQuestionArgs= {}>(args?: Subset<T, TriviaQuestionArgs>): Prisma__TriviaQuestionClient<TriviaQuestionGetPayload<T> | Null>;
+
+    userChoice<T extends TriviaChoiceArgs= {}>(args?: Subset<T, TriviaChoiceArgs>): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | Null>;
+
+    round<T extends TriviaRoundArgs= {}>(args?: Subset<T, TriviaRoundArgs>): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * TriviaRoundQuestion base type for findUnique actions
+   */
+  export type TriviaRoundQuestionFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter, which TriviaRoundQuestion to fetch.
+     */
+    where: TriviaRoundQuestionWhereUniqueInput
+  }
+
+  /**
+   * TriviaRoundQuestion findUnique
+   */
+  export interface TriviaRoundQuestionFindUniqueArgs extends TriviaRoundQuestionFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaRoundQuestion findUniqueOrThrow
+   */
+  export type TriviaRoundQuestionFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter, which TriviaRoundQuestion to fetch.
+     */
+    where: TriviaRoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaRoundQuestion base type for findFirst actions
+   */
+  export type TriviaRoundQuestionFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter, which TriviaRoundQuestion to fetch.
+     */
+    where?: TriviaRoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaRoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaRoundQuestions.
+     */
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaRoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaRoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaRoundQuestions.
+     */
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
+  }
+
+  /**
+   * TriviaRoundQuestion findFirst
+   */
+  export interface TriviaRoundQuestionFindFirstArgs extends TriviaRoundQuestionFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * TriviaRoundQuestion findFirstOrThrow
+   */
+  export type TriviaRoundQuestionFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter, which TriviaRoundQuestion to fetch.
+     */
+    where?: TriviaRoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaRoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TriviaRoundQuestions.
+     */
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaRoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaRoundQuestions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TriviaRoundQuestions.
+     */
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaRoundQuestion findMany
+   */
+  export type TriviaRoundQuestionFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter, which TriviaRoundQuestions to fetch.
+     */
+    where?: TriviaRoundQuestionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaRoundQuestions to fetch.
+     */
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TriviaRoundQuestions.
+     */
+    cursor?: TriviaRoundQuestionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaRoundQuestions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaRoundQuestions.
+     */
+    skip?: number
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
+  }
+
+
+  /**
+   * TriviaRoundQuestion create
+   */
+  export type TriviaRoundQuestionCreateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * The data needed to create a TriviaRoundQuestion.
+     */
+    data: XOR<TriviaRoundQuestionCreateInput, TriviaRoundQuestionUncheckedCreateInput>
+  }
+
+
+  /**
+   * TriviaRoundQuestion createMany
+   */
+  export type TriviaRoundQuestionCreateManyArgs = {
+    /**
+     * The data used to create many TriviaRoundQuestions.
+     */
+    data: Enumerable<TriviaRoundQuestionCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * TriviaRoundQuestion update
+   */
+  export type TriviaRoundQuestionUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * The data needed to update a TriviaRoundQuestion.
+     */
+    data: XOR<TriviaRoundQuestionUpdateInput, TriviaRoundQuestionUncheckedUpdateInput>
+    /**
+     * Choose, which TriviaRoundQuestion to update.
+     */
+    where: TriviaRoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaRoundQuestion updateMany
+   */
+  export type TriviaRoundQuestionUpdateManyArgs = {
+    /**
+     * The data used to update TriviaRoundQuestions.
+     */
+    data: XOR<TriviaRoundQuestionUpdateManyMutationInput, TriviaRoundQuestionUncheckedUpdateManyInput>
+    /**
+     * Filter which TriviaRoundQuestions to update
+     */
+    where?: TriviaRoundQuestionWhereInput
+  }
+
+
+  /**
+   * TriviaRoundQuestion upsert
+   */
+  export type TriviaRoundQuestionUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * The filter to search for the TriviaRoundQuestion to update in case it exists.
+     */
+    where: TriviaRoundQuestionWhereUniqueInput
+    /**
+     * In case the TriviaRoundQuestion found by the `where` argument doesn't exist, create a new TriviaRoundQuestion with this data.
+     */
+    create: XOR<TriviaRoundQuestionCreateInput, TriviaRoundQuestionUncheckedCreateInput>
+    /**
+     * In case the TriviaRoundQuestion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TriviaRoundQuestionUpdateInput, TriviaRoundQuestionUncheckedUpdateInput>
+  }
+
+
+  /**
+   * TriviaRoundQuestion delete
+   */
+  export type TriviaRoundQuestionDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+    /**
+     * Filter which TriviaRoundQuestion to delete.
+     */
+    where: TriviaRoundQuestionWhereUniqueInput
+  }
+
+
+  /**
+   * TriviaRoundQuestion deleteMany
+   */
+  export type TriviaRoundQuestionDeleteManyArgs = {
+    /**
+     * Filter which TriviaRoundQuestions to delete
+     */
+    where?: TriviaRoundQuestionWhereInput
+  }
+
+
+  /**
+   * TriviaRoundQuestion without action
+   */
+  export type TriviaRoundQuestionArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaRoundQuestion
+     */
+    select?: TriviaRoundQuestionSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaRoundQuestionInclude | null
+  }
+
+
+
+  /**
+   * Model TriviaRound
+   */
+
+
+  export type AggregateTriviaRound = {
+    _count: TriviaRoundCountAggregateOutputType | null
+    _avg: TriviaRoundAvgAggregateOutputType | null
+    _sum: TriviaRoundSumAggregateOutputType | null
+    _min: TriviaRoundMinAggregateOutputType | null
+    _max: TriviaRoundMaxAggregateOutputType | null
+  }
+
+  export type TriviaRoundAvgAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+    totalResult: number | null
+    userId: number | null
+    roundNo: number | null
+  }
+
+  export type TriviaRoundSumAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+    totalResult: number | null
+    userId: number | null
+    roundNo: number | null
+  }
+
+  export type TriviaRoundMinAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+    totalResult: number | null
+    createAt: Date | null
+    userId: number | null
+    roundNo: number | null
+  }
+
+  export type TriviaRoundMaxAggregateOutputType = {
+    id: number | null
+    categoryId: number | null
+    totalResult: number | null
+    createAt: Date | null
+    userId: number | null
+    roundNo: number | null
+  }
+
+  export type TriviaRoundCountAggregateOutputType = {
+    id: number
+    categoryId: number
+    totalResult: number
+    createAt: number
+    userId: number
+    roundNo: number
+    _all: number
+  }
+
+
+  export type TriviaRoundAvgAggregateInputType = {
+    id?: true
+    categoryId?: true
+    totalResult?: true
+    userId?: true
+    roundNo?: true
+  }
+
+  export type TriviaRoundSumAggregateInputType = {
+    id?: true
+    categoryId?: true
+    totalResult?: true
+    userId?: true
+    roundNo?: true
+  }
+
+  export type TriviaRoundMinAggregateInputType = {
+    id?: true
+    categoryId?: true
+    totalResult?: true
+    createAt?: true
+    userId?: true
+    roundNo?: true
+  }
+
+  export type TriviaRoundMaxAggregateInputType = {
+    id?: true
+    categoryId?: true
+    totalResult?: true
+    createAt?: true
+    userId?: true
+    roundNo?: true
+  }
+
+  export type TriviaRoundCountAggregateInputType = {
+    id?: true
+    categoryId?: true
+    totalResult?: true
+    createAt?: true
+    userId?: true
+    roundNo?: true
+    _all?: true
+  }
+
+  export type TriviaRoundAggregateArgs = {
+    /**
+     * Filter which TriviaRound to aggregate.
+     */
+    where?: TriviaRoundWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TriviaRounds to fetch.
+     */
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TriviaRoundWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TriviaRounds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TriviaRounds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TriviaRounds
+    **/
+    _count?: true | TriviaRoundCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TriviaRoundAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TriviaRoundSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TriviaRoundMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TriviaRoundMaxAggregateInputType
+  }
+
+  export type GetTriviaRoundAggregateType<T extends TriviaRoundAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaRound]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTriviaRound[P]>
+      : GetScalarType<T[P], AggregateTriviaRound[P]>
+  }
+
+
+
+
+  export type TriviaRoundGroupByArgs = {
+    where?: TriviaRoundWhereInput
+    orderBy?: Enumerable<TriviaRoundOrderByWithAggregationInput>
+    by: TriviaRoundScalarFieldEnum[]
+    having?: TriviaRoundScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TriviaRoundCountAggregateInputType | true
+    _avg?: TriviaRoundAvgAggregateInputType
+    _sum?: TriviaRoundSumAggregateInputType
+    _min?: TriviaRoundMinAggregateInputType
+    _max?: TriviaRoundMaxAggregateInputType
+  }
+
+
+  export type TriviaRoundGroupByOutputType = {
+    id: number
+    categoryId: number
+    totalResult: number
+    createAt: Date
+    userId: number
+    roundNo: number
+    _count: TriviaRoundCountAggregateOutputType | null
+    _avg: TriviaRoundAvgAggregateOutputType | null
+    _sum: TriviaRoundSumAggregateOutputType | null
+    _min: TriviaRoundMinAggregateOutputType | null
+    _max: TriviaRoundMaxAggregateOutputType | null
+  }
+
+  type GetTriviaRoundGroupByPayload<T extends TriviaRoundGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<TriviaRoundGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TriviaRoundGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TriviaRoundGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaRoundGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TriviaRoundSelect = {
+    id?: boolean
+    categoryId?: boolean
+    totalResult?: boolean
+    createAt?: boolean
     userId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | TwitterUserArgs
-    hashtags?: boolean | TwitterPost$hashtagsArgs
-    replyTo?: boolean | TwitterPost$replyToArgs
-    replyBy?: boolean | TwitterPost$replyByArgs
-    _count?: boolean | TwitterPostCountOutputTypeArgs
+    roundNo?: boolean
+    category?: boolean | TriviaCategoryArgs
+    user?: boolean | TriviaUserArgs
+    roundQuestions?: boolean | TriviaRound$roundQuestionsArgs
+    _count?: boolean | TriviaRoundCountOutputTypeArgs
   }
 
 
-  export type TwitterPostInclude = {
-    user?: boolean | TwitterUserArgs
-    hashtags?: boolean | TwitterPost$hashtagsArgs
-    replyTo?: boolean | TwitterPost$replyToArgs
-    replyBy?: boolean | TwitterPost$replyByArgs
-    _count?: boolean | TwitterPostCountOutputTypeArgs
+  export type TriviaRoundInclude = {
+    category?: boolean | TriviaCategoryArgs
+    user?: boolean | TriviaUserArgs
+    roundQuestions?: boolean | TriviaRound$roundQuestionsArgs
+    _count?: boolean | TriviaRoundCountOutputTypeArgs
   }
 
-  export type TwitterPostGetPayload<S extends boolean | null | undefined | TwitterPostArgs> =
+  export type TriviaRoundGetPayload<S extends boolean | null | undefined | TriviaRoundArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterPost :
+    S extends true ? TriviaRound :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterPostArgs | TwitterPostFindManyArgs)
-    ? TwitterPost  & {
+    S extends { include: any } & (TriviaRoundArgs | TriviaRoundFindManyArgs)
+    ? TriviaRound  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'hashtags' ? Array < TwitterHashtagGetPayload<S['include'][P]>>  :
-        P extends 'replyTo' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends 'replyBy' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'category' ? TriviaCategoryGetPayload<S['include'][P]> :
+        P extends 'user' ? TriviaUserGetPayload<S['include'][P]> :
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TriviaRoundCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (TwitterPostArgs | TwitterPostFindManyArgs)
+    : S extends { select: any } & (TriviaRoundArgs | TriviaRoundFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'hashtags' ? Array < TwitterHashtagGetPayload<S['select'][P]>>  :
-        P extends 'replyTo' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends 'replyBy' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterPost ? TwitterPost[P] : never
+        P extends 'category' ? TriviaCategoryGetPayload<S['select'][P]> :
+        P extends 'user' ? TriviaUserGetPayload<S['select'][P]> :
+        P extends 'roundQuestions' ? Array < TriviaRoundQuestionGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TriviaRoundCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaRound ? TriviaRound[P] : never
   } 
-      : TwitterPost
+      : TriviaRound
 
 
-  type TwitterPostCountArgs = 
-    Omit<TwitterPostFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterPostCountAggregateInputType | true
+  type TriviaRoundCountArgs = 
+    Omit<TriviaRoundFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaRoundCountAggregateInputType | true
     }
 
-  export interface TwitterPostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface TriviaRoundDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one TwitterPost that matches the filter.
-     * @param {TwitterPostFindUniqueArgs} args - Arguments to find a TwitterPost
+     * Find zero or one TriviaRound that matches the filter.
+     * @param {TriviaRoundFindUniqueArgs} args - Arguments to find a TriviaRound
      * @example
-     * // Get one TwitterPost
-     * const twitterPost = await prisma.twitterPost.findUnique({
+     * // Get one TriviaRound
+     * const triviaRound = await prisma.triviaRound.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends TwitterPostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterPostFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterPost'> extends True ? Prisma__TwitterPostClient<TwitterPostGetPayload<T>> : Prisma__TwitterPostClient<TwitterPostGetPayload<T> | null, null>
+    findUnique<T extends TriviaRoundFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaRoundFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaRound'> extends True ? Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>> : Prisma__TriviaRoundClient<TriviaRoundGetPayload<T> | null, null>
 
     /**
-     * Find one TwitterPost that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one TriviaRound that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {TwitterPostFindUniqueOrThrowArgs} args - Arguments to find a TwitterPost
+     * @param {TriviaRoundFindUniqueOrThrowArgs} args - Arguments to find a TriviaRound
      * @example
-     * // Get one TwitterPost
-     * const twitterPost = await prisma.twitterPost.findUniqueOrThrow({
+     * // Get one TriviaRound
+     * const triviaRound = await prisma.triviaRound.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends TwitterPostFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterPostFindUniqueOrThrowArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    findUniqueOrThrow<T extends TriviaRoundFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaRoundFindUniqueOrThrowArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Find the first TwitterPost that matches the filter.
+     * Find the first TriviaRound that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostFindFirstArgs} args - Arguments to find a TwitterPost
+     * @param {TriviaRoundFindFirstArgs} args - Arguments to find a TriviaRound
      * @example
-     * // Get one TwitterPost
-     * const twitterPost = await prisma.twitterPost.findFirst({
+     * // Get one TriviaRound
+     * const triviaRound = await prisma.triviaRound.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends TwitterPostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterPostFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterPost'> extends True ? Prisma__TwitterPostClient<TwitterPostGetPayload<T>> : Prisma__TwitterPostClient<TwitterPostGetPayload<T> | null, null>
+    findFirst<T extends TriviaRoundFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaRoundFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaRound'> extends True ? Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>> : Prisma__TriviaRoundClient<TriviaRoundGetPayload<T> | null, null>
 
     /**
-     * Find the first TwitterPost that matches the filter or
+     * Find the first TriviaRound that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostFindFirstOrThrowArgs} args - Arguments to find a TwitterPost
+     * @param {TriviaRoundFindFirstOrThrowArgs} args - Arguments to find a TriviaRound
      * @example
-     * // Get one TwitterPost
-     * const twitterPost = await prisma.twitterPost.findFirstOrThrow({
+     * // Get one TriviaRound
+     * const triviaRound = await prisma.triviaRound.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends TwitterPostFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterPostFindFirstOrThrowArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    findFirstOrThrow<T extends TriviaRoundFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaRoundFindFirstOrThrowArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Find zero or more TwitterPosts that matches the filter.
+     * Find zero or more TriviaRounds that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TriviaRoundFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TwitterPosts
-     * const twitterPosts = await prisma.twitterPost.findMany()
+     * // Get all TriviaRounds
+     * const triviaRounds = await prisma.triviaRound.findMany()
      * 
-     * // Get first 10 TwitterPosts
-     * const twitterPosts = await prisma.twitterPost.findMany({ take: 10 })
+     * // Get first 10 TriviaRounds
+     * const triviaRounds = await prisma.triviaRound.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const twitterPostWithIdOnly = await prisma.twitterPost.findMany({ select: { id: true } })
+     * const triviaRoundWithIdOnly = await prisma.triviaRound.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends TwitterPostFindManyArgs>(
-      args?: SelectSubset<T, TwitterPostFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>>
+    findMany<T extends TriviaRoundFindManyArgs>(
+      args?: SelectSubset<T, TriviaRoundFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaRoundGetPayload<T>>>
 
     /**
-     * Create a TwitterPost.
-     * @param {TwitterPostCreateArgs} args - Arguments to create a TwitterPost.
+     * Create a TriviaRound.
+     * @param {TriviaRoundCreateArgs} args - Arguments to create a TriviaRound.
      * @example
-     * // Create one TwitterPost
-     * const TwitterPost = await prisma.twitterPost.create({
+     * // Create one TriviaRound
+     * const TriviaRound = await prisma.triviaRound.create({
      *   data: {
-     *     // ... data to create a TwitterPost
+     *     // ... data to create a TriviaRound
      *   }
      * })
      * 
     **/
-    create<T extends TwitterPostCreateArgs>(
-      args: SelectSubset<T, TwitterPostCreateArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    create<T extends TriviaRoundCreateArgs>(
+      args: SelectSubset<T, TriviaRoundCreateArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Create many TwitterPosts.
-     *     @param {TwitterPostCreateManyArgs} args - Arguments to create many TwitterPosts.
+     * Create many TriviaRounds.
+     *     @param {TriviaRoundCreateManyArgs} args - Arguments to create many TriviaRounds.
      *     @example
-     *     // Create many TwitterPosts
-     *     const twitterPost = await prisma.twitterPost.createMany({
+     *     // Create many TriviaRounds
+     *     const triviaRound = await prisma.triviaRound.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends TwitterPostCreateManyArgs>(
-      args?: SelectSubset<T, TwitterPostCreateManyArgs>
+    createMany<T extends TriviaRoundCreateManyArgs>(
+      args?: SelectSubset<T, TriviaRoundCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a TwitterPost.
-     * @param {TwitterPostDeleteArgs} args - Arguments to delete one TwitterPost.
+     * Delete a TriviaRound.
+     * @param {TriviaRoundDeleteArgs} args - Arguments to delete one TriviaRound.
      * @example
-     * // Delete one TwitterPost
-     * const TwitterPost = await prisma.twitterPost.delete({
+     * // Delete one TriviaRound
+     * const TriviaRound = await prisma.triviaRound.delete({
      *   where: {
-     *     // ... filter to delete one TwitterPost
+     *     // ... filter to delete one TriviaRound
      *   }
      * })
      * 
     **/
-    delete<T extends TwitterPostDeleteArgs>(
-      args: SelectSubset<T, TwitterPostDeleteArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    delete<T extends TriviaRoundDeleteArgs>(
+      args: SelectSubset<T, TriviaRoundDeleteArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Update one TwitterPost.
-     * @param {TwitterPostUpdateArgs} args - Arguments to update one TwitterPost.
+     * Update one TriviaRound.
+     * @param {TriviaRoundUpdateArgs} args - Arguments to update one TriviaRound.
      * @example
-     * // Update one TwitterPost
-     * const twitterPost = await prisma.twitterPost.update({
+     * // Update one TriviaRound
+     * const triviaRound = await prisma.triviaRound.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3503,34 +5532,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends TwitterPostUpdateArgs>(
-      args: SelectSubset<T, TwitterPostUpdateArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    update<T extends TriviaRoundUpdateArgs>(
+      args: SelectSubset<T, TriviaRoundUpdateArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Delete zero or more TwitterPosts.
-     * @param {TwitterPostDeleteManyArgs} args - Arguments to filter TwitterPosts to delete.
+     * Delete zero or more TriviaRounds.
+     * @param {TriviaRoundDeleteManyArgs} args - Arguments to filter TriviaRounds to delete.
      * @example
-     * // Delete a few TwitterPosts
-     * const { count } = await prisma.twitterPost.deleteMany({
+     * // Delete a few TriviaRounds
+     * const { count } = await prisma.triviaRound.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends TwitterPostDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterPostDeleteManyArgs>
+    deleteMany<T extends TriviaRoundDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaRoundDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TwitterPosts.
+     * Update zero or more TriviaRounds.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TriviaRoundUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TwitterPosts
-     * const twitterPost = await prisma.twitterPost.updateMany({
+     * // Update many TriviaRounds
+     * const triviaRound = await prisma.triviaRound.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3540,59 +5569,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends TwitterPostUpdateManyArgs>(
-      args: SelectSubset<T, TwitterPostUpdateManyArgs>
+    updateMany<T extends TriviaRoundUpdateManyArgs>(
+      args: SelectSubset<T, TriviaRoundUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one TwitterPost.
-     * @param {TwitterPostUpsertArgs} args - Arguments to update or create a TwitterPost.
+     * Create or update one TriviaRound.
+     * @param {TriviaRoundUpsertArgs} args - Arguments to update or create a TriviaRound.
      * @example
-     * // Update or create a TwitterPost
-     * const twitterPost = await prisma.twitterPost.upsert({
+     * // Update or create a TriviaRound
+     * const triviaRound = await prisma.triviaRound.upsert({
      *   create: {
-     *     // ... data to create a TwitterPost
+     *     // ... data to create a TriviaRound
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TwitterPost we want to update
+     *     // ... the filter for the TriviaRound we want to update
      *   }
      * })
     **/
-    upsert<T extends TwitterPostUpsertArgs>(
-      args: SelectSubset<T, TwitterPostUpsertArgs>
-    ): Prisma__TwitterPostClient<TwitterPostGetPayload<T>>
+    upsert<T extends TriviaRoundUpsertArgs>(
+      args: SelectSubset<T, TriviaRoundUpsertArgs>
+    ): Prisma__TriviaRoundClient<TriviaRoundGetPayload<T>>
 
     /**
-     * Count the number of TwitterPosts.
+     * Count the number of TriviaRounds.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostCountArgs} args - Arguments to filter TwitterPosts to count.
+     * @param {TriviaRoundCountArgs} args - Arguments to filter TriviaRounds to count.
      * @example
-     * // Count the number of TwitterPosts
-     * const count = await prisma.twitterPost.count({
+     * // Count the number of TriviaRounds
+     * const count = await prisma.triviaRound.count({
      *   where: {
-     *     // ... the filter for the TwitterPosts we want to count
+     *     // ... the filter for the TriviaRounds we want to count
      *   }
      * })
     **/
-    count<T extends TwitterPostCountArgs>(
-      args?: Subset<T, TwitterPostCountArgs>,
+    count<T extends TriviaRoundCountArgs>(
+      args?: Subset<T, TriviaRoundCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TwitterPostCountAggregateOutputType>
+          : GetScalarType<T['select'], TriviaRoundCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TwitterPost.
+     * Allows you to perform aggregations operations on a TriviaRound.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TriviaRoundAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3612,13 +5641,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TwitterPostAggregateArgs>(args: Subset<T, TwitterPostAggregateArgs>): Prisma.PrismaPromise<GetTwitterPostAggregateType<T>>
+    aggregate<T extends TriviaRoundAggregateArgs>(args: Subset<T, TriviaRoundAggregateArgs>): Prisma.PrismaPromise<GetTriviaRoundAggregateType<T>>
 
     /**
-     * Group by TwitterPost.
+     * Group by TriviaRound.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostGroupByArgs} args - Group by arguments.
+     * @param {TriviaRoundGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3633,14 +5662,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TwitterPostGroupByArgs,
+      T extends TriviaRoundGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterPostGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterPostGroupByArgs['orderBy'] },
+        ? { orderBy: TriviaRoundGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaRoundGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3689,17 +5718,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TriviaRoundGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaRoundGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TwitterPost.
+   * The delegate class that acts as a "Promise-like" for TriviaRound.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__TwitterPostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__TriviaRoundClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -3714,13 +5743,11 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    user<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
+    category<T extends TriviaCategoryArgs= {}>(args?: Subset<T, TriviaCategoryArgs>): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T> | Null>;
 
-    hashtags<T extends TwitterPost$hashtagsArgs= {}>(args?: Subset<T, TwitterPost$hashtagsArgs>): Prisma.PrismaPromise<Array<TwitterHashtagGetPayload<T>>| Null>;
+    user<T extends TriviaUserArgs= {}>(args?: Subset<T, TriviaUserArgs>): Prisma__TriviaUserClient<TriviaUserGetPayload<T> | Null>;
 
-    replyTo<T extends TwitterPost$replyToArgs= {}>(args?: Subset<T, TwitterPost$replyToArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
-
-    replyBy<T extends TwitterPost$replyByArgs= {}>(args?: Subset<T, TwitterPost$replyByArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
+    roundQuestions<T extends TriviaRound$roundQuestionsArgs= {}>(args?: Subset<T, TriviaRound$roundQuestionsArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuestionGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -3750,27 +5777,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterPost base type for findUnique actions
+   * TriviaRound base type for findUnique actions
    */
-  export type TwitterPostFindUniqueArgsBase = {
+  export type TriviaRoundFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter, which TwitterPost to fetch.
+     * Filter, which TriviaRound to fetch.
      */
-    where: TwitterPostWhereUniqueInput
+    where: TriviaRoundWhereUniqueInput
   }
 
   /**
-   * TwitterPost findUnique
+   * TriviaRound findUnique
    */
-  export interface TwitterPostFindUniqueArgs extends TwitterPostFindUniqueArgsBase {
+  export interface TriviaRoundFindUniqueArgs extends TriviaRoundFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -3780,76 +5807,76 @@ export namespace Prisma {
       
 
   /**
-   * TwitterPost findUniqueOrThrow
+   * TriviaRound findUniqueOrThrow
    */
-  export type TwitterPostFindUniqueOrThrowArgs = {
+  export type TriviaRoundFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter, which TwitterPost to fetch.
+     * Filter, which TriviaRound to fetch.
      */
-    where: TwitterPostWhereUniqueInput
+    where: TriviaRoundWhereUniqueInput
   }
 
 
   /**
-   * TwitterPost base type for findFirst actions
+   * TriviaRound base type for findFirst actions
    */
-  export type TwitterPostFindFirstArgsBase = {
+  export type TriviaRoundFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter, which TwitterPost to fetch.
+     * Filter, which TriviaRound to fetch.
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaRoundWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterPosts to fetch.
+     * Determine the order of TriviaRounds to fetch.
      */
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterPosts.
+     * Sets the position for searching for TriviaRounds.
      */
-    cursor?: TwitterPostWhereUniqueInput
+    cursor?: TriviaRoundWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterPosts from the position of the cursor.
+     * Take `±n` TriviaRounds from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterPosts.
+     * Skip the first `n` TriviaRounds.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterPosts.
+     * Filter by unique combinations of TriviaRounds.
      */
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
+    distinct?: Enumerable<TriviaRoundScalarFieldEnum>
   }
 
   /**
-   * TwitterPost findFirst
+   * TriviaRound findFirst
    */
-  export interface TwitterPostFindFirstArgs extends TwitterPostFindFirstArgsBase {
+  export interface TriviaRoundFindFirstArgs extends TriviaRoundFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -3859,695 +5886,621 @@ export namespace Prisma {
       
 
   /**
-   * TwitterPost findFirstOrThrow
+   * TriviaRound findFirstOrThrow
    */
-  export type TwitterPostFindFirstOrThrowArgs = {
+  export type TriviaRoundFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter, which TwitterPost to fetch.
+     * Filter, which TriviaRound to fetch.
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaRoundWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterPosts to fetch.
+     * Determine the order of TriviaRounds to fetch.
      */
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterPosts.
+     * Sets the position for searching for TriviaRounds.
      */
-    cursor?: TwitterPostWhereUniqueInput
+    cursor?: TriviaRoundWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterPosts from the position of the cursor.
+     * Take `±n` TriviaRounds from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterPosts.
+     * Skip the first `n` TriviaRounds.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterPosts.
+     * Filter by unique combinations of TriviaRounds.
      */
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
+    distinct?: Enumerable<TriviaRoundScalarFieldEnum>
   }
 
 
   /**
-   * TwitterPost findMany
+   * TriviaRound findMany
    */
-  export type TwitterPostFindManyArgs = {
+  export type TriviaRoundFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter, which TwitterPosts to fetch.
+     * Filter, which TriviaRounds to fetch.
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaRoundWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterPosts to fetch.
+     * Determine the order of TriviaRounds to fetch.
      */
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TwitterPosts.
+     * Sets the position for listing TriviaRounds.
      */
-    cursor?: TwitterPostWhereUniqueInput
+    cursor?: TriviaRoundWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterPosts from the position of the cursor.
+     * Take `±n` TriviaRounds from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterPosts.
+     * Skip the first `n` TriviaRounds.
      */
     skip?: number
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
+    distinct?: Enumerable<TriviaRoundScalarFieldEnum>
   }
 
 
   /**
-   * TwitterPost create
+   * TriviaRound create
    */
-  export type TwitterPostCreateArgs = {
+  export type TriviaRoundCreateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * The data needed to create a TwitterPost.
+     * The data needed to create a TriviaRound.
      */
-    data: XOR<TwitterPostCreateInput, TwitterPostUncheckedCreateInput>
+    data: XOR<TriviaRoundCreateInput, TriviaRoundUncheckedCreateInput>
   }
 
 
   /**
-   * TwitterPost createMany
+   * TriviaRound createMany
    */
-  export type TwitterPostCreateManyArgs = {
+  export type TriviaRoundCreateManyArgs = {
     /**
-     * The data used to create many TwitterPosts.
+     * The data used to create many TriviaRounds.
      */
-    data: Enumerable<TwitterPostCreateManyInput>
+    data: Enumerable<TriviaRoundCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TwitterPost update
+   * TriviaRound update
    */
-  export type TwitterPostUpdateArgs = {
+  export type TriviaRoundUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * The data needed to update a TwitterPost.
+     * The data needed to update a TriviaRound.
      */
-    data: XOR<TwitterPostUpdateInput, TwitterPostUncheckedUpdateInput>
+    data: XOR<TriviaRoundUpdateInput, TriviaRoundUncheckedUpdateInput>
     /**
-     * Choose, which TwitterPost to update.
+     * Choose, which TriviaRound to update.
      */
-    where: TwitterPostWhereUniqueInput
+    where: TriviaRoundWhereUniqueInput
   }
 
 
   /**
-   * TwitterPost updateMany
+   * TriviaRound updateMany
    */
-  export type TwitterPostUpdateManyArgs = {
+  export type TriviaRoundUpdateManyArgs = {
     /**
-     * The data used to update TwitterPosts.
+     * The data used to update TriviaRounds.
      */
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyInput>
+    data: XOR<TriviaRoundUpdateManyMutationInput, TriviaRoundUncheckedUpdateManyInput>
     /**
-     * Filter which TwitterPosts to update
+     * Filter which TriviaRounds to update
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaRoundWhereInput
   }
 
 
   /**
-   * TwitterPost upsert
+   * TriviaRound upsert
    */
-  export type TwitterPostUpsertArgs = {
+  export type TriviaRoundUpsertArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * The filter to search for the TwitterPost to update in case it exists.
+     * The filter to search for the TriviaRound to update in case it exists.
      */
-    where: TwitterPostWhereUniqueInput
+    where: TriviaRoundWhereUniqueInput
     /**
-     * In case the TwitterPost found by the `where` argument doesn't exist, create a new TwitterPost with this data.
+     * In case the TriviaRound found by the `where` argument doesn't exist, create a new TriviaRound with this data.
      */
-    create: XOR<TwitterPostCreateInput, TwitterPostUncheckedCreateInput>
+    create: XOR<TriviaRoundCreateInput, TriviaRoundUncheckedCreateInput>
     /**
-     * In case the TwitterPost was found with the provided `where` argument, update it with this data.
+     * In case the TriviaRound was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TwitterPostUpdateInput, TwitterPostUncheckedUpdateInput>
+    update: XOR<TriviaRoundUpdateInput, TriviaRoundUncheckedUpdateInput>
   }
 
 
   /**
-   * TwitterPost delete
+   * TriviaRound delete
    */
-  export type TwitterPostDeleteArgs = {
+  export type TriviaRoundDeleteArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
     /**
-     * Filter which TwitterPost to delete.
+     * Filter which TriviaRound to delete.
      */
-    where: TwitterPostWhereUniqueInput
+    where: TriviaRoundWhereUniqueInput
   }
 
 
   /**
-   * TwitterPost deleteMany
+   * TriviaRound deleteMany
    */
-  export type TwitterPostDeleteManyArgs = {
+  export type TriviaRoundDeleteManyArgs = {
     /**
-     * Filter which TwitterPosts to delete
+     * Filter which TriviaRounds to delete
      */
-    where?: TwitterPostWhereInput
+    where?: TriviaRoundWhereInput
   }
 
 
   /**
-   * TwitterPost.hashtags
+   * TriviaRound.roundQuestions
    */
-  export type TwitterPost$hashtagsArgs = {
+  export type TriviaRound$roundQuestionsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterHashtag
+     * Select specific fields to fetch from the TriviaRoundQuestion
      */
-    select?: TwitterHashtagSelect | null
+    select?: TriviaRoundQuestionSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterHashtagInclude | null
-    where?: TwitterHashtagWhereInput
-    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
-    cursor?: TwitterHashtagWhereUniqueInput
+    include?: TriviaRoundQuestionInclude | null
+    where?: TriviaRoundQuestionWhereInput
+    orderBy?: Enumerable<TriviaRoundQuestionOrderByWithRelationInput>
+    cursor?: TriviaRoundQuestionWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterHashtagScalarFieldEnum>
+    distinct?: Enumerable<TriviaRoundQuestionScalarFieldEnum>
   }
 
 
   /**
-   * TwitterPost.replyTo
+   * TriviaRound without action
    */
-  export type TwitterPost$replyToArgs = {
+  export type TriviaRoundArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPost
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterPostSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostInclude | null
-    where?: TwitterPostWhereInput
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
-    cursor?: TwitterPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterPost.replyBy
-   */
-  export type TwitterPost$replyByArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPost
-     */
-    select?: TwitterPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostInclude | null
-    where?: TwitterPostWhereInput
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
-    cursor?: TwitterPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterPost without action
-   */
-  export type TwitterPostArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPost
-     */
-    select?: TwitterPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostInclude | null
+    include?: TriviaRoundInclude | null
   }
 
 
 
   /**
-   * Model TwitterDirectMessage
+   * Model TriviaUser
    */
 
 
-  export type AggregateTwitterDirectMessage = {
-    _count: TwitterDirectMessageCountAggregateOutputType | null
-    _avg: TwitterDirectMessageAvgAggregateOutputType | null
-    _sum: TwitterDirectMessageSumAggregateOutputType | null
-    _min: TwitterDirectMessageMinAggregateOutputType | null
-    _max: TwitterDirectMessageMaxAggregateOutputType | null
+  export type AggregateTriviaUser = {
+    _count: TriviaUserCountAggregateOutputType | null
+    _avg: TriviaUserAvgAggregateOutputType | null
+    _sum: TriviaUserSumAggregateOutputType | null
+    _min: TriviaUserMinAggregateOutputType | null
+    _max: TriviaUserMaxAggregateOutputType | null
   }
 
-  export type TwitterDirectMessageAvgAggregateOutputType = {
+  export type TriviaUserAvgAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
   }
 
-  export type TwitterDirectMessageSumAggregateOutputType = {
+  export type TriviaUserSumAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
   }
 
-  export type TwitterDirectMessageMinAggregateOutputType = {
+  export type TriviaUserMinAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    text: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    user: string | null
+    avatar: string | null
   }
 
-  export type TwitterDirectMessageMaxAggregateOutputType = {
+  export type TriviaUserMaxAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    text: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    user: string | null
+    avatar: string | null
   }
 
-  export type TwitterDirectMessageCountAggregateOutputType = {
+  export type TriviaUserCountAggregateOutputType = {
     id: number
-    fromUserId: number
-    toUserId: number
-    text: number
-    createdAt: number
-    updatedAt: number
+    user: number
+    avatar: number
     _all: number
   }
 
 
-  export type TwitterDirectMessageAvgAggregateInputType = {
+  export type TriviaUserAvgAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
   }
 
-  export type TwitterDirectMessageSumAggregateInputType = {
+  export type TriviaUserSumAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
   }
 
-  export type TwitterDirectMessageMinAggregateInputType = {
+  export type TriviaUserMinAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    text?: true
-    createdAt?: true
-    updatedAt?: true
+    user?: true
+    avatar?: true
   }
 
-  export type TwitterDirectMessageMaxAggregateInputType = {
+  export type TriviaUserMaxAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    text?: true
-    createdAt?: true
-    updatedAt?: true
+    user?: true
+    avatar?: true
   }
 
-  export type TwitterDirectMessageCountAggregateInputType = {
+  export type TriviaUserCountAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
-    text?: true
-    createdAt?: true
-    updatedAt?: true
+    user?: true
+    avatar?: true
     _all?: true
   }
 
-  export type TwitterDirectMessageAggregateArgs = {
+  export type TriviaUserAggregateArgs = {
     /**
-     * Filter which TwitterDirectMessage to aggregate.
+     * Filter which TriviaUser to aggregate.
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterDirectMessages to fetch.
+     * Determine the order of TriviaUsers to fetch.
      */
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaUserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TwitterDirectMessageWhereUniqueInput
+    cursor?: TriviaUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterDirectMessages from the position of the cursor.
+     * Take `±n` TriviaUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterDirectMessages.
+     * Skip the first `n` TriviaUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TwitterDirectMessages
+     * Count returned TriviaUsers
     **/
-    _count?: true | TwitterDirectMessageCountAggregateInputType
+    _count?: true | TriviaUserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TwitterDirectMessageAvgAggregateInputType
+    _avg?: TriviaUserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TwitterDirectMessageSumAggregateInputType
+    _sum?: TriviaUserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TwitterDirectMessageMinAggregateInputType
+    _min?: TriviaUserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TwitterDirectMessageMaxAggregateInputType
+    _max?: TriviaUserMaxAggregateInputType
   }
 
-  export type GetTwitterDirectMessageAggregateType<T extends TwitterDirectMessageAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterDirectMessage]: P extends '_count' | 'count'
+  export type GetTriviaUserAggregateType<T extends TriviaUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTwitterDirectMessage[P]>
-      : GetScalarType<T[P], AggregateTwitterDirectMessage[P]>
+        : GetScalarType<T[P], AggregateTriviaUser[P]>
+      : GetScalarType<T[P], AggregateTriviaUser[P]>
   }
 
 
 
 
-  export type TwitterDirectMessageGroupByArgs = {
-    where?: TwitterDirectMessageWhereInput
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithAggregationInput>
-    by: TwitterDirectMessageScalarFieldEnum[]
-    having?: TwitterDirectMessageScalarWhereWithAggregatesInput
+  export type TriviaUserGroupByArgs = {
+    where?: TriviaUserWhereInput
+    orderBy?: Enumerable<TriviaUserOrderByWithAggregationInput>
+    by: TriviaUserScalarFieldEnum[]
+    having?: TriviaUserScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TwitterDirectMessageCountAggregateInputType | true
-    _avg?: TwitterDirectMessageAvgAggregateInputType
-    _sum?: TwitterDirectMessageSumAggregateInputType
-    _min?: TwitterDirectMessageMinAggregateInputType
-    _max?: TwitterDirectMessageMaxAggregateInputType
+    _count?: TriviaUserCountAggregateInputType | true
+    _avg?: TriviaUserAvgAggregateInputType
+    _sum?: TriviaUserSumAggregateInputType
+    _min?: TriviaUserMinAggregateInputType
+    _max?: TriviaUserMaxAggregateInputType
   }
 
 
-  export type TwitterDirectMessageGroupByOutputType = {
+  export type TriviaUserGroupByOutputType = {
     id: number
-    fromUserId: number
-    toUserId: number
-    text: string
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterDirectMessageCountAggregateOutputType | null
-    _avg: TwitterDirectMessageAvgAggregateOutputType | null
-    _sum: TwitterDirectMessageSumAggregateOutputType | null
-    _min: TwitterDirectMessageMinAggregateOutputType | null
-    _max: TwitterDirectMessageMaxAggregateOutputType | null
+    user: string
+    avatar: string
+    _count: TriviaUserCountAggregateOutputType | null
+    _avg: TriviaUserAvgAggregateOutputType | null
+    _sum: TriviaUserSumAggregateOutputType | null
+    _min: TriviaUserMinAggregateOutputType | null
+    _max: TriviaUserMaxAggregateOutputType | null
   }
 
-  type GetTwitterDirectMessageGroupByPayload<T extends TwitterDirectMessageGroupByArgs> = Prisma.PrismaPromise<
+  type GetTriviaUserGroupByPayload<T extends TriviaUserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<TwitterDirectMessageGroupByOutputType, T['by']> &
+      PickArray<TriviaUserGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TwitterDirectMessageGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TriviaUserGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TwitterDirectMessageGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterDirectMessageGroupByOutputType[P]>
+              : GetScalarType<T[P], TriviaUserGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaUserGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TwitterDirectMessageSelect = {
+  export type TriviaUserSelect = {
     id?: boolean
-    fromUserId?: boolean
-    toUserId?: boolean
-    text?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
+    user?: boolean
+    avatar?: boolean
+    rounds?: boolean | TriviaUser$roundsArgs
+    _count?: boolean | TriviaUserCountOutputTypeArgs
   }
 
 
-  export type TwitterDirectMessageInclude = {
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
+  export type TriviaUserInclude = {
+    rounds?: boolean | TriviaUser$roundsArgs
+    _count?: boolean | TriviaUserCountOutputTypeArgs
   }
 
-  export type TwitterDirectMessageGetPayload<S extends boolean | null | undefined | TwitterDirectMessageArgs> =
+  export type TriviaUserGetPayload<S extends boolean | null | undefined | TriviaUserArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterDirectMessage :
+    S extends true ? TriviaUser :
     S extends undefined ? never :
-    S extends { include: any } & (TwitterDirectMessageArgs | TwitterDirectMessageFindManyArgs)
-    ? TwitterDirectMessage  & {
+    S extends { include: any } & (TriviaUserArgs | TriviaUserFindManyArgs)
+    ? TriviaUser  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['include'][P]> :  never
+        P extends 'rounds' ? Array < TriviaRoundGetPayload<S['include'][P]>>  :
+        P extends '_count' ? TriviaUserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (TwitterDirectMessageArgs | TwitterDirectMessageFindManyArgs)
+    : S extends { select: any } & (TriviaUserArgs | TriviaUserFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['select'][P]> :  P extends keyof TwitterDirectMessage ? TwitterDirectMessage[P] : never
+        P extends 'rounds' ? Array < TriviaRoundGetPayload<S['select'][P]>>  :
+        P extends '_count' ? TriviaUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaUser ? TriviaUser[P] : never
   } 
-      : TwitterDirectMessage
+      : TriviaUser
 
 
-  type TwitterDirectMessageCountArgs = 
-    Omit<TwitterDirectMessageFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterDirectMessageCountAggregateInputType | true
+  type TriviaUserCountArgs = 
+    Omit<TriviaUserFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaUserCountAggregateInputType | true
     }
 
-  export interface TwitterDirectMessageDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface TriviaUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one TwitterDirectMessage that matches the filter.
-     * @param {TwitterDirectMessageFindUniqueArgs} args - Arguments to find a TwitterDirectMessage
+     * Find zero or one TriviaUser that matches the filter.
+     * @param {TriviaUserFindUniqueArgs} args - Arguments to find a TriviaUser
      * @example
-     * // Get one TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.findUnique({
+     * // Get one TriviaUser
+     * const triviaUser = await prisma.triviaUser.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends TwitterDirectMessageFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterDirectMessageFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterDirectMessage'> extends True ? Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>> : Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T> | null, null>
+    findUnique<T extends TriviaUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaUser'> extends True ? Prisma__TriviaUserClient<TriviaUserGetPayload<T>> : Prisma__TriviaUserClient<TriviaUserGetPayload<T> | null, null>
 
     /**
-     * Find one TwitterDirectMessage that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one TriviaUser that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {TwitterDirectMessageFindUniqueOrThrowArgs} args - Arguments to find a TwitterDirectMessage
+     * @param {TriviaUserFindUniqueOrThrowArgs} args - Arguments to find a TriviaUser
      * @example
-     * // Get one TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.findUniqueOrThrow({
+     * // Get one TriviaUser
+     * const triviaUser = await prisma.triviaUser.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends TwitterDirectMessageFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterDirectMessageFindUniqueOrThrowArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    findUniqueOrThrow<T extends TriviaUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaUserFindUniqueOrThrowArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Find the first TwitterDirectMessage that matches the filter.
+     * Find the first TriviaUser that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageFindFirstArgs} args - Arguments to find a TwitterDirectMessage
+     * @param {TriviaUserFindFirstArgs} args - Arguments to find a TriviaUser
      * @example
-     * // Get one TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.findFirst({
+     * // Get one TriviaUser
+     * const triviaUser = await prisma.triviaUser.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends TwitterDirectMessageFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterDirectMessageFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterDirectMessage'> extends True ? Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>> : Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T> | null, null>
+    findFirst<T extends TriviaUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaUser'> extends True ? Prisma__TriviaUserClient<TriviaUserGetPayload<T>> : Prisma__TriviaUserClient<TriviaUserGetPayload<T> | null, null>
 
     /**
-     * Find the first TwitterDirectMessage that matches the filter or
+     * Find the first TriviaUser that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageFindFirstOrThrowArgs} args - Arguments to find a TwitterDirectMessage
+     * @param {TriviaUserFindFirstOrThrowArgs} args - Arguments to find a TriviaUser
      * @example
-     * // Get one TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.findFirstOrThrow({
+     * // Get one TriviaUser
+     * const triviaUser = await prisma.triviaUser.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends TwitterDirectMessageFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterDirectMessageFindFirstOrThrowArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    findFirstOrThrow<T extends TriviaUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaUserFindFirstOrThrowArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Find zero or more TwitterDirectMessages that matches the filter.
+     * Find zero or more TriviaUsers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TriviaUserFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TwitterDirectMessages
-     * const twitterDirectMessages = await prisma.twitterDirectMessage.findMany()
+     * // Get all TriviaUsers
+     * const triviaUsers = await prisma.triviaUser.findMany()
      * 
-     * // Get first 10 TwitterDirectMessages
-     * const twitterDirectMessages = await prisma.twitterDirectMessage.findMany({ take: 10 })
+     * // Get first 10 TriviaUsers
+     * const triviaUsers = await prisma.triviaUser.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const twitterDirectMessageWithIdOnly = await prisma.twitterDirectMessage.findMany({ select: { id: true } })
+     * const triviaUserWithIdOnly = await prisma.triviaUser.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends TwitterDirectMessageFindManyArgs>(
-      args?: SelectSubset<T, TwitterDirectMessageFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterDirectMessageGetPayload<T>>>
+    findMany<T extends TriviaUserFindManyArgs>(
+      args?: SelectSubset<T, TriviaUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaUserGetPayload<T>>>
 
     /**
-     * Create a TwitterDirectMessage.
-     * @param {TwitterDirectMessageCreateArgs} args - Arguments to create a TwitterDirectMessage.
+     * Create a TriviaUser.
+     * @param {TriviaUserCreateArgs} args - Arguments to create a TriviaUser.
      * @example
-     * // Create one TwitterDirectMessage
-     * const TwitterDirectMessage = await prisma.twitterDirectMessage.create({
+     * // Create one TriviaUser
+     * const TriviaUser = await prisma.triviaUser.create({
      *   data: {
-     *     // ... data to create a TwitterDirectMessage
+     *     // ... data to create a TriviaUser
      *   }
      * })
      * 
     **/
-    create<T extends TwitterDirectMessageCreateArgs>(
-      args: SelectSubset<T, TwitterDirectMessageCreateArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    create<T extends TriviaUserCreateArgs>(
+      args: SelectSubset<T, TriviaUserCreateArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Create many TwitterDirectMessages.
-     *     @param {TwitterDirectMessageCreateManyArgs} args - Arguments to create many TwitterDirectMessages.
+     * Create many TriviaUsers.
+     *     @param {TriviaUserCreateManyArgs} args - Arguments to create many TriviaUsers.
      *     @example
-     *     // Create many TwitterDirectMessages
-     *     const twitterDirectMessage = await prisma.twitterDirectMessage.createMany({
+     *     // Create many TriviaUsers
+     *     const triviaUser = await prisma.triviaUser.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends TwitterDirectMessageCreateManyArgs>(
-      args?: SelectSubset<T, TwitterDirectMessageCreateManyArgs>
+    createMany<T extends TriviaUserCreateManyArgs>(
+      args?: SelectSubset<T, TriviaUserCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a TwitterDirectMessage.
-     * @param {TwitterDirectMessageDeleteArgs} args - Arguments to delete one TwitterDirectMessage.
+     * Delete a TriviaUser.
+     * @param {TriviaUserDeleteArgs} args - Arguments to delete one TriviaUser.
      * @example
-     * // Delete one TwitterDirectMessage
-     * const TwitterDirectMessage = await prisma.twitterDirectMessage.delete({
+     * // Delete one TriviaUser
+     * const TriviaUser = await prisma.triviaUser.delete({
      *   where: {
-     *     // ... filter to delete one TwitterDirectMessage
+     *     // ... filter to delete one TriviaUser
      *   }
      * })
      * 
     **/
-    delete<T extends TwitterDirectMessageDeleteArgs>(
-      args: SelectSubset<T, TwitterDirectMessageDeleteArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    delete<T extends TriviaUserDeleteArgs>(
+      args: SelectSubset<T, TriviaUserDeleteArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Update one TwitterDirectMessage.
-     * @param {TwitterDirectMessageUpdateArgs} args - Arguments to update one TwitterDirectMessage.
+     * Update one TriviaUser.
+     * @param {TriviaUserUpdateArgs} args - Arguments to update one TriviaUser.
      * @example
-     * // Update one TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.update({
+     * // Update one TriviaUser
+     * const triviaUser = await prisma.triviaUser.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4557,34 +6510,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends TwitterDirectMessageUpdateArgs>(
-      args: SelectSubset<T, TwitterDirectMessageUpdateArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    update<T extends TriviaUserUpdateArgs>(
+      args: SelectSubset<T, TriviaUserUpdateArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Delete zero or more TwitterDirectMessages.
-     * @param {TwitterDirectMessageDeleteManyArgs} args - Arguments to filter TwitterDirectMessages to delete.
+     * Delete zero or more TriviaUsers.
+     * @param {TriviaUserDeleteManyArgs} args - Arguments to filter TriviaUsers to delete.
      * @example
-     * // Delete a few TwitterDirectMessages
-     * const { count } = await prisma.twitterDirectMessage.deleteMany({
+     * // Delete a few TriviaUsers
+     * const { count } = await prisma.triviaUser.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends TwitterDirectMessageDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterDirectMessageDeleteManyArgs>
+    deleteMany<T extends TriviaUserDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaUserDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TwitterDirectMessages.
+     * Update zero or more TriviaUsers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TriviaUserUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TwitterDirectMessages
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.updateMany({
+     * // Update many TriviaUsers
+     * const triviaUser = await prisma.triviaUser.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -4594,59 +6547,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends TwitterDirectMessageUpdateManyArgs>(
-      args: SelectSubset<T, TwitterDirectMessageUpdateManyArgs>
+    updateMany<T extends TriviaUserUpdateManyArgs>(
+      args: SelectSubset<T, TriviaUserUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one TwitterDirectMessage.
-     * @param {TwitterDirectMessageUpsertArgs} args - Arguments to update or create a TwitterDirectMessage.
+     * Create or update one TriviaUser.
+     * @param {TriviaUserUpsertArgs} args - Arguments to update or create a TriviaUser.
      * @example
-     * // Update or create a TwitterDirectMessage
-     * const twitterDirectMessage = await prisma.twitterDirectMessage.upsert({
+     * // Update or create a TriviaUser
+     * const triviaUser = await prisma.triviaUser.upsert({
      *   create: {
-     *     // ... data to create a TwitterDirectMessage
+     *     // ... data to create a TriviaUser
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TwitterDirectMessage we want to update
+     *     // ... the filter for the TriviaUser we want to update
      *   }
      * })
     **/
-    upsert<T extends TwitterDirectMessageUpsertArgs>(
-      args: SelectSubset<T, TwitterDirectMessageUpsertArgs>
-    ): Prisma__TwitterDirectMessageClient<TwitterDirectMessageGetPayload<T>>
+    upsert<T extends TriviaUserUpsertArgs>(
+      args: SelectSubset<T, TriviaUserUpsertArgs>
+    ): Prisma__TriviaUserClient<TriviaUserGetPayload<T>>
 
     /**
-     * Count the number of TwitterDirectMessages.
+     * Count the number of TriviaUsers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageCountArgs} args - Arguments to filter TwitterDirectMessages to count.
+     * @param {TriviaUserCountArgs} args - Arguments to filter TriviaUsers to count.
      * @example
-     * // Count the number of TwitterDirectMessages
-     * const count = await prisma.twitterDirectMessage.count({
+     * // Count the number of TriviaUsers
+     * const count = await prisma.triviaUser.count({
      *   where: {
-     *     // ... the filter for the TwitterDirectMessages we want to count
+     *     // ... the filter for the TriviaUsers we want to count
      *   }
      * })
     **/
-    count<T extends TwitterDirectMessageCountArgs>(
-      args?: Subset<T, TwitterDirectMessageCountArgs>,
+    count<T extends TriviaUserCountArgs>(
+      args?: Subset<T, TriviaUserCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TwitterDirectMessageCountAggregateOutputType>
+          : GetScalarType<T['select'], TriviaUserCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TwitterDirectMessage.
+     * Allows you to perform aggregations operations on a TriviaUser.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TriviaUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -4666,13 +6619,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TwitterDirectMessageAggregateArgs>(args: Subset<T, TwitterDirectMessageAggregateArgs>): Prisma.PrismaPromise<GetTwitterDirectMessageAggregateType<T>>
+    aggregate<T extends TriviaUserAggregateArgs>(args: Subset<T, TriviaUserAggregateArgs>): Prisma.PrismaPromise<GetTriviaUserAggregateType<T>>
 
     /**
-     * Group by TwitterDirectMessage.
+     * Group by TriviaUser.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterDirectMessageGroupByArgs} args - Group by arguments.
+     * @param {TriviaUserGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -4687,14 +6640,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TwitterDirectMessageGroupByArgs,
+      T extends TriviaUserGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterDirectMessageGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterDirectMessageGroupByArgs['orderBy'] },
+        ? { orderBy: TriviaUserGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaUserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -4743,17 +6696,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterDirectMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterDirectMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TriviaUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TwitterDirectMessage.
+   * The delegate class that acts as a "Promise-like" for TriviaUser.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__TwitterDirectMessageClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__TriviaUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -4768,9 +6721,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    from<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
-
-    to<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
+    rounds<T extends TriviaUser$roundsArgs= {}>(args?: Subset<T, TriviaUser$roundsArgs>): Prisma.PrismaPromise<Array<TriviaRoundGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -4800,27 +6751,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TwitterDirectMessage base type for findUnique actions
+   * TriviaUser base type for findUnique actions
    */
-  export type TwitterDirectMessageFindUniqueArgsBase = {
+  export type TriviaUserFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter, which TwitterDirectMessage to fetch.
+     * Filter, which TriviaUser to fetch.
      */
-    where: TwitterDirectMessageWhereUniqueInput
+    where: TriviaUserWhereUniqueInput
   }
 
   /**
-   * TwitterDirectMessage findUnique
+   * TriviaUser findUnique
    */
-  export interface TwitterDirectMessageFindUniqueArgs extends TwitterDirectMessageFindUniqueArgsBase {
+  export interface TriviaUserFindUniqueArgs extends TriviaUserFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -4830,76 +6781,76 @@ export namespace Prisma {
       
 
   /**
-   * TwitterDirectMessage findUniqueOrThrow
+   * TriviaUser findUniqueOrThrow
    */
-  export type TwitterDirectMessageFindUniqueOrThrowArgs = {
+  export type TriviaUserFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter, which TwitterDirectMessage to fetch.
+     * Filter, which TriviaUser to fetch.
      */
-    where: TwitterDirectMessageWhereUniqueInput
+    where: TriviaUserWhereUniqueInput
   }
 
 
   /**
-   * TwitterDirectMessage base type for findFirst actions
+   * TriviaUser base type for findFirst actions
    */
-  export type TwitterDirectMessageFindFirstArgsBase = {
+  export type TriviaUserFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter, which TwitterDirectMessage to fetch.
+     * Filter, which TriviaUser to fetch.
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterDirectMessages to fetch.
+     * Determine the order of TriviaUsers to fetch.
      */
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaUserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterDirectMessages.
+     * Sets the position for searching for TriviaUsers.
      */
-    cursor?: TwitterDirectMessageWhereUniqueInput
+    cursor?: TriviaUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterDirectMessages from the position of the cursor.
+     * Take `±n` TriviaUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterDirectMessages.
+     * Skip the first `n` TriviaUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterDirectMessages.
+     * Filter by unique combinations of TriviaUsers.
      */
-    distinct?: Enumerable<TwitterDirectMessageScalarFieldEnum>
+    distinct?: Enumerable<TriviaUserScalarFieldEnum>
   }
 
   /**
-   * TwitterDirectMessage findFirst
+   * TriviaUser findFirst
    */
-  export interface TwitterDirectMessageFindFirstArgs extends TwitterDirectMessageFindFirstArgsBase {
+  export interface TriviaUserFindFirstArgs extends TriviaUserFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -4909,1218 +6860,257 @@ export namespace Prisma {
       
 
   /**
-   * TwitterDirectMessage findFirstOrThrow
+   * TriviaUser findFirstOrThrow
    */
-  export type TwitterDirectMessageFindFirstOrThrowArgs = {
+  export type TriviaUserFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter, which TwitterDirectMessage to fetch.
+     * Filter, which TriviaUser to fetch.
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterDirectMessages to fetch.
+     * Determine the order of TriviaUsers to fetch.
      */
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaUserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TwitterDirectMessages.
+     * Sets the position for searching for TriviaUsers.
      */
-    cursor?: TwitterDirectMessageWhereUniqueInput
+    cursor?: TriviaUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterDirectMessages from the position of the cursor.
+     * Take `±n` TriviaUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterDirectMessages.
+     * Skip the first `n` TriviaUsers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TwitterDirectMessages.
+     * Filter by unique combinations of TriviaUsers.
      */
-    distinct?: Enumerable<TwitterDirectMessageScalarFieldEnum>
+    distinct?: Enumerable<TriviaUserScalarFieldEnum>
   }
 
 
   /**
-   * TwitterDirectMessage findMany
+   * TriviaUser findMany
    */
-  export type TwitterDirectMessageFindManyArgs = {
+  export type TriviaUserFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter, which TwitterDirectMessages to fetch.
+     * Filter, which TriviaUsers to fetch.
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TwitterDirectMessages to fetch.
+     * Determine the order of TriviaUsers to fetch.
      */
-    orderBy?: Enumerable<TwitterDirectMessageOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaUserOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TwitterDirectMessages.
+     * Sets the position for listing TriviaUsers.
      */
-    cursor?: TwitterDirectMessageWhereUniqueInput
+    cursor?: TriviaUserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TwitterDirectMessages from the position of the cursor.
+     * Take `±n` TriviaUsers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TwitterDirectMessages.
+     * Skip the first `n` TriviaUsers.
      */
     skip?: number
-    distinct?: Enumerable<TwitterDirectMessageScalarFieldEnum>
+    distinct?: Enumerable<TriviaUserScalarFieldEnum>
   }
 
 
   /**
-   * TwitterDirectMessage create
+   * TriviaUser create
    */
-  export type TwitterDirectMessageCreateArgs = {
+  export type TriviaUserCreateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * The data needed to create a TwitterDirectMessage.
+     * The data needed to create a TriviaUser.
      */
-    data: XOR<TwitterDirectMessageCreateInput, TwitterDirectMessageUncheckedCreateInput>
+    data: XOR<TriviaUserCreateInput, TriviaUserUncheckedCreateInput>
   }
 
 
   /**
-   * TwitterDirectMessage createMany
+   * TriviaUser createMany
    */
-  export type TwitterDirectMessageCreateManyArgs = {
+  export type TriviaUserCreateManyArgs = {
     /**
-     * The data used to create many TwitterDirectMessages.
+     * The data used to create many TriviaUsers.
      */
-    data: Enumerable<TwitterDirectMessageCreateManyInput>
+    data: Enumerable<TriviaUserCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TwitterDirectMessage update
+   * TriviaUser update
    */
-  export type TwitterDirectMessageUpdateArgs = {
+  export type TriviaUserUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * The data needed to update a TwitterDirectMessage.
+     * The data needed to update a TriviaUser.
      */
-    data: XOR<TwitterDirectMessageUpdateInput, TwitterDirectMessageUncheckedUpdateInput>
+    data: XOR<TriviaUserUpdateInput, TriviaUserUncheckedUpdateInput>
     /**
-     * Choose, which TwitterDirectMessage to update.
+     * Choose, which TriviaUser to update.
      */
-    where: TwitterDirectMessageWhereUniqueInput
+    where: TriviaUserWhereUniqueInput
   }
 
 
   /**
-   * TwitterDirectMessage updateMany
+   * TriviaUser updateMany
    */
-  export type TwitterDirectMessageUpdateManyArgs = {
+  export type TriviaUserUpdateManyArgs = {
     /**
-     * The data used to update TwitterDirectMessages.
+     * The data used to update TriviaUsers.
      */
-    data: XOR<TwitterDirectMessageUpdateManyMutationInput, TwitterDirectMessageUncheckedUpdateManyInput>
+    data: XOR<TriviaUserUpdateManyMutationInput, TriviaUserUncheckedUpdateManyInput>
     /**
-     * Filter which TwitterDirectMessages to update
+     * Filter which TriviaUsers to update
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
   }
 
 
   /**
-   * TwitterDirectMessage upsert
+   * TriviaUser upsert
    */
-  export type TwitterDirectMessageUpsertArgs = {
+  export type TriviaUserUpsertArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * The filter to search for the TwitterDirectMessage to update in case it exists.
+     * The filter to search for the TriviaUser to update in case it exists.
      */
-    where: TwitterDirectMessageWhereUniqueInput
+    where: TriviaUserWhereUniqueInput
     /**
-     * In case the TwitterDirectMessage found by the `where` argument doesn't exist, create a new TwitterDirectMessage with this data.
+     * In case the TriviaUser found by the `where` argument doesn't exist, create a new TriviaUser with this data.
      */
-    create: XOR<TwitterDirectMessageCreateInput, TwitterDirectMessageUncheckedCreateInput>
+    create: XOR<TriviaUserCreateInput, TriviaUserUncheckedCreateInput>
     /**
-     * In case the TwitterDirectMessage was found with the provided `where` argument, update it with this data.
+     * In case the TriviaUser was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TwitterDirectMessageUpdateInput, TwitterDirectMessageUncheckedUpdateInput>
+    update: XOR<TriviaUserUpdateInput, TriviaUserUncheckedUpdateInput>
   }
 
 
   /**
-   * TwitterDirectMessage delete
+   * TriviaUser delete
    */
-  export type TwitterDirectMessageDeleteArgs = {
+  export type TriviaUserDeleteArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaUser
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
+    include?: TriviaUserInclude | null
     /**
-     * Filter which TwitterDirectMessage to delete.
+     * Filter which TriviaUser to delete.
      */
-    where: TwitterDirectMessageWhereUniqueInput
+    where: TriviaUserWhereUniqueInput
   }
 
 
   /**
-   * TwitterDirectMessage deleteMany
+   * TriviaUser deleteMany
    */
-  export type TwitterDirectMessageDeleteManyArgs = {
+  export type TriviaUserDeleteManyArgs = {
     /**
-     * Filter which TwitterDirectMessages to delete
+     * Filter which TriviaUsers to delete
      */
-    where?: TwitterDirectMessageWhereInput
+    where?: TriviaUserWhereInput
   }
 
 
   /**
-   * TwitterDirectMessage without action
+   * TriviaUser.rounds
    */
-  export type TwitterDirectMessageArgs = {
+  export type TriviaUser$roundsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterDirectMessage
+     * Select specific fields to fetch from the TriviaRound
      */
-    select?: TwitterDirectMessageSelect | null
+    select?: TriviaRoundSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterDirectMessageInclude | null
-  }
-
-
-
-  /**
-   * Model TwitterHashtag
-   */
-
-
-  export type AggregateTwitterHashtag = {
-    _count: TwitterHashtagCountAggregateOutputType | null
-    _avg: TwitterHashtagAvgAggregateOutputType | null
-    _sum: TwitterHashtagSumAggregateOutputType | null
-    _min: TwitterHashtagMinAggregateOutputType | null
-    _max: TwitterHashtagMaxAggregateOutputType | null
-  }
-
-  export type TwitterHashtagAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TwitterHashtagSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TwitterHashtagMinAggregateOutputType = {
-    id: number | null
-    hashtag: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterHashtagMaxAggregateOutputType = {
-    id: number | null
-    hashtag: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterHashtagCountAggregateOutputType = {
-    id: number
-    hashtag: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TwitterHashtagAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type TwitterHashtagSumAggregateInputType = {
-    id?: true
-  }
-
-  export type TwitterHashtagMinAggregateInputType = {
-    id?: true
-    hashtag?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterHashtagMaxAggregateInputType = {
-    id?: true
-    hashtag?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterHashtagCountAggregateInputType = {
-    id?: true
-    hashtag?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TwitterHashtagAggregateArgs = {
-    /**
-     * Filter which TwitterHashtag to aggregate.
-     */
-    where?: TwitterHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TwitterHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TwitterHashtags
-    **/
-    _count?: true | TwitterHashtagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TwitterHashtagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TwitterHashtagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TwitterHashtagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TwitterHashtagMaxAggregateInputType
-  }
-
-  export type GetTwitterHashtagAggregateType<T extends TwitterHashtagAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterHashtag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTwitterHashtag[P]>
-      : GetScalarType<T[P], AggregateTwitterHashtag[P]>
-  }
-
-
-
-
-  export type TwitterHashtagGroupByArgs = {
-    where?: TwitterHashtagWhereInput
-    orderBy?: Enumerable<TwitterHashtagOrderByWithAggregationInput>
-    by: TwitterHashtagScalarFieldEnum[]
-    having?: TwitterHashtagScalarWhereWithAggregatesInput
+    include?: TriviaRoundInclude | null
+    where?: TriviaRoundWhereInput
+    orderBy?: Enumerable<TriviaRoundOrderByWithRelationInput>
+    cursor?: TriviaRoundWhereUniqueInput
     take?: number
     skip?: number
-    _count?: TwitterHashtagCountAggregateInputType | true
-    _avg?: TwitterHashtagAvgAggregateInputType
-    _sum?: TwitterHashtagSumAggregateInputType
-    _min?: TwitterHashtagMinAggregateInputType
-    _max?: TwitterHashtagMaxAggregateInputType
+    distinct?: Enumerable<TriviaRoundScalarFieldEnum>
   }
 
-
-  export type TwitterHashtagGroupByOutputType = {
-    id: number
-    hashtag: string
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterHashtagCountAggregateOutputType | null
-    _avg: TwitterHashtagAvgAggregateOutputType | null
-    _sum: TwitterHashtagSumAggregateOutputType | null
-    _min: TwitterHashtagMinAggregateOutputType | null
-    _max: TwitterHashtagMaxAggregateOutputType | null
-  }
-
-  type GetTwitterHashtagGroupByPayload<T extends TwitterHashtagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<TwitterHashtagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TwitterHashtagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TwitterHashtagGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterHashtagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TwitterHashtagSelect = {
-    id?: boolean
-    hashtag?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    posts?: boolean | TwitterHashtag$postsArgs
-    _count?: boolean | TwitterHashtagCountOutputTypeArgs
-  }
-
-
-  export type TwitterHashtagInclude = {
-    posts?: boolean | TwitterHashtag$postsArgs
-    _count?: boolean | TwitterHashtagCountOutputTypeArgs
-  }
-
-  export type TwitterHashtagGetPayload<S extends boolean | null | undefined | TwitterHashtagArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterHashtag :
-    S extends undefined ? never :
-    S extends { include: any } & (TwitterHashtagArgs | TwitterHashtagFindManyArgs)
-    ? TwitterHashtag  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'posts' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TwitterHashtagCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (TwitterHashtagArgs | TwitterHashtagFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'posts' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TwitterHashtagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterHashtag ? TwitterHashtag[P] : never
-  } 
-      : TwitterHashtag
-
-
-  type TwitterHashtagCountArgs = 
-    Omit<TwitterHashtagFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterHashtagCountAggregateInputType | true
-    }
-
-  export interface TwitterHashtagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one TwitterHashtag that matches the filter.
-     * @param {TwitterHashtagFindUniqueArgs} args - Arguments to find a TwitterHashtag
-     * @example
-     * // Get one TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends TwitterHashtagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterHashtagFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterHashtag'> extends True ? Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>> : Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T> | null, null>
-
-    /**
-     * Find one TwitterHashtag that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TwitterHashtagFindUniqueOrThrowArgs} args - Arguments to find a TwitterHashtag
-     * @example
-     * // Get one TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TwitterHashtagFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterHashtagFindUniqueOrThrowArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Find the first TwitterHashtag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagFindFirstArgs} args - Arguments to find a TwitterHashtag
-     * @example
-     * // Get one TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends TwitterHashtagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterHashtagFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterHashtag'> extends True ? Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>> : Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T> | null, null>
-
-    /**
-     * Find the first TwitterHashtag that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagFindFirstOrThrowArgs} args - Arguments to find a TwitterHashtag
-     * @example
-     * // Get one TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TwitterHashtagFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterHashtagFindFirstOrThrowArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Find zero or more TwitterHashtags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TwitterHashtags
-     * const twitterHashtags = await prisma.twitterHashtag.findMany()
-     * 
-     * // Get first 10 TwitterHashtags
-     * const twitterHashtags = await prisma.twitterHashtag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const twitterHashtagWithIdOnly = await prisma.twitterHashtag.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends TwitterHashtagFindManyArgs>(
-      args?: SelectSubset<T, TwitterHashtagFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterHashtagGetPayload<T>>>
-
-    /**
-     * Create a TwitterHashtag.
-     * @param {TwitterHashtagCreateArgs} args - Arguments to create a TwitterHashtag.
-     * @example
-     * // Create one TwitterHashtag
-     * const TwitterHashtag = await prisma.twitterHashtag.create({
-     *   data: {
-     *     // ... data to create a TwitterHashtag
-     *   }
-     * })
-     * 
-    **/
-    create<T extends TwitterHashtagCreateArgs>(
-      args: SelectSubset<T, TwitterHashtagCreateArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Create many TwitterHashtags.
-     *     @param {TwitterHashtagCreateManyArgs} args - Arguments to create many TwitterHashtags.
-     *     @example
-     *     // Create many TwitterHashtags
-     *     const twitterHashtag = await prisma.twitterHashtag.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends TwitterHashtagCreateManyArgs>(
-      args?: SelectSubset<T, TwitterHashtagCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a TwitterHashtag.
-     * @param {TwitterHashtagDeleteArgs} args - Arguments to delete one TwitterHashtag.
-     * @example
-     * // Delete one TwitterHashtag
-     * const TwitterHashtag = await prisma.twitterHashtag.delete({
-     *   where: {
-     *     // ... filter to delete one TwitterHashtag
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends TwitterHashtagDeleteArgs>(
-      args: SelectSubset<T, TwitterHashtagDeleteArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Update one TwitterHashtag.
-     * @param {TwitterHashtagUpdateArgs} args - Arguments to update one TwitterHashtag.
-     * @example
-     * // Update one TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends TwitterHashtagUpdateArgs>(
-      args: SelectSubset<T, TwitterHashtagUpdateArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Delete zero or more TwitterHashtags.
-     * @param {TwitterHashtagDeleteManyArgs} args - Arguments to filter TwitterHashtags to delete.
-     * @example
-     * // Delete a few TwitterHashtags
-     * const { count } = await prisma.twitterHashtag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends TwitterHashtagDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterHashtagDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TwitterHashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TwitterHashtags
-     * const twitterHashtag = await prisma.twitterHashtag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends TwitterHashtagUpdateManyArgs>(
-      args: SelectSubset<T, TwitterHashtagUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one TwitterHashtag.
-     * @param {TwitterHashtagUpsertArgs} args - Arguments to update or create a TwitterHashtag.
-     * @example
-     * // Update or create a TwitterHashtag
-     * const twitterHashtag = await prisma.twitterHashtag.upsert({
-     *   create: {
-     *     // ... data to create a TwitterHashtag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TwitterHashtag we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends TwitterHashtagUpsertArgs>(
-      args: SelectSubset<T, TwitterHashtagUpsertArgs>
-    ): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T>>
-
-    /**
-     * Count the number of TwitterHashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagCountArgs} args - Arguments to filter TwitterHashtags to count.
-     * @example
-     * // Count the number of TwitterHashtags
-     * const count = await prisma.twitterHashtag.count({
-     *   where: {
-     *     // ... the filter for the TwitterHashtags we want to count
-     *   }
-     * })
-    **/
-    count<T extends TwitterHashtagCountArgs>(
-      args?: Subset<T, TwitterHashtagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TwitterHashtagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TwitterHashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TwitterHashtagAggregateArgs>(args: Subset<T, TwitterHashtagAggregateArgs>): Prisma.PrismaPromise<GetTwitterHashtagAggregateType<T>>
-
-    /**
-     * Group by TwitterHashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterHashtagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TwitterHashtagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterHashtagGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterHashtagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterHashtagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterHashtagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TwitterHashtag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
+   * TriviaUser without action
    */
-  export class Prisma__TwitterHashtagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    posts<T extends TwitterHashtag$postsArgs= {}>(args?: Subset<T, TwitterHashtag$postsArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
-
-    private get _document();
+  export type TriviaUserArgs = {
     /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
+     * Select specific fields to fetch from the TriviaUser
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TwitterHashtag base type for findUnique actions
-   */
-  export type TwitterHashtagFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
+    select?: TriviaUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter, which TwitterHashtag to fetch.
-     */
-    where: TwitterHashtagWhereUniqueInput
-  }
-
-  /**
-   * TwitterHashtag findUnique
-   */
-  export interface TwitterHashtagFindUniqueArgs extends TwitterHashtagFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterHashtag findUniqueOrThrow
-   */
-  export type TwitterHashtagFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter, which TwitterHashtag to fetch.
-     */
-    where: TwitterHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterHashtag base type for findFirst actions
-   */
-  export type TwitterHashtagFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter, which TwitterHashtag to fetch.
-     */
-    where?: TwitterHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterHashtags.
-     */
-    cursor?: TwitterHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterHashtags.
-     */
-    distinct?: Enumerable<TwitterHashtagScalarFieldEnum>
-  }
-
-  /**
-   * TwitterHashtag findFirst
-   */
-  export interface TwitterHashtagFindFirstArgs extends TwitterHashtagFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterHashtag findFirstOrThrow
-   */
-  export type TwitterHashtagFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter, which TwitterHashtag to fetch.
-     */
-    where?: TwitterHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterHashtags.
-     */
-    cursor?: TwitterHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterHashtags.
-     */
-    distinct?: Enumerable<TwitterHashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterHashtag findMany
-   */
-  export type TwitterHashtagFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter, which TwitterHashtags to fetch.
-     */
-    where?: TwitterHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TwitterHashtags.
-     */
-    cursor?: TwitterHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterHashtags.
-     */
-    skip?: number
-    distinct?: Enumerable<TwitterHashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterHashtag create
-   */
-  export type TwitterHashtagCreateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * The data needed to create a TwitterHashtag.
-     */
-    data: XOR<TwitterHashtagCreateInput, TwitterHashtagUncheckedCreateInput>
-  }
-
-
-  /**
-   * TwitterHashtag createMany
-   */
-  export type TwitterHashtagCreateManyArgs = {
-    /**
-     * The data used to create many TwitterHashtags.
-     */
-    data: Enumerable<TwitterHashtagCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * TwitterHashtag update
-   */
-  export type TwitterHashtagUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * The data needed to update a TwitterHashtag.
-     */
-    data: XOR<TwitterHashtagUpdateInput, TwitterHashtagUncheckedUpdateInput>
-    /**
-     * Choose, which TwitterHashtag to update.
-     */
-    where: TwitterHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterHashtag updateMany
-   */
-  export type TwitterHashtagUpdateManyArgs = {
-    /**
-     * The data used to update TwitterHashtags.
-     */
-    data: XOR<TwitterHashtagUpdateManyMutationInput, TwitterHashtagUncheckedUpdateManyInput>
-    /**
-     * Filter which TwitterHashtags to update
-     */
-    where?: TwitterHashtagWhereInput
-  }
-
-
-  /**
-   * TwitterHashtag upsert
-   */
-  export type TwitterHashtagUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * The filter to search for the TwitterHashtag to update in case it exists.
-     */
-    where: TwitterHashtagWhereUniqueInput
-    /**
-     * In case the TwitterHashtag found by the `where` argument doesn't exist, create a new TwitterHashtag with this data.
-     */
-    create: XOR<TwitterHashtagCreateInput, TwitterHashtagUncheckedCreateInput>
-    /**
-     * In case the TwitterHashtag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TwitterHashtagUpdateInput, TwitterHashtagUncheckedUpdateInput>
-  }
-
-
-  /**
-   * TwitterHashtag delete
-   */
-  export type TwitterHashtagDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
-    /**
-     * Filter which TwitterHashtag to delete.
-     */
-    where: TwitterHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterHashtag deleteMany
-   */
-  export type TwitterHashtagDeleteManyArgs = {
-    /**
-     * Filter which TwitterHashtags to delete
-     */
-    where?: TwitterHashtagWhereInput
-  }
-
-
-  /**
-   * TwitterHashtag.posts
-   */
-  export type TwitterHashtag$postsArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPost
-     */
-    select?: TwitterPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostInclude | null
-    where?: TwitterPostWhereInput
-    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
-    cursor?: TwitterPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterHashtag without action
-   */
-  export type TwitterHashtagArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterHashtag
-     */
-    select?: TwitterHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterHashtagInclude | null
+    include?: TriviaUserInclude | null
   }
 
 
@@ -6158,60 +7148,63 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const TwitterDirectMessageScalarFieldEnum: {
+  export const TriviaCategoryScalarFieldEnum: {
     id: 'id',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId',
-    text: 'text',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    category: 'category'
   };
 
-  export type TwitterDirectMessageScalarFieldEnum = (typeof TwitterDirectMessageScalarFieldEnum)[keyof typeof TwitterDirectMessageScalarFieldEnum]
+  export type TriviaCategoryScalarFieldEnum = (typeof TriviaCategoryScalarFieldEnum)[keyof typeof TriviaCategoryScalarFieldEnum]
 
 
-  export const TwitterFollowScalarFieldEnum: {
+  export const TriviaChoiceScalarFieldEnum: {
     id: 'id',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    choice: 'choice',
+    quizId: 'quizId'
   };
 
-  export type TwitterFollowScalarFieldEnum = (typeof TwitterFollowScalarFieldEnum)[keyof typeof TwitterFollowScalarFieldEnum]
+  export type TriviaChoiceScalarFieldEnum = (typeof TriviaChoiceScalarFieldEnum)[keyof typeof TriviaChoiceScalarFieldEnum]
 
 
-  export const TwitterHashtagScalarFieldEnum: {
+  export const TriviaQuestionScalarFieldEnum: {
     id: 'id',
-    hashtag: 'hashtag',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    quiz: 'quiz',
+    categoryId: 'categoryId',
+    triviaAnswerChoiceId: 'triviaAnswerChoiceId'
   };
 
-  export type TwitterHashtagScalarFieldEnum = (typeof TwitterHashtagScalarFieldEnum)[keyof typeof TwitterHashtagScalarFieldEnum]
+  export type TriviaQuestionScalarFieldEnum = (typeof TriviaQuestionScalarFieldEnum)[keyof typeof TriviaQuestionScalarFieldEnum]
 
 
-  export const TwitterPostScalarFieldEnum: {
+  export const TriviaRoundQuestionScalarFieldEnum: {
     id: 'id',
-    caption: 'caption',
+    quizId: 'quizId',
+    choiceId: 'choiceId',
+    quizResult: 'quizResult',
+    roundId: 'roundId'
+  };
+
+  export type TriviaRoundQuestionScalarFieldEnum = (typeof TriviaRoundQuestionScalarFieldEnum)[keyof typeof TriviaRoundQuestionScalarFieldEnum]
+
+
+  export const TriviaRoundScalarFieldEnum: {
+    id: 'id',
+    categoryId: 'categoryId',
+    totalResult: 'totalResult',
+    createAt: 'createAt',
     userId: 'userId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    roundNo: 'roundNo'
   };
 
-  export type TwitterPostScalarFieldEnum = (typeof TwitterPostScalarFieldEnum)[keyof typeof TwitterPostScalarFieldEnum]
+  export type TriviaRoundScalarFieldEnum = (typeof TriviaRoundScalarFieldEnum)[keyof typeof TriviaRoundScalarFieldEnum]
 
 
-  export const TwitterUserScalarFieldEnum: {
+  export const TriviaUserScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    image: 'image',
-    join: 'join',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    user: 'user',
+    avatar: 'avatar'
   };
 
-  export type TwitterUserScalarFieldEnum = (typeof TwitterUserScalarFieldEnum)[keyof typeof TwitterUserScalarFieldEnum]
+  export type TriviaUserScalarFieldEnum = (typeof TriviaUserScalarFieldEnum)[keyof typeof TriviaUserScalarFieldEnum]
 
 
   /**
@@ -6219,576 +7212,585 @@ export namespace Prisma {
    */
 
 
-  export type TwitterUserWhereInput = {
-    AND?: Enumerable<TwitterUserWhereInput>
-    OR?: Enumerable<TwitterUserWhereInput>
-    NOT?: Enumerable<TwitterUserWhereInput>
+  export type TriviaCategoryWhereInput = {
+    AND?: Enumerable<TriviaCategoryWhereInput>
+    OR?: Enumerable<TriviaCategoryWhereInput>
+    NOT?: Enumerable<TriviaCategoryWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    image?: StringFilter | string
-    join?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    fromFollowing?: TwitterFollowListRelationFilter
-    toFollowing?: TwitterFollowListRelationFilter
-    posts?: TwitterPostListRelationFilter
-    fromDirectMessage?: TwitterDirectMessageListRelationFilter
-    toDirectMessage?: TwitterDirectMessageListRelationFilter
+    category?: StringFilter | string
+    questions?: TriviaQuestionListRelationFilter
+    rounds?: TriviaRoundListRelationFilter
   }
 
-  export type TwitterUserOrderByWithRelationInput = {
+  export type TriviaCategoryOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    join?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromFollowing?: TwitterFollowOrderByRelationAggregateInput
-    toFollowing?: TwitterFollowOrderByRelationAggregateInput
-    posts?: TwitterPostOrderByRelationAggregateInput
-    fromDirectMessage?: TwitterDirectMessageOrderByRelationAggregateInput
-    toDirectMessage?: TwitterDirectMessageOrderByRelationAggregateInput
+    category?: SortOrder
+    questions?: TriviaQuestionOrderByRelationAggregateInput
+    rounds?: TriviaRoundOrderByRelationAggregateInput
   }
 
-  export type TwitterUserWhereUniqueInput = {
+  export type TriviaCategoryWhereUniqueInput = {
     id?: number
-    name?: string
+    category?: string
   }
 
-  export type TwitterUserOrderByWithAggregationInput = {
+  export type TriviaCategoryOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    join?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterUserCountOrderByAggregateInput
-    _avg?: TwitterUserAvgOrderByAggregateInput
-    _max?: TwitterUserMaxOrderByAggregateInput
-    _min?: TwitterUserMinOrderByAggregateInput
-    _sum?: TwitterUserSumOrderByAggregateInput
+    category?: SortOrder
+    _count?: TriviaCategoryCountOrderByAggregateInput
+    _avg?: TriviaCategoryAvgOrderByAggregateInput
+    _max?: TriviaCategoryMaxOrderByAggregateInput
+    _min?: TriviaCategoryMinOrderByAggregateInput
+    _sum?: TriviaCategorySumOrderByAggregateInput
   }
 
-  export type TwitterUserScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterUserScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterUserScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterUserScalarWhereWithAggregatesInput>
+  export type TriviaCategoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaCategoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaCategoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaCategoryScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    image?: StringWithAggregatesFilter | string
-    join?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    category?: StringWithAggregatesFilter | string
   }
 
-  export type TwitterFollowWhereInput = {
-    AND?: Enumerable<TwitterFollowWhereInput>
-    OR?: Enumerable<TwitterFollowWhereInput>
-    NOT?: Enumerable<TwitterFollowWhereInput>
+  export type TriviaQuestionWhereInput = {
+    AND?: Enumerable<TriviaQuestionWhereInput>
+    OR?: Enumerable<TriviaQuestionWhereInput>
+    NOT?: Enumerable<TriviaQuestionWhereInput>
     id?: IntFilter | number
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    from?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    to?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
+    quiz?: StringFilter | string
+    categoryId?: IntFilter | number
+    triviaAnswerChoiceId?: IntFilter | number
+    category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput>
+    roundQuestions?: TriviaRoundQuestionListRelationFilter
+    choices?: TriviaChoiceListRelationFilter
+    answer?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
   }
 
-  export type TwitterFollowOrderByWithRelationInput = {
+  export type TriviaQuestionOrderByWithRelationInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    from?: TwitterUserOrderByWithRelationInput
-    to?: TwitterUserOrderByWithRelationInput
+    quiz?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+    category?: TriviaCategoryOrderByWithRelationInput
+    roundQuestions?: TriviaRoundQuestionOrderByRelationAggregateInput
+    choices?: TriviaChoiceOrderByRelationAggregateInput
+    answer?: TriviaChoiceOrderByWithRelationInput
   }
 
-  export type TwitterFollowWhereUniqueInput = {
+  export type TriviaQuestionWhereUniqueInput = {
+    id?: number
+    triviaAnswerChoiceId?: number
+  }
+
+  export type TriviaQuestionOrderByWithAggregationInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+    _count?: TriviaQuestionCountOrderByAggregateInput
+    _avg?: TriviaQuestionAvgOrderByAggregateInput
+    _max?: TriviaQuestionMaxOrderByAggregateInput
+    _min?: TriviaQuestionMinOrderByAggregateInput
+    _sum?: TriviaQuestionSumOrderByAggregateInput
+  }
+
+  export type TriviaQuestionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaQuestionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaQuestionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaQuestionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    quiz?: StringWithAggregatesFilter | string
+    categoryId?: IntWithAggregatesFilter | number
+    triviaAnswerChoiceId?: IntWithAggregatesFilter | number
+  }
+
+  export type TriviaChoiceWhereInput = {
+    AND?: Enumerable<TriviaChoiceWhereInput>
+    OR?: Enumerable<TriviaChoiceWhereInput>
+    NOT?: Enumerable<TriviaChoiceWhereInput>
+    id?: IntFilter | number
+    choice?: StringFilter | string
+    quizId?: IntNullableFilter | number | null
+    roundQuestions?: TriviaRoundQuestionListRelationFilter
+    quiz?: XOR<TriviaQuestionRelationFilter, TriviaQuestionWhereInput> | null
+    quizAnswer?: XOR<TriviaQuestionRelationFilter, TriviaQuestionWhereInput> | null
+  }
+
+  export type TriviaChoiceOrderByWithRelationInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    quizId?: SortOrder
+    roundQuestions?: TriviaRoundQuestionOrderByRelationAggregateInput
+    quiz?: TriviaQuestionOrderByWithRelationInput
+    quizAnswer?: TriviaQuestionOrderByWithRelationInput
+  }
+
+  export type TriviaChoiceWhereUniqueInput = {
     id?: number
   }
 
-  export type TwitterFollowOrderByWithAggregationInput = {
+  export type TriviaChoiceOrderByWithAggregationInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterFollowCountOrderByAggregateInput
-    _avg?: TwitterFollowAvgOrderByAggregateInput
-    _max?: TwitterFollowMaxOrderByAggregateInput
-    _min?: TwitterFollowMinOrderByAggregateInput
-    _sum?: TwitterFollowSumOrderByAggregateInput
+    choice?: SortOrder
+    quizId?: SortOrder
+    _count?: TriviaChoiceCountOrderByAggregateInput
+    _avg?: TriviaChoiceAvgOrderByAggregateInput
+    _max?: TriviaChoiceMaxOrderByAggregateInput
+    _min?: TriviaChoiceMinOrderByAggregateInput
+    _sum?: TriviaChoiceSumOrderByAggregateInput
   }
 
-  export type TwitterFollowScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterFollowScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterFollowScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterFollowScalarWhereWithAggregatesInput>
+  export type TriviaChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    choice?: StringWithAggregatesFilter | string
+    quizId?: IntNullableWithAggregatesFilter | number | null
   }
 
-  export type TwitterPostWhereInput = {
-    AND?: Enumerable<TwitterPostWhereInput>
-    OR?: Enumerable<TwitterPostWhereInput>
-    NOT?: Enumerable<TwitterPostWhereInput>
+  export type TriviaRoundQuestionWhereInput = {
+    AND?: Enumerable<TriviaRoundQuestionWhereInput>
+    OR?: Enumerable<TriviaRoundQuestionWhereInput>
+    NOT?: Enumerable<TriviaRoundQuestionWhereInput>
     id?: IntFilter | number
-    caption?: StringFilter | string
+    quizId?: IntFilter | number
+    choiceId?: IntFilter | number
+    quizResult?: IntNullableFilter | number | null
+    roundId?: IntFilter | number
+    question?: XOR<TriviaQuestionRelationFilter, TriviaQuestionWhereInput>
+    userChoice?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
+    round?: XOR<TriviaRoundRelationFilter, TriviaRoundWhereInput>
+  }
+
+  export type TriviaRoundQuestionOrderByWithRelationInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+    question?: TriviaQuestionOrderByWithRelationInput
+    userChoice?: TriviaChoiceOrderByWithRelationInput
+    round?: TriviaRoundOrderByWithRelationInput
+  }
+
+  export type TriviaRoundQuestionWhereUniqueInput = {
+    id?: number
+  }
+
+  export type TriviaRoundQuestionOrderByWithAggregationInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+    _count?: TriviaRoundQuestionCountOrderByAggregateInput
+    _avg?: TriviaRoundQuestionAvgOrderByAggregateInput
+    _max?: TriviaRoundQuestionMaxOrderByAggregateInput
+    _min?: TriviaRoundQuestionMinOrderByAggregateInput
+    _sum?: TriviaRoundQuestionSumOrderByAggregateInput
+  }
+
+  export type TriviaRoundQuestionScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaRoundQuestionScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaRoundQuestionScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaRoundQuestionScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    quizId?: IntWithAggregatesFilter | number
+    choiceId?: IntWithAggregatesFilter | number
+    quizResult?: IntNullableWithAggregatesFilter | number | null
+    roundId?: IntWithAggregatesFilter | number
+  }
+
+  export type TriviaRoundWhereInput = {
+    AND?: Enumerable<TriviaRoundWhereInput>
+    OR?: Enumerable<TriviaRoundWhereInput>
+    NOT?: Enumerable<TriviaRoundWhereInput>
+    id?: IntFilter | number
+    categoryId?: IntFilter | number
+    totalResult?: IntFilter | number
+    createAt?: DateTimeFilter | Date | string
     userId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    user?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    hashtags?: TwitterHashtagListRelationFilter
-    replyTo?: TwitterPostListRelationFilter
-    replyBy?: TwitterPostListRelationFilter
+    roundNo?: IntFilter | number
+    category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput>
+    user?: XOR<TriviaUserRelationFilter, TriviaUserWhereInput>
+    roundQuestions?: TriviaRoundQuestionListRelationFilter
   }
 
-  export type TwitterPostOrderByWithRelationInput = {
+  export type TriviaRoundOrderByWithRelationInput = {
     id?: SortOrder
-    caption?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    createAt?: SortOrder
     userId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    user?: TwitterUserOrderByWithRelationInput
-    hashtags?: TwitterHashtagOrderByRelationAggregateInput
-    replyTo?: TwitterPostOrderByRelationAggregateInput
-    replyBy?: TwitterPostOrderByRelationAggregateInput
+    roundNo?: SortOrder
+    category?: TriviaCategoryOrderByWithRelationInput
+    user?: TriviaUserOrderByWithRelationInput
+    roundQuestions?: TriviaRoundQuestionOrderByRelationAggregateInput
   }
 
-  export type TwitterPostWhereUniqueInput = {
+  export type TriviaRoundWhereUniqueInput = {
     id?: number
   }
 
-  export type TwitterPostOrderByWithAggregationInput = {
+  export type TriviaRoundOrderByWithAggregationInput = {
     id?: SortOrder
-    caption?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    createAt?: SortOrder
     userId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterPostCountOrderByAggregateInput
-    _avg?: TwitterPostAvgOrderByAggregateInput
-    _max?: TwitterPostMaxOrderByAggregateInput
-    _min?: TwitterPostMinOrderByAggregateInput
-    _sum?: TwitterPostSumOrderByAggregateInput
+    roundNo?: SortOrder
+    _count?: TriviaRoundCountOrderByAggregateInput
+    _avg?: TriviaRoundAvgOrderByAggregateInput
+    _max?: TriviaRoundMaxOrderByAggregateInput
+    _min?: TriviaRoundMinOrderByAggregateInput
+    _sum?: TriviaRoundSumOrderByAggregateInput
   }
 
-  export type TwitterPostScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterPostScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterPostScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterPostScalarWhereWithAggregatesInput>
+  export type TriviaRoundScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaRoundScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaRoundScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaRoundScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    caption?: StringWithAggregatesFilter | string
+    categoryId?: IntWithAggregatesFilter | number
+    totalResult?: IntWithAggregatesFilter | number
+    createAt?: DateTimeWithAggregatesFilter | Date | string
     userId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    roundNo?: IntWithAggregatesFilter | number
   }
 
-  export type TwitterDirectMessageWhereInput = {
-    AND?: Enumerable<TwitterDirectMessageWhereInput>
-    OR?: Enumerable<TwitterDirectMessageWhereInput>
-    NOT?: Enumerable<TwitterDirectMessageWhereInput>
+  export type TriviaUserWhereInput = {
+    AND?: Enumerable<TriviaUserWhereInput>
+    OR?: Enumerable<TriviaUserWhereInput>
+    NOT?: Enumerable<TriviaUserWhereInput>
     id?: IntFilter | number
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    text?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    from?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    to?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
+    user?: StringFilter | string
+    avatar?: StringFilter | string
+    rounds?: TriviaRoundListRelationFilter
   }
 
-  export type TwitterDirectMessageOrderByWithRelationInput = {
+  export type TriviaUserOrderByWithRelationInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    text?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    from?: TwitterUserOrderByWithRelationInput
-    to?: TwitterUserOrderByWithRelationInput
+    user?: SortOrder
+    avatar?: SortOrder
+    rounds?: TriviaRoundOrderByRelationAggregateInput
   }
 
-  export type TwitterDirectMessageWhereUniqueInput = {
+  export type TriviaUserWhereUniqueInput = {
     id?: number
   }
 
-  export type TwitterDirectMessageOrderByWithAggregationInput = {
+  export type TriviaUserOrderByWithAggregationInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    text?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterDirectMessageCountOrderByAggregateInput
-    _avg?: TwitterDirectMessageAvgOrderByAggregateInput
-    _max?: TwitterDirectMessageMaxOrderByAggregateInput
-    _min?: TwitterDirectMessageMinOrderByAggregateInput
-    _sum?: TwitterDirectMessageSumOrderByAggregateInput
+    user?: SortOrder
+    avatar?: SortOrder
+    _count?: TriviaUserCountOrderByAggregateInput
+    _avg?: TriviaUserAvgOrderByAggregateInput
+    _max?: TriviaUserMaxOrderByAggregateInput
+    _min?: TriviaUserMinOrderByAggregateInput
+    _sum?: TriviaUserSumOrderByAggregateInput
   }
 
-  export type TwitterDirectMessageScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterDirectMessageScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterDirectMessageScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterDirectMessageScalarWhereWithAggregatesInput>
+  export type TriviaUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaUserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
-    text?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    user?: StringWithAggregatesFilter | string
+    avatar?: StringWithAggregatesFilter | string
   }
 
-  export type TwitterHashtagWhereInput = {
-    AND?: Enumerable<TwitterHashtagWhereInput>
-    OR?: Enumerable<TwitterHashtagWhereInput>
-    NOT?: Enumerable<TwitterHashtagWhereInput>
-    id?: IntFilter | number
-    hashtag?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    posts?: TwitterPostListRelationFilter
+  export type TriviaCategoryCreateInput = {
+    category: string
+    questions?: TriviaQuestionCreateNestedManyWithoutCategoryInput
+    rounds?: TriviaRoundCreateNestedManyWithoutCategoryInput
   }
 
-  export type TwitterHashtagOrderByWithRelationInput = {
-    id?: SortOrder
-    hashtag?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    posts?: TwitterPostOrderByRelationAggregateInput
-  }
-
-  export type TwitterHashtagWhereUniqueInput = {
+  export type TriviaCategoryUncheckedCreateInput = {
     id?: number
-    hashtag?: string
+    category: string
+    questions?: TriviaQuestionUncheckedCreateNestedManyWithoutCategoryInput
+    rounds?: TriviaRoundUncheckedCreateNestedManyWithoutCategoryInput
   }
 
-  export type TwitterHashtagOrderByWithAggregationInput = {
-    id?: SortOrder
-    hashtag?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterHashtagCountOrderByAggregateInput
-    _avg?: TwitterHashtagAvgOrderByAggregateInput
-    _max?: TwitterHashtagMaxOrderByAggregateInput
-    _min?: TwitterHashtagMinOrderByAggregateInput
-    _sum?: TwitterHashtagSumOrderByAggregateInput
+  export type TriviaCategoryUpdateInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    questions?: TriviaQuestionUpdateManyWithoutCategoryNestedInput
+    rounds?: TriviaRoundUpdateManyWithoutCategoryNestedInput
   }
 
-  export type TwitterHashtagScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterHashtagScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterHashtagScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterHashtagScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    hashtag?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type TwitterUserCreateInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowCreateNestedManyWithoutToInput
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutToInput
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateInput = {
+  export type TriviaCategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUncheckedUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUncheckedUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
+    category?: StringFieldUpdateOperationsInput | string
+    questions?: TriviaQuestionUncheckedUpdateManyWithoutCategoryNestedInput
+    rounds?: TriviaRoundUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type TwitterUserCreateManyInput = {
+  export type TriviaCategoryCreateManyInput = {
     id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    category: string
   }
 
-  export type TwitterUserUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TriviaCategoryUpdateManyMutationInput = {
+    category?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TwitterUserUncheckedUpdateManyInput = {
+  export type TriviaCategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TwitterFollowCreateInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: TwitterUserCreateNestedOneWithoutFromFollowingInput
-    to: TwitterUserCreateNestedOneWithoutToFollowingInput
+  export type TriviaQuestionCreateInput = {
+    quiz: string
+    category: TriviaCategoryCreateNestedOneWithoutQuestionsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceCreateNestedManyWithoutQuizInput
+    answer: TriviaChoiceCreateNestedOneWithoutQuizAnswerInput
   }
 
-  export type TwitterFollowUncheckedCreateInput = {
+  export type TriviaQuestionUncheckedCreateInput = {
     id?: number
-    fromUserId: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    quiz: string
+    categoryId: number
+    triviaAnswerChoiceId: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type TwitterFollowUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: TwitterUserUpdateOneRequiredWithoutFromFollowingNestedInput
-    to?: TwitterUserUpdateOneRequiredWithoutToFollowingNestedInput
+  export type TriviaQuestionUpdateInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    category?: TriviaCategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUpdateManyWithoutQuizNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
   }
 
-  export type TwitterFollowUncheckedUpdateInput = {
+  export type TriviaQuestionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type TwitterFollowCreateManyInput = {
+  export type TriviaQuestionCreateManyInput = {
     id?: number
-    fromUserId: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    quiz: string
+    categoryId: number
+    triviaAnswerChoiceId: number
   }
 
-  export type TwitterFollowUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TriviaQuestionUpdateManyMutationInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TwitterFollowUncheckedUpdateManyInput = {
+  export type TriviaQuestionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TwitterPostCreateInput = {
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: TwitterUserCreateNestedOneWithoutPostsInput
-    hashtags?: TwitterHashtagCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
+  export type TriviaChoiceCreateInput = {
+    choice: string
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutUserChoiceInput
+    quiz?: TriviaQuestionCreateNestedOneWithoutChoicesInput
+    quizAnswer?: TriviaQuestionCreateNestedOneWithoutAnswerInput
   }
 
-  export type TwitterPostUncheckedCreateInput = {
+  export type TriviaChoiceUncheckedCreateInput = {
     id?: number
-    caption: string
+    choice: string
+    quizId?: number | null
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput
+    quizAnswer?: TriviaQuestionUncheckedCreateNestedOneWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUpdateInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutUserChoiceNestedInput
+    quiz?: TriviaQuestionUpdateOneWithoutChoicesNestedInput
+    quizAnswer?: TriviaQuestionUpdateOneWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput
+    quizAnswer?: TriviaQuestionUncheckedUpdateOneWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceCreateManyInput = {
+    id?: number
+    choice: string
+    quizId?: number | null
+  }
+
+  export type TriviaChoiceUpdateManyMutationInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TriviaRoundQuestionCreateInput = {
+    quizResult?: number | null
+    question: TriviaQuestionCreateNestedOneWithoutRoundQuestionsInput
+    userChoice: TriviaChoiceCreateNestedOneWithoutRoundQuestionsInput
+    round: TriviaRoundCreateNestedOneWithoutRoundQuestionsInput
+  }
+
+  export type TriviaRoundQuestionUncheckedCreateInput = {
+    id?: number
+    quizId: number
+    choiceId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaRoundQuestionUpdateInput = {
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    question?: TriviaQuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    userChoice?: TriviaChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    round?: TriviaRoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    roundId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundQuestionCreateManyInput = {
+    id?: number
+    quizId: number
+    choiceId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaRoundQuestionUpdateManyMutationInput = {
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    roundId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundCreateInput = {
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+    category: TriviaCategoryCreateNestedOneWithoutRoundsInput
+    user: TriviaUserCreateNestedOneWithoutRoundsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutRoundInput
+  }
+
+  export type TriviaRoundUncheckedCreateInput = {
+    id?: number
+    categoryId: number
+    totalResult: number
+    createAt?: Date | string
     userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+    roundNo: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutRoundInput
   }
 
-  export type TwitterPostUpdateInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    hashtags?: TwitterHashtagUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
+  export type TriviaRoundUpdateInput = {
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
+    category?: TriviaCategoryUpdateOneRequiredWithoutRoundsNestedInput
+    user?: TriviaUserUpdateOneRequiredWithoutRoundsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutRoundNestedInput
   }
 
-  export type TwitterPostUncheckedUpdateInput = {
+  export type TriviaRoundUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    roundNo?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
   }
 
-  export type TwitterPostCreateManyInput = {
+  export type TriviaRoundCreateManyInput = {
     id?: number
-    caption: string
+    categoryId: number
+    totalResult: number
+    createAt?: Date | string
     userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    roundNo: number
   }
 
-  export type TwitterPostUpdateManyMutationInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TriviaRoundUpdateManyMutationInput = {
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TwitterPostUncheckedUpdateManyInput = {
+  export type TriviaRoundUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TwitterDirectMessageCreateInput = {
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: TwitterUserCreateNestedOneWithoutFromDirectMessageInput
-    to: TwitterUserCreateNestedOneWithoutToDirectMessageInput
+  export type TriviaUserCreateInput = {
+    user: string
+    avatar: string
+    rounds?: TriviaRoundCreateNestedManyWithoutUserInput
   }
 
-  export type TwitterDirectMessageUncheckedCreateInput = {
+  export type TriviaUserUncheckedCreateInput = {
     id?: number
-    fromUserId: number
-    toUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    user: string
+    avatar: string
+    rounds?: TriviaRoundUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type TwitterDirectMessageUpdateInput = {
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: TwitterUserUpdateOneRequiredWithoutFromDirectMessageNestedInput
-    to?: TwitterUserUpdateOneRequiredWithoutToDirectMessageNestedInput
+  export type TriviaUserUpdateInput = {
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
+    rounds?: TriviaRoundUpdateManyWithoutUserNestedInput
   }
 
-  export type TwitterDirectMessageUncheckedUpdateInput = {
+  export type TriviaUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
+    rounds?: TriviaRoundUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type TwitterDirectMessageCreateManyInput = {
+  export type TriviaUserCreateManyInput = {
     id?: number
-    fromUserId: number
-    toUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    user: string
+    avatar: string
   }
 
-  export type TwitterDirectMessageUpdateManyMutationInput = {
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TriviaUserUpdateManyMutationInput = {
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TwitterDirectMessageUncheckedUpdateManyInput = {
+  export type TriviaUserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagCreateInput = {
-    hashtag: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutHashtagsInput
-  }
-
-  export type TwitterHashtagUncheckedCreateInput = {
-    id?: number
-    hashtag: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutHashtagsInput
-  }
-
-  export type TwitterHashtagUpdateInput = {
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutHashtagsNestedInput
-  }
-
-  export type TwitterHashtagUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutHashtagsNestedInput
-  }
-
-  export type TwitterHashtagCreateManyInput = {
-    id?: number
-    hashtag: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterHashtagUpdateManyMutationInput = {
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter = {
@@ -6817,79 +7819,46 @@ export namespace Prisma {
     not?: NestedStringFilter | string
   }
 
-  export type DateTimeFilter = {
-    equals?: Date | string
-    in?: Enumerable<Date> | Enumerable<string>
-    notIn?: Enumerable<Date> | Enumerable<string>
-    lt?: Date | string
-    lte?: Date | string
-    gt?: Date | string
-    gte?: Date | string
-    not?: NestedDateTimeFilter | Date | string
+  export type TriviaQuestionListRelationFilter = {
+    every?: TriviaQuestionWhereInput
+    some?: TriviaQuestionWhereInput
+    none?: TriviaQuestionWhereInput
   }
 
-  export type TwitterFollowListRelationFilter = {
-    every?: TwitterFollowWhereInput
-    some?: TwitterFollowWhereInput
-    none?: TwitterFollowWhereInput
+  export type TriviaRoundListRelationFilter = {
+    every?: TriviaRoundWhereInput
+    some?: TriviaRoundWhereInput
+    none?: TriviaRoundWhereInput
   }
 
-  export type TwitterPostListRelationFilter = {
-    every?: TwitterPostWhereInput
-    some?: TwitterPostWhereInput
-    none?: TwitterPostWhereInput
-  }
-
-  export type TwitterDirectMessageListRelationFilter = {
-    every?: TwitterDirectMessageWhereInput
-    some?: TwitterDirectMessageWhereInput
-    none?: TwitterDirectMessageWhereInput
-  }
-
-  export type TwitterFollowOrderByRelationAggregateInput = {
+  export type TriviaQuestionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type TwitterPostOrderByRelationAggregateInput = {
+  export type TriviaRoundOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type TwitterDirectMessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TwitterUserCountOrderByAggregateInput = {
+  export type TriviaCategoryCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    join?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    category?: SortOrder
   }
 
-  export type TwitterUserAvgOrderByAggregateInput = {
+  export type TriviaCategoryAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type TwitterUserMaxOrderByAggregateInput = {
+  export type TriviaCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    join?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    category?: SortOrder
   }
 
-  export type TwitterUserMinOrderByAggregateInput = {
+  export type TriviaCategoryMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    join?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    category?: SortOrder
   }
 
-  export type TwitterUserSumOrderByAggregateInput = {
+  export type TriviaCategorySumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -6927,6 +7896,233 @@ export namespace Prisma {
     _max?: NestedStringFilter
   }
 
+  export type TriviaCategoryRelationFilter = {
+    is?: TriviaCategoryWhereInput
+    isNot?: TriviaCategoryWhereInput
+  }
+
+  export type TriviaRoundQuestionListRelationFilter = {
+    every?: TriviaRoundQuestionWhereInput
+    some?: TriviaRoundQuestionWhereInput
+    none?: TriviaRoundQuestionWhereInput
+  }
+
+  export type TriviaChoiceListRelationFilter = {
+    every?: TriviaChoiceWhereInput
+    some?: TriviaChoiceWhereInput
+    none?: TriviaChoiceWhereInput
+  }
+
+  export type TriviaChoiceRelationFilter = {
+    is?: TriviaChoiceWhereInput
+    isNot?: TriviaChoiceWhereInput
+  }
+
+  export type TriviaRoundQuestionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TriviaChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TriviaQuestionCountOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+  }
+
+  export type TriviaQuestionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+  }
+
+  export type TriviaQuestionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+  }
+
+  export type TriviaQuestionMinOrderByAggregateInput = {
+    id?: SortOrder
+    quiz?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+  }
+
+  export type TriviaQuestionSumOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
+  }
+
+  export type IntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
+  export type TriviaQuestionRelationFilter = {
+    is?: TriviaQuestionWhereInput
+    isNot?: TriviaQuestionWhereInput
+  }
+
+  export type TriviaChoiceCountOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type TriviaChoiceAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type TriviaChoiceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type TriviaChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    choice?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type TriviaChoiceSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
+  }
+
+  export type TriviaRoundRelationFilter = {
+    is?: TriviaRoundWhereInput
+    isNot?: TriviaRoundWhereInput
+  }
+
+  export type TriviaRoundQuestionCountOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+  }
+
+  export type TriviaRoundQuestionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+  }
+
+  export type TriviaRoundQuestionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+  }
+
+  export type TriviaRoundQuestionMinOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+  }
+
+  export type TriviaRoundQuestionSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    choiceId?: SortOrder
+    quizResult?: SortOrder
+    roundId?: SortOrder
+  }
+
+  export type DateTimeFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeFilter | Date | string
+  }
+
+  export type TriviaUserRelationFilter = {
+    is?: TriviaUserWhereInput
+    isNot?: TriviaUserWhereInput
+  }
+
+  export type TriviaRoundCountOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    createAt?: SortOrder
+    userId?: SortOrder
+    roundNo?: SortOrder
+  }
+
+  export type TriviaRoundAvgOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    userId?: SortOrder
+    roundNo?: SortOrder
+  }
+
+  export type TriviaRoundMaxOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    createAt?: SortOrder
+    userId?: SortOrder
+    roundNo?: SortOrder
+  }
+
+  export type TriviaRoundMinOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    createAt?: SortOrder
+    userId?: SortOrder
+    roundNo?: SortOrder
+  }
+
+  export type TriviaRoundSumOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    totalResult?: SortOrder
+    userId?: SortOrder
+    roundNo?: SortOrder
+  }
+
   export type DateTimeWithAggregatesFilter = {
     equals?: Date | string
     in?: Enumerable<Date> | Enumerable<string>
@@ -6941,305 +8137,90 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type TwitterUserRelationFilter = {
-    is?: TwitterUserWhereInput
-    isNot?: TwitterUserWhereInput
-  }
-
-  export type TwitterFollowCountOrderByAggregateInput = {
+  export type TriviaUserCountOrderByAggregateInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    user?: SortOrder
+    avatar?: SortOrder
   }
 
-  export type TwitterFollowAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type TwitterFollowMaxOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterFollowMinOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterFollowSumOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type TwitterHashtagListRelationFilter = {
-    every?: TwitterHashtagWhereInput
-    some?: TwitterHashtagWhereInput
-    none?: TwitterHashtagWhereInput
-  }
-
-  export type TwitterHashtagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TwitterPostCountOrderByAggregateInput = {
-    id?: SortOrder
-    caption?: SortOrder
-    userId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type TwitterPostMaxOrderByAggregateInput = {
-    id?: SortOrder
-    caption?: SortOrder
-    userId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostMinOrderByAggregateInput = {
-    id?: SortOrder
-    caption?: SortOrder
-    userId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type TwitterDirectMessageCountOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    text?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterDirectMessageAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type TwitterDirectMessageMaxOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    text?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterDirectMessageMinOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    text?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterDirectMessageSumOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type TwitterHashtagCountOrderByAggregateInput = {
-    id?: SortOrder
-    hashtag?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterHashtagAvgOrderByAggregateInput = {
+  export type TriviaUserAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type TwitterHashtagMaxOrderByAggregateInput = {
+  export type TriviaUserMaxOrderByAggregateInput = {
     id?: SortOrder
-    hashtag?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    user?: SortOrder
+    avatar?: SortOrder
   }
 
-  export type TwitterHashtagMinOrderByAggregateInput = {
+  export type TriviaUserMinOrderByAggregateInput = {
     id?: SortOrder
-    hashtag?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    user?: SortOrder
+    avatar?: SortOrder
   }
 
-  export type TwitterHashtagSumOrderByAggregateInput = {
+  export type TriviaUserSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type TwitterFollowCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutFromInput>, Enumerable<TwitterFollowUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutFromInput>
-    createMany?: TwitterFollowCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
+  export type TriviaQuestionCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<TriviaQuestionCreateWithoutCategoryInput>, Enumerable<TriviaQuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaQuestionCreateOrConnectWithoutCategoryInput>
+    createMany?: TriviaQuestionCreateManyCategoryInputEnvelope
+    connect?: Enumerable<TriviaQuestionWhereUniqueInput>
   }
 
-  export type TwitterFollowCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutToInput>, Enumerable<TwitterFollowUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutToInput>
-    createMany?: TwitterFollowCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
+  export type TriviaRoundCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutCategoryInput>, Enumerable<TriviaRoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutCategoryInput>
+    createMany?: TriviaRoundCreateManyCategoryInputEnvelope
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
   }
 
-  export type TwitterPostCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutUserInput>, Enumerable<TwitterPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutUserInput>
-    createMany?: TwitterPostCreateManyUserInputEnvelope
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaQuestionUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<TriviaQuestionCreateWithoutCategoryInput>, Enumerable<TriviaQuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaQuestionCreateOrConnectWithoutCategoryInput>
+    createMany?: TriviaQuestionCreateManyCategoryInputEnvelope
+    connect?: Enumerable<TriviaQuestionWhereUniqueInput>
   }
 
-  export type TwitterDirectMessageCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutFromInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutFromInput>
-    createMany?: TwitterDirectMessageCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-  }
-
-  export type TwitterDirectMessageCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutToInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutToInput>
-    createMany?: TwitterDirectMessageCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-  }
-
-  export type TwitterFollowUncheckedCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutFromInput>, Enumerable<TwitterFollowUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutFromInput>
-    createMany?: TwitterFollowCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-  }
-
-  export type TwitterFollowUncheckedCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutToInput>, Enumerable<TwitterFollowUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutToInput>
-    createMany?: TwitterFollowCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-  }
-
-  export type TwitterPostUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutUserInput>, Enumerable<TwitterPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutUserInput>
-    createMany?: TwitterPostCreateManyUserInputEnvelope
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-  }
-
-  export type TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutFromInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutFromInput>
-    createMany?: TwitterDirectMessageCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-  }
-
-  export type TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutToInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutToInput>
-    createMany?: TwitterDirectMessageCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
+  export type TriviaRoundUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutCategoryInput>, Enumerable<TriviaRoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutCategoryInput>
+    createMany?: TriviaRoundCreateManyCategoryInputEnvelope
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type TriviaQuestionUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<TriviaQuestionCreateWithoutCategoryInput>, Enumerable<TriviaQuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaQuestionCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<TriviaQuestionUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: TriviaQuestionCreateManyCategoryInputEnvelope
+    set?: Enumerable<TriviaQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaQuestionUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<TriviaQuestionUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<TriviaQuestionScalarWhereInput>
   }
 
-  export type TwitterFollowUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutFromInput>, Enumerable<TwitterFollowUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterFollowUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterFollowCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterFollowWhereUniqueInput>
-    disconnect?: Enumerable<TwitterFollowWhereUniqueInput>
-    delete?: Enumerable<TwitterFollowWhereUniqueInput>
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-    update?: Enumerable<TwitterFollowUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterFollowUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterFollowScalarWhereInput>
-  }
-
-  export type TwitterFollowUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutToInput>, Enumerable<TwitterFollowUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterFollowUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterFollowCreateManyToInputEnvelope
-    set?: Enumerable<TwitterFollowWhereUniqueInput>
-    disconnect?: Enumerable<TwitterFollowWhereUniqueInput>
-    delete?: Enumerable<TwitterFollowWhereUniqueInput>
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-    update?: Enumerable<TwitterFollowUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterFollowUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterFollowScalarWhereInput>
-  }
-
-  export type TwitterPostUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutUserInput>, Enumerable<TwitterPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: TwitterPostCreateManyUserInputEnvelope
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
-  }
-
-  export type TwitterDirectMessageUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutFromInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterDirectMessageUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterDirectMessageCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    delete?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    update?: Enumerable<TwitterDirectMessageUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterDirectMessageUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterDirectMessageScalarWhereInput>
-  }
-
-  export type TwitterDirectMessageUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutToInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterDirectMessageUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterDirectMessageCreateManyToInputEnvelope
-    set?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    delete?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    update?: Enumerable<TwitterDirectMessageUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterDirectMessageUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterDirectMessageScalarWhereInput>
+  export type TriviaRoundUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutCategoryInput>, Enumerable<TriviaRoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<TriviaRoundUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: TriviaRoundCreateManyCategoryInputEnvelope
+    set?: Enumerable<TriviaRoundWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+    update?: Enumerable<TriviaRoundUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<TriviaRoundUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<TriviaRoundScalarWhereInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -7250,296 +8231,400 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type TwitterFollowUncheckedUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutFromInput>, Enumerable<TwitterFollowUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterFollowUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterFollowCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterFollowWhereUniqueInput>
-    disconnect?: Enumerable<TwitterFollowWhereUniqueInput>
-    delete?: Enumerable<TwitterFollowWhereUniqueInput>
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-    update?: Enumerable<TwitterFollowUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterFollowUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterFollowScalarWhereInput>
+  export type TriviaQuestionUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<TriviaQuestionCreateWithoutCategoryInput>, Enumerable<TriviaQuestionUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaQuestionCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<TriviaQuestionUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: TriviaQuestionCreateManyCategoryInputEnvelope
+    set?: Enumerable<TriviaQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaQuestionUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<TriviaQuestionUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<TriviaQuestionScalarWhereInput>
   }
 
-  export type TwitterFollowUncheckedUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterFollowCreateWithoutToInput>, Enumerable<TwitterFollowUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterFollowCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterFollowUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterFollowCreateManyToInputEnvelope
-    set?: Enumerable<TwitterFollowWhereUniqueInput>
-    disconnect?: Enumerable<TwitterFollowWhereUniqueInput>
-    delete?: Enumerable<TwitterFollowWhereUniqueInput>
-    connect?: Enumerable<TwitterFollowWhereUniqueInput>
-    update?: Enumerable<TwitterFollowUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterFollowUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterFollowScalarWhereInput>
+  export type TriviaRoundUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutCategoryInput>, Enumerable<TriviaRoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<TriviaRoundUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: TriviaRoundCreateManyCategoryInputEnvelope
+    set?: Enumerable<TriviaRoundWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+    update?: Enumerable<TriviaRoundUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<TriviaRoundUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<TriviaRoundScalarWhereInput>
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutUserInput>, Enumerable<TwitterPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: TwitterPostCreateManyUserInputEnvelope
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaCategoryCreateNestedOneWithoutQuestionsInput = {
+    create?: XOR<TriviaCategoryCreateWithoutQuestionsInput, TriviaCategoryUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: TriviaCategoryCreateOrConnectWithoutQuestionsInput
+    connect?: TriviaCategoryWhereUniqueInput
   }
 
-  export type TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutFromInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterDirectMessageUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterDirectMessageCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    delete?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    update?: Enumerable<TwitterDirectMessageUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterDirectMessageUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterDirectMessageScalarWhereInput>
+  export type TriviaRoundQuestionCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutQuestionInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutQuestionInput>
+    createMany?: TriviaRoundQuestionCreateManyQuestionInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
   }
 
-  export type TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterDirectMessageCreateWithoutToInput>, Enumerable<TwitterDirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterDirectMessageCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterDirectMessageUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterDirectMessageCreateManyToInputEnvelope
-    set?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    delete?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    connect?: Enumerable<TwitterDirectMessageWhereUniqueInput>
-    update?: Enumerable<TwitterDirectMessageUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterDirectMessageUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterDirectMessageScalarWhereInput>
+  export type TriviaChoiceCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutFromFollowingInput = {
-    create?: XOR<TwitterUserCreateWithoutFromFollowingInput, TwitterUserUncheckedCreateWithoutFromFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFromFollowingInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TriviaChoiceCreateNestedOneWithoutQuizAnswerInput = {
+    create?: XOR<TriviaChoiceCreateWithoutQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
   }
 
-  export type TwitterUserCreateNestedOneWithoutToFollowingInput = {
-    create?: XOR<TwitterUserCreateWithoutToFollowingInput, TwitterUserUncheckedCreateWithoutToFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutToFollowingInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TriviaRoundQuestionUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutQuestionInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutQuestionInput>
+    createMany?: TriviaRoundQuestionCreateManyQuestionInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFromFollowingNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFromFollowingInput, TwitterUserUncheckedCreateWithoutFromFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFromFollowingInput
-    upsert?: TwitterUserUpsertWithoutFromFollowingInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFromFollowingInput, TwitterUserUncheckedUpdateWithoutFromFollowingInput>
+  export type TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutToFollowingNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutToFollowingInput, TwitterUserUncheckedCreateWithoutToFollowingInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutToFollowingInput
-    upsert?: TwitterUserUpsertWithoutToFollowingInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutToFollowingInput, TwitterUserUncheckedUpdateWithoutToFollowingInput>
+  export type TriviaCategoryUpdateOneRequiredWithoutQuestionsNestedInput = {
+    create?: XOR<TriviaCategoryCreateWithoutQuestionsInput, TriviaCategoryUncheckedCreateWithoutQuestionsInput>
+    connectOrCreate?: TriviaCategoryCreateOrConnectWithoutQuestionsInput
+    upsert?: TriviaCategoryUpsertWithoutQuestionsInput
+    connect?: TriviaCategoryWhereUniqueInput
+    update?: XOR<TriviaCategoryUpdateWithoutQuestionsInput, TriviaCategoryUncheckedUpdateWithoutQuestionsInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutPostsInput = {
-    create?: XOR<TwitterUserCreateWithoutPostsInput, TwitterUserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutPostsInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TriviaRoundQuestionUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutQuestionInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: TriviaRoundQuestionCreateManyQuestionInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
   }
 
-  export type TwitterHashtagCreateNestedManyWithoutPostsInput = {
-    create?: XOR<Enumerable<TwitterHashtagCreateWithoutPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutPostsInput>>
-    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutPostsInput>
-    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
+  export type TriviaChoiceUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
   }
 
-  export type TwitterPostCreateNestedManyWithoutReplyByInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutQuizAnswerInput
+    upsert?: TriviaChoiceUpsertWithoutQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
+    update?: XOR<TriviaChoiceUpdateWithoutQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutQuizAnswerInput>
   }
 
-  export type TwitterPostCreateNestedManyWithoutReplyToInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaRoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutQuestionInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutQuestionInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
+    createMany?: TriviaRoundQuestionCreateManyQuestionInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutQuestionInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
   }
 
-  export type TwitterHashtagUncheckedCreateNestedManyWithoutPostsInput = {
-    create?: XOR<Enumerable<TwitterHashtagCreateWithoutPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutPostsInput>>
-    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutPostsInput>
-    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
+  export type TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
   }
 
-  export type TwitterPostUncheckedCreateNestedManyWithoutReplyByInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaRoundQuestionCreateNestedManyWithoutUserChoiceInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutUserChoiceInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutUserChoiceInput>
+    createMany?: TriviaRoundQuestionCreateManyUserChoiceInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
   }
 
-  export type TwitterPostUncheckedCreateNestedManyWithoutReplyToInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaQuestionCreateNestedOneWithoutChoicesInput = {
+    create?: XOR<TriviaQuestionCreateWithoutChoicesInput, TriviaQuestionUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutChoicesInput
+    connect?: TriviaQuestionWhereUniqueInput
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutPostsNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutPostsInput, TwitterUserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutPostsInput
-    upsert?: TwitterUserUpsertWithoutPostsInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutPostsInput, TwitterUserUncheckedUpdateWithoutPostsInput>
+  export type TriviaQuestionCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutAnswerInput
+    connect?: TriviaQuestionWhereUniqueInput
   }
 
-  export type TwitterHashtagUpdateManyWithoutPostsNestedInput = {
-    create?: XOR<Enumerable<TwitterHashtagCreateWithoutPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutPostsInput>>
-    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutPostsInput>
-    upsert?: Enumerable<TwitterHashtagUpsertWithWhereUniqueWithoutPostsInput>
-    set?: Enumerable<TwitterHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterHashtagUpdateWithWhereUniqueWithoutPostsInput>
-    updateMany?: Enumerable<TwitterHashtagUpdateManyWithWhereWithoutPostsInput>
-    deleteMany?: Enumerable<TwitterHashtagScalarWhereInput>
+  export type TriviaRoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutUserChoiceInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutUserChoiceInput>
+    createMany?: TriviaRoundQuestionCreateManyUserChoiceInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
   }
 
-  export type TwitterPostUpdateManyWithoutReplyByNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyByInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyByInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyByInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaQuestionUncheckedCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutAnswerInput
+    connect?: TriviaQuestionWhereUniqueInput
   }
 
-  export type TwitterPostUpdateManyWithoutReplyToNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyToInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyToInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyToInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaRoundQuestionUpdateManyWithoutUserChoiceNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutUserChoiceInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutUserChoiceInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput>
+    createMany?: TriviaRoundQuestionCreateManyUserChoiceInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutUserChoiceInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
   }
 
-  export type TwitterHashtagUncheckedUpdateManyWithoutPostsNestedInput = {
-    create?: XOR<Enumerable<TwitterHashtagCreateWithoutPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutPostsInput>>
-    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutPostsInput>
-    upsert?: Enumerable<TwitterHashtagUpsertWithWhereUniqueWithoutPostsInput>
-    set?: Enumerable<TwitterHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterHashtagUpdateWithWhereUniqueWithoutPostsInput>
-    updateMany?: Enumerable<TwitterHashtagUpdateManyWithWhereWithoutPostsInput>
-    deleteMany?: Enumerable<TwitterHashtagScalarWhereInput>
+  export type TriviaQuestionUpdateOneWithoutChoicesNestedInput = {
+    create?: XOR<TriviaQuestionCreateWithoutChoicesInput, TriviaQuestionUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutChoicesInput
+    upsert?: TriviaQuestionUpsertWithoutChoicesInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuestionWhereUniqueInput
+    update?: XOR<TriviaQuestionUpdateWithoutChoicesInput, TriviaQuestionUncheckedUpdateWithoutChoicesInput>
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyByInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyByInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyByInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaQuestionUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuestionUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuestionWhereUniqueInput
+    update?: XOR<TriviaQuestionUpdateWithoutAnswerInput, TriviaQuestionUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyToInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyToInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyToInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type TwitterUserCreateNestedOneWithoutFromDirectMessageInput = {
-    create?: XOR<TwitterUserCreateWithoutFromDirectMessageInput, TwitterUserUncheckedCreateWithoutFromDirectMessageInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFromDirectMessageInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TriviaRoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutUserChoiceInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutUserChoiceInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput>
+    createMany?: TriviaRoundQuestionCreateManyUserChoiceInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutUserChoiceInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutToDirectMessageInput = {
-    create?: XOR<TwitterUserCreateWithoutToDirectMessageInput, TwitterUserUncheckedCreateWithoutToDirectMessageInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutToDirectMessageInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TriviaQuestionUncheckedUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuestionUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuestionWhereUniqueInput
+    update?: XOR<TriviaQuestionUpdateWithoutAnswerInput, TriviaQuestionUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFromDirectMessageNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFromDirectMessageInput, TwitterUserUncheckedCreateWithoutFromDirectMessageInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFromDirectMessageInput
-    upsert?: TwitterUserUpsertWithoutFromDirectMessageInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFromDirectMessageInput, TwitterUserUncheckedUpdateWithoutFromDirectMessageInput>
+  export type TriviaQuestionCreateNestedOneWithoutRoundQuestionsInput = {
+    create?: XOR<TriviaQuestionCreateWithoutRoundQuestionsInput, TriviaQuestionUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutRoundQuestionsInput
+    connect?: TriviaQuestionWhereUniqueInput
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutToDirectMessageNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutToDirectMessageInput, TwitterUserUncheckedCreateWithoutToDirectMessageInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutToDirectMessageInput
-    upsert?: TwitterUserUpsertWithoutToDirectMessageInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutToDirectMessageInput, TwitterUserUncheckedUpdateWithoutToDirectMessageInput>
+  export type TriviaChoiceCreateNestedOneWithoutRoundQuestionsInput = {
+    create?: XOR<TriviaChoiceCreateWithoutRoundQuestionsInput, TriviaChoiceUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutRoundQuestionsInput
+    connect?: TriviaChoiceWhereUniqueInput
   }
 
-  export type TwitterPostCreateNestedManyWithoutHashtagsInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaRoundCreateNestedOneWithoutRoundQuestionsInput = {
+    create?: XOR<TriviaRoundCreateWithoutRoundQuestionsInput, TriviaRoundUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaRoundCreateOrConnectWithoutRoundQuestionsInput
+    connect?: TriviaRoundWhereUniqueInput
   }
 
-  export type TwitterPostUncheckedCreateNestedManyWithoutHashtagsInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  export type TriviaQuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
+    create?: XOR<TriviaQuestionCreateWithoutRoundQuestionsInput, TriviaQuestionUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaQuestionCreateOrConnectWithoutRoundQuestionsInput
+    upsert?: TriviaQuestionUpsertWithoutRoundQuestionsInput
+    connect?: TriviaQuestionWhereUniqueInput
+    update?: XOR<TriviaQuestionUpdateWithoutRoundQuestionsInput, TriviaQuestionUncheckedUpdateWithoutRoundQuestionsInput>
   }
 
-  export type TwitterPostUpdateManyWithoutHashtagsNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutHashtagsInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutRoundQuestionsInput, TriviaChoiceUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutRoundQuestionsInput
+    upsert?: TriviaChoiceUpsertWithoutRoundQuestionsInput
+    connect?: TriviaChoiceWhereUniqueInput
+    update?: XOR<TriviaChoiceUpdateWithoutRoundQuestionsInput, TriviaChoiceUncheckedUpdateWithoutRoundQuestionsInput>
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutHashtagsNestedInput = {
-    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
-    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
-    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput>
-    set?: Enumerable<TwitterPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
-    delete?: Enumerable<TwitterPostWhereUniqueInput>
-    connect?: Enumerable<TwitterPostWhereUniqueInput>
-    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput>
-    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutHashtagsInput>
-    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaRoundUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
+    create?: XOR<TriviaRoundCreateWithoutRoundQuestionsInput, TriviaRoundUncheckedCreateWithoutRoundQuestionsInput>
+    connectOrCreate?: TriviaRoundCreateOrConnectWithoutRoundQuestionsInput
+    upsert?: TriviaRoundUpsertWithoutRoundQuestionsInput
+    connect?: TriviaRoundWhereUniqueInput
+    update?: XOR<TriviaRoundUpdateWithoutRoundQuestionsInput, TriviaRoundUncheckedUpdateWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaCategoryCreateNestedOneWithoutRoundsInput = {
+    create?: XOR<TriviaCategoryCreateWithoutRoundsInput, TriviaCategoryUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: TriviaCategoryCreateOrConnectWithoutRoundsInput
+    connect?: TriviaCategoryWhereUniqueInput
+  }
+
+  export type TriviaUserCreateNestedOneWithoutRoundsInput = {
+    create?: XOR<TriviaUserCreateWithoutRoundsInput, TriviaUserUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: TriviaUserCreateOrConnectWithoutRoundsInput
+    connect?: TriviaUserWhereUniqueInput
+  }
+
+  export type TriviaRoundQuestionCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutRoundInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutRoundInput>
+    createMany?: TriviaRoundQuestionCreateManyRoundInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+  }
+
+  export type TriviaRoundQuestionUncheckedCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutRoundInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutRoundInput>
+    createMany?: TriviaRoundQuestionCreateManyRoundInputEnvelope
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type TriviaCategoryUpdateOneRequiredWithoutRoundsNestedInput = {
+    create?: XOR<TriviaCategoryCreateWithoutRoundsInput, TriviaCategoryUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: TriviaCategoryCreateOrConnectWithoutRoundsInput
+    upsert?: TriviaCategoryUpsertWithoutRoundsInput
+    connect?: TriviaCategoryWhereUniqueInput
+    update?: XOR<TriviaCategoryUpdateWithoutRoundsInput, TriviaCategoryUncheckedUpdateWithoutRoundsInput>
+  }
+
+  export type TriviaUserUpdateOneRequiredWithoutRoundsNestedInput = {
+    create?: XOR<TriviaUserCreateWithoutRoundsInput, TriviaUserUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: TriviaUserCreateOrConnectWithoutRoundsInput
+    upsert?: TriviaUserUpsertWithoutRoundsInput
+    connect?: TriviaUserWhereUniqueInput
+    update?: XOR<TriviaUserUpdateWithoutRoundsInput, TriviaUserUncheckedUpdateWithoutRoundsInput>
+  }
+
+  export type TriviaRoundQuestionUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutRoundInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: TriviaRoundQuestionCreateManyRoundInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundQuestionCreateWithoutRoundInput>, Enumerable<TriviaRoundQuestionUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<TriviaRoundQuestionCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<TriviaRoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: TriviaRoundQuestionCreateManyRoundInputEnvelope
+    set?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundQuestionWhereUniqueInput>
+    update?: Enumerable<TriviaRoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<TriviaRoundQuestionUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<TriviaRoundQuestionScalarWhereInput>
+  }
+
+  export type TriviaRoundCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutUserInput>, Enumerable<TriviaRoundUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutUserInput>
+    createMany?: TriviaRoundCreateManyUserInputEnvelope
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+  }
+
+  export type TriviaRoundUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutUserInput>, Enumerable<TriviaRoundUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutUserInput>
+    createMany?: TriviaRoundCreateManyUserInputEnvelope
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+  }
+
+  export type TriviaRoundUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutUserInput>, Enumerable<TriviaRoundUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<TriviaRoundUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: TriviaRoundCreateManyUserInputEnvelope
+    set?: Enumerable<TriviaRoundWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+    update?: Enumerable<TriviaRoundUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<TriviaRoundUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<TriviaRoundScalarWhereInput>
+  }
+
+  export type TriviaRoundUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<TriviaRoundCreateWithoutUserInput>, Enumerable<TriviaRoundUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<TriviaRoundCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<TriviaRoundUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: TriviaRoundCreateManyUserInputEnvelope
+    set?: Enumerable<TriviaRoundWhereUniqueInput>
+    disconnect?: Enumerable<TriviaRoundWhereUniqueInput>
+    delete?: Enumerable<TriviaRoundWhereUniqueInput>
+    connect?: Enumerable<TriviaRoundWhereUniqueInput>
+    update?: Enumerable<TriviaRoundUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<TriviaRoundUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<TriviaRoundScalarWhereInput>
   }
 
   export type NestedIntFilter = {
@@ -7565,17 +8650,6 @@ export namespace Prisma {
     startsWith?: string
     endsWith?: string
     not?: NestedStringFilter | string
-  }
-
-  export type NestedDateTimeFilter = {
-    equals?: Date | string
-    in?: Enumerable<Date> | Enumerable<string>
-    notIn?: Enumerable<Date> | Enumerable<string>
-    lt?: Date | string
-    lte?: Date | string
-    gt?: Date | string
-    gte?: Date | string
-    not?: NestedDateTimeFilter | Date | string
   }
 
   export type NestedIntWithAggregatesFilter = {
@@ -7622,6 +8696,55 @@ export namespace Prisma {
     _max?: NestedStringFilter
   }
 
+  export type NestedIntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
+  }
+
+  export type NestedFloatNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedFloatNullableFilter | number | null
+  }
+
+  export type NestedDateTimeFilter = {
+    equals?: Date | string
+    in?: Enumerable<Date> | Enumerable<string>
+    notIn?: Enumerable<Date> | Enumerable<string>
+    lt?: Date | string
+    lte?: Date | string
+    gt?: Date | string
+    gte?: Date | string
+    not?: NestedDateTimeFilter | Date | string
+  }
+
   export type NestedDateTimeWithAggregatesFilter = {
     equals?: Date | string
     in?: Enumerable<Date> | Enumerable<string>
@@ -7636,949 +8759,836 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type TwitterFollowCreateWithoutFromInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    to: TwitterUserCreateNestedOneWithoutToFollowingInput
+  export type TriviaQuestionCreateWithoutCategoryInput = {
+    quiz: string
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceCreateNestedManyWithoutQuizInput
+    answer: TriviaChoiceCreateNestedOneWithoutQuizAnswerInput
   }
 
-  export type TwitterFollowUncheckedCreateWithoutFromInput = {
+  export type TriviaQuestionUncheckedCreateWithoutCategoryInput = {
     id?: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    quiz: string
+    triviaAnswerChoiceId: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type TwitterFollowCreateOrConnectWithoutFromInput = {
-    where: TwitterFollowWhereUniqueInput
-    create: XOR<TwitterFollowCreateWithoutFromInput, TwitterFollowUncheckedCreateWithoutFromInput>
+  export type TriviaQuestionCreateOrConnectWithoutCategoryInput = {
+    where: TriviaQuestionWhereUniqueInput
+    create: XOR<TriviaQuestionCreateWithoutCategoryInput, TriviaQuestionUncheckedCreateWithoutCategoryInput>
   }
 
-  export type TwitterFollowCreateManyFromInputEnvelope = {
-    data: Enumerable<TwitterFollowCreateManyFromInput>
+  export type TriviaQuestionCreateManyCategoryInputEnvelope = {
+    data: Enumerable<TriviaQuestionCreateManyCategoryInput>
     skipDuplicates?: boolean
   }
 
-  export type TwitterFollowCreateWithoutToInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: TwitterUserCreateNestedOneWithoutFromFollowingInput
+  export type TriviaRoundCreateWithoutCategoryInput = {
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+    user: TriviaUserCreateNestedOneWithoutRoundsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutRoundInput
   }
 
-  export type TwitterFollowUncheckedCreateWithoutToInput = {
+  export type TriviaRoundUncheckedCreateWithoutCategoryInput = {
     id?: number
-    fromUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    totalResult: number
+    createAt?: Date | string
+    userId: number
+    roundNo: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutRoundInput
   }
 
-  export type TwitterFollowCreateOrConnectWithoutToInput = {
-    where: TwitterFollowWhereUniqueInput
-    create: XOR<TwitterFollowCreateWithoutToInput, TwitterFollowUncheckedCreateWithoutToInput>
+  export type TriviaRoundCreateOrConnectWithoutCategoryInput = {
+    where: TriviaRoundWhereUniqueInput
+    create: XOR<TriviaRoundCreateWithoutCategoryInput, TriviaRoundUncheckedCreateWithoutCategoryInput>
   }
 
-  export type TwitterFollowCreateManyToInputEnvelope = {
-    data: Enumerable<TwitterFollowCreateManyToInput>
+  export type TriviaRoundCreateManyCategoryInputEnvelope = {
+    data: Enumerable<TriviaRoundCreateManyCategoryInput>
     skipDuplicates?: boolean
   }
 
-  export type TwitterPostCreateWithoutUserInput = {
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtags?: TwitterHashtagCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
+  export type TriviaQuestionUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: TriviaQuestionWhereUniqueInput
+    update: XOR<TriviaQuestionUpdateWithoutCategoryInput, TriviaQuestionUncheckedUpdateWithoutCategoryInput>
+    create: XOR<TriviaQuestionCreateWithoutCategoryInput, TriviaQuestionUncheckedCreateWithoutCategoryInput>
   }
 
-  export type TwitterPostUncheckedCreateWithoutUserInput = {
-    id?: number
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+  export type TriviaQuestionUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: TriviaQuestionWhereUniqueInput
+    data: XOR<TriviaQuestionUpdateWithoutCategoryInput, TriviaQuestionUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type TwitterPostCreateOrConnectWithoutUserInput = {
-    where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutUserInput, TwitterPostUncheckedCreateWithoutUserInput>
+  export type TriviaQuestionUpdateManyWithWhereWithoutCategoryInput = {
+    where: TriviaQuestionScalarWhereInput
+    data: XOR<TriviaQuestionUpdateManyMutationInput, TriviaQuestionUncheckedUpdateManyWithoutQuestionsInput>
   }
 
-  export type TwitterPostCreateManyUserInputEnvelope = {
-    data: Enumerable<TwitterPostCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterDirectMessageCreateWithoutFromInput = {
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    to: TwitterUserCreateNestedOneWithoutToDirectMessageInput
-  }
-
-  export type TwitterDirectMessageUncheckedCreateWithoutFromInput = {
-    id?: number
-    toUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterDirectMessageCreateOrConnectWithoutFromInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    create: XOR<TwitterDirectMessageCreateWithoutFromInput, TwitterDirectMessageUncheckedCreateWithoutFromInput>
-  }
-
-  export type TwitterDirectMessageCreateManyFromInputEnvelope = {
-    data: Enumerable<TwitterDirectMessageCreateManyFromInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterDirectMessageCreateWithoutToInput = {
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: TwitterUserCreateNestedOneWithoutFromDirectMessageInput
-  }
-
-  export type TwitterDirectMessageUncheckedCreateWithoutToInput = {
-    id?: number
-    fromUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterDirectMessageCreateOrConnectWithoutToInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    create: XOR<TwitterDirectMessageCreateWithoutToInput, TwitterDirectMessageUncheckedCreateWithoutToInput>
-  }
-
-  export type TwitterDirectMessageCreateManyToInputEnvelope = {
-    data: Enumerable<TwitterDirectMessageCreateManyToInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterFollowUpsertWithWhereUniqueWithoutFromInput = {
-    where: TwitterFollowWhereUniqueInput
-    update: XOR<TwitterFollowUpdateWithoutFromInput, TwitterFollowUncheckedUpdateWithoutFromInput>
-    create: XOR<TwitterFollowCreateWithoutFromInput, TwitterFollowUncheckedCreateWithoutFromInput>
-  }
-
-  export type TwitterFollowUpdateWithWhereUniqueWithoutFromInput = {
-    where: TwitterFollowWhereUniqueInput
-    data: XOR<TwitterFollowUpdateWithoutFromInput, TwitterFollowUncheckedUpdateWithoutFromInput>
-  }
-
-  export type TwitterFollowUpdateManyWithWhereWithoutFromInput = {
-    where: TwitterFollowScalarWhereInput
-    data: XOR<TwitterFollowUpdateManyMutationInput, TwitterFollowUncheckedUpdateManyWithoutFromFollowingInput>
-  }
-
-  export type TwitterFollowScalarWhereInput = {
-    AND?: Enumerable<TwitterFollowScalarWhereInput>
-    OR?: Enumerable<TwitterFollowScalarWhereInput>
-    NOT?: Enumerable<TwitterFollowScalarWhereInput>
+  export type TriviaQuestionScalarWhereInput = {
+    AND?: Enumerable<TriviaQuestionScalarWhereInput>
+    OR?: Enumerable<TriviaQuestionScalarWhereInput>
+    NOT?: Enumerable<TriviaQuestionScalarWhereInput>
     id?: IntFilter | number
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
+    quiz?: StringFilter | string
+    categoryId?: IntFilter | number
+    triviaAnswerChoiceId?: IntFilter | number
   }
 
-  export type TwitterFollowUpsertWithWhereUniqueWithoutToInput = {
-    where: TwitterFollowWhereUniqueInput
-    update: XOR<TwitterFollowUpdateWithoutToInput, TwitterFollowUncheckedUpdateWithoutToInput>
-    create: XOR<TwitterFollowCreateWithoutToInput, TwitterFollowUncheckedCreateWithoutToInput>
+  export type TriviaRoundUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: TriviaRoundWhereUniqueInput
+    update: XOR<TriviaRoundUpdateWithoutCategoryInput, TriviaRoundUncheckedUpdateWithoutCategoryInput>
+    create: XOR<TriviaRoundCreateWithoutCategoryInput, TriviaRoundUncheckedCreateWithoutCategoryInput>
   }
 
-  export type TwitterFollowUpdateWithWhereUniqueWithoutToInput = {
-    where: TwitterFollowWhereUniqueInput
-    data: XOR<TwitterFollowUpdateWithoutToInput, TwitterFollowUncheckedUpdateWithoutToInput>
+  export type TriviaRoundUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: TriviaRoundWhereUniqueInput
+    data: XOR<TriviaRoundUpdateWithoutCategoryInput, TriviaRoundUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type TwitterFollowUpdateManyWithWhereWithoutToInput = {
-    where: TwitterFollowScalarWhereInput
-    data: XOR<TwitterFollowUpdateManyMutationInput, TwitterFollowUncheckedUpdateManyWithoutToFollowingInput>
+  export type TriviaRoundUpdateManyWithWhereWithoutCategoryInput = {
+    where: TriviaRoundScalarWhereInput
+    data: XOR<TriviaRoundUpdateManyMutationInput, TriviaRoundUncheckedUpdateManyWithoutRoundsInput>
   }
 
-  export type TwitterPostUpsertWithWhereUniqueWithoutUserInput = {
-    where: TwitterPostWhereUniqueInput
-    update: XOR<TwitterPostUpdateWithoutUserInput, TwitterPostUncheckedUpdateWithoutUserInput>
-    create: XOR<TwitterPostCreateWithoutUserInput, TwitterPostUncheckedCreateWithoutUserInput>
-  }
-
-  export type TwitterPostUpdateWithWhereUniqueWithoutUserInput = {
-    where: TwitterPostWhereUniqueInput
-    data: XOR<TwitterPostUpdateWithoutUserInput, TwitterPostUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TwitterPostUpdateManyWithWhereWithoutUserInput = {
-    where: TwitterPostScalarWhereInput
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutPostsInput>
-  }
-
-  export type TwitterPostScalarWhereInput = {
-    AND?: Enumerable<TwitterPostScalarWhereInput>
-    OR?: Enumerable<TwitterPostScalarWhereInput>
-    NOT?: Enumerable<TwitterPostScalarWhereInput>
+  export type TriviaRoundScalarWhereInput = {
+    AND?: Enumerable<TriviaRoundScalarWhereInput>
+    OR?: Enumerable<TriviaRoundScalarWhereInput>
+    NOT?: Enumerable<TriviaRoundScalarWhereInput>
     id?: IntFilter | number
-    caption?: StringFilter | string
+    categoryId?: IntFilter | number
+    totalResult?: IntFilter | number
+    createAt?: DateTimeFilter | Date | string
     userId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
+    roundNo?: IntFilter | number
   }
 
-  export type TwitterDirectMessageUpsertWithWhereUniqueWithoutFromInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    update: XOR<TwitterDirectMessageUpdateWithoutFromInput, TwitterDirectMessageUncheckedUpdateWithoutFromInput>
-    create: XOR<TwitterDirectMessageCreateWithoutFromInput, TwitterDirectMessageUncheckedCreateWithoutFromInput>
+  export type TriviaCategoryCreateWithoutQuestionsInput = {
+    category: string
+    rounds?: TriviaRoundCreateNestedManyWithoutCategoryInput
   }
 
-  export type TwitterDirectMessageUpdateWithWhereUniqueWithoutFromInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    data: XOR<TwitterDirectMessageUpdateWithoutFromInput, TwitterDirectMessageUncheckedUpdateWithoutFromInput>
+  export type TriviaCategoryUncheckedCreateWithoutQuestionsInput = {
+    id?: number
+    category: string
+    rounds?: TriviaRoundUncheckedCreateNestedManyWithoutCategoryInput
   }
 
-  export type TwitterDirectMessageUpdateManyWithWhereWithoutFromInput = {
-    where: TwitterDirectMessageScalarWhereInput
-    data: XOR<TwitterDirectMessageUpdateManyMutationInput, TwitterDirectMessageUncheckedUpdateManyWithoutFromDirectMessageInput>
+  export type TriviaCategoryCreateOrConnectWithoutQuestionsInput = {
+    where: TriviaCategoryWhereUniqueInput
+    create: XOR<TriviaCategoryCreateWithoutQuestionsInput, TriviaCategoryUncheckedCreateWithoutQuestionsInput>
   }
 
-  export type TwitterDirectMessageScalarWhereInput = {
-    AND?: Enumerable<TwitterDirectMessageScalarWhereInput>
-    OR?: Enumerable<TwitterDirectMessageScalarWhereInput>
-    NOT?: Enumerable<TwitterDirectMessageScalarWhereInput>
+  export type TriviaRoundQuestionCreateWithoutQuestionInput = {
+    quizResult?: number | null
+    userChoice: TriviaChoiceCreateNestedOneWithoutRoundQuestionsInput
+    round: TriviaRoundCreateNestedOneWithoutRoundQuestionsInput
+  }
+
+  export type TriviaRoundQuestionUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    choiceId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaRoundQuestionCreateOrConnectWithoutQuestionInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    create: XOR<TriviaRoundQuestionCreateWithoutQuestionInput, TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type TriviaRoundQuestionCreateManyQuestionInputEnvelope = {
+    data: Enumerable<TriviaRoundQuestionCreateManyQuestionInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaChoiceCreateWithoutQuizInput = {
+    choice: string
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutUserChoiceInput
+    quizAnswer?: TriviaQuestionCreateNestedOneWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutQuizInput = {
+    id?: number
+    choice: string
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput
+    quizAnswer?: TriviaQuestionUncheckedCreateNestedOneWithoutAnswerInput
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutQuizInput, TriviaChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type TriviaChoiceCreateManyQuizInputEnvelope = {
+    data: Enumerable<TriviaChoiceCreateManyQuizInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaChoiceCreateWithoutQuizAnswerInput = {
+    choice: string
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutUserChoiceInput
+    quiz?: TriviaQuestionCreateNestedOneWithoutChoicesInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutQuizAnswerInput = {
+    id?: number
+    choice: string
+    quizId?: number | null
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutQuizAnswerInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutQuizAnswerInput>
+  }
+
+  export type TriviaCategoryUpsertWithoutQuestionsInput = {
+    update: XOR<TriviaCategoryUpdateWithoutQuestionsInput, TriviaCategoryUncheckedUpdateWithoutQuestionsInput>
+    create: XOR<TriviaCategoryCreateWithoutQuestionsInput, TriviaCategoryUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type TriviaCategoryUpdateWithoutQuestionsInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    rounds?: TriviaRoundUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type TriviaCategoryUncheckedUpdateWithoutQuestionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    rounds?: TriviaRoundUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type TriviaRoundQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    update: XOR<TriviaRoundQuestionUpdateWithoutQuestionInput, TriviaRoundQuestionUncheckedUpdateWithoutQuestionInput>
+    create: XOR<TriviaRoundQuestionCreateWithoutQuestionInput, TriviaRoundQuestionUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type TriviaRoundQuestionUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    data: XOR<TriviaRoundQuestionUpdateWithoutQuestionInput, TriviaRoundQuestionUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type TriviaRoundQuestionUpdateManyWithWhereWithoutQuestionInput = {
+    where: TriviaRoundQuestionScalarWhereInput
+    data: XOR<TriviaRoundQuestionUpdateManyMutationInput, TriviaRoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaRoundQuestionScalarWhereInput = {
+    AND?: Enumerable<TriviaRoundQuestionScalarWhereInput>
+    OR?: Enumerable<TriviaRoundQuestionScalarWhereInput>
+    NOT?: Enumerable<TriviaRoundQuestionScalarWhereInput>
     id?: IntFilter | number
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    text?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
+    quizId?: IntFilter | number
+    choiceId?: IntFilter | number
+    quizResult?: IntNullableFilter | number | null
+    roundId?: IntFilter | number
   }
 
-  export type TwitterDirectMessageUpsertWithWhereUniqueWithoutToInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    update: XOR<TwitterDirectMessageUpdateWithoutToInput, TwitterDirectMessageUncheckedUpdateWithoutToInput>
-    create: XOR<TwitterDirectMessageCreateWithoutToInput, TwitterDirectMessageUncheckedCreateWithoutToInput>
+  export type TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    update: XOR<TriviaChoiceUpdateWithoutQuizInput, TriviaChoiceUncheckedUpdateWithoutQuizInput>
+    create: XOR<TriviaChoiceCreateWithoutQuizInput, TriviaChoiceUncheckedCreateWithoutQuizInput>
   }
 
-  export type TwitterDirectMessageUpdateWithWhereUniqueWithoutToInput = {
-    where: TwitterDirectMessageWhereUniqueInput
-    data: XOR<TwitterDirectMessageUpdateWithoutToInput, TwitterDirectMessageUncheckedUpdateWithoutToInput>
+  export type TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    data: XOR<TriviaChoiceUpdateWithoutQuizInput, TriviaChoiceUncheckedUpdateWithoutQuizInput>
   }
 
-  export type TwitterDirectMessageUpdateManyWithWhereWithoutToInput = {
-    where: TwitterDirectMessageScalarWhereInput
-    data: XOR<TwitterDirectMessageUpdateManyMutationInput, TwitterDirectMessageUncheckedUpdateManyWithoutToDirectMessageInput>
+  export type TriviaChoiceUpdateManyWithWhereWithoutQuizInput = {
+    where: TriviaChoiceScalarWhereInput
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyWithoutChoicesInput>
   }
 
-  export type TwitterUserCreateWithoutFromFollowingInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toFollowing?: TwitterFollowCreateNestedManyWithoutToInput
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutFromFollowingInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutToInput
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutFromFollowingInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFromFollowingInput, TwitterUserUncheckedCreateWithoutFromFollowingInput>
-  }
-
-  export type TwitterUserCreateWithoutToFollowingInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowCreateNestedManyWithoutFromInput
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutToFollowingInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutFromInput
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutToFollowingInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutToFollowingInput, TwitterUserUncheckedCreateWithoutToFollowingInput>
-  }
-
-  export type TwitterUserUpsertWithoutFromFollowingInput = {
-    update: XOR<TwitterUserUpdateWithoutFromFollowingInput, TwitterUserUncheckedUpdateWithoutFromFollowingInput>
-    create: XOR<TwitterUserCreateWithoutFromFollowingInput, TwitterUserUncheckedCreateWithoutFromFollowingInput>
-  }
-
-  export type TwitterUserUpdateWithoutFromFollowingInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toFollowing?: TwitterFollowUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutFromFollowingInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toFollowing?: TwitterFollowUncheckedUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUpsertWithoutToFollowingInput = {
-    update: XOR<TwitterUserUpdateWithoutToFollowingInput, TwitterUserUncheckedUpdateWithoutToFollowingInput>
-    create: XOR<TwitterUserCreateWithoutToFollowingInput, TwitterUserUncheckedCreateWithoutToFollowingInput>
-  }
-
-  export type TwitterUserUpdateWithoutToFollowingInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUpdateManyWithoutFromNestedInput
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutToFollowingInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUncheckedUpdateManyWithoutFromNestedInput
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserCreateWithoutPostsInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowCreateNestedManyWithoutToInput
-    fromDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutPostsInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutToInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutPostsInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutPostsInput, TwitterUserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type TwitterHashtagCreateWithoutPostsInput = {
-    hashtag: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterHashtagUncheckedCreateWithoutPostsInput = {
-    id?: number
-    hashtag: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterHashtagCreateOrConnectWithoutPostsInput = {
-    where: TwitterHashtagWhereUniqueInput
-    create: XOR<TwitterHashtagCreateWithoutPostsInput, TwitterHashtagUncheckedCreateWithoutPostsInput>
-  }
-
-  export type TwitterPostCreateWithoutReplyByInput = {
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: TwitterUserCreateNestedOneWithoutPostsInput
-    hashtags?: TwitterHashtagCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
-  }
-
-  export type TwitterPostUncheckedCreateWithoutReplyByInput = {
-    id?: number
-    caption: string
-    userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutPostsInput
-    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
-  }
-
-  export type TwitterPostCreateOrConnectWithoutReplyByInput = {
-    where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutReplyByInput, TwitterPostUncheckedCreateWithoutReplyByInput>
-  }
-
-  export type TwitterPostCreateWithoutReplyToInput = {
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: TwitterUserCreateNestedOneWithoutPostsInput
-    hashtags?: TwitterHashtagCreateNestedManyWithoutPostsInput
-    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
-  }
-
-  export type TwitterPostUncheckedCreateWithoutReplyToInput = {
-    id?: number
-    caption: string
-    userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutPostsInput
-    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
-  }
-
-  export type TwitterPostCreateOrConnectWithoutReplyToInput = {
-    where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutReplyToInput, TwitterPostUncheckedCreateWithoutReplyToInput>
-  }
-
-  export type TwitterUserUpsertWithoutPostsInput = {
-    update: XOR<TwitterUserUpdateWithoutPostsInput, TwitterUserUncheckedUpdateWithoutPostsInput>
-    create: XOR<TwitterUserCreateWithoutPostsInput, TwitterUserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type TwitterUserUpdateWithoutPostsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUpdateManyWithoutToNestedInput
-    fromDirectMessage?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUncheckedUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUncheckedUpdateManyWithoutToNestedInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterHashtagUpsertWithWhereUniqueWithoutPostsInput = {
-    where: TwitterHashtagWhereUniqueInput
-    update: XOR<TwitterHashtagUpdateWithoutPostsInput, TwitterHashtagUncheckedUpdateWithoutPostsInput>
-    create: XOR<TwitterHashtagCreateWithoutPostsInput, TwitterHashtagUncheckedCreateWithoutPostsInput>
-  }
-
-  export type TwitterHashtagUpdateWithWhereUniqueWithoutPostsInput = {
-    where: TwitterHashtagWhereUniqueInput
-    data: XOR<TwitterHashtagUpdateWithoutPostsInput, TwitterHashtagUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type TwitterHashtagUpdateManyWithWhereWithoutPostsInput = {
-    where: TwitterHashtagScalarWhereInput
-    data: XOR<TwitterHashtagUpdateManyMutationInput, TwitterHashtagUncheckedUpdateManyWithoutHashtagsInput>
-  }
-
-  export type TwitterHashtagScalarWhereInput = {
-    AND?: Enumerable<TwitterHashtagScalarWhereInput>
-    OR?: Enumerable<TwitterHashtagScalarWhereInput>
-    NOT?: Enumerable<TwitterHashtagScalarWhereInput>
+  export type TriviaChoiceScalarWhereInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereInput>
     id?: IntFilter | number
-    hashtag?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
+    choice?: StringFilter | string
+    quizId?: IntNullableFilter | number | null
   }
 
-  export type TwitterPostUpsertWithWhereUniqueWithoutReplyByInput = {
-    where: TwitterPostWhereUniqueInput
-    update: XOR<TwitterPostUpdateWithoutReplyByInput, TwitterPostUncheckedUpdateWithoutReplyByInput>
-    create: XOR<TwitterPostCreateWithoutReplyByInput, TwitterPostUncheckedCreateWithoutReplyByInput>
+  export type TriviaChoiceUpsertWithoutQuizAnswerInput = {
+    update: XOR<TriviaChoiceUpdateWithoutQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutQuizAnswerInput>
+    create: XOR<TriviaChoiceCreateWithoutQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutQuizAnswerInput>
   }
 
-  export type TwitterPostUpdateWithWhereUniqueWithoutReplyByInput = {
-    where: TwitterPostWhereUniqueInput
-    data: XOR<TwitterPostUpdateWithoutReplyByInput, TwitterPostUncheckedUpdateWithoutReplyByInput>
+  export type TriviaChoiceUpdateWithoutQuizAnswerInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutUserChoiceNestedInput
+    quiz?: TriviaQuestionUpdateOneWithoutChoicesNestedInput
   }
 
-  export type TwitterPostUpdateManyWithWhereWithoutReplyByInput = {
-    where: TwitterPostScalarWhereInput
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutReplyToInput>
-  }
-
-  export type TwitterPostUpsertWithWhereUniqueWithoutReplyToInput = {
-    where: TwitterPostWhereUniqueInput
-    update: XOR<TwitterPostUpdateWithoutReplyToInput, TwitterPostUncheckedUpdateWithoutReplyToInput>
-    create: XOR<TwitterPostCreateWithoutReplyToInput, TwitterPostUncheckedCreateWithoutReplyToInput>
-  }
-
-  export type TwitterPostUpdateWithWhereUniqueWithoutReplyToInput = {
-    where: TwitterPostWhereUniqueInput
-    data: XOR<TwitterPostUpdateWithoutReplyToInput, TwitterPostUncheckedUpdateWithoutReplyToInput>
-  }
-
-  export type TwitterPostUpdateManyWithWhereWithoutReplyToInput = {
-    where: TwitterPostScalarWhereInput
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutReplyByInput>
-  }
-
-  export type TwitterUserCreateWithoutFromDirectMessageInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowCreateNestedManyWithoutToInput
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    toDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutFromDirectMessageInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutToInput
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    toDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutFromDirectMessageInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFromDirectMessageInput, TwitterUserUncheckedCreateWithoutFromDirectMessageInput>
-  }
-
-  export type TwitterUserCreateWithoutToDirectMessageInput = {
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowCreateNestedManyWithoutToInput
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutToDirectMessageInput = {
-    id?: number
-    name: string
-    image: string
-    join: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutFromInput
-    toFollowing?: TwitterFollowUncheckedCreateNestedManyWithoutToInput
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutToDirectMessageInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutToDirectMessageInput, TwitterUserUncheckedCreateWithoutToDirectMessageInput>
-  }
-
-  export type TwitterUserUpsertWithoutFromDirectMessageInput = {
-    update: XOR<TwitterUserUpdateWithoutFromDirectMessageInput, TwitterUserUncheckedUpdateWithoutFromDirectMessageInput>
-    create: XOR<TwitterUserCreateWithoutFromDirectMessageInput, TwitterUserUncheckedCreateWithoutFromDirectMessageInput>
-  }
-
-  export type TwitterUserUpdateWithoutFromDirectMessageInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    toDirectMessage?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutFromDirectMessageInput = {
+  export type TriviaChoiceUncheckedUpdateWithoutQuizAnswerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUncheckedUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUncheckedUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    toDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
+    choice?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput
   }
 
-  export type TwitterUserUpsertWithoutToDirectMessageInput = {
-    update: XOR<TwitterUserUpdateWithoutToDirectMessageInput, TwitterUserUncheckedUpdateWithoutToDirectMessageInput>
-    create: XOR<TwitterUserCreateWithoutToDirectMessageInput, TwitterUserUncheckedCreateWithoutToDirectMessageInput>
+  export type TriviaRoundQuestionCreateWithoutUserChoiceInput = {
+    quizResult?: number | null
+    question: TriviaQuestionCreateNestedOneWithoutRoundQuestionsInput
+    round: TriviaRoundCreateNestedOneWithoutRoundQuestionsInput
   }
 
-  export type TwitterUserUpdateWithoutToDirectMessageInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutToDirectMessageInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    join?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromFollowing?: TwitterFollowUncheckedUpdateManyWithoutFromNestedInput
-    toFollowing?: TwitterFollowUncheckedUpdateManyWithoutToNestedInput
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessage?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-  }
-
-  export type TwitterPostCreateWithoutHashtagsInput = {
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: TwitterUserCreateNestedOneWithoutPostsInput
-    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
-  }
-
-  export type TwitterPostUncheckedCreateWithoutHashtagsInput = {
+  export type TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput = {
     id?: number
-    caption: string
+    quizId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaRoundQuestionCreateOrConnectWithoutUserChoiceInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    create: XOR<TriviaRoundQuestionCreateWithoutUserChoiceInput, TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>
+  }
+
+  export type TriviaRoundQuestionCreateManyUserChoiceInputEnvelope = {
+    data: Enumerable<TriviaRoundQuestionCreateManyUserChoiceInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaQuestionCreateWithoutChoicesInput = {
+    quiz: string
+    category: TriviaCategoryCreateNestedOneWithoutQuestionsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutQuestionInput
+    answer: TriviaChoiceCreateNestedOneWithoutQuizAnswerInput
+  }
+
+  export type TriviaQuestionUncheckedCreateWithoutChoicesInput = {
+    id?: number
+    quiz: string
+    categoryId: number
+    triviaAnswerChoiceId: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+  }
+
+  export type TriviaQuestionCreateOrConnectWithoutChoicesInput = {
+    where: TriviaQuestionWhereUniqueInput
+    create: XOR<TriviaQuestionCreateWithoutChoicesInput, TriviaQuestionUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type TriviaQuestionCreateWithoutAnswerInput = {
+    quiz: string
+    category: TriviaCategoryCreateNestedOneWithoutQuestionsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceCreateNestedManyWithoutQuizInput
+  }
+
+  export type TriviaQuestionUncheckedCreateWithoutAnswerInput = {
+    id?: number
+    quiz: string
+    categoryId: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type TriviaQuestionCreateOrConnectWithoutAnswerInput = {
+    where: TriviaQuestionWhereUniqueInput
+    create: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type TriviaRoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    update: XOR<TriviaRoundQuestionUpdateWithoutUserChoiceInput, TriviaRoundQuestionUncheckedUpdateWithoutUserChoiceInput>
+    create: XOR<TriviaRoundQuestionCreateWithoutUserChoiceInput, TriviaRoundQuestionUncheckedCreateWithoutUserChoiceInput>
+  }
+
+  export type TriviaRoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    data: XOR<TriviaRoundQuestionUpdateWithoutUserChoiceInput, TriviaRoundQuestionUncheckedUpdateWithoutUserChoiceInput>
+  }
+
+  export type TriviaRoundQuestionUpdateManyWithWhereWithoutUserChoiceInput = {
+    where: TriviaRoundQuestionScalarWhereInput
+    data: XOR<TriviaRoundQuestionUpdateManyMutationInput, TriviaRoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaQuestionUpsertWithoutChoicesInput = {
+    update: XOR<TriviaQuestionUpdateWithoutChoicesInput, TriviaQuestionUncheckedUpdateWithoutChoicesInput>
+    create: XOR<TriviaQuestionCreateWithoutChoicesInput, TriviaQuestionUncheckedCreateWithoutChoicesInput>
+  }
+
+  export type TriviaQuestionUpdateWithoutChoicesInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    category?: TriviaCategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutQuestionNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+  }
+
+  export type TriviaQuestionUncheckedUpdateWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+  }
+
+  export type TriviaQuestionUpsertWithoutAnswerInput = {
+    update: XOR<TriviaQuestionUpdateWithoutAnswerInput, TriviaQuestionUncheckedUpdateWithoutAnswerInput>
+    create: XOR<TriviaQuestionCreateWithoutAnswerInput, TriviaQuestionUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type TriviaQuestionUpdateWithoutAnswerInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    category?: TriviaCategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUpdateManyWithoutQuizNestedInput
+  }
+
+  export type TriviaQuestionUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
+  }
+
+  export type TriviaQuestionCreateWithoutRoundQuestionsInput = {
+    quiz: string
+    category: TriviaCategoryCreateNestedOneWithoutQuestionsInput
+    choices?: TriviaChoiceCreateNestedManyWithoutQuizInput
+    answer: TriviaChoiceCreateNestedOneWithoutQuizAnswerInput
+  }
+
+  export type TriviaQuestionUncheckedCreateWithoutRoundQuestionsInput = {
+    id?: number
+    quiz: string
+    categoryId: number
+    triviaAnswerChoiceId: number
+    choices?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type TriviaQuestionCreateOrConnectWithoutRoundQuestionsInput = {
+    where: TriviaQuestionWhereUniqueInput
+    create: XOR<TriviaQuestionCreateWithoutRoundQuestionsInput, TriviaQuestionUncheckedCreateWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaChoiceCreateWithoutRoundQuestionsInput = {
+    choice: string
+    quiz?: TriviaQuestionCreateNestedOneWithoutChoicesInput
+    quizAnswer?: TriviaQuestionCreateNestedOneWithoutAnswerInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutRoundQuestionsInput = {
+    id?: number
+    choice: string
+    quizId?: number | null
+    quizAnswer?: TriviaQuestionUncheckedCreateNestedOneWithoutAnswerInput
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutRoundQuestionsInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutRoundQuestionsInput, TriviaChoiceUncheckedCreateWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaRoundCreateWithoutRoundQuestionsInput = {
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+    category: TriviaCategoryCreateNestedOneWithoutRoundsInput
+    user: TriviaUserCreateNestedOneWithoutRoundsInput
+  }
+
+  export type TriviaRoundUncheckedCreateWithoutRoundQuestionsInput = {
+    id?: number
+    categoryId: number
+    totalResult: number
+    createAt?: Date | string
     userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
-    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+    roundNo: number
   }
 
-  export type TwitterPostCreateOrConnectWithoutHashtagsInput = {
-    where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutHashtagsInput, TwitterPostUncheckedCreateWithoutHashtagsInput>
+  export type TriviaRoundCreateOrConnectWithoutRoundQuestionsInput = {
+    where: TriviaRoundWhereUniqueInput
+    create: XOR<TriviaRoundCreateWithoutRoundQuestionsInput, TriviaRoundUncheckedCreateWithoutRoundQuestionsInput>
   }
 
-  export type TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput = {
-    where: TwitterPostWhereUniqueInput
-    update: XOR<TwitterPostUpdateWithoutHashtagsInput, TwitterPostUncheckedUpdateWithoutHashtagsInput>
-    create: XOR<TwitterPostCreateWithoutHashtagsInput, TwitterPostUncheckedCreateWithoutHashtagsInput>
+  export type TriviaQuestionUpsertWithoutRoundQuestionsInput = {
+    update: XOR<TriviaQuestionUpdateWithoutRoundQuestionsInput, TriviaQuestionUncheckedUpdateWithoutRoundQuestionsInput>
+    create: XOR<TriviaQuestionCreateWithoutRoundQuestionsInput, TriviaQuestionUncheckedCreateWithoutRoundQuestionsInput>
   }
 
-  export type TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput = {
-    where: TwitterPostWhereUniqueInput
-    data: XOR<TwitterPostUpdateWithoutHashtagsInput, TwitterPostUncheckedUpdateWithoutHashtagsInput>
+  export type TriviaQuestionUpdateWithoutRoundQuestionsInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    category?: TriviaCategoryUpdateOneRequiredWithoutQuestionsNestedInput
+    choices?: TriviaChoiceUpdateManyWithoutQuizNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
   }
 
-  export type TwitterPostUpdateManyWithWhereWithoutHashtagsInput = {
-    where: TwitterPostScalarWhereInput
-    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutPostsInput>
-  }
-
-  export type TwitterFollowCreateManyFromInput = {
-    id?: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterFollowCreateManyToInput = {
-    id?: number
-    fromUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostCreateManyUserInput = {
-    id?: number
-    caption: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterDirectMessageCreateManyFromInput = {
-    id?: number
-    toUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterDirectMessageCreateManyToInput = {
-    id?: number
-    fromUserId: number
-    text: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterFollowUpdateWithoutFromInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    to?: TwitterUserUpdateOneRequiredWithoutToFollowingNestedInput
-  }
-
-  export type TwitterFollowUncheckedUpdateWithoutFromInput = {
+  export type TriviaQuestionUncheckedUpdateWithoutRoundQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type TwitterFollowUncheckedUpdateManyWithoutFromFollowingInput = {
+  export type TriviaChoiceUpsertWithoutRoundQuestionsInput = {
+    update: XOR<TriviaChoiceUpdateWithoutRoundQuestionsInput, TriviaChoiceUncheckedUpdateWithoutRoundQuestionsInput>
+    create: XOR<TriviaChoiceCreateWithoutRoundQuestionsInput, TriviaChoiceUncheckedCreateWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaChoiceUpdateWithoutRoundQuestionsInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    quiz?: TriviaQuestionUpdateOneWithoutChoicesNestedInput
+    quizAnswer?: TriviaQuestionUpdateOneWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateWithoutRoundQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choice?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswer?: TriviaQuestionUncheckedUpdateOneWithoutAnswerNestedInput
   }
 
-  export type TwitterFollowUpdateWithoutToInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: TwitterUserUpdateOneRequiredWithoutFromFollowingNestedInput
+  export type TriviaRoundUpsertWithoutRoundQuestionsInput = {
+    update: XOR<TriviaRoundUpdateWithoutRoundQuestionsInput, TriviaRoundUncheckedUpdateWithoutRoundQuestionsInput>
+    create: XOR<TriviaRoundCreateWithoutRoundQuestionsInput, TriviaRoundUncheckedCreateWithoutRoundQuestionsInput>
   }
 
-  export type TwitterFollowUncheckedUpdateWithoutToInput = {
+  export type TriviaRoundUpdateWithoutRoundQuestionsInput = {
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
+    category?: TriviaCategoryUpdateOneRequiredWithoutRoundsNestedInput
+    user?: TriviaUserUpdateOneRequiredWithoutRoundsNestedInput
+  }
+
+  export type TriviaRoundUncheckedUpdateWithoutRoundQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterFollowUncheckedUpdateManyWithoutToFollowingInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostUpdateWithoutUserInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtags?: TwitterHashtagUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateManyWithoutPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterDirectMessageUpdateWithoutFromInput = {
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    to?: TwitterUserUpdateOneRequiredWithoutToDirectMessageNestedInput
-  }
-
-  export type TwitterDirectMessageUncheckedUpdateWithoutFromInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterDirectMessageUncheckedUpdateManyWithoutFromDirectMessageInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterDirectMessageUpdateWithoutToInput = {
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: TwitterUserUpdateOneRequiredWithoutFromDirectMessageNestedInput
-  }
-
-  export type TwitterDirectMessageUncheckedUpdateWithoutToInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterDirectMessageUncheckedUpdateManyWithoutToDirectMessageInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    text?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagUpdateWithoutPostsInput = {
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagUncheckedUpdateWithoutPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagUncheckedUpdateManyWithoutHashtagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    hashtag?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostUpdateWithoutReplyByInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    hashtags?: TwitterHashtagUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateWithoutReplyByInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutPostsNestedInput
-    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
+    roundNo?: IntFieldUpdateOperationsInput | number
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutReplyToInput = {
+  export type TriviaCategoryCreateWithoutRoundsInput = {
+    category: string
+    questions?: TriviaQuestionCreateNestedManyWithoutCategoryInput
+  }
+
+  export type TriviaCategoryUncheckedCreateWithoutRoundsInput = {
+    id?: number
+    category: string
+    questions?: TriviaQuestionUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type TriviaCategoryCreateOrConnectWithoutRoundsInput = {
+    where: TriviaCategoryWhereUniqueInput
+    create: XOR<TriviaCategoryCreateWithoutRoundsInput, TriviaCategoryUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type TriviaUserCreateWithoutRoundsInput = {
+    user: string
+    avatar: string
+  }
+
+  export type TriviaUserUncheckedCreateWithoutRoundsInput = {
+    id?: number
+    user: string
+    avatar: string
+  }
+
+  export type TriviaUserCreateOrConnectWithoutRoundsInput = {
+    where: TriviaUserWhereUniqueInput
+    create: XOR<TriviaUserCreateWithoutRoundsInput, TriviaUserUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type TriviaRoundQuestionCreateWithoutRoundInput = {
+    quizResult?: number | null
+    question: TriviaQuestionCreateNestedOneWithoutRoundQuestionsInput
+    userChoice: TriviaChoiceCreateNestedOneWithoutRoundQuestionsInput
+  }
+
+  export type TriviaRoundQuestionUncheckedCreateWithoutRoundInput = {
+    id?: number
+    quizId: number
+    choiceId: number
+    quizResult?: number | null
+  }
+
+  export type TriviaRoundQuestionCreateOrConnectWithoutRoundInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    create: XOR<TriviaRoundQuestionCreateWithoutRoundInput, TriviaRoundQuestionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type TriviaRoundQuestionCreateManyRoundInputEnvelope = {
+    data: Enumerable<TriviaRoundQuestionCreateManyRoundInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaCategoryUpsertWithoutRoundsInput = {
+    update: XOR<TriviaCategoryUpdateWithoutRoundsInput, TriviaCategoryUncheckedUpdateWithoutRoundsInput>
+    create: XOR<TriviaCategoryCreateWithoutRoundsInput, TriviaCategoryUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type TriviaCategoryUpdateWithoutRoundsInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    questions?: TriviaQuestionUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type TriviaCategoryUncheckedUpdateWithoutRoundsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: StringFieldUpdateOperationsInput | string
+    questions?: TriviaQuestionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type TwitterPostUpdateWithoutReplyToInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    hashtags?: TwitterHashtagUpdateManyWithoutPostsNestedInput
-    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
+  export type TriviaUserUpsertWithoutRoundsInput = {
+    update: XOR<TriviaUserUpdateWithoutRoundsInput, TriviaUserUncheckedUpdateWithoutRoundsInput>
+    create: XOR<TriviaUserCreateWithoutRoundsInput, TriviaUserUncheckedCreateWithoutRoundsInput>
   }
 
-  export type TwitterPostUncheckedUpdateWithoutReplyToInput = {
+  export type TriviaUserUpdateWithoutRoundsInput = {
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaUserUncheckedUpdateWithoutRoundsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutPostsNestedInput
-    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    user?: StringFieldUpdateOperationsInput | string
+    avatar?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TwitterPostUncheckedUpdateManyWithoutReplyByInput = {
+  export type TriviaRoundQuestionUpsertWithWhereUniqueWithoutRoundInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    update: XOR<TriviaRoundQuestionUpdateWithoutRoundInput, TriviaRoundQuestionUncheckedUpdateWithoutRoundInput>
+    create: XOR<TriviaRoundQuestionCreateWithoutRoundInput, TriviaRoundQuestionUncheckedCreateWithoutRoundInput>
+  }
+
+  export type TriviaRoundQuestionUpdateWithWhereUniqueWithoutRoundInput = {
+    where: TriviaRoundQuestionWhereUniqueInput
+    data: XOR<TriviaRoundQuestionUpdateWithoutRoundInput, TriviaRoundQuestionUncheckedUpdateWithoutRoundInput>
+  }
+
+  export type TriviaRoundQuestionUpdateManyWithWhereWithoutRoundInput = {
+    where: TriviaRoundQuestionScalarWhereInput
+    data: XOR<TriviaRoundQuestionUpdateManyMutationInput, TriviaRoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  }
+
+  export type TriviaRoundCreateWithoutUserInput = {
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+    category: TriviaCategoryCreateNestedOneWithoutRoundsInput
+    roundQuestions?: TriviaRoundQuestionCreateNestedManyWithoutRoundInput
+  }
+
+  export type TriviaRoundUncheckedCreateWithoutUserInput = {
+    id?: number
+    categoryId: number
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+    roundQuestions?: TriviaRoundQuestionUncheckedCreateNestedManyWithoutRoundInput
+  }
+
+  export type TriviaRoundCreateOrConnectWithoutUserInput = {
+    where: TriviaRoundWhereUniqueInput
+    create: XOR<TriviaRoundCreateWithoutUserInput, TriviaRoundUncheckedCreateWithoutUserInput>
+  }
+
+  export type TriviaRoundCreateManyUserInputEnvelope = {
+    data: Enumerable<TriviaRoundCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type TriviaRoundUpsertWithWhereUniqueWithoutUserInput = {
+    where: TriviaRoundWhereUniqueInput
+    update: XOR<TriviaRoundUpdateWithoutUserInput, TriviaRoundUncheckedUpdateWithoutUserInput>
+    create: XOR<TriviaRoundCreateWithoutUserInput, TriviaRoundUncheckedCreateWithoutUserInput>
+  }
+
+  export type TriviaRoundUpdateWithWhereUniqueWithoutUserInput = {
+    where: TriviaRoundWhereUniqueInput
+    data: XOR<TriviaRoundUpdateWithoutUserInput, TriviaRoundUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TriviaRoundUpdateManyWithWhereWithoutUserInput = {
+    where: TriviaRoundScalarWhereInput
+    data: XOR<TriviaRoundUpdateManyMutationInput, TriviaRoundUncheckedUpdateManyWithoutRoundsInput>
+  }
+
+  export type TriviaQuestionCreateManyCategoryInput = {
+    id?: number
+    quiz: string
+    triviaAnswerChoiceId: number
+  }
+
+  export type TriviaRoundCreateManyCategoryInput = {
+    id?: number
+    totalResult: number
+    createAt?: Date | string
+    userId: number
+    roundNo: number
+  }
+
+  export type TriviaQuestionUpdateWithoutCategoryInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUpdateManyWithoutQuizNestedInput
+    answer?: TriviaChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+  }
+
+  export type TriviaQuestionUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+    choices?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type TwitterPostUpdateWithoutHashtagsInput = {
-    caption?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateWithoutHashtagsInput = {
+  export type TriviaQuestionUncheckedUpdateManyWithoutQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    caption?: StringFieldUpdateOperationsInput | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundUpdateWithoutCategoryInput = {
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
+    user?: TriviaUserUpdateOneRequiredWithoutRoundsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutRoundNestedInput
+  }
+
+  export type TriviaRoundUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
-    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    roundNo?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
+  }
+
+  export type TriviaRoundUncheckedUpdateManyWithoutRoundsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    roundNo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundQuestionCreateManyQuestionInput = {
+    id?: number
+    choiceId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaChoiceCreateManyQuizInput = {
+    id?: number
+    choice: string
+  }
+
+  export type TriviaRoundQuestionUpdateWithoutQuestionInput = {
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    userChoice?: TriviaChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    round?: TriviaRoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    roundId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    roundId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaChoiceUpdateWithoutQuizInput = {
+    choice?: StringFieldUpdateOperationsInput | string
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutUserChoiceNestedInput
+    quizAnswer?: TriviaQuestionUpdateOneWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput
+    quizAnswer?: TriviaQuestionUncheckedUpdateOneWithoutAnswerNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyWithoutChoicesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choice?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TriviaRoundQuestionCreateManyUserChoiceInput = {
+    id?: number
+    quizId: number
+    quizResult?: number | null
+    roundId: number
+  }
+
+  export type TriviaRoundQuestionUpdateWithoutUserChoiceInput = {
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    question?: TriviaQuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    round?: TriviaRoundUpdateOneRequiredWithoutRoundQuestionsNestedInput
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateWithoutUserChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    roundId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TriviaRoundQuestionCreateManyRoundInput = {
+    id?: number
+    quizId: number
+    choiceId: number
+    quizResult?: number | null
+  }
+
+  export type TriviaRoundQuestionUpdateWithoutRoundInput = {
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+    question?: TriviaQuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    userChoice?: TriviaChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
+  }
+
+  export type TriviaRoundQuestionUncheckedUpdateWithoutRoundInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    choiceId?: IntFieldUpdateOperationsInput | number
+    quizResult?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TriviaRoundCreateManyUserInput = {
+    id?: number
+    categoryId: number
+    totalResult: number
+    createAt?: Date | string
+    roundNo: number
+  }
+
+  export type TriviaRoundUpdateWithoutUserInput = {
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
+    category?: TriviaCategoryUpdateOneRequiredWithoutRoundsNestedInput
+    roundQuestions?: TriviaRoundQuestionUpdateManyWithoutRoundNestedInput
+  }
+
+  export type TriviaRoundUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    categoryId?: IntFieldUpdateOperationsInput | number
+    totalResult?: IntFieldUpdateOperationsInput | number
+    createAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundNo?: IntFieldUpdateOperationsInput | number
+    roundQuestions?: TriviaRoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
   }
 
 

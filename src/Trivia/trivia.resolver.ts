@@ -164,3 +164,9 @@ export const getResults = () =>
       totalResult: "desc",
     },
   });
+
+  export const getQuizCategories = async () => {
+  const categoryLists = await prisma.triviaCategory.findMany()
+    return categoryLists.sort((a, b) => a.id - b.id);
+
+}

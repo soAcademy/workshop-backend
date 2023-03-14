@@ -1,56 +1,59 @@
-model TwitterUser {
-  id                Int                    @id @default(autoincrement())
-  name              String                 @unique
-  image             String
-  join              String
-  createdAt         DateTime               @default(now())
-  updatedAt         DateTime               @updatedAt
-  fromFollowing     TwitterFollow[]        @relation("FromFollowing")
-  toFollowing       TwitterFollow[]        @relation("ToFollowing")
-  posts             TwitterPost[]
-  fromDirectMessage TwitterDirectMessage[] @relation("FromDirectMessage")
-  toDirectMessage   TwitterDirectMessage[] @relation("ToDirectMessage")
-}
-
-model TwitterFollow {
-  id         Int         @id @default(autoincrement())
-  from       TwitterUser @relation("FromFollowing", fields: [fromUserId], references: [id])
-  fromUserId Int
-  to         TwitterUser @relation("ToFollowing", fields: [toUserId], references: [id])
-  toUserId   Int
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-}
-
-model TwitterPost {
+model TriviaCategory {
   id        Int              @id @default(autoincrement())
-  caption   String
-  user      TwitterUser      @relation(fields: [userId], references: [id])
-  userId    Int
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  hashtags  TwitterHashtag[]
-  replyTo   TwitterPost[]    @relation("TwitterReply")
-  replyBy   TwitterPost[]    @relation("TwitterReply")
+  category  String           @unique
+  questions TriviaQuestion[]
+  rounds    TriviaRound[]
+  // roundQuestion TriviaRoundQuestion[]
 }
 
-model TwitterDirectMessage {
-  id         Int         @id @default(autoincrement())
-  from       TwitterUser @relation("FromDirectMessage", fields: [fromUserId], references: [id])
-  fromUserId Int
-  to         TwitterUser @relation("ToDirectMessage", fields: [toUserId], references: [id])
-  toUserId   Int
-  text       String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+model TriviaQuestion {
+  id                   Int                   @id @default(autoincrement())
+  quiz                 String
+  category             TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  roundQuestions       TriviaRoundQuestion[]
+  choices              TriviaChoice[]
+  answer               TriviaChoice          @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
+  triviaAnswerChoiceId Int                   @unique
 }
 
-model TwitterHashtag {
-  id        Int           @id @default(autoincrement())
-  hashtag   String        @unique
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  posts     TwitterPost[]
+model TriviaChoice {
+  id             Int                   @id @default(autoincrement())
+  choice         String
+  roundQuestions TriviaRoundQuestion[]
+  quiz           TriviaQuestion?       @relation(fields: [quizId], references: [id])
+  quizId         Int?
+  quizAnswer     TriviaQuestion?       @relation("TriviaQuizAnswer")
+}
+
+model TriviaRoundQuestion {
+  id         Int            @id @default(autoincrement())
+  question   TriviaQuestion @relation(fields: [quizId], references: [id])
+  quizId     Int
+  userChoice TriviaChoice   @relation(fields: [choiceId], references: [id])
+  choiceId   Int
+  quizResult Int?
+  round      TriviaRound    @relation(fields: [roundId], references: [id])
+  roundId    Int
+}
+
+model TriviaRound {
+  id             Int                   @id @default(autoincrement())
+  category       TriviaCategory        @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  totalResult    Int
+  createAt       DateTime              @default(now())
+  user           TriviaUser            @relation(fields: [userId], references: [id])
+  userId         Int
+  roundNo        Int
+  roundQuestions TriviaRoundQuestion[]
+}
+
+model TriviaUser {
+  id     Int           @id @default(autoincrement())
+  user   String
+  avatar String
+  rounds TriviaRound[]
 }
 
 datasource db {

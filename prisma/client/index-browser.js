@@ -106,54 +106,55 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TwitterDirectMessageScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
   id: 'id',
-  fromUserId: 'fromUserId',
-  toUserId: 'toUserId',
-  text: 'text',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  category: 'category'
 });
 
-exports.Prisma.TwitterFollowScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
   id: 'id',
-  fromUserId: 'fromUserId',
-  toUserId: 'toUserId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  choice: 'choice',
+  quizId: 'quizId'
 });
 
-exports.Prisma.TwitterHashtagScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaQuestionScalarFieldEnum = makeEnum({
   id: 'id',
-  hashtag: 'hashtag',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  quiz: 'quiz',
+  categoryId: 'categoryId',
+  triviaAnswerChoiceId: 'triviaAnswerChoiceId'
 });
 
-exports.Prisma.TwitterPostScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaRoundQuestionScalarFieldEnum = makeEnum({
   id: 'id',
-  caption: 'caption',
+  quizId: 'quizId',
+  choiceId: 'choiceId',
+  quizResult: 'quizResult',
+  roundId: 'roundId'
+});
+
+exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
+  id: 'id',
+  categoryId: 'categoryId',
+  totalResult: 'totalResult',
+  createAt: 'createAt',
   userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  roundNo: 'roundNo'
 });
 
-exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaUserScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
-  image: 'image',
-  join: 'join',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  user: 'user',
+  avatar: 'avatar'
 });
 
 
 exports.Prisma.ModelName = makeEnum({
-  TwitterUser: 'TwitterUser',
-  TwitterFollow: 'TwitterFollow',
-  TwitterPost: 'TwitterPost',
-  TwitterDirectMessage: 'TwitterDirectMessage',
-  TwitterHashtag: 'TwitterHashtag'
+  TriviaCategory: 'TriviaCategory',
+  TriviaQuestion: 'TriviaQuestion',
+  TriviaChoice: 'TriviaChoice',
+  TriviaRoundQuestion: 'TriviaRoundQuestion',
+  TriviaRound: 'TriviaRound',
+  TriviaUser: 'TriviaUser'
 });
 
 /**

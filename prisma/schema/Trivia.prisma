@@ -51,7 +51,7 @@ model TriviaRound {
 
 model TriviaUser {
   id     Int           @id @default(autoincrement())
-  user   String
+  user   String        @unique
   avatar String
   rounds TriviaRound[]
 }

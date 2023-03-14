@@ -6,6 +6,7 @@ import {
   createUser,
   submitQuiz,
   getResults,
+  getQuizCategories,
 } from "./trivia.resolver";
 
 describe("Trivia", () => {
@@ -29,62 +30,67 @@ describe("Trivia", () => {
     expect(result1.category === category1).toBe(true);
   });
 
-  test('createQuiz', async () => {
+  test("createQuiz", async () => {
     const data = {
       quiz: "ปลาโลมาเป็นปลาใช่หรือไม่",
       answer: "ไม่ใช่",
       categoryId: category1Id,
       choices: [
         {
-          choice: "ใช่"
+          choice: "ใช่",
         },
         {
-          choice: "ไม่รู้"
-        }
-      ]
-    }
-    
+          choice: "ไม่รู้",
+        },
+      ],
+    };
+
     const result = await createQuiz(data);
-    console.log('createQuiz', result)
-    expect(result.quiz === data.quiz).toBe(true)
-  })
+    console.log("createQuiz", result);
+    expect(result.quiz === data.quiz).toBe(true);
+  });
 
-  test('getQuiz', async () => {
-    const result = await getQuiz({categoryId: category1Id})
-    console.log('getQuiz', result)
-    expect(result.length > 0).toBe(true)
-  })
+  test("getQuiz", async () => {
+    const result = await getQuiz({ categoryId: category1Id });
+    console.log("getQuiz", result);
+    expect(result.length > 0).toBe(true);
+  });
 
-  test('createUser', async () => {
+  test("createUser", async () => {
     const user1 = "Nana";
-    const avatar1 = "Nana_Avatar"
-    const result = await createUser({ user: user1, avatar: avatar1})
-    console.log('createUser', result)
-    expect(result.user === user1).toBe(true)
-  })
+    const avatar1 = "Nana_Avatar";
+    const result = await createUser({ user: user1, avatar: avatar1 });
+    console.log("createUser", result);
+    expect(result.user === user1).toBe(true);
+  });
 
-  test('submitQuiz', async () => {
+  test("submitQuiz", async () => {
     const data = {
       categoryId: 10,
-    userId: 2,
-    play: [
+      userId: 2,
+      play: [
         {
-            "quizId": 6,
-            "choiceId": 10
-        }
-    ]
-    }
-    const result = await submitQuiz(data)
-    console.log('submitQuiz', result)
-    expect(result.length > 0).toBe(true)
+          quizId: 6,
+          choiceId: 10,
+        },
+      ],
+    };
+    const result = await submitQuiz(data);
+    console.log("submitQuiz", result);
+    expect(result.length > 0).toBe(true);
+  });
+
+  test("getResults", async () => {
+    const result = await getResults();
+    console.log("getResults", result);
+    expect(result.length > 0).toBe(true);
+  });
+
+  test("getQuizCategories", async () => {
+    const result = await getQuizCategories();
+    console.log("getQuizCategories", result);
+    expect(result.length > 0).toBe(true);
   })
 
-  test('getResults', async () => {
-    const result = await getResults()
-    console.log('getResults', result)
-    expect(result.length > 0).toBe(true)
-  })
 
-
-})
-
+});

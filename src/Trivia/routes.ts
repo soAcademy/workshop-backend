@@ -3,6 +3,7 @@ import {
   createQuizHandler,
   createRoundHandler,
   createUserHandler,
+  getQuizCategoriesHandler,
   getQuizHandler,
   getResultsHandler,
   submitQuizHandler,
@@ -44,4 +45,9 @@ export const AppRoutes = [
   method: "post",
   action: getResultsHandler,
 },
+{
+  path: "/getQuizCategories",
+  method: "post",
+  action: getQuizCategoriesHandler,
+}
 ]
