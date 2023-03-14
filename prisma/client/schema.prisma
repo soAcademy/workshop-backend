@@ -459,7 +459,7 @@ model TodoList {
 
 model User {
   id                     Int             @id @default(autoincrement())
-  name                   String
+  name                   String          @unique
   imageUrl               String?
   bio                    String?
   followingUserRelations UserRelation[]  @relation("followingUser")
@@ -491,10 +491,10 @@ model Tweet {
   id            Int       @id @default(autoincrement())
   tweetText     String
   tweetingUser  User      @relation(fields: [userId], references: [id])
+  userId        Int
   parentTweet   Tweet?    @relation("parentTweet", fields: [parentTweetId], references: [id])
   parentTweetId Int?
   childTweets   Tweet[]   @relation("parentTweet")
-  userId        Int
   hashTags      HashTag[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -504,7 +504,7 @@ model Tweet {
 
 model HashTag {
   id          Int      @id @default(autoincrement())
-  hashTagText String
+  hashTagText String   @unique
   isInTweets  Tweet[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

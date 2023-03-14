@@ -372,8 +372,8 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.TweetScalarFieldEnum = makeEnum({
   id: 'id',
   tweetText: 'tweetText',
-  parentTweetId: 'parentTweetId',
   userId: 'userId',
+  parentTweetId: 'parentTweetId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });

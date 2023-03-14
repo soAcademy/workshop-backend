@@ -1,6 +1,6 @@
 model User {
   id                     Int             @id @default(autoincrement())
-  name                   String
+  name                   String          @unique
   imageUrl               String?
   bio                    String?
   followingUserRelations UserRelation[]  @relation("followingUser")
@@ -45,7 +45,7 @@ model Tweet {
 
 model HashTag {
   id          Int      @id @default(autoincrement())
-  hashTagText String
+  hashTagText String   @unique
   isInTweets  Tweet[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

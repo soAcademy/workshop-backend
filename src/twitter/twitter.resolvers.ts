@@ -18,16 +18,13 @@ export const createTweet = (args: ICreateTweet) => {
     data: {
       tweetText: args.tweetText,
       userId: args.userId,
-      //     },
-      //   });
-      // };
-
-      // export const createChildTweet = (args: ICreateTweet) => {
-      //   return prisma.tweet.create({
-      //     data: {
-      //       tweetText: args.tweetText,
-      //       userId: args.userId,
       parentTweetId: args.parentTweetId,
+      hashTags: {
+        connectOrCreate: args.hashTags.map((hashTag) => ({
+          where: { hashTagText: hashTag.hashTagText },
+          create: { hashTagText: hashTag.hashTagText },
+        })),
+      },
     },
   });
 };

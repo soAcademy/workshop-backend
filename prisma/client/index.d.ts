@@ -461,8 +461,8 @@ export type UserRelation = {
 export type Tweet = {
   id: number
   tweetText: string
-  parentTweetId: number | null
   userId: number
+  parentTweetId: number | null
   createdAt: Date
   updatedAt: Date
 }
@@ -37881,21 +37881,21 @@ export namespace Prisma {
 
   export type TweetAvgAggregateOutputType = {
     id: number | null
-    parentTweetId: number | null
     userId: number | null
+    parentTweetId: number | null
   }
 
   export type TweetSumAggregateOutputType = {
     id: number | null
-    parentTweetId: number | null
     userId: number | null
+    parentTweetId: number | null
   }
 
   export type TweetMinAggregateOutputType = {
     id: number | null
     tweetText: string | null
-    parentTweetId: number | null
     userId: number | null
+    parentTweetId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37903,8 +37903,8 @@ export namespace Prisma {
   export type TweetMaxAggregateOutputType = {
     id: number | null
     tweetText: string | null
-    parentTweetId: number | null
     userId: number | null
+    parentTweetId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -37912,8 +37912,8 @@ export namespace Prisma {
   export type TweetCountAggregateOutputType = {
     id: number
     tweetText: number
-    parentTweetId: number
     userId: number
+    parentTweetId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -37922,21 +37922,21 @@ export namespace Prisma {
 
   export type TweetAvgAggregateInputType = {
     id?: true
-    parentTweetId?: true
     userId?: true
+    parentTweetId?: true
   }
 
   export type TweetSumAggregateInputType = {
     id?: true
-    parentTweetId?: true
     userId?: true
+    parentTweetId?: true
   }
 
   export type TweetMinAggregateInputType = {
     id?: true
     tweetText?: true
-    parentTweetId?: true
     userId?: true
+    parentTweetId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37944,8 +37944,8 @@ export namespace Prisma {
   export type TweetMaxAggregateInputType = {
     id?: true
     tweetText?: true
-    parentTweetId?: true
     userId?: true
+    parentTweetId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -37953,8 +37953,8 @@ export namespace Prisma {
   export type TweetCountAggregateInputType = {
     id?: true
     tweetText?: true
-    parentTweetId?: true
     userId?: true
+    parentTweetId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -38050,8 +38050,8 @@ export namespace Prisma {
   export type TweetGroupByOutputType = {
     id: number
     tweetText: string
-    parentTweetId: number | null
     userId: number
+    parentTweetId: number | null
     createdAt: Date
     updatedAt: Date
     _count: TweetCountAggregateOutputType | null
@@ -38079,10 +38079,10 @@ export namespace Prisma {
     id?: boolean
     tweetText?: boolean
     tweetingUser?: boolean | UserArgs
+    userId?: boolean
     parentTweet?: boolean | TweetArgs
     parentTweetId?: boolean
     childTweets?: boolean | Tweet$childTweetsArgs
-    userId?: boolean
     hashTags?: boolean | Tweet$hashTagsArgs
     createdAt?: boolean
     updatedAt?: boolean
@@ -47569,8 +47569,8 @@ export namespace Prisma {
   export const TweetScalarFieldEnum: {
     id: 'id',
     tweetText: 'tweetText',
-    parentTweetId: 'parentTweetId',
     userId: 'userId',
+    parentTweetId: 'parentTweetId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -49579,6 +49579,7 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = {
     id?: number
+    name?: string
   }
 
   export type UserOrderByWithAggregationInput = {
@@ -49665,10 +49666,10 @@ export namespace Prisma {
     id?: IntFilter | number
     tweetText?: StringFilter | string
     tweetingUser?: XOR<UserRelationFilter, UserWhereInput>
+    userId?: IntFilter | number
     parentTweet?: XOR<TweetRelationFilter, TweetWhereInput> | null
     parentTweetId?: IntNullableFilter | number | null
     childTweets?: TweetListRelationFilter
-    userId?: IntFilter | number
     hashTags?: HashTagListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -49678,10 +49679,10 @@ export namespace Prisma {
     id?: SortOrder
     tweetText?: SortOrder
     tweetingUser?: UserOrderByWithRelationInput
+    userId?: SortOrder
     parentTweet?: TweetOrderByWithRelationInput
     parentTweetId?: SortOrder
     childTweets?: TweetOrderByRelationAggregateInput
-    userId?: SortOrder
     hashTags?: HashTagOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49694,8 +49695,8 @@ export namespace Prisma {
   export type TweetOrderByWithAggregationInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TweetCountOrderByAggregateInput
@@ -49711,8 +49712,8 @@ export namespace Prisma {
     NOT?: Enumerable<TweetScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     tweetText?: StringWithAggregatesFilter | string
-    parentTweetId?: IntNullableWithAggregatesFilter | number | null
     userId?: IntWithAggregatesFilter | number
+    parentTweetId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -49738,6 +49739,7 @@ export namespace Prisma {
 
   export type HashTagWhereUniqueInput = {
     id?: number
+    hashTagText?: string
   }
 
   export type HashTagOrderByWithAggregationInput = {
@@ -52407,9 +52409,9 @@ export namespace Prisma {
   export type TweetUncheckedCreateInput = {
     id?: number
     tweetText: string
+    userId: number
     parentTweetId?: number | null
     childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
-    userId: number
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52428,9 +52430,9 @@ export namespace Prisma {
   export type TweetUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
     parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52439,8 +52441,8 @@ export namespace Prisma {
   export type TweetCreateManyInput = {
     id?: number
     tweetText: string
-    parentTweetId?: number | null
     userId: number
+    parentTweetId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52454,8 +52456,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54924,23 +54926,23 @@ export namespace Prisma {
   export type TweetCountOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TweetAvgOrderByAggregateInput = {
     id?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
   }
 
   export type TweetMaxOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -54948,16 +54950,16 @@ export namespace Prisma {
   export type TweetMinOrderByAggregateInput = {
     id?: SortOrder
     tweetText?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TweetSumOrderByAggregateInput = {
     id?: SortOrder
-    parentTweetId?: SortOrder
     userId?: SortOrder
+    parentTweetId?: SortOrder
   }
 
   export type HashTagCountOrderByAggregateInput = {
@@ -63537,8 +63539,8 @@ export namespace Prisma {
     NOT?: Enumerable<TweetScalarWhereInput>
     id?: IntFilter | number
     tweetText?: StringFilter | string
-    parentTweetId?: IntNullableFilter | number | null
     userId?: IntFilter | number
+    parentTweetId?: IntNullableFilter | number | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -63749,8 +63751,8 @@ export namespace Prisma {
   export type TweetUncheckedCreateWithoutChildTweetsInput = {
     id?: number
     tweetText: string
-    parentTweetId?: number | null
     userId: number
+    parentTweetId?: number | null
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -63773,8 +63775,8 @@ export namespace Prisma {
   export type TweetUncheckedCreateWithoutParentTweetInput = {
     id?: number
     tweetText: string
-    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     userId: number
+    childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
     hashTags?: HashTagUncheckedCreateNestedManyWithoutIsInTweetsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -63855,8 +63857,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateWithoutChildTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63916,9 +63918,9 @@ export namespace Prisma {
   export type TweetUncheckedCreateWithoutHashTagsInput = {
     id?: number
     tweetText: string
+    userId: number
     parentTweetId?: number | null
     childTweets?: TweetUncheckedCreateNestedManyWithoutParentTweetInput
-    userId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -66879,8 +66881,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateWithoutParentTweetInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
     userId?: IntFieldUpdateOperationsInput | number
+    childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
     hashTags?: HashTagUncheckedUpdateManyWithoutIsInTweetsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66926,9 +66928,9 @@ export namespace Prisma {
   export type TweetUncheckedUpdateWithoutHashTagsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
+    userId?: IntFieldUpdateOperationsInput | number
     parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     childTweets?: TweetUncheckedUpdateManyWithoutParentTweetNestedInput
-    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -66936,8 +66938,8 @@ export namespace Prisma {
   export type TweetUncheckedUpdateManyWithoutIsInTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     tweetText?: StringFieldUpdateOperationsInput | string
-    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: IntFieldUpdateOperationsInput | number
+    parentTweetId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

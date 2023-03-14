@@ -12,10 +12,15 @@ export const CreateUserCodec = t.intersection([
 
 export interface ICreateUser extends t.TypeOf<typeof CreateUserCodec> {}
 
+export const CreateHashTagCodec = t.type({ hashTagText: t.string });
+
+export interface ICreateHashTag extends t.TypeOf<typeof CreateHashTagCodec> {}
+
 export const CreateTweetCodec = t.intersection([
   t.type({
     tweetText: t.string,
     userId: t.number,
+    hashTags: t.array(CreateHashTagCodec),
   }),
   t.partial({
     parentTweetId: t.number,
