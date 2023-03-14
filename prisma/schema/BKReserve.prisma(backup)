@@ -1,0 +1,136 @@
+model BKReserveUser {
+  id                 Int                  @id @default(autoincrement())
+  university         BKUniversity         @relation(fields: [universityId], references: [id])
+  universityId       Int
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  requests           BKRequest[]
+  BKBorrowingHistory BKBorrowingHistory[]
+  BKCopy             BKCopy[]
+}
+
+model BKRequest {
+  id               Int               @id @default(autoincrement())
+  user             BKReserveUser     @relation(fields: [reserveUserId], references: [id])
+  reserveUserId    Int
+  copy             BKCopy            @relation(fields: [copyId], references: [id])
+  copyId           Int
+  from             BKUniversity      @relation("FromRequest", fields: [fromUniversityId], references: [id])
+  fromUniversityId Int
+  to               BKUniversity      @relation("ToRequest", fields: [toUniversityId], references: [id])
+  toUniversityId   Int
+  requestDate      DateTime
+  status           RequestStatusEnum
+  planRecievedDate DateTime
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+enum RequestStatusEnum {
+  PENDING
+  COMPLETED
+}
+
+model BKBorrowingHistory {
+  id               Int           @id @default(autoincrement())
+  user             BKReserveUser @relation(fields: [reserveUserId], references: [id])
+  reserveUserId    Int
+  copy             BKCopy        @relation(fields: [copyId], references: [id])
+  copyId           Int
+  from             BKUniversity  @relation(fields: [fromUniversityId], references: [id])
+  fromUniversityId Int
+  borrowDate       DateTime
+  returnDate       DateTime
+  actualReturnDate DateTime
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+enum CopyStatusEnum {
+  INSTOCK
+  RESERVED
+}
+
+model BKCopy {
+  id                 Int                  @id @default(autoincrement())
+  status             CopyStatusEnum
+  title              BKTitle              @relation(fields: [titleId], references: [id])
+  titleId            Int
+  user               BKReserveUser?       @relation(fields: [reserveUserId], references: [id])
+  reserveUserId      Int?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  requests           BKRequest[]
+  BKBorrowingHistory BKBorrowingHistory[]
+}
+
+model BKUniversity {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  universityToTitles UniversityToTitle[]
+  reserveUsers       BKReserveUser[]
+  fromRequest        BKRequest[]          @relation("FromRequest")
+  toRequest          BKRequest[]          @relation("ToRequest")
+  BKBorrowingHistory BKBorrowingHistory[]
+}
+
+model BKTitle {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  ISBN               Int
+  copyQty            Int
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  titleToCategories  TitleToCategory[]
+  titleToAuthors     TitleToAuthor[]
+  universityToTitles UniversityToTitle[]
+  copies             BKCopy[]
+}
+
+model UniversityToTitle {
+  id           Int          @id @default(autoincrement())
+  university   BKUniversity @relation(fields: [universityId], references: [id])
+  universityId Int
+  title        BKTitle      @relation(fields: [titleId], references: [id])
+  titleId      Int
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model BKCategory {
+  id                Int               @id @default(autoincrement())
+  name              String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  titleToCategories TitleToCategory[]
+}
+
+model TitleToCategory {
+  id         Int        @id @default(autoincrement())
+  title      BKTitle    @relation(fields: [titleId], references: [id])
+  titleId    Int
+  category   BKCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model BKAuthor {
+  id             Int             @id @default(autoincrement())
+  name           String
+  titleToAuthors TitleToAuthor[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model TitleToAuthor {
+  id        Int      @id @default(autoincrement())
+  title     BKTitle  @relation(fields: [titleId], references: [id])
+  titleId   Int
+  author    BKAuthor @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

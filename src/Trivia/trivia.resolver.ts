@@ -1,4 +1,3 @@
-import { Int } from "io-ts";
 import { PrismaClient } from "../../prisma/client";
 import {
   ICreateQuiz,
@@ -10,11 +9,13 @@ import {
 
 export const prisma = new PrismaClient();
 
+export const sumNumber = (args: {x: number, y: number}) => args.x + args.y;
+
 export const createQuizCategory = (args: ICreateQuizCategory) =>
-  prisma.triviaCategory.create({
-    data: {
-      category: args.category,
-    },
+  prisma.triviaCategory.upsert({
+    where:{category: args.category},
+    create:{category: args.category},
+    update:{},
   });
 
 export const createQuiz = (args: ICreateQuiz) =>
@@ -86,7 +87,7 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
 
   const checkRound = getUserRound.map((r) => r.userId).includes(args.userId)
     ? getUserRound.map((r) => r.roundNo).length + 1
-    : "No User ID";
+    : 1;
 
   console.log(checkRound);
 

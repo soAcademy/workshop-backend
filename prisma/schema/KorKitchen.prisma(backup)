@@ -1,0 +1,40 @@
+model KorKitchenCategory {
+  id       Int              @id @default(autoincrement())
+  name     String           @unique
+  menu     KorKitchenMenu[]
+  createAt DateTime         @default(now())
+  updateAt DateTime         @updatedAt
+}
+
+model KorKitchenMenu {
+  id           Int                   @id @default(autoincrement())
+  name         String
+  image        String
+  price        Float
+  category     KorKitchenCategory?   @relation(fields: [categoryName], references: [name])
+  categoryName String?
+  orderItems   KorKitchenOrderItem[]
+  createAt     DateTime              @default(now())
+  updateAt     DateTime              @updatedAt
+}
+
+model KorKitchenOrder {
+  id       Int                   @id @default(autoincrement())
+  status   String                @default("PENDING")
+  tableId  Int
+  items    KorKitchenOrderItem[]
+  createAt DateTime              @default(now())
+  updateAt DateTime              @updatedAt
+}
+
+model KorKitchenOrderItem {
+  id         Int              @id @default(autoincrement())
+  menu       KorKitchenMenu   @relation(fields: [menuId], references: [id])
+  menuId     Int
+  order      KorKitchenOrder? @relation(fields: [orderId], references: [id])
+  orderId    Int?
+  quantity   Int
+  totalPrice Float
+  creatAt    DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+}

@@ -1,7 +1,8 @@
 model TwitterUser {
   id                Int                    @id @default(autoincrement())
-  name              String
-  Image             String
+  name              String                 @unique
+  image             String
+  join              String
   createdAt         DateTime               @default(now())
   updatedAt         DateTime               @updatedAt
   fromFollowing     TwitterFollow[]        @relation("FromFollowing")
@@ -9,7 +10,6 @@ model TwitterUser {
   posts             TwitterPost[]
   fromDirectMessage TwitterDirectMessage[] @relation("FromDirectMessage")
   toDirectMessage   TwitterDirectMessage[] @relation("ToDirectMessage")
-  comments          TwitterComment[]
 }
 
 model TwitterFollow {
@@ -23,14 +23,15 @@ model TwitterFollow {
 }
 
 model TwitterPost {
-  id             Int                    @id @default(autoincrement())
-  caption        String
-  user           TwitterUser            @relation(fields: [userId], references: [id])
-  userId         Int
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
-  comments       TwitterComment[]
-  postOnHashtags TwitterPostOnHashtag[]
+  id        Int              @id @default(autoincrement())
+  caption   String
+  user      TwitterUser      @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  hashtags  TwitterHashtag[]
+  replyTo   TwitterPost[]    @relation("TwitterReply")
+  replyBy   TwitterPost[]    @relation("TwitterReply")
 }
 
 model TwitterDirectMessage {
@@ -45,28 +46,9 @@ model TwitterDirectMessage {
 }
 
 model TwitterHashtag {
-  id            Int                    @id @default(autoincrement())
-  hashtag       String
-  createdAt     DateTime               @default(now())
-  updatedAt     DateTime               @updatedAt
-  postOnHashtag TwitterPostOnHashtag[]
-}
-
-model TwitterComment {
-  id        Int         @id @default(autoincrement())
-  text      String
-  user      TwitterUser @relation(fields: [userId], references: [id])
-  userId    Int
-  post      TwitterPost @relation(fields: [postId], references: [id])
-  postId    Int
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-}
-
-model TwitterPostOnHashtag {
-  id        Int            @id @default(autoincrement())
-  post      TwitterPost    @relation(fields: [postId], references: [id])
-  postId    Int
-  hashtag   TwitterHashtag @relation(fields: [hashtagId], references: [id])
-  hashtagId Int
+  id        Int           @id @default(autoincrement())
+  hashtag   String        @unique
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  posts     TwitterPost[]
 }

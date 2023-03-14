@@ -26,6 +26,6 @@ export const createRoundCodec = t.type({
   categoryId: t.number,
   totalResult: t.number,
   userId: t.number,
-  roundNo: t.number,
-});
+  roundNo: t.number
+})
 export interface ICreateRound extends t.TypeOf<typeof createRoundCodec> {}

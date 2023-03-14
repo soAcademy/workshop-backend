@@ -71,7 +71,7 @@ export const updateManyTaskStatuses = (args: IUpdateManyTaskStatuses) =>
       status: args.status1,
     },
     data: {
-      task: args.status2,
+      status: args.status2,
     },
   });
 

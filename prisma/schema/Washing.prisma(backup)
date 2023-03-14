@@ -1,0 +1,111 @@
+model WSUser {
+  id             Int              @id @default(autoincrement())
+  name           String
+  tel            Int
+  myWallet       Int
+  createdAt      DateTime         @default(now())
+  updateAt       DateTime         @updatedAt
+  topupHistories WSTopupHistory[]
+  usingHistories WSUsingHistory[]
+}
+
+model WSTopupHistory {
+  id        Int      @id @default(autoincrement())
+  user      WSUser   @relation(fields: [userId], references: [id])
+  userId    Int
+  topup     Int
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model WSUsingHistory {
+  id           Int       @id @default(autoincrement())
+  user         WSUser    @relation(fields: [userId], references: [id])
+  userId       Int
+  price        Int
+  createdAt    DateTime  @default(now())
+  updateAt     DateTime  @updatedAt
+  // shops     WSShop[]
+  // machines  WSMachine[]
+  // programs  WSProgram[]
+  machine      WSMachine @relation(fields: [wSMachineId], references: [id])
+  program      WSProgram @relation(fields: [wSProgramId], references: [id])
+  usingStartAt DateTime
+  finishingAt  DateTime
+  wSMachineId  Int
+  wSProgramId  Int
+}
+
+model WSShop {
+  id        Int         @id @default(autoincrement())
+  branch    String
+  owner     String
+  tel       Int
+  location  String
+  area      String
+  machines  WSMachine[]
+  createdAt DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+}
+
+model WSMachine {
+  id                   Int                @id @default(autoincrement())
+  shop                 WSShop             @relation(fields: [shopId], references: [id])
+  shopId               Int
+  brandname            String
+  size                 String
+  type                 String
+  model                String
+  producedDate         String
+  insuranceExpiredDate String
+  createdAt            DateTime           @default(now())
+  updateAt             DateTime           @updatedAt
+  machineToPrograms    MachineToProgram[]
+  maintains            WSMaintain[]
+  usingHistories       WSUsingHistory[]
+}
+
+model WSProgram {
+  id                Int                @id @default(autoincrement())
+  name              String
+  createdAt         DateTime           @default(now())
+  updateAt          DateTime           @updatedAt
+  machineToPrograms MachineToProgram[]
+  programLists      WSProgramDetail[]  @relation("ProgramLists")
+  activeProgram     WSProgramDetail    @relation(fields: [activeProgramId], references: [id])
+  usingHistories    WSUsingHistory[]
+  activeProgramId   Int
+}
+
+model MachineToProgram {
+  id        Int       @id @default(autoincrement())
+  maching   WSMachine @relation(fields: [machineId], references: [id])
+  machineId Int
+  program   WSProgram @relation(fields: [programId], references: [id])
+  programId Int
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+}
+
+model WSProgramDetail {
+  id        Int         @id @default(autoincrement())
+  program   WSProgram   @relation("ProgramLists", fields: [programId], references: [id])
+  programId Int
+  price     Int
+  duration  Int
+  weight    Int
+  createdAt DateTime    @default(now())
+  updateAt  DateTime    @updatedAt
+  programs  WSProgram[]
+}
+
+model WSMaintain {
+  id        Int       @id @default(autoincrement())
+  checker   String
+  item      String
+  status    String
+  machine   WSMachine @relation(fields: [machineId], references: [id])
+  machineId Int
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+}

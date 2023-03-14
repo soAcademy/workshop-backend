@@ -49,6 +49,10 @@ import {
   submitQuizHandler,
   // submitQuizHandler,
 } from "./Trivia/trivia.handler";
+import {
+  createTWFollowHandler,
+  createTWUsersHandler,
+} from "./twitterApi/twitter.handler";
 
 export const AppRoutes = [
   {
@@ -249,6 +253,16 @@ export const AppRoutes = [
   {
     path: "/getResults",
     method: "post",
-    action: getResultsHandler
-  }
+    action: getResultsHandler,
+  },
+  {
+    path: "/createTWUsers",
+    method: "post",
+    action: createTWUsersHandler,
+  },
+  {
+    path: "/createTWFollow",
+    method: "post",
+    action: createTWFollowHandler,
+  },
 ];
