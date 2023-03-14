@@ -32,10 +32,10 @@ model Tweet {
   id            Int       @id @default(autoincrement())
   tweetText     String
   tweetingUser  User      @relation(fields: [userId], references: [id])
+  userId        Int
   parentTweet   Tweet?    @relation("parentTweet", fields: [parentTweetId], references: [id])
   parentTweetId Int?
   childTweets   Tweet[]   @relation("parentTweet")
-  userId        Int
   hashTags      HashTag[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

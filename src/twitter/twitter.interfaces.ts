@@ -11,3 +11,15 @@ export const CreateUserCodec = t.intersection([
 ]);
 
 export interface ICreateUser extends t.TypeOf<typeof CreateUserCodec> {}
+
+export const CreateTweetCodec = t.intersection([
+  t.type({
+    tweetText: t.string,
+    userId: t.number,
+  }),
+  t.partial({
+    parentTweetId: t.number,
+  }),
+]);
+
+export interface ICreateTweet extends t.TypeOf<typeof CreateTweetCodec> {}
