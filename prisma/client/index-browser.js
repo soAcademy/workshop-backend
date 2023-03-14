@@ -498,37 +498,11 @@ exports.Prisma.TwitterHashtagScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.TwitterPostAndHashtagScalarFieldEnum = makeEnum({
-  id: 'id',
-  postId: 'postId',
-  hashtagId: 'hashtagId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
 exports.Prisma.TwitterPostScalarFieldEnum = makeEnum({
   id: 'id',
   userId: 'userId',
   message: 'message',
   image: 'image',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.TwitterReplyPostScalarFieldEnum = makeEnum({
-  id: 'id',
-  userId: 'userId',
-  message: 'message',
-  image: 'image',
-  postId: 'postId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.TwitterUserRelationshipScalarFieldEnum = makeEnum({
-  id: 'id',
-  fromUserId: 'fromUserId',
-  toUserId: 'toUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -653,10 +627,7 @@ exports.Prisma.ModelName = makeEnum({
   FacebookCommentPost: 'FacebookCommentPost',
   TwitterUser: 'TwitterUser',
   TwitterPost: 'TwitterPost',
-  TwitterUserRelationship: 'TwitterUserRelationship',
   TwitterHashtag: 'TwitterHashtag',
-  TwitterPostAndHashtag: 'TwitterPostAndHashtag',
-  TwitterReplyPost: 'TwitterReplyPost',
   TwitterDirectMessage: 'TwitterDirectMessage',
   YoutubeUser: 'YoutubeUser',
   YoutubeRole: 'YoutubeRole',

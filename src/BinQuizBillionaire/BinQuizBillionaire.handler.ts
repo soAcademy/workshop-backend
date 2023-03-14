@@ -2,14 +2,20 @@ import { Request, Response } from "express";
 import {
   CreateCategoryCodec,
   CreateQuestionCodec,
+  GetResultByCategoryCodec,
+  SubmitQuestionCodec,
+  UpdateQuestionCodec,
 } from "./BinQuizBillionaire.interface";
 import {
   createCategory,
   createQuestion,
   getCategories,
   getQuestion,
+  getResultByCategory,
   getResults,
   submitQuestion,
+  updateAnswer,
+  updateQuestion,
   // submitQuestion,
 } from "./BinQuizBillionaire.resolver";
 
@@ -73,10 +79,16 @@ export const getQuestionHandler = async (req: Request, res: Response) => {
 
 export const submitQuestionHandler = async (req: Request, res: Response) => {
   const args = req?.body;
+  console.log(args);
+  console.log(SubmitQuestionCodec.decode(args));
 
   try {
-    const result = await submitQuestion(args);
-    res.status(200).json(result);
+    if (SubmitQuestionCodec.decode(args)._tag === "Right") {
+      const result = await submitQuestion(args);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
   } catch (err) {
     res.status(500).json({ error: String(err) });
   }
@@ -86,6 +98,60 @@ export const getResultsHandler = async (req: Request, res: Response) => {
   try {
     const result = await getResults();
     res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+};
+
+export const getResultByCategoryHandler = async (
+  req: Request,
+  res: Response
+) => {
+  const args = req.body;
+  console.log(args);
+  console.log(GetResultByCategoryCodec.decode(args));
+
+  try {
+    if (GetResultByCategoryCodec.decode(args)._tag === "Right") {
+      const result = await getResultByCategory(args);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+};
+
+export const updateQuestionHandler = async (req: Request, res: Response) => {
+  const args = req.body;
+  console.log(args);
+  console.log(UpdateQuestionCodec.decode(args));
+
+  try {
+    if (UpdateQuestionCodec.decode(args)._tag === "Right") {
+      const result = await updateQuestion(args);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+};
+
+export const updateAnswerHandler = async (req: Request, res: Response) => {
+  const args = req.body;
+  console.log(args);
+  console.log(UpdateQuestionCodec.decode(args));
+
+  try {
+    if (UpdateQuestionCodec.decode(args)._tag === "Right") {
+      const result = await updateAnswer(args);
+      res.status(200).json(result);
+    } else {
+      res.status(404).json({ error: String("Error invalid codec") });
+    }
   } catch (err) {
     res.status(500).json({ error: String(err) });
   }

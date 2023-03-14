@@ -304,50 +304,12 @@ export type TwitterPost = {
 }
 
 /**
- * Model TwitterUserRelationship
- * 
- */
-export type TwitterUserRelationship = {
-  id: number
-  fromUserId: number
-  toUserId: number
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
  * Model TwitterHashtag
  * 
  */
 export type TwitterHashtag = {
   id: number
   name: string
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model TwitterPostAndHashtag
- * 
- */
-export type TwitterPostAndHashtag = {
-  id: number
-  postId: number
-  hashtagId: number
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model TwitterReplyPost
- * 
- */
-export type TwitterReplyPost = {
-  id: number
-  userId: number
-  message: string
-  image: string | null
-  postId: number
   createdAt: Date
   updatedAt: Date
 }
@@ -1124,16 +1086,6 @@ export class PrismaClient<
   get twitterPost(): Prisma.TwitterPostDelegate<GlobalReject>;
 
   /**
-   * `prisma.twitterUserRelationship`: Exposes CRUD operations for the **TwitterUserRelationship** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TwitterUserRelationships
-    * const twitterUserRelationships = await prisma.twitterUserRelationship.findMany()
-    * ```
-    */
-  get twitterUserRelationship(): Prisma.TwitterUserRelationshipDelegate<GlobalReject>;
-
-  /**
    * `prisma.twitterHashtag`: Exposes CRUD operations for the **TwitterHashtag** model.
     * Example usage:
     * ```ts
@@ -1142,26 +1094,6 @@ export class PrismaClient<
     * ```
     */
   get twitterHashtag(): Prisma.TwitterHashtagDelegate<GlobalReject>;
-
-  /**
-   * `prisma.twitterPostAndHashtag`: Exposes CRUD operations for the **TwitterPostAndHashtag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TwitterPostAndHashtags
-    * const twitterPostAndHashtags = await prisma.twitterPostAndHashtag.findMany()
-    * ```
-    */
-  get twitterPostAndHashtag(): Prisma.TwitterPostAndHashtagDelegate<GlobalReject>;
-
-  /**
-   * `prisma.twitterReplyPost`: Exposes CRUD operations for the **TwitterReplyPost** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TwitterReplyPosts
-    * const twitterReplyPosts = await prisma.twitterReplyPost.findMany()
-    * ```
-    */
-  get twitterReplyPost(): Prisma.TwitterReplyPostDelegate<GlobalReject>;
 
   /**
    * `prisma.twitterDirectMessage`: Exposes CRUD operations for the **TwitterDirectMessage** model.
@@ -1954,10 +1886,7 @@ export namespace Prisma {
     FacebookCommentPost: 'FacebookCommentPost',
     TwitterUser: 'TwitterUser',
     TwitterPost: 'TwitterPost',
-    TwitterUserRelationship: 'TwitterUserRelationship',
     TwitterHashtag: 'TwitterHashtag',
-    TwitterPostAndHashtag: 'TwitterPostAndHashtag',
-    TwitterReplyPost: 'TwitterReplyPost',
     TwitterDirectMessage: 'TwitterDirectMessage',
     YoutubeUser: 'YoutubeUser',
     YoutubeRole: 'YoutubeRole',
@@ -2744,7 +2673,6 @@ export namespace Prisma {
     posts: number
     followings: number
     followers: number
-    replyPosts: number
     directMessageFrom: number
     directMessageTo: number
   }
@@ -2753,7 +2681,6 @@ export namespace Prisma {
     posts?: boolean
     followings?: boolean
     followers?: boolean
-    replyPosts?: boolean
     directMessageFrom?: boolean
     directMessageTo?: boolean
   }
@@ -2794,13 +2721,15 @@ export namespace Prisma {
 
 
   export type TwitterPostCountOutputType = {
-    postAndHashtags: number
-    replyPosts: number
+    hashtags: number
+    replyBy: number
+    replyTo: number
   }
 
   export type TwitterPostCountOutputTypeSelect = {
-    postAndHashtags?: boolean
-    replyPosts?: boolean
+    hashtags?: boolean
+    replyBy?: boolean
+    replyTo?: boolean
   }
 
   export type TwitterPostCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterPostCountOutputTypeArgs> =
@@ -2839,11 +2768,11 @@ export namespace Prisma {
 
 
   export type TwitterHashtagCountOutputType = {
-    postAndHashtags: number
+    twitterPosts: number
   }
 
   export type TwitterHashtagCountOutputTypeSelect = {
-    postAndHashtags?: boolean
+    twitterPosts?: boolean
   }
 
   export type TwitterHashtagCountOutputTypeGetPayload<S extends boolean | null | undefined | TwitterHashtagCountOutputTypeArgs> =
@@ -25154,14 +25083,13 @@ export namespace Prisma {
     id?: boolean
     username?: boolean
     image?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
     posts?: boolean | TwitterUser$postsArgs
     followings?: boolean | TwitterUser$followingsArgs
     followers?: boolean | TwitterUser$followersArgs
-    replyPosts?: boolean | TwitterUser$replyPostsArgs
     directMessageFrom?: boolean | TwitterUser$directMessageFromArgs
     directMessageTo?: boolean | TwitterUser$directMessageToArgs
+    createdAt?: boolean
+    updatedAt?: boolean
     _count?: boolean | TwitterUserCountOutputTypeArgs
   }
 
@@ -25170,7 +25098,6 @@ export namespace Prisma {
     posts?: boolean | TwitterUser$postsArgs
     followings?: boolean | TwitterUser$followingsArgs
     followers?: boolean | TwitterUser$followersArgs
-    replyPosts?: boolean | TwitterUser$replyPostsArgs
     directMessageFrom?: boolean | TwitterUser$directMessageFromArgs
     directMessageTo?: boolean | TwitterUser$directMessageToArgs
     _count?: boolean | TwitterUserCountOutputTypeArgs
@@ -25184,9 +25111,8 @@ export namespace Prisma {
     ? TwitterUser  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'posts' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
-        P extends 'followings' ? Array < TwitterUserRelationshipGetPayload<S['include'][P]>>  :
-        P extends 'followers' ? Array < TwitterUserRelationshipGetPayload<S['include'][P]>>  :
-        P extends 'replyPosts' ? Array < TwitterReplyPostGetPayload<S['include'][P]>>  :
+        P extends 'followings' ? Array < TwitterUserGetPayload<S['include'][P]>>  :
+        P extends 'followers' ? Array < TwitterUserGetPayload<S['include'][P]>>  :
         P extends 'directMessageFrom' ? Array < TwitterDirectMessageGetPayload<S['include'][P]>>  :
         P extends 'directMessageTo' ? Array < TwitterDirectMessageGetPayload<S['include'][P]>>  :
         P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['include'][P]> :  never
@@ -25195,9 +25121,8 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'posts' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
-        P extends 'followings' ? Array < TwitterUserRelationshipGetPayload<S['select'][P]>>  :
-        P extends 'followers' ? Array < TwitterUserRelationshipGetPayload<S['select'][P]>>  :
-        P extends 'replyPosts' ? Array < TwitterReplyPostGetPayload<S['select'][P]>>  :
+        P extends 'followings' ? Array < TwitterUserGetPayload<S['select'][P]>>  :
+        P extends 'followers' ? Array < TwitterUserGetPayload<S['select'][P]>>  :
         P extends 'directMessageFrom' ? Array < TwitterDirectMessageGetPayload<S['select'][P]>>  :
         P extends 'directMessageTo' ? Array < TwitterDirectMessageGetPayload<S['select'][P]>>  :
         P extends '_count' ? TwitterUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterUser ? TwitterUser[P] : never
@@ -25574,11 +25499,9 @@ export namespace Prisma {
 
     posts<T extends TwitterUser$postsArgs= {}>(args?: Subset<T, TwitterUser$postsArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
 
-    followings<T extends TwitterUser$followingsArgs= {}>(args?: Subset<T, TwitterUser$followingsArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationshipGetPayload<T>>| Null>;
+    followings<T extends TwitterUser$followingsArgs= {}>(args?: Subset<T, TwitterUser$followingsArgs>): Prisma.PrismaPromise<Array<TwitterUserGetPayload<T>>| Null>;
 
-    followers<T extends TwitterUser$followersArgs= {}>(args?: Subset<T, TwitterUser$followersArgs>): Prisma.PrismaPromise<Array<TwitterUserRelationshipGetPayload<T>>| Null>;
-
-    replyPosts<T extends TwitterUser$replyPostsArgs= {}>(args?: Subset<T, TwitterUser$replyPostsArgs>): Prisma.PrismaPromise<Array<TwitterReplyPostGetPayload<T>>| Null>;
+    followers<T extends TwitterUser$followersArgs= {}>(args?: Subset<T, TwitterUser$followersArgs>): Prisma.PrismaPromise<Array<TwitterUserGetPayload<T>>| Null>;
 
     directMessageFrom<T extends TwitterUser$directMessageFromArgs= {}>(args?: Subset<T, TwitterUser$directMessageFromArgs>): Prisma.PrismaPromise<Array<TwitterDirectMessageGetPayload<T>>| Null>;
 
@@ -25965,19 +25888,19 @@ export namespace Prisma {
    */
   export type TwitterUser$followingsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUserRelationship
+     * Select specific fields to fetch from the TwitterUser
      */
-    select?: TwitterUserRelationshipSelect | null
+    select?: TwitterUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserRelationshipInclude | null
-    where?: TwitterUserRelationshipWhereInput
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    cursor?: TwitterUserRelationshipWhereUniqueInput
+    include?: TwitterUserInclude | null
+    where?: TwitterUserWhereInput
+    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    cursor?: TwitterUserWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterUserRelationshipScalarFieldEnum>
+    distinct?: Enumerable<TwitterUserScalarFieldEnum>
   }
 
 
@@ -25986,40 +25909,19 @@ export namespace Prisma {
    */
   export type TwitterUser$followersArgs = {
     /**
-     * Select specific fields to fetch from the TwitterUserRelationship
+     * Select specific fields to fetch from the TwitterUser
      */
-    select?: TwitterUserRelationshipSelect | null
+    select?: TwitterUserSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterUserRelationshipInclude | null
-    where?: TwitterUserRelationshipWhereInput
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    cursor?: TwitterUserRelationshipWhereUniqueInput
+    include?: TwitterUserInclude | null
+    where?: TwitterUserWhereInput
+    orderBy?: Enumerable<TwitterUserOrderByWithRelationInput>
+    cursor?: TwitterUserWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterUserRelationshipScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUser.replyPosts
-   */
-  export type TwitterUser$replyPostsArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    where?: TwitterReplyPostWhereInput
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    cursor?: TwitterReplyPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TwitterReplyPostScalarFieldEnum>
+    distinct?: Enumerable<TwitterUserScalarFieldEnum>
   }
 
 
@@ -26292,18 +26194,20 @@ export namespace Prisma {
     userId?: boolean
     message?: boolean
     image?: boolean
+    hashtags?: boolean | TwitterPost$hashtagsArgs
+    replyBy?: boolean | TwitterPost$replyByArgs
+    replyTo?: boolean | TwitterPost$replyToArgs
     createdAt?: boolean
     updatedAt?: boolean
-    postAndHashtags?: boolean | TwitterPost$postAndHashtagsArgs
-    replyPosts?: boolean | TwitterPost$replyPostsArgs
     _count?: boolean | TwitterPostCountOutputTypeArgs
   }
 
 
   export type TwitterPostInclude = {
     user?: boolean | TwitterUserArgs
-    postAndHashtags?: boolean | TwitterPost$postAndHashtagsArgs
-    replyPosts?: boolean | TwitterPost$replyPostsArgs
+    hashtags?: boolean | TwitterPost$hashtagsArgs
+    replyBy?: boolean | TwitterPost$replyByArgs
+    replyTo?: boolean | TwitterPost$replyToArgs
     _count?: boolean | TwitterPostCountOutputTypeArgs
   }
 
@@ -26315,16 +26219,18 @@ export namespace Prisma {
     ? TwitterPost  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'user' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'postAndHashtags' ? Array < TwitterPostAndHashtagGetPayload<S['include'][P]>>  :
-        P extends 'replyPosts' ? Array < TwitterReplyPostGetPayload<S['include'][P]>>  :
+        P extends 'hashtags' ? Array < TwitterHashtagGetPayload<S['include'][P]>>  :
+        P extends 'replyBy' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
+        P extends 'replyTo' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
         P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TwitterPostArgs | TwitterPostFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'user' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'postAndHashtags' ? Array < TwitterPostAndHashtagGetPayload<S['select'][P]>>  :
-        P extends 'replyPosts' ? Array < TwitterReplyPostGetPayload<S['select'][P]>>  :
+        P extends 'hashtags' ? Array < TwitterHashtagGetPayload<S['select'][P]>>  :
+        P extends 'replyBy' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
+        P extends 'replyTo' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
         P extends '_count' ? TwitterPostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterPost ? TwitterPost[P] : never
   } 
       : TwitterPost
@@ -26699,9 +26605,11 @@ export namespace Prisma {
 
     user<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
 
-    postAndHashtags<T extends TwitterPost$postAndHashtagsArgs= {}>(args?: Subset<T, TwitterPost$postAndHashtagsArgs>): Prisma.PrismaPromise<Array<TwitterPostAndHashtagGetPayload<T>>| Null>;
+    hashtags<T extends TwitterPost$hashtagsArgs= {}>(args?: Subset<T, TwitterPost$hashtagsArgs>): Prisma.PrismaPromise<Array<TwitterHashtagGetPayload<T>>| Null>;
 
-    replyPosts<T extends TwitterPost$replyPostsArgs= {}>(args?: Subset<T, TwitterPost$replyPostsArgs>): Prisma.PrismaPromise<Array<TwitterReplyPostGetPayload<T>>| Null>;
+    replyBy<T extends TwitterPost$replyByArgs= {}>(args?: Subset<T, TwitterPost$replyByArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
+
+    replyTo<T extends TwitterPost$replyToArgs= {}>(args?: Subset<T, TwitterPost$replyToArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -27059,44 +26967,65 @@ export namespace Prisma {
 
 
   /**
-   * TwitterPost.postAndHashtags
+   * TwitterPost.hashtags
    */
-  export type TwitterPost$postAndHashtagsArgs = {
+  export type TwitterPost$hashtagsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
+     * Select specific fields to fetch from the TwitterHashtag
      */
-    select?: TwitterPostAndHashtagSelect | null
+    select?: TwitterHashtagSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostAndHashtagInclude | null
-    where?: TwitterPostAndHashtagWhereInput
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
+    include?: TwitterHashtagInclude | null
+    where?: TwitterHashtagWhereInput
+    orderBy?: Enumerable<TwitterHashtagOrderByWithRelationInput>
+    cursor?: TwitterHashtagWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterPostAndHashtagScalarFieldEnum>
+    distinct?: Enumerable<TwitterHashtagScalarFieldEnum>
   }
 
 
   /**
-   * TwitterPost.replyPosts
+   * TwitterPost.replyBy
    */
-  export type TwitterPost$replyPostsArgs = {
+  export type TwitterPost$replyByArgs = {
     /**
-     * Select specific fields to fetch from the TwitterReplyPost
+     * Select specific fields to fetch from the TwitterPost
      */
-    select?: TwitterReplyPostSelect | null
+    select?: TwitterPostSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterReplyPostInclude | null
-    where?: TwitterReplyPostWhereInput
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    cursor?: TwitterReplyPostWhereUniqueInput
+    include?: TwitterPostInclude | null
+    where?: TwitterPostWhereInput
+    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    cursor?: TwitterPostWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterReplyPostScalarFieldEnum>
+    distinct?: Enumerable<TwitterPostScalarFieldEnum>
+  }
+
+
+  /**
+   * TwitterPost.replyTo
+   */
+  export type TwitterPost$replyToArgs = {
+    /**
+     * Select specific fields to fetch from the TwitterPost
+     */
+    select?: TwitterPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TwitterPostInclude | null
+    where?: TwitterPostWhereInput
+    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    cursor?: TwitterPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TwitterPostScalarFieldEnum>
   }
 
 
@@ -27112,985 +27041,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: TwitterPostInclude | null
-  }
-
-
-
-  /**
-   * Model TwitterUserRelationship
-   */
-
-
-  export type AggregateTwitterUserRelationship = {
-    _count: TwitterUserRelationshipCountAggregateOutputType | null
-    _avg: TwitterUserRelationshipAvgAggregateOutputType | null
-    _sum: TwitterUserRelationshipSumAggregateOutputType | null
-    _min: TwitterUserRelationshipMinAggregateOutputType | null
-    _max: TwitterUserRelationshipMaxAggregateOutputType | null
-  }
-
-  export type TwitterUserRelationshipAvgAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type TwitterUserRelationshipSumAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type TwitterUserRelationshipMinAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterUserRelationshipMaxAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterUserRelationshipCountAggregateOutputType = {
-    id: number
-    fromUserId: number
-    toUserId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TwitterUserRelationshipAvgAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type TwitterUserRelationshipSumAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type TwitterUserRelationshipMinAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterUserRelationshipMaxAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterUserRelationshipCountAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TwitterUserRelationshipAggregateArgs = {
-    /**
-     * Filter which TwitterUserRelationship to aggregate.
-     */
-    where?: TwitterUserRelationshipWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterUserRelationships to fetch.
-     */
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TwitterUserRelationshipWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterUserRelationships from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterUserRelationships.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TwitterUserRelationships
-    **/
-    _count?: true | TwitterUserRelationshipCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TwitterUserRelationshipAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TwitterUserRelationshipSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TwitterUserRelationshipMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TwitterUserRelationshipMaxAggregateInputType
-  }
-
-  export type GetTwitterUserRelationshipAggregateType<T extends TwitterUserRelationshipAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterUserRelationship]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTwitterUserRelationship[P]>
-      : GetScalarType<T[P], AggregateTwitterUserRelationship[P]>
-  }
-
-
-
-
-  export type TwitterUserRelationshipGroupByArgs = {
-    where?: TwitterUserRelationshipWhereInput
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithAggregationInput>
-    by: TwitterUserRelationshipScalarFieldEnum[]
-    having?: TwitterUserRelationshipScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TwitterUserRelationshipCountAggregateInputType | true
-    _avg?: TwitterUserRelationshipAvgAggregateInputType
-    _sum?: TwitterUserRelationshipSumAggregateInputType
-    _min?: TwitterUserRelationshipMinAggregateInputType
-    _max?: TwitterUserRelationshipMaxAggregateInputType
-  }
-
-
-  export type TwitterUserRelationshipGroupByOutputType = {
-    id: number
-    fromUserId: number
-    toUserId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterUserRelationshipCountAggregateOutputType | null
-    _avg: TwitterUserRelationshipAvgAggregateOutputType | null
-    _sum: TwitterUserRelationshipSumAggregateOutputType | null
-    _min: TwitterUserRelationshipMinAggregateOutputType | null
-    _max: TwitterUserRelationshipMaxAggregateOutputType | null
-  }
-
-  type GetTwitterUserRelationshipGroupByPayload<T extends TwitterUserRelationshipGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<TwitterUserRelationshipGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TwitterUserRelationshipGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TwitterUserRelationshipGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterUserRelationshipGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TwitterUserRelationshipSelect = {
-    id?: boolean
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
-    fromUserId?: boolean
-    toUserId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type TwitterUserRelationshipInclude = {
-    from?: boolean | TwitterUserArgs
-    to?: boolean | TwitterUserArgs
-  }
-
-  export type TwitterUserRelationshipGetPayload<S extends boolean | null | undefined | TwitterUserRelationshipArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterUserRelationship :
-    S extends undefined ? never :
-    S extends { include: any } & (TwitterUserRelationshipArgs | TwitterUserRelationshipFindManyArgs)
-    ? TwitterUserRelationship  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (TwitterUserRelationshipArgs | TwitterUserRelationshipFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'from' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'to' ? TwitterUserGetPayload<S['select'][P]> :  P extends keyof TwitterUserRelationship ? TwitterUserRelationship[P] : never
-  } 
-      : TwitterUserRelationship
-
-
-  type TwitterUserRelationshipCountArgs = 
-    Omit<TwitterUserRelationshipFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterUserRelationshipCountAggregateInputType | true
-    }
-
-  export interface TwitterUserRelationshipDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one TwitterUserRelationship that matches the filter.
-     * @param {TwitterUserRelationshipFindUniqueArgs} args - Arguments to find a TwitterUserRelationship
-     * @example
-     * // Get one TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends TwitterUserRelationshipFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterUserRelationshipFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterUserRelationship'> extends True ? Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>> : Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T> | null, null>
-
-    /**
-     * Find one TwitterUserRelationship that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TwitterUserRelationshipFindUniqueOrThrowArgs} args - Arguments to find a TwitterUserRelationship
-     * @example
-     * // Get one TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TwitterUserRelationshipFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterUserRelationshipFindUniqueOrThrowArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Find the first TwitterUserRelationship that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipFindFirstArgs} args - Arguments to find a TwitterUserRelationship
-     * @example
-     * // Get one TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends TwitterUserRelationshipFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterUserRelationshipFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterUserRelationship'> extends True ? Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>> : Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T> | null, null>
-
-    /**
-     * Find the first TwitterUserRelationship that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipFindFirstOrThrowArgs} args - Arguments to find a TwitterUserRelationship
-     * @example
-     * // Get one TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TwitterUserRelationshipFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterUserRelationshipFindFirstOrThrowArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Find zero or more TwitterUserRelationships that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TwitterUserRelationships
-     * const twitterUserRelationships = await prisma.twitterUserRelationship.findMany()
-     * 
-     * // Get first 10 TwitterUserRelationships
-     * const twitterUserRelationships = await prisma.twitterUserRelationship.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const twitterUserRelationshipWithIdOnly = await prisma.twitterUserRelationship.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends TwitterUserRelationshipFindManyArgs>(
-      args?: SelectSubset<T, TwitterUserRelationshipFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterUserRelationshipGetPayload<T>>>
-
-    /**
-     * Create a TwitterUserRelationship.
-     * @param {TwitterUserRelationshipCreateArgs} args - Arguments to create a TwitterUserRelationship.
-     * @example
-     * // Create one TwitterUserRelationship
-     * const TwitterUserRelationship = await prisma.twitterUserRelationship.create({
-     *   data: {
-     *     // ... data to create a TwitterUserRelationship
-     *   }
-     * })
-     * 
-    **/
-    create<T extends TwitterUserRelationshipCreateArgs>(
-      args: SelectSubset<T, TwitterUserRelationshipCreateArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Create many TwitterUserRelationships.
-     *     @param {TwitterUserRelationshipCreateManyArgs} args - Arguments to create many TwitterUserRelationships.
-     *     @example
-     *     // Create many TwitterUserRelationships
-     *     const twitterUserRelationship = await prisma.twitterUserRelationship.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends TwitterUserRelationshipCreateManyArgs>(
-      args?: SelectSubset<T, TwitterUserRelationshipCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a TwitterUserRelationship.
-     * @param {TwitterUserRelationshipDeleteArgs} args - Arguments to delete one TwitterUserRelationship.
-     * @example
-     * // Delete one TwitterUserRelationship
-     * const TwitterUserRelationship = await prisma.twitterUserRelationship.delete({
-     *   where: {
-     *     // ... filter to delete one TwitterUserRelationship
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends TwitterUserRelationshipDeleteArgs>(
-      args: SelectSubset<T, TwitterUserRelationshipDeleteArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Update one TwitterUserRelationship.
-     * @param {TwitterUserRelationshipUpdateArgs} args - Arguments to update one TwitterUserRelationship.
-     * @example
-     * // Update one TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends TwitterUserRelationshipUpdateArgs>(
-      args: SelectSubset<T, TwitterUserRelationshipUpdateArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Delete zero or more TwitterUserRelationships.
-     * @param {TwitterUserRelationshipDeleteManyArgs} args - Arguments to filter TwitterUserRelationships to delete.
-     * @example
-     * // Delete a few TwitterUserRelationships
-     * const { count } = await prisma.twitterUserRelationship.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends TwitterUserRelationshipDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterUserRelationshipDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TwitterUserRelationships.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TwitterUserRelationships
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends TwitterUserRelationshipUpdateManyArgs>(
-      args: SelectSubset<T, TwitterUserRelationshipUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one TwitterUserRelationship.
-     * @param {TwitterUserRelationshipUpsertArgs} args - Arguments to update or create a TwitterUserRelationship.
-     * @example
-     * // Update or create a TwitterUserRelationship
-     * const twitterUserRelationship = await prisma.twitterUserRelationship.upsert({
-     *   create: {
-     *     // ... data to create a TwitterUserRelationship
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TwitterUserRelationship we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends TwitterUserRelationshipUpsertArgs>(
-      args: SelectSubset<T, TwitterUserRelationshipUpsertArgs>
-    ): Prisma__TwitterUserRelationshipClient<TwitterUserRelationshipGetPayload<T>>
-
-    /**
-     * Count the number of TwitterUserRelationships.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipCountArgs} args - Arguments to filter TwitterUserRelationships to count.
-     * @example
-     * // Count the number of TwitterUserRelationships
-     * const count = await prisma.twitterUserRelationship.count({
-     *   where: {
-     *     // ... the filter for the TwitterUserRelationships we want to count
-     *   }
-     * })
-    **/
-    count<T extends TwitterUserRelationshipCountArgs>(
-      args?: Subset<T, TwitterUserRelationshipCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TwitterUserRelationshipCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TwitterUserRelationship.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TwitterUserRelationshipAggregateArgs>(args: Subset<T, TwitterUserRelationshipAggregateArgs>): Prisma.PrismaPromise<GetTwitterUserRelationshipAggregateType<T>>
-
-    /**
-     * Group by TwitterUserRelationship.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterUserRelationshipGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TwitterUserRelationshipGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterUserRelationshipGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterUserRelationshipGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterUserRelationshipGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterUserRelationshipGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TwitterUserRelationship.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__TwitterUserRelationshipClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    from<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
-
-    to<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TwitterUserRelationship base type for findUnique actions
-   */
-  export type TwitterUserRelationshipFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter, which TwitterUserRelationship to fetch.
-     */
-    where: TwitterUserRelationshipWhereUniqueInput
-  }
-
-  /**
-   * TwitterUserRelationship findUnique
-   */
-  export interface TwitterUserRelationshipFindUniqueArgs extends TwitterUserRelationshipFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterUserRelationship findUniqueOrThrow
-   */
-  export type TwitterUserRelationshipFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter, which TwitterUserRelationship to fetch.
-     */
-    where: TwitterUserRelationshipWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterUserRelationship base type for findFirst actions
-   */
-  export type TwitterUserRelationshipFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter, which TwitterUserRelationship to fetch.
-     */
-    where?: TwitterUserRelationshipWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterUserRelationships to fetch.
-     */
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterUserRelationships.
-     */
-    cursor?: TwitterUserRelationshipWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterUserRelationships from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterUserRelationships.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterUserRelationships.
-     */
-    distinct?: Enumerable<TwitterUserRelationshipScalarFieldEnum>
-  }
-
-  /**
-   * TwitterUserRelationship findFirst
-   */
-  export interface TwitterUserRelationshipFindFirstArgs extends TwitterUserRelationshipFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterUserRelationship findFirstOrThrow
-   */
-  export type TwitterUserRelationshipFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter, which TwitterUserRelationship to fetch.
-     */
-    where?: TwitterUserRelationshipWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterUserRelationships to fetch.
-     */
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterUserRelationships.
-     */
-    cursor?: TwitterUserRelationshipWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterUserRelationships from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterUserRelationships.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterUserRelationships.
-     */
-    distinct?: Enumerable<TwitterUserRelationshipScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUserRelationship findMany
-   */
-  export type TwitterUserRelationshipFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter, which TwitterUserRelationships to fetch.
-     */
-    where?: TwitterUserRelationshipWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterUserRelationships to fetch.
-     */
-    orderBy?: Enumerable<TwitterUserRelationshipOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TwitterUserRelationships.
-     */
-    cursor?: TwitterUserRelationshipWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterUserRelationships from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterUserRelationships.
-     */
-    skip?: number
-    distinct?: Enumerable<TwitterUserRelationshipScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterUserRelationship create
-   */
-  export type TwitterUserRelationshipCreateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * The data needed to create a TwitterUserRelationship.
-     */
-    data: XOR<TwitterUserRelationshipCreateInput, TwitterUserRelationshipUncheckedCreateInput>
-  }
-
-
-  /**
-   * TwitterUserRelationship createMany
-   */
-  export type TwitterUserRelationshipCreateManyArgs = {
-    /**
-     * The data used to create many TwitterUserRelationships.
-     */
-    data: Enumerable<TwitterUserRelationshipCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * TwitterUserRelationship update
-   */
-  export type TwitterUserRelationshipUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * The data needed to update a TwitterUserRelationship.
-     */
-    data: XOR<TwitterUserRelationshipUpdateInput, TwitterUserRelationshipUncheckedUpdateInput>
-    /**
-     * Choose, which TwitterUserRelationship to update.
-     */
-    where: TwitterUserRelationshipWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterUserRelationship updateMany
-   */
-  export type TwitterUserRelationshipUpdateManyArgs = {
-    /**
-     * The data used to update TwitterUserRelationships.
-     */
-    data: XOR<TwitterUserRelationshipUpdateManyMutationInput, TwitterUserRelationshipUncheckedUpdateManyInput>
-    /**
-     * Filter which TwitterUserRelationships to update
-     */
-    where?: TwitterUserRelationshipWhereInput
-  }
-
-
-  /**
-   * TwitterUserRelationship upsert
-   */
-  export type TwitterUserRelationshipUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * The filter to search for the TwitterUserRelationship to update in case it exists.
-     */
-    where: TwitterUserRelationshipWhereUniqueInput
-    /**
-     * In case the TwitterUserRelationship found by the `where` argument doesn't exist, create a new TwitterUserRelationship with this data.
-     */
-    create: XOR<TwitterUserRelationshipCreateInput, TwitterUserRelationshipUncheckedCreateInput>
-    /**
-     * In case the TwitterUserRelationship was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TwitterUserRelationshipUpdateInput, TwitterUserRelationshipUncheckedUpdateInput>
-  }
-
-
-  /**
-   * TwitterUserRelationship delete
-   */
-  export type TwitterUserRelationshipDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
-    /**
-     * Filter which TwitterUserRelationship to delete.
-     */
-    where: TwitterUserRelationshipWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterUserRelationship deleteMany
-   */
-  export type TwitterUserRelationshipDeleteManyArgs = {
-    /**
-     * Filter which TwitterUserRelationships to delete
-     */
-    where?: TwitterUserRelationshipWhereInput
-  }
-
-
-  /**
-   * TwitterUserRelationship without action
-   */
-  export type TwitterUserRelationshipArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterUserRelationship
-     */
-    select?: TwitterUserRelationshipSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterUserRelationshipInclude | null
   }
 
 
@@ -28287,13 +27237,13 @@ export namespace Prisma {
     name?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    postAndHashtags?: boolean | TwitterHashtag$postAndHashtagsArgs
+    twitterPosts?: boolean | TwitterHashtag$twitterPostsArgs
     _count?: boolean | TwitterHashtagCountOutputTypeArgs
   }
 
 
   export type TwitterHashtagInclude = {
-    postAndHashtags?: boolean | TwitterHashtag$postAndHashtagsArgs
+    twitterPosts?: boolean | TwitterHashtag$twitterPostsArgs
     _count?: boolean | TwitterHashtagCountOutputTypeArgs
   }
 
@@ -28304,13 +27254,13 @@ export namespace Prisma {
     S extends { include: any } & (TwitterHashtagArgs | TwitterHashtagFindManyArgs)
     ? TwitterHashtag  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'postAndHashtags' ? Array < TwitterPostAndHashtagGetPayload<S['include'][P]>>  :
+        P extends 'twitterPosts' ? Array < TwitterPostGetPayload<S['include'][P]>>  :
         P extends '_count' ? TwitterHashtagCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TwitterHashtagArgs | TwitterHashtagFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'postAndHashtags' ? Array < TwitterPostAndHashtagGetPayload<S['select'][P]>>  :
+        P extends 'twitterPosts' ? Array < TwitterPostGetPayload<S['select'][P]>>  :
         P extends '_count' ? TwitterHashtagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TwitterHashtag ? TwitterHashtag[P] : never
   } 
       : TwitterHashtag
@@ -28683,7 +27633,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    postAndHashtags<T extends TwitterHashtag$postAndHashtagsArgs= {}>(args?: Subset<T, TwitterHashtag$postAndHashtagsArgs>): Prisma.PrismaPromise<Array<TwitterPostAndHashtagGetPayload<T>>| Null>;
+    twitterPosts<T extends TwitterHashtag$twitterPostsArgs= {}>(args?: Subset<T, TwitterHashtag$twitterPostsArgs>): Prisma.PrismaPromise<Array<TwitterPostGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -29041,23 +27991,23 @@ export namespace Prisma {
 
 
   /**
-   * TwitterHashtag.postAndHashtags
+   * TwitterHashtag.twitterPosts
    */
-  export type TwitterHashtag$postAndHashtagsArgs = {
+  export type TwitterHashtag$twitterPostsArgs = {
     /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
+     * Select specific fields to fetch from the TwitterPost
      */
-    select?: TwitterPostAndHashtagSelect | null
+    select?: TwitterPostSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TwitterPostAndHashtagInclude | null
-    where?: TwitterPostAndHashtagWhereInput
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
+    include?: TwitterPostInclude | null
+    where?: TwitterPostWhereInput
+    orderBy?: Enumerable<TwitterPostOrderByWithRelationInput>
+    cursor?: TwitterPostWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<TwitterPostAndHashtagScalarFieldEnum>
+    distinct?: Enumerable<TwitterPostScalarFieldEnum>
   }
 
 
@@ -29073,1980 +28023,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: TwitterHashtagInclude | null
-  }
-
-
-
-  /**
-   * Model TwitterPostAndHashtag
-   */
-
-
-  export type AggregateTwitterPostAndHashtag = {
-    _count: TwitterPostAndHashtagCountAggregateOutputType | null
-    _avg: TwitterPostAndHashtagAvgAggregateOutputType | null
-    _sum: TwitterPostAndHashtagSumAggregateOutputType | null
-    _min: TwitterPostAndHashtagMinAggregateOutputType | null
-    _max: TwitterPostAndHashtagMaxAggregateOutputType | null
-  }
-
-  export type TwitterPostAndHashtagAvgAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type TwitterPostAndHashtagSumAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type TwitterPostAndHashtagMinAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterPostAndHashtagMaxAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterPostAndHashtagCountAggregateOutputType = {
-    id: number
-    postId: number
-    hashtagId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TwitterPostAndHashtagAvgAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type TwitterPostAndHashtagSumAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type TwitterPostAndHashtagMinAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterPostAndHashtagMaxAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterPostAndHashtagCountAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TwitterPostAndHashtagAggregateArgs = {
-    /**
-     * Filter which TwitterPostAndHashtag to aggregate.
-     */
-    where?: TwitterPostAndHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterPostAndHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterPostAndHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterPostAndHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TwitterPostAndHashtags
-    **/
-    _count?: true | TwitterPostAndHashtagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TwitterPostAndHashtagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TwitterPostAndHashtagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TwitterPostAndHashtagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TwitterPostAndHashtagMaxAggregateInputType
-  }
-
-  export type GetTwitterPostAndHashtagAggregateType<T extends TwitterPostAndHashtagAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterPostAndHashtag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTwitterPostAndHashtag[P]>
-      : GetScalarType<T[P], AggregateTwitterPostAndHashtag[P]>
-  }
-
-
-
-
-  export type TwitterPostAndHashtagGroupByArgs = {
-    where?: TwitterPostAndHashtagWhereInput
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithAggregationInput>
-    by: TwitterPostAndHashtagScalarFieldEnum[]
-    having?: TwitterPostAndHashtagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TwitterPostAndHashtagCountAggregateInputType | true
-    _avg?: TwitterPostAndHashtagAvgAggregateInputType
-    _sum?: TwitterPostAndHashtagSumAggregateInputType
-    _min?: TwitterPostAndHashtagMinAggregateInputType
-    _max?: TwitterPostAndHashtagMaxAggregateInputType
-  }
-
-
-  export type TwitterPostAndHashtagGroupByOutputType = {
-    id: number
-    postId: number
-    hashtagId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterPostAndHashtagCountAggregateOutputType | null
-    _avg: TwitterPostAndHashtagAvgAggregateOutputType | null
-    _sum: TwitterPostAndHashtagSumAggregateOutputType | null
-    _min: TwitterPostAndHashtagMinAggregateOutputType | null
-    _max: TwitterPostAndHashtagMaxAggregateOutputType | null
-  }
-
-  type GetTwitterPostAndHashtagGroupByPayload<T extends TwitterPostAndHashtagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<TwitterPostAndHashtagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TwitterPostAndHashtagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TwitterPostAndHashtagGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterPostAndHashtagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TwitterPostAndHashtagSelect = {
-    id?: boolean
-    post?: boolean | TwitterPostArgs
-    postId?: boolean
-    hashtag?: boolean | TwitterHashtagArgs
-    hashtagId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type TwitterPostAndHashtagInclude = {
-    post?: boolean | TwitterPostArgs
-    hashtag?: boolean | TwitterHashtagArgs
-  }
-
-  export type TwitterPostAndHashtagGetPayload<S extends boolean | null | undefined | TwitterPostAndHashtagArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterPostAndHashtag :
-    S extends undefined ? never :
-    S extends { include: any } & (TwitterPostAndHashtagArgs | TwitterPostAndHashtagFindManyArgs)
-    ? TwitterPostAndHashtag  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'post' ? TwitterPostGetPayload<S['include'][P]> :
-        P extends 'hashtag' ? TwitterHashtagGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (TwitterPostAndHashtagArgs | TwitterPostAndHashtagFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'post' ? TwitterPostGetPayload<S['select'][P]> :
-        P extends 'hashtag' ? TwitterHashtagGetPayload<S['select'][P]> :  P extends keyof TwitterPostAndHashtag ? TwitterPostAndHashtag[P] : never
-  } 
-      : TwitterPostAndHashtag
-
-
-  type TwitterPostAndHashtagCountArgs = 
-    Omit<TwitterPostAndHashtagFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterPostAndHashtagCountAggregateInputType | true
-    }
-
-  export interface TwitterPostAndHashtagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one TwitterPostAndHashtag that matches the filter.
-     * @param {TwitterPostAndHashtagFindUniqueArgs} args - Arguments to find a TwitterPostAndHashtag
-     * @example
-     * // Get one TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends TwitterPostAndHashtagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterPostAndHashtagFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterPostAndHashtag'> extends True ? Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>> : Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T> | null, null>
-
-    /**
-     * Find one TwitterPostAndHashtag that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TwitterPostAndHashtagFindUniqueOrThrowArgs} args - Arguments to find a TwitterPostAndHashtag
-     * @example
-     * // Get one TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TwitterPostAndHashtagFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterPostAndHashtagFindUniqueOrThrowArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Find the first TwitterPostAndHashtag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagFindFirstArgs} args - Arguments to find a TwitterPostAndHashtag
-     * @example
-     * // Get one TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends TwitterPostAndHashtagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterPostAndHashtagFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterPostAndHashtag'> extends True ? Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>> : Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T> | null, null>
-
-    /**
-     * Find the first TwitterPostAndHashtag that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagFindFirstOrThrowArgs} args - Arguments to find a TwitterPostAndHashtag
-     * @example
-     * // Get one TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TwitterPostAndHashtagFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterPostAndHashtagFindFirstOrThrowArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Find zero or more TwitterPostAndHashtags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TwitterPostAndHashtags
-     * const twitterPostAndHashtags = await prisma.twitterPostAndHashtag.findMany()
-     * 
-     * // Get first 10 TwitterPostAndHashtags
-     * const twitterPostAndHashtags = await prisma.twitterPostAndHashtag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const twitterPostAndHashtagWithIdOnly = await prisma.twitterPostAndHashtag.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends TwitterPostAndHashtagFindManyArgs>(
-      args?: SelectSubset<T, TwitterPostAndHashtagFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterPostAndHashtagGetPayload<T>>>
-
-    /**
-     * Create a TwitterPostAndHashtag.
-     * @param {TwitterPostAndHashtagCreateArgs} args - Arguments to create a TwitterPostAndHashtag.
-     * @example
-     * // Create one TwitterPostAndHashtag
-     * const TwitterPostAndHashtag = await prisma.twitterPostAndHashtag.create({
-     *   data: {
-     *     // ... data to create a TwitterPostAndHashtag
-     *   }
-     * })
-     * 
-    **/
-    create<T extends TwitterPostAndHashtagCreateArgs>(
-      args: SelectSubset<T, TwitterPostAndHashtagCreateArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Create many TwitterPostAndHashtags.
-     *     @param {TwitterPostAndHashtagCreateManyArgs} args - Arguments to create many TwitterPostAndHashtags.
-     *     @example
-     *     // Create many TwitterPostAndHashtags
-     *     const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends TwitterPostAndHashtagCreateManyArgs>(
-      args?: SelectSubset<T, TwitterPostAndHashtagCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a TwitterPostAndHashtag.
-     * @param {TwitterPostAndHashtagDeleteArgs} args - Arguments to delete one TwitterPostAndHashtag.
-     * @example
-     * // Delete one TwitterPostAndHashtag
-     * const TwitterPostAndHashtag = await prisma.twitterPostAndHashtag.delete({
-     *   where: {
-     *     // ... filter to delete one TwitterPostAndHashtag
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends TwitterPostAndHashtagDeleteArgs>(
-      args: SelectSubset<T, TwitterPostAndHashtagDeleteArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Update one TwitterPostAndHashtag.
-     * @param {TwitterPostAndHashtagUpdateArgs} args - Arguments to update one TwitterPostAndHashtag.
-     * @example
-     * // Update one TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends TwitterPostAndHashtagUpdateArgs>(
-      args: SelectSubset<T, TwitterPostAndHashtagUpdateArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Delete zero or more TwitterPostAndHashtags.
-     * @param {TwitterPostAndHashtagDeleteManyArgs} args - Arguments to filter TwitterPostAndHashtags to delete.
-     * @example
-     * // Delete a few TwitterPostAndHashtags
-     * const { count } = await prisma.twitterPostAndHashtag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends TwitterPostAndHashtagDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterPostAndHashtagDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TwitterPostAndHashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TwitterPostAndHashtags
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends TwitterPostAndHashtagUpdateManyArgs>(
-      args: SelectSubset<T, TwitterPostAndHashtagUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one TwitterPostAndHashtag.
-     * @param {TwitterPostAndHashtagUpsertArgs} args - Arguments to update or create a TwitterPostAndHashtag.
-     * @example
-     * // Update or create a TwitterPostAndHashtag
-     * const twitterPostAndHashtag = await prisma.twitterPostAndHashtag.upsert({
-     *   create: {
-     *     // ... data to create a TwitterPostAndHashtag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TwitterPostAndHashtag we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends TwitterPostAndHashtagUpsertArgs>(
-      args: SelectSubset<T, TwitterPostAndHashtagUpsertArgs>
-    ): Prisma__TwitterPostAndHashtagClient<TwitterPostAndHashtagGetPayload<T>>
-
-    /**
-     * Count the number of TwitterPostAndHashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagCountArgs} args - Arguments to filter TwitterPostAndHashtags to count.
-     * @example
-     * // Count the number of TwitterPostAndHashtags
-     * const count = await prisma.twitterPostAndHashtag.count({
-     *   where: {
-     *     // ... the filter for the TwitterPostAndHashtags we want to count
-     *   }
-     * })
-    **/
-    count<T extends TwitterPostAndHashtagCountArgs>(
-      args?: Subset<T, TwitterPostAndHashtagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TwitterPostAndHashtagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TwitterPostAndHashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TwitterPostAndHashtagAggregateArgs>(args: Subset<T, TwitterPostAndHashtagAggregateArgs>): Prisma.PrismaPromise<GetTwitterPostAndHashtagAggregateType<T>>
-
-    /**
-     * Group by TwitterPostAndHashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterPostAndHashtagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TwitterPostAndHashtagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterPostAndHashtagGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterPostAndHashtagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterPostAndHashtagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterPostAndHashtagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TwitterPostAndHashtag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__TwitterPostAndHashtagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    post<T extends TwitterPostArgs= {}>(args?: Subset<T, TwitterPostArgs>): Prisma__TwitterPostClient<TwitterPostGetPayload<T> | Null>;
-
-    hashtag<T extends TwitterHashtagArgs= {}>(args?: Subset<T, TwitterHashtagArgs>): Prisma__TwitterHashtagClient<TwitterHashtagGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TwitterPostAndHashtag base type for findUnique actions
-   */
-  export type TwitterPostAndHashtagFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter, which TwitterPostAndHashtag to fetch.
-     */
-    where: TwitterPostAndHashtagWhereUniqueInput
-  }
-
-  /**
-   * TwitterPostAndHashtag findUnique
-   */
-  export interface TwitterPostAndHashtagFindUniqueArgs extends TwitterPostAndHashtagFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterPostAndHashtag findUniqueOrThrow
-   */
-  export type TwitterPostAndHashtagFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter, which TwitterPostAndHashtag to fetch.
-     */
-    where: TwitterPostAndHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterPostAndHashtag base type for findFirst actions
-   */
-  export type TwitterPostAndHashtagFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter, which TwitterPostAndHashtag to fetch.
-     */
-    where?: TwitterPostAndHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterPostAndHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterPostAndHashtags.
-     */
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterPostAndHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterPostAndHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterPostAndHashtags.
-     */
-    distinct?: Enumerable<TwitterPostAndHashtagScalarFieldEnum>
-  }
-
-  /**
-   * TwitterPostAndHashtag findFirst
-   */
-  export interface TwitterPostAndHashtagFindFirstArgs extends TwitterPostAndHashtagFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterPostAndHashtag findFirstOrThrow
-   */
-  export type TwitterPostAndHashtagFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter, which TwitterPostAndHashtag to fetch.
-     */
-    where?: TwitterPostAndHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterPostAndHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterPostAndHashtags.
-     */
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterPostAndHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterPostAndHashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterPostAndHashtags.
-     */
-    distinct?: Enumerable<TwitterPostAndHashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterPostAndHashtag findMany
-   */
-  export type TwitterPostAndHashtagFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter, which TwitterPostAndHashtags to fetch.
-     */
-    where?: TwitterPostAndHashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterPostAndHashtags to fetch.
-     */
-    orderBy?: Enumerable<TwitterPostAndHashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TwitterPostAndHashtags.
-     */
-    cursor?: TwitterPostAndHashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterPostAndHashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterPostAndHashtags.
-     */
-    skip?: number
-    distinct?: Enumerable<TwitterPostAndHashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterPostAndHashtag create
-   */
-  export type TwitterPostAndHashtagCreateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * The data needed to create a TwitterPostAndHashtag.
-     */
-    data: XOR<TwitterPostAndHashtagCreateInput, TwitterPostAndHashtagUncheckedCreateInput>
-  }
-
-
-  /**
-   * TwitterPostAndHashtag createMany
-   */
-  export type TwitterPostAndHashtagCreateManyArgs = {
-    /**
-     * The data used to create many TwitterPostAndHashtags.
-     */
-    data: Enumerable<TwitterPostAndHashtagCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * TwitterPostAndHashtag update
-   */
-  export type TwitterPostAndHashtagUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * The data needed to update a TwitterPostAndHashtag.
-     */
-    data: XOR<TwitterPostAndHashtagUpdateInput, TwitterPostAndHashtagUncheckedUpdateInput>
-    /**
-     * Choose, which TwitterPostAndHashtag to update.
-     */
-    where: TwitterPostAndHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterPostAndHashtag updateMany
-   */
-  export type TwitterPostAndHashtagUpdateManyArgs = {
-    /**
-     * The data used to update TwitterPostAndHashtags.
-     */
-    data: XOR<TwitterPostAndHashtagUpdateManyMutationInput, TwitterPostAndHashtagUncheckedUpdateManyInput>
-    /**
-     * Filter which TwitterPostAndHashtags to update
-     */
-    where?: TwitterPostAndHashtagWhereInput
-  }
-
-
-  /**
-   * TwitterPostAndHashtag upsert
-   */
-  export type TwitterPostAndHashtagUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * The filter to search for the TwitterPostAndHashtag to update in case it exists.
-     */
-    where: TwitterPostAndHashtagWhereUniqueInput
-    /**
-     * In case the TwitterPostAndHashtag found by the `where` argument doesn't exist, create a new TwitterPostAndHashtag with this data.
-     */
-    create: XOR<TwitterPostAndHashtagCreateInput, TwitterPostAndHashtagUncheckedCreateInput>
-    /**
-     * In case the TwitterPostAndHashtag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TwitterPostAndHashtagUpdateInput, TwitterPostAndHashtagUncheckedUpdateInput>
-  }
-
-
-  /**
-   * TwitterPostAndHashtag delete
-   */
-  export type TwitterPostAndHashtagDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-    /**
-     * Filter which TwitterPostAndHashtag to delete.
-     */
-    where: TwitterPostAndHashtagWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterPostAndHashtag deleteMany
-   */
-  export type TwitterPostAndHashtagDeleteManyArgs = {
-    /**
-     * Filter which TwitterPostAndHashtags to delete
-     */
-    where?: TwitterPostAndHashtagWhereInput
-  }
-
-
-  /**
-   * TwitterPostAndHashtag without action
-   */
-  export type TwitterPostAndHashtagArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterPostAndHashtag
-     */
-    select?: TwitterPostAndHashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterPostAndHashtagInclude | null
-  }
-
-
-
-  /**
-   * Model TwitterReplyPost
-   */
-
-
-  export type AggregateTwitterReplyPost = {
-    _count: TwitterReplyPostCountAggregateOutputType | null
-    _avg: TwitterReplyPostAvgAggregateOutputType | null
-    _sum: TwitterReplyPostSumAggregateOutputType | null
-    _min: TwitterReplyPostMinAggregateOutputType | null
-    _max: TwitterReplyPostMaxAggregateOutputType | null
-  }
-
-  export type TwitterReplyPostAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type TwitterReplyPostSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type TwitterReplyPostMinAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    message: string | null
-    image: string | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterReplyPostMaxAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    message: string | null
-    image: string | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TwitterReplyPostCountAggregateOutputType = {
-    id: number
-    userId: number
-    message: number
-    image: number
-    postId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TwitterReplyPostAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type TwitterReplyPostSumAggregateInputType = {
-    id?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type TwitterReplyPostMinAggregateInputType = {
-    id?: true
-    userId?: true
-    message?: true
-    image?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterReplyPostMaxAggregateInputType = {
-    id?: true
-    userId?: true
-    message?: true
-    image?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TwitterReplyPostCountAggregateInputType = {
-    id?: true
-    userId?: true
-    message?: true
-    image?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TwitterReplyPostAggregateArgs = {
-    /**
-     * Filter which TwitterReplyPost to aggregate.
-     */
-    where?: TwitterReplyPostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterReplyPosts to fetch.
-     */
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TwitterReplyPostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterReplyPosts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterReplyPosts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TwitterReplyPosts
-    **/
-    _count?: true | TwitterReplyPostCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TwitterReplyPostAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TwitterReplyPostSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TwitterReplyPostMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TwitterReplyPostMaxAggregateInputType
-  }
-
-  export type GetTwitterReplyPostAggregateType<T extends TwitterReplyPostAggregateArgs> = {
-        [P in keyof T & keyof AggregateTwitterReplyPost]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTwitterReplyPost[P]>
-      : GetScalarType<T[P], AggregateTwitterReplyPost[P]>
-  }
-
-
-
-
-  export type TwitterReplyPostGroupByArgs = {
-    where?: TwitterReplyPostWhereInput
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithAggregationInput>
-    by: TwitterReplyPostScalarFieldEnum[]
-    having?: TwitterReplyPostScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TwitterReplyPostCountAggregateInputType | true
-    _avg?: TwitterReplyPostAvgAggregateInputType
-    _sum?: TwitterReplyPostSumAggregateInputType
-    _min?: TwitterReplyPostMinAggregateInputType
-    _max?: TwitterReplyPostMaxAggregateInputType
-  }
-
-
-  export type TwitterReplyPostGroupByOutputType = {
-    id: number
-    userId: number
-    message: string
-    image: string | null
-    postId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: TwitterReplyPostCountAggregateOutputType | null
-    _avg: TwitterReplyPostAvgAggregateOutputType | null
-    _sum: TwitterReplyPostSumAggregateOutputType | null
-    _min: TwitterReplyPostMinAggregateOutputType | null
-    _max: TwitterReplyPostMaxAggregateOutputType | null
-  }
-
-  type GetTwitterReplyPostGroupByPayload<T extends TwitterReplyPostGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<TwitterReplyPostGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TwitterReplyPostGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TwitterReplyPostGroupByOutputType[P]>
-            : GetScalarType<T[P], TwitterReplyPostGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TwitterReplyPostSelect = {
-    id?: boolean
-    user?: boolean | TwitterUserArgs
-    userId?: boolean
-    message?: boolean
-    image?: boolean
-    post?: boolean | TwitterPostArgs
-    postId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type TwitterReplyPostInclude = {
-    user?: boolean | TwitterUserArgs
-    post?: boolean | TwitterPostArgs
-  }
-
-  export type TwitterReplyPostGetPayload<S extends boolean | null | undefined | TwitterReplyPostArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TwitterReplyPost :
-    S extends undefined ? never :
-    S extends { include: any } & (TwitterReplyPostArgs | TwitterReplyPostFindManyArgs)
-    ? TwitterReplyPost  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? TwitterUserGetPayload<S['include'][P]> :
-        P extends 'post' ? TwitterPostGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (TwitterReplyPostArgs | TwitterReplyPostFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? TwitterUserGetPayload<S['select'][P]> :
-        P extends 'post' ? TwitterPostGetPayload<S['select'][P]> :  P extends keyof TwitterReplyPost ? TwitterReplyPost[P] : never
-  } 
-      : TwitterReplyPost
-
-
-  type TwitterReplyPostCountArgs = 
-    Omit<TwitterReplyPostFindManyArgs, 'select' | 'include'> & {
-      select?: TwitterReplyPostCountAggregateInputType | true
-    }
-
-  export interface TwitterReplyPostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one TwitterReplyPost that matches the filter.
-     * @param {TwitterReplyPostFindUniqueArgs} args - Arguments to find a TwitterReplyPost
-     * @example
-     * // Get one TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends TwitterReplyPostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TwitterReplyPostFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TwitterReplyPost'> extends True ? Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>> : Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T> | null, null>
-
-    /**
-     * Find one TwitterReplyPost that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TwitterReplyPostFindUniqueOrThrowArgs} args - Arguments to find a TwitterReplyPost
-     * @example
-     * // Get one TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TwitterReplyPostFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TwitterReplyPostFindUniqueOrThrowArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Find the first TwitterReplyPost that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostFindFirstArgs} args - Arguments to find a TwitterReplyPost
-     * @example
-     * // Get one TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends TwitterReplyPostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TwitterReplyPostFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TwitterReplyPost'> extends True ? Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>> : Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T> | null, null>
-
-    /**
-     * Find the first TwitterReplyPost that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostFindFirstOrThrowArgs} args - Arguments to find a TwitterReplyPost
-     * @example
-     * // Get one TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TwitterReplyPostFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TwitterReplyPostFindFirstOrThrowArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Find zero or more TwitterReplyPosts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TwitterReplyPosts
-     * const twitterReplyPosts = await prisma.twitterReplyPost.findMany()
-     * 
-     * // Get first 10 TwitterReplyPosts
-     * const twitterReplyPosts = await prisma.twitterReplyPost.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const twitterReplyPostWithIdOnly = await prisma.twitterReplyPost.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends TwitterReplyPostFindManyArgs>(
-      args?: SelectSubset<T, TwitterReplyPostFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TwitterReplyPostGetPayload<T>>>
-
-    /**
-     * Create a TwitterReplyPost.
-     * @param {TwitterReplyPostCreateArgs} args - Arguments to create a TwitterReplyPost.
-     * @example
-     * // Create one TwitterReplyPost
-     * const TwitterReplyPost = await prisma.twitterReplyPost.create({
-     *   data: {
-     *     // ... data to create a TwitterReplyPost
-     *   }
-     * })
-     * 
-    **/
-    create<T extends TwitterReplyPostCreateArgs>(
-      args: SelectSubset<T, TwitterReplyPostCreateArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Create many TwitterReplyPosts.
-     *     @param {TwitterReplyPostCreateManyArgs} args - Arguments to create many TwitterReplyPosts.
-     *     @example
-     *     // Create many TwitterReplyPosts
-     *     const twitterReplyPost = await prisma.twitterReplyPost.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends TwitterReplyPostCreateManyArgs>(
-      args?: SelectSubset<T, TwitterReplyPostCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a TwitterReplyPost.
-     * @param {TwitterReplyPostDeleteArgs} args - Arguments to delete one TwitterReplyPost.
-     * @example
-     * // Delete one TwitterReplyPost
-     * const TwitterReplyPost = await prisma.twitterReplyPost.delete({
-     *   where: {
-     *     // ... filter to delete one TwitterReplyPost
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends TwitterReplyPostDeleteArgs>(
-      args: SelectSubset<T, TwitterReplyPostDeleteArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Update one TwitterReplyPost.
-     * @param {TwitterReplyPostUpdateArgs} args - Arguments to update one TwitterReplyPost.
-     * @example
-     * // Update one TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends TwitterReplyPostUpdateArgs>(
-      args: SelectSubset<T, TwitterReplyPostUpdateArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Delete zero or more TwitterReplyPosts.
-     * @param {TwitterReplyPostDeleteManyArgs} args - Arguments to filter TwitterReplyPosts to delete.
-     * @example
-     * // Delete a few TwitterReplyPosts
-     * const { count } = await prisma.twitterReplyPost.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends TwitterReplyPostDeleteManyArgs>(
-      args?: SelectSubset<T, TwitterReplyPostDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TwitterReplyPosts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TwitterReplyPosts
-     * const twitterReplyPost = await prisma.twitterReplyPost.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends TwitterReplyPostUpdateManyArgs>(
-      args: SelectSubset<T, TwitterReplyPostUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one TwitterReplyPost.
-     * @param {TwitterReplyPostUpsertArgs} args - Arguments to update or create a TwitterReplyPost.
-     * @example
-     * // Update or create a TwitterReplyPost
-     * const twitterReplyPost = await prisma.twitterReplyPost.upsert({
-     *   create: {
-     *     // ... data to create a TwitterReplyPost
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TwitterReplyPost we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends TwitterReplyPostUpsertArgs>(
-      args: SelectSubset<T, TwitterReplyPostUpsertArgs>
-    ): Prisma__TwitterReplyPostClient<TwitterReplyPostGetPayload<T>>
-
-    /**
-     * Count the number of TwitterReplyPosts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostCountArgs} args - Arguments to filter TwitterReplyPosts to count.
-     * @example
-     * // Count the number of TwitterReplyPosts
-     * const count = await prisma.twitterReplyPost.count({
-     *   where: {
-     *     // ... the filter for the TwitterReplyPosts we want to count
-     *   }
-     * })
-    **/
-    count<T extends TwitterReplyPostCountArgs>(
-      args?: Subset<T, TwitterReplyPostCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TwitterReplyPostCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TwitterReplyPost.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TwitterReplyPostAggregateArgs>(args: Subset<T, TwitterReplyPostAggregateArgs>): Prisma.PrismaPromise<GetTwitterReplyPostAggregateType<T>>
-
-    /**
-     * Group by TwitterReplyPost.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TwitterReplyPostGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TwitterReplyPostGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TwitterReplyPostGroupByArgs['orderBy'] }
-        : { orderBy?: TwitterReplyPostGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TwitterReplyPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTwitterReplyPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TwitterReplyPost.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__TwitterReplyPostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    user<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
-
-    post<T extends TwitterPostArgs= {}>(args?: Subset<T, TwitterPostArgs>): Prisma__TwitterPostClient<TwitterPostGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * TwitterReplyPost base type for findUnique actions
-   */
-  export type TwitterReplyPostFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter, which TwitterReplyPost to fetch.
-     */
-    where: TwitterReplyPostWhereUniqueInput
-  }
-
-  /**
-   * TwitterReplyPost findUnique
-   */
-  export interface TwitterReplyPostFindUniqueArgs extends TwitterReplyPostFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterReplyPost findUniqueOrThrow
-   */
-  export type TwitterReplyPostFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter, which TwitterReplyPost to fetch.
-     */
-    where: TwitterReplyPostWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterReplyPost base type for findFirst actions
-   */
-  export type TwitterReplyPostFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter, which TwitterReplyPost to fetch.
-     */
-    where?: TwitterReplyPostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterReplyPosts to fetch.
-     */
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterReplyPosts.
-     */
-    cursor?: TwitterReplyPostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterReplyPosts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterReplyPosts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterReplyPosts.
-     */
-    distinct?: Enumerable<TwitterReplyPostScalarFieldEnum>
-  }
-
-  /**
-   * TwitterReplyPost findFirst
-   */
-  export interface TwitterReplyPostFindFirstArgs extends TwitterReplyPostFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * TwitterReplyPost findFirstOrThrow
-   */
-  export type TwitterReplyPostFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter, which TwitterReplyPost to fetch.
-     */
-    where?: TwitterReplyPostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterReplyPosts to fetch.
-     */
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for TwitterReplyPosts.
-     */
-    cursor?: TwitterReplyPostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterReplyPosts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterReplyPosts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of TwitterReplyPosts.
-     */
-    distinct?: Enumerable<TwitterReplyPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterReplyPost findMany
-   */
-  export type TwitterReplyPostFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter, which TwitterReplyPosts to fetch.
-     */
-    where?: TwitterReplyPostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TwitterReplyPosts to fetch.
-     */
-    orderBy?: Enumerable<TwitterReplyPostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing TwitterReplyPosts.
-     */
-    cursor?: TwitterReplyPostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TwitterReplyPosts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TwitterReplyPosts.
-     */
-    skip?: number
-    distinct?: Enumerable<TwitterReplyPostScalarFieldEnum>
-  }
-
-
-  /**
-   * TwitterReplyPost create
-   */
-  export type TwitterReplyPostCreateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * The data needed to create a TwitterReplyPost.
-     */
-    data: XOR<TwitterReplyPostCreateInput, TwitterReplyPostUncheckedCreateInput>
-  }
-
-
-  /**
-   * TwitterReplyPost createMany
-   */
-  export type TwitterReplyPostCreateManyArgs = {
-    /**
-     * The data used to create many TwitterReplyPosts.
-     */
-    data: Enumerable<TwitterReplyPostCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * TwitterReplyPost update
-   */
-  export type TwitterReplyPostUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * The data needed to update a TwitterReplyPost.
-     */
-    data: XOR<TwitterReplyPostUpdateInput, TwitterReplyPostUncheckedUpdateInput>
-    /**
-     * Choose, which TwitterReplyPost to update.
-     */
-    where: TwitterReplyPostWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterReplyPost updateMany
-   */
-  export type TwitterReplyPostUpdateManyArgs = {
-    /**
-     * The data used to update TwitterReplyPosts.
-     */
-    data: XOR<TwitterReplyPostUpdateManyMutationInput, TwitterReplyPostUncheckedUpdateManyInput>
-    /**
-     * Filter which TwitterReplyPosts to update
-     */
-    where?: TwitterReplyPostWhereInput
-  }
-
-
-  /**
-   * TwitterReplyPost upsert
-   */
-  export type TwitterReplyPostUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * The filter to search for the TwitterReplyPost to update in case it exists.
-     */
-    where: TwitterReplyPostWhereUniqueInput
-    /**
-     * In case the TwitterReplyPost found by the `where` argument doesn't exist, create a new TwitterReplyPost with this data.
-     */
-    create: XOR<TwitterReplyPostCreateInput, TwitterReplyPostUncheckedCreateInput>
-    /**
-     * In case the TwitterReplyPost was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TwitterReplyPostUpdateInput, TwitterReplyPostUncheckedUpdateInput>
-  }
-
-
-  /**
-   * TwitterReplyPost delete
-   */
-  export type TwitterReplyPostDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
-    /**
-     * Filter which TwitterReplyPost to delete.
-     */
-    where: TwitterReplyPostWhereUniqueInput
-  }
-
-
-  /**
-   * TwitterReplyPost deleteMany
-   */
-  export type TwitterReplyPostDeleteManyArgs = {
-    /**
-     * Filter which TwitterReplyPosts to delete
-     */
-    where?: TwitterReplyPostWhereInput
-  }
-
-
-  /**
-   * TwitterReplyPost without action
-   */
-  export type TwitterReplyPostArgs = {
-    /**
-     * Select specific fields to fetch from the TwitterReplyPost
-     */
-    select?: TwitterReplyPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TwitterReplyPostInclude | null
   }
 
 
@@ -61972,17 +58948,6 @@ export namespace Prisma {
   export type TwitterHashtagScalarFieldEnum = (typeof TwitterHashtagScalarFieldEnum)[keyof typeof TwitterHashtagScalarFieldEnum]
 
 
-  export const TwitterPostAndHashtagScalarFieldEnum: {
-    id: 'id',
-    postId: 'postId',
-    hashtagId: 'hashtagId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type TwitterPostAndHashtagScalarFieldEnum = (typeof TwitterPostAndHashtagScalarFieldEnum)[keyof typeof TwitterPostAndHashtagScalarFieldEnum]
-
-
   export const TwitterPostScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -61993,30 +58958,6 @@ export namespace Prisma {
   };
 
   export type TwitterPostScalarFieldEnum = (typeof TwitterPostScalarFieldEnum)[keyof typeof TwitterPostScalarFieldEnum]
-
-
-  export const TwitterReplyPostScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    message: 'message',
-    image: 'image',
-    postId: 'postId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type TwitterReplyPostScalarFieldEnum = (typeof TwitterReplyPostScalarFieldEnum)[keyof typeof TwitterReplyPostScalarFieldEnum]
-
-
-  export const TwitterUserRelationshipScalarFieldEnum: {
-    id: 'id',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type TwitterUserRelationshipScalarFieldEnum = (typeof TwitterUserRelationshipScalarFieldEnum)[keyof typeof TwitterUserRelationshipScalarFieldEnum]
 
 
   export const TwitterUserScalarFieldEnum: {
@@ -63309,28 +60250,26 @@ export namespace Prisma {
     id?: IntFilter | number
     username?: StringFilter | string
     image?: StringNullableFilter | string | null
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
     posts?: TwitterPostListRelationFilter
-    followings?: TwitterUserRelationshipListRelationFilter
-    followers?: TwitterUserRelationshipListRelationFilter
-    replyPosts?: TwitterReplyPostListRelationFilter
+    followings?: TwitterUserListRelationFilter
+    followers?: TwitterUserListRelationFilter
     directMessageFrom?: TwitterDirectMessageListRelationFilter
     directMessageTo?: TwitterDirectMessageListRelationFilter
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
   }
 
   export type TwitterUserOrderByWithRelationInput = {
     id?: SortOrder
     username?: SortOrder
     image?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
     posts?: TwitterPostOrderByRelationAggregateInput
-    followings?: TwitterUserRelationshipOrderByRelationAggregateInput
-    followers?: TwitterUserRelationshipOrderByRelationAggregateInput
-    replyPosts?: TwitterReplyPostOrderByRelationAggregateInput
+    followings?: TwitterUserOrderByRelationAggregateInput
+    followers?: TwitterUserOrderByRelationAggregateInput
     directMessageFrom?: TwitterDirectMessageOrderByRelationAggregateInput
     directMessageTo?: TwitterDirectMessageOrderByRelationAggregateInput
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type TwitterUserWhereUniqueInput = {
@@ -63371,10 +60310,11 @@ export namespace Prisma {
     userId?: IntFilter | number
     message?: StringFilter | string
     image?: StringNullableFilter | string | null
+    hashtags?: TwitterHashtagListRelationFilter
+    replyBy?: TwitterPostListRelationFilter
+    replyTo?: TwitterPostListRelationFilter
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    postAndHashtags?: TwitterPostAndHashtagListRelationFilter
-    replyPosts?: TwitterReplyPostListRelationFilter
   }
 
   export type TwitterPostOrderByWithRelationInput = {
@@ -63383,10 +60323,11 @@ export namespace Prisma {
     userId?: SortOrder
     message?: SortOrder
     image?: SortOrder
+    hashtags?: TwitterHashtagOrderByRelationAggregateInput
+    replyBy?: TwitterPostOrderByRelationAggregateInput
+    replyTo?: TwitterPostOrderByRelationAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    postAndHashtags?: TwitterPostAndHashtagOrderByRelationAggregateInput
-    replyPosts?: TwitterReplyPostOrderByRelationAggregateInput
   }
 
   export type TwitterPostWhereUniqueInput = {
@@ -63419,57 +60360,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type TwitterUserRelationshipWhereInput = {
-    AND?: Enumerable<TwitterUserRelationshipWhereInput>
-    OR?: Enumerable<TwitterUserRelationshipWhereInput>
-    NOT?: Enumerable<TwitterUserRelationshipWhereInput>
-    id?: IntFilter | number
-    from?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    to?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type TwitterUserRelationshipOrderByWithRelationInput = {
-    id?: SortOrder
-    from?: TwitterUserOrderByWithRelationInput
-    to?: TwitterUserOrderByWithRelationInput
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterUserRelationshipWhereUniqueInput = {
-    id?: number
-  }
-
-  export type TwitterUserRelationshipOrderByWithAggregationInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterUserRelationshipCountOrderByAggregateInput
-    _avg?: TwitterUserRelationshipAvgOrderByAggregateInput
-    _max?: TwitterUserRelationshipMaxOrderByAggregateInput
-    _min?: TwitterUserRelationshipMinOrderByAggregateInput
-    _sum?: TwitterUserRelationshipSumOrderByAggregateInput
-  }
-
-  export type TwitterUserRelationshipScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterUserRelationshipScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterUserRelationshipScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterUserRelationshipScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
   export type TwitterHashtagWhereInput = {
     AND?: Enumerable<TwitterHashtagWhereInput>
     OR?: Enumerable<TwitterHashtagWhereInput>
@@ -63478,7 +60368,7 @@ export namespace Prisma {
     name?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    postAndHashtags?: TwitterPostAndHashtagListRelationFilter
+    twitterPosts?: TwitterPostListRelationFilter
   }
 
   export type TwitterHashtagOrderByWithRelationInput = {
@@ -63486,11 +60376,12 @@ export namespace Prisma {
     name?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    postAndHashtags?: TwitterPostAndHashtagOrderByRelationAggregateInput
+    twitterPosts?: TwitterPostOrderByRelationAggregateInput
   }
 
   export type TwitterHashtagWhereUniqueInput = {
     id?: number
+    name?: string
   }
 
   export type TwitterHashtagOrderByWithAggregationInput = {
@@ -63511,116 +60402,6 @@ export namespace Prisma {
     NOT?: Enumerable<TwitterHashtagScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type TwitterPostAndHashtagWhereInput = {
-    AND?: Enumerable<TwitterPostAndHashtagWhereInput>
-    OR?: Enumerable<TwitterPostAndHashtagWhereInput>
-    NOT?: Enumerable<TwitterPostAndHashtagWhereInput>
-    id?: IntFilter | number
-    post?: XOR<TwitterPostRelationFilter, TwitterPostWhereInput>
-    postId?: IntFilter | number
-    hashtag?: XOR<TwitterHashtagRelationFilter, TwitterHashtagWhereInput>
-    hashtagId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type TwitterPostAndHashtagOrderByWithRelationInput = {
-    id?: SortOrder
-    post?: TwitterPostOrderByWithRelationInput
-    postId?: SortOrder
-    hashtag?: TwitterHashtagOrderByWithRelationInput
-    hashtagId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostAndHashtagWhereUniqueInput = {
-    id?: number
-  }
-
-  export type TwitterPostAndHashtagOrderByWithAggregationInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterPostAndHashtagCountOrderByAggregateInput
-    _avg?: TwitterPostAndHashtagAvgOrderByAggregateInput
-    _max?: TwitterPostAndHashtagMaxOrderByAggregateInput
-    _min?: TwitterPostAndHashtagMinOrderByAggregateInput
-    _sum?: TwitterPostAndHashtagSumOrderByAggregateInput
-  }
-
-  export type TwitterPostAndHashtagScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterPostAndHashtagScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterPostAndHashtagScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterPostAndHashtagScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    postId?: IntWithAggregatesFilter | number
-    hashtagId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type TwitterReplyPostWhereInput = {
-    AND?: Enumerable<TwitterReplyPostWhereInput>
-    OR?: Enumerable<TwitterReplyPostWhereInput>
-    NOT?: Enumerable<TwitterReplyPostWhereInput>
-    id?: IntFilter | number
-    user?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    userId?: IntFilter | number
-    message?: StringFilter | string
-    image?: StringNullableFilter | string | null
-    post?: XOR<TwitterPostRelationFilter, TwitterPostWhereInput>
-    postId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type TwitterReplyPostOrderByWithRelationInput = {
-    id?: SortOrder
-    user?: TwitterUserOrderByWithRelationInput
-    userId?: SortOrder
-    message?: SortOrder
-    image?: SortOrder
-    post?: TwitterPostOrderByWithRelationInput
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterReplyPostWhereUniqueInput = {
-    id?: number
-  }
-
-  export type TwitterReplyPostOrderByWithAggregationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    message?: SortOrder
-    image?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TwitterReplyPostCountOrderByAggregateInput
-    _avg?: TwitterReplyPostAvgOrderByAggregateInput
-    _max?: TwitterReplyPostMaxOrderByAggregateInput
-    _min?: TwitterReplyPostMinOrderByAggregateInput
-    _sum?: TwitterReplyPostSumOrderByAggregateInput
-  }
-
-  export type TwitterReplyPostScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TwitterReplyPostScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TwitterReplyPostScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TwitterReplyPostScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    userId?: IntWithAggregatesFilter | number
-    message?: StringWithAggregatesFilter | string
-    image?: StringNullableWithAggregatesFilter | string | null
-    postId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -66631,55 +63412,51 @@ export namespace Prisma {
   export type TwitterUserCreateInput = {
     username: string
     image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
+    followings?: TwitterUserCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserCreateNestedManyWithoutFollowingsInput
     directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
     directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TwitterUserUncheckedCreateInput = {
     id?: number
     username: string
     image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
     posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
+    followings?: TwitterUserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput
     directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TwitterUserUpdateInput = {
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUpdateManyWithoutFollowingsNestedInput
     directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
     directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TwitterUserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput
     directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TwitterUserCreateManyInput = {
@@ -66709,10 +63486,11 @@ export namespace Prisma {
     user: TwitterUserCreateNestedOneWithoutPostsInput
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagCreateNestedManyWithoutPostInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostUncheckedCreateInput = {
@@ -66720,20 +63498,22 @@ export namespace Prisma {
     userId: number
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedCreateNestedManyWithoutPostInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostUpdateInput = {
     user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
     message?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUpdateManyWithoutPostNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostUncheckedUpdateInput = {
@@ -66741,10 +63521,11 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedUpdateManyWithoutPostNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostCreateManyInput = {
@@ -66772,62 +63553,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationshipCreateInput = {
-    from: TwitterUserCreateNestedOneWithoutFollowingsInput
-    to: TwitterUserCreateNestedOneWithoutFollowersInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedCreateInput = {
-    id?: number
-    fromUserId: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipUpdateInput = {
-    from?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
-    to?: TwitterUserUpdateOneRequiredWithoutFollowersNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipCreateManyInput = {
-    id?: number
-    fromUserId: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type TwitterHashtagCreateInput = {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagCreateNestedManyWithoutHashtagInput
+    twitterPosts?: TwitterPostCreateNestedManyWithoutHashtagsInput
   }
 
   export type TwitterHashtagUncheckedCreateInput = {
@@ -66835,14 +63565,14 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedCreateNestedManyWithoutHashtagInput
+    twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutHashtagsInput
   }
 
   export type TwitterHashtagUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUpdateManyWithoutHashtagNestedInput
+    twitterPosts?: TwitterPostUpdateManyWithoutHashtagsNestedInput
   }
 
   export type TwitterHashtagUncheckedUpdateInput = {
@@ -66850,7 +63580,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedUpdateManyWithoutHashtagNestedInput
+    twitterPosts?: TwitterPostUncheckedUpdateManyWithoutHashtagsNestedInput
   }
 
   export type TwitterHashtagCreateManyInput = {
@@ -66869,122 +63599,6 @@ export namespace Prisma {
   export type TwitterHashtagUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostAndHashtagCreateInput = {
-    post: TwitterPostCreateNestedOneWithoutPostAndHashtagsInput
-    hashtag: TwitterHashtagCreateNestedOneWithoutPostAndHashtagsInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUncheckedCreateInput = {
-    id?: number
-    postId: number
-    hashtagId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUpdateInput = {
-    post?: TwitterPostUpdateOneRequiredWithoutPostAndHashtagsNestedInput
-    hashtag?: TwitterHashtagUpdateOneRequiredWithoutPostAndHashtagsNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostAndHashtagUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostAndHashtagCreateManyInput = {
-    id?: number
-    postId: number
-    hashtagId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterPostAndHashtagUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterReplyPostCreateInput = {
-    user: TwitterUserCreateNestedOneWithoutReplyPostsInput
-    message: string
-    image?: string | null
-    post: TwitterPostCreateNestedOneWithoutReplyPostsInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterReplyPostUncheckedCreateInput = {
-    id?: number
-    userId: number
-    message: string
-    image?: string | null
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterReplyPostUpdateInput = {
-    user?: TwitterUserUpdateOneRequiredWithoutReplyPostsNestedInput
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    post?: TwitterPostUpdateOneRequiredWithoutReplyPostsNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterReplyPostUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    postId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterReplyPostCreateManyInput = {
-    id?: number
-    userId: number
-    message: string
-    image?: string | null
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterReplyPostUpdateManyMutationInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterReplyPostUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -70115,16 +66729,10 @@ export namespace Prisma {
     none?: TwitterPostWhereInput
   }
 
-  export type TwitterUserRelationshipListRelationFilter = {
-    every?: TwitterUserRelationshipWhereInput
-    some?: TwitterUserRelationshipWhereInput
-    none?: TwitterUserRelationshipWhereInput
-  }
-
-  export type TwitterReplyPostListRelationFilter = {
-    every?: TwitterReplyPostWhereInput
-    some?: TwitterReplyPostWhereInput
-    none?: TwitterReplyPostWhereInput
+  export type TwitterUserListRelationFilter = {
+    every?: TwitterUserWhereInput
+    some?: TwitterUserWhereInput
+    none?: TwitterUserWhereInput
   }
 
   export type TwitterDirectMessageListRelationFilter = {
@@ -70137,11 +66745,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type TwitterUserRelationshipOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TwitterReplyPostOrderByRelationAggregateInput = {
+  export type TwitterUserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -70186,13 +66790,13 @@ export namespace Prisma {
     isNot?: TwitterUserWhereInput
   }
 
-  export type TwitterPostAndHashtagListRelationFilter = {
-    every?: TwitterPostAndHashtagWhereInput
-    some?: TwitterPostAndHashtagWhereInput
-    none?: TwitterPostAndHashtagWhereInput
+  export type TwitterHashtagListRelationFilter = {
+    every?: TwitterHashtagWhereInput
+    some?: TwitterHashtagWhereInput
+    none?: TwitterHashtagWhereInput
   }
 
-  export type TwitterPostAndHashtagOrderByRelationAggregateInput = {
+  export type TwitterHashtagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -70233,42 +66837,6 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type TwitterUserRelationshipCountOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterUserRelationshipAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type TwitterUserRelationshipMaxOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterUserRelationshipMinOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterUserRelationshipSumOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
   export type TwitterHashtagCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -70296,94 +66864,6 @@ export namespace Prisma {
 
   export type TwitterHashtagSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type TwitterPostRelationFilter = {
-    is?: TwitterPostWhereInput
-    isNot?: TwitterPostWhereInput
-  }
-
-  export type TwitterHashtagRelationFilter = {
-    is?: TwitterHashtagWhereInput
-    isNot?: TwitterHashtagWhereInput
-  }
-
-  export type TwitterPostAndHashtagCountOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostAndHashtagAvgOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type TwitterPostAndHashtagMaxOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostAndHashtagMinOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterPostAndHashtagSumOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type TwitterReplyPostCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    message?: SortOrder
-    image?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterReplyPostAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type TwitterReplyPostMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    message?: SortOrder
-    image?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterReplyPostMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    message?: SortOrder
-    image?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TwitterReplyPostSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
   }
 
   export type TwitterDirectMessageCountOrderByAggregateInput = {
@@ -73423,25 +69903,16 @@ export namespace Prisma {
     connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterUserRelationshipCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutFromInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutFromInput>
-    createMany?: TwitterUserRelationshipCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
+  export type TwitterUserCreateNestedManyWithoutFollowersInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowersInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowersInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowersInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
   }
 
-  export type TwitterUserRelationshipCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutToInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutToInput>
-    createMany?: TwitterUserRelationshipCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-  }
-
-  export type TwitterReplyPostCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutUserInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutUserInput>
-    createMany?: TwitterReplyPostCreateManyUserInputEnvelope
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
+  export type TwitterUserCreateNestedManyWithoutFollowingsInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowingsInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowingsInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowingsInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
   }
 
   export type TwitterDirectMessageCreateNestedManyWithoutFromInput = {
@@ -73465,25 +69936,16 @@ export namespace Prisma {
     connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutFromInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutFromInput>
-    createMany?: TwitterUserRelationshipCreateManyFromInputEnvelope
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
+  export type TwitterUserUncheckedCreateNestedManyWithoutFollowersInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowersInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowersInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowersInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
   }
 
-  export type TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutToInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutToInput>
-    createMany?: TwitterUserRelationshipCreateManyToInputEnvelope
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-  }
-
-  export type TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutUserInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutUserInput>
-    createMany?: TwitterReplyPostCreateManyUserInputEnvelope
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
+  export type TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowingsInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowingsInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowingsInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
   }
 
   export type TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput = {
@@ -73514,46 +69976,30 @@ export namespace Prisma {
     deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterUserRelationshipUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutFromInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterUserRelationshipUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterUserRelationshipCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    disconnect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    delete?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationshipUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterUserRelationshipUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterUserRelationshipScalarWhereInput>
+  export type TwitterUserUpdateManyWithoutFollowersNestedInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowersInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowersInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowersInput>
+    upsert?: Enumerable<TwitterUserUpsertWithWhereUniqueWithoutFollowersInput>
+    set?: Enumerable<TwitterUserWhereUniqueInput>
+    disconnect?: Enumerable<TwitterUserWhereUniqueInput>
+    delete?: Enumerable<TwitterUserWhereUniqueInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
+    update?: Enumerable<TwitterUserUpdateWithWhereUniqueWithoutFollowersInput>
+    updateMany?: Enumerable<TwitterUserUpdateManyWithWhereWithoutFollowersInput>
+    deleteMany?: Enumerable<TwitterUserScalarWhereInput>
   }
 
-  export type TwitterUserRelationshipUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutToInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterUserRelationshipUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterUserRelationshipCreateManyToInputEnvelope
-    set?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    disconnect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    delete?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationshipUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterUserRelationshipUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterUserRelationshipScalarWhereInput>
-  }
-
-  export type TwitterReplyPostUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutUserInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<TwitterReplyPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: TwitterReplyPostCreateManyUserInputEnvelope
-    set?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    delete?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    update?: Enumerable<TwitterReplyPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<TwitterReplyPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<TwitterReplyPostScalarWhereInput>
+  export type TwitterUserUpdateManyWithoutFollowingsNestedInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowingsInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowingsInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowingsInput>
+    upsert?: Enumerable<TwitterUserUpsertWithWhereUniqueWithoutFollowingsInput>
+    set?: Enumerable<TwitterUserWhereUniqueInput>
+    disconnect?: Enumerable<TwitterUserWhereUniqueInput>
+    delete?: Enumerable<TwitterUserWhereUniqueInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
+    update?: Enumerable<TwitterUserUpdateWithWhereUniqueWithoutFollowingsInput>
+    updateMany?: Enumerable<TwitterUserUpdateManyWithWhereWithoutFollowingsInput>
+    deleteMany?: Enumerable<TwitterUserScalarWhereInput>
   }
 
   export type TwitterDirectMessageUpdateManyWithoutFromNestedInput = {
@@ -73598,46 +70044,30 @@ export namespace Prisma {
     deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutFromInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<TwitterUserRelationshipUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: TwitterUserRelationshipCreateManyFromInputEnvelope
-    set?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    disconnect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    delete?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationshipUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<TwitterUserRelationshipUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<TwitterUserRelationshipScalarWhereInput>
+  export type TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowersInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowersInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowersInput>
+    upsert?: Enumerable<TwitterUserUpsertWithWhereUniqueWithoutFollowersInput>
+    set?: Enumerable<TwitterUserWhereUniqueInput>
+    disconnect?: Enumerable<TwitterUserWhereUniqueInput>
+    delete?: Enumerable<TwitterUserWhereUniqueInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
+    update?: Enumerable<TwitterUserUpdateWithWhereUniqueWithoutFollowersInput>
+    updateMany?: Enumerable<TwitterUserUpdateManyWithWhereWithoutFollowersInput>
+    deleteMany?: Enumerable<TwitterUserScalarWhereInput>
   }
 
-  export type TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationshipCreateWithoutToInput>, Enumerable<TwitterUserRelationshipUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationshipCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<TwitterUserRelationshipUpsertWithWhereUniqueWithoutToInput>
-    createMany?: TwitterUserRelationshipCreateManyToInputEnvelope
-    set?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    disconnect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    delete?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    connect?: Enumerable<TwitterUserRelationshipWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationshipUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<TwitterUserRelationshipUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<TwitterUserRelationshipScalarWhereInput>
-  }
-
-  export type TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutUserInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<TwitterReplyPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: TwitterReplyPostCreateManyUserInputEnvelope
-    set?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    delete?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    update?: Enumerable<TwitterReplyPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<TwitterReplyPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<TwitterReplyPostScalarWhereInput>
+  export type TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput = {
+    create?: XOR<Enumerable<TwitterUserCreateWithoutFollowingsInput>, Enumerable<TwitterUserUncheckedCreateWithoutFollowingsInput>>
+    connectOrCreate?: Enumerable<TwitterUserCreateOrConnectWithoutFollowingsInput>
+    upsert?: Enumerable<TwitterUserUpsertWithWhereUniqueWithoutFollowingsInput>
+    set?: Enumerable<TwitterUserWhereUniqueInput>
+    disconnect?: Enumerable<TwitterUserWhereUniqueInput>
+    delete?: Enumerable<TwitterUserWhereUniqueInput>
+    connect?: Enumerable<TwitterUserWhereUniqueInput>
+    update?: Enumerable<TwitterUserUpdateWithWhereUniqueWithoutFollowingsInput>
+    updateMany?: Enumerable<TwitterUserUpdateManyWithWhereWithoutFollowingsInput>
+    deleteMany?: Enumerable<TwitterUserScalarWhereInput>
   }
 
   export type TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput = {
@@ -73674,32 +70104,40 @@ export namespace Prisma {
     connect?: TwitterUserWhereUniqueInput
   }
 
-  export type TwitterPostAndHashtagCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutPostInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutPostInput>
-    createMany?: TwitterPostAndHashtagCreateManyPostInputEnvelope
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
+  export type TwitterHashtagCreateNestedManyWithoutTwitterPostsInput = {
+    create?: XOR<Enumerable<TwitterHashtagCreateWithoutTwitterPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>>
+    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutTwitterPostsInput>
+    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
   }
 
-  export type TwitterReplyPostCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutPostInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutPostInput>
-    createMany?: TwitterReplyPostCreateManyPostInputEnvelope
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
+  export type TwitterPostCreateNestedManyWithoutReplyToInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterPostAndHashtagUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutPostInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutPostInput>
-    createMany?: TwitterPostAndHashtagCreateManyPostInputEnvelope
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
+  export type TwitterPostCreateNestedManyWithoutReplyByInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterReplyPostUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutPostInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutPostInput>
-    createMany?: TwitterReplyPostCreateManyPostInputEnvelope
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
+  export type TwitterHashtagUncheckedCreateNestedManyWithoutTwitterPostsInput = {
+    create?: XOR<Enumerable<TwitterHashtagCreateWithoutTwitterPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>>
+    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutTwitterPostsInput>
+    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
+  }
+
+  export type TwitterPostUncheckedCreateNestedManyWithoutReplyToInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+  }
+
+  export type TwitterPostUncheckedCreateNestedManyWithoutReplyByInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
   export type TwitterUserUpdateOneRequiredWithoutPostsNestedInput = {
@@ -73710,186 +70148,120 @@ export namespace Prisma {
     update?: XOR<TwitterUserUpdateWithoutPostsInput, TwitterUserUncheckedUpdateWithoutPostsInput>
   }
 
-  export type TwitterPostAndHashtagUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutPostInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<TwitterPostAndHashtagUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: TwitterPostAndHashtagCreateManyPostInputEnvelope
-    set?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterPostAndHashtagUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<TwitterPostAndHashtagUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
+  export type TwitterHashtagUpdateManyWithoutTwitterPostsNestedInput = {
+    create?: XOR<Enumerable<TwitterHashtagCreateWithoutTwitterPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>>
+    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutTwitterPostsInput>
+    upsert?: Enumerable<TwitterHashtagUpsertWithWhereUniqueWithoutTwitterPostsInput>
+    set?: Enumerable<TwitterHashtagWhereUniqueInput>
+    disconnect?: Enumerable<TwitterHashtagWhereUniqueInput>
+    delete?: Enumerable<TwitterHashtagWhereUniqueInput>
+    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
+    update?: Enumerable<TwitterHashtagUpdateWithWhereUniqueWithoutTwitterPostsInput>
+    updateMany?: Enumerable<TwitterHashtagUpdateManyWithWhereWithoutTwitterPostsInput>
+    deleteMany?: Enumerable<TwitterHashtagScalarWhereInput>
   }
 
-  export type TwitterReplyPostUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutPostInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<TwitterReplyPostUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: TwitterReplyPostCreateManyPostInputEnvelope
-    set?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    delete?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    update?: Enumerable<TwitterReplyPostUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<TwitterReplyPostUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<TwitterReplyPostScalarWhereInput>
+  export type TwitterPostUpdateManyWithoutReplyToNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyToInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyToInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyToInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterPostAndHashtagUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutPostInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<TwitterPostAndHashtagUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: TwitterPostAndHashtagCreateManyPostInputEnvelope
-    set?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterPostAndHashtagUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<TwitterPostAndHashtagUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
+  export type TwitterPostUpdateManyWithoutReplyByNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyByInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyByInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyByInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterReplyPostUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<TwitterReplyPostCreateWithoutPostInput>, Enumerable<TwitterReplyPostUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<TwitterReplyPostCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<TwitterReplyPostUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: TwitterReplyPostCreateManyPostInputEnvelope
-    set?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    disconnect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    delete?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    connect?: Enumerable<TwitterReplyPostWhereUniqueInput>
-    update?: Enumerable<TwitterReplyPostUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<TwitterReplyPostUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<TwitterReplyPostScalarWhereInput>
+  export type TwitterHashtagUncheckedUpdateManyWithoutTwitterPostsNestedInput = {
+    create?: XOR<Enumerable<TwitterHashtagCreateWithoutTwitterPostsInput>, Enumerable<TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>>
+    connectOrCreate?: Enumerable<TwitterHashtagCreateOrConnectWithoutTwitterPostsInput>
+    upsert?: Enumerable<TwitterHashtagUpsertWithWhereUniqueWithoutTwitterPostsInput>
+    set?: Enumerable<TwitterHashtagWhereUniqueInput>
+    disconnect?: Enumerable<TwitterHashtagWhereUniqueInput>
+    delete?: Enumerable<TwitterHashtagWhereUniqueInput>
+    connect?: Enumerable<TwitterHashtagWhereUniqueInput>
+    update?: Enumerable<TwitterHashtagUpdateWithWhereUniqueWithoutTwitterPostsInput>
+    updateMany?: Enumerable<TwitterHashtagUpdateManyWithWhereWithoutTwitterPostsInput>
+    deleteMany?: Enumerable<TwitterHashtagScalarWhereInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutFollowingsInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingsInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyToInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyToInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyToInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyToInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyToInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyToInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterUserCreateNestedOneWithoutFollowersInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowersInput
-    connect?: TwitterUserWhereUniqueInput
+  export type TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutReplyByInput>, Enumerable<TwitterPostUncheckedCreateWithoutReplyByInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutReplyByInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutReplyByInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutReplyByInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutReplyByInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowingsInput
-    upsert?: TwitterUserUpsertWithoutFollowingsInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
+  export type TwitterPostCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterUserUpdateOneRequiredWithoutFollowersNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutFollowersInput
-    upsert?: TwitterUserUpsertWithoutFollowersInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutFollowersInput, TwitterUserUncheckedUpdateWithoutFollowersInput>
+  export type TwitterPostUncheckedCreateNestedManyWithoutHashtagsInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
   }
 
-  export type TwitterPostAndHashtagCreateNestedManyWithoutHashtagInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutHashtagInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutHashtagInput>
-    createMany?: TwitterPostAndHashtagCreateManyHashtagInputEnvelope
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
+  export type TwitterPostUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
-  export type TwitterPostAndHashtagUncheckedCreateNestedManyWithoutHashtagInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutHashtagInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutHashtagInput>
-    createMany?: TwitterPostAndHashtagCreateManyHashtagInputEnvelope
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-  }
-
-  export type TwitterPostAndHashtagUpdateManyWithoutHashtagNestedInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutHashtagInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutHashtagInput>
-    upsert?: Enumerable<TwitterPostAndHashtagUpsertWithWhereUniqueWithoutHashtagInput>
-    createMany?: TwitterPostAndHashtagCreateManyHashtagInputEnvelope
-    set?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterPostAndHashtagUpdateWithWhereUniqueWithoutHashtagInput>
-    updateMany?: Enumerable<TwitterPostAndHashtagUpdateManyWithWhereWithoutHashtagInput>
-    deleteMany?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
-  }
-
-  export type TwitterPostAndHashtagUncheckedUpdateManyWithoutHashtagNestedInput = {
-    create?: XOR<Enumerable<TwitterPostAndHashtagCreateWithoutHashtagInput>, Enumerable<TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<TwitterPostAndHashtagCreateOrConnectWithoutHashtagInput>
-    upsert?: Enumerable<TwitterPostAndHashtagUpsertWithWhereUniqueWithoutHashtagInput>
-    createMany?: TwitterPostAndHashtagCreateManyHashtagInputEnvelope
-    set?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    disconnect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    delete?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    connect?: Enumerable<TwitterPostAndHashtagWhereUniqueInput>
-    update?: Enumerable<TwitterPostAndHashtagUpdateWithWhereUniqueWithoutHashtagInput>
-    updateMany?: Enumerable<TwitterPostAndHashtagUpdateManyWithWhereWithoutHashtagInput>
-    deleteMany?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
-  }
-
-  export type TwitterPostCreateNestedOneWithoutPostAndHashtagsInput = {
-    create?: XOR<TwitterPostCreateWithoutPostAndHashtagsInput, TwitterPostUncheckedCreateWithoutPostAndHashtagsInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutPostAndHashtagsInput
-    connect?: TwitterPostWhereUniqueInput
-  }
-
-  export type TwitterHashtagCreateNestedOneWithoutPostAndHashtagsInput = {
-    create?: XOR<TwitterHashtagCreateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedCreateWithoutPostAndHashtagsInput>
-    connectOrCreate?: TwitterHashtagCreateOrConnectWithoutPostAndHashtagsInput
-    connect?: TwitterHashtagWhereUniqueInput
-  }
-
-  export type TwitterPostUpdateOneRequiredWithoutPostAndHashtagsNestedInput = {
-    create?: XOR<TwitterPostCreateWithoutPostAndHashtagsInput, TwitterPostUncheckedCreateWithoutPostAndHashtagsInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutPostAndHashtagsInput
-    upsert?: TwitterPostUpsertWithoutPostAndHashtagsInput
-    connect?: TwitterPostWhereUniqueInput
-    update?: XOR<TwitterPostUpdateWithoutPostAndHashtagsInput, TwitterPostUncheckedUpdateWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterHashtagUpdateOneRequiredWithoutPostAndHashtagsNestedInput = {
-    create?: XOR<TwitterHashtagCreateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedCreateWithoutPostAndHashtagsInput>
-    connectOrCreate?: TwitterHashtagCreateOrConnectWithoutPostAndHashtagsInput
-    upsert?: TwitterHashtagUpsertWithoutPostAndHashtagsInput
-    connect?: TwitterHashtagWhereUniqueInput
-    update?: XOR<TwitterHashtagUpdateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedUpdateWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterUserCreateNestedOneWithoutReplyPostsInput = {
-    create?: XOR<TwitterUserCreateWithoutReplyPostsInput, TwitterUserUncheckedCreateWithoutReplyPostsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutReplyPostsInput
-    connect?: TwitterUserWhereUniqueInput
-  }
-
-  export type TwitterPostCreateNestedOneWithoutReplyPostsInput = {
-    create?: XOR<TwitterPostCreateWithoutReplyPostsInput, TwitterPostUncheckedCreateWithoutReplyPostsInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutReplyPostsInput
-    connect?: TwitterPostWhereUniqueInput
-  }
-
-  export type TwitterUserUpdateOneRequiredWithoutReplyPostsNestedInput = {
-    create?: XOR<TwitterUserCreateWithoutReplyPostsInput, TwitterUserUncheckedCreateWithoutReplyPostsInput>
-    connectOrCreate?: TwitterUserCreateOrConnectWithoutReplyPostsInput
-    upsert?: TwitterUserUpsertWithoutReplyPostsInput
-    connect?: TwitterUserWhereUniqueInput
-    update?: XOR<TwitterUserUpdateWithoutReplyPostsInput, TwitterUserUncheckedUpdateWithoutReplyPostsInput>
-  }
-
-  export type TwitterPostUpdateOneRequiredWithoutReplyPostsNestedInput = {
-    create?: XOR<TwitterPostCreateWithoutReplyPostsInput, TwitterPostUncheckedCreateWithoutReplyPostsInput>
-    connectOrCreate?: TwitterPostCreateOrConnectWithoutReplyPostsInput
-    upsert?: TwitterPostUpsertWithoutReplyPostsInput
-    connect?: TwitterPostWhereUniqueInput
-    update?: XOR<TwitterPostUpdateWithoutReplyPostsInput, TwitterPostUncheckedUpdateWithoutReplyPostsInput>
+  export type TwitterPostUncheckedUpdateManyWithoutHashtagsNestedInput = {
+    create?: XOR<Enumerable<TwitterPostCreateWithoutHashtagsInput>, Enumerable<TwitterPostUncheckedCreateWithoutHashtagsInput>>
+    connectOrCreate?: Enumerable<TwitterPostCreateOrConnectWithoutHashtagsInput>
+    upsert?: Enumerable<TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput>
+    set?: Enumerable<TwitterPostWhereUniqueInput>
+    disconnect?: Enumerable<TwitterPostWhereUniqueInput>
+    delete?: Enumerable<TwitterPostWhereUniqueInput>
+    connect?: Enumerable<TwitterPostWhereUniqueInput>
+    update?: Enumerable<TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput>
+    updateMany?: Enumerable<TwitterPostUpdateManyWithWhereWithoutHashtagsInput>
+    deleteMany?: Enumerable<TwitterPostScalarWhereInput>
   }
 
   export type TwitterUserCreateNestedOneWithoutDirectMessageFromInput = {
@@ -78970,20 +75342,22 @@ export namespace Prisma {
   export type TwitterPostCreateWithoutUserInput = {
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagCreateNestedManyWithoutPostInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostUncheckedCreateWithoutUserInput = {
     id?: number
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedCreateNestedManyWithoutPostInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type TwitterPostCreateOrConnectWithoutUserInput = {
@@ -78996,77 +75370,60 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TwitterUserRelationshipCreateWithoutFromInput = {
-    to: TwitterUserCreateNestedOneWithoutFollowersInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedCreateWithoutFromInput = {
-    id?: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipCreateOrConnectWithoutFromInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    create: XOR<TwitterUserRelationshipCreateWithoutFromInput, TwitterUserRelationshipUncheckedCreateWithoutFromInput>
-  }
-
-  export type TwitterUserRelationshipCreateManyFromInputEnvelope = {
-    data: Enumerable<TwitterUserRelationshipCreateManyFromInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterUserRelationshipCreateWithoutToInput = {
-    from: TwitterUserCreateNestedOneWithoutFollowingsInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedCreateWithoutToInput = {
-    id?: number
-    fromUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipCreateOrConnectWithoutToInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    create: XOR<TwitterUserRelationshipCreateWithoutToInput, TwitterUserRelationshipUncheckedCreateWithoutToInput>
-  }
-
-  export type TwitterUserRelationshipCreateManyToInputEnvelope = {
-    data: Enumerable<TwitterUserRelationshipCreateManyToInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterReplyPostCreateWithoutUserInput = {
-    message: string
+  export type TwitterUserCreateWithoutFollowersInput = {
+    username: string
     image?: string | null
-    post: TwitterPostCreateNestedOneWithoutReplyPostsInput
+    posts?: TwitterPostCreateNestedManyWithoutUserInput
+    followings?: TwitterUserCreateNestedManyWithoutFollowersInput
+    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
+    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterReplyPostUncheckedCreateWithoutUserInput = {
+  export type TwitterUserUncheckedCreateWithoutFollowersInput = {
     id?: number
-    message: string
+    username: string
     image?: string | null
-    postId: number
+    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    followings?: TwitterUserUncheckedCreateNestedManyWithoutFollowersInput
+    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
+    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterReplyPostCreateOrConnectWithoutUserInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    create: XOR<TwitterReplyPostCreateWithoutUserInput, TwitterReplyPostUncheckedCreateWithoutUserInput>
+  export type TwitterUserCreateOrConnectWithoutFollowersInput = {
+    where: TwitterUserWhereUniqueInput
+    create: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
   }
 
-  export type TwitterReplyPostCreateManyUserInputEnvelope = {
-    data: Enumerable<TwitterReplyPostCreateManyUserInput>
-    skipDuplicates?: boolean
+  export type TwitterUserCreateWithoutFollowingsInput = {
+    username: string
+    image?: string | null
+    posts?: TwitterPostCreateNestedManyWithoutUserInput
+    followers?: TwitterUserCreateNestedManyWithoutFollowingsInput
+    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
+    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TwitterUserUncheckedCreateWithoutFollowingsInput = {
+    id?: number
+    username: string
+    image?: string | null
+    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    followers?: TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput
+    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
+    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TwitterUserCreateOrConnectWithoutFollowingsInput = {
+    where: TwitterUserWhereUniqueInput
+    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
   }
 
   export type TwitterDirectMessageCreateWithoutFromInput = {
@@ -79151,76 +75508,47 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type TwitterUserRelationshipUpsertWithWhereUniqueWithoutFromInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    update: XOR<TwitterUserRelationshipUpdateWithoutFromInput, TwitterUserRelationshipUncheckedUpdateWithoutFromInput>
-    create: XOR<TwitterUserRelationshipCreateWithoutFromInput, TwitterUserRelationshipUncheckedCreateWithoutFromInput>
+  export type TwitterUserUpsertWithWhereUniqueWithoutFollowersInput = {
+    where: TwitterUserWhereUniqueInput
+    update: XOR<TwitterUserUpdateWithoutFollowersInput, TwitterUserUncheckedUpdateWithoutFollowersInput>
+    create: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
   }
 
-  export type TwitterUserRelationshipUpdateWithWhereUniqueWithoutFromInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    data: XOR<TwitterUserRelationshipUpdateWithoutFromInput, TwitterUserRelationshipUncheckedUpdateWithoutFromInput>
+  export type TwitterUserUpdateWithWhereUniqueWithoutFollowersInput = {
+    where: TwitterUserWhereUniqueInput
+    data: XOR<TwitterUserUpdateWithoutFollowersInput, TwitterUserUncheckedUpdateWithoutFollowersInput>
   }
 
-  export type TwitterUserRelationshipUpdateManyWithWhereWithoutFromInput = {
-    where: TwitterUserRelationshipScalarWhereInput
-    data: XOR<TwitterUserRelationshipUpdateManyMutationInput, TwitterUserRelationshipUncheckedUpdateManyWithoutFollowingsInput>
+  export type TwitterUserUpdateManyWithWhereWithoutFollowersInput = {
+    where: TwitterUserScalarWhereInput
+    data: XOR<TwitterUserUpdateManyMutationInput, TwitterUserUncheckedUpdateManyWithoutFollowingsInput>
   }
 
-  export type TwitterUserRelationshipScalarWhereInput = {
-    AND?: Enumerable<TwitterUserRelationshipScalarWhereInput>
-    OR?: Enumerable<TwitterUserRelationshipScalarWhereInput>
-    NOT?: Enumerable<TwitterUserRelationshipScalarWhereInput>
+  export type TwitterUserScalarWhereInput = {
+    AND?: Enumerable<TwitterUserScalarWhereInput>
+    OR?: Enumerable<TwitterUserScalarWhereInput>
+    NOT?: Enumerable<TwitterUserScalarWhereInput>
     id?: IntFilter | number
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type TwitterUserRelationshipUpsertWithWhereUniqueWithoutToInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    update: XOR<TwitterUserRelationshipUpdateWithoutToInput, TwitterUserRelationshipUncheckedUpdateWithoutToInput>
-    create: XOR<TwitterUserRelationshipCreateWithoutToInput, TwitterUserRelationshipUncheckedCreateWithoutToInput>
-  }
-
-  export type TwitterUserRelationshipUpdateWithWhereUniqueWithoutToInput = {
-    where: TwitterUserRelationshipWhereUniqueInput
-    data: XOR<TwitterUserRelationshipUpdateWithoutToInput, TwitterUserRelationshipUncheckedUpdateWithoutToInput>
-  }
-
-  export type TwitterUserRelationshipUpdateManyWithWhereWithoutToInput = {
-    where: TwitterUserRelationshipScalarWhereInput
-    data: XOR<TwitterUserRelationshipUpdateManyMutationInput, TwitterUserRelationshipUncheckedUpdateManyWithoutFollowersInput>
-  }
-
-  export type TwitterReplyPostUpsertWithWhereUniqueWithoutUserInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    update: XOR<TwitterReplyPostUpdateWithoutUserInput, TwitterReplyPostUncheckedUpdateWithoutUserInput>
-    create: XOR<TwitterReplyPostCreateWithoutUserInput, TwitterReplyPostUncheckedCreateWithoutUserInput>
-  }
-
-  export type TwitterReplyPostUpdateWithWhereUniqueWithoutUserInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    data: XOR<TwitterReplyPostUpdateWithoutUserInput, TwitterReplyPostUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TwitterReplyPostUpdateManyWithWhereWithoutUserInput = {
-    where: TwitterReplyPostScalarWhereInput
-    data: XOR<TwitterReplyPostUpdateManyMutationInput, TwitterReplyPostUncheckedUpdateManyWithoutReplyPostsInput>
-  }
-
-  export type TwitterReplyPostScalarWhereInput = {
-    AND?: Enumerable<TwitterReplyPostScalarWhereInput>
-    OR?: Enumerable<TwitterReplyPostScalarWhereInput>
-    NOT?: Enumerable<TwitterReplyPostScalarWhereInput>
-    id?: IntFilter | number
-    userId?: IntFilter | number
-    message?: StringFilter | string
+    username?: StringFilter | string
     image?: StringNullableFilter | string | null
-    postId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TwitterUserUpsertWithWhereUniqueWithoutFollowingsInput = {
+    where: TwitterUserWhereUniqueInput
+    update: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
+    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
+  }
+
+  export type TwitterUserUpdateWithWhereUniqueWithoutFollowingsInput = {
+    where: TwitterUserWhereUniqueInput
+    data: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
+  }
+
+  export type TwitterUserUpdateManyWithWhereWithoutFollowingsInput = {
+    where: TwitterUserScalarWhereInput
+    data: XOR<TwitterUserUpdateManyMutationInput, TwitterUserUncheckedUpdateManyWithoutFollowersInput>
   }
 
   export type TwitterDirectMessageUpsertWithWhereUniqueWithoutFromInput = {
@@ -79271,26 +75599,24 @@ export namespace Prisma {
   export type TwitterUserCreateWithoutPostsInput = {
     username: string
     image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
+    followings?: TwitterUserCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserCreateNestedManyWithoutFollowingsInput
     directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
     directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TwitterUserUncheckedCreateWithoutPostsInput = {
     id?: number
     username: string
     image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
+    followings?: TwitterUserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput
     directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TwitterUserCreateOrConnectWithoutPostsInput = {
@@ -79298,54 +75624,74 @@ export namespace Prisma {
     create: XOR<TwitterUserCreateWithoutPostsInput, TwitterUserUncheckedCreateWithoutPostsInput>
   }
 
-  export type TwitterPostAndHashtagCreateWithoutPostInput = {
-    hashtag: TwitterHashtagCreateNestedOneWithoutPostAndHashtagsInput
+  export type TwitterHashtagCreateWithoutTwitterPostsInput = {
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterPostAndHashtagUncheckedCreateWithoutPostInput = {
+  export type TwitterHashtagUncheckedCreateWithoutTwitterPostsInput = {
     id?: number
-    hashtagId: number
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterPostAndHashtagCreateOrConnectWithoutPostInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    create: XOR<TwitterPostAndHashtagCreateWithoutPostInput, TwitterPostAndHashtagUncheckedCreateWithoutPostInput>
+  export type TwitterHashtagCreateOrConnectWithoutTwitterPostsInput = {
+    where: TwitterHashtagWhereUniqueInput
+    create: XOR<TwitterHashtagCreateWithoutTwitterPostsInput, TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>
   }
 
-  export type TwitterPostAndHashtagCreateManyPostInputEnvelope = {
-    data: Enumerable<TwitterPostAndHashtagCreateManyPostInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterReplyPostCreateWithoutPostInput = {
-    user: TwitterUserCreateNestedOneWithoutReplyPostsInput
+  export type TwitterPostCreateWithoutReplyToInput = {
+    user: TwitterUserCreateNestedOneWithoutPostsInput
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterReplyPostUncheckedCreateWithoutPostInput = {
+  export type TwitterPostUncheckedCreateWithoutReplyToInput = {
     id?: number
     userId: number
     message: string
     image?: string | null
+    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutTwitterPostsInput
+    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterReplyPostCreateOrConnectWithoutPostInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    create: XOR<TwitterReplyPostCreateWithoutPostInput, TwitterReplyPostUncheckedCreateWithoutPostInput>
+  export type TwitterPostCreateOrConnectWithoutReplyToInput = {
+    where: TwitterPostWhereUniqueInput
+    create: XOR<TwitterPostCreateWithoutReplyToInput, TwitterPostUncheckedCreateWithoutReplyToInput>
   }
 
-  export type TwitterReplyPostCreateManyPostInputEnvelope = {
-    data: Enumerable<TwitterReplyPostCreateManyPostInput>
-    skipDuplicates?: boolean
+  export type TwitterPostCreateWithoutReplyByInput = {
+    user: TwitterUserCreateNestedOneWithoutPostsInput
+    message: string
+    image?: string | null
+    hashtags?: TwitterHashtagCreateNestedManyWithoutTwitterPostsInput
+    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TwitterPostUncheckedCreateWithoutReplyByInput = {
+    id?: number
+    userId: number
+    message: string
+    image?: string | null
+    hashtags?: TwitterHashtagUncheckedCreateNestedManyWithoutTwitterPostsInput
+    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TwitterPostCreateOrConnectWithoutReplyByInput = {
+    where: TwitterPostWhereUniqueInput
+    create: XOR<TwitterPostCreateWithoutReplyByInput, TwitterPostUncheckedCreateWithoutReplyByInput>
   }
 
   export type TwitterUserUpsertWithoutPostsInput = {
@@ -79356,445 +75702,147 @@ export namespace Prisma {
   export type TwitterUserUpdateWithoutPostsInput = {
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUpdateManyWithoutFollowingsNestedInput
     directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
     directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TwitterUserUncheckedUpdateWithoutPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput
     directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagUpsertWithWhereUniqueWithoutPostInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    update: XOR<TwitterPostAndHashtagUpdateWithoutPostInput, TwitterPostAndHashtagUncheckedUpdateWithoutPostInput>
-    create: XOR<TwitterPostAndHashtagCreateWithoutPostInput, TwitterPostAndHashtagUncheckedCreateWithoutPostInput>
+  export type TwitterHashtagUpsertWithWhereUniqueWithoutTwitterPostsInput = {
+    where: TwitterHashtagWhereUniqueInput
+    update: XOR<TwitterHashtagUpdateWithoutTwitterPostsInput, TwitterHashtagUncheckedUpdateWithoutTwitterPostsInput>
+    create: XOR<TwitterHashtagCreateWithoutTwitterPostsInput, TwitterHashtagUncheckedCreateWithoutTwitterPostsInput>
   }
 
-  export type TwitterPostAndHashtagUpdateWithWhereUniqueWithoutPostInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    data: XOR<TwitterPostAndHashtagUpdateWithoutPostInput, TwitterPostAndHashtagUncheckedUpdateWithoutPostInput>
+  export type TwitterHashtagUpdateWithWhereUniqueWithoutTwitterPostsInput = {
+    where: TwitterHashtagWhereUniqueInput
+    data: XOR<TwitterHashtagUpdateWithoutTwitterPostsInput, TwitterHashtagUncheckedUpdateWithoutTwitterPostsInput>
   }
 
-  export type TwitterPostAndHashtagUpdateManyWithWhereWithoutPostInput = {
-    where: TwitterPostAndHashtagScalarWhereInput
-    data: XOR<TwitterPostAndHashtagUpdateManyMutationInput, TwitterPostAndHashtagUncheckedUpdateManyWithoutPostAndHashtagsInput>
+  export type TwitterHashtagUpdateManyWithWhereWithoutTwitterPostsInput = {
+    where: TwitterHashtagScalarWhereInput
+    data: XOR<TwitterHashtagUpdateManyMutationInput, TwitterHashtagUncheckedUpdateManyWithoutHashtagsInput>
   }
 
-  export type TwitterPostAndHashtagScalarWhereInput = {
-    AND?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
-    OR?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
-    NOT?: Enumerable<TwitterPostAndHashtagScalarWhereInput>
+  export type TwitterHashtagScalarWhereInput = {
+    AND?: Enumerable<TwitterHashtagScalarWhereInput>
+    OR?: Enumerable<TwitterHashtagScalarWhereInput>
+    NOT?: Enumerable<TwitterHashtagScalarWhereInput>
     id?: IntFilter | number
-    postId?: IntFilter | number
-    hashtagId?: IntFilter | number
+    name?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type TwitterReplyPostUpsertWithWhereUniqueWithoutPostInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    update: XOR<TwitterReplyPostUpdateWithoutPostInput, TwitterReplyPostUncheckedUpdateWithoutPostInput>
-    create: XOR<TwitterReplyPostCreateWithoutPostInput, TwitterReplyPostUncheckedCreateWithoutPostInput>
+  export type TwitterPostUpsertWithWhereUniqueWithoutReplyToInput = {
+    where: TwitterPostWhereUniqueInput
+    update: XOR<TwitterPostUpdateWithoutReplyToInput, TwitterPostUncheckedUpdateWithoutReplyToInput>
+    create: XOR<TwitterPostCreateWithoutReplyToInput, TwitterPostUncheckedCreateWithoutReplyToInput>
   }
 
-  export type TwitterReplyPostUpdateWithWhereUniqueWithoutPostInput = {
-    where: TwitterReplyPostWhereUniqueInput
-    data: XOR<TwitterReplyPostUpdateWithoutPostInput, TwitterReplyPostUncheckedUpdateWithoutPostInput>
+  export type TwitterPostUpdateWithWhereUniqueWithoutReplyToInput = {
+    where: TwitterPostWhereUniqueInput
+    data: XOR<TwitterPostUpdateWithoutReplyToInput, TwitterPostUncheckedUpdateWithoutReplyToInput>
   }
 
-  export type TwitterReplyPostUpdateManyWithWhereWithoutPostInput = {
-    where: TwitterReplyPostScalarWhereInput
-    data: XOR<TwitterReplyPostUpdateManyMutationInput, TwitterReplyPostUncheckedUpdateManyWithoutReplyPostsInput>
+  export type TwitterPostUpdateManyWithWhereWithoutReplyToInput = {
+    where: TwitterPostScalarWhereInput
+    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutReplyByInput>
   }
 
-  export type TwitterUserCreateWithoutFollowingsInput = {
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
+  export type TwitterPostUpsertWithWhereUniqueWithoutReplyByInput = {
+    where: TwitterPostWhereUniqueInput
+    update: XOR<TwitterPostUpdateWithoutReplyByInput, TwitterPostUncheckedUpdateWithoutReplyByInput>
+    create: XOR<TwitterPostCreateWithoutReplyByInput, TwitterPostUncheckedCreateWithoutReplyByInput>
   }
 
-  export type TwitterUserUncheckedCreateWithoutFollowingsInput = {
-    id?: number
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
+  export type TwitterPostUpdateWithWhereUniqueWithoutReplyByInput = {
+    where: TwitterPostWhereUniqueInput
+    data: XOR<TwitterPostUpdateWithoutReplyByInput, TwitterPostUncheckedUpdateWithoutReplyByInput>
   }
 
-  export type TwitterUserCreateOrConnectWithoutFollowingsInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
+  export type TwitterPostUpdateManyWithWhereWithoutReplyByInput = {
+    where: TwitterPostScalarWhereInput
+    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutReplyToInput>
   }
 
-  export type TwitterUserCreateWithoutFollowersInput = {
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutFollowersInput = {
-    id?: number
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutFollowersInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
-  }
-
-  export type TwitterUserUpsertWithoutFollowingsInput = {
-    update: XOR<TwitterUserUpdateWithoutFollowingsInput, TwitterUserUncheckedUpdateWithoutFollowingsInput>
-    create: XOR<TwitterUserCreateWithoutFollowingsInput, TwitterUserUncheckedCreateWithoutFollowingsInput>
-  }
-
-  export type TwitterUserUpdateWithoutFollowingsInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUpsertWithoutFollowersInput = {
-    update: XOR<TwitterUserUpdateWithoutFollowersInput, TwitterUserUncheckedUpdateWithoutFollowersInput>
-    create: XOR<TwitterUserCreateWithoutFollowersInput, TwitterUserUncheckedCreateWithoutFollowersInput>
-  }
-
-  export type TwitterUserUpdateWithoutFollowersInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutFollowersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterPostAndHashtagCreateWithoutHashtagInput = {
-    post: TwitterPostCreateNestedOneWithoutPostAndHashtagsInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput = {
-    id?: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagCreateOrConnectWithoutHashtagInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    create: XOR<TwitterPostAndHashtagCreateWithoutHashtagInput, TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>
-  }
-
-  export type TwitterPostAndHashtagCreateManyHashtagInputEnvelope = {
-    data: Enumerable<TwitterPostAndHashtagCreateManyHashtagInput>
-    skipDuplicates?: boolean
-  }
-
-  export type TwitterPostAndHashtagUpsertWithWhereUniqueWithoutHashtagInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    update: XOR<TwitterPostAndHashtagUpdateWithoutHashtagInput, TwitterPostAndHashtagUncheckedUpdateWithoutHashtagInput>
-    create: XOR<TwitterPostAndHashtagCreateWithoutHashtagInput, TwitterPostAndHashtagUncheckedCreateWithoutHashtagInput>
-  }
-
-  export type TwitterPostAndHashtagUpdateWithWhereUniqueWithoutHashtagInput = {
-    where: TwitterPostAndHashtagWhereUniqueInput
-    data: XOR<TwitterPostAndHashtagUpdateWithoutHashtagInput, TwitterPostAndHashtagUncheckedUpdateWithoutHashtagInput>
-  }
-
-  export type TwitterPostAndHashtagUpdateManyWithWhereWithoutHashtagInput = {
-    where: TwitterPostAndHashtagScalarWhereInput
-    data: XOR<TwitterPostAndHashtagUpdateManyMutationInput, TwitterPostAndHashtagUncheckedUpdateManyWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterPostCreateWithoutPostAndHashtagsInput = {
+  export type TwitterPostCreateWithoutHashtagsInput = {
     user: TwitterUserCreateNestedOneWithoutPostsInput
     message: string
     image?: string | null
+    replyBy?: TwitterPostCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutPostInput
   }
 
-  export type TwitterPostUncheckedCreateWithoutPostAndHashtagsInput = {
+  export type TwitterPostUncheckedCreateWithoutHashtagsInput = {
     id?: number
     userId: number
     message: string
     image?: string | null
+    replyBy?: TwitterPostUncheckedCreateNestedManyWithoutReplyToInput
+    replyTo?: TwitterPostUncheckedCreateNestedManyWithoutReplyByInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type TwitterPostCreateOrConnectWithoutPostAndHashtagsInput = {
+  export type TwitterPostCreateOrConnectWithoutHashtagsInput = {
     where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutPostAndHashtagsInput, TwitterPostUncheckedCreateWithoutPostAndHashtagsInput>
+    create: XOR<TwitterPostCreateWithoutHashtagsInput, TwitterPostUncheckedCreateWithoutHashtagsInput>
   }
 
-  export type TwitterHashtagCreateWithoutPostAndHashtagsInput = {
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterHashtagUncheckedCreateWithoutPostAndHashtagsInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterHashtagCreateOrConnectWithoutPostAndHashtagsInput = {
-    where: TwitterHashtagWhereUniqueInput
-    create: XOR<TwitterHashtagCreateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedCreateWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterPostUpsertWithoutPostAndHashtagsInput = {
-    update: XOR<TwitterPostUpdateWithoutPostAndHashtagsInput, TwitterPostUncheckedUpdateWithoutPostAndHashtagsInput>
-    create: XOR<TwitterPostCreateWithoutPostAndHashtagsInput, TwitterPostUncheckedCreateWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterPostUpdateWithoutPostAndHashtagsInput = {
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replyPosts?: TwitterReplyPostUpdateManyWithoutPostNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateWithoutPostAndHashtagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type TwitterHashtagUpsertWithoutPostAndHashtagsInput = {
-    update: XOR<TwitterHashtagUpdateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedUpdateWithoutPostAndHashtagsInput>
-    create: XOR<TwitterHashtagCreateWithoutPostAndHashtagsInput, TwitterHashtagUncheckedCreateWithoutPostAndHashtagsInput>
-  }
-
-  export type TwitterHashtagUpdateWithoutPostAndHashtagsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterHashtagUncheckedUpdateWithoutPostAndHashtagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserCreateWithoutReplyPostsInput = {
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserUncheckedCreateWithoutReplyPostsInput = {
-    id?: number
-    username: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
-    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type TwitterUserCreateOrConnectWithoutReplyPostsInput = {
-    where: TwitterUserWhereUniqueInput
-    create: XOR<TwitterUserCreateWithoutReplyPostsInput, TwitterUserUncheckedCreateWithoutReplyPostsInput>
-  }
-
-  export type TwitterPostCreateWithoutReplyPostsInput = {
-    user: TwitterUserCreateNestedOneWithoutPostsInput
-    message: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagCreateNestedManyWithoutPostInput
-  }
-
-  export type TwitterPostUncheckedCreateWithoutReplyPostsInput = {
-    id?: number
-    userId: number
-    message: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type TwitterPostCreateOrConnectWithoutReplyPostsInput = {
+  export type TwitterPostUpsertWithWhereUniqueWithoutHashtagsInput = {
     where: TwitterPostWhereUniqueInput
-    create: XOR<TwitterPostCreateWithoutReplyPostsInput, TwitterPostUncheckedCreateWithoutReplyPostsInput>
+    update: XOR<TwitterPostUpdateWithoutHashtagsInput, TwitterPostUncheckedUpdateWithoutHashtagsInput>
+    create: XOR<TwitterPostCreateWithoutHashtagsInput, TwitterPostUncheckedCreateWithoutHashtagsInput>
   }
 
-  export type TwitterUserUpsertWithoutReplyPostsInput = {
-    update: XOR<TwitterUserUpdateWithoutReplyPostsInput, TwitterUserUncheckedUpdateWithoutReplyPostsInput>
-    create: XOR<TwitterUserCreateWithoutReplyPostsInput, TwitterUserUncheckedCreateWithoutReplyPostsInput>
+  export type TwitterPostUpdateWithWhereUniqueWithoutHashtagsInput = {
+    where: TwitterPostWhereUniqueInput
+    data: XOR<TwitterPostUpdateWithoutHashtagsInput, TwitterPostUncheckedUpdateWithoutHashtagsInput>
   }
 
-  export type TwitterUserUpdateWithoutReplyPostsInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterUserUncheckedUpdateWithoutReplyPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type TwitterPostUpsertWithoutReplyPostsInput = {
-    update: XOR<TwitterPostUpdateWithoutReplyPostsInput, TwitterPostUncheckedUpdateWithoutReplyPostsInput>
-    create: XOR<TwitterPostCreateWithoutReplyPostsInput, TwitterPostUncheckedCreateWithoutReplyPostsInput>
-  }
-
-  export type TwitterPostUpdateWithoutReplyPostsInput = {
-    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUpdateManyWithoutPostNestedInput
-  }
-
-  export type TwitterPostUncheckedUpdateWithoutReplyPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedUpdateManyWithoutPostNestedInput
+  export type TwitterPostUpdateManyWithWhereWithoutHashtagsInput = {
+    where: TwitterPostScalarWhereInput
+    data: XOR<TwitterPostUpdateManyMutationInput, TwitterPostUncheckedUpdateManyWithoutTwitterPostsInput>
   }
 
   export type TwitterUserCreateWithoutDirectMessageFromInput = {
     username: string
     image?: string | null
+    posts?: TwitterPostCreateNestedManyWithoutUserInput
+    followings?: TwitterUserCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserCreateNestedManyWithoutFollowingsInput
+    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
-    directMessageTo?: TwitterDirectMessageCreateNestedManyWithoutToInput
   }
 
   export type TwitterUserUncheckedCreateWithoutDirectMessageFromInput = {
     id?: number
     username: string
     image?: string | null
+    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    followings?: TwitterUserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput
+    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
-    directMessageTo?: TwitterDirectMessageUncheckedCreateNestedManyWithoutToInput
   }
 
   export type TwitterUserCreateOrConnectWithoutDirectMessageFromInput = {
@@ -79805,26 +75853,24 @@ export namespace Prisma {
   export type TwitterUserCreateWithoutDirectMessageToInput = {
     username: string
     image?: string | null
+    posts?: TwitterPostCreateNestedManyWithoutUserInput
+    followings?: TwitterUserCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserCreateNestedManyWithoutFollowingsInput
+    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    posts?: TwitterPostCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageCreateNestedManyWithoutFromInput
   }
 
   export type TwitterUserUncheckedCreateWithoutDirectMessageToInput = {
     id?: number
     username: string
     image?: string | null
+    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
+    followings?: TwitterUserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: TwitterUserUncheckedCreateNestedManyWithoutFollowingsInput
+    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    posts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
-    followings?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutFromInput
-    followers?: TwitterUserRelationshipUncheckedCreateNestedManyWithoutToInput
-    replyPosts?: TwitterReplyPostUncheckedCreateNestedManyWithoutUserInput
-    directMessageFrom?: TwitterDirectMessageUncheckedCreateNestedManyWithoutFromInput
   }
 
   export type TwitterUserCreateOrConnectWithoutDirectMessageToInput = {
@@ -79840,26 +75886,24 @@ export namespace Prisma {
   export type TwitterUserUpdateWithoutDirectMessageFromInput = {
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUpdateManyWithoutFollowingsNestedInput
+    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
-    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
   }
 
   export type TwitterUserUncheckedUpdateWithoutDirectMessageFromInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput
+    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
-    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
   }
 
   export type TwitterUserUpsertWithoutDirectMessageToInput = {
@@ -79870,26 +75914,24 @@ export namespace Prisma {
   export type TwitterUserUpdateWithoutDirectMessageToInput = {
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUpdateManyWithoutFollowingsNestedInput
+    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
   }
 
   export type TwitterUserUncheckedUpdateWithoutDirectMessageToInput = {
     id?: IntFieldUpdateOperationsInput | number
     username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput
+    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
-    followings?: TwitterUserRelationshipUncheckedUpdateManyWithoutFromNestedInput
-    followers?: TwitterUserRelationshipUncheckedUpdateManyWithoutToNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutUserNestedInput
-    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
   }
 
   export type YoutubeUserToChannelCreateWithoutUserInput = {
@@ -84083,29 +80125,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type TwitterUserRelationshipCreateManyFromInput = {
-    id?: number
-    toUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterUserRelationshipCreateManyToInput = {
-    id?: number
-    fromUserId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterReplyPostCreateManyUserInput = {
-    id?: number
-    message: string
-    image?: string | null
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type TwitterDirectMessageCreateManyFromInput = {
     id?: number
     toUserId: number
@@ -84127,20 +80146,22 @@ export namespace Prisma {
   export type TwitterPostUpdateWithoutUserInput = {
     message?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUpdateManyWithoutPostNestedInput
-    replyPosts?: TwitterReplyPostUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postAndHashtags?: TwitterPostAndHashtagUncheckedUpdateManyWithoutPostNestedInput
-    replyPosts?: TwitterReplyPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type TwitterPostUncheckedUpdateManyWithoutPostsInput = {
@@ -84151,68 +80172,64 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationshipUpdateWithoutFromInput = {
-    to?: TwitterUserUpdateOneRequiredWithoutFollowersNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateWithoutFromInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateManyWithoutFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUpdateWithoutToInput = {
-    from?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateWithoutToInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterUserRelationshipUncheckedUpdateManyWithoutFollowersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TwitterReplyPostUpdateWithoutUserInput = {
-    message?: StringFieldUpdateOperationsInput | string
+  export type TwitterUserUpdateWithoutFollowersInput = {
+    username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    post?: TwitterPostUpdateOneRequiredWithoutReplyPostsNestedInput
+    posts?: TwitterPostUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUpdateManyWithoutFollowersNestedInput
+    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
+    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterReplyPostUncheckedUpdateWithoutUserInput = {
+  export type TwitterUserUncheckedUpdateWithoutFollowersInput = {
     id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    postId?: IntFieldUpdateOperationsInput | number
+    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    followings?: TwitterUserUncheckedUpdateManyWithoutFollowersNestedInput
+    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
+    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterReplyPostUncheckedUpdateManyWithoutReplyPostsInput = {
+  export type TwitterUserUncheckedUpdateManyWithoutFollowingsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    postId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterUserUpdateWithoutFollowingsInput = {
+    username?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUpdateManyWithoutUserNestedInput
+    followers?: TwitterUserUpdateManyWithoutFollowingsNestedInput
+    directMessageFrom?: TwitterDirectMessageUpdateManyWithoutFromNestedInput
+    directMessageTo?: TwitterDirectMessageUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterUserUncheckedUpdateWithoutFollowingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
+    followers?: TwitterUserUncheckedUpdateManyWithoutFollowingsNestedInput
+    directMessageFrom?: TwitterDirectMessageUncheckedUpdateManyWithoutFromNestedInput
+    directMessageTo?: TwitterDirectMessageUncheckedUpdateManyWithoutToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterUserUncheckedUpdateManyWithoutFollowersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    username?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -84269,51 +80286,48 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagCreateManyPostInput = {
-    id?: number
-    hashtagId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterReplyPostCreateManyPostInput = {
-    id?: number
-    userId: number
-    message: string
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUpdateWithoutPostInput = {
-    hashtag?: TwitterHashtagUpdateOneRequiredWithoutPostAndHashtagsNestedInput
+  export type TwitterHashtagUpdateWithoutTwitterPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagUncheckedUpdateWithoutPostInput = {
+  export type TwitterHashtagUncheckedUpdateWithoutTwitterPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagUncheckedUpdateManyWithoutPostAndHashtagsInput = {
+  export type TwitterHashtagUncheckedUpdateManyWithoutHashtagsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterReplyPostUpdateWithoutPostInput = {
-    user?: TwitterUserUpdateOneRequiredWithoutReplyPostsNestedInput
+  export type TwitterPostUpdateWithoutReplyToInput = {
+    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
     message?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterReplyPostUncheckedUpdateWithoutPostInput = {
+  export type TwitterPostUncheckedUpdateWithoutReplyToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutTwitterPostsNestedInput
+    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterPostUncheckedUpdateManyWithoutReplyByInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
@@ -84322,22 +80336,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagCreateManyHashtagInput = {
-    id?: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TwitterPostAndHashtagUpdateWithoutHashtagInput = {
-    post?: TwitterPostUpdateOneRequiredWithoutPostAndHashtagsNestedInput
+  export type TwitterPostUpdateWithoutReplyByInput = {
+    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUpdateManyWithoutTwitterPostsNestedInput
+    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterPostAndHashtagUncheckedUpdateWithoutHashtagInput = {
+  export type TwitterPostUncheckedUpdateWithoutReplyByInput = {
     id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    hashtags?: TwitterHashtagUncheckedUpdateManyWithoutTwitterPostsNestedInput
+    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterPostUncheckedUpdateManyWithoutReplyToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterPostUpdateWithoutHashtagsInput = {
+    user?: TwitterUserUpdateOneRequiredWithoutPostsNestedInput
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    replyBy?: TwitterPostUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUpdateManyWithoutReplyByNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterPostUncheckedUpdateWithoutHashtagsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    replyBy?: TwitterPostUncheckedUpdateManyWithoutReplyToNestedInput
+    replyTo?: TwitterPostUncheckedUpdateManyWithoutReplyByNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TwitterPostUncheckedUpdateManyWithoutTwitterPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

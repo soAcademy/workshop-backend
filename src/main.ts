@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
-import { AppRoutes } from "./BinQuizBillionaire/routes";
+import { AppRoutes } from "./binQuizBillionaire/routes";
+// import { AppRoutes } from "./cloneTwitter/routes";
 import cors from "cors";
 // Express Server
 

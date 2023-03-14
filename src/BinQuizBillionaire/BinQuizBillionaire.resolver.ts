@@ -2,7 +2,10 @@ import { PrismaClient } from "../../prisma/client";
 import {
   ICreateCategory,
   ICreateQuestion,
-  // ISubmitQuestion,
+  IGetResultByCategory,
+  ISubmitQuestion,
+  IUpdateAnswer,
+  IUpdateQuestion,
 } from "./BinQuizBillionaire.interface";
 
 export const prisma = new PrismaClient();
@@ -49,7 +52,7 @@ export const getQuestion = async (args: { categoryId: number }) => {
 
   const result = question
     .sort((a, b) => Math.random() - 0.5)
-    .slice(0, 3)
+    .slice(0, 5)
     .map((r) => ({
       id: r.id,
       questName: r.questName,
@@ -72,11 +75,7 @@ export const getQuestion = async (args: { categoryId: number }) => {
   return result;
 };
 
-export const submitQuestion = async (args: {
-  user: string;
-  roundQuestions: { questionId: number; userChoiceId: number }[];
-  categoryId: number;
-}) => {
+export const submitQuestion = async (args: ISubmitQuestion) => {
   try {
     const questionData = await prisma.quizQuestion.findMany({
       where: {
@@ -120,4 +119,32 @@ export const submitQuestion = async (args: {
 export const getResults = () =>
   prisma.quizRound.findMany({
     orderBy: { score: "desc" },
+  });
+
+export const getResultByCategory = (args: IGetResultByCategory) =>
+  prisma.quizRound.findMany({
+    where: { categoryId: args.categoryId },
+    orderBy: { score: "desc" },
+  });
+
+export const updateQuestion = (args: IUpdateQuestion) =>
+  prisma.quizQuestion.update({
+    where: { id: args.quizId },
+    data: {
+      questName: args.questName ?? undefined,
+      choices: {
+        connectOrCreate: args.choices?.map((c) => ({
+          where: { id: c.choiceId ?? undefined },
+          create: { choiceName: c.choiceName ?? undefined },
+        })),
+      },
+    },
+    include: { choices: true },
+  });
+
+export const updateAnswer = (args: IUpdateAnswer) =>
+  prisma.quizQuestion.update({
+    where: { id: args.quizId },
+    data: { answer: { update: { choiceName: args.answerName } } },
+    include: { answer: true },
   });
