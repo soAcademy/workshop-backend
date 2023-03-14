@@ -28,6 +28,7 @@ import {
 import {
   createCategoryHandler,
   createQuizHandler,
+  getAllQuizesHandler,
   getCategoriesHandler,
   getQuizesByCategoryHandler,
   getResultsHandler,
@@ -46,6 +47,7 @@ import {
   updateCategoryHandler,
   updateMenuHandler,
 } from "./binKitchen";
+import { createTwitterPostHandler } from "./twitter/twitter.handler";
 
 export const AppRoutes = [
   {
@@ -234,6 +236,11 @@ export const AppRoutes = [
     action: getQuizesByCategoryHandler,
   },
   {
+    path: "/trivia/getAllQuizes",
+    method: "post",
+    action: getAllQuizesHandler,
+  },
+  {
     path: "/trivia/submitQuestion",
     method: "post",
     action: submitQuestionHandler,
@@ -242,5 +249,11 @@ export const AppRoutes = [
     path: "/trivia/getResults",
     method: "post",
     action: getResultsHandler,
+  },
+  //todo TWITTER
+  {
+    path: "/twitter/createTwitterPost",
+    method: "post",
+    action: createTwitterPostHandler,
   },
 ];

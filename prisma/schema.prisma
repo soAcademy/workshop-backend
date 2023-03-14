@@ -85,7 +85,7 @@ model TriviaRound {
   user         String
   category     TriviaCategory?   @relation(fields: [categoryName], references: [name])
   categoryName String
-  score        Int?
+  score        Int
   createdAt    DateTime          @default(now())
   updatedAt    DateTime          @updatedAt
   roundQuizes  TriviaRoundQuiz[]
@@ -117,7 +117,7 @@ model TriviaRoundQuiz {
 // }
 model TwitterUser {
   id             Int                   @id @default(autoincrement())
-  image          String                @unique
+  image          String
   name           String                @unique
   createdAt      DateTime              @default(now())
   updatedAt      DateTime              @updatedAt
@@ -131,12 +131,14 @@ model TwitterUser {
 
 model TwitterUserRelation {
   id          Int         @id @default(autoincrement())
-  follwer     TwitterUser @relation("FromId", fields: [followerId], references: [id])
+  follower    TwitterUser @relation("FromId", fields: [followerId], references: [id])
   followerId  Int
   following   TwitterUser @relation("ToId", fields: [followingId], references: [id])
   followingId Int
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  @@unique([followerId, followingId])
 }
 
 model TwitterPost {
@@ -153,7 +155,7 @@ model TwitterPost {
 
 model TwitterHashTag {
   id        Int           @id @default(autoincrement())
-  message   String
+  message   String        @unique
   posts     TwitterPost[]
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
@@ -169,14 +171,14 @@ model TwitterHashTag {
 // }
 
 model TwitterReply {
-  id           Int         @id @default(autoincrement())
-  message      String
-  post         TwitterPost @relation(fields: [postId], references: [id])
-  postId       Int
-  user         TwitterUser @relation(fields: [postByUserId], references: [id])
-  postByUserId Int
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  id            Int         @id @default(autoincrement())
+  message       String
+  post          TwitterPost @relation(fields: [postId], references: [id])
+  postId        Int
+  user          TwitterUser @relation(fields: [replyByUserId], references: [id])
+  replyByUserId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model TwitterDM {

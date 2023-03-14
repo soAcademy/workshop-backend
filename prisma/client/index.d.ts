@@ -118,7 +118,7 @@ export type TriviaRound = {
   id: number
   user: string
   categoryName: string
-  score: number | null
+  score: number
   createdAt: Date
   updatedAt: Date
 }
@@ -191,7 +191,7 @@ export type TwitterReply = {
   id: number
   message: string
   postId: number
-  postByUserId: number
+  replyByUserId: number
   createdAt: Date
   updatedAt: Date
 }
@@ -11673,7 +11673,7 @@ export namespace Prisma {
     id: number
     user: string
     categoryName: string
-    score: number | null
+    score: number
     createdAt: Date
     updatedAt: Date
     _count: TriviaRoundCountAggregateOutputType | null
@@ -14826,7 +14826,7 @@ export namespace Prisma {
 
   export type TwitterUserRelationSelect = {
     id?: boolean
-    follwer?: boolean | TwitterUserArgs
+    follower?: boolean | TwitterUserArgs
     followerId?: boolean
     following?: boolean | TwitterUserArgs
     followingId?: boolean
@@ -14836,7 +14836,7 @@ export namespace Prisma {
 
 
   export type TwitterUserRelationInclude = {
-    follwer?: boolean | TwitterUserArgs
+    follower?: boolean | TwitterUserArgs
     following?: boolean | TwitterUserArgs
   }
 
@@ -14847,13 +14847,13 @@ export namespace Prisma {
     S extends { include: any } & (TwitterUserRelationArgs | TwitterUserRelationFindManyArgs)
     ? TwitterUserRelation  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'follwer' ? TwitterUserGetPayload<S['include'][P]> :
+        P extends 'follower' ? TwitterUserGetPayload<S['include'][P]> :
         P extends 'following' ? TwitterUserGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TwitterUserRelationArgs | TwitterUserRelationFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'follwer' ? TwitterUserGetPayload<S['select'][P]> :
+        P extends 'follower' ? TwitterUserGetPayload<S['select'][P]> :
         P extends 'following' ? TwitterUserGetPayload<S['select'][P]> :  P extends keyof TwitterUserRelation ? TwitterUserRelation[P] : never
   } 
       : TwitterUserRelation
@@ -15226,7 +15226,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    follwer<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
+    follower<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
 
     following<T extends TwitterUserArgs= {}>(args?: Subset<T, TwitterUserArgs>): Prisma__TwitterUserClient<TwitterUserGetPayload<T> | Null>;
 
@@ -17626,20 +17626,20 @@ export namespace Prisma {
   export type TwitterReplyAvgAggregateOutputType = {
     id: number | null
     postId: number | null
-    postByUserId: number | null
+    replyByUserId: number | null
   }
 
   export type TwitterReplySumAggregateOutputType = {
     id: number | null
     postId: number | null
-    postByUserId: number | null
+    replyByUserId: number | null
   }
 
   export type TwitterReplyMinAggregateOutputType = {
     id: number | null
     message: string | null
     postId: number | null
-    postByUserId: number | null
+    replyByUserId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -17648,7 +17648,7 @@ export namespace Prisma {
     id: number | null
     message: string | null
     postId: number | null
-    postByUserId: number | null
+    replyByUserId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -17657,7 +17657,7 @@ export namespace Prisma {
     id: number
     message: number
     postId: number
-    postByUserId: number
+    replyByUserId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -17667,20 +17667,20 @@ export namespace Prisma {
   export type TwitterReplyAvgAggregateInputType = {
     id?: true
     postId?: true
-    postByUserId?: true
+    replyByUserId?: true
   }
 
   export type TwitterReplySumAggregateInputType = {
     id?: true
     postId?: true
-    postByUserId?: true
+    replyByUserId?: true
   }
 
   export type TwitterReplyMinAggregateInputType = {
     id?: true
     message?: true
     postId?: true
-    postByUserId?: true
+    replyByUserId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -17689,7 +17689,7 @@ export namespace Prisma {
     id?: true
     message?: true
     postId?: true
-    postByUserId?: true
+    replyByUserId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -17698,7 +17698,7 @@ export namespace Prisma {
     id?: true
     message?: true
     postId?: true
-    postByUserId?: true
+    replyByUserId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -17795,7 +17795,7 @@ export namespace Prisma {
     id: number
     message: string
     postId: number
-    postByUserId: number
+    replyByUserId: number
     createdAt: Date
     updatedAt: Date
     _count: TwitterReplyCountAggregateOutputType | null
@@ -17825,7 +17825,7 @@ export namespace Prisma {
     post?: boolean | TwitterPostArgs
     postId?: boolean
     user?: boolean | TwitterUserArgs
-    postByUserId?: boolean
+    replyByUserId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -56772,7 +56772,7 @@ export namespace Prisma {
     id: 'id',
     message: 'message',
     postId: 'postId',
-    postByUserId: 'postByUserId',
+    replyByUserId: 'replyByUserId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -57502,7 +57502,7 @@ export namespace Prisma {
     user?: StringFilter | string
     category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput> | null
     categoryName?: StringFilter | string
-    score?: IntNullableFilter | number | null
+    score?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     roundQuizes?: TriviaRoundQuizListRelationFilter
@@ -57544,7 +57544,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     user?: StringWithAggregatesFilter | string
     categoryName?: StringWithAggregatesFilter | string
-    score?: IntNullableWithAggregatesFilter | number | null
+    score?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -57639,7 +57639,6 @@ export namespace Prisma {
 
   export type TwitterUserWhereUniqueInput = {
     id?: number
-    image?: string
     name?: string
   }
 
@@ -57672,7 +57671,7 @@ export namespace Prisma {
     OR?: Enumerable<TwitterUserRelationWhereInput>
     NOT?: Enumerable<TwitterUserRelationWhereInput>
     id?: IntFilter | number
-    follwer?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
+    follower?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
     followerId?: IntFilter | number
     following?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
     followingId?: IntFilter | number
@@ -57682,7 +57681,7 @@ export namespace Prisma {
 
   export type TwitterUserRelationOrderByWithRelationInput = {
     id?: SortOrder
-    follwer?: TwitterUserOrderByWithRelationInput
+    follower?: TwitterUserOrderByWithRelationInput
     followerId?: SortOrder
     following?: TwitterUserOrderByWithRelationInput
     followingId?: SortOrder
@@ -57692,6 +57691,7 @@ export namespace Prisma {
 
   export type TwitterUserRelationWhereUniqueInput = {
     id?: number
+    followerId_followingId?: TwitterUserRelationFollowerIdFollowingIdCompoundUniqueInput
   }
 
   export type TwitterUserRelationOrderByWithAggregationInput = {
@@ -57792,6 +57792,7 @@ export namespace Prisma {
 
   export type TwitterHashTagWhereUniqueInput = {
     id?: number
+    message?: string
   }
 
   export type TwitterHashTagOrderByWithAggregationInput = {
@@ -57825,7 +57826,7 @@ export namespace Prisma {
     post?: XOR<TwitterPostRelationFilter, TwitterPostWhereInput>
     postId?: IntFilter | number
     user?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
-    postByUserId?: IntFilter | number
+    replyByUserId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -57836,7 +57837,7 @@ export namespace Prisma {
     post?: TwitterPostOrderByWithRelationInput
     postId?: SortOrder
     user?: TwitterUserOrderByWithRelationInput
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -57849,7 +57850,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TwitterReplyCountOrderByAggregateInput
@@ -57866,7 +57867,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     message?: StringWithAggregatesFilter | string
     postId?: IntWithAggregatesFilter | number
-    postByUserId?: IntWithAggregatesFilter | number
+    replyByUserId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -60451,7 +60452,7 @@ export namespace Prisma {
   export type TriviaRoundCreateInput = {
     user: string
     category?: TriviaCategoryCreateNestedOneWithoutRoundsInput
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
     roundQuizes?: TriviaRoundQuizCreateNestedManyWithoutRoundInput
@@ -60461,7 +60462,7 @@ export namespace Prisma {
     id?: number
     user: string
     categoryName: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
     roundQuizes?: TriviaRoundQuizUncheckedCreateNestedManyWithoutRoundInput
@@ -60470,7 +60471,7 @@ export namespace Prisma {
   export type TriviaRoundUpdateInput = {
     user?: StringFieldUpdateOperationsInput | string
     category?: TriviaCategoryUpdateOneWithoutRoundsNestedInput
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundQuizes?: TriviaRoundQuizUpdateManyWithoutRoundNestedInput
@@ -60480,7 +60481,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     categoryName?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundQuizes?: TriviaRoundQuizUncheckedUpdateManyWithoutRoundNestedInput
@@ -60490,14 +60491,14 @@ export namespace Prisma {
     id?: number
     user: string
     categoryName: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TriviaRoundUpdateManyMutationInput = {
     user?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60506,7 +60507,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     categoryName?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60573,7 +60574,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
@@ -60587,7 +60588,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
@@ -60600,7 +60601,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
@@ -60614,7 +60615,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
@@ -60646,7 +60647,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationCreateInput = {
-    follwer: TwitterUserCreateNestedOneWithoutFollwersInput
+    follower: TwitterUserCreateNestedOneWithoutFollwersInput
     following: TwitterUserCreateNestedOneWithoutFollowingsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -60661,7 +60662,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationUpdateInput = {
-    follwer?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
+    follower?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
     following?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -60818,7 +60819,7 @@ export namespace Prisma {
     id?: number
     message: string
     postId: number
-    postByUserId: number
+    replyByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60835,7 +60836,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postId?: IntFieldUpdateOperationsInput | number
-    postByUserId?: IntFieldUpdateOperationsInput | number
+    replyByUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60844,7 +60845,7 @@ export namespace Prisma {
     id?: number
     message: string
     postId: number
-    postByUserId: number
+    replyByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60859,7 +60860,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
     postId?: IntFieldUpdateOperationsInput | number
-    postByUserId?: IntFieldUpdateOperationsInput | number
+    replyByUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -63944,6 +63945,11 @@ export namespace Prisma {
     isNot?: TwitterUserWhereInput
   }
 
+  export type TwitterUserRelationFollowerIdFollowingIdCompoundUniqueInput = {
+    followerId: number
+    followingId: number
+  }
+
   export type TwitterUserRelationCountOrderByAggregateInput = {
     id?: SortOrder
     followerId?: SortOrder
@@ -64062,7 +64068,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64070,14 +64076,14 @@ export namespace Prisma {
   export type TwitterReplyAvgOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
   }
 
   export type TwitterReplyMaxOrderByAggregateInput = {
     id?: SortOrder
     message?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64086,7 +64092,7 @@ export namespace Prisma {
     id?: SortOrder
     message?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -64094,7 +64100,7 @@ export namespace Prisma {
   export type TwitterReplySumOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    postByUserId?: SortOrder
+    replyByUserId?: SortOrder
   }
 
   export type TwitterDMCountOrderByAggregateInput = {
@@ -66516,10 +66522,10 @@ export namespace Prisma {
     update?: XOR<TriviaChoiceUpdateWithoutRoundQuizesInput, TriviaChoiceUncheckedUpdateWithoutRoundQuizesInput>
   }
 
-  export type TwitterUserRelationCreateNestedManyWithoutFollwerInput = {
-    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollwerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollwerInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollwerInput>
-    createMany?: TwitterUserRelationCreateManyFollwerInputEnvelope
+  export type TwitterUserRelationCreateNestedManyWithoutFollowerInput = {
+    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollowerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollowerInput>>
+    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollowerInput>
+    createMany?: TwitterUserRelationCreateManyFollowerInputEnvelope
     connect?: Enumerable<TwitterUserRelationWhereUniqueInput>
   }
 
@@ -66558,10 +66564,10 @@ export namespace Prisma {
     connect?: Enumerable<TwitterDMWhereUniqueInput>
   }
 
-  export type TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput = {
-    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollwerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollwerInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollwerInput>
-    createMany?: TwitterUserRelationCreateManyFollwerInputEnvelope
+  export type TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput = {
+    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollowerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollowerInput>>
+    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollowerInput>
+    createMany?: TwitterUserRelationCreateManyFollowerInputEnvelope
     connect?: Enumerable<TwitterUserRelationWhereUniqueInput>
   }
 
@@ -66600,17 +66606,17 @@ export namespace Prisma {
     connect?: Enumerable<TwitterDMWhereUniqueInput>
   }
 
-  export type TwitterUserRelationUpdateManyWithoutFollwerNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollwerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollwerInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollwerInput>
-    upsert?: Enumerable<TwitterUserRelationUpsertWithWhereUniqueWithoutFollwerInput>
-    createMany?: TwitterUserRelationCreateManyFollwerInputEnvelope
+  export type TwitterUserRelationUpdateManyWithoutFollowerNestedInput = {
+    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollowerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollowerInput>>
+    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollowerInput>
+    upsert?: Enumerable<TwitterUserRelationUpsertWithWhereUniqueWithoutFollowerInput>
+    createMany?: TwitterUserRelationCreateManyFollowerInputEnvelope
     set?: Enumerable<TwitterUserRelationWhereUniqueInput>
     disconnect?: Enumerable<TwitterUserRelationWhereUniqueInput>
     delete?: Enumerable<TwitterUserRelationWhereUniqueInput>
     connect?: Enumerable<TwitterUserRelationWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationUpdateWithWhereUniqueWithoutFollwerInput>
-    updateMany?: Enumerable<TwitterUserRelationUpdateManyWithWhereWithoutFollwerInput>
+    update?: Enumerable<TwitterUserRelationUpdateWithWhereUniqueWithoutFollowerInput>
+    updateMany?: Enumerable<TwitterUserRelationUpdateManyWithWhereWithoutFollowerInput>
     deleteMany?: Enumerable<TwitterUserRelationScalarWhereInput>
   }
 
@@ -66684,17 +66690,17 @@ export namespace Prisma {
     deleteMany?: Enumerable<TwitterDMScalarWhereInput>
   }
 
-  export type TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput = {
-    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollwerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollwerInput>>
-    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollwerInput>
-    upsert?: Enumerable<TwitterUserRelationUpsertWithWhereUniqueWithoutFollwerInput>
-    createMany?: TwitterUserRelationCreateManyFollwerInputEnvelope
+  export type TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput = {
+    create?: XOR<Enumerable<TwitterUserRelationCreateWithoutFollowerInput>, Enumerable<TwitterUserRelationUncheckedCreateWithoutFollowerInput>>
+    connectOrCreate?: Enumerable<TwitterUserRelationCreateOrConnectWithoutFollowerInput>
+    upsert?: Enumerable<TwitterUserRelationUpsertWithWhereUniqueWithoutFollowerInput>
+    createMany?: TwitterUserRelationCreateManyFollowerInputEnvelope
     set?: Enumerable<TwitterUserRelationWhereUniqueInput>
     disconnect?: Enumerable<TwitterUserRelationWhereUniqueInput>
     delete?: Enumerable<TwitterUserRelationWhereUniqueInput>
     connect?: Enumerable<TwitterUserRelationWhereUniqueInput>
-    update?: Enumerable<TwitterUserRelationUpdateWithWhereUniqueWithoutFollwerInput>
-    updateMany?: Enumerable<TwitterUserRelationUpdateManyWithWhereWithoutFollwerInput>
+    update?: Enumerable<TwitterUserRelationUpdateWithWhereUniqueWithoutFollowerInput>
+    updateMany?: Enumerable<TwitterUserRelationUpdateManyWithWhereWithoutFollowerInput>
     deleteMany?: Enumerable<TwitterUserRelationScalarWhereInput>
   }
 
@@ -70456,7 +70462,7 @@ export namespace Prisma {
 
   export type TriviaRoundCreateWithoutCategoryInput = {
     user: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
     roundQuizes?: TriviaRoundQuizCreateNestedManyWithoutRoundInput
@@ -70465,7 +70471,7 @@ export namespace Prisma {
   export type TriviaRoundUncheckedCreateWithoutCategoryInput = {
     id?: number
     user: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
     roundQuizes?: TriviaRoundQuizUncheckedCreateNestedManyWithoutRoundInput
@@ -70532,7 +70538,7 @@ export namespace Prisma {
     id?: IntFilter | number
     user?: StringFilter | string
     categoryName?: StringFilter | string
-    score?: IntNullableFilter | number | null
+    score?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -70946,7 +70952,7 @@ export namespace Prisma {
   export type TriviaRoundCreateWithoutRoundQuizesInput = {
     user: string
     category?: TriviaCategoryCreateNestedOneWithoutRoundsInput
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -70955,7 +70961,7 @@ export namespace Prisma {
     id?: number
     user: string
     categoryName: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -71019,7 +71025,7 @@ export namespace Prisma {
   export type TriviaRoundUpdateWithoutRoundQuizesInput = {
     user?: StringFieldUpdateOperationsInput | string
     category?: TriviaCategoryUpdateOneWithoutRoundsNestedInput
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -71028,7 +71034,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     categoryName?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -71079,31 +71085,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationCreateWithoutFollwerInput = {
+  export type TwitterUserRelationCreateWithoutFollowerInput = {
     following: TwitterUserCreateNestedOneWithoutFollowingsInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterUserRelationUncheckedCreateWithoutFollwerInput = {
+  export type TwitterUserRelationUncheckedCreateWithoutFollowerInput = {
     id?: number
     followingId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TwitterUserRelationCreateOrConnectWithoutFollwerInput = {
+  export type TwitterUserRelationCreateOrConnectWithoutFollowerInput = {
     where: TwitterUserRelationWhereUniqueInput
-    create: XOR<TwitterUserRelationCreateWithoutFollwerInput, TwitterUserRelationUncheckedCreateWithoutFollwerInput>
+    create: XOR<TwitterUserRelationCreateWithoutFollowerInput, TwitterUserRelationUncheckedCreateWithoutFollowerInput>
   }
 
-  export type TwitterUserRelationCreateManyFollwerInputEnvelope = {
-    data: Enumerable<TwitterUserRelationCreateManyFollwerInput>
+  export type TwitterUserRelationCreateManyFollowerInputEnvelope = {
+    data: Enumerable<TwitterUserRelationCreateManyFollowerInput>
     skipDuplicates?: boolean
   }
 
   export type TwitterUserRelationCreateWithoutFollowingInput = {
-    follwer: TwitterUserCreateNestedOneWithoutFollwersInput
+    follower: TwitterUserCreateNestedOneWithoutFollwersInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -71227,18 +71233,18 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TwitterUserRelationUpsertWithWhereUniqueWithoutFollwerInput = {
+  export type TwitterUserRelationUpsertWithWhereUniqueWithoutFollowerInput = {
     where: TwitterUserRelationWhereUniqueInput
-    update: XOR<TwitterUserRelationUpdateWithoutFollwerInput, TwitterUserRelationUncheckedUpdateWithoutFollwerInput>
-    create: XOR<TwitterUserRelationCreateWithoutFollwerInput, TwitterUserRelationUncheckedCreateWithoutFollwerInput>
+    update: XOR<TwitterUserRelationUpdateWithoutFollowerInput, TwitterUserRelationUncheckedUpdateWithoutFollowerInput>
+    create: XOR<TwitterUserRelationCreateWithoutFollowerInput, TwitterUserRelationUncheckedCreateWithoutFollowerInput>
   }
 
-  export type TwitterUserRelationUpdateWithWhereUniqueWithoutFollwerInput = {
+  export type TwitterUserRelationUpdateWithWhereUniqueWithoutFollowerInput = {
     where: TwitterUserRelationWhereUniqueInput
-    data: XOR<TwitterUserRelationUpdateWithoutFollwerInput, TwitterUserRelationUncheckedUpdateWithoutFollwerInput>
+    data: XOR<TwitterUserRelationUpdateWithoutFollowerInput, TwitterUserRelationUncheckedUpdateWithoutFollowerInput>
   }
 
-  export type TwitterUserRelationUpdateManyWithWhereWithoutFollwerInput = {
+  export type TwitterUserRelationUpdateManyWithWhereWithoutFollowerInput = {
     where: TwitterUserRelationScalarWhereInput
     data: XOR<TwitterUserRelationUpdateManyMutationInput, TwitterUserRelationUncheckedUpdateManyWithoutFollwersInput>
   }
@@ -71320,7 +71326,7 @@ export namespace Prisma {
     id?: IntFilter | number
     message?: StringFilter | string
     postId?: IntFilter | number
-    postByUserId?: IntFilter | number
+    replyByUserId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -71404,7 +71410,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
@@ -71417,7 +71423,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
@@ -71469,7 +71475,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
@@ -71482,7 +71488,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
@@ -71494,7 +71500,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
     twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
@@ -71507,7 +71513,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
     twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
@@ -71529,7 +71535,7 @@ export namespace Prisma {
   export type TwitterReplyUncheckedCreateWithoutPostInput = {
     id?: number
     message: string
-    postByUserId: number
+    replyByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -71572,7 +71578,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
     twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
@@ -71585,7 +71591,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
@@ -71699,7 +71705,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMCreateNestedManyWithoutDirectFromInput
@@ -71712,7 +71718,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
     directFroms?: TwitterDMUncheckedCreateNestedManyWithoutDirectFromInput
@@ -71756,7 +71762,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUpdateManyWithoutDirectFromNestedInput
@@ -71769,7 +71775,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     directFroms?: TwitterDMUncheckedUpdateManyWithoutDirectFromNestedInput
@@ -71781,7 +71787,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
@@ -71794,7 +71800,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
@@ -71811,7 +71817,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyCreateNestedManyWithoutUserInput
@@ -71824,7 +71830,7 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollwerInput
+    follwers?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowerInput
     followings?: TwitterUserRelationUncheckedCreateNestedManyWithoutFollowingInput
     twitterPosts?: TwitterPostUncheckedCreateNestedManyWithoutUserInput
     twitterReplies?: TwitterReplyUncheckedCreateNestedManyWithoutUserInput
@@ -71846,7 +71852,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
@@ -71859,7 +71865,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
@@ -71876,7 +71882,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUpdateManyWithoutUserNestedInput
@@ -71889,7 +71895,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollwerNestedInput
+    follwers?: TwitterUserRelationUncheckedUpdateManyWithoutFollowerNestedInput
     followings?: TwitterUserRelationUncheckedUpdateManyWithoutFollowingNestedInput
     twitterPosts?: TwitterPostUncheckedUpdateManyWithoutUserNestedInput
     twitterReplies?: TwitterReplyUncheckedUpdateManyWithoutUserNestedInput
@@ -77538,7 +77544,7 @@ export namespace Prisma {
   export type TriviaRoundCreateManyCategoryInput = {
     id?: number
     user: string
-    score?: number | null
+    score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -77572,7 +77578,7 @@ export namespace Prisma {
 
   export type TriviaRoundUpdateWithoutCategoryInput = {
     user?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundQuizes?: TriviaRoundQuizUpdateManyWithoutRoundNestedInput
@@ -77581,7 +77587,7 @@ export namespace Prisma {
   export type TriviaRoundUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundQuizes?: TriviaRoundQuizUncheckedUpdateManyWithoutRoundNestedInput
@@ -77590,7 +77596,7 @@ export namespace Prisma {
   export type TriviaRoundUncheckedUpdateManyWithoutRoundsInput = {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
-    score?: NullableIntFieldUpdateOperationsInput | number | null
+    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -77738,7 +77744,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationCreateManyFollwerInput = {
+  export type TwitterUserRelationCreateManyFollowerInput = {
     id?: number
     followingId: number
     createdAt?: Date | string
@@ -77783,13 +77789,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type TwitterUserRelationUpdateWithoutFollwerInput = {
+  export type TwitterUserRelationUpdateWithoutFollowerInput = {
     following?: TwitterUserUpdateOneRequiredWithoutFollowingsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TwitterUserRelationUncheckedUpdateWithoutFollwerInput = {
+  export type TwitterUserRelationUncheckedUpdateWithoutFollowerInput = {
     id?: IntFieldUpdateOperationsInput | number
     followingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -77804,7 +77810,7 @@ export namespace Prisma {
   }
 
   export type TwitterUserRelationUpdateWithoutFollowingInput = {
-    follwer?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
+    follower?: TwitterUserUpdateOneRequiredWithoutFollwersNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -77919,7 +77925,7 @@ export namespace Prisma {
   export type TwitterReplyCreateManyPostInput = {
     id?: number
     message: string
-    postByUserId: number
+    replyByUserId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -77934,7 +77940,7 @@ export namespace Prisma {
   export type TwitterReplyUncheckedUpdateWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
     message?: StringFieldUpdateOperationsInput | string
-    postByUserId?: IntFieldUpdateOperationsInput | number
+    replyByUserId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

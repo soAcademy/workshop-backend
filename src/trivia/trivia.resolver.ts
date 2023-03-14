@@ -1,12 +1,17 @@
 import { PrismaClient } from "../../prisma/client";
-// import { interface } from "./trivia.interface";
+import {
+  ICreateCategory,
+  ICreateQuiz,
+  IGetResults,
+  ISubmitQuestion,
+} from "./trivia.interface";
 
 export const prisma = new PrismaClient();
 
-export const sumNumber = (args: {x: number, y: number}) => args.x + args.y;
+export const sumNumber = (args: { x: number; y: number }) => args.x + args.y;
 
-// CATEGORY
-export const createCategory = (args: { name: string }) =>
+// CATEGORY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+export const createCategory = (args: ICreateCategory) =>
   prisma.triviaCategory.create({
     data: {
       name: args.name,
@@ -25,14 +30,9 @@ export const updateCategory = (args: { name1: string; name2: string }) =>
     },
   });
 
-// QUIZ
+// QUIZ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-export const createQuiz = (args: {
-  quiz: string;
-  answer: string;
-  categoryName: string;
-  choices: { choice: string }[];
-}) =>
+export const createQuiz = (args: ICreateQuiz) =>
   prisma.triviaQuiz.create({
     data: {
       quiz: args.quiz,
@@ -46,10 +46,13 @@ export const createQuiz = (args: {
     },
   });
 
-  export const updateQuiz = (args: { quizId: number; quiz: string;
-    answer: string;
-    categoryName: string;
-    choices: { choice: string }[]; }) =>
+export const updateQuiz = (args: {
+  quizId: number;
+  quiz: string;
+  answer: string;
+  categoryName: string;
+  choices: { choice: string }[];
+}) =>
   prisma.triviaQuiz.update({
     where: {
       id: args.quizId,
@@ -98,12 +101,8 @@ export const getQuizesByCategory = async (args: { categoryName: string }) => {
 
   return result;
 };
-
-export const submitQuestion = async (args: {
-  user: string;
-  roundQuizes: { quizId: number; userChoiceId: number }[];
-  categoryName: string;
-}) => {
+// ROUND %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+export const submitQuestion = async (args: ISubmitQuestion) => {
   try {
     const questions = await prisma.triviaQuiz.findMany({
       where: {
@@ -143,8 +142,11 @@ export const submitQuestion = async (args: {
     throw error;
   }
 };
-
-export const getResults = () =>
+// RESULTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+export const getResults = (args: IGetResults) =>
   prisma.triviaRound.findMany({
+    where: {
+      categoryName: args.name,
+    },
     orderBy: { score: "desc" },
   });

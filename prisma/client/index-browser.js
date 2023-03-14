@@ -346,7 +346,7 @@ exports.Prisma.TwitterReplyScalarFieldEnum = makeEnum({
   id: 'id',
   message: 'message',
   postId: 'postId',
-  postByUserId: 'postByUserId',
+  replyByUserId: 'replyByUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });

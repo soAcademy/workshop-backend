@@ -79,8 +79,9 @@ export const submitQuestionHandler = async (req: Request, res: Response) => {
 };
 
 export const getResultsHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
   try {
-    const result = await getResults(); 
+    const result = await getResults(body); 
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({
