@@ -34,6 +34,7 @@
     "prisma:generate": "yarn pnpify prisma generate --schema=prisma/schema.prisma",
     "test": "jest --verbose",
     "test:binQuiz": "jest -- src/binQuiz",
-    "test:todoList": "jest -- src/todoList"
+    "test:todoList": "jest -- src/todoList",
+    "test:twitter": "jest -- src/twitter"
   }
 }

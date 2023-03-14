@@ -1,9 +1,13 @@
 import * as t from "io-ts";
 
-export const CreateUserCodec = t.type({
-  name: t.string,
-  imageUrl: t.string || null,
-  bio: t.string || null,
-});
+export const CreateUserCodec = t.intersection([
+  t.type({
+    name: t.string,
+  }),
+  t.partial({
+    imageUrl: t.string,
+    bio: t.string,
+  }),
+]);
 
 export interface ICreateUser extends t.TypeOf<typeof CreateUserCodec> {}

@@ -436,8 +436,8 @@ export type TodoList = {
 export type User = {
   id: number
   name: string
-  imageUrl: string
-  bio: string
+  imageUrl: string | null
+  bio: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -35957,8 +35957,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl: string | null
+    bio: string | null
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -49552,8 +49552,8 @@ export namespace Prisma {
     NOT?: Enumerable<UserWhereInput>
     id?: IntFilter | number
     name?: StringFilter | string
-    imageUrl?: StringFilter | string
-    bio?: StringFilter | string
+    imageUrl?: StringNullableFilter | string | null
+    bio?: StringNullableFilter | string | null
     followingUserRelations?: UserRelationListRelationFilter
     followedUserRelations?: UserRelationListRelationFilter
     tweets?: TweetListRelationFilter
@@ -49601,8 +49601,8 @@ export namespace Prisma {
     NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     name?: StringWithAggregatesFilter | string
-    imageUrl?: StringWithAggregatesFilter | string
-    bio?: StringWithAggregatesFilter | string
+    imageUrl?: StringNullableWithAggregatesFilter | string | null
+    bio?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -52265,8 +52265,8 @@ export namespace Prisma {
 
   export type UserCreateInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetCreateNestedManyWithoutTweetingUserInput
@@ -52279,8 +52279,8 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
@@ -52292,8 +52292,8 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
@@ -52306,8 +52306,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
@@ -52320,16 +52320,16 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52337,8 +52337,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54767,6 +54767,21 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type StringNullableFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableFilter | string | null
+  }
+
   export type UserRelationListRelationFilter = {
     every?: UserRelationWhereInput
     some?: UserRelationWhereInput
@@ -54830,6 +54845,24 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter = {
+    equals?: string | null
+    in?: Enumerable<string> | null
+    notIn?: Enumerable<string> | null
+    lt?: string
+    lte?: string
+    gt?: string
+    gte?: string
+    contains?: string
+    startsWith?: string
+    endsWith?: string
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter | string | null
+    _count?: NestedIntNullableFilter
+    _min?: NestedStringNullableFilter
+    _max?: NestedStringNullableFilter
   }
 
   export type UserRelationFilter = {
@@ -54995,21 +55028,6 @@ export namespace Prisma {
     toUserId?: SortOrder
   }
 
-  export type StringNullableFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableFilter | string | null
-  }
-
   export type ChannelListRelationFilter = {
     every?: ChannelWhereInput
     some?: ChannelWhereInput
@@ -55093,24 +55111,6 @@ export namespace Prisma {
 
   export type YouTubeUserSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter | string | null
-    _count?: NestedIntNullableFilter
-    _min?: NestedStringNullableFilter
-    _max?: NestedStringNullableFilter
   }
 
   export type YouTubeUserListRelationFilter = {
@@ -57867,6 +57867,10 @@ export namespace Prisma {
     connect?: Enumerable<DirectMessageWhereUniqueInput>
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type UserRelationUpdateManyWithoutFollowingUserNestedInput = {
     create?: XOR<Enumerable<UserRelationCreateWithoutFollowingUserInput>, Enumerable<UserRelationUncheckedCreateWithoutFollowingUserInput>>
     connectOrCreate?: Enumerable<UserRelationCreateOrConnectWithoutFollowingUserInput>
@@ -58287,10 +58291,6 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<VideoCommentCreateOrConnectWithoutCommentingUserInput>
     createMany?: VideoCommentCreateManyCommentingUserInputEnvelope
     connect?: Enumerable<VideoCommentWhereUniqueInput>
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type ChannelUpdateManyWithoutAdminUsersNestedInput = {
@@ -63589,8 +63589,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutFollowingUserRelationsInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetCreateNestedManyWithoutTweetingUserInput
     directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
@@ -63602,8 +63602,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutFollowingUserRelationsInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
     directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
@@ -63619,8 +63619,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutFollowedUserRelationsInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
     tweets?: TweetCreateNestedManyWithoutTweetingUserInput
     directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
@@ -63632,8 +63632,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutFollowedUserRelationsInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
     tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
     directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
@@ -63654,8 +63654,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFollowingUserRelationsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
     directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
@@ -63667,8 +63667,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutFollowingUserRelationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
     directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
@@ -63684,8 +63684,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFollowedUserRelationsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
     tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
     directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
@@ -63697,8 +63697,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutFollowedUserRelationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
     tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
     directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
@@ -63709,8 +63709,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutTweetsInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
     directMessagesFrom?: DirectMessageCreateNestedManyWithoutFromUserInput
@@ -63722,8 +63722,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutTweetsInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
     directMessagesFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromUserInput
@@ -63815,8 +63815,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutTweetsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
     directMessagesFrom?: DirectMessageUpdateManyWithoutFromUserNestedInput
@@ -63828,8 +63828,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutTweetsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
     directMessagesFrom?: DirectMessageUncheckedUpdateManyWithoutFromUserNestedInput
@@ -63946,8 +63946,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutDirectMessagesFromInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetCreateNestedManyWithoutTweetingUserInput
@@ -63959,8 +63959,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutDirectMessagesFromInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
@@ -63976,8 +63976,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutDirectMessagesToInput = {
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetCreateNestedManyWithoutTweetingUserInput
@@ -63989,8 +63989,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutDirectMessagesToInput = {
     id?: number
     name: string
-    imageUrl: string
-    bio: string
+    imageUrl?: string | null
+    bio?: string | null
     followingUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowingUserInput
     followedUserRelations?: UserRelationUncheckedCreateNestedManyWithoutFollowedUserInput
     tweets?: TweetUncheckedCreateNestedManyWithoutTweetingUserInput
@@ -64011,8 +64011,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutDirectMessagesFromInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
@@ -64024,8 +64024,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutDirectMessagesFromInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
@@ -64041,8 +64041,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutDirectMessagesToInput = {
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUpdateManyWithoutTweetingUserNestedInput
@@ -64054,8 +64054,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutDirectMessagesToInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    imageUrl?: StringFieldUpdateOperationsInput | string
-    bio?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     followingUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowingUserNestedInput
     followedUserRelations?: UserRelationUncheckedUpdateManyWithoutFollowedUserNestedInput
     tweets?: TweetUncheckedUpdateManyWithoutTweetingUserNestedInput
