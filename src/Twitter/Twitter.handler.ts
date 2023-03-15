@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  createHashTag,
   createReplyTwitter,
   createTweet,
   createTweetWithHashTag,
@@ -59,9 +60,8 @@ export const getHashtagsTwitterHandler = async (
   req: Request,
   res: Response
 ) => {
-  const args = req.body;
   try {
-    const result = await getHashtagsTwitter(args);
+    const result = await getHashtagsTwitter();
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({
@@ -167,6 +167,20 @@ export const createTweetWithHashTagHandler = async (
   const args = req.body;
   try {
     const result = await createTweetWithHashTag(args);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(500).json({
+      error: String(e),
+    });
+  }
+};
+
+//------------------------------------------------------------
+
+export const createHashTagHandler = async (req: Request, res: Response) => {
+  const args = req.body;
+  try {
+    const result = await createHashTag(args);
     res.status(200).json(result);
   } catch (e) {
     res.status(500).json({

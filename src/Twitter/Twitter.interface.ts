@@ -22,7 +22,7 @@ export interface IGetUserProfileTwitterCodec
 export const createTweetCodec = t.type({
   message: t.string,
   userId: t.number,
-  hashTags: t.array(t.string),
+  // hashTags: t.array(t.string),
 });
 export interface ICreateTweetCodec extends t.TypeOf<typeof createTweetCodec> {}
 

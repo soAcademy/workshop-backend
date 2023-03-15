@@ -53,41 +53,17 @@ export const createTweet = async (args: ICreateTweetCodec) => {
     },
   });
 
-  //   if (args.hashTags) {
-  //     await prisma.hashTag.createMany({
-  //      data: args.hashTags.map((hashTag) => ({ name: hashTag })),
-  //    });
-
-  //   const createdHashTag = await prisma.hashTag.findMany({
-  //     where: {
-  //      name: {
-  //           in: args.hashTags.map((hashtag) => hashtag),
-  //       // ['abc','dcb','bdf']
-  //       },
-  //     },
-  //       orderBy: { id: "asc" },
-  //       distinct: ["name"], //unique
-  //     });
-
-  //    hashtag & post relation  : many Hashtag > one post
-  //     await prisma.hashTagOnPost.createMany({
-  //       data: createdHashTag.map((r) => ({
-  //        hashTagId: r.id,
-  //      postId: createdTweet.id,
-  //     })),
-  //   });
-  //    return {
-  //      createdTweet,
-  //       createdHashTag,
-  //     };
-  //  }
   return createdTweet;
 };
+
+//-------------------------------------------------------------------
 
 export const createTweetWithHashTag = async (args: {
   hashTagName: string[];
   postId: number;
 }) => {
+  console.log(args);
+
   const createTweetWithHashTag = await Promise.all(
     args.hashTagName.map((r) =>
       prisma.hashTagOnPost.create({
@@ -101,8 +77,36 @@ export const createTweetWithHashTag = async (args: {
   return createTweetWithHashTag;
 };
 
-export const getHashtagsTwitter = (args: IGetHashtagsTwitter) =>
-  prisma.hashTag.findMany({});
+export const createHashTag = async (args: {
+  postId: number;
+  hashTagName: string;
+}) => {
+  const hashtagResult = await prisma.hashTag.upsert({
+    //upsert = update0rcreate
+    where: {
+      name: args.hashTagName,
+    },
+    create: {
+      name: args.hashTagName,
+    },
+    update: {
+      name: args.hashTagName,
+    },
+  });
+  // console.log(hashtagResult);
+
+  const result = await prisma.hashTagOnPost.create({
+    data: {
+      postId: args.postId,
+      hashTagName: hashtagResult.name,
+    },
+  });
+  return result;
+};
+
+//-------------------------------------------------------------------
+
+export const getHashtagsTwitter = () => prisma.hashTag.findMany({});
 
 export const getPostByHashtagTwitter = (args: { hashTagName: string }) =>
   prisma.hashTagOnPost.findMany({
@@ -134,7 +138,7 @@ export const createReplyTwitter = (args: ICreateReplyTwitter) =>
       userId: args.userId,
     },
   });
-
+//---------------------------- DELETE ZONE ------------------------------
 // //delete post
 export const deletePostTweet = (args: { id: number }) =>
   prisma.post.delete({

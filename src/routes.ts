@@ -22,6 +22,7 @@
 //   submitQuizHandler,
 // } from "./QuestionQuiz";
 import {
+  createHashTagHandler,
   createReplyTwitterHandler,
   createTweetHandler,
   createTweetWithHashTagHandler,
@@ -338,6 +339,11 @@ export const AppRoutes = [
     path: "/twitter/createTweetWithHashTag",
     method: "post",
     action: createTweetWithHashTagHandler,
+  },
+  {
+    path: "/twitter/createHashTagHashTag",
+    method: "post",
+    action: createHashTagHandler,
   },
 
   //------------- twitter ----------------
