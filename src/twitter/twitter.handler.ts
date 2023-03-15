@@ -1,12 +1,17 @@
 import { Request, Response } from "express";
 import {
+  createUser,
   createUserPost,
-  getHashtags,
+  getSumHashtags,
   getPostByHashtag,
   getPostByUser,
+  getPosts,
   getUserProfile,
+  getUsers,
+  getHashtags,
 } from "./twitter.resolver";
 import {
+  CreateUserCodec,
   CreateUserPostCodec,
   GetPostByHashtagCodec,
   GetPostByUserCodec,
@@ -32,6 +37,14 @@ export const CreateUserPostHandler = async (req: Request, res: Response) => {
     CreateUserPostCodec.decode(body)._tag === "Right"
       ? res.status(200).json(await createUserPost(body))
       : res.status(500).json({ error: "Invalid type Input" });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const GetSumHashtagsHandler = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(await getSumHashtags());
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
@@ -63,6 +76,34 @@ export const GetPostByUserHandler = async (req: Request, res: Response) => {
   try {
     GetPostByUserCodec.decode(body)._tag === "Right"
       ? res.status(200).json(await getPostByUser(body))
+      : res.status(500).json({ error: "Invalid type Input" });
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const GetPostsHandler = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(await getPosts());
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const GetUsersHandler = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(await getUsers());
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const CreateUserHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log(body);
+  try {
+    CreateUserCodec.decode(body)._tag === "Right"
+      ? res.status(200).json(await createUser(body))
       : res.status(500).json({ error: "Invalid type Input" });
   } catch (e) {
     res.status(500).json({ error: String(e) });

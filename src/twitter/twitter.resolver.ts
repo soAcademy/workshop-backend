@@ -1,5 +1,6 @@
 import { PrismaClient } from "../../prisma/client";
 import {
+  ICreateUser,
   ICreateUserPost,
   IGetPostByHashtag,
   IGetPostByUser,
@@ -42,6 +43,19 @@ export const createUserPost = async (args: ICreateUserPost) =>
     },
   });
 
+export const getSumHashtags = async () =>
+  prisma.hashtagOnPost.groupBy({
+    by: ["hashtagId"],
+    _count: {
+      hashtagId: true,
+    },
+    orderBy: {
+      _count: {
+        hashtagId: "desc",
+      },
+    },
+  });
+
 export const getHashtags = async () => prisma.hashtag.findMany();
 
 export const getPostByHashtag = async (args: IGetPostByHashtag) =>
@@ -53,6 +67,15 @@ export const getPostByHashtag = async (args: IGetPostByHashtag) =>
         },
       },
     },
+    include: {
+      user: true,
+      replies: true,
+      hashtagOnPosts: {
+        include: {
+          hashtag: true,
+        },
+      },
+    },
   });
 
 export const getPostByUser = async (args: IGetPostByUser) =>
@@ -61,10 +84,50 @@ export const getPostByUser = async (args: IGetPostByUser) =>
       userId: args.userId,
     },
     include: {
+      user: true,
       replies: {
         where: {
           userId: args.userId,
         },
       },
+      hashtagOnPosts: {
+        include: {
+          hashtag: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+export const getPosts = async () =>
+  prisma.post.findMany({
+    include: {
+      user: true,
+      replies: true,
+      hashtagOnPosts: {
+        include: {
+          hashtag: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+export const getUsers = async () =>
+  prisma.user.findMany({
+    orderBy: {
+      username: "asc",
+    },
+  });
+
+export const createUser = async (args: ICreateUser) =>
+  prisma.user.create({
+    data: {
+      username: args.username,
+      image: args.image,
     },
   });

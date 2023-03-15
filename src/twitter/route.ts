@@ -1,9 +1,13 @@
 import {
+  CreateUserHandler,
   CreateUserPostHandler,
-  GetHashtagsHandler,
+  GetSumHashtagsHandler,
   GetPostByHashtagHandler,
   GetPostByUserHandler,
+  GetPostsHandler,
   GetUserProfileHandler,
+  GetUsersHandler,
+  GetHashtagsHandler,
 } from "./twitter.handler";
 
 export const AppRoutes = [
@@ -16,6 +20,11 @@ export const AppRoutes = [
     path: "/twitter/createUserPost",
     method: "post",
     action: CreateUserPostHandler,
+  },
+  {
+    path: "/twitter/getSumHashtags",
+    method: "post",
+    action: GetSumHashtagsHandler,
   },
   {
     path: "/twitter/getHashtags",
@@ -31,5 +40,20 @@ export const AppRoutes = [
     path: "/twitter/getPostByUser",
     method: "post",
     action: GetPostByUserHandler,
+  },
+  {
+    path: "/twitter/getPosts",
+    method: "post",
+    action: GetPostsHandler,
+  },
+  {
+    path: "/twitter/getUsers",
+    method: "post",
+    action: GetUsersHandler,
+  },
+  {
+    path: "/twitter/createUser",
+    method: "post",
+    action: CreateUserHandler,
   },
 ];

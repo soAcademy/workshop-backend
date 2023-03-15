@@ -16,3 +16,6 @@ export interface IGetPostByHashtag
 
 export const GetPostByUserCodec = t.type({ userId: t.number });
 export interface IGetPostByUser extends t.TypeOf<typeof GetPostByUserCodec> {}
+
+export const CreateUserCodec = t.type({ username: t.string, image: t.string });
+export interface ICreateUser extends t.TypeOf<typeof CreateUserCodec> {}
