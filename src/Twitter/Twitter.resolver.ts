@@ -1,10 +1,16 @@
 import { number } from "io-ts";
 import { PrismaClient } from "../../prisma/client";
 import {
+  ICreateHashTag,
   ICreateReplyTwitter,
   ICreateTweetCodec,
+  ICreateTweetWithHash,
   ICreateUserTwitterCodec,
+  IDeletePostTweet,
+  IDeleteReplyTweet,
+  IDeleteUserTweet,
   IGetHashtagsTwitter,
+  IGetPostByHashtagTwitter,
   IGetPostByUserTwitter,
   IGetUserProfileTwitterCodec,
 } from "./Twitter.interface";
@@ -58,10 +64,7 @@ export const createTweet = async (args: ICreateTweetCodec) => {
 
 //-------------------------------------------------------------------
 
-export const createTweetWithHashTag = async (args: {
-  hashTagName: string[];
-  postId: number;
-}) => {
+export const createTweetWithHashTag = async (args: ICreateTweetWithHash) => {
   console.log(args);
 
   const createTweetWithHashTag = await Promise.all(
@@ -77,10 +80,7 @@ export const createTweetWithHashTag = async (args: {
   return createTweetWithHashTag;
 };
 
-export const createHashTag = async (args: {
-  postId: number;
-  hashTagName: string;
-}) => {
+export const createHashTag = async (args: ICreateHashTag) => {
   const hashtagResult = await prisma.hashTag.upsert({
     //upsert = update0rcreate
     where: {
@@ -108,7 +108,7 @@ export const createHashTag = async (args: {
 
 export const getHashtagsTwitter = () => prisma.hashTag.findMany({});
 
-export const getPostByHashtagTwitter = (args: { hashTagName: string }) =>
+export const getPostByHashtagTwitter = (args: IGetPostByHashtagTwitter) =>
   prisma.hashTagOnPost.findMany({
     where: {
       hashTagName: args.hashTagName,
@@ -140,21 +140,21 @@ export const createReplyTwitter = (args: ICreateReplyTwitter) =>
   });
 //---------------------------- DELETE ZONE ------------------------------
 // //delete post
-export const deletePostTweet = (args: { id: number }) =>
+export const deletePostTweet = (args: IDeletePostTweet) =>
   prisma.post.delete({
     where: {
       id: args.id,
     },
   });
 // //delete user
-export const deleteUserTweet = (args: { id: number }) =>
+export const deleteUserTweet = (args: IDeleteUserTweet) =>
   prisma.user.delete({
     where: {
       id: args.id,
     },
   });
 // //delete reply
-export const deleteReplyTweet = (args: { id: number }) =>
+export const deleteReplyTweet = (args: IDeleteReplyTweet) =>
   prisma.reply.delete({
     where: {
       id: args.id,

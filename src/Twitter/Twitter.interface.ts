@@ -55,4 +55,59 @@ export const createReplyTwitterCodec = t.type({
 export interface ICreateReplyTwitter
   extends t.TypeOf<typeof createReplyTwitterCodec> {}
 
-//-----------------------------------------------------
+//------------------------------------------------------
+
+export const createTweetWithHashTagCodec = t.type({
+  hashTagName: t.array(t.string),
+  postId: t.number,
+});
+
+export interface ICreateTweetWithHash
+  extends t.TypeOf<typeof createTweetWithHashTagCodec> {}
+
+//------------------------------------------------------
+
+export const createHashTagCodec = t.type({
+  postId: t.number,
+  hashTagName: t.string,
+});
+
+export interface ICreateHashTag extends t.TypeOf<typeof createHashTagCodec> {}
+
+//------------------------------------------------------
+
+export const getPostByHashtagTwitterCodec = t.type({
+  hashTagName: t.string,
+});
+
+export interface IGetPostByHashtagTwitter
+  extends t.TypeOf<typeof getPostByHashtagTwitterCodec> {}
+
+//------------------------------------------------------
+
+export const deletePostTweetCodec = t.type({
+  id: t.number,
+});
+
+export interface IDeletePostTweet
+  extends t.TypeOf<typeof deletePostTweetCodec> {}
+
+//------------------------------------------------------
+
+export const deleteUserTweetCodec = t.type({
+  id: t.number,
+});
+
+export interface IDeleteUserTweet
+  extends t.TypeOf<typeof deleteUserTweetCodec> {}
+
+//------------------------------------------------------
+
+export const deleteReplyTweetCodec = t.type({
+  id: t.number,
+});
+
+export interface IDeleteReplyTweet
+  extends t.TypeOf<typeof deleteReplyTweetCodec> {}
+
+//------------------------------------------------------
