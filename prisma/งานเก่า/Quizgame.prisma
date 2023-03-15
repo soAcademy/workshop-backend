@@ -15,7 +15,6 @@ model Question {
   createdAt      DateTime        @default(now())
   updateAt       DateTime        @updatedAt
   quizCatId      Int
-  answerId       Int
   roundQuestions RoundQuestion[]
 }
 

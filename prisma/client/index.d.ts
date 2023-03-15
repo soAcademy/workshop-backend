@@ -11,78 +11,39 @@ type UnwrapTuple<Tuple extends readonly unknown[]> = {
 
 
 /**
- * Model BinKitchenCategory
+ * Model user
  * 
  */
-export type BinKitchenCategory = {
+export type user = {
   id: number
-  name: string
+  nameUser: string
+  category: string
+  createdAt: Date
+}
+
+/**
+ * Model Category
+ * 
+ */
+export type Category = {
+  id: number
+  category: string
   createdAt: Date
   updatedAt: Date
 }
 
 /**
- * Model BinKitchenMenu
+ * Model Quiz
  * 
  */
-export type BinKitchenMenu = {
+export type Quiz = {
   id: number
-  name: string
-  image: string
-  price: number
-  categoryName: string | null
+  quiz: string
+  categoryNameId: number | null
+  quizAnswerId: number
   createdAt: Date
-  updateAt: Date
-}
-
-/**
- * Model BinKitchenOrder
- * 
- */
-export type BinKitchenOrder = {
-  id: number
-  status: string
-  tableId: number
-  createdAt: Date
-  updateAt: Date
-}
-
-/**
- * Model BinKitchenOrderItem
- * 
- */
-export type BinKitchenOrderItem = {
-  id: number
-  menuId: number
-  orderId: number | null
-  quantity: number
-  totalPrice: number
-  createdAt: Date
-  updateAt: Date
-}
-
-/**
- * Model QuizCat
- * 
- */
-export type QuizCat = {
-  id: number
-  name: string
-  createdAt: Date
-  updateAt: Date
-}
-
-/**
- * Model Question
- * 
- */
-export type Question = {
-  id: number
-  question: string
-  createdAt: Date
-  updateAt: Date
-  quizCatId: number
-  answerId: number
+  updatedAt: Date
+  categoryId: number
 }
 
 /**
@@ -91,11 +52,10 @@ export type Question = {
  */
 export type Choice = {
   id: number
-  questionId: number
   choice: string
   createdAt: Date
-  updateAt: Date
-  questionsId: number | null
+  updatedAt: Date
+  quizId: number | null
 }
 
 /**
@@ -104,121 +64,22 @@ export type Choice = {
  */
 export type Round = {
   id: number
-  score: number
   createdAt: Date
   updateAt: Date
-  quizCatId: number
+  categoryId: number | null
 }
 
 /**
- * Model RoundQuestion
+ * Model RoundQuiz
  * 
  */
-export type RoundQuestion = {
+export type RoundQuiz = {
   id: number
+  category: string
+  createdAt: Date
   roundId: number | null
-  questionId: number
-  choiceId: number
-  createdAt: Date
-  updateAt: Date
-}
-
-/**
- * Model TodoList
- * 
- */
-export type TodoList = {
-  id: number
-  task: string
-  status: string
-  notes: string | null
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model Following
- * 
- */
-export type Following = {
-  id: number
-  createdAt: Date
-  updatedAt: Date
-  fromUserId: number
-  toUserId: number
-}
-
-/**
- * Model User
- * 
- */
-export type User = {
-  id: number
-  name: string
-  profileImage: string
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model Post
- * 
- */
-export type Post = {
-  id: number
-  message: string
-  createdAt: Date
-  updatedAt: Date
-  userId: number
-}
-
-/**
- * Model DirectMessage
- * 
- */
-export type DirectMessage = {
-  id: number
-  message: string
-  createdAt: Date
-  updatedAt: Date
-  fromUserId: number
-  toUserId: number
-}
-
-/**
- * Model MessageToHashTag
- * 
- */
-export type MessageToHashTag = {
-  id: number
-  createdAt: Date
-  updatedAt: Date
-  postId: number
-  hashtagId: number
-}
-
-/**
- * Model Hashtag
- * 
- */
-export type Hashtag = {
-  id: number
-  name: string
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model PostReply
- * 
- */
-export type PostReply = {
-  id: number
-  message: string
-  createdAt: Date
-  updatedAt: Date
-  userId: number
-  postId: number
+  choiceId: number | null
+  quizId: number | null
 }
 
 
@@ -229,8 +90,8 @@ export type PostReply = {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more BinKitchenCategories
- * const binKitchenCategories = await prisma.binKitchenCategory.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  * 
@@ -243,6 +104,8 @@ export class PrismaClient<
     ? T['rejectOnNotFound']
     : false
       > {
+  triviaCategory: any;
+  triviaQuiz: any;
     /**
    * ##  Prisma Client ʲˢ
    * 
@@ -250,8 +113,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more BinKitchenCategories
-   * const binKitchenCategories = await prisma.binKitchenCategory.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    * 
@@ -340,64 +203,34 @@ export class PrismaClient<
   $transaction<R>(fn: (prisma: Omit<this, "$connect" | "$disconnect" | "$on" | "$transaction" | "$use">) => Promise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): Promise<R>
 
       /**
-   * `prisma.binKitchenCategory`: Exposes CRUD operations for the **BinKitchenCategory** model.
+   * `prisma.user`: Exposes CRUD operations for the **user** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more BinKitchenCategories
-    * const binKitchenCategories = await prisma.binKitchenCategory.findMany()
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
     * ```
     */
-  get binKitchenCategory(): Prisma.BinKitchenCategoryDelegate<GlobalReject>;
+  get user(): Prisma.userDelegate<GlobalReject>;
 
   /**
-   * `prisma.binKitchenMenu`: Exposes CRUD operations for the **BinKitchenMenu** model.
+   * `prisma.category`: Exposes CRUD operations for the **Category** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more BinKitchenMenus
-    * const binKitchenMenus = await prisma.binKitchenMenu.findMany()
+    * // Fetch zero or more Categories
+    * const categories = await prisma.category.findMany()
     * ```
     */
-  get binKitchenMenu(): Prisma.BinKitchenMenuDelegate<GlobalReject>;
+  get category(): Prisma.CategoryDelegate<GlobalReject>;
 
   /**
-   * `prisma.binKitchenOrder`: Exposes CRUD operations for the **BinKitchenOrder** model.
+   * `prisma.quiz`: Exposes CRUD operations for the **Quiz** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more BinKitchenOrders
-    * const binKitchenOrders = await prisma.binKitchenOrder.findMany()
+    * // Fetch zero or more Quizzes
+    * const quizzes = await prisma.quiz.findMany()
     * ```
     */
-  get binKitchenOrder(): Prisma.BinKitchenOrderDelegate<GlobalReject>;
-
-  /**
-   * `prisma.binKitchenOrderItem`: Exposes CRUD operations for the **BinKitchenOrderItem** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BinKitchenOrderItems
-    * const binKitchenOrderItems = await prisma.binKitchenOrderItem.findMany()
-    * ```
-    */
-  get binKitchenOrderItem(): Prisma.BinKitchenOrderItemDelegate<GlobalReject>;
-
-  /**
-   * `prisma.quizCat`: Exposes CRUD operations for the **QuizCat** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more QuizCats
-    * const quizCats = await prisma.quizCat.findMany()
-    * ```
-    */
-  get quizCat(): Prisma.QuizCatDelegate<GlobalReject>;
-
-  /**
-   * `prisma.question`: Exposes CRUD operations for the **Question** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Questions
-    * const questions = await prisma.question.findMany()
-    * ```
-    */
-  get question(): Prisma.QuestionDelegate<GlobalReject>;
+  get quiz(): Prisma.QuizDelegate<GlobalReject>;
 
   /**
    * `prisma.choice`: Exposes CRUD operations for the **Choice** model.
@@ -420,94 +253,14 @@ export class PrismaClient<
   get round(): Prisma.RoundDelegate<GlobalReject>;
 
   /**
-   * `prisma.roundQuestion`: Exposes CRUD operations for the **RoundQuestion** model.
+   * `prisma.roundQuiz`: Exposes CRUD operations for the **RoundQuiz** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more RoundQuestions
-    * const roundQuestions = await prisma.roundQuestion.findMany()
+    * // Fetch zero or more RoundQuizs
+    * const roundQuizs = await prisma.roundQuiz.findMany()
     * ```
     */
-  get roundQuestion(): Prisma.RoundQuestionDelegate<GlobalReject>;
-
-  /**
-   * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more TodoLists
-    * const todoLists = await prisma.todoList.findMany()
-    * ```
-    */
-  get todoList(): Prisma.TodoListDelegate<GlobalReject>;
-
-  /**
-   * `prisma.following`: Exposes CRUD operations for the **Following** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Followings
-    * const followings = await prisma.following.findMany()
-    * ```
-    */
-  get following(): Prisma.FollowingDelegate<GlobalReject>;
-
-  /**
-   * `prisma.user`: Exposes CRUD operations for the **User** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): Prisma.UserDelegate<GlobalReject>;
-
-  /**
-   * `prisma.post`: Exposes CRUD operations for the **Post** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Posts
-    * const posts = await prisma.post.findMany()
-    * ```
-    */
-  get post(): Prisma.PostDelegate<GlobalReject>;
-
-  /**
-   * `prisma.directMessage`: Exposes CRUD operations for the **DirectMessage** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more DirectMessages
-    * const directMessages = await prisma.directMessage.findMany()
-    * ```
-    */
-  get directMessage(): Prisma.DirectMessageDelegate<GlobalReject>;
-
-  /**
-   * `prisma.messageToHashTag`: Exposes CRUD operations for the **MessageToHashTag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more MessageToHashTags
-    * const messageToHashTags = await prisma.messageToHashTag.findMany()
-    * ```
-    */
-  get messageToHashTag(): Prisma.MessageToHashTagDelegate<GlobalReject>;
-
-  /**
-   * `prisma.hashtag`: Exposes CRUD operations for the **Hashtag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Hashtags
-    * const hashtags = await prisma.hashtag.findMany()
-    * ```
-    */
-  get hashtag(): Prisma.HashtagDelegate<GlobalReject>;
-
-  /**
-   * `prisma.postReply`: Exposes CRUD operations for the **PostReply** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more PostReplies
-    * const postReplies = await prisma.postReply.findMany()
-    * ```
-    */
-  get postReply(): Prisma.PostReplyDelegate<GlobalReject>;
+  get roundQuiz(): Prisma.RoundQuizDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -977,23 +730,12 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    BinKitchenCategory: 'BinKitchenCategory',
-    BinKitchenMenu: 'BinKitchenMenu',
-    BinKitchenOrder: 'BinKitchenOrder',
-    BinKitchenOrderItem: 'BinKitchenOrderItem',
-    QuizCat: 'QuizCat',
-    Question: 'Question',
+    user: 'user',
+    Category: 'Category',
+    Quiz: 'Quiz',
     Choice: 'Choice',
     Round: 'Round',
-    RoundQuestion: 'RoundQuestion',
-    TodoList: 'TodoList',
-    Following: 'Following',
-    User: 'User',
-    Post: 'Post',
-    DirectMessage: 'DirectMessage',
-    MessageToHashTag: 'MessageToHashTag',
-    Hashtag: 'Hashtag',
-    PostReply: 'PostReply'
+    RoundQuiz: 'RoundQuiz'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1155,161 +897,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type BinKitchenCategoryCountOutputType
+   * Count Type CategoryCountOutputType
    */
 
 
-  export type BinKitchenCategoryCountOutputType = {
-    menus: number
-  }
-
-  export type BinKitchenCategoryCountOutputTypeSelect = {
-    menus?: boolean
-  }
-
-  export type BinKitchenCategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | BinKitchenCategoryCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenCategoryCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenCategoryCountOutputTypeArgs)
-    ? BinKitchenCategoryCountOutputType 
-    : S extends { select: any } & (BinKitchenCategoryCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof BinKitchenCategoryCountOutputType ? BinKitchenCategoryCountOutputType[P] : never
-  } 
-      : BinKitchenCategoryCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenCategoryCountOutputType without action
-   */
-  export type BinKitchenCategoryCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategoryCountOutputType
-     */
-    select?: BinKitchenCategoryCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type BinKitchenMenuCountOutputType
-   */
-
-
-  export type BinKitchenMenuCountOutputType = {
-    binKitchenOrderItem: number
-  }
-
-  export type BinKitchenMenuCountOutputTypeSelect = {
-    binKitchenOrderItem?: boolean
-  }
-
-  export type BinKitchenMenuCountOutputTypeGetPayload<S extends boolean | null | undefined | BinKitchenMenuCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenMenuCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenMenuCountOutputTypeArgs)
-    ? BinKitchenMenuCountOutputType 
-    : S extends { select: any } & (BinKitchenMenuCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof BinKitchenMenuCountOutputType ? BinKitchenMenuCountOutputType[P] : never
-  } 
-      : BinKitchenMenuCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenMenuCountOutputType without action
-   */
-  export type BinKitchenMenuCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenuCountOutputType
-     */
-    select?: BinKitchenMenuCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type BinKitchenOrderCountOutputType
-   */
-
-
-  export type BinKitchenOrderCountOutputType = {
-    items: number
-  }
-
-  export type BinKitchenOrderCountOutputTypeSelect = {
-    items?: boolean
-  }
-
-  export type BinKitchenOrderCountOutputTypeGetPayload<S extends boolean | null | undefined | BinKitchenOrderCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenOrderCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenOrderCountOutputTypeArgs)
-    ? BinKitchenOrderCountOutputType 
-    : S extends { select: any } & (BinKitchenOrderCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof BinKitchenOrderCountOutputType ? BinKitchenOrderCountOutputType[P] : never
-  } 
-      : BinKitchenOrderCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenOrderCountOutputType without action
-   */
-  export type BinKitchenOrderCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderCountOutputType
-     */
-    select?: BinKitchenOrderCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type QuizCatCountOutputType
-   */
-
-
-  export type QuizCatCountOutputType = {
-    questions: number
+  export type CategoryCountOutputType = {
+    quiz: number
     rounds: number
   }
 
-  export type QuizCatCountOutputTypeSelect = {
-    questions?: boolean
+  export type CategoryCountOutputTypeSelect = {
+    quiz?: boolean
     rounds?: boolean
   }
 
-  export type QuizCatCountOutputTypeGetPayload<S extends boolean | null | undefined | QuizCatCountOutputTypeArgs> =
+  export type CategoryCountOutputTypeGetPayload<S extends boolean | null | undefined | CategoryCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? QuizCatCountOutputType :
+    S extends true ? CategoryCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (QuizCatCountOutputTypeArgs)
-    ? QuizCatCountOutputType 
-    : S extends { select: any } & (QuizCatCountOutputTypeArgs)
+    S extends { include: any } & (CategoryCountOutputTypeArgs)
+    ? CategoryCountOutputType 
+    : S extends { select: any } & (CategoryCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof QuizCatCountOutputType ? QuizCatCountOutputType[P] : never
+    P extends keyof CategoryCountOutputType ? CategoryCountOutputType[P] : never
   } 
-      : QuizCatCountOutputType
+      : CategoryCountOutputType
 
 
 
@@ -1317,44 +930,44 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * QuizCatCountOutputType without action
+   * CategoryCountOutputType without action
    */
-  export type QuizCatCountOutputTypeArgs = {
+  export type CategoryCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the QuizCatCountOutputType
+     * Select specific fields to fetch from the CategoryCountOutputType
      */
-    select?: QuizCatCountOutputTypeSelect | null
+    select?: CategoryCountOutputTypeSelect | null
   }
 
 
 
   /**
-   * Count Type QuestionCountOutputType
+   * Count Type QuizCountOutputType
    */
 
 
-  export type QuestionCountOutputType = {
+  export type QuizCountOutputType = {
     choices: number
-    roundQuestions: number
+    roundQuiz: number
   }
 
-  export type QuestionCountOutputTypeSelect = {
+  export type QuizCountOutputTypeSelect = {
     choices?: boolean
-    roundQuestions?: boolean
+    roundQuiz?: boolean
   }
 
-  export type QuestionCountOutputTypeGetPayload<S extends boolean | null | undefined | QuestionCountOutputTypeArgs> =
+  export type QuizCountOutputTypeGetPayload<S extends boolean | null | undefined | QuizCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? QuestionCountOutputType :
+    S extends true ? QuizCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (QuestionCountOutputTypeArgs)
-    ? QuestionCountOutputType 
-    : S extends { select: any } & (QuestionCountOutputTypeArgs)
+    S extends { include: any } & (QuizCountOutputTypeArgs)
+    ? QuizCountOutputType 
+    : S extends { select: any } & (QuizCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof QuestionCountOutputType ? QuestionCountOutputType[P] : never
+    P extends keyof QuizCountOutputType ? QuizCountOutputType[P] : never
   } 
-      : QuestionCountOutputType
+      : QuizCountOutputType
 
 
 
@@ -1362,13 +975,13 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * QuestionCountOutputType without action
+   * QuizCountOutputType without action
    */
-  export type QuestionCountOutputTypeArgs = {
+  export type QuizCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the QuestionCountOutputType
+     * Select specific fields to fetch from the QuizCountOutputType
      */
-    select?: QuestionCountOutputTypeSelect | null
+    select?: QuizCountOutputTypeSelect | null
   }
 
 
@@ -1379,11 +992,11 @@ export namespace Prisma {
 
 
   export type ChoiceCountOutputType = {
-    roundQuestions: number
+    roundQuiz: number
   }
 
   export type ChoiceCountOutputTypeSelect = {
-    roundQuestions?: boolean
+    roundQuiz?: boolean
   }
 
   export type ChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | ChoiceCountOutputTypeArgs> =
@@ -1422,11 +1035,11 @@ export namespace Prisma {
 
 
   export type RoundCountOutputType = {
-    questions: number
+    roundQiuz: number
   }
 
   export type RoundCountOutputTypeSelect = {
-    questions?: boolean
+    roundQiuz?: boolean
   }
 
   export type RoundCountOutputTypeGetPayload<S extends boolean | null | undefined | RoundCountOutputTypeArgs> =
@@ -1460,4517 +1073,1289 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
-   */
-
-
-  export type UserCountOutputType = {
-    posts: number
-    fromDirectMessages: number
-    toDirectMessages: number
-    postReplies: number
-    fromFollowings: number
-    toFollowings: number
-  }
-
-  export type UserCountOutputTypeSelect = {
-    posts?: boolean
-    fromDirectMessages?: boolean
-    toDirectMessages?: boolean
-    postReplies?: boolean
-    fromFollowings?: boolean
-    toFollowings?: boolean
-  }
-
-  export type UserCountOutputTypeGetPayload<S extends boolean | null | undefined | UserCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? UserCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (UserCountOutputTypeArgs)
-    ? UserCountOutputType 
-    : S extends { select: any } & (UserCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof UserCountOutputType ? UserCountOutputType[P] : never
-  } 
-      : UserCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: UserCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type PostCountOutputType
-   */
-
-
-  export type PostCountOutputType = {
-    messageToHashTags: number
-    postReplies: number
-  }
-
-  export type PostCountOutputTypeSelect = {
-    messageToHashTags?: boolean
-    postReplies?: boolean
-  }
-
-  export type PostCountOutputTypeGetPayload<S extends boolean | null | undefined | PostCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? PostCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (PostCountOutputTypeArgs)
-    ? PostCountOutputType 
-    : S extends { select: any } & (PostCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof PostCountOutputType ? PostCountOutputType[P] : never
-  } 
-      : PostCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * PostCountOutputType without action
-   */
-  export type PostCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the PostCountOutputType
-     */
-    select?: PostCountOutputTypeSelect | null
-  }
-
-
-
-  /**
-   * Count Type HashtagCountOutputType
-   */
-
-
-  export type HashtagCountOutputType = {
-    MessageToHashTag: number
-  }
-
-  export type HashtagCountOutputTypeSelect = {
-    MessageToHashTag?: boolean
-  }
-
-  export type HashtagCountOutputTypeGetPayload<S extends boolean | null | undefined | HashtagCountOutputTypeArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? HashtagCountOutputType :
-    S extends undefined ? never :
-    S extends { include: any } & (HashtagCountOutputTypeArgs)
-    ? HashtagCountOutputType 
-    : S extends { select: any } & (HashtagCountOutputTypeArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof HashtagCountOutputType ? HashtagCountOutputType[P] : never
-  } 
-      : HashtagCountOutputType
-
-
-
-
-  // Custom InputTypes
-
-  /**
-   * HashtagCountOutputType without action
-   */
-  export type HashtagCountOutputTypeArgs = {
-    /**
-     * Select specific fields to fetch from the HashtagCountOutputType
-     */
-    select?: HashtagCountOutputTypeSelect | null
-  }
-
-
-
-  /**
    * Models
    */
 
   /**
-   * Model BinKitchenCategory
+   * Model user
    */
 
 
-  export type AggregateBinKitchenCategory = {
-    _count: BinKitchenCategoryCountAggregateOutputType | null
-    _avg: BinKitchenCategoryAvgAggregateOutputType | null
-    _sum: BinKitchenCategorySumAggregateOutputType | null
-    _min: BinKitchenCategoryMinAggregateOutputType | null
-    _max: BinKitchenCategoryMaxAggregateOutputType | null
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
   }
 
-  export type BinKitchenCategoryAvgAggregateOutputType = {
+  export type UserAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type BinKitchenCategorySumAggregateOutputType = {
+  export type UserSumAggregateOutputType = {
     id: number | null
   }
 
-  export type BinKitchenCategoryMinAggregateOutputType = {
+  export type UserMinAggregateOutputType = {
     id: number | null
-    name: string | null
+    nameUser: string | null
+    category: string | null
     createdAt: Date | null
-    updatedAt: Date | null
   }
 
-  export type BinKitchenCategoryMaxAggregateOutputType = {
+  export type UserMaxAggregateOutputType = {
     id: number | null
-    name: string | null
+    nameUser: string | null
+    category: string | null
     createdAt: Date | null
-    updatedAt: Date | null
   }
 
-  export type BinKitchenCategoryCountAggregateOutputType = {
+  export type UserCountAggregateOutputType = {
     id: number
-    name: number
+    nameUser: number
+    category: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    nameUser?: true
+    category?: true
+    createdAt?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    nameUser?: true
+    category?: true
+    createdAt?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    nameUser?: true
+    category?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs = {
+    /**
+     * Filter which user to aggregate.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: Enumerable<userOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs = {
+    where?: userWhereInput
+    orderBy?: Enumerable<userOrderByWithAggregationInput>
+    by: UserScalarFieldEnum[]
+    having?: userScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+
+  export type UserGroupByOutputType = {
+    id: number
+    nameUser: string
+    category: string
+    createdAt: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type userSelect = {
+    id?: boolean
+    nameUser?: boolean
+    category?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type userGetPayload<S extends boolean | null | undefined | userArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? user :
+    S extends undefined ? never :
+    S extends { include: any } & (userArgs | userFindManyArgs)
+    ? user 
+    : S extends { select: any } & (userArgs | userFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof user ? user[P] : never
+  } 
+      : user
+
+
+  type userCountArgs = 
+    Omit<userFindManyArgs, 'select' | 'include'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface userDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {userFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends userFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, userFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'user'> extends True ? Prisma__userClient<userGetPayload<T>> : Prisma__userClient<userGetPayload<T> | null, null>
+
+    /**
+     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {userFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends userFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, userFindUniqueOrThrowArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {userFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends userFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, userFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'user'> extends True ? Prisma__userClient<userGetPayload<T>> : Prisma__userClient<userGetPayload<T> | null, null>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {userFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends userFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, userFindFirstOrThrowArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {userFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends userFindManyArgs>(
+      args?: SelectSubset<T, userFindManyArgs>
+    ): Prisma.PrismaPromise<Array<userGetPayload<T>>>
+
+    /**
+     * Create a User.
+     * @param {userCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+    **/
+    create<T extends userCreateArgs>(
+      args: SelectSubset<T, userCreateArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Create many Users.
+     *     @param {userCreateManyArgs} args - Arguments to create many Users.
+     *     @example
+     *     // Create many Users
+     *     const user = await prisma.user.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends userCreateManyArgs>(
+      args?: SelectSubset<T, userCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a User.
+     * @param {userDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends userDeleteArgs>(
+      args: SelectSubset<T, userDeleteArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Update one User.
+     * @param {userUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends userUpdateArgs>(
+      args: SelectSubset<T, userUpdateArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Delete zero or more Users.
+     * @param {userDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends userDeleteManyArgs>(
+      args?: SelectSubset<T, userDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {userUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends userUpdateManyArgs>(
+      args: SelectSubset<T, userUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one User.
+     * @param {userUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends userUpsertArgs>(
+      args: SelectSubset<T, userUpsertArgs>
+    ): Prisma__userClient<userGetPayload<T>>
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {userCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends userCountArgs>(
+      args?: Subset<T, userCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for user.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__userClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * user base type for findUnique actions
+   */
+  export type userFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where: userWhereUniqueInput
+  }
+
+  /**
+   * user findUnique
+   */
+  export interface userFindUniqueArgs extends userFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * user findUniqueOrThrow
+   */
+  export type userFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where: userWhereUniqueInput
+  }
+
+
+  /**
+   * user base type for findFirst actions
+   */
+  export type userFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: Enumerable<userOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of users.
+     */
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+  /**
+   * user findFirst
+   */
+  export interface userFindFirstArgs extends userFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * user findFirstOrThrow
+   */
+  export type userFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter, which user to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: Enumerable<userOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of users.
+     */
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+
+  /**
+   * user findMany
+   */
+  export type userFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter, which users to fetch.
+     */
+    where?: userWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of users to fetch.
+     */
+    orderBy?: Enumerable<userOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing users.
+     */
+    cursor?: userWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` users.
+     */
+    skip?: number
+    distinct?: Enumerable<UserScalarFieldEnum>
+  }
+
+
+  /**
+   * user create
+   */
+  export type userCreateArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * The data needed to create a user.
+     */
+    data: XOR<userCreateInput, userUncheckedCreateInput>
+  }
+
+
+  /**
+   * user createMany
+   */
+  export type userCreateManyArgs = {
+    /**
+     * The data used to create many users.
+     */
+    data: Enumerable<userCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * user update
+   */
+  export type userUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * The data needed to update a user.
+     */
+    data: XOR<userUpdateInput, userUncheckedUpdateInput>
+    /**
+     * Choose, which user to update.
+     */
+    where: userWhereUniqueInput
+  }
+
+
+  /**
+   * user updateMany
+   */
+  export type userUpdateManyArgs = {
+    /**
+     * The data used to update users.
+     */
+    data: XOR<userUpdateManyMutationInput, userUncheckedUpdateManyInput>
+    /**
+     * Filter which users to update
+     */
+    where?: userWhereInput
+  }
+
+
+  /**
+   * user upsert
+   */
+  export type userUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * The filter to search for the user to update in case it exists.
+     */
+    where: userWhereUniqueInput
+    /**
+     * In case the user found by the `where` argument doesn't exist, create a new user with this data.
+     */
+    create: XOR<userCreateInput, userUncheckedCreateInput>
+    /**
+     * In case the user was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<userUpdateInput, userUncheckedUpdateInput>
+  }
+
+
+  /**
+   * user delete
+   */
+  export type userDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+    /**
+     * Filter which user to delete.
+     */
+    where: userWhereUniqueInput
+  }
+
+
+  /**
+   * user deleteMany
+   */
+  export type userDeleteManyArgs = {
+    /**
+     * Filter which users to delete
+     */
+    where?: userWhereInput
+  }
+
+
+  /**
+   * user without action
+   */
+  export type userArgs = {
+    /**
+     * Select specific fields to fetch from the user
+     */
+    select?: userSelect | null
+  }
+
+
+
+  /**
+   * Model Category
+   */
+
+
+  export type AggregateCategory = {
+    _count: CategoryCountAggregateOutputType | null
+    _avg: CategoryAvgAggregateOutputType | null
+    _sum: CategorySumAggregateOutputType | null
+    _min: CategoryMinAggregateOutputType | null
+    _max: CategoryMaxAggregateOutputType | null
+  }
+
+  export type CategoryAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CategorySumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CategoryMinAggregateOutputType = {
+    id: number | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CategoryMaxAggregateOutputType = {
+    id: number | null
+    category: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CategoryCountAggregateOutputType = {
+    id: number
+    category: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type BinKitchenCategoryAvgAggregateInputType = {
+  export type CategoryAvgAggregateInputType = {
     id?: true
   }
 
-  export type BinKitchenCategorySumAggregateInputType = {
+  export type CategorySumAggregateInputType = {
     id?: true
   }
 
-  export type BinKitchenCategoryMinAggregateInputType = {
+  export type CategoryMinAggregateInputType = {
     id?: true
-    name?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type BinKitchenCategoryMaxAggregateInputType = {
+  export type CategoryMaxAggregateInputType = {
     id?: true
-    name?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type BinKitchenCategoryCountAggregateInputType = {
+  export type CategoryCountAggregateInputType = {
     id?: true
-    name?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type BinKitchenCategoryAggregateArgs = {
+  export type CategoryAggregateArgs = {
     /**
-     * Filter which BinKitchenCategory to aggregate.
+     * Filter which Category to aggregate.
      */
-    where?: BinKitchenCategoryWhereInput
+    where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of BinKitchenCategories to fetch.
+     * Determine the order of Categories to fetch.
      */
-    orderBy?: Enumerable<BinKitchenCategoryOrderByWithRelationInput>
+    orderBy?: Enumerable<CategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: BinKitchenCategoryWhereUniqueInput
+    cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` BinKitchenCategories from the position of the cursor.
+     * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` BinKitchenCategories.
+     * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned BinKitchenCategories
+     * Count returned Categories
     **/
-    _count?: true | BinKitchenCategoryCountAggregateInputType
+    _count?: true | CategoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: BinKitchenCategoryAvgAggregateInputType
+    _avg?: CategoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: BinKitchenCategorySumAggregateInputType
+    _sum?: CategorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: BinKitchenCategoryMinAggregateInputType
+    _min?: CategoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: BinKitchenCategoryMaxAggregateInputType
+    _max?: CategoryMaxAggregateInputType
   }
 
-  export type GetBinKitchenCategoryAggregateType<T extends BinKitchenCategoryAggregateArgs> = {
-        [P in keyof T & keyof AggregateBinKitchenCategory]: P extends '_count' | 'count'
+  export type GetCategoryAggregateType<T extends CategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateCategory]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateBinKitchenCategory[P]>
-      : GetScalarType<T[P], AggregateBinKitchenCategory[P]>
+        : GetScalarType<T[P], AggregateCategory[P]>
+      : GetScalarType<T[P], AggregateCategory[P]>
   }
 
 
 
 
-  export type BinKitchenCategoryGroupByArgs = {
-    where?: BinKitchenCategoryWhereInput
-    orderBy?: Enumerable<BinKitchenCategoryOrderByWithAggregationInput>
-    by: BinKitchenCategoryScalarFieldEnum[]
-    having?: BinKitchenCategoryScalarWhereWithAggregatesInput
+  export type CategoryGroupByArgs = {
+    where?: CategoryWhereInput
+    orderBy?: Enumerable<CategoryOrderByWithAggregationInput>
+    by: CategoryScalarFieldEnum[]
+    having?: CategoryScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: BinKitchenCategoryCountAggregateInputType | true
-    _avg?: BinKitchenCategoryAvgAggregateInputType
-    _sum?: BinKitchenCategorySumAggregateInputType
-    _min?: BinKitchenCategoryMinAggregateInputType
-    _max?: BinKitchenCategoryMaxAggregateInputType
+    _count?: CategoryCountAggregateInputType | true
+    _avg?: CategoryAvgAggregateInputType
+    _sum?: CategorySumAggregateInputType
+    _min?: CategoryMinAggregateInputType
+    _max?: CategoryMaxAggregateInputType
   }
 
 
-  export type BinKitchenCategoryGroupByOutputType = {
+  export type CategoryGroupByOutputType = {
     id: number
-    name: string
+    category: string
     createdAt: Date
     updatedAt: Date
-    _count: BinKitchenCategoryCountAggregateOutputType | null
-    _avg: BinKitchenCategoryAvgAggregateOutputType | null
-    _sum: BinKitchenCategorySumAggregateOutputType | null
-    _min: BinKitchenCategoryMinAggregateOutputType | null
-    _max: BinKitchenCategoryMaxAggregateOutputType | null
+    _count: CategoryCountAggregateOutputType | null
+    _avg: CategoryAvgAggregateOutputType | null
+    _sum: CategorySumAggregateOutputType | null
+    _min: CategoryMinAggregateOutputType | null
+    _max: CategoryMaxAggregateOutputType | null
   }
 
-  type GetBinKitchenCategoryGroupByPayload<T extends BinKitchenCategoryGroupByArgs> = Prisma.PrismaPromise<
+  type GetCategoryGroupByPayload<T extends CategoryGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<BinKitchenCategoryGroupByOutputType, T['by']> &
+      PickArray<CategoryGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof BinKitchenCategoryGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CategoryGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], BinKitchenCategoryGroupByOutputType[P]>
-            : GetScalarType<T[P], BinKitchenCategoryGroupByOutputType[P]>
+              : GetScalarType<T[P], CategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], CategoryGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type BinKitchenCategorySelect = {
+  export type CategorySelect = {
     id?: boolean
-    name?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    menus?: boolean | BinKitchenCategory$menusArgs
-    _count?: boolean | BinKitchenCategoryCountOutputTypeArgs
+    quiz?: boolean | Category$quizArgs
+    rounds?: boolean | Category$roundsArgs
+    _count?: boolean | CategoryCountOutputTypeArgs
   }
 
 
-  export type BinKitchenCategoryInclude = {
-    menus?: boolean | BinKitchenCategory$menusArgs
-    _count?: boolean | BinKitchenCategoryCountOutputTypeArgs
+  export type CategoryInclude = {
+    quiz?: boolean | Category$quizArgs
+    rounds?: boolean | Category$roundsArgs
+    _count?: boolean | CategoryCountOutputTypeArgs
   }
 
-  export type BinKitchenCategoryGetPayload<S extends boolean | null | undefined | BinKitchenCategoryArgs> =
+  export type CategoryGetPayload<S extends boolean | null | undefined | CategoryArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenCategory :
+    S extends true ? Category :
     S extends undefined ? never :
-    S extends { include: any } & (BinKitchenCategoryArgs | BinKitchenCategoryFindManyArgs)
-    ? BinKitchenCategory  & {
+    S extends { include: any } & (CategoryArgs | CategoryFindManyArgs)
+    ? Category  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'menus' ? Array < BinKitchenMenuGetPayload<S['include'][P]>>  :
-        P extends '_count' ? BinKitchenCategoryCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (BinKitchenCategoryArgs | BinKitchenCategoryFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'menus' ? Array < BinKitchenMenuGetPayload<S['select'][P]>>  :
-        P extends '_count' ? BinKitchenCategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BinKitchenCategory ? BinKitchenCategory[P] : never
-  } 
-      : BinKitchenCategory
-
-
-  type BinKitchenCategoryCountArgs = 
-    Omit<BinKitchenCategoryFindManyArgs, 'select' | 'include'> & {
-      select?: BinKitchenCategoryCountAggregateInputType | true
-    }
-
-  export interface BinKitchenCategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one BinKitchenCategory that matches the filter.
-     * @param {BinKitchenCategoryFindUniqueArgs} args - Arguments to find a BinKitchenCategory
-     * @example
-     * // Get one BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends BinKitchenCategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, BinKitchenCategoryFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BinKitchenCategory'> extends True ? Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>> : Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T> | null, null>
-
-    /**
-     * Find one BinKitchenCategory that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {BinKitchenCategoryFindUniqueOrThrowArgs} args - Arguments to find a BinKitchenCategory
-     * @example
-     * // Get one BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends BinKitchenCategoryFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenCategoryFindUniqueOrThrowArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Find the first BinKitchenCategory that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryFindFirstArgs} args - Arguments to find a BinKitchenCategory
-     * @example
-     * // Get one BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends BinKitchenCategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, BinKitchenCategoryFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BinKitchenCategory'> extends True ? Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>> : Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T> | null, null>
-
-    /**
-     * Find the first BinKitchenCategory that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryFindFirstOrThrowArgs} args - Arguments to find a BinKitchenCategory
-     * @example
-     * // Get one BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends BinKitchenCategoryFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenCategoryFindFirstOrThrowArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Find zero or more BinKitchenCategories that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all BinKitchenCategories
-     * const binKitchenCategories = await prisma.binKitchenCategory.findMany()
-     * 
-     * // Get first 10 BinKitchenCategories
-     * const binKitchenCategories = await prisma.binKitchenCategory.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const binKitchenCategoryWithIdOnly = await prisma.binKitchenCategory.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends BinKitchenCategoryFindManyArgs>(
-      args?: SelectSubset<T, BinKitchenCategoryFindManyArgs>
-    ): Prisma.PrismaPromise<Array<BinKitchenCategoryGetPayload<T>>>
-
-    /**
-     * Create a BinKitchenCategory.
-     * @param {BinKitchenCategoryCreateArgs} args - Arguments to create a BinKitchenCategory.
-     * @example
-     * // Create one BinKitchenCategory
-     * const BinKitchenCategory = await prisma.binKitchenCategory.create({
-     *   data: {
-     *     // ... data to create a BinKitchenCategory
-     *   }
-     * })
-     * 
-    **/
-    create<T extends BinKitchenCategoryCreateArgs>(
-      args: SelectSubset<T, BinKitchenCategoryCreateArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Create many BinKitchenCategories.
-     *     @param {BinKitchenCategoryCreateManyArgs} args - Arguments to create many BinKitchenCategories.
-     *     @example
-     *     // Create many BinKitchenCategories
-     *     const binKitchenCategory = await prisma.binKitchenCategory.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends BinKitchenCategoryCreateManyArgs>(
-      args?: SelectSubset<T, BinKitchenCategoryCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a BinKitchenCategory.
-     * @param {BinKitchenCategoryDeleteArgs} args - Arguments to delete one BinKitchenCategory.
-     * @example
-     * // Delete one BinKitchenCategory
-     * const BinKitchenCategory = await prisma.binKitchenCategory.delete({
-     *   where: {
-     *     // ... filter to delete one BinKitchenCategory
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends BinKitchenCategoryDeleteArgs>(
-      args: SelectSubset<T, BinKitchenCategoryDeleteArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Update one BinKitchenCategory.
-     * @param {BinKitchenCategoryUpdateArgs} args - Arguments to update one BinKitchenCategory.
-     * @example
-     * // Update one BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends BinKitchenCategoryUpdateArgs>(
-      args: SelectSubset<T, BinKitchenCategoryUpdateArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Delete zero or more BinKitchenCategories.
-     * @param {BinKitchenCategoryDeleteManyArgs} args - Arguments to filter BinKitchenCategories to delete.
-     * @example
-     * // Delete a few BinKitchenCategories
-     * const { count } = await prisma.binKitchenCategory.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends BinKitchenCategoryDeleteManyArgs>(
-      args?: SelectSubset<T, BinKitchenCategoryDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BinKitchenCategories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many BinKitchenCategories
-     * const binKitchenCategory = await prisma.binKitchenCategory.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends BinKitchenCategoryUpdateManyArgs>(
-      args: SelectSubset<T, BinKitchenCategoryUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one BinKitchenCategory.
-     * @param {BinKitchenCategoryUpsertArgs} args - Arguments to update or create a BinKitchenCategory.
-     * @example
-     * // Update or create a BinKitchenCategory
-     * const binKitchenCategory = await prisma.binKitchenCategory.upsert({
-     *   create: {
-     *     // ... data to create a BinKitchenCategory
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the BinKitchenCategory we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends BinKitchenCategoryUpsertArgs>(
-      args: SelectSubset<T, BinKitchenCategoryUpsertArgs>
-    ): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T>>
-
-    /**
-     * Count the number of BinKitchenCategories.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryCountArgs} args - Arguments to filter BinKitchenCategories to count.
-     * @example
-     * // Count the number of BinKitchenCategories
-     * const count = await prisma.binKitchenCategory.count({
-     *   where: {
-     *     // ... the filter for the BinKitchenCategories we want to count
-     *   }
-     * })
-    **/
-    count<T extends BinKitchenCategoryCountArgs>(
-      args?: Subset<T, BinKitchenCategoryCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], BinKitchenCategoryCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a BinKitchenCategory.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends BinKitchenCategoryAggregateArgs>(args: Subset<T, BinKitchenCategoryAggregateArgs>): Prisma.PrismaPromise<GetBinKitchenCategoryAggregateType<T>>
-
-    /**
-     * Group by BinKitchenCategory.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenCategoryGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends BinKitchenCategoryGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: BinKitchenCategoryGroupByArgs['orderBy'] }
-        : { orderBy?: BinKitchenCategoryGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, BinKitchenCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBinKitchenCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for BinKitchenCategory.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__BinKitchenCategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    menus<T extends BinKitchenCategory$menusArgs= {}>(args?: Subset<T, BinKitchenCategory$menusArgs>): Prisma.PrismaPromise<Array<BinKitchenMenuGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenCategory base type for findUnique actions
-   */
-  export type BinKitchenCategoryFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter, which BinKitchenCategory to fetch.
-     */
-    where: BinKitchenCategoryWhereUniqueInput
-  }
-
-  /**
-   * BinKitchenCategory findUnique
-   */
-  export interface BinKitchenCategoryFindUniqueArgs extends BinKitchenCategoryFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenCategory findUniqueOrThrow
-   */
-  export type BinKitchenCategoryFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter, which BinKitchenCategory to fetch.
-     */
-    where: BinKitchenCategoryWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenCategory base type for findFirst actions
-   */
-  export type BinKitchenCategoryFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter, which BinKitchenCategory to fetch.
-     */
-    where?: BinKitchenCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenCategories to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenCategoryOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenCategories.
-     */
-    cursor?: BinKitchenCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenCategories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenCategories.
-     */
-    distinct?: Enumerable<BinKitchenCategoryScalarFieldEnum>
-  }
-
-  /**
-   * BinKitchenCategory findFirst
-   */
-  export interface BinKitchenCategoryFindFirstArgs extends BinKitchenCategoryFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenCategory findFirstOrThrow
-   */
-  export type BinKitchenCategoryFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter, which BinKitchenCategory to fetch.
-     */
-    where?: BinKitchenCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenCategories to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenCategoryOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenCategories.
-     */
-    cursor?: BinKitchenCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenCategories.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenCategories.
-     */
-    distinct?: Enumerable<BinKitchenCategoryScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenCategory findMany
-   */
-  export type BinKitchenCategoryFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter, which BinKitchenCategories to fetch.
-     */
-    where?: BinKitchenCategoryWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenCategories to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenCategoryOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing BinKitchenCategories.
-     */
-    cursor?: BinKitchenCategoryWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenCategories from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenCategories.
-     */
-    skip?: number
-    distinct?: Enumerable<BinKitchenCategoryScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenCategory create
-   */
-  export type BinKitchenCategoryCreateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * The data needed to create a BinKitchenCategory.
-     */
-    data: XOR<BinKitchenCategoryCreateInput, BinKitchenCategoryUncheckedCreateInput>
-  }
-
-
-  /**
-   * BinKitchenCategory createMany
-   */
-  export type BinKitchenCategoryCreateManyArgs = {
-    /**
-     * The data used to create many BinKitchenCategories.
-     */
-    data: Enumerable<BinKitchenCategoryCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * BinKitchenCategory update
-   */
-  export type BinKitchenCategoryUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * The data needed to update a BinKitchenCategory.
-     */
-    data: XOR<BinKitchenCategoryUpdateInput, BinKitchenCategoryUncheckedUpdateInput>
-    /**
-     * Choose, which BinKitchenCategory to update.
-     */
-    where: BinKitchenCategoryWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenCategory updateMany
-   */
-  export type BinKitchenCategoryUpdateManyArgs = {
-    /**
-     * The data used to update BinKitchenCategories.
-     */
-    data: XOR<BinKitchenCategoryUpdateManyMutationInput, BinKitchenCategoryUncheckedUpdateManyInput>
-    /**
-     * Filter which BinKitchenCategories to update
-     */
-    where?: BinKitchenCategoryWhereInput
-  }
-
-
-  /**
-   * BinKitchenCategory upsert
-   */
-  export type BinKitchenCategoryUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * The filter to search for the BinKitchenCategory to update in case it exists.
-     */
-    where: BinKitchenCategoryWhereUniqueInput
-    /**
-     * In case the BinKitchenCategory found by the `where` argument doesn't exist, create a new BinKitchenCategory with this data.
-     */
-    create: XOR<BinKitchenCategoryCreateInput, BinKitchenCategoryUncheckedCreateInput>
-    /**
-     * In case the BinKitchenCategory was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<BinKitchenCategoryUpdateInput, BinKitchenCategoryUncheckedUpdateInput>
-  }
-
-
-  /**
-   * BinKitchenCategory delete
-   */
-  export type BinKitchenCategoryDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-    /**
-     * Filter which BinKitchenCategory to delete.
-     */
-    where: BinKitchenCategoryWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenCategory deleteMany
-   */
-  export type BinKitchenCategoryDeleteManyArgs = {
-    /**
-     * Filter which BinKitchenCategories to delete
-     */
-    where?: BinKitchenCategoryWhereInput
-  }
-
-
-  /**
-   * BinKitchenCategory.menus
-   */
-  export type BinKitchenCategory$menusArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    where?: BinKitchenMenuWhereInput
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithRelationInput>
-    cursor?: BinKitchenMenuWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<BinKitchenMenuScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenCategory without action
-   */
-  export type BinKitchenCategoryArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenCategory
-     */
-    select?: BinKitchenCategorySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenCategoryInclude | null
-  }
-
-
-
-  /**
-   * Model BinKitchenMenu
-   */
-
-
-  export type AggregateBinKitchenMenu = {
-    _count: BinKitchenMenuCountAggregateOutputType | null
-    _avg: BinKitchenMenuAvgAggregateOutputType | null
-    _sum: BinKitchenMenuSumAggregateOutputType | null
-    _min: BinKitchenMenuMinAggregateOutputType | null
-    _max: BinKitchenMenuMaxAggregateOutputType | null
-  }
-
-  export type BinKitchenMenuAvgAggregateOutputType = {
-    id: number | null
-    price: number | null
-  }
-
-  export type BinKitchenMenuSumAggregateOutputType = {
-    id: number | null
-    price: number | null
-  }
-
-  export type BinKitchenMenuMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    image: string | null
-    price: number | null
-    categoryName: string | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenMenuMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    image: string | null
-    price: number | null
-    categoryName: string | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenMenuCountAggregateOutputType = {
-    id: number
-    name: number
-    image: number
-    price: number
-    categoryName: number
-    createdAt: number
-    updateAt: number
-    _all: number
-  }
-
-
-  export type BinKitchenMenuAvgAggregateInputType = {
-    id?: true
-    price?: true
-  }
-
-  export type BinKitchenMenuSumAggregateInputType = {
-    id?: true
-    price?: true
-  }
-
-  export type BinKitchenMenuMinAggregateInputType = {
-    id?: true
-    name?: true
-    image?: true
-    price?: true
-    categoryName?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenMenuMaxAggregateInputType = {
-    id?: true
-    name?: true
-    image?: true
-    price?: true
-    categoryName?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenMenuCountAggregateInputType = {
-    id?: true
-    name?: true
-    image?: true
-    price?: true
-    categoryName?: true
-    createdAt?: true
-    updateAt?: true
-    _all?: true
-  }
-
-  export type BinKitchenMenuAggregateArgs = {
-    /**
-     * Filter which BinKitchenMenu to aggregate.
-     */
-    where?: BinKitchenMenuWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenMenus to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: BinKitchenMenuWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenMenus from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenMenus.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned BinKitchenMenus
-    **/
-    _count?: true | BinKitchenMenuCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: BinKitchenMenuAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: BinKitchenMenuSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: BinKitchenMenuMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: BinKitchenMenuMaxAggregateInputType
-  }
-
-  export type GetBinKitchenMenuAggregateType<T extends BinKitchenMenuAggregateArgs> = {
-        [P in keyof T & keyof AggregateBinKitchenMenu]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateBinKitchenMenu[P]>
-      : GetScalarType<T[P], AggregateBinKitchenMenu[P]>
-  }
-
-
-
-
-  export type BinKitchenMenuGroupByArgs = {
-    where?: BinKitchenMenuWhereInput
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithAggregationInput>
-    by: BinKitchenMenuScalarFieldEnum[]
-    having?: BinKitchenMenuScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: BinKitchenMenuCountAggregateInputType | true
-    _avg?: BinKitchenMenuAvgAggregateInputType
-    _sum?: BinKitchenMenuSumAggregateInputType
-    _min?: BinKitchenMenuMinAggregateInputType
-    _max?: BinKitchenMenuMaxAggregateInputType
-  }
-
-
-  export type BinKitchenMenuGroupByOutputType = {
-    id: number
-    name: string
-    image: string
-    price: number
-    categoryName: string | null
-    createdAt: Date
-    updateAt: Date
-    _count: BinKitchenMenuCountAggregateOutputType | null
-    _avg: BinKitchenMenuAvgAggregateOutputType | null
-    _sum: BinKitchenMenuSumAggregateOutputType | null
-    _min: BinKitchenMenuMinAggregateOutputType | null
-    _max: BinKitchenMenuMaxAggregateOutputType | null
-  }
-
-  type GetBinKitchenMenuGroupByPayload<T extends BinKitchenMenuGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<BinKitchenMenuGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BinKitchenMenuGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BinKitchenMenuGroupByOutputType[P]>
-            : GetScalarType<T[P], BinKitchenMenuGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type BinKitchenMenuSelect = {
-    id?: boolean
-    name?: boolean
-    image?: boolean
-    price?: boolean
-    categoryName?: boolean
-    createdAt?: boolean
-    updateAt?: boolean
-    category?: boolean | BinKitchenCategoryArgs
-    binKitchenOrderItem?: boolean | BinKitchenMenu$binKitchenOrderItemArgs
-    _count?: boolean | BinKitchenMenuCountOutputTypeArgs
-  }
-
-
-  export type BinKitchenMenuInclude = {
-    category?: boolean | BinKitchenCategoryArgs
-    binKitchenOrderItem?: boolean | BinKitchenMenu$binKitchenOrderItemArgs
-    _count?: boolean | BinKitchenMenuCountOutputTypeArgs
-  }
-
-  export type BinKitchenMenuGetPayload<S extends boolean | null | undefined | BinKitchenMenuArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenMenu :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenMenuArgs | BinKitchenMenuFindManyArgs)
-    ? BinKitchenMenu  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'category' ? BinKitchenCategoryGetPayload<S['include'][P]> | null :
-        P extends 'binKitchenOrderItem' ? Array < BinKitchenOrderItemGetPayload<S['include'][P]>>  :
-        P extends '_count' ? BinKitchenMenuCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (BinKitchenMenuArgs | BinKitchenMenuFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'category' ? BinKitchenCategoryGetPayload<S['select'][P]> | null :
-        P extends 'binKitchenOrderItem' ? Array < BinKitchenOrderItemGetPayload<S['select'][P]>>  :
-        P extends '_count' ? BinKitchenMenuCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BinKitchenMenu ? BinKitchenMenu[P] : never
-  } 
-      : BinKitchenMenu
-
-
-  type BinKitchenMenuCountArgs = 
-    Omit<BinKitchenMenuFindManyArgs, 'select' | 'include'> & {
-      select?: BinKitchenMenuCountAggregateInputType | true
-    }
-
-  export interface BinKitchenMenuDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one BinKitchenMenu that matches the filter.
-     * @param {BinKitchenMenuFindUniqueArgs} args - Arguments to find a BinKitchenMenu
-     * @example
-     * // Get one BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends BinKitchenMenuFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, BinKitchenMenuFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BinKitchenMenu'> extends True ? Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>> : Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T> | null, null>
-
-    /**
-     * Find one BinKitchenMenu that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {BinKitchenMenuFindUniqueOrThrowArgs} args - Arguments to find a BinKitchenMenu
-     * @example
-     * // Get one BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends BinKitchenMenuFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenMenuFindUniqueOrThrowArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Find the first BinKitchenMenu that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuFindFirstArgs} args - Arguments to find a BinKitchenMenu
-     * @example
-     * // Get one BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends BinKitchenMenuFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, BinKitchenMenuFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BinKitchenMenu'> extends True ? Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>> : Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T> | null, null>
-
-    /**
-     * Find the first BinKitchenMenu that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuFindFirstOrThrowArgs} args - Arguments to find a BinKitchenMenu
-     * @example
-     * // Get one BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends BinKitchenMenuFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenMenuFindFirstOrThrowArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Find zero or more BinKitchenMenus that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all BinKitchenMenus
-     * const binKitchenMenus = await prisma.binKitchenMenu.findMany()
-     * 
-     * // Get first 10 BinKitchenMenus
-     * const binKitchenMenus = await prisma.binKitchenMenu.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const binKitchenMenuWithIdOnly = await prisma.binKitchenMenu.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends BinKitchenMenuFindManyArgs>(
-      args?: SelectSubset<T, BinKitchenMenuFindManyArgs>
-    ): Prisma.PrismaPromise<Array<BinKitchenMenuGetPayload<T>>>
-
-    /**
-     * Create a BinKitchenMenu.
-     * @param {BinKitchenMenuCreateArgs} args - Arguments to create a BinKitchenMenu.
-     * @example
-     * // Create one BinKitchenMenu
-     * const BinKitchenMenu = await prisma.binKitchenMenu.create({
-     *   data: {
-     *     // ... data to create a BinKitchenMenu
-     *   }
-     * })
-     * 
-    **/
-    create<T extends BinKitchenMenuCreateArgs>(
-      args: SelectSubset<T, BinKitchenMenuCreateArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Create many BinKitchenMenus.
-     *     @param {BinKitchenMenuCreateManyArgs} args - Arguments to create many BinKitchenMenus.
-     *     @example
-     *     // Create many BinKitchenMenus
-     *     const binKitchenMenu = await prisma.binKitchenMenu.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends BinKitchenMenuCreateManyArgs>(
-      args?: SelectSubset<T, BinKitchenMenuCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a BinKitchenMenu.
-     * @param {BinKitchenMenuDeleteArgs} args - Arguments to delete one BinKitchenMenu.
-     * @example
-     * // Delete one BinKitchenMenu
-     * const BinKitchenMenu = await prisma.binKitchenMenu.delete({
-     *   where: {
-     *     // ... filter to delete one BinKitchenMenu
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends BinKitchenMenuDeleteArgs>(
-      args: SelectSubset<T, BinKitchenMenuDeleteArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Update one BinKitchenMenu.
-     * @param {BinKitchenMenuUpdateArgs} args - Arguments to update one BinKitchenMenu.
-     * @example
-     * // Update one BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends BinKitchenMenuUpdateArgs>(
-      args: SelectSubset<T, BinKitchenMenuUpdateArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Delete zero or more BinKitchenMenus.
-     * @param {BinKitchenMenuDeleteManyArgs} args - Arguments to filter BinKitchenMenus to delete.
-     * @example
-     * // Delete a few BinKitchenMenus
-     * const { count } = await prisma.binKitchenMenu.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends BinKitchenMenuDeleteManyArgs>(
-      args?: SelectSubset<T, BinKitchenMenuDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BinKitchenMenus.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many BinKitchenMenus
-     * const binKitchenMenu = await prisma.binKitchenMenu.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends BinKitchenMenuUpdateManyArgs>(
-      args: SelectSubset<T, BinKitchenMenuUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one BinKitchenMenu.
-     * @param {BinKitchenMenuUpsertArgs} args - Arguments to update or create a BinKitchenMenu.
-     * @example
-     * // Update or create a BinKitchenMenu
-     * const binKitchenMenu = await prisma.binKitchenMenu.upsert({
-     *   create: {
-     *     // ... data to create a BinKitchenMenu
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the BinKitchenMenu we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends BinKitchenMenuUpsertArgs>(
-      args: SelectSubset<T, BinKitchenMenuUpsertArgs>
-    ): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T>>
-
-    /**
-     * Count the number of BinKitchenMenus.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuCountArgs} args - Arguments to filter BinKitchenMenus to count.
-     * @example
-     * // Count the number of BinKitchenMenus
-     * const count = await prisma.binKitchenMenu.count({
-     *   where: {
-     *     // ... the filter for the BinKitchenMenus we want to count
-     *   }
-     * })
-    **/
-    count<T extends BinKitchenMenuCountArgs>(
-      args?: Subset<T, BinKitchenMenuCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], BinKitchenMenuCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a BinKitchenMenu.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends BinKitchenMenuAggregateArgs>(args: Subset<T, BinKitchenMenuAggregateArgs>): Prisma.PrismaPromise<GetBinKitchenMenuAggregateType<T>>
-
-    /**
-     * Group by BinKitchenMenu.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenMenuGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends BinKitchenMenuGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: BinKitchenMenuGroupByArgs['orderBy'] }
-        : { orderBy?: BinKitchenMenuGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, BinKitchenMenuGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBinKitchenMenuGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for BinKitchenMenu.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__BinKitchenMenuClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    category<T extends BinKitchenCategoryArgs= {}>(args?: Subset<T, BinKitchenCategoryArgs>): Prisma__BinKitchenCategoryClient<BinKitchenCategoryGetPayload<T> | Null>;
-
-    binKitchenOrderItem<T extends BinKitchenMenu$binKitchenOrderItemArgs= {}>(args?: Subset<T, BinKitchenMenu$binKitchenOrderItemArgs>): Prisma.PrismaPromise<Array<BinKitchenOrderItemGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenMenu base type for findUnique actions
-   */
-  export type BinKitchenMenuFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter, which BinKitchenMenu to fetch.
-     */
-    where: BinKitchenMenuWhereUniqueInput
-  }
-
-  /**
-   * BinKitchenMenu findUnique
-   */
-  export interface BinKitchenMenuFindUniqueArgs extends BinKitchenMenuFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenMenu findUniqueOrThrow
-   */
-  export type BinKitchenMenuFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter, which BinKitchenMenu to fetch.
-     */
-    where: BinKitchenMenuWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenMenu base type for findFirst actions
-   */
-  export type BinKitchenMenuFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter, which BinKitchenMenu to fetch.
-     */
-    where?: BinKitchenMenuWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenMenus to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenMenus.
-     */
-    cursor?: BinKitchenMenuWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenMenus from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenMenus.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenMenus.
-     */
-    distinct?: Enumerable<BinKitchenMenuScalarFieldEnum>
-  }
-
-  /**
-   * BinKitchenMenu findFirst
-   */
-  export interface BinKitchenMenuFindFirstArgs extends BinKitchenMenuFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenMenu findFirstOrThrow
-   */
-  export type BinKitchenMenuFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter, which BinKitchenMenu to fetch.
-     */
-    where?: BinKitchenMenuWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenMenus to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenMenus.
-     */
-    cursor?: BinKitchenMenuWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenMenus from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenMenus.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenMenus.
-     */
-    distinct?: Enumerable<BinKitchenMenuScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenMenu findMany
-   */
-  export type BinKitchenMenuFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter, which BinKitchenMenus to fetch.
-     */
-    where?: BinKitchenMenuWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenMenus to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenMenuOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing BinKitchenMenus.
-     */
-    cursor?: BinKitchenMenuWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenMenus from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenMenus.
-     */
-    skip?: number
-    distinct?: Enumerable<BinKitchenMenuScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenMenu create
-   */
-  export type BinKitchenMenuCreateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * The data needed to create a BinKitchenMenu.
-     */
-    data: XOR<BinKitchenMenuCreateInput, BinKitchenMenuUncheckedCreateInput>
-  }
-
-
-  /**
-   * BinKitchenMenu createMany
-   */
-  export type BinKitchenMenuCreateManyArgs = {
-    /**
-     * The data used to create many BinKitchenMenus.
-     */
-    data: Enumerable<BinKitchenMenuCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * BinKitchenMenu update
-   */
-  export type BinKitchenMenuUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * The data needed to update a BinKitchenMenu.
-     */
-    data: XOR<BinKitchenMenuUpdateInput, BinKitchenMenuUncheckedUpdateInput>
-    /**
-     * Choose, which BinKitchenMenu to update.
-     */
-    where: BinKitchenMenuWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenMenu updateMany
-   */
-  export type BinKitchenMenuUpdateManyArgs = {
-    /**
-     * The data used to update BinKitchenMenus.
-     */
-    data: XOR<BinKitchenMenuUpdateManyMutationInput, BinKitchenMenuUncheckedUpdateManyInput>
-    /**
-     * Filter which BinKitchenMenus to update
-     */
-    where?: BinKitchenMenuWhereInput
-  }
-
-
-  /**
-   * BinKitchenMenu upsert
-   */
-  export type BinKitchenMenuUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * The filter to search for the BinKitchenMenu to update in case it exists.
-     */
-    where: BinKitchenMenuWhereUniqueInput
-    /**
-     * In case the BinKitchenMenu found by the `where` argument doesn't exist, create a new BinKitchenMenu with this data.
-     */
-    create: XOR<BinKitchenMenuCreateInput, BinKitchenMenuUncheckedCreateInput>
-    /**
-     * In case the BinKitchenMenu was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<BinKitchenMenuUpdateInput, BinKitchenMenuUncheckedUpdateInput>
-  }
-
-
-  /**
-   * BinKitchenMenu delete
-   */
-  export type BinKitchenMenuDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-    /**
-     * Filter which BinKitchenMenu to delete.
-     */
-    where: BinKitchenMenuWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenMenu deleteMany
-   */
-  export type BinKitchenMenuDeleteManyArgs = {
-    /**
-     * Filter which BinKitchenMenus to delete
-     */
-    where?: BinKitchenMenuWhereInput
-  }
-
-
-  /**
-   * BinKitchenMenu.binKitchenOrderItem
-   */
-  export type BinKitchenMenu$binKitchenOrderItemArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    where?: BinKitchenOrderItemWhereInput
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<BinKitchenOrderItemScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenMenu without action
-   */
-  export type BinKitchenMenuArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenMenu
-     */
-    select?: BinKitchenMenuSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenMenuInclude | null
-  }
-
-
-
-  /**
-   * Model BinKitchenOrder
-   */
-
-
-  export type AggregateBinKitchenOrder = {
-    _count: BinKitchenOrderCountAggregateOutputType | null
-    _avg: BinKitchenOrderAvgAggregateOutputType | null
-    _sum: BinKitchenOrderSumAggregateOutputType | null
-    _min: BinKitchenOrderMinAggregateOutputType | null
-    _max: BinKitchenOrderMaxAggregateOutputType | null
-  }
-
-  export type BinKitchenOrderAvgAggregateOutputType = {
-    id: number | null
-    tableId: number | null
-  }
-
-  export type BinKitchenOrderSumAggregateOutputType = {
-    id: number | null
-    tableId: number | null
-  }
-
-  export type BinKitchenOrderMinAggregateOutputType = {
-    id: number | null
-    status: string | null
-    tableId: number | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenOrderMaxAggregateOutputType = {
-    id: number | null
-    status: string | null
-    tableId: number | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenOrderCountAggregateOutputType = {
-    id: number
-    status: number
-    tableId: number
-    createdAt: number
-    updateAt: number
-    _all: number
-  }
-
-
-  export type BinKitchenOrderAvgAggregateInputType = {
-    id?: true
-    tableId?: true
-  }
-
-  export type BinKitchenOrderSumAggregateInputType = {
-    id?: true
-    tableId?: true
-  }
-
-  export type BinKitchenOrderMinAggregateInputType = {
-    id?: true
-    status?: true
-    tableId?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenOrderMaxAggregateInputType = {
-    id?: true
-    status?: true
-    tableId?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenOrderCountAggregateInputType = {
-    id?: true
-    status?: true
-    tableId?: true
-    createdAt?: true
-    updateAt?: true
-    _all?: true
-  }
-
-  export type BinKitchenOrderAggregateArgs = {
-    /**
-     * Filter which BinKitchenOrder to aggregate.
-     */
-    where?: BinKitchenOrderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrders to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: BinKitchenOrderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrders from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrders.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned BinKitchenOrders
-    **/
-    _count?: true | BinKitchenOrderCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: BinKitchenOrderAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: BinKitchenOrderSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: BinKitchenOrderMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: BinKitchenOrderMaxAggregateInputType
-  }
-
-  export type GetBinKitchenOrderAggregateType<T extends BinKitchenOrderAggregateArgs> = {
-        [P in keyof T & keyof AggregateBinKitchenOrder]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateBinKitchenOrder[P]>
-      : GetScalarType<T[P], AggregateBinKitchenOrder[P]>
-  }
-
-
-
-
-  export type BinKitchenOrderGroupByArgs = {
-    where?: BinKitchenOrderWhereInput
-    orderBy?: Enumerable<BinKitchenOrderOrderByWithAggregationInput>
-    by: BinKitchenOrderScalarFieldEnum[]
-    having?: BinKitchenOrderScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: BinKitchenOrderCountAggregateInputType | true
-    _avg?: BinKitchenOrderAvgAggregateInputType
-    _sum?: BinKitchenOrderSumAggregateInputType
-    _min?: BinKitchenOrderMinAggregateInputType
-    _max?: BinKitchenOrderMaxAggregateInputType
-  }
-
-
-  export type BinKitchenOrderGroupByOutputType = {
-    id: number
-    status: string
-    tableId: number
-    createdAt: Date
-    updateAt: Date
-    _count: BinKitchenOrderCountAggregateOutputType | null
-    _avg: BinKitchenOrderAvgAggregateOutputType | null
-    _sum: BinKitchenOrderSumAggregateOutputType | null
-    _min: BinKitchenOrderMinAggregateOutputType | null
-    _max: BinKitchenOrderMaxAggregateOutputType | null
-  }
-
-  type GetBinKitchenOrderGroupByPayload<T extends BinKitchenOrderGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<BinKitchenOrderGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BinKitchenOrderGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BinKitchenOrderGroupByOutputType[P]>
-            : GetScalarType<T[P], BinKitchenOrderGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type BinKitchenOrderSelect = {
-    id?: boolean
-    status?: boolean
-    tableId?: boolean
-    createdAt?: boolean
-    updateAt?: boolean
-    items?: boolean | BinKitchenOrder$itemsArgs
-    _count?: boolean | BinKitchenOrderCountOutputTypeArgs
-  }
-
-
-  export type BinKitchenOrderInclude = {
-    items?: boolean | BinKitchenOrder$itemsArgs
-    _count?: boolean | BinKitchenOrderCountOutputTypeArgs
-  }
-
-  export type BinKitchenOrderGetPayload<S extends boolean | null | undefined | BinKitchenOrderArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenOrder :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenOrderArgs | BinKitchenOrderFindManyArgs)
-    ? BinKitchenOrder  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'items' ? Array < BinKitchenOrderItemGetPayload<S['include'][P]>>  :
-        P extends '_count' ? BinKitchenOrderCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (BinKitchenOrderArgs | BinKitchenOrderFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'items' ? Array < BinKitchenOrderItemGetPayload<S['select'][P]>>  :
-        P extends '_count' ? BinKitchenOrderCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof BinKitchenOrder ? BinKitchenOrder[P] : never
-  } 
-      : BinKitchenOrder
-
-
-  type BinKitchenOrderCountArgs = 
-    Omit<BinKitchenOrderFindManyArgs, 'select' | 'include'> & {
-      select?: BinKitchenOrderCountAggregateInputType | true
-    }
-
-  export interface BinKitchenOrderDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one BinKitchenOrder that matches the filter.
-     * @param {BinKitchenOrderFindUniqueArgs} args - Arguments to find a BinKitchenOrder
-     * @example
-     * // Get one BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends BinKitchenOrderFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, BinKitchenOrderFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BinKitchenOrder'> extends True ? Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>> : Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T> | null, null>
-
-    /**
-     * Find one BinKitchenOrder that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {BinKitchenOrderFindUniqueOrThrowArgs} args - Arguments to find a BinKitchenOrder
-     * @example
-     * // Get one BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends BinKitchenOrderFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenOrderFindUniqueOrThrowArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Find the first BinKitchenOrder that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderFindFirstArgs} args - Arguments to find a BinKitchenOrder
-     * @example
-     * // Get one BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends BinKitchenOrderFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, BinKitchenOrderFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BinKitchenOrder'> extends True ? Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>> : Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T> | null, null>
-
-    /**
-     * Find the first BinKitchenOrder that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderFindFirstOrThrowArgs} args - Arguments to find a BinKitchenOrder
-     * @example
-     * // Get one BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends BinKitchenOrderFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenOrderFindFirstOrThrowArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Find zero or more BinKitchenOrders that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all BinKitchenOrders
-     * const binKitchenOrders = await prisma.binKitchenOrder.findMany()
-     * 
-     * // Get first 10 BinKitchenOrders
-     * const binKitchenOrders = await prisma.binKitchenOrder.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const binKitchenOrderWithIdOnly = await prisma.binKitchenOrder.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends BinKitchenOrderFindManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderFindManyArgs>
-    ): Prisma.PrismaPromise<Array<BinKitchenOrderGetPayload<T>>>
-
-    /**
-     * Create a BinKitchenOrder.
-     * @param {BinKitchenOrderCreateArgs} args - Arguments to create a BinKitchenOrder.
-     * @example
-     * // Create one BinKitchenOrder
-     * const BinKitchenOrder = await prisma.binKitchenOrder.create({
-     *   data: {
-     *     // ... data to create a BinKitchenOrder
-     *   }
-     * })
-     * 
-    **/
-    create<T extends BinKitchenOrderCreateArgs>(
-      args: SelectSubset<T, BinKitchenOrderCreateArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Create many BinKitchenOrders.
-     *     @param {BinKitchenOrderCreateManyArgs} args - Arguments to create many BinKitchenOrders.
-     *     @example
-     *     // Create many BinKitchenOrders
-     *     const binKitchenOrder = await prisma.binKitchenOrder.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends BinKitchenOrderCreateManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a BinKitchenOrder.
-     * @param {BinKitchenOrderDeleteArgs} args - Arguments to delete one BinKitchenOrder.
-     * @example
-     * // Delete one BinKitchenOrder
-     * const BinKitchenOrder = await prisma.binKitchenOrder.delete({
-     *   where: {
-     *     // ... filter to delete one BinKitchenOrder
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends BinKitchenOrderDeleteArgs>(
-      args: SelectSubset<T, BinKitchenOrderDeleteArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Update one BinKitchenOrder.
-     * @param {BinKitchenOrderUpdateArgs} args - Arguments to update one BinKitchenOrder.
-     * @example
-     * // Update one BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends BinKitchenOrderUpdateArgs>(
-      args: SelectSubset<T, BinKitchenOrderUpdateArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Delete zero or more BinKitchenOrders.
-     * @param {BinKitchenOrderDeleteManyArgs} args - Arguments to filter BinKitchenOrders to delete.
-     * @example
-     * // Delete a few BinKitchenOrders
-     * const { count } = await prisma.binKitchenOrder.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends BinKitchenOrderDeleteManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BinKitchenOrders.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many BinKitchenOrders
-     * const binKitchenOrder = await prisma.binKitchenOrder.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends BinKitchenOrderUpdateManyArgs>(
-      args: SelectSubset<T, BinKitchenOrderUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one BinKitchenOrder.
-     * @param {BinKitchenOrderUpsertArgs} args - Arguments to update or create a BinKitchenOrder.
-     * @example
-     * // Update or create a BinKitchenOrder
-     * const binKitchenOrder = await prisma.binKitchenOrder.upsert({
-     *   create: {
-     *     // ... data to create a BinKitchenOrder
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the BinKitchenOrder we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends BinKitchenOrderUpsertArgs>(
-      args: SelectSubset<T, BinKitchenOrderUpsertArgs>
-    ): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T>>
-
-    /**
-     * Count the number of BinKitchenOrders.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderCountArgs} args - Arguments to filter BinKitchenOrders to count.
-     * @example
-     * // Count the number of BinKitchenOrders
-     * const count = await prisma.binKitchenOrder.count({
-     *   where: {
-     *     // ... the filter for the BinKitchenOrders we want to count
-     *   }
-     * })
-    **/
-    count<T extends BinKitchenOrderCountArgs>(
-      args?: Subset<T, BinKitchenOrderCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], BinKitchenOrderCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a BinKitchenOrder.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends BinKitchenOrderAggregateArgs>(args: Subset<T, BinKitchenOrderAggregateArgs>): Prisma.PrismaPromise<GetBinKitchenOrderAggregateType<T>>
-
-    /**
-     * Group by BinKitchenOrder.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends BinKitchenOrderGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: BinKitchenOrderGroupByArgs['orderBy'] }
-        : { orderBy?: BinKitchenOrderGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, BinKitchenOrderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBinKitchenOrderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for BinKitchenOrder.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__BinKitchenOrderClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    items<T extends BinKitchenOrder$itemsArgs= {}>(args?: Subset<T, BinKitchenOrder$itemsArgs>): Prisma.PrismaPromise<Array<BinKitchenOrderItemGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenOrder base type for findUnique actions
-   */
-  export type BinKitchenOrderFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter, which BinKitchenOrder to fetch.
-     */
-    where: BinKitchenOrderWhereUniqueInput
-  }
-
-  /**
-   * BinKitchenOrder findUnique
-   */
-  export interface BinKitchenOrderFindUniqueArgs extends BinKitchenOrderFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenOrder findUniqueOrThrow
-   */
-  export type BinKitchenOrderFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter, which BinKitchenOrder to fetch.
-     */
-    where: BinKitchenOrderWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrder base type for findFirst actions
-   */
-  export type BinKitchenOrderFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter, which BinKitchenOrder to fetch.
-     */
-    where?: BinKitchenOrderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrders to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenOrders.
-     */
-    cursor?: BinKitchenOrderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrders from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrders.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenOrders.
-     */
-    distinct?: Enumerable<BinKitchenOrderScalarFieldEnum>
-  }
-
-  /**
-   * BinKitchenOrder findFirst
-   */
-  export interface BinKitchenOrderFindFirstArgs extends BinKitchenOrderFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenOrder findFirstOrThrow
-   */
-  export type BinKitchenOrderFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter, which BinKitchenOrder to fetch.
-     */
-    where?: BinKitchenOrderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrders to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenOrders.
-     */
-    cursor?: BinKitchenOrderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrders from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrders.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenOrders.
-     */
-    distinct?: Enumerable<BinKitchenOrderScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenOrder findMany
-   */
-  export type BinKitchenOrderFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter, which BinKitchenOrders to fetch.
-     */
-    where?: BinKitchenOrderWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrders to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing BinKitchenOrders.
-     */
-    cursor?: BinKitchenOrderWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrders from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrders.
-     */
-    skip?: number
-    distinct?: Enumerable<BinKitchenOrderScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenOrder create
-   */
-  export type BinKitchenOrderCreateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * The data needed to create a BinKitchenOrder.
-     */
-    data: XOR<BinKitchenOrderCreateInput, BinKitchenOrderUncheckedCreateInput>
-  }
-
-
-  /**
-   * BinKitchenOrder createMany
-   */
-  export type BinKitchenOrderCreateManyArgs = {
-    /**
-     * The data used to create many BinKitchenOrders.
-     */
-    data: Enumerable<BinKitchenOrderCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * BinKitchenOrder update
-   */
-  export type BinKitchenOrderUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * The data needed to update a BinKitchenOrder.
-     */
-    data: XOR<BinKitchenOrderUpdateInput, BinKitchenOrderUncheckedUpdateInput>
-    /**
-     * Choose, which BinKitchenOrder to update.
-     */
-    where: BinKitchenOrderWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrder updateMany
-   */
-  export type BinKitchenOrderUpdateManyArgs = {
-    /**
-     * The data used to update BinKitchenOrders.
-     */
-    data: XOR<BinKitchenOrderUpdateManyMutationInput, BinKitchenOrderUncheckedUpdateManyInput>
-    /**
-     * Filter which BinKitchenOrders to update
-     */
-    where?: BinKitchenOrderWhereInput
-  }
-
-
-  /**
-   * BinKitchenOrder upsert
-   */
-  export type BinKitchenOrderUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * The filter to search for the BinKitchenOrder to update in case it exists.
-     */
-    where: BinKitchenOrderWhereUniqueInput
-    /**
-     * In case the BinKitchenOrder found by the `where` argument doesn't exist, create a new BinKitchenOrder with this data.
-     */
-    create: XOR<BinKitchenOrderCreateInput, BinKitchenOrderUncheckedCreateInput>
-    /**
-     * In case the BinKitchenOrder was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<BinKitchenOrderUpdateInput, BinKitchenOrderUncheckedUpdateInput>
-  }
-
-
-  /**
-   * BinKitchenOrder delete
-   */
-  export type BinKitchenOrderDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-    /**
-     * Filter which BinKitchenOrder to delete.
-     */
-    where: BinKitchenOrderWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrder deleteMany
-   */
-  export type BinKitchenOrderDeleteManyArgs = {
-    /**
-     * Filter which BinKitchenOrders to delete
-     */
-    where?: BinKitchenOrderWhereInput
-  }
-
-
-  /**
-   * BinKitchenOrder.items
-   */
-  export type BinKitchenOrder$itemsArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    where?: BinKitchenOrderItemWhereInput
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<BinKitchenOrderItemScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenOrder without action
-   */
-  export type BinKitchenOrderArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrder
-     */
-    select?: BinKitchenOrderSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderInclude | null
-  }
-
-
-
-  /**
-   * Model BinKitchenOrderItem
-   */
-
-
-  export type AggregateBinKitchenOrderItem = {
-    _count: BinKitchenOrderItemCountAggregateOutputType | null
-    _avg: BinKitchenOrderItemAvgAggregateOutputType | null
-    _sum: BinKitchenOrderItemSumAggregateOutputType | null
-    _min: BinKitchenOrderItemMinAggregateOutputType | null
-    _max: BinKitchenOrderItemMaxAggregateOutputType | null
-  }
-
-  export type BinKitchenOrderItemAvgAggregateOutputType = {
-    id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
-  }
-
-  export type BinKitchenOrderItemSumAggregateOutputType = {
-    id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
-  }
-
-  export type BinKitchenOrderItemMinAggregateOutputType = {
-    id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenOrderItemMaxAggregateOutputType = {
-    id: number | null
-    menuId: number | null
-    orderId: number | null
-    quantity: number | null
-    totalPrice: number | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type BinKitchenOrderItemCountAggregateOutputType = {
-    id: number
-    menuId: number
-    orderId: number
-    quantity: number
-    totalPrice: number
-    createdAt: number
-    updateAt: number
-    _all: number
-  }
-
-
-  export type BinKitchenOrderItemAvgAggregateInputType = {
-    id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
-  }
-
-  export type BinKitchenOrderItemSumAggregateInputType = {
-    id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
-  }
-
-  export type BinKitchenOrderItemMinAggregateInputType = {
-    id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenOrderItemMaxAggregateInputType = {
-    id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type BinKitchenOrderItemCountAggregateInputType = {
-    id?: true
-    menuId?: true
-    orderId?: true
-    quantity?: true
-    totalPrice?: true
-    createdAt?: true
-    updateAt?: true
-    _all?: true
-  }
-
-  export type BinKitchenOrderItemAggregateArgs = {
-    /**
-     * Filter which BinKitchenOrderItem to aggregate.
-     */
-    where?: BinKitchenOrderItemWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrderItems to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrderItems from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrderItems.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned BinKitchenOrderItems
-    **/
-    _count?: true | BinKitchenOrderItemCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: BinKitchenOrderItemAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: BinKitchenOrderItemSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: BinKitchenOrderItemMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: BinKitchenOrderItemMaxAggregateInputType
-  }
-
-  export type GetBinKitchenOrderItemAggregateType<T extends BinKitchenOrderItemAggregateArgs> = {
-        [P in keyof T & keyof AggregateBinKitchenOrderItem]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateBinKitchenOrderItem[P]>
-      : GetScalarType<T[P], AggregateBinKitchenOrderItem[P]>
-  }
-
-
-
-
-  export type BinKitchenOrderItemGroupByArgs = {
-    where?: BinKitchenOrderItemWhereInput
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithAggregationInput>
-    by: BinKitchenOrderItemScalarFieldEnum[]
-    having?: BinKitchenOrderItemScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: BinKitchenOrderItemCountAggregateInputType | true
-    _avg?: BinKitchenOrderItemAvgAggregateInputType
-    _sum?: BinKitchenOrderItemSumAggregateInputType
-    _min?: BinKitchenOrderItemMinAggregateInputType
-    _max?: BinKitchenOrderItemMaxAggregateInputType
-  }
-
-
-  export type BinKitchenOrderItemGroupByOutputType = {
-    id: number
-    menuId: number
-    orderId: number | null
-    quantity: number
-    totalPrice: number
-    createdAt: Date
-    updateAt: Date
-    _count: BinKitchenOrderItemCountAggregateOutputType | null
-    _avg: BinKitchenOrderItemAvgAggregateOutputType | null
-    _sum: BinKitchenOrderItemSumAggregateOutputType | null
-    _min: BinKitchenOrderItemMinAggregateOutputType | null
-    _max: BinKitchenOrderItemMaxAggregateOutputType | null
-  }
-
-  type GetBinKitchenOrderItemGroupByPayload<T extends BinKitchenOrderItemGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<BinKitchenOrderItemGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BinKitchenOrderItemGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BinKitchenOrderItemGroupByOutputType[P]>
-            : GetScalarType<T[P], BinKitchenOrderItemGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type BinKitchenOrderItemSelect = {
-    id?: boolean
-    menuId?: boolean
-    orderId?: boolean
-    quantity?: boolean
-    totalPrice?: boolean
-    createdAt?: boolean
-    updateAt?: boolean
-    menu?: boolean | BinKitchenMenuArgs
-    order?: boolean | BinKitchenOrderArgs
-  }
-
-
-  export type BinKitchenOrderItemInclude = {
-    menu?: boolean | BinKitchenMenuArgs
-    order?: boolean | BinKitchenOrderArgs
-  }
-
-  export type BinKitchenOrderItemGetPayload<S extends boolean | null | undefined | BinKitchenOrderItemArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? BinKitchenOrderItem :
-    S extends undefined ? never :
-    S extends { include: any } & (BinKitchenOrderItemArgs | BinKitchenOrderItemFindManyArgs)
-    ? BinKitchenOrderItem  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'menu' ? BinKitchenMenuGetPayload<S['include'][P]> :
-        P extends 'order' ? BinKitchenOrderGetPayload<S['include'][P]> | null :  never
-  } 
-    : S extends { select: any } & (BinKitchenOrderItemArgs | BinKitchenOrderItemFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'menu' ? BinKitchenMenuGetPayload<S['select'][P]> :
-        P extends 'order' ? BinKitchenOrderGetPayload<S['select'][P]> | null :  P extends keyof BinKitchenOrderItem ? BinKitchenOrderItem[P] : never
-  } 
-      : BinKitchenOrderItem
-
-
-  type BinKitchenOrderItemCountArgs = 
-    Omit<BinKitchenOrderItemFindManyArgs, 'select' | 'include'> & {
-      select?: BinKitchenOrderItemCountAggregateInputType | true
-    }
-
-  export interface BinKitchenOrderItemDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one BinKitchenOrderItem that matches the filter.
-     * @param {BinKitchenOrderItemFindUniqueArgs} args - Arguments to find a BinKitchenOrderItem
-     * @example
-     * // Get one BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends BinKitchenOrderItemFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, BinKitchenOrderItemFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'BinKitchenOrderItem'> extends True ? Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>> : Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T> | null, null>
-
-    /**
-     * Find one BinKitchenOrderItem that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {BinKitchenOrderItemFindUniqueOrThrowArgs} args - Arguments to find a BinKitchenOrderItem
-     * @example
-     * // Get one BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends BinKitchenOrderItemFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenOrderItemFindUniqueOrThrowArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Find the first BinKitchenOrderItem that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemFindFirstArgs} args - Arguments to find a BinKitchenOrderItem
-     * @example
-     * // Get one BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends BinKitchenOrderItemFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, BinKitchenOrderItemFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'BinKitchenOrderItem'> extends True ? Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>> : Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T> | null, null>
-
-    /**
-     * Find the first BinKitchenOrderItem that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemFindFirstOrThrowArgs} args - Arguments to find a BinKitchenOrderItem
-     * @example
-     * // Get one BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends BinKitchenOrderItemFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, BinKitchenOrderItemFindFirstOrThrowArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Find zero or more BinKitchenOrderItems that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all BinKitchenOrderItems
-     * const binKitchenOrderItems = await prisma.binKitchenOrderItem.findMany()
-     * 
-     * // Get first 10 BinKitchenOrderItems
-     * const binKitchenOrderItems = await prisma.binKitchenOrderItem.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const binKitchenOrderItemWithIdOnly = await prisma.binKitchenOrderItem.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends BinKitchenOrderItemFindManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderItemFindManyArgs>
-    ): Prisma.PrismaPromise<Array<BinKitchenOrderItemGetPayload<T>>>
-
-    /**
-     * Create a BinKitchenOrderItem.
-     * @param {BinKitchenOrderItemCreateArgs} args - Arguments to create a BinKitchenOrderItem.
-     * @example
-     * // Create one BinKitchenOrderItem
-     * const BinKitchenOrderItem = await prisma.binKitchenOrderItem.create({
-     *   data: {
-     *     // ... data to create a BinKitchenOrderItem
-     *   }
-     * })
-     * 
-    **/
-    create<T extends BinKitchenOrderItemCreateArgs>(
-      args: SelectSubset<T, BinKitchenOrderItemCreateArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Create many BinKitchenOrderItems.
-     *     @param {BinKitchenOrderItemCreateManyArgs} args - Arguments to create many BinKitchenOrderItems.
-     *     @example
-     *     // Create many BinKitchenOrderItems
-     *     const binKitchenOrderItem = await prisma.binKitchenOrderItem.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends BinKitchenOrderItemCreateManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderItemCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a BinKitchenOrderItem.
-     * @param {BinKitchenOrderItemDeleteArgs} args - Arguments to delete one BinKitchenOrderItem.
-     * @example
-     * // Delete one BinKitchenOrderItem
-     * const BinKitchenOrderItem = await prisma.binKitchenOrderItem.delete({
-     *   where: {
-     *     // ... filter to delete one BinKitchenOrderItem
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends BinKitchenOrderItemDeleteArgs>(
-      args: SelectSubset<T, BinKitchenOrderItemDeleteArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Update one BinKitchenOrderItem.
-     * @param {BinKitchenOrderItemUpdateArgs} args - Arguments to update one BinKitchenOrderItem.
-     * @example
-     * // Update one BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends BinKitchenOrderItemUpdateArgs>(
-      args: SelectSubset<T, BinKitchenOrderItemUpdateArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Delete zero or more BinKitchenOrderItems.
-     * @param {BinKitchenOrderItemDeleteManyArgs} args - Arguments to filter BinKitchenOrderItems to delete.
-     * @example
-     * // Delete a few BinKitchenOrderItems
-     * const { count } = await prisma.binKitchenOrderItem.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends BinKitchenOrderItemDeleteManyArgs>(
-      args?: SelectSubset<T, BinKitchenOrderItemDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more BinKitchenOrderItems.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many BinKitchenOrderItems
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends BinKitchenOrderItemUpdateManyArgs>(
-      args: SelectSubset<T, BinKitchenOrderItemUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one BinKitchenOrderItem.
-     * @param {BinKitchenOrderItemUpsertArgs} args - Arguments to update or create a BinKitchenOrderItem.
-     * @example
-     * // Update or create a BinKitchenOrderItem
-     * const binKitchenOrderItem = await prisma.binKitchenOrderItem.upsert({
-     *   create: {
-     *     // ... data to create a BinKitchenOrderItem
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the BinKitchenOrderItem we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends BinKitchenOrderItemUpsertArgs>(
-      args: SelectSubset<T, BinKitchenOrderItemUpsertArgs>
-    ): Prisma__BinKitchenOrderItemClient<BinKitchenOrderItemGetPayload<T>>
-
-    /**
-     * Count the number of BinKitchenOrderItems.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemCountArgs} args - Arguments to filter BinKitchenOrderItems to count.
-     * @example
-     * // Count the number of BinKitchenOrderItems
-     * const count = await prisma.binKitchenOrderItem.count({
-     *   where: {
-     *     // ... the filter for the BinKitchenOrderItems we want to count
-     *   }
-     * })
-    **/
-    count<T extends BinKitchenOrderItemCountArgs>(
-      args?: Subset<T, BinKitchenOrderItemCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], BinKitchenOrderItemCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a BinKitchenOrderItem.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends BinKitchenOrderItemAggregateArgs>(args: Subset<T, BinKitchenOrderItemAggregateArgs>): Prisma.PrismaPromise<GetBinKitchenOrderItemAggregateType<T>>
-
-    /**
-     * Group by BinKitchenOrderItem.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {BinKitchenOrderItemGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends BinKitchenOrderItemGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: BinKitchenOrderItemGroupByArgs['orderBy'] }
-        : { orderBy?: BinKitchenOrderItemGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, BinKitchenOrderItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBinKitchenOrderItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for BinKitchenOrderItem.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__BinKitchenOrderItemClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    menu<T extends BinKitchenMenuArgs= {}>(args?: Subset<T, BinKitchenMenuArgs>): Prisma__BinKitchenMenuClient<BinKitchenMenuGetPayload<T> | Null>;
-
-    order<T extends BinKitchenOrderArgs= {}>(args?: Subset<T, BinKitchenOrderArgs>): Prisma__BinKitchenOrderClient<BinKitchenOrderGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * BinKitchenOrderItem base type for findUnique actions
-   */
-  export type BinKitchenOrderItemFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter, which BinKitchenOrderItem to fetch.
-     */
-    where: BinKitchenOrderItemWhereUniqueInput
-  }
-
-  /**
-   * BinKitchenOrderItem findUnique
-   */
-  export interface BinKitchenOrderItemFindUniqueArgs extends BinKitchenOrderItemFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenOrderItem findUniqueOrThrow
-   */
-  export type BinKitchenOrderItemFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter, which BinKitchenOrderItem to fetch.
-     */
-    where: BinKitchenOrderItemWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrderItem base type for findFirst actions
-   */
-  export type BinKitchenOrderItemFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter, which BinKitchenOrderItem to fetch.
-     */
-    where?: BinKitchenOrderItemWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrderItems to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenOrderItems.
-     */
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrderItems from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrderItems.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenOrderItems.
-     */
-    distinct?: Enumerable<BinKitchenOrderItemScalarFieldEnum>
-  }
-
-  /**
-   * BinKitchenOrderItem findFirst
-   */
-  export interface BinKitchenOrderItemFindFirstArgs extends BinKitchenOrderItemFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * BinKitchenOrderItem findFirstOrThrow
-   */
-  export type BinKitchenOrderItemFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter, which BinKitchenOrderItem to fetch.
-     */
-    where?: BinKitchenOrderItemWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrderItems to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for BinKitchenOrderItems.
-     */
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrderItems from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrderItems.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of BinKitchenOrderItems.
-     */
-    distinct?: Enumerable<BinKitchenOrderItemScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenOrderItem findMany
-   */
-  export type BinKitchenOrderItemFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter, which BinKitchenOrderItems to fetch.
-     */
-    where?: BinKitchenOrderItemWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of BinKitchenOrderItems to fetch.
-     */
-    orderBy?: Enumerable<BinKitchenOrderItemOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing BinKitchenOrderItems.
-     */
-    cursor?: BinKitchenOrderItemWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` BinKitchenOrderItems from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` BinKitchenOrderItems.
-     */
-    skip?: number
-    distinct?: Enumerable<BinKitchenOrderItemScalarFieldEnum>
-  }
-
-
-  /**
-   * BinKitchenOrderItem create
-   */
-  export type BinKitchenOrderItemCreateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * The data needed to create a BinKitchenOrderItem.
-     */
-    data: XOR<BinKitchenOrderItemCreateInput, BinKitchenOrderItemUncheckedCreateInput>
-  }
-
-
-  /**
-   * BinKitchenOrderItem createMany
-   */
-  export type BinKitchenOrderItemCreateManyArgs = {
-    /**
-     * The data used to create many BinKitchenOrderItems.
-     */
-    data: Enumerable<BinKitchenOrderItemCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * BinKitchenOrderItem update
-   */
-  export type BinKitchenOrderItemUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * The data needed to update a BinKitchenOrderItem.
-     */
-    data: XOR<BinKitchenOrderItemUpdateInput, BinKitchenOrderItemUncheckedUpdateInput>
-    /**
-     * Choose, which BinKitchenOrderItem to update.
-     */
-    where: BinKitchenOrderItemWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrderItem updateMany
-   */
-  export type BinKitchenOrderItemUpdateManyArgs = {
-    /**
-     * The data used to update BinKitchenOrderItems.
-     */
-    data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyInput>
-    /**
-     * Filter which BinKitchenOrderItems to update
-     */
-    where?: BinKitchenOrderItemWhereInput
-  }
-
-
-  /**
-   * BinKitchenOrderItem upsert
-   */
-  export type BinKitchenOrderItemUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * The filter to search for the BinKitchenOrderItem to update in case it exists.
-     */
-    where: BinKitchenOrderItemWhereUniqueInput
-    /**
-     * In case the BinKitchenOrderItem found by the `where` argument doesn't exist, create a new BinKitchenOrderItem with this data.
-     */
-    create: XOR<BinKitchenOrderItemCreateInput, BinKitchenOrderItemUncheckedCreateInput>
-    /**
-     * In case the BinKitchenOrderItem was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<BinKitchenOrderItemUpdateInput, BinKitchenOrderItemUncheckedUpdateInput>
-  }
-
-
-  /**
-   * BinKitchenOrderItem delete
-   */
-  export type BinKitchenOrderItemDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-    /**
-     * Filter which BinKitchenOrderItem to delete.
-     */
-    where: BinKitchenOrderItemWhereUniqueInput
-  }
-
-
-  /**
-   * BinKitchenOrderItem deleteMany
-   */
-  export type BinKitchenOrderItemDeleteManyArgs = {
-    /**
-     * Filter which BinKitchenOrderItems to delete
-     */
-    where?: BinKitchenOrderItemWhereInput
-  }
-
-
-  /**
-   * BinKitchenOrderItem without action
-   */
-  export type BinKitchenOrderItemArgs = {
-    /**
-     * Select specific fields to fetch from the BinKitchenOrderItem
-     */
-    select?: BinKitchenOrderItemSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: BinKitchenOrderItemInclude | null
-  }
-
-
-
-  /**
-   * Model QuizCat
-   */
-
-
-  export type AggregateQuizCat = {
-    _count: QuizCatCountAggregateOutputType | null
-    _avg: QuizCatAvgAggregateOutputType | null
-    _sum: QuizCatSumAggregateOutputType | null
-    _min: QuizCatMinAggregateOutputType | null
-    _max: QuizCatMaxAggregateOutputType | null
-  }
-
-  export type QuizCatAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type QuizCatSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type QuizCatMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type QuizCatMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type QuizCatCountAggregateOutputType = {
-    id: number
-    name: number
-    createdAt: number
-    updateAt: number
-    _all: number
-  }
-
-
-  export type QuizCatAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type QuizCatSumAggregateInputType = {
-    id?: true
-  }
-
-  export type QuizCatMinAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type QuizCatMaxAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updateAt?: true
-  }
-
-  export type QuizCatCountAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updateAt?: true
-    _all?: true
-  }
-
-  export type QuizCatAggregateArgs = {
-    /**
-     * Filter which QuizCat to aggregate.
-     */
-    where?: QuizCatWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of QuizCats to fetch.
-     */
-    orderBy?: Enumerable<QuizCatOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: QuizCatWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` QuizCats from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` QuizCats.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned QuizCats
-    **/
-    _count?: true | QuizCatCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: QuizCatAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: QuizCatSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: QuizCatMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: QuizCatMaxAggregateInputType
-  }
-
-  export type GetQuizCatAggregateType<T extends QuizCatAggregateArgs> = {
-        [P in keyof T & keyof AggregateQuizCat]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateQuizCat[P]>
-      : GetScalarType<T[P], AggregateQuizCat[P]>
-  }
-
-
-
-
-  export type QuizCatGroupByArgs = {
-    where?: QuizCatWhereInput
-    orderBy?: Enumerable<QuizCatOrderByWithAggregationInput>
-    by: QuizCatScalarFieldEnum[]
-    having?: QuizCatScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: QuizCatCountAggregateInputType | true
-    _avg?: QuizCatAvgAggregateInputType
-    _sum?: QuizCatSumAggregateInputType
-    _min?: QuizCatMinAggregateInputType
-    _max?: QuizCatMaxAggregateInputType
-  }
-
-
-  export type QuizCatGroupByOutputType = {
-    id: number
-    name: string
-    createdAt: Date
-    updateAt: Date
-    _count: QuizCatCountAggregateOutputType | null
-    _avg: QuizCatAvgAggregateOutputType | null
-    _sum: QuizCatSumAggregateOutputType | null
-    _min: QuizCatMinAggregateOutputType | null
-    _max: QuizCatMaxAggregateOutputType | null
-  }
-
-  type GetQuizCatGroupByPayload<T extends QuizCatGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<QuizCatGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof QuizCatGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], QuizCatGroupByOutputType[P]>
-            : GetScalarType<T[P], QuizCatGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type QuizCatSelect = {
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updateAt?: boolean
-    questions?: boolean | QuizCat$questionsArgs
-    rounds?: boolean | QuizCat$roundsArgs
-    _count?: boolean | QuizCatCountOutputTypeArgs
-  }
-
-
-  export type QuizCatInclude = {
-    questions?: boolean | QuizCat$questionsArgs
-    rounds?: boolean | QuizCat$roundsArgs
-    _count?: boolean | QuizCatCountOutputTypeArgs
-  }
-
-  export type QuizCatGetPayload<S extends boolean | null | undefined | QuizCatArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? QuizCat :
-    S extends undefined ? never :
-    S extends { include: any } & (QuizCatArgs | QuizCatFindManyArgs)
-    ? QuizCat  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'questions' ? Array < QuestionGetPayload<S['include'][P]>>  :
+        P extends 'quiz' ? Array < QuizGetPayload<S['include'][P]>>  :
         P extends 'rounds' ? Array < RoundGetPayload<S['include'][P]>>  :
-        P extends '_count' ? QuizCatCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends '_count' ? CategoryCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (QuizCatArgs | QuizCatFindManyArgs)
+    : S extends { select: any } & (CategoryArgs | CategoryFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'questions' ? Array < QuestionGetPayload<S['select'][P]>>  :
+        P extends 'quiz' ? Array < QuizGetPayload<S['select'][P]>>  :
         P extends 'rounds' ? Array < RoundGetPayload<S['select'][P]>>  :
-        P extends '_count' ? QuizCatCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof QuizCat ? QuizCat[P] : never
+        P extends '_count' ? CategoryCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Category ? Category[P] : never
   } 
-      : QuizCat
+      : Category
 
 
-  type QuizCatCountArgs = 
-    Omit<QuizCatFindManyArgs, 'select' | 'include'> & {
-      select?: QuizCatCountAggregateInputType | true
+  type CategoryCountArgs = 
+    Omit<CategoryFindManyArgs, 'select' | 'include'> & {
+      select?: CategoryCountAggregateInputType | true
     }
 
-  export interface QuizCatDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface CategoryDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one QuizCat that matches the filter.
-     * @param {QuizCatFindUniqueArgs} args - Arguments to find a QuizCat
+     * Find zero or one Category that matches the filter.
+     * @param {CategoryFindUniqueArgs} args - Arguments to find a Category
      * @example
-     * // Get one QuizCat
-     * const quizCat = await prisma.quizCat.findUnique({
+     * // Get one Category
+     * const category = await prisma.category.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends QuizCatFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, QuizCatFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'QuizCat'> extends True ? Prisma__QuizCatClient<QuizCatGetPayload<T>> : Prisma__QuizCatClient<QuizCatGetPayload<T> | null, null>
+    findUnique<T extends CategoryFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, CategoryFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Category'> extends True ? Prisma__CategoryClient<CategoryGetPayload<T>> : Prisma__CategoryClient<CategoryGetPayload<T> | null, null>
 
     /**
-     * Find one QuizCat that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Category that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {QuizCatFindUniqueOrThrowArgs} args - Arguments to find a QuizCat
+     * @param {CategoryFindUniqueOrThrowArgs} args - Arguments to find a Category
      * @example
-     * // Get one QuizCat
-     * const quizCat = await prisma.quizCat.findUniqueOrThrow({
+     * // Get one Category
+     * const category = await prisma.category.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends QuizCatFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, QuizCatFindUniqueOrThrowArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    findUniqueOrThrow<T extends CategoryFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, CategoryFindUniqueOrThrowArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Find the first QuizCat that matches the filter.
+     * Find the first Category that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatFindFirstArgs} args - Arguments to find a QuizCat
+     * @param {CategoryFindFirstArgs} args - Arguments to find a Category
      * @example
-     * // Get one QuizCat
-     * const quizCat = await prisma.quizCat.findFirst({
+     * // Get one Category
+     * const category = await prisma.category.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends QuizCatFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, QuizCatFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'QuizCat'> extends True ? Prisma__QuizCatClient<QuizCatGetPayload<T>> : Prisma__QuizCatClient<QuizCatGetPayload<T> | null, null>
+    findFirst<T extends CategoryFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, CategoryFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Category'> extends True ? Prisma__CategoryClient<CategoryGetPayload<T>> : Prisma__CategoryClient<CategoryGetPayload<T> | null, null>
 
     /**
-     * Find the first QuizCat that matches the filter or
+     * Find the first Category that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatFindFirstOrThrowArgs} args - Arguments to find a QuizCat
+     * @param {CategoryFindFirstOrThrowArgs} args - Arguments to find a Category
      * @example
-     * // Get one QuizCat
-     * const quizCat = await prisma.quizCat.findFirstOrThrow({
+     * // Get one Category
+     * const category = await prisma.category.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends QuizCatFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, QuizCatFindFirstOrThrowArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    findFirstOrThrow<T extends CategoryFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, CategoryFindFirstOrThrowArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Find zero or more QuizCats that matches the filter.
+     * Find zero or more Categories that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {CategoryFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all QuizCats
-     * const quizCats = await prisma.quizCat.findMany()
+     * // Get all Categories
+     * const categories = await prisma.category.findMany()
      * 
-     * // Get first 10 QuizCats
-     * const quizCats = await prisma.quizCat.findMany({ take: 10 })
+     * // Get first 10 Categories
+     * const categories = await prisma.category.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const quizCatWithIdOnly = await prisma.quizCat.findMany({ select: { id: true } })
+     * const categoryWithIdOnly = await prisma.category.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends QuizCatFindManyArgs>(
-      args?: SelectSubset<T, QuizCatFindManyArgs>
-    ): Prisma.PrismaPromise<Array<QuizCatGetPayload<T>>>
+    findMany<T extends CategoryFindManyArgs>(
+      args?: SelectSubset<T, CategoryFindManyArgs>
+    ): Prisma.PrismaPromise<Array<CategoryGetPayload<T>>>
 
     /**
-     * Create a QuizCat.
-     * @param {QuizCatCreateArgs} args - Arguments to create a QuizCat.
+     * Create a Category.
+     * @param {CategoryCreateArgs} args - Arguments to create a Category.
      * @example
-     * // Create one QuizCat
-     * const QuizCat = await prisma.quizCat.create({
+     * // Create one Category
+     * const Category = await prisma.category.create({
      *   data: {
-     *     // ... data to create a QuizCat
+     *     // ... data to create a Category
      *   }
      * })
      * 
     **/
-    create<T extends QuizCatCreateArgs>(
-      args: SelectSubset<T, QuizCatCreateArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    create<T extends CategoryCreateArgs>(
+      args: SelectSubset<T, CategoryCreateArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Create many QuizCats.
-     *     @param {QuizCatCreateManyArgs} args - Arguments to create many QuizCats.
+     * Create many Categories.
+     *     @param {CategoryCreateManyArgs} args - Arguments to create many Categories.
      *     @example
-     *     // Create many QuizCats
-     *     const quizCat = await prisma.quizCat.createMany({
+     *     // Create many Categories
+     *     const category = await prisma.category.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends QuizCatCreateManyArgs>(
-      args?: SelectSubset<T, QuizCatCreateManyArgs>
+    createMany<T extends CategoryCreateManyArgs>(
+      args?: SelectSubset<T, CategoryCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a QuizCat.
-     * @param {QuizCatDeleteArgs} args - Arguments to delete one QuizCat.
+     * Delete a Category.
+     * @param {CategoryDeleteArgs} args - Arguments to delete one Category.
      * @example
-     * // Delete one QuizCat
-     * const QuizCat = await prisma.quizCat.delete({
+     * // Delete one Category
+     * const Category = await prisma.category.delete({
      *   where: {
-     *     // ... filter to delete one QuizCat
+     *     // ... filter to delete one Category
      *   }
      * })
      * 
     **/
-    delete<T extends QuizCatDeleteArgs>(
-      args: SelectSubset<T, QuizCatDeleteArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    delete<T extends CategoryDeleteArgs>(
+      args: SelectSubset<T, CategoryDeleteArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Update one QuizCat.
-     * @param {QuizCatUpdateArgs} args - Arguments to update one QuizCat.
+     * Update one Category.
+     * @param {CategoryUpdateArgs} args - Arguments to update one Category.
      * @example
-     * // Update one QuizCat
-     * const quizCat = await prisma.quizCat.update({
+     * // Update one Category
+     * const category = await prisma.category.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -5980,34 +2365,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends QuizCatUpdateArgs>(
-      args: SelectSubset<T, QuizCatUpdateArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    update<T extends CategoryUpdateArgs>(
+      args: SelectSubset<T, CategoryUpdateArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Delete zero or more QuizCats.
-     * @param {QuizCatDeleteManyArgs} args - Arguments to filter QuizCats to delete.
+     * Delete zero or more Categories.
+     * @param {CategoryDeleteManyArgs} args - Arguments to filter Categories to delete.
      * @example
-     * // Delete a few QuizCats
-     * const { count } = await prisma.quizCat.deleteMany({
+     * // Delete a few Categories
+     * const { count } = await prisma.category.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends QuizCatDeleteManyArgs>(
-      args?: SelectSubset<T, QuizCatDeleteManyArgs>
+    deleteMany<T extends CategoryDeleteManyArgs>(
+      args?: SelectSubset<T, CategoryDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more QuizCats.
+     * Update zero or more Categories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CategoryUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many QuizCats
-     * const quizCat = await prisma.quizCat.updateMany({
+     * // Update many Categories
+     * const category = await prisma.category.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6017,59 +2402,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends QuizCatUpdateManyArgs>(
-      args: SelectSubset<T, QuizCatUpdateManyArgs>
+    updateMany<T extends CategoryUpdateManyArgs>(
+      args: SelectSubset<T, CategoryUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one QuizCat.
-     * @param {QuizCatUpsertArgs} args - Arguments to update or create a QuizCat.
+     * Create or update one Category.
+     * @param {CategoryUpsertArgs} args - Arguments to update or create a Category.
      * @example
-     * // Update or create a QuizCat
-     * const quizCat = await prisma.quizCat.upsert({
+     * // Update or create a Category
+     * const category = await prisma.category.upsert({
      *   create: {
-     *     // ... data to create a QuizCat
+     *     // ... data to create a Category
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the QuizCat we want to update
+     *     // ... the filter for the Category we want to update
      *   }
      * })
     **/
-    upsert<T extends QuizCatUpsertArgs>(
-      args: SelectSubset<T, QuizCatUpsertArgs>
-    ): Prisma__QuizCatClient<QuizCatGetPayload<T>>
+    upsert<T extends CategoryUpsertArgs>(
+      args: SelectSubset<T, CategoryUpsertArgs>
+    ): Prisma__CategoryClient<CategoryGetPayload<T>>
 
     /**
-     * Count the number of QuizCats.
+     * Count the number of Categories.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatCountArgs} args - Arguments to filter QuizCats to count.
+     * @param {CategoryCountArgs} args - Arguments to filter Categories to count.
      * @example
-     * // Count the number of QuizCats
-     * const count = await prisma.quizCat.count({
+     * // Count the number of Categories
+     * const count = await prisma.category.count({
      *   where: {
-     *     // ... the filter for the QuizCats we want to count
+     *     // ... the filter for the Categories we want to count
      *   }
      * })
     **/
-    count<T extends QuizCatCountArgs>(
-      args?: Subset<T, QuizCatCountArgs>,
+    count<T extends CategoryCountArgs>(
+      args?: Subset<T, CategoryCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], QuizCatCountAggregateOutputType>
+          : GetScalarType<T['select'], CategoryCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a QuizCat.
+     * Allows you to perform aggregations operations on a Category.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -6089,13 +2474,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends QuizCatAggregateArgs>(args: Subset<T, QuizCatAggregateArgs>): Prisma.PrismaPromise<GetQuizCatAggregateType<T>>
+    aggregate<T extends CategoryAggregateArgs>(args: Subset<T, CategoryAggregateArgs>): Prisma.PrismaPromise<GetCategoryAggregateType<T>>
 
     /**
-     * Group by QuizCat.
+     * Group by Category.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuizCatGroupByArgs} args - Group by arguments.
+     * @param {CategoryGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -6110,14 +2495,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends QuizCatGroupByArgs,
+      T extends CategoryGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: QuizCatGroupByArgs['orderBy'] }
-        : { orderBy?: QuizCatGroupByArgs['orderBy'] },
+        ? { orderBy: CategoryGroupByArgs['orderBy'] }
+        : { orderBy?: CategoryGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -6166,17 +2551,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, QuizCatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuizCatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for QuizCat.
+   * The delegate class that acts as a "Promise-like" for Category.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__QuizCatClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__CategoryClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -6191,9 +2576,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    questions<T extends QuizCat$questionsArgs= {}>(args?: Subset<T, QuizCat$questionsArgs>): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>| Null>;
+    quiz<T extends Category$quizArgs= {}>(args?: Subset<T, Category$quizArgs>): Prisma.PrismaPromise<Array<QuizGetPayload<T>>| Null>;
 
-    rounds<T extends QuizCat$roundsArgs= {}>(args?: Subset<T, QuizCat$roundsArgs>): Prisma.PrismaPromise<Array<RoundGetPayload<T>>| Null>;
+    rounds<T extends Category$roundsArgs= {}>(args?: Subset<T, Category$roundsArgs>): Prisma.PrismaPromise<Array<RoundGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -6223,27 +2608,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * QuizCat base type for findUnique actions
+   * Category base type for findUnique actions
    */
-  export type QuizCatFindUniqueArgsBase = {
+  export type CategoryFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter, which QuizCat to fetch.
+     * Filter, which Category to fetch.
      */
-    where: QuizCatWhereUniqueInput
+    where: CategoryWhereUniqueInput
   }
 
   /**
-   * QuizCat findUnique
+   * Category findUnique
    */
-  export interface QuizCatFindUniqueArgs extends QuizCatFindUniqueArgsBase {
+  export interface CategoryFindUniqueArgs extends CategoryFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -6253,76 +2638,76 @@ export namespace Prisma {
       
 
   /**
-   * QuizCat findUniqueOrThrow
+   * Category findUniqueOrThrow
    */
-  export type QuizCatFindUniqueOrThrowArgs = {
+  export type CategoryFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter, which QuizCat to fetch.
+     * Filter, which Category to fetch.
      */
-    where: QuizCatWhereUniqueInput
+    where: CategoryWhereUniqueInput
   }
 
 
   /**
-   * QuizCat base type for findFirst actions
+   * Category base type for findFirst actions
    */
-  export type QuizCatFindFirstArgsBase = {
+  export type CategoryFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter, which QuizCat to fetch.
+     * Filter, which Category to fetch.
      */
-    where?: QuizCatWhereInput
+    where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of QuizCats to fetch.
+     * Determine the order of Categories to fetch.
      */
-    orderBy?: Enumerable<QuizCatOrderByWithRelationInput>
+    orderBy?: Enumerable<CategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for QuizCats.
+     * Sets the position for searching for Categories.
      */
-    cursor?: QuizCatWhereUniqueInput
+    cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` QuizCats from the position of the cursor.
+     * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` QuizCats.
+     * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of QuizCats.
+     * Filter by unique combinations of Categories.
      */
-    distinct?: Enumerable<QuizCatScalarFieldEnum>
+    distinct?: Enumerable<CategoryScalarFieldEnum>
   }
 
   /**
-   * QuizCat findFirst
+   * Category findFirst
    */
-  export interface QuizCatFindFirstArgs extends QuizCatFindFirstArgsBase {
+  export interface CategoryFindFirstArgs extends CategoryFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -6332,249 +2717,249 @@ export namespace Prisma {
       
 
   /**
-   * QuizCat findFirstOrThrow
+   * Category findFirstOrThrow
    */
-  export type QuizCatFindFirstOrThrowArgs = {
+  export type CategoryFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter, which QuizCat to fetch.
+     * Filter, which Category to fetch.
      */
-    where?: QuizCatWhereInput
+    where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of QuizCats to fetch.
+     * Determine the order of Categories to fetch.
      */
-    orderBy?: Enumerable<QuizCatOrderByWithRelationInput>
+    orderBy?: Enumerable<CategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for QuizCats.
+     * Sets the position for searching for Categories.
      */
-    cursor?: QuizCatWhereUniqueInput
+    cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` QuizCats from the position of the cursor.
+     * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` QuizCats.
+     * Skip the first `n` Categories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of QuizCats.
+     * Filter by unique combinations of Categories.
      */
-    distinct?: Enumerable<QuizCatScalarFieldEnum>
+    distinct?: Enumerable<CategoryScalarFieldEnum>
   }
 
 
   /**
-   * QuizCat findMany
+   * Category findMany
    */
-  export type QuizCatFindManyArgs = {
+  export type CategoryFindManyArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter, which QuizCats to fetch.
+     * Filter, which Categories to fetch.
      */
-    where?: QuizCatWhereInput
+    where?: CategoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of QuizCats to fetch.
+     * Determine the order of Categories to fetch.
      */
-    orderBy?: Enumerable<QuizCatOrderByWithRelationInput>
+    orderBy?: Enumerable<CategoryOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing QuizCats.
+     * Sets the position for listing Categories.
      */
-    cursor?: QuizCatWhereUniqueInput
+    cursor?: CategoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` QuizCats from the position of the cursor.
+     * Take `±n` Categories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` QuizCats.
+     * Skip the first `n` Categories.
      */
     skip?: number
-    distinct?: Enumerable<QuizCatScalarFieldEnum>
+    distinct?: Enumerable<CategoryScalarFieldEnum>
   }
 
 
   /**
-   * QuizCat create
+   * Category create
    */
-  export type QuizCatCreateArgs = {
+  export type CategoryCreateArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * The data needed to create a QuizCat.
+     * The data needed to create a Category.
      */
-    data: XOR<QuizCatCreateInput, QuizCatUncheckedCreateInput>
+    data: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
   }
 
 
   /**
-   * QuizCat createMany
+   * Category createMany
    */
-  export type QuizCatCreateManyArgs = {
+  export type CategoryCreateManyArgs = {
     /**
-     * The data used to create many QuizCats.
+     * The data used to create many Categories.
      */
-    data: Enumerable<QuizCatCreateManyInput>
+    data: Enumerable<CategoryCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * QuizCat update
+   * Category update
    */
-  export type QuizCatUpdateArgs = {
+  export type CategoryUpdateArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * The data needed to update a QuizCat.
+     * The data needed to update a Category.
      */
-    data: XOR<QuizCatUpdateInput, QuizCatUncheckedUpdateInput>
+    data: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
     /**
-     * Choose, which QuizCat to update.
+     * Choose, which Category to update.
      */
-    where: QuizCatWhereUniqueInput
+    where: CategoryWhereUniqueInput
   }
 
 
   /**
-   * QuizCat updateMany
+   * Category updateMany
    */
-  export type QuizCatUpdateManyArgs = {
+  export type CategoryUpdateManyArgs = {
     /**
-     * The data used to update QuizCats.
+     * The data used to update Categories.
      */
-    data: XOR<QuizCatUpdateManyMutationInput, QuizCatUncheckedUpdateManyInput>
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyInput>
     /**
-     * Filter which QuizCats to update
+     * Filter which Categories to update
      */
-    where?: QuizCatWhereInput
+    where?: CategoryWhereInput
   }
 
 
   /**
-   * QuizCat upsert
+   * Category upsert
    */
-  export type QuizCatUpsertArgs = {
+  export type CategoryUpsertArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * The filter to search for the QuizCat to update in case it exists.
+     * The filter to search for the Category to update in case it exists.
      */
-    where: QuizCatWhereUniqueInput
+    where: CategoryWhereUniqueInput
     /**
-     * In case the QuizCat found by the `where` argument doesn't exist, create a new QuizCat with this data.
+     * In case the Category found by the `where` argument doesn't exist, create a new Category with this data.
      */
-    create: XOR<QuizCatCreateInput, QuizCatUncheckedCreateInput>
+    create: XOR<CategoryCreateInput, CategoryUncheckedCreateInput>
     /**
-     * In case the QuizCat was found with the provided `where` argument, update it with this data.
+     * In case the Category was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<QuizCatUpdateInput, QuizCatUncheckedUpdateInput>
+    update: XOR<CategoryUpdateInput, CategoryUncheckedUpdateInput>
   }
 
 
   /**
-   * QuizCat delete
+   * Category delete
    */
-  export type QuizCatDeleteArgs = {
+  export type CategoryDeleteArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
     /**
-     * Filter which QuizCat to delete.
+     * Filter which Category to delete.
      */
-    where: QuizCatWhereUniqueInput
+    where: CategoryWhereUniqueInput
   }
 
 
   /**
-   * QuizCat deleteMany
+   * Category deleteMany
    */
-  export type QuizCatDeleteManyArgs = {
+  export type CategoryDeleteManyArgs = {
     /**
-     * Filter which QuizCats to delete
+     * Filter which Categories to delete
      */
-    where?: QuizCatWhereInput
+    where?: CategoryWhereInput
   }
 
 
   /**
-   * QuizCat.questions
+   * Category.quiz
    */
-  export type QuizCat$questionsArgs = {
+  export type Category$quizArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
-    where?: QuestionWhereInput
-    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
-    cursor?: QuestionWhereUniqueInput
+    include?: QuizInclude | null
+    where?: QuizWhereInput
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
+    cursor?: QuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<QuestionScalarFieldEnum>
+    distinct?: Enumerable<QuizScalarFieldEnum>
   }
 
 
   /**
-   * QuizCat.rounds
+   * Category.rounds
    */
-  export type QuizCat$roundsArgs = {
+  export type Category$roundsArgs = {
     /**
      * Select specific fields to fetch from the Round
      */
@@ -6593,421 +2978,437 @@ export namespace Prisma {
 
 
   /**
-   * QuizCat without action
+   * Category without action
    */
-  export type QuizCatArgs = {
+  export type CategoryArgs = {
     /**
-     * Select specific fields to fetch from the QuizCat
+     * Select specific fields to fetch from the Category
      */
-    select?: QuizCatSelect | null
+    select?: CategorySelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuizCatInclude | null
+    include?: CategoryInclude | null
   }
 
 
 
   /**
-   * Model Question
+   * Model Quiz
    */
 
 
-  export type AggregateQuestion = {
-    _count: QuestionCountAggregateOutputType | null
-    _avg: QuestionAvgAggregateOutputType | null
-    _sum: QuestionSumAggregateOutputType | null
-    _min: QuestionMinAggregateOutputType | null
-    _max: QuestionMaxAggregateOutputType | null
+  export type AggregateQuiz = {
+    _count: QuizCountAggregateOutputType | null
+    _avg: QuizAvgAggregateOutputType | null
+    _sum: QuizSumAggregateOutputType | null
+    _min: QuizMinAggregateOutputType | null
+    _max: QuizMaxAggregateOutputType | null
   }
 
-  export type QuestionAvgAggregateOutputType = {
+  export type QuizAvgAggregateOutputType = {
     id: number | null
-    quizCatId: number | null
-    answerId: number | null
+    categoryNameId: number | null
+    quizAnswerId: number | null
+    categoryId: number | null
   }
 
-  export type QuestionSumAggregateOutputType = {
+  export type QuizSumAggregateOutputType = {
     id: number | null
-    quizCatId: number | null
-    answerId: number | null
+    categoryNameId: number | null
+    quizAnswerId: number | null
+    categoryId: number | null
   }
 
-  export type QuestionMinAggregateOutputType = {
+  export type QuizMinAggregateOutputType = {
     id: number | null
-    question: string | null
+    quiz: string | null
+    categoryNameId: number | null
+    quizAnswerId: number | null
     createdAt: Date | null
-    updateAt: Date | null
-    quizCatId: number | null
-    answerId: number | null
+    updatedAt: Date | null
+    categoryId: number | null
   }
 
-  export type QuestionMaxAggregateOutputType = {
+  export type QuizMaxAggregateOutputType = {
     id: number | null
-    question: string | null
+    quiz: string | null
+    categoryNameId: number | null
+    quizAnswerId: number | null
     createdAt: Date | null
-    updateAt: Date | null
-    quizCatId: number | null
-    answerId: number | null
+    updatedAt: Date | null
+    categoryId: number | null
   }
 
-  export type QuestionCountAggregateOutputType = {
+  export type QuizCountAggregateOutputType = {
     id: number
-    question: number
+    quiz: number
+    categoryNameId: number
+    quizAnswerId: number
     createdAt: number
-    updateAt: number
-    quizCatId: number
-    answerId: number
+    updatedAt: number
+    categoryId: number
     _all: number
   }
 
 
-  export type QuestionAvgAggregateInputType = {
+  export type QuizAvgAggregateInputType = {
     id?: true
-    quizCatId?: true
-    answerId?: true
+    categoryNameId?: true
+    quizAnswerId?: true
+    categoryId?: true
   }
 
-  export type QuestionSumAggregateInputType = {
+  export type QuizSumAggregateInputType = {
     id?: true
-    quizCatId?: true
-    answerId?: true
+    categoryNameId?: true
+    quizAnswerId?: true
+    categoryId?: true
   }
 
-  export type QuestionMinAggregateInputType = {
+  export type QuizMinAggregateInputType = {
     id?: true
-    question?: true
+    quiz?: true
+    categoryNameId?: true
+    quizAnswerId?: true
     createdAt?: true
-    updateAt?: true
-    quizCatId?: true
-    answerId?: true
+    updatedAt?: true
+    categoryId?: true
   }
 
-  export type QuestionMaxAggregateInputType = {
+  export type QuizMaxAggregateInputType = {
     id?: true
-    question?: true
+    quiz?: true
+    categoryNameId?: true
+    quizAnswerId?: true
     createdAt?: true
-    updateAt?: true
-    quizCatId?: true
-    answerId?: true
+    updatedAt?: true
+    categoryId?: true
   }
 
-  export type QuestionCountAggregateInputType = {
+  export type QuizCountAggregateInputType = {
     id?: true
-    question?: true
+    quiz?: true
+    categoryNameId?: true
+    quizAnswerId?: true
     createdAt?: true
-    updateAt?: true
-    quizCatId?: true
-    answerId?: true
+    updatedAt?: true
+    categoryId?: true
     _all?: true
   }
 
-  export type QuestionAggregateArgs = {
+  export type QuizAggregateArgs = {
     /**
-     * Filter which Question to aggregate.
+     * Filter which Quiz to aggregate.
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Questions to fetch.
+     * Determine the order of Quizzes to fetch.
      */
-    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: QuestionWhereUniqueInput
+    cursor?: QuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Questions from the position of the cursor.
+     * Take `±n` Quizzes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Questions.
+     * Skip the first `n` Quizzes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Questions
+     * Count returned Quizzes
     **/
-    _count?: true | QuestionCountAggregateInputType
+    _count?: true | QuizCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: QuestionAvgAggregateInputType
+    _avg?: QuizAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: QuestionSumAggregateInputType
+    _sum?: QuizSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: QuestionMinAggregateInputType
+    _min?: QuizMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: QuestionMaxAggregateInputType
+    _max?: QuizMaxAggregateInputType
   }
 
-  export type GetQuestionAggregateType<T extends QuestionAggregateArgs> = {
-        [P in keyof T & keyof AggregateQuestion]: P extends '_count' | 'count'
+  export type GetQuizAggregateType<T extends QuizAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuiz]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateQuestion[P]>
-      : GetScalarType<T[P], AggregateQuestion[P]>
+        : GetScalarType<T[P], AggregateQuiz[P]>
+      : GetScalarType<T[P], AggregateQuiz[P]>
   }
 
 
 
 
-  export type QuestionGroupByArgs = {
-    where?: QuestionWhereInput
-    orderBy?: Enumerable<QuestionOrderByWithAggregationInput>
-    by: QuestionScalarFieldEnum[]
-    having?: QuestionScalarWhereWithAggregatesInput
+  export type QuizGroupByArgs = {
+    where?: QuizWhereInput
+    orderBy?: Enumerable<QuizOrderByWithAggregationInput>
+    by: QuizScalarFieldEnum[]
+    having?: QuizScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: QuestionCountAggregateInputType | true
-    _avg?: QuestionAvgAggregateInputType
-    _sum?: QuestionSumAggregateInputType
-    _min?: QuestionMinAggregateInputType
-    _max?: QuestionMaxAggregateInputType
+    _count?: QuizCountAggregateInputType | true
+    _avg?: QuizAvgAggregateInputType
+    _sum?: QuizSumAggregateInputType
+    _min?: QuizMinAggregateInputType
+    _max?: QuizMaxAggregateInputType
   }
 
 
-  export type QuestionGroupByOutputType = {
+  export type QuizGroupByOutputType = {
     id: number
-    question: string
+    quiz: string
+    categoryNameId: number | null
+    quizAnswerId: number
     createdAt: Date
-    updateAt: Date
-    quizCatId: number
-    answerId: number
-    _count: QuestionCountAggregateOutputType | null
-    _avg: QuestionAvgAggregateOutputType | null
-    _sum: QuestionSumAggregateOutputType | null
-    _min: QuestionMinAggregateOutputType | null
-    _max: QuestionMaxAggregateOutputType | null
+    updatedAt: Date
+    categoryId: number
+    _count: QuizCountAggregateOutputType | null
+    _avg: QuizAvgAggregateOutputType | null
+    _sum: QuizSumAggregateOutputType | null
+    _min: QuizMinAggregateOutputType | null
+    _max: QuizMaxAggregateOutputType | null
   }
 
-  type GetQuestionGroupByPayload<T extends QuestionGroupByArgs> = Prisma.PrismaPromise<
+  type GetQuizGroupByPayload<T extends QuizGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<QuestionGroupByOutputType, T['by']> &
+      PickArray<QuizGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof QuestionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof QuizGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], QuestionGroupByOutputType[P]>
-            : GetScalarType<T[P], QuestionGroupByOutputType[P]>
+              : GetScalarType<T[P], QuizGroupByOutputType[P]>
+            : GetScalarType<T[P], QuizGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type QuestionSelect = {
+  export type QuizSelect = {
     id?: boolean
-    question?: boolean
+    quiz?: boolean
+    categoryNameId?: boolean
+    quizAnswerId?: boolean
     createdAt?: boolean
-    updateAt?: boolean
-    quizCatId?: boolean
-    answerId?: boolean
-    catName?: boolean | QuizCatArgs
-    choices?: boolean | Question$choicesArgs
-    roundQuestions?: boolean | Question$roundQuestionsArgs
-    _count?: boolean | QuestionCountOutputTypeArgs
+    updatedAt?: boolean
+    categoryId?: boolean
+    answer?: boolean | ChoiceArgs
+    choices?: boolean | Quiz$choicesArgs
+    roundQuiz?: boolean | Quiz$roundQuizArgs
+    category?: boolean | CategoryArgs
+    _count?: boolean | QuizCountOutputTypeArgs
   }
 
 
-  export type QuestionInclude = {
-    catName?: boolean | QuizCatArgs
-    choices?: boolean | Question$choicesArgs
-    roundQuestions?: boolean | Question$roundQuestionsArgs
-    _count?: boolean | QuestionCountOutputTypeArgs
+  export type QuizInclude = {
+    answer?: boolean | ChoiceArgs
+    choices?: boolean | Quiz$choicesArgs
+    roundQuiz?: boolean | Quiz$roundQuizArgs
+    category?: boolean | CategoryArgs
+    _count?: boolean | QuizCountOutputTypeArgs
   }
 
-  export type QuestionGetPayload<S extends boolean | null | undefined | QuestionArgs> =
+  export type QuizGetPayload<S extends boolean | null | undefined | QuizArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Question :
+    S extends true ? Quiz :
     S extends undefined ? never :
-    S extends { include: any } & (QuestionArgs | QuestionFindManyArgs)
-    ? Question  & {
+    S extends { include: any } & (QuizArgs | QuizFindManyArgs)
+    ? Quiz  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'catName' ? QuizCatGetPayload<S['include'][P]> :
+        P extends 'answer' ? ChoiceGetPayload<S['include'][P]> :
         P extends 'choices' ? Array < ChoiceGetPayload<S['include'][P]>>  :
-        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['include'][P]>>  :
-        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends 'roundQuiz' ? Array < RoundQuizGetPayload<S['include'][P]>>  :
+        P extends 'category' ? CategoryGetPayload<S['include'][P]> :
+        P extends '_count' ? QuizCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (QuestionArgs | QuestionFindManyArgs)
+    : S extends { select: any } & (QuizArgs | QuizFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'catName' ? QuizCatGetPayload<S['select'][P]> :
+        P extends 'answer' ? ChoiceGetPayload<S['select'][P]> :
         P extends 'choices' ? Array < ChoiceGetPayload<S['select'][P]>>  :
-        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['select'][P]>>  :
-        P extends '_count' ? QuestionCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Question ? Question[P] : never
+        P extends 'roundQuiz' ? Array < RoundQuizGetPayload<S['select'][P]>>  :
+        P extends 'category' ? CategoryGetPayload<S['select'][P]> :
+        P extends '_count' ? QuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Quiz ? Quiz[P] : never
   } 
-      : Question
+      : Quiz
 
 
-  type QuestionCountArgs = 
-    Omit<QuestionFindManyArgs, 'select' | 'include'> & {
-      select?: QuestionCountAggregateInputType | true
+  type QuizCountArgs = 
+    Omit<QuizFindManyArgs, 'select' | 'include'> & {
+      select?: QuizCountAggregateInputType | true
     }
 
-  export interface QuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface QuizDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Question that matches the filter.
-     * @param {QuestionFindUniqueArgs} args - Arguments to find a Question
+     * Find zero or one Quiz that matches the filter.
+     * @param {QuizFindUniqueArgs} args - Arguments to find a Quiz
      * @example
-     * // Get one Question
-     * const question = await prisma.question.findUnique({
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends QuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, QuestionFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
+    findUnique<T extends QuizFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, QuizFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Quiz'> extends True ? Prisma__QuizClient<QuizGetPayload<T>> : Prisma__QuizClient<QuizGetPayload<T> | null, null>
 
     /**
-     * Find one Question that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one Quiz that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {QuestionFindUniqueOrThrowArgs} args - Arguments to find a Question
+     * @param {QuizFindUniqueOrThrowArgs} args - Arguments to find a Quiz
      * @example
-     * // Get one Question
-     * const question = await prisma.question.findUniqueOrThrow({
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends QuestionFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, QuestionFindUniqueOrThrowArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    findUniqueOrThrow<T extends QuizFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, QuizFindUniqueOrThrowArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Find the first Question that matches the filter.
+     * Find the first Quiz that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionFindFirstArgs} args - Arguments to find a Question
+     * @param {QuizFindFirstArgs} args - Arguments to find a Quiz
      * @example
-     * // Get one Question
-     * const question = await prisma.question.findFirst({
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends QuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, QuestionFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Question'> extends True ? Prisma__QuestionClient<QuestionGetPayload<T>> : Prisma__QuestionClient<QuestionGetPayload<T> | null, null>
+    findFirst<T extends QuizFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, QuizFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Quiz'> extends True ? Prisma__QuizClient<QuizGetPayload<T>> : Prisma__QuizClient<QuizGetPayload<T> | null, null>
 
     /**
-     * Find the first Question that matches the filter or
+     * Find the first Quiz that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionFindFirstOrThrowArgs} args - Arguments to find a Question
+     * @param {QuizFindFirstOrThrowArgs} args - Arguments to find a Quiz
      * @example
-     * // Get one Question
-     * const question = await prisma.question.findFirstOrThrow({
+     * // Get one Quiz
+     * const quiz = await prisma.quiz.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends QuestionFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, QuestionFindFirstOrThrowArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    findFirstOrThrow<T extends QuizFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, QuizFindFirstOrThrowArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Find zero or more Questions that matches the filter.
+     * Find zero or more Quizzes that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {QuizFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Questions
-     * const questions = await prisma.question.findMany()
+     * // Get all Quizzes
+     * const quizzes = await prisma.quiz.findMany()
      * 
-     * // Get first 10 Questions
-     * const questions = await prisma.question.findMany({ take: 10 })
+     * // Get first 10 Quizzes
+     * const quizzes = await prisma.quiz.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const questionWithIdOnly = await prisma.question.findMany({ select: { id: true } })
+     * const quizWithIdOnly = await prisma.quiz.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends QuestionFindManyArgs>(
-      args?: SelectSubset<T, QuestionFindManyArgs>
-    ): Prisma.PrismaPromise<Array<QuestionGetPayload<T>>>
+    findMany<T extends QuizFindManyArgs>(
+      args?: SelectSubset<T, QuizFindManyArgs>
+    ): Prisma.PrismaPromise<Array<QuizGetPayload<T>>>
 
     /**
-     * Create a Question.
-     * @param {QuestionCreateArgs} args - Arguments to create a Question.
+     * Create a Quiz.
+     * @param {QuizCreateArgs} args - Arguments to create a Quiz.
      * @example
-     * // Create one Question
-     * const Question = await prisma.question.create({
+     * // Create one Quiz
+     * const Quiz = await prisma.quiz.create({
      *   data: {
-     *     // ... data to create a Question
+     *     // ... data to create a Quiz
      *   }
      * })
      * 
     **/
-    create<T extends QuestionCreateArgs>(
-      args: SelectSubset<T, QuestionCreateArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    create<T extends QuizCreateArgs>(
+      args: SelectSubset<T, QuizCreateArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Create many Questions.
-     *     @param {QuestionCreateManyArgs} args - Arguments to create many Questions.
+     * Create many Quizzes.
+     *     @param {QuizCreateManyArgs} args - Arguments to create many Quizzes.
      *     @example
-     *     // Create many Questions
-     *     const question = await prisma.question.createMany({
+     *     // Create many Quizzes
+     *     const quiz = await prisma.quiz.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends QuestionCreateManyArgs>(
-      args?: SelectSubset<T, QuestionCreateManyArgs>
+    createMany<T extends QuizCreateManyArgs>(
+      args?: SelectSubset<T, QuizCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Question.
-     * @param {QuestionDeleteArgs} args - Arguments to delete one Question.
+     * Delete a Quiz.
+     * @param {QuizDeleteArgs} args - Arguments to delete one Quiz.
      * @example
-     * // Delete one Question
-     * const Question = await prisma.question.delete({
+     * // Delete one Quiz
+     * const Quiz = await prisma.quiz.delete({
      *   where: {
-     *     // ... filter to delete one Question
+     *     // ... filter to delete one Quiz
      *   }
      * })
      * 
     **/
-    delete<T extends QuestionDeleteArgs>(
-      args: SelectSubset<T, QuestionDeleteArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    delete<T extends QuizDeleteArgs>(
+      args: SelectSubset<T, QuizDeleteArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Update one Question.
-     * @param {QuestionUpdateArgs} args - Arguments to update one Question.
+     * Update one Quiz.
+     * @param {QuizUpdateArgs} args - Arguments to update one Quiz.
      * @example
-     * // Update one Question
-     * const question = await prisma.question.update({
+     * // Update one Quiz
+     * const quiz = await prisma.quiz.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7017,34 +3418,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends QuestionUpdateArgs>(
-      args: SelectSubset<T, QuestionUpdateArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    update<T extends QuizUpdateArgs>(
+      args: SelectSubset<T, QuizUpdateArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Delete zero or more Questions.
-     * @param {QuestionDeleteManyArgs} args - Arguments to filter Questions to delete.
+     * Delete zero or more Quizzes.
+     * @param {QuizDeleteManyArgs} args - Arguments to filter Quizzes to delete.
      * @example
-     * // Delete a few Questions
-     * const { count } = await prisma.question.deleteMany({
+     * // Delete a few Quizzes
+     * const { count } = await prisma.quiz.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends QuestionDeleteManyArgs>(
-      args?: SelectSubset<T, QuestionDeleteManyArgs>
+    deleteMany<T extends QuizDeleteManyArgs>(
+      args?: SelectSubset<T, QuizDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Questions.
+     * Update zero or more Quizzes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {QuizUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Questions
-     * const question = await prisma.question.updateMany({
+     * // Update many Quizzes
+     * const quiz = await prisma.quiz.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7054,59 +3455,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends QuestionUpdateManyArgs>(
-      args: SelectSubset<T, QuestionUpdateManyArgs>
+    updateMany<T extends QuizUpdateManyArgs>(
+      args: SelectSubset<T, QuizUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Question.
-     * @param {QuestionUpsertArgs} args - Arguments to update or create a Question.
+     * Create or update one Quiz.
+     * @param {QuizUpsertArgs} args - Arguments to update or create a Quiz.
      * @example
-     * // Update or create a Question
-     * const question = await prisma.question.upsert({
+     * // Update or create a Quiz
+     * const quiz = await prisma.quiz.upsert({
      *   create: {
-     *     // ... data to create a Question
+     *     // ... data to create a Quiz
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Question we want to update
+     *     // ... the filter for the Quiz we want to update
      *   }
      * })
     **/
-    upsert<T extends QuestionUpsertArgs>(
-      args: SelectSubset<T, QuestionUpsertArgs>
-    ): Prisma__QuestionClient<QuestionGetPayload<T>>
+    upsert<T extends QuizUpsertArgs>(
+      args: SelectSubset<T, QuizUpsertArgs>
+    ): Prisma__QuizClient<QuizGetPayload<T>>
 
     /**
-     * Count the number of Questions.
+     * Count the number of Quizzes.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionCountArgs} args - Arguments to filter Questions to count.
+     * @param {QuizCountArgs} args - Arguments to filter Quizzes to count.
      * @example
-     * // Count the number of Questions
-     * const count = await prisma.question.count({
+     * // Count the number of Quizzes
+     * const count = await prisma.quiz.count({
      *   where: {
-     *     // ... the filter for the Questions we want to count
+     *     // ... the filter for the Quizzes we want to count
      *   }
      * })
     **/
-    count<T extends QuestionCountArgs>(
-      args?: Subset<T, QuestionCountArgs>,
+    count<T extends QuizCountArgs>(
+      args?: Subset<T, QuizCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], QuestionCountAggregateOutputType>
+          : GetScalarType<T['select'], QuizCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Question.
+     * Allows you to perform aggregations operations on a Quiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {QuizAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -7126,13 +3527,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends QuestionAggregateArgs>(args: Subset<T, QuestionAggregateArgs>): Prisma.PrismaPromise<GetQuestionAggregateType<T>>
+    aggregate<T extends QuizAggregateArgs>(args: Subset<T, QuizAggregateArgs>): Prisma.PrismaPromise<GetQuizAggregateType<T>>
 
     /**
-     * Group by Question.
+     * Group by Quiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {QuestionGroupByArgs} args - Group by arguments.
+     * @param {QuizGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -7147,14 +3548,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends QuestionGroupByArgs,
+      T extends QuizGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: QuestionGroupByArgs['orderBy'] }
-        : { orderBy?: QuestionGroupByArgs['orderBy'] },
+        ? { orderBy: QuizGroupByArgs['orderBy'] }
+        : { orderBy?: QuizGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -7203,17 +3604,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, QuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, QuizGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuizGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Question.
+   * The delegate class that acts as a "Promise-like" for Quiz.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__QuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__QuizClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -7228,11 +3629,13 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    catName<T extends QuizCatArgs= {}>(args?: Subset<T, QuizCatArgs>): Prisma__QuizCatClient<QuizCatGetPayload<T> | Null>;
+    answer<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
 
-    choices<T extends Question$choicesArgs= {}>(args?: Subset<T, Question$choicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
+    choices<T extends Quiz$choicesArgs= {}>(args?: Subset<T, Quiz$choicesArgs>): Prisma.PrismaPromise<Array<ChoiceGetPayload<T>>| Null>;
 
-    roundQuestions<T extends Question$roundQuestionsArgs= {}>(args?: Subset<T, Question$roundQuestionsArgs>): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>| Null>;
+    roundQuiz<T extends Quiz$roundQuizArgs= {}>(args?: Subset<T, Quiz$roundQuizArgs>): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>| Null>;
+
+    category<T extends CategoryArgs= {}>(args?: Subset<T, CategoryArgs>): Prisma__CategoryClient<CategoryGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -7262,27 +3665,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * Question base type for findUnique actions
+   * Quiz base type for findUnique actions
    */
-  export type QuestionFindUniqueArgsBase = {
+  export type QuizFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter, which Question to fetch.
+     * Filter, which Quiz to fetch.
      */
-    where: QuestionWhereUniqueInput
+    where: QuizWhereUniqueInput
   }
 
   /**
-   * Question findUnique
+   * Quiz findUnique
    */
-  export interface QuestionFindUniqueArgs extends QuestionFindUniqueArgsBase {
+  export interface QuizFindUniqueArgs extends QuizFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -7292,76 +3695,76 @@ export namespace Prisma {
       
 
   /**
-   * Question findUniqueOrThrow
+   * Quiz findUniqueOrThrow
    */
-  export type QuestionFindUniqueOrThrowArgs = {
+  export type QuizFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter, which Question to fetch.
+     * Filter, which Quiz to fetch.
      */
-    where: QuestionWhereUniqueInput
+    where: QuizWhereUniqueInput
   }
 
 
   /**
-   * Question base type for findFirst actions
+   * Quiz base type for findFirst actions
    */
-  export type QuestionFindFirstArgsBase = {
+  export type QuizFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter, which Question to fetch.
+     * Filter, which Quiz to fetch.
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Questions to fetch.
+     * Determine the order of Quizzes to fetch.
      */
-    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Questions.
+     * Sets the position for searching for Quizzes.
      */
-    cursor?: QuestionWhereUniqueInput
+    cursor?: QuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Questions from the position of the cursor.
+     * Take `±n` Quizzes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Questions.
+     * Skip the first `n` Quizzes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Questions.
+     * Filter by unique combinations of Quizzes.
      */
-    distinct?: Enumerable<QuestionScalarFieldEnum>
+    distinct?: Enumerable<QuizScalarFieldEnum>
   }
 
   /**
-   * Question findFirst
+   * Quiz findFirst
    */
-  export interface QuestionFindFirstArgs extends QuestionFindFirstArgsBase {
+  export interface QuizFindFirstArgs extends QuizFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -7371,228 +3774,228 @@ export namespace Prisma {
       
 
   /**
-   * Question findFirstOrThrow
+   * Quiz findFirstOrThrow
    */
-  export type QuestionFindFirstOrThrowArgs = {
+  export type QuizFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter, which Question to fetch.
+     * Filter, which Quiz to fetch.
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Questions to fetch.
+     * Determine the order of Quizzes to fetch.
      */
-    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Questions.
+     * Sets the position for searching for Quizzes.
      */
-    cursor?: QuestionWhereUniqueInput
+    cursor?: QuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Questions from the position of the cursor.
+     * Take `±n` Quizzes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Questions.
+     * Skip the first `n` Quizzes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Questions.
+     * Filter by unique combinations of Quizzes.
      */
-    distinct?: Enumerable<QuestionScalarFieldEnum>
+    distinct?: Enumerable<QuizScalarFieldEnum>
   }
 
 
   /**
-   * Question findMany
+   * Quiz findMany
    */
-  export type QuestionFindManyArgs = {
+  export type QuizFindManyArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter, which Questions to fetch.
+     * Filter, which Quizzes to fetch.
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Questions to fetch.
+     * Determine the order of Quizzes to fetch.
      */
-    orderBy?: Enumerable<QuestionOrderByWithRelationInput>
+    orderBy?: Enumerable<QuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Questions.
+     * Sets the position for listing Quizzes.
      */
-    cursor?: QuestionWhereUniqueInput
+    cursor?: QuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Questions from the position of the cursor.
+     * Take `±n` Quizzes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Questions.
+     * Skip the first `n` Quizzes.
      */
     skip?: number
-    distinct?: Enumerable<QuestionScalarFieldEnum>
+    distinct?: Enumerable<QuizScalarFieldEnum>
   }
 
 
   /**
-   * Question create
+   * Quiz create
    */
-  export type QuestionCreateArgs = {
+  export type QuizCreateArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * The data needed to create a Question.
+     * The data needed to create a Quiz.
      */
-    data: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
+    data: XOR<QuizCreateInput, QuizUncheckedCreateInput>
   }
 
 
   /**
-   * Question createMany
+   * Quiz createMany
    */
-  export type QuestionCreateManyArgs = {
+  export type QuizCreateManyArgs = {
     /**
-     * The data used to create many Questions.
+     * The data used to create many Quizzes.
      */
-    data: Enumerable<QuestionCreateManyInput>
+    data: Enumerable<QuizCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * Question update
+   * Quiz update
    */
-  export type QuestionUpdateArgs = {
+  export type QuizUpdateArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * The data needed to update a Question.
+     * The data needed to update a Quiz.
      */
-    data: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
+    data: XOR<QuizUpdateInput, QuizUncheckedUpdateInput>
     /**
-     * Choose, which Question to update.
+     * Choose, which Quiz to update.
      */
-    where: QuestionWhereUniqueInput
+    where: QuizWhereUniqueInput
   }
 
 
   /**
-   * Question updateMany
+   * Quiz updateMany
    */
-  export type QuestionUpdateManyArgs = {
+  export type QuizUpdateManyArgs = {
     /**
-     * The data used to update Questions.
+     * The data used to update Quizzes.
      */
-    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyInput>
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyInput>
     /**
-     * Filter which Questions to update
+     * Filter which Quizzes to update
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
   }
 
 
   /**
-   * Question upsert
+   * Quiz upsert
    */
-  export type QuestionUpsertArgs = {
+  export type QuizUpsertArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * The filter to search for the Question to update in case it exists.
+     * The filter to search for the Quiz to update in case it exists.
      */
-    where: QuestionWhereUniqueInput
+    where: QuizWhereUniqueInput
     /**
-     * In case the Question found by the `where` argument doesn't exist, create a new Question with this data.
+     * In case the Quiz found by the `where` argument doesn't exist, create a new Quiz with this data.
      */
-    create: XOR<QuestionCreateInput, QuestionUncheckedCreateInput>
+    create: XOR<QuizCreateInput, QuizUncheckedCreateInput>
     /**
-     * In case the Question was found with the provided `where` argument, update it with this data.
+     * In case the Quiz was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<QuestionUpdateInput, QuestionUncheckedUpdateInput>
+    update: XOR<QuizUpdateInput, QuizUncheckedUpdateInput>
   }
 
 
   /**
-   * Question delete
+   * Quiz delete
    */
-  export type QuestionDeleteArgs = {
+  export type QuizDeleteArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
     /**
-     * Filter which Question to delete.
+     * Filter which Quiz to delete.
      */
-    where: QuestionWhereUniqueInput
+    where: QuizWhereUniqueInput
   }
 
 
   /**
-   * Question deleteMany
+   * Quiz deleteMany
    */
-  export type QuestionDeleteManyArgs = {
+  export type QuizDeleteManyArgs = {
     /**
-     * Filter which Questions to delete
+     * Filter which Quizzes to delete
      */
-    where?: QuestionWhereInput
+    where?: QuizWhereInput
   }
 
 
   /**
-   * Question.choices
+   * Quiz.choices
    */
-  export type Question$choicesArgs = {
+  export type Quiz$choicesArgs = {
     /**
      * Select specific fields to fetch from the Choice
      */
@@ -7611,38 +4014,38 @@ export namespace Prisma {
 
 
   /**
-   * Question.roundQuestions
+   * Quiz.roundQuiz
    */
-  export type Question$roundQuestionsArgs = {
+  export type Quiz$roundQuizArgs = {
     /**
-     * Select specific fields to fetch from the RoundQuestion
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: RoundQuestionSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundQuestionInclude | null
-    where?: RoundQuestionWhereInput
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    cursor?: RoundQuestionWhereUniqueInput
+    include?: RoundQuizInclude | null
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
+    cursor?: RoundQuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * Question without action
+   * Quiz without action
    */
-  export type QuestionArgs = {
+  export type QuizArgs = {
     /**
-     * Select specific fields to fetch from the Question
+     * Select specific fields to fetch from the Quiz
      */
-    select?: QuestionSelect | null
+    select?: QuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: QuestionInclude | null
+    include?: QuizInclude | null
   }
 
 
@@ -7662,82 +4065,72 @@ export namespace Prisma {
 
   export type ChoiceAvgAggregateOutputType = {
     id: number | null
-    questionId: number | null
-    questionsId: number | null
+    quizId: number | null
   }
 
   export type ChoiceSumAggregateOutputType = {
     id: number | null
-    questionId: number | null
-    questionsId: number | null
+    quizId: number | null
   }
 
   export type ChoiceMinAggregateOutputType = {
     id: number | null
-    questionId: number | null
     choice: string | null
     createdAt: Date | null
-    updateAt: Date | null
-    questionsId: number | null
+    updatedAt: Date | null
+    quizId: number | null
   }
 
   export type ChoiceMaxAggregateOutputType = {
     id: number | null
-    questionId: number | null
     choice: string | null
     createdAt: Date | null
-    updateAt: Date | null
-    questionsId: number | null
+    updatedAt: Date | null
+    quizId: number | null
   }
 
   export type ChoiceCountAggregateOutputType = {
     id: number
-    questionId: number
     choice: number
     createdAt: number
-    updateAt: number
-    questionsId: number
+    updatedAt: number
+    quizId: number
     _all: number
   }
 
 
   export type ChoiceAvgAggregateInputType = {
     id?: true
-    questionId?: true
-    questionsId?: true
+    quizId?: true
   }
 
   export type ChoiceSumAggregateInputType = {
     id?: true
-    questionId?: true
-    questionsId?: true
+    quizId?: true
   }
 
   export type ChoiceMinAggregateInputType = {
     id?: true
-    questionId?: true
     choice?: true
     createdAt?: true
-    updateAt?: true
-    questionsId?: true
+    updatedAt?: true
+    quizId?: true
   }
 
   export type ChoiceMaxAggregateInputType = {
     id?: true
-    questionId?: true
     choice?: true
     createdAt?: true
-    updateAt?: true
-    questionsId?: true
+    updatedAt?: true
+    quizId?: true
   }
 
   export type ChoiceCountAggregateInputType = {
     id?: true
-    questionId?: true
     choice?: true
     createdAt?: true
-    updateAt?: true
-    questionsId?: true
+    updatedAt?: true
+    quizId?: true
     _all?: true
   }
 
@@ -7830,11 +4223,10 @@ export namespace Prisma {
 
   export type ChoiceGroupByOutputType = {
     id: number
-    questionId: number
     choice: string
     createdAt: Date
-    updateAt: Date
-    questionsId: number | null
+    updatedAt: Date
+    quizId: number | null
     _count: ChoiceCountAggregateOutputType | null
     _avg: ChoiceAvgAggregateOutputType | null
     _sum: ChoiceSumAggregateOutputType | null
@@ -7858,20 +4250,21 @@ export namespace Prisma {
 
   export type ChoiceSelect = {
     id?: boolean
-    questionId?: boolean
     choice?: boolean
     createdAt?: boolean
-    updateAt?: boolean
-    questionsId?: boolean
-    question?: boolean | QuestionArgs
-    roundQuestions?: boolean | Choice$roundQuestionsArgs
+    updatedAt?: boolean
+    quizId?: boolean
+    quiz?: boolean | QuizArgs
+    quizAnswer?: boolean | QuizArgs
+    roundQuiz?: boolean | Choice$roundQuizArgs
     _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
 
   export type ChoiceInclude = {
-    question?: boolean | QuestionArgs
-    roundQuestions?: boolean | Choice$roundQuestionsArgs
+    quiz?: boolean | QuizArgs
+    quizAnswer?: boolean | QuizArgs
+    roundQuiz?: boolean | Choice$roundQuizArgs
     _count?: boolean | ChoiceCountOutputTypeArgs
   }
 
@@ -7882,15 +4275,17 @@ export namespace Prisma {
     S extends { include: any } & (ChoiceArgs | ChoiceFindManyArgs)
     ? Choice  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'question' ? QuestionGetPayload<S['include'][P]> | null :
-        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['include'][P]>>  :
+        P extends 'quiz' ? QuizGetPayload<S['include'][P]> | null :
+        P extends 'quizAnswer' ? QuizGetPayload<S['include'][P]> | null :
+        P extends 'roundQuiz' ? Array < RoundQuizGetPayload<S['include'][P]>>  :
         P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (ChoiceArgs | ChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'question' ? QuestionGetPayload<S['select'][P]> | null :
-        P extends 'roundQuestions' ? Array < RoundQuestionGetPayload<S['select'][P]>>  :
+        P extends 'quiz' ? QuizGetPayload<S['select'][P]> | null :
+        P extends 'quizAnswer' ? QuizGetPayload<S['select'][P]> | null :
+        P extends 'roundQuiz' ? Array < RoundQuizGetPayload<S['select'][P]>>  :
         P extends '_count' ? ChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Choice ? Choice[P] : never
   } 
       : Choice
@@ -8263,9 +4658,11 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
+    quiz<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
 
-    roundQuestions<T extends Choice$roundQuestionsArgs= {}>(args?: Subset<T, Choice$roundQuestionsArgs>): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>| Null>;
+    quizAnswer<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
+
+    roundQuiz<T extends Choice$roundQuizArgs= {}>(args?: Subset<T, Choice$roundQuizArgs>): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -8623,23 +5020,23 @@ export namespace Prisma {
 
 
   /**
-   * Choice.roundQuestions
+   * Choice.roundQuiz
    */
-  export type Choice$roundQuestionsArgs = {
+  export type Choice$roundQuizArgs = {
     /**
-     * Select specific fields to fetch from the RoundQuestion
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: RoundQuestionSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundQuestionInclude | null
-    where?: RoundQuestionWhereInput
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    cursor?: RoundQuestionWhereUniqueInput
+    include?: RoundQuizInclude | null
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
+    cursor?: RoundQuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
@@ -8674,76 +5071,66 @@ export namespace Prisma {
 
   export type RoundAvgAggregateOutputType = {
     id: number | null
-    score: number | null
-    quizCatId: number | null
+    categoryId: number | null
   }
 
   export type RoundSumAggregateOutputType = {
     id: number | null
-    score: number | null
-    quizCatId: number | null
+    categoryId: number | null
   }
 
   export type RoundMinAggregateOutputType = {
     id: number | null
-    score: number | null
     createdAt: Date | null
     updateAt: Date | null
-    quizCatId: number | null
+    categoryId: number | null
   }
 
   export type RoundMaxAggregateOutputType = {
     id: number | null
-    score: number | null
     createdAt: Date | null
     updateAt: Date | null
-    quizCatId: number | null
+    categoryId: number | null
   }
 
   export type RoundCountAggregateOutputType = {
     id: number
-    score: number
     createdAt: number
     updateAt: number
-    quizCatId: number
+    categoryId: number
     _all: number
   }
 
 
   export type RoundAvgAggregateInputType = {
     id?: true
-    score?: true
-    quizCatId?: true
+    categoryId?: true
   }
 
   export type RoundSumAggregateInputType = {
     id?: true
-    score?: true
-    quizCatId?: true
+    categoryId?: true
   }
 
   export type RoundMinAggregateInputType = {
     id?: true
-    score?: true
     createdAt?: true
     updateAt?: true
-    quizCatId?: true
+    categoryId?: true
   }
 
   export type RoundMaxAggregateInputType = {
     id?: true
-    score?: true
     createdAt?: true
     updateAt?: true
-    quizCatId?: true
+    categoryId?: true
   }
 
   export type RoundCountAggregateInputType = {
     id?: true
-    score?: true
     createdAt?: true
     updateAt?: true
-    quizCatId?: true
+    categoryId?: true
     _all?: true
   }
 
@@ -8836,10 +5223,9 @@ export namespace Prisma {
 
   export type RoundGroupByOutputType = {
     id: number
-    score: number
     createdAt: Date
     updateAt: Date
-    quizCatId: number
+    categoryId: number | null
     _count: RoundCountAggregateOutputType | null
     _avg: RoundAvgAggregateOutputType | null
     _sum: RoundSumAggregateOutputType | null
@@ -8863,19 +5249,18 @@ export namespace Prisma {
 
   export type RoundSelect = {
     id?: boolean
-    score?: boolean
     createdAt?: boolean
     updateAt?: boolean
-    quizCatId?: boolean
-    cat?: boolean | QuizCatArgs
-    questions?: boolean | Round$questionsArgs
+    categoryId?: boolean
+    roundQiuz?: boolean | Round$roundQiuzArgs
+    Category?: boolean | CategoryArgs
     _count?: boolean | RoundCountOutputTypeArgs
   }
 
 
   export type RoundInclude = {
-    cat?: boolean | QuizCatArgs
-    questions?: boolean | Round$questionsArgs
+    roundQiuz?: boolean | Round$roundQiuzArgs
+    Category?: boolean | CategoryArgs
     _count?: boolean | RoundCountOutputTypeArgs
   }
 
@@ -8886,15 +5271,15 @@ export namespace Prisma {
     S extends { include: any } & (RoundArgs | RoundFindManyArgs)
     ? Round  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'cat' ? QuizCatGetPayload<S['include'][P]> :
-        P extends 'questions' ? Array < RoundQuestionGetPayload<S['include'][P]>>  :
+        P extends 'roundQiuz' ? Array < RoundQuizGetPayload<S['include'][P]>>  :
+        P extends 'Category' ? CategoryGetPayload<S['include'][P]> | null :
         P extends '_count' ? RoundCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (RoundArgs | RoundFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'cat' ? QuizCatGetPayload<S['select'][P]> :
-        P extends 'questions' ? Array < RoundQuestionGetPayload<S['select'][P]>>  :
+        P extends 'roundQiuz' ? Array < RoundQuizGetPayload<S['select'][P]>>  :
+        P extends 'Category' ? CategoryGetPayload<S['select'][P]> | null :
         P extends '_count' ? RoundCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Round ? Round[P] : never
   } 
       : Round
@@ -9267,9 +5652,9 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    cat<T extends QuizCatArgs= {}>(args?: Subset<T, QuizCatArgs>): Prisma__QuizCatClient<QuizCatGetPayload<T> | Null>;
+    roundQiuz<T extends Round$roundQiuzArgs= {}>(args?: Subset<T, Round$roundQiuzArgs>): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>| Null>;
 
-    questions<T extends Round$questionsArgs= {}>(args?: Subset<T, Round$questionsArgs>): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>| Null>;
+    Category<T extends CategoryArgs= {}>(args?: Subset<T, CategoryArgs>): Prisma__CategoryClient<CategoryGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -9627,23 +6012,23 @@ export namespace Prisma {
 
 
   /**
-   * Round.questions
+   * Round.roundQiuz
    */
-  export type Round$questionsArgs = {
+  export type Round$roundQiuzArgs = {
     /**
-     * Select specific fields to fetch from the RoundQuestion
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: RoundQuestionSelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: RoundQuestionInclude | null
-    where?: RoundQuestionWhereInput
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    cursor?: RoundQuestionWhereUniqueInput
+    include?: RoundQuizInclude | null
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
+    cursor?: RoundQuizWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
@@ -9664,405 +6049,405 @@ export namespace Prisma {
 
 
   /**
-   * Model RoundQuestion
+   * Model RoundQuiz
    */
 
 
-  export type AggregateRoundQuestion = {
-    _count: RoundQuestionCountAggregateOutputType | null
-    _avg: RoundQuestionAvgAggregateOutputType | null
-    _sum: RoundQuestionSumAggregateOutputType | null
-    _min: RoundQuestionMinAggregateOutputType | null
-    _max: RoundQuestionMaxAggregateOutputType | null
+  export type AggregateRoundQuiz = {
+    _count: RoundQuizCountAggregateOutputType | null
+    _avg: RoundQuizAvgAggregateOutputType | null
+    _sum: RoundQuizSumAggregateOutputType | null
+    _min: RoundQuizMinAggregateOutputType | null
+    _max: RoundQuizMaxAggregateOutputType | null
   }
 
-  export type RoundQuestionAvgAggregateOutputType = {
+  export type RoundQuizAvgAggregateOutputType = {
     id: number | null
     roundId: number | null
-    questionId: number | null
     choiceId: number | null
+    quizId: number | null
   }
 
-  export type RoundQuestionSumAggregateOutputType = {
+  export type RoundQuizSumAggregateOutputType = {
     id: number | null
     roundId: number | null
-    questionId: number | null
     choiceId: number | null
+    quizId: number | null
   }
 
-  export type RoundQuestionMinAggregateOutputType = {
+  export type RoundQuizMinAggregateOutputType = {
     id: number | null
-    roundId: number | null
-    questionId: number | null
-    choiceId: number | null
+    category: string | null
     createdAt: Date | null
-    updateAt: Date | null
-  }
-
-  export type RoundQuestionMaxAggregateOutputType = {
-    id: number | null
     roundId: number | null
-    questionId: number | null
     choiceId: number | null
-    createdAt: Date | null
-    updateAt: Date | null
+    quizId: number | null
   }
 
-  export type RoundQuestionCountAggregateOutputType = {
+  export type RoundQuizMaxAggregateOutputType = {
+    id: number | null
+    category: string | null
+    createdAt: Date | null
+    roundId: number | null
+    choiceId: number | null
+    quizId: number | null
+  }
+
+  export type RoundQuizCountAggregateOutputType = {
     id: number
-    roundId: number
-    questionId: number
-    choiceId: number
+    category: number
     createdAt: number
-    updateAt: number
+    roundId: number
+    choiceId: number
+    quizId: number
     _all: number
   }
 
 
-  export type RoundQuestionAvgAggregateInputType = {
+  export type RoundQuizAvgAggregateInputType = {
     id?: true
     roundId?: true
-    questionId?: true
     choiceId?: true
+    quizId?: true
   }
 
-  export type RoundQuestionSumAggregateInputType = {
+  export type RoundQuizSumAggregateInputType = {
     id?: true
     roundId?: true
-    questionId?: true
     choiceId?: true
+    quizId?: true
   }
 
-  export type RoundQuestionMinAggregateInputType = {
+  export type RoundQuizMinAggregateInputType = {
     id?: true
-    roundId?: true
-    questionId?: true
-    choiceId?: true
+    category?: true
     createdAt?: true
-    updateAt?: true
+    roundId?: true
+    choiceId?: true
+    quizId?: true
   }
 
-  export type RoundQuestionMaxAggregateInputType = {
+  export type RoundQuizMaxAggregateInputType = {
     id?: true
-    roundId?: true
-    questionId?: true
-    choiceId?: true
+    category?: true
     createdAt?: true
-    updateAt?: true
+    roundId?: true
+    choiceId?: true
+    quizId?: true
   }
 
-  export type RoundQuestionCountAggregateInputType = {
+  export type RoundQuizCountAggregateInputType = {
     id?: true
-    roundId?: true
-    questionId?: true
-    choiceId?: true
+    category?: true
     createdAt?: true
-    updateAt?: true
+    roundId?: true
+    choiceId?: true
+    quizId?: true
     _all?: true
   }
 
-  export type RoundQuestionAggregateArgs = {
+  export type RoundQuizAggregateArgs = {
     /**
-     * Filter which RoundQuestion to aggregate.
+     * Filter which RoundQuiz to aggregate.
      */
-    where?: RoundQuestionWhereInput
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RoundQuestions to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RoundQuestionWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RoundQuestions from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RoundQuestions.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned RoundQuestions
+     * Count returned RoundQuizs
     **/
-    _count?: true | RoundQuestionCountAggregateInputType
+    _count?: true | RoundQuizCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: RoundQuestionAvgAggregateInputType
+    _avg?: RoundQuizAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: RoundQuestionSumAggregateInputType
+    _sum?: RoundQuizSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RoundQuestionMinAggregateInputType
+    _min?: RoundQuizMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RoundQuestionMaxAggregateInputType
+    _max?: RoundQuizMaxAggregateInputType
   }
 
-  export type GetRoundQuestionAggregateType<T extends RoundQuestionAggregateArgs> = {
-        [P in keyof T & keyof AggregateRoundQuestion]: P extends '_count' | 'count'
+  export type GetRoundQuizAggregateType<T extends RoundQuizAggregateArgs> = {
+        [P in keyof T & keyof AggregateRoundQuiz]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRoundQuestion[P]>
-      : GetScalarType<T[P], AggregateRoundQuestion[P]>
+        : GetScalarType<T[P], AggregateRoundQuiz[P]>
+      : GetScalarType<T[P], AggregateRoundQuiz[P]>
   }
 
 
 
 
-  export type RoundQuestionGroupByArgs = {
-    where?: RoundQuestionWhereInput
-    orderBy?: Enumerable<RoundQuestionOrderByWithAggregationInput>
-    by: RoundQuestionScalarFieldEnum[]
-    having?: RoundQuestionScalarWhereWithAggregatesInput
+  export type RoundQuizGroupByArgs = {
+    where?: RoundQuizWhereInput
+    orderBy?: Enumerable<RoundQuizOrderByWithAggregationInput>
+    by: RoundQuizScalarFieldEnum[]
+    having?: RoundQuizScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RoundQuestionCountAggregateInputType | true
-    _avg?: RoundQuestionAvgAggregateInputType
-    _sum?: RoundQuestionSumAggregateInputType
-    _min?: RoundQuestionMinAggregateInputType
-    _max?: RoundQuestionMaxAggregateInputType
+    _count?: RoundQuizCountAggregateInputType | true
+    _avg?: RoundQuizAvgAggregateInputType
+    _sum?: RoundQuizSumAggregateInputType
+    _min?: RoundQuizMinAggregateInputType
+    _max?: RoundQuizMaxAggregateInputType
   }
 
 
-  export type RoundQuestionGroupByOutputType = {
+  export type RoundQuizGroupByOutputType = {
     id: number
-    roundId: number | null
-    questionId: number
-    choiceId: number
+    category: string
     createdAt: Date
-    updateAt: Date
-    _count: RoundQuestionCountAggregateOutputType | null
-    _avg: RoundQuestionAvgAggregateOutputType | null
-    _sum: RoundQuestionSumAggregateOutputType | null
-    _min: RoundQuestionMinAggregateOutputType | null
-    _max: RoundQuestionMaxAggregateOutputType | null
+    roundId: number | null
+    choiceId: number | null
+    quizId: number | null
+    _count: RoundQuizCountAggregateOutputType | null
+    _avg: RoundQuizAvgAggregateOutputType | null
+    _sum: RoundQuizSumAggregateOutputType | null
+    _min: RoundQuizMinAggregateOutputType | null
+    _max: RoundQuizMaxAggregateOutputType | null
   }
 
-  type GetRoundQuestionGroupByPayload<T extends RoundQuestionGroupByArgs> = Prisma.PrismaPromise<
+  type GetRoundQuizGroupByPayload<T extends RoundQuizGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<RoundQuestionGroupByOutputType, T['by']> &
+      PickArray<RoundQuizGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RoundQuestionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RoundQuizGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RoundQuestionGroupByOutputType[P]>
-            : GetScalarType<T[P], RoundQuestionGroupByOutputType[P]>
+              : GetScalarType<T[P], RoundQuizGroupByOutputType[P]>
+            : GetScalarType<T[P], RoundQuizGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RoundQuestionSelect = {
+  export type RoundQuizSelect = {
     id?: boolean
-    roundId?: boolean
-    questionId?: boolean
-    choiceId?: boolean
+    category?: boolean
     createdAt?: boolean
-    updateAt?: boolean
-    question?: boolean | QuestionArgs
-    userChoice?: boolean | ChoiceArgs
+    roundId?: boolean
+    choiceId?: boolean
+    quizId?: boolean
     round?: boolean | RoundArgs
+    choice?: boolean | ChoiceArgs
+    quiz?: boolean | QuizArgs
   }
 
 
-  export type RoundQuestionInclude = {
-    question?: boolean | QuestionArgs
-    userChoice?: boolean | ChoiceArgs
+  export type RoundQuizInclude = {
     round?: boolean | RoundArgs
+    choice?: boolean | ChoiceArgs
+    quiz?: boolean | QuizArgs
   }
 
-  export type RoundQuestionGetPayload<S extends boolean | null | undefined | RoundQuestionArgs> =
+  export type RoundQuizGetPayload<S extends boolean | null | undefined | RoundQuizArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? RoundQuestion :
+    S extends true ? RoundQuiz :
     S extends undefined ? never :
-    S extends { include: any } & (RoundQuestionArgs | RoundQuestionFindManyArgs)
-    ? RoundQuestion  & {
+    S extends { include: any } & (RoundQuizArgs | RoundQuizFindManyArgs)
+    ? RoundQuiz  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'question' ? QuestionGetPayload<S['include'][P]> :
-        P extends 'userChoice' ? ChoiceGetPayload<S['include'][P]> :
-        P extends 'round' ? RoundGetPayload<S['include'][P]> | null :  never
+        P extends 'round' ? RoundGetPayload<S['include'][P]> | null :
+        P extends 'choice' ? ChoiceGetPayload<S['include'][P]> | null :
+        P extends 'quiz' ? QuizGetPayload<S['include'][P]> | null :  never
   } 
-    : S extends { select: any } & (RoundQuestionArgs | RoundQuestionFindManyArgs)
+    : S extends { select: any } & (RoundQuizArgs | RoundQuizFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'question' ? QuestionGetPayload<S['select'][P]> :
-        P extends 'userChoice' ? ChoiceGetPayload<S['select'][P]> :
-        P extends 'round' ? RoundGetPayload<S['select'][P]> | null :  P extends keyof RoundQuestion ? RoundQuestion[P] : never
+        P extends 'round' ? RoundGetPayload<S['select'][P]> | null :
+        P extends 'choice' ? ChoiceGetPayload<S['select'][P]> | null :
+        P extends 'quiz' ? QuizGetPayload<S['select'][P]> | null :  P extends keyof RoundQuiz ? RoundQuiz[P] : never
   } 
-      : RoundQuestion
+      : RoundQuiz
 
 
-  type RoundQuestionCountArgs = 
-    Omit<RoundQuestionFindManyArgs, 'select' | 'include'> & {
-      select?: RoundQuestionCountAggregateInputType | true
+  type RoundQuizCountArgs = 
+    Omit<RoundQuizFindManyArgs, 'select' | 'include'> & {
+      select?: RoundQuizCountAggregateInputType | true
     }
 
-  export interface RoundQuestionDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface RoundQuizDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one RoundQuestion that matches the filter.
-     * @param {RoundQuestionFindUniqueArgs} args - Arguments to find a RoundQuestion
+     * Find zero or one RoundQuiz that matches the filter.
+     * @param {RoundQuizFindUniqueArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.findUnique({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends RoundQuestionFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, RoundQuestionFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuestion'> extends True ? Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>> : Prisma__RoundQuestionClient<RoundQuestionGetPayload<T> | null, null>
+    findUnique<T extends RoundQuizFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RoundQuizFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RoundQuiz'> extends True ? Prisma__RoundQuizClient<RoundQuizGetPayload<T>> : Prisma__RoundQuizClient<RoundQuizGetPayload<T> | null, null>
 
     /**
-     * Find one RoundQuestion that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one RoundQuiz that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {RoundQuestionFindUniqueOrThrowArgs} args - Arguments to find a RoundQuestion
+     * @param {RoundQuizFindUniqueOrThrowArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.findUniqueOrThrow({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends RoundQuestionFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, RoundQuestionFindUniqueOrThrowArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    findUniqueOrThrow<T extends RoundQuizFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuizFindUniqueOrThrowArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Find the first RoundQuestion that matches the filter.
+     * Find the first RoundQuiz that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionFindFirstArgs} args - Arguments to find a RoundQuestion
+     * @param {RoundQuizFindFirstArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.findFirst({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends RoundQuestionFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, RoundQuestionFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuestion'> extends True ? Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>> : Prisma__RoundQuestionClient<RoundQuestionGetPayload<T> | null, null>
+    findFirst<T extends RoundQuizFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RoundQuizFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RoundQuiz'> extends True ? Prisma__RoundQuizClient<RoundQuizGetPayload<T>> : Prisma__RoundQuizClient<RoundQuizGetPayload<T> | null, null>
 
     /**
-     * Find the first RoundQuestion that matches the filter or
+     * Find the first RoundQuiz that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionFindFirstOrThrowArgs} args - Arguments to find a RoundQuestion
+     * @param {RoundQuizFindFirstOrThrowArgs} args - Arguments to find a RoundQuiz
      * @example
-     * // Get one RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.findFirstOrThrow({
+     * // Get one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends RoundQuestionFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, RoundQuestionFindFirstOrThrowArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    findFirstOrThrow<T extends RoundQuizFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RoundQuizFindFirstOrThrowArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Find zero or more RoundQuestions that matches the filter.
+     * Find zero or more RoundQuizs that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {RoundQuizFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all RoundQuestions
-     * const roundQuestions = await prisma.roundQuestion.findMany()
+     * // Get all RoundQuizs
+     * const roundQuizs = await prisma.roundQuiz.findMany()
      * 
-     * // Get first 10 RoundQuestions
-     * const roundQuestions = await prisma.roundQuestion.findMany({ take: 10 })
+     * // Get first 10 RoundQuizs
+     * const roundQuizs = await prisma.roundQuiz.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const roundQuestionWithIdOnly = await prisma.roundQuestion.findMany({ select: { id: true } })
+     * const roundQuizWithIdOnly = await prisma.roundQuiz.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends RoundQuestionFindManyArgs>(
-      args?: SelectSubset<T, RoundQuestionFindManyArgs>
-    ): Prisma.PrismaPromise<Array<RoundQuestionGetPayload<T>>>
+    findMany<T extends RoundQuizFindManyArgs>(
+      args?: SelectSubset<T, RoundQuizFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RoundQuizGetPayload<T>>>
 
     /**
-     * Create a RoundQuestion.
-     * @param {RoundQuestionCreateArgs} args - Arguments to create a RoundQuestion.
+     * Create a RoundQuiz.
+     * @param {RoundQuizCreateArgs} args - Arguments to create a RoundQuiz.
      * @example
-     * // Create one RoundQuestion
-     * const RoundQuestion = await prisma.roundQuestion.create({
+     * // Create one RoundQuiz
+     * const RoundQuiz = await prisma.roundQuiz.create({
      *   data: {
-     *     // ... data to create a RoundQuestion
+     *     // ... data to create a RoundQuiz
      *   }
      * })
      * 
     **/
-    create<T extends RoundQuestionCreateArgs>(
-      args: SelectSubset<T, RoundQuestionCreateArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    create<T extends RoundQuizCreateArgs>(
+      args: SelectSubset<T, RoundQuizCreateArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Create many RoundQuestions.
-     *     @param {RoundQuestionCreateManyArgs} args - Arguments to create many RoundQuestions.
+     * Create many RoundQuizs.
+     *     @param {RoundQuizCreateManyArgs} args - Arguments to create many RoundQuizs.
      *     @example
-     *     // Create many RoundQuestions
-     *     const roundQuestion = await prisma.roundQuestion.createMany({
+     *     // Create many RoundQuizs
+     *     const roundQuiz = await prisma.roundQuiz.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends RoundQuestionCreateManyArgs>(
-      args?: SelectSubset<T, RoundQuestionCreateManyArgs>
+    createMany<T extends RoundQuizCreateManyArgs>(
+      args?: SelectSubset<T, RoundQuizCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a RoundQuestion.
-     * @param {RoundQuestionDeleteArgs} args - Arguments to delete one RoundQuestion.
+     * Delete a RoundQuiz.
+     * @param {RoundQuizDeleteArgs} args - Arguments to delete one RoundQuiz.
      * @example
-     * // Delete one RoundQuestion
-     * const RoundQuestion = await prisma.roundQuestion.delete({
+     * // Delete one RoundQuiz
+     * const RoundQuiz = await prisma.roundQuiz.delete({
      *   where: {
-     *     // ... filter to delete one RoundQuestion
+     *     // ... filter to delete one RoundQuiz
      *   }
      * })
      * 
     **/
-    delete<T extends RoundQuestionDeleteArgs>(
-      args: SelectSubset<T, RoundQuestionDeleteArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    delete<T extends RoundQuizDeleteArgs>(
+      args: SelectSubset<T, RoundQuizDeleteArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Update one RoundQuestion.
-     * @param {RoundQuestionUpdateArgs} args - Arguments to update one RoundQuestion.
+     * Update one RoundQuiz.
+     * @param {RoundQuizUpdateArgs} args - Arguments to update one RoundQuiz.
      * @example
-     * // Update one RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.update({
+     * // Update one RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10072,34 +6457,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends RoundQuestionUpdateArgs>(
-      args: SelectSubset<T, RoundQuestionUpdateArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    update<T extends RoundQuizUpdateArgs>(
+      args: SelectSubset<T, RoundQuizUpdateArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Delete zero or more RoundQuestions.
-     * @param {RoundQuestionDeleteManyArgs} args - Arguments to filter RoundQuestions to delete.
+     * Delete zero or more RoundQuizs.
+     * @param {RoundQuizDeleteManyArgs} args - Arguments to filter RoundQuizs to delete.
      * @example
-     * // Delete a few RoundQuestions
-     * const { count } = await prisma.roundQuestion.deleteMany({
+     * // Delete a few RoundQuizs
+     * const { count } = await prisma.roundQuiz.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends RoundQuestionDeleteManyArgs>(
-      args?: SelectSubset<T, RoundQuestionDeleteManyArgs>
+    deleteMany<T extends RoundQuizDeleteManyArgs>(
+      args?: SelectSubset<T, RoundQuizDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RoundQuestions.
+     * Update zero or more RoundQuizs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RoundQuizUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many RoundQuestions
-     * const roundQuestion = await prisma.roundQuestion.updateMany({
+     * // Update many RoundQuizs
+     * const roundQuiz = await prisma.roundQuiz.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10109,59 +6494,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends RoundQuestionUpdateManyArgs>(
-      args: SelectSubset<T, RoundQuestionUpdateManyArgs>
+    updateMany<T extends RoundQuizUpdateManyArgs>(
+      args: SelectSubset<T, RoundQuizUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one RoundQuestion.
-     * @param {RoundQuestionUpsertArgs} args - Arguments to update or create a RoundQuestion.
+     * Create or update one RoundQuiz.
+     * @param {RoundQuizUpsertArgs} args - Arguments to update or create a RoundQuiz.
      * @example
-     * // Update or create a RoundQuestion
-     * const roundQuestion = await prisma.roundQuestion.upsert({
+     * // Update or create a RoundQuiz
+     * const roundQuiz = await prisma.roundQuiz.upsert({
      *   create: {
-     *     // ... data to create a RoundQuestion
+     *     // ... data to create a RoundQuiz
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the RoundQuestion we want to update
+     *     // ... the filter for the RoundQuiz we want to update
      *   }
      * })
     **/
-    upsert<T extends RoundQuestionUpsertArgs>(
-      args: SelectSubset<T, RoundQuestionUpsertArgs>
-    ): Prisma__RoundQuestionClient<RoundQuestionGetPayload<T>>
+    upsert<T extends RoundQuizUpsertArgs>(
+      args: SelectSubset<T, RoundQuizUpsertArgs>
+    ): Prisma__RoundQuizClient<RoundQuizGetPayload<T>>
 
     /**
-     * Count the number of RoundQuestions.
+     * Count the number of RoundQuizs.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionCountArgs} args - Arguments to filter RoundQuestions to count.
+     * @param {RoundQuizCountArgs} args - Arguments to filter RoundQuizs to count.
      * @example
-     * // Count the number of RoundQuestions
-     * const count = await prisma.roundQuestion.count({
+     * // Count the number of RoundQuizs
+     * const count = await prisma.roundQuiz.count({
      *   where: {
-     *     // ... the filter for the RoundQuestions we want to count
+     *     // ... the filter for the RoundQuizs we want to count
      *   }
      * })
     **/
-    count<T extends RoundQuestionCountArgs>(
-      args?: Subset<T, RoundQuestionCountArgs>,
+    count<T extends RoundQuizCountArgs>(
+      args?: Subset<T, RoundQuizCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RoundQuestionCountAggregateOutputType>
+          : GetScalarType<T['select'], RoundQuizCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a RoundQuestion.
+     * Allows you to perform aggregations operations on a RoundQuiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RoundQuizAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10181,13 +6566,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RoundQuestionAggregateArgs>(args: Subset<T, RoundQuestionAggregateArgs>): Prisma.PrismaPromise<GetRoundQuestionAggregateType<T>>
+    aggregate<T extends RoundQuizAggregateArgs>(args: Subset<T, RoundQuizAggregateArgs>): Prisma.PrismaPromise<GetRoundQuizAggregateType<T>>
 
     /**
-     * Group by RoundQuestion.
+     * Group by RoundQuiz.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RoundQuestionGroupByArgs} args - Group by arguments.
+     * @param {RoundQuizGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10202,14 +6587,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RoundQuestionGroupByArgs,
+      T extends RoundQuizGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RoundQuestionGroupByArgs['orderBy'] }
-        : { orderBy?: RoundQuestionGroupByArgs['orderBy'] },
+        ? { orderBy: RoundQuizGroupByArgs['orderBy'] }
+        : { orderBy?: RoundQuizGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -10258,17 +6643,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RoundQuestionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuestionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RoundQuizGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRoundQuizGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for RoundQuestion.
+   * The delegate class that acts as a "Promise-like" for RoundQuiz.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__RoundQuestionClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__RoundQuizClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -10282,976 +6667,12 @@ export namespace Prisma {
     private _requestPromise?;
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    question<T extends QuestionArgs= {}>(args?: Subset<T, QuestionArgs>): Prisma__QuestionClient<QuestionGetPayload<T> | Null>;
-
-    userChoice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
 
     round<T extends RoundArgs= {}>(args?: Subset<T, RoundArgs>): Prisma__RoundClient<RoundGetPayload<T> | Null>;
 
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
+    choice<T extends ChoiceArgs= {}>(args?: Subset<T, ChoiceArgs>): Prisma__ChoiceClient<ChoiceGetPayload<T> | Null>;
 
-
-
-  // Custom InputTypes
-
-  /**
-   * RoundQuestion base type for findUnique actions
-   */
-  export type RoundQuestionFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter, which RoundQuestion to fetch.
-     */
-    where: RoundQuestionWhereUniqueInput
-  }
-
-  /**
-   * RoundQuestion findUnique
-   */
-  export interface RoundQuestionFindUniqueArgs extends RoundQuestionFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * RoundQuestion findUniqueOrThrow
-   */
-  export type RoundQuestionFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter, which RoundQuestion to fetch.
-     */
-    where: RoundQuestionWhereUniqueInput
-  }
-
-
-  /**
-   * RoundQuestion base type for findFirst actions
-   */
-  export type RoundQuestionFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter, which RoundQuestion to fetch.
-     */
-    where?: RoundQuestionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RoundQuestions to fetch.
-     */
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RoundQuestions.
-     */
-    cursor?: RoundQuestionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RoundQuestions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RoundQuestions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RoundQuestions.
-     */
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
-  }
-
-  /**
-   * RoundQuestion findFirst
-   */
-  export interface RoundQuestionFindFirstArgs extends RoundQuestionFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * RoundQuestion findFirstOrThrow
-   */
-  export type RoundQuestionFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter, which RoundQuestion to fetch.
-     */
-    where?: RoundQuestionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RoundQuestions to fetch.
-     */
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for RoundQuestions.
-     */
-    cursor?: RoundQuestionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RoundQuestions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RoundQuestions.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of RoundQuestions.
-     */
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
-  }
-
-
-  /**
-   * RoundQuestion findMany
-   */
-  export type RoundQuestionFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter, which RoundQuestions to fetch.
-     */
-    where?: RoundQuestionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of RoundQuestions to fetch.
-     */
-    orderBy?: Enumerable<RoundQuestionOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing RoundQuestions.
-     */
-    cursor?: RoundQuestionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` RoundQuestions from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` RoundQuestions.
-     */
-    skip?: number
-    distinct?: Enumerable<RoundQuestionScalarFieldEnum>
-  }
-
-
-  /**
-   * RoundQuestion create
-   */
-  export type RoundQuestionCreateArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * The data needed to create a RoundQuestion.
-     */
-    data: XOR<RoundQuestionCreateInput, RoundQuestionUncheckedCreateInput>
-  }
-
-
-  /**
-   * RoundQuestion createMany
-   */
-  export type RoundQuestionCreateManyArgs = {
-    /**
-     * The data used to create many RoundQuestions.
-     */
-    data: Enumerable<RoundQuestionCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * RoundQuestion update
-   */
-  export type RoundQuestionUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * The data needed to update a RoundQuestion.
-     */
-    data: XOR<RoundQuestionUpdateInput, RoundQuestionUncheckedUpdateInput>
-    /**
-     * Choose, which RoundQuestion to update.
-     */
-    where: RoundQuestionWhereUniqueInput
-  }
-
-
-  /**
-   * RoundQuestion updateMany
-   */
-  export type RoundQuestionUpdateManyArgs = {
-    /**
-     * The data used to update RoundQuestions.
-     */
-    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyInput>
-    /**
-     * Filter which RoundQuestions to update
-     */
-    where?: RoundQuestionWhereInput
-  }
-
-
-  /**
-   * RoundQuestion upsert
-   */
-  export type RoundQuestionUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * The filter to search for the RoundQuestion to update in case it exists.
-     */
-    where: RoundQuestionWhereUniqueInput
-    /**
-     * In case the RoundQuestion found by the `where` argument doesn't exist, create a new RoundQuestion with this data.
-     */
-    create: XOR<RoundQuestionCreateInput, RoundQuestionUncheckedCreateInput>
-    /**
-     * In case the RoundQuestion was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RoundQuestionUpdateInput, RoundQuestionUncheckedUpdateInput>
-  }
-
-
-  /**
-   * RoundQuestion delete
-   */
-  export type RoundQuestionDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-    /**
-     * Filter which RoundQuestion to delete.
-     */
-    where: RoundQuestionWhereUniqueInput
-  }
-
-
-  /**
-   * RoundQuestion deleteMany
-   */
-  export type RoundQuestionDeleteManyArgs = {
-    /**
-     * Filter which RoundQuestions to delete
-     */
-    where?: RoundQuestionWhereInput
-  }
-
-
-  /**
-   * RoundQuestion without action
-   */
-  export type RoundQuestionArgs = {
-    /**
-     * Select specific fields to fetch from the RoundQuestion
-     */
-    select?: RoundQuestionSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: RoundQuestionInclude | null
-  }
-
-
-
-  /**
-   * Model TodoList
-   */
-
-
-  export type AggregateTodoList = {
-    _count: TodoListCountAggregateOutputType | null
-    _avg: TodoListAvgAggregateOutputType | null
-    _sum: TodoListSumAggregateOutputType | null
-    _min: TodoListMinAggregateOutputType | null
-    _max: TodoListMaxAggregateOutputType | null
-  }
-
-  export type TodoListAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TodoListSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type TodoListMinAggregateOutputType = {
-    id: number | null
-    task: string | null
-    status: string | null
-    notes: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TodoListMaxAggregateOutputType = {
-    id: number | null
-    task: string | null
-    status: string | null
-    notes: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TodoListCountAggregateOutputType = {
-    id: number
-    task: number
-    status: number
-    notes: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type TodoListAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type TodoListSumAggregateInputType = {
-    id?: true
-  }
-
-  export type TodoListMinAggregateInputType = {
-    id?: true
-    task?: true
-    status?: true
-    notes?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TodoListMaxAggregateInputType = {
-    id?: true
-    task?: true
-    status?: true
-    notes?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TodoListCountAggregateInputType = {
-    id?: true
-    task?: true
-    status?: true
-    notes?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type TodoListAggregateArgs = {
-    /**
-     * Filter which TodoList to aggregate.
-     */
-    where?: TodoListWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of TodoLists to fetch.
-     */
-    orderBy?: Enumerable<TodoListOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: TodoListWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` TodoLists from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` TodoLists.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned TodoLists
-    **/
-    _count?: true | TodoListCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: TodoListAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: TodoListSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: TodoListMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: TodoListMaxAggregateInputType
-  }
-
-  export type GetTodoListAggregateType<T extends TodoListAggregateArgs> = {
-        [P in keyof T & keyof AggregateTodoList]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateTodoList[P]>
-      : GetScalarType<T[P], AggregateTodoList[P]>
-  }
-
-
-
-
-  export type TodoListGroupByArgs = {
-    where?: TodoListWhereInput
-    orderBy?: Enumerable<TodoListOrderByWithAggregationInput>
-    by: TodoListScalarFieldEnum[]
-    having?: TodoListScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: TodoListCountAggregateInputType | true
-    _avg?: TodoListAvgAggregateInputType
-    _sum?: TodoListSumAggregateInputType
-    _min?: TodoListMinAggregateInputType
-    _max?: TodoListMaxAggregateInputType
-  }
-
-
-  export type TodoListGroupByOutputType = {
-    id: number
-    task: string
-    status: string
-    notes: string | null
-    createdAt: Date
-    updatedAt: Date
-    _count: TodoListCountAggregateOutputType | null
-    _avg: TodoListAvgAggregateOutputType | null
-    _sum: TodoListSumAggregateOutputType | null
-    _min: TodoListMinAggregateOutputType | null
-    _max: TodoListMaxAggregateOutputType | null
-  }
-
-  type GetTodoListGroupByPayload<T extends TodoListGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<TodoListGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof TodoListGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], TodoListGroupByOutputType[P]>
-            : GetScalarType<T[P], TodoListGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type TodoListSelect = {
-    id?: boolean
-    task?: boolean
-    status?: boolean
-    notes?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type TodoListGetPayload<S extends boolean | null | undefined | TodoListArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TodoList :
-    S extends undefined ? never :
-    S extends { include: any } & (TodoListArgs | TodoListFindManyArgs)
-    ? TodoList 
-    : S extends { select: any } & (TodoListArgs | TodoListFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-    P extends keyof TodoList ? TodoList[P] : never
-  } 
-      : TodoList
-
-
-  type TodoListCountArgs = 
-    Omit<TodoListFindManyArgs, 'select' | 'include'> & {
-      select?: TodoListCountAggregateInputType | true
-    }
-
-  export interface TodoListDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one TodoList that matches the filter.
-     * @param {TodoListFindUniqueArgs} args - Arguments to find a TodoList
-     * @example
-     * // Get one TodoList
-     * const todoList = await prisma.todoList.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends TodoListFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TodoListFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TodoList'> extends True ? Prisma__TodoListClient<TodoListGetPayload<T>> : Prisma__TodoListClient<TodoListGetPayload<T> | null, null>
-
-    /**
-     * Find one TodoList that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {TodoListFindUniqueOrThrowArgs} args - Arguments to find a TodoList
-     * @example
-     * // Get one TodoList
-     * const todoList = await prisma.todoList.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends TodoListFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TodoListFindUniqueOrThrowArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Find the first TodoList that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListFindFirstArgs} args - Arguments to find a TodoList
-     * @example
-     * // Get one TodoList
-     * const todoList = await prisma.todoList.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends TodoListFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TodoListFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TodoList'> extends True ? Prisma__TodoListClient<TodoListGetPayload<T>> : Prisma__TodoListClient<TodoListGetPayload<T> | null, null>
-
-    /**
-     * Find the first TodoList that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListFindFirstOrThrowArgs} args - Arguments to find a TodoList
-     * @example
-     * // Get one TodoList
-     * const todoList = await prisma.todoList.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends TodoListFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TodoListFindFirstOrThrowArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Find zero or more TodoLists that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all TodoLists
-     * const todoLists = await prisma.todoList.findMany()
-     * 
-     * // Get first 10 TodoLists
-     * const todoLists = await prisma.todoList.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const todoListWithIdOnly = await prisma.todoList.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends TodoListFindManyArgs>(
-      args?: SelectSubset<T, TodoListFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TodoListGetPayload<T>>>
-
-    /**
-     * Create a TodoList.
-     * @param {TodoListCreateArgs} args - Arguments to create a TodoList.
-     * @example
-     * // Create one TodoList
-     * const TodoList = await prisma.todoList.create({
-     *   data: {
-     *     // ... data to create a TodoList
-     *   }
-     * })
-     * 
-    **/
-    create<T extends TodoListCreateArgs>(
-      args: SelectSubset<T, TodoListCreateArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Create many TodoLists.
-     *     @param {TodoListCreateManyArgs} args - Arguments to create many TodoLists.
-     *     @example
-     *     // Create many TodoLists
-     *     const todoList = await prisma.todoList.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends TodoListCreateManyArgs>(
-      args?: SelectSubset<T, TodoListCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a TodoList.
-     * @param {TodoListDeleteArgs} args - Arguments to delete one TodoList.
-     * @example
-     * // Delete one TodoList
-     * const TodoList = await prisma.todoList.delete({
-     *   where: {
-     *     // ... filter to delete one TodoList
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends TodoListDeleteArgs>(
-      args: SelectSubset<T, TodoListDeleteArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Update one TodoList.
-     * @param {TodoListUpdateArgs} args - Arguments to update one TodoList.
-     * @example
-     * // Update one TodoList
-     * const todoList = await prisma.todoList.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends TodoListUpdateArgs>(
-      args: SelectSubset<T, TodoListUpdateArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Delete zero or more TodoLists.
-     * @param {TodoListDeleteManyArgs} args - Arguments to filter TodoLists to delete.
-     * @example
-     * // Delete a few TodoLists
-     * const { count } = await prisma.todoList.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends TodoListDeleteManyArgs>(
-      args?: SelectSubset<T, TodoListDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more TodoLists.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many TodoLists
-     * const todoList = await prisma.todoList.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends TodoListUpdateManyArgs>(
-      args: SelectSubset<T, TodoListUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one TodoList.
-     * @param {TodoListUpsertArgs} args - Arguments to update or create a TodoList.
-     * @example
-     * // Update or create a TodoList
-     * const todoList = await prisma.todoList.upsert({
-     *   create: {
-     *     // ... data to create a TodoList
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the TodoList we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends TodoListUpsertArgs>(
-      args: SelectSubset<T, TodoListUpsertArgs>
-    ): Prisma__TodoListClient<TodoListGetPayload<T>>
-
-    /**
-     * Count the number of TodoLists.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListCountArgs} args - Arguments to filter TodoLists to count.
-     * @example
-     * // Count the number of TodoLists
-     * const count = await prisma.todoList.count({
-     *   where: {
-     *     // ... the filter for the TodoLists we want to count
-     *   }
-     * })
-    **/
-    count<T extends TodoListCountArgs>(
-      args?: Subset<T, TodoListCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], TodoListCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a TodoList.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends TodoListAggregateArgs>(args: Subset<T, TodoListAggregateArgs>): Prisma.PrismaPromise<GetTodoListAggregateType<T>>
-
-    /**
-     * Group by TodoList.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {TodoListGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends TodoListGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TodoListGroupByArgs['orderBy'] }
-        : { orderBy?: TodoListGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, TodoListGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTodoListGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for TodoList.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__TodoListClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
+    quiz<T extends QuizArgs= {}>(args?: Subset<T, QuizArgs>): Prisma__QuizClient<QuizGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -11281,23 +6702,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TodoList base type for findUnique actions
+   * RoundQuiz base type for findUnique actions
    */
-  export type TodoListFindUniqueArgsBase = {
+  export type RoundQuizFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * Filter, which TodoList to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where: TodoListWhereUniqueInput
+    include?: RoundQuizInclude | null
+    /**
+     * Filter, which RoundQuiz to fetch.
+     */
+    where: RoundQuizWhereUniqueInput
   }
 
   /**
-   * TodoList findUnique
+   * RoundQuiz findUnique
    */
-  export interface TodoListFindUniqueArgs extends TodoListFindUniqueArgsBase {
+  export interface RoundQuizFindUniqueArgs extends RoundQuizFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -11307,68 +6732,76 @@ export namespace Prisma {
       
 
   /**
-   * TodoList findUniqueOrThrow
+   * RoundQuiz findUniqueOrThrow
    */
-  export type TodoListFindUniqueOrThrowArgs = {
+  export type RoundQuizFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * Filter, which TodoList to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where: TodoListWhereUniqueInput
+    include?: RoundQuizInclude | null
+    /**
+     * Filter, which RoundQuiz to fetch.
+     */
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * TodoList base type for findFirst actions
+   * RoundQuiz base type for findFirst actions
    */
-  export type TodoListFindFirstArgsBase = {
+  export type RoundQuizFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * Filter, which TodoList to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: TodoListWhereInput
+    include?: RoundQuizInclude | null
+    /**
+     * Filter, which RoundQuiz to fetch.
+     */
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TodoLists to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<TodoListOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TodoLists.
+     * Sets the position for searching for RoundQuizs.
      */
-    cursor?: TodoListWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TodoLists from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TodoLists.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TodoLists.
+     * Filter by unique combinations of RoundQuizs.
      */
-    distinct?: Enumerable<TodoListScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
   /**
-   * TodoList findFirst
+   * RoundQuiz findFirst
    */
-  export interface TodoListFindFirstArgs extends TodoListFindFirstArgsBase {
+  export interface RoundQuizFindFirstArgs extends RoundQuizFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -11378,7274 +6811,236 @@ export namespace Prisma {
       
 
   /**
-   * TodoList findFirstOrThrow
+   * RoundQuiz findFirstOrThrow
    */
-  export type TodoListFindFirstOrThrowArgs = {
+  export type RoundQuizFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * Filter, which TodoList to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: TodoListWhereInput
+    include?: RoundQuizInclude | null
+    /**
+     * Filter, which RoundQuiz to fetch.
+     */
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TodoLists to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<TodoListOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TodoLists.
+     * Sets the position for searching for RoundQuizs.
      */
-    cursor?: TodoListWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TodoLists from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TodoLists.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TodoLists.
+     * Filter by unique combinations of RoundQuizs.
      */
-    distinct?: Enumerable<TodoListScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * TodoList findMany
+   * RoundQuiz findMany
    */
-  export type TodoListFindManyArgs = {
+  export type RoundQuizFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * Filter, which TodoLists to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: TodoListWhereInput
+    include?: RoundQuizInclude | null
+    /**
+     * Filter, which RoundQuizs to fetch.
+     */
+    where?: RoundQuizWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TodoLists to fetch.
+     * Determine the order of RoundQuizs to fetch.
      */
-    orderBy?: Enumerable<TodoListOrderByWithRelationInput>
+    orderBy?: Enumerable<RoundQuizOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TodoLists.
+     * Sets the position for listing RoundQuizs.
      */
-    cursor?: TodoListWhereUniqueInput
+    cursor?: RoundQuizWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TodoLists from the position of the cursor.
+     * Take `±n` RoundQuizs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TodoLists.
+     * Skip the first `n` RoundQuizs.
      */
     skip?: number
-    distinct?: Enumerable<TodoListScalarFieldEnum>
+    distinct?: Enumerable<RoundQuizScalarFieldEnum>
   }
 
 
   /**
-   * TodoList create
+   * RoundQuiz create
    */
-  export type TodoListCreateArgs = {
+  export type RoundQuizCreateArgs = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * The data needed to create a TodoList.
+     * Choose, which related nodes to fetch as well.
      */
-    data: XOR<TodoListCreateInput, TodoListUncheckedCreateInput>
+    include?: RoundQuizInclude | null
+    /**
+     * The data needed to create a RoundQuiz.
+     */
+    data: XOR<RoundQuizCreateInput, RoundQuizUncheckedCreateInput>
   }
 
 
   /**
-   * TodoList createMany
+   * RoundQuiz createMany
    */
-  export type TodoListCreateManyArgs = {
+  export type RoundQuizCreateManyArgs = {
     /**
-     * The data used to create many TodoLists.
+     * The data used to create many RoundQuizs.
      */
-    data: Enumerable<TodoListCreateManyInput>
+    data: Enumerable<RoundQuizCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TodoList update
+   * RoundQuiz update
    */
-  export type TodoListUpdateArgs = {
+  export type RoundQuizUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TodoList
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: TodoListSelect | null
+    select?: RoundQuizSelect | null
     /**
-     * The data needed to update a TodoList.
-     */
-    data: XOR<TodoListUpdateInput, TodoListUncheckedUpdateInput>
-    /**
-     * Choose, which TodoList to update.
-     */
-    where: TodoListWhereUniqueInput
-  }
-
-
-  /**
-   * TodoList updateMany
-   */
-  export type TodoListUpdateManyArgs = {
-    /**
-     * The data used to update TodoLists.
-     */
-    data: XOR<TodoListUpdateManyMutationInput, TodoListUncheckedUpdateManyInput>
-    /**
-     * Filter which TodoLists to update
-     */
-    where?: TodoListWhereInput
-  }
-
-
-  /**
-   * TodoList upsert
-   */
-  export type TodoListUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the TodoList
-     */
-    select?: TodoListSelect | null
-    /**
-     * The filter to search for the TodoList to update in case it exists.
-     */
-    where: TodoListWhereUniqueInput
-    /**
-     * In case the TodoList found by the `where` argument doesn't exist, create a new TodoList with this data.
-     */
-    create: XOR<TodoListCreateInput, TodoListUncheckedCreateInput>
-    /**
-     * In case the TodoList was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<TodoListUpdateInput, TodoListUncheckedUpdateInput>
-  }
-
-
-  /**
-   * TodoList delete
-   */
-  export type TodoListDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the TodoList
-     */
-    select?: TodoListSelect | null
-    /**
-     * Filter which TodoList to delete.
-     */
-    where: TodoListWhereUniqueInput
-  }
-
-
-  /**
-   * TodoList deleteMany
-   */
-  export type TodoListDeleteManyArgs = {
-    /**
-     * Filter which TodoLists to delete
-     */
-    where?: TodoListWhereInput
-  }
-
-
-  /**
-   * TodoList without action
-   */
-  export type TodoListArgs = {
-    /**
-     * Select specific fields to fetch from the TodoList
-     */
-    select?: TodoListSelect | null
-  }
-
-
-
-  /**
-   * Model Following
-   */
-
-
-  export type AggregateFollowing = {
-    _count: FollowingCountAggregateOutputType | null
-    _avg: FollowingAvgAggregateOutputType | null
-    _sum: FollowingSumAggregateOutputType | null
-    _min: FollowingMinAggregateOutputType | null
-    _max: FollowingMaxAggregateOutputType | null
-  }
-
-  export type FollowingAvgAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type FollowingSumAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type FollowingMinAggregateOutputType = {
-    id: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type FollowingMaxAggregateOutputType = {
-    id: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type FollowingCountAggregateOutputType = {
-    id: number
-    createdAt: number
-    updatedAt: number
-    fromUserId: number
-    toUserId: number
-    _all: number
-  }
-
-
-  export type FollowingAvgAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type FollowingSumAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type FollowingMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type FollowingMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type FollowingCountAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-    _all?: true
-  }
-
-  export type FollowingAggregateArgs = {
-    /**
-     * Filter which Following to aggregate.
-     */
-    where?: FollowingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Followings to fetch.
-     */
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: FollowingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Followings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Followings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Followings
-    **/
-    _count?: true | FollowingCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: FollowingAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: FollowingSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: FollowingMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: FollowingMaxAggregateInputType
-  }
-
-  export type GetFollowingAggregateType<T extends FollowingAggregateArgs> = {
-        [P in keyof T & keyof AggregateFollowing]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateFollowing[P]>
-      : GetScalarType<T[P], AggregateFollowing[P]>
-  }
-
-
-
-
-  export type FollowingGroupByArgs = {
-    where?: FollowingWhereInput
-    orderBy?: Enumerable<FollowingOrderByWithAggregationInput>
-    by: FollowingScalarFieldEnum[]
-    having?: FollowingScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: FollowingCountAggregateInputType | true
-    _avg?: FollowingAvgAggregateInputType
-    _sum?: FollowingSumAggregateInputType
-    _min?: FollowingMinAggregateInputType
-    _max?: FollowingMaxAggregateInputType
-  }
-
-
-  export type FollowingGroupByOutputType = {
-    id: number
-    createdAt: Date
-    updatedAt: Date
-    fromUserId: number
-    toUserId: number
-    _count: FollowingCountAggregateOutputType | null
-    _avg: FollowingAvgAggregateOutputType | null
-    _sum: FollowingSumAggregateOutputType | null
-    _min: FollowingMinAggregateOutputType | null
-    _max: FollowingMaxAggregateOutputType | null
-  }
-
-  type GetFollowingGroupByPayload<T extends FollowingGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<FollowingGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof FollowingGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], FollowingGroupByOutputType[P]>
-            : GetScalarType<T[P], FollowingGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type FollowingSelect = {
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    fromUserId?: boolean
-    toUserId?: boolean
-    from?: boolean | UserArgs
-    to?: boolean | UserArgs
-  }
-
-
-  export type FollowingInclude = {
-    from?: boolean | UserArgs
-    to?: boolean | UserArgs
-  }
-
-  export type FollowingGetPayload<S extends boolean | null | undefined | FollowingArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Following :
-    S extends undefined ? never :
-    S extends { include: any } & (FollowingArgs | FollowingFindManyArgs)
-    ? Following  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'from' ? UserGetPayload<S['include'][P]> :
-        P extends 'to' ? UserGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (FollowingArgs | FollowingFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'from' ? UserGetPayload<S['select'][P]> :
-        P extends 'to' ? UserGetPayload<S['select'][P]> :  P extends keyof Following ? Following[P] : never
-  } 
-      : Following
-
-
-  type FollowingCountArgs = 
-    Omit<FollowingFindManyArgs, 'select' | 'include'> & {
-      select?: FollowingCountAggregateInputType | true
-    }
-
-  export interface FollowingDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one Following that matches the filter.
-     * @param {FollowingFindUniqueArgs} args - Arguments to find a Following
-     * @example
-     * // Get one Following
-     * const following = await prisma.following.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends FollowingFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, FollowingFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Following'> extends True ? Prisma__FollowingClient<FollowingGetPayload<T>> : Prisma__FollowingClient<FollowingGetPayload<T> | null, null>
-
-    /**
-     * Find one Following that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {FollowingFindUniqueOrThrowArgs} args - Arguments to find a Following
-     * @example
-     * // Get one Following
-     * const following = await prisma.following.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends FollowingFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, FollowingFindUniqueOrThrowArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Find the first Following that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingFindFirstArgs} args - Arguments to find a Following
-     * @example
-     * // Get one Following
-     * const following = await prisma.following.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends FollowingFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, FollowingFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Following'> extends True ? Prisma__FollowingClient<FollowingGetPayload<T>> : Prisma__FollowingClient<FollowingGetPayload<T> | null, null>
-
-    /**
-     * Find the first Following that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingFindFirstOrThrowArgs} args - Arguments to find a Following
-     * @example
-     * // Get one Following
-     * const following = await prisma.following.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends FollowingFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, FollowingFindFirstOrThrowArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Find zero or more Followings that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Followings
-     * const followings = await prisma.following.findMany()
-     * 
-     * // Get first 10 Followings
-     * const followings = await prisma.following.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const followingWithIdOnly = await prisma.following.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends FollowingFindManyArgs>(
-      args?: SelectSubset<T, FollowingFindManyArgs>
-    ): Prisma.PrismaPromise<Array<FollowingGetPayload<T>>>
-
-    /**
-     * Create a Following.
-     * @param {FollowingCreateArgs} args - Arguments to create a Following.
-     * @example
-     * // Create one Following
-     * const Following = await prisma.following.create({
-     *   data: {
-     *     // ... data to create a Following
-     *   }
-     * })
-     * 
-    **/
-    create<T extends FollowingCreateArgs>(
-      args: SelectSubset<T, FollowingCreateArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Create many Followings.
-     *     @param {FollowingCreateManyArgs} args - Arguments to create many Followings.
-     *     @example
-     *     // Create many Followings
-     *     const following = await prisma.following.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends FollowingCreateManyArgs>(
-      args?: SelectSubset<T, FollowingCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Following.
-     * @param {FollowingDeleteArgs} args - Arguments to delete one Following.
-     * @example
-     * // Delete one Following
-     * const Following = await prisma.following.delete({
-     *   where: {
-     *     // ... filter to delete one Following
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends FollowingDeleteArgs>(
-      args: SelectSubset<T, FollowingDeleteArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Update one Following.
-     * @param {FollowingUpdateArgs} args - Arguments to update one Following.
-     * @example
-     * // Update one Following
-     * const following = await prisma.following.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends FollowingUpdateArgs>(
-      args: SelectSubset<T, FollowingUpdateArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Delete zero or more Followings.
-     * @param {FollowingDeleteManyArgs} args - Arguments to filter Followings to delete.
-     * @example
-     * // Delete a few Followings
-     * const { count } = await prisma.following.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends FollowingDeleteManyArgs>(
-      args?: SelectSubset<T, FollowingDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Followings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Followings
-     * const following = await prisma.following.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends FollowingUpdateManyArgs>(
-      args: SelectSubset<T, FollowingUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Following.
-     * @param {FollowingUpsertArgs} args - Arguments to update or create a Following.
-     * @example
-     * // Update or create a Following
-     * const following = await prisma.following.upsert({
-     *   create: {
-     *     // ... data to create a Following
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Following we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends FollowingUpsertArgs>(
-      args: SelectSubset<T, FollowingUpsertArgs>
-    ): Prisma__FollowingClient<FollowingGetPayload<T>>
-
-    /**
-     * Count the number of Followings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingCountArgs} args - Arguments to filter Followings to count.
-     * @example
-     * // Count the number of Followings
-     * const count = await prisma.following.count({
-     *   where: {
-     *     // ... the filter for the Followings we want to count
-     *   }
-     * })
-    **/
-    count<T extends FollowingCountArgs>(
-      args?: Subset<T, FollowingCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], FollowingCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Following.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends FollowingAggregateArgs>(args: Subset<T, FollowingAggregateArgs>): Prisma.PrismaPromise<GetFollowingAggregateType<T>>
-
-    /**
-     * Group by Following.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {FollowingGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends FollowingGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: FollowingGroupByArgs['orderBy'] }
-        : { orderBy?: FollowingGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, FollowingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFollowingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Following.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__FollowingClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    from<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    to<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * Following base type for findUnique actions
-   */
-  export type FollowingFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter, which Following to fetch.
-     */
-    where: FollowingWhereUniqueInput
-  }
-
-  /**
-   * Following findUnique
-   */
-  export interface FollowingFindUniqueArgs extends FollowingFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Following findUniqueOrThrow
-   */
-  export type FollowingFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter, which Following to fetch.
-     */
-    where: FollowingWhereUniqueInput
-  }
-
-
-  /**
-   * Following base type for findFirst actions
-   */
-  export type FollowingFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter, which Following to fetch.
-     */
-    where?: FollowingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Followings to fetch.
-     */
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Followings.
-     */
-    cursor?: FollowingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Followings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Followings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Followings.
-     */
-    distinct?: Enumerable<FollowingScalarFieldEnum>
-  }
-
-  /**
-   * Following findFirst
-   */
-  export interface FollowingFindFirstArgs extends FollowingFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Following findFirstOrThrow
-   */
-  export type FollowingFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter, which Following to fetch.
-     */
-    where?: FollowingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Followings to fetch.
-     */
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Followings.
-     */
-    cursor?: FollowingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Followings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Followings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Followings.
-     */
-    distinct?: Enumerable<FollowingScalarFieldEnum>
-  }
-
-
-  /**
-   * Following findMany
-   */
-  export type FollowingFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter, which Followings to fetch.
-     */
-    where?: FollowingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Followings to fetch.
-     */
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Followings.
-     */
-    cursor?: FollowingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Followings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Followings.
-     */
-    skip?: number
-    distinct?: Enumerable<FollowingScalarFieldEnum>
-  }
-
-
-  /**
-   * Following create
-   */
-  export type FollowingCreateArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * The data needed to create a Following.
-     */
-    data: XOR<FollowingCreateInput, FollowingUncheckedCreateInput>
-  }
-
-
-  /**
-   * Following createMany
-   */
-  export type FollowingCreateManyArgs = {
-    /**
-     * The data used to create many Followings.
-     */
-    data: Enumerable<FollowingCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * Following update
-   */
-  export type FollowingUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * The data needed to update a Following.
-     */
-    data: XOR<FollowingUpdateInput, FollowingUncheckedUpdateInput>
-    /**
-     * Choose, which Following to update.
-     */
-    where: FollowingWhereUniqueInput
-  }
-
-
-  /**
-   * Following updateMany
-   */
-  export type FollowingUpdateManyArgs = {
-    /**
-     * The data used to update Followings.
-     */
-    data: XOR<FollowingUpdateManyMutationInput, FollowingUncheckedUpdateManyInput>
-    /**
-     * Filter which Followings to update
-     */
-    where?: FollowingWhereInput
-  }
-
-
-  /**
-   * Following upsert
-   */
-  export type FollowingUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * The filter to search for the Following to update in case it exists.
-     */
-    where: FollowingWhereUniqueInput
-    /**
-     * In case the Following found by the `where` argument doesn't exist, create a new Following with this data.
-     */
-    create: XOR<FollowingCreateInput, FollowingUncheckedCreateInput>
-    /**
-     * In case the Following was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<FollowingUpdateInput, FollowingUncheckedUpdateInput>
-  }
-
-
-  /**
-   * Following delete
-   */
-  export type FollowingDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    /**
-     * Filter which Following to delete.
-     */
-    where: FollowingWhereUniqueInput
-  }
-
-
-  /**
-   * Following deleteMany
-   */
-  export type FollowingDeleteManyArgs = {
-    /**
-     * Filter which Followings to delete
-     */
-    where?: FollowingWhereInput
-  }
-
-
-  /**
-   * Following without action
-   */
-  export type FollowingArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-  }
-
-
-
-  /**
-   * Model User
-   */
-
-
-  export type AggregateUser = {
-    _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  export type UserAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UserMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    profileImage: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type UserMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    profileImage: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type UserCountAggregateOutputType = {
-    id: number
-    name: number
-    profileImage: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type UserAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    id?: true
-  }
-
-  export type UserMinAggregateInputType = {
-    id?: true
-    name?: true
-    profileImage?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type UserMaxAggregateInputType = {
-    id?: true
-    name?: true
-    profileImage?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type UserCountAggregateInputType = {
-    id?: true
-    name?: true
-    profileImage?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type UserAggregateArgs = {
-    /**
-     * Filter which User to aggregate.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: Enumerable<UserOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Users
-    **/
-    _count?: true | UserCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserMaxAggregateInputType
-  }
-
-  export type GetUserAggregateType<T extends UserAggregateArgs> = {
-        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUser[P]>
-      : GetScalarType<T[P], AggregateUser[P]>
-  }
-
-
-
-
-  export type UserGroupByArgs = {
-    where?: UserWhereInput
-    orderBy?: Enumerable<UserOrderByWithAggregationInput>
-    by: UserScalarFieldEnum[]
-    having?: UserScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
-    _min?: UserMinAggregateInputType
-    _max?: UserMaxAggregateInputType
-  }
-
-
-  export type UserGroupByOutputType = {
-    id: number
-    name: string
-    profileImage: string
-    createdAt: Date
-    updatedAt: Date
-    _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<UserGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserGroupByOutputType[P]>
-            : GetScalarType<T[P], UserGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type UserSelect = {
-    id?: boolean
-    name?: boolean
-    profileImage?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    posts?: boolean | User$postsArgs
-    fromDirectMessages?: boolean | User$fromDirectMessagesArgs
-    toDirectMessages?: boolean | User$toDirectMessagesArgs
-    postReplies?: boolean | User$postRepliesArgs
-    fromFollowings?: boolean | User$fromFollowingsArgs
-    toFollowings?: boolean | User$toFollowingsArgs
-    _count?: boolean | UserCountOutputTypeArgs
-  }
-
-
-  export type UserInclude = {
-    posts?: boolean | User$postsArgs
-    fromDirectMessages?: boolean | User$fromDirectMessagesArgs
-    toDirectMessages?: boolean | User$toDirectMessagesArgs
-    postReplies?: boolean | User$postRepliesArgs
-    fromFollowings?: boolean | User$fromFollowingsArgs
-    toFollowings?: boolean | User$toFollowingsArgs
-    _count?: boolean | UserCountOutputTypeArgs
-  }
-
-  export type UserGetPayload<S extends boolean | null | undefined | UserArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? User :
-    S extends undefined ? never :
-    S extends { include: any } & (UserArgs | UserFindManyArgs)
-    ? User  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'posts' ? Array < PostGetPayload<S['include'][P]>>  :
-        P extends 'fromDirectMessages' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
-        P extends 'toDirectMessages' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
-        P extends 'postReplies' ? Array < PostReplyGetPayload<S['include'][P]>>  :
-        P extends 'fromFollowings' ? Array < FollowingGetPayload<S['include'][P]>>  :
-        P extends 'toFollowings' ? Array < FollowingGetPayload<S['include'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (UserArgs | UserFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'posts' ? Array < PostGetPayload<S['select'][P]>>  :
-        P extends 'fromDirectMessages' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
-        P extends 'toDirectMessages' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
-        P extends 'postReplies' ? Array < PostReplyGetPayload<S['select'][P]>>  :
-        P extends 'fromFollowings' ? Array < FollowingGetPayload<S['select'][P]>>  :
-        P extends 'toFollowings' ? Array < FollowingGetPayload<S['select'][P]>>  :
-        P extends '_count' ? UserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof User ? User[P] : never
-  } 
-      : User
-
-
-  type UserCountArgs = 
-    Omit<UserFindManyArgs, 'select' | 'include'> & {
-      select?: UserCountAggregateInputType | true
-    }
-
-  export interface UserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one User that matches the filter.
-     * @param {UserFindUniqueArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends UserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, UserFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
-
-    /**
-     * Find one User that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, UserFindUniqueOrThrowArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Find the first User that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends UserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, UserFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'User'> extends True ? Prisma__UserClient<UserGetPayload<T>> : Prisma__UserClient<UserGetPayload<T> | null, null>
-
-    /**
-     * Find the first User that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, UserFindFirstOrThrowArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Find zero or more Users that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Users
-     * const users = await prisma.user.findMany()
-     * 
-     * // Get first 10 Users
-     * const users = await prisma.user.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends UserFindManyArgs>(
-      args?: SelectSubset<T, UserFindManyArgs>
-    ): Prisma.PrismaPromise<Array<UserGetPayload<T>>>
-
-    /**
-     * Create a User.
-     * @param {UserCreateArgs} args - Arguments to create a User.
-     * @example
-     * // Create one User
-     * const User = await prisma.user.create({
-     *   data: {
-     *     // ... data to create a User
-     *   }
-     * })
-     * 
-    **/
-    create<T extends UserCreateArgs>(
-      args: SelectSubset<T, UserCreateArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Create many Users.
-     *     @param {UserCreateManyArgs} args - Arguments to create many Users.
-     *     @example
-     *     // Create many Users
-     *     const user = await prisma.user.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends UserCreateManyArgs>(
-      args?: SelectSubset<T, UserCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a User.
-     * @param {UserDeleteArgs} args - Arguments to delete one User.
-     * @example
-     * // Delete one User
-     * const User = await prisma.user.delete({
-     *   where: {
-     *     // ... filter to delete one User
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends UserDeleteArgs>(
-      args: SelectSubset<T, UserDeleteArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Update one User.
-     * @param {UserUpdateArgs} args - Arguments to update one User.
-     * @example
-     * // Update one User
-     * const user = await prisma.user.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends UserUpdateArgs>(
-      args: SelectSubset<T, UserUpdateArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Delete zero or more Users.
-     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
-     * @example
-     * // Delete a few Users
-     * const { count } = await prisma.user.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends UserDeleteManyArgs>(
-      args?: SelectSubset<T, UserDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends UserUpdateManyArgs>(
-      args: SelectSubset<T, UserUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one User.
-     * @param {UserUpsertArgs} args - Arguments to update or create a User.
-     * @example
-     * // Update or create a User
-     * const user = await prisma.user.upsert({
-     *   create: {
-     *     // ... data to create a User
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the User we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends UserUpsertArgs>(
-      args: SelectSubset<T, UserUpsertArgs>
-    ): Prisma__UserClient<UserGetPayload<T>>
-
-    /**
-     * Count the number of Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserCountArgs} args - Arguments to filter Users to count.
-     * @example
-     * // Count the number of Users
-     * const count = await prisma.user.count({
-     *   where: {
-     *     // ... the filter for the Users we want to count
-     *   }
-     * })
-    **/
-    count<T extends UserCountArgs>(
-      args?: Subset<T, UserCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
-
-    /**
-     * Group by User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends UserGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserGroupByArgs['orderBy'] }
-        : { orderBy?: UserGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for User.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__UserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    posts<T extends User$postsArgs= {}>(args?: Subset<T, User$postsArgs>): Prisma.PrismaPromise<Array<PostGetPayload<T>>| Null>;
-
-    fromDirectMessages<T extends User$fromDirectMessagesArgs= {}>(args?: Subset<T, User$fromDirectMessagesArgs>): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>| Null>;
-
-    toDirectMessages<T extends User$toDirectMessagesArgs= {}>(args?: Subset<T, User$toDirectMessagesArgs>): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>| Null>;
-
-    postReplies<T extends User$postRepliesArgs= {}>(args?: Subset<T, User$postRepliesArgs>): Prisma.PrismaPromise<Array<PostReplyGetPayload<T>>| Null>;
-
-    fromFollowings<T extends User$fromFollowingsArgs= {}>(args?: Subset<T, User$fromFollowingsArgs>): Prisma.PrismaPromise<Array<FollowingGetPayload<T>>| Null>;
-
-    toFollowings<T extends User$toFollowingsArgs= {}>(args?: Subset<T, User$toFollowingsArgs>): Prisma.PrismaPromise<Array<FollowingGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * User base type for findUnique actions
-   */
-  export type UserFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where: UserWhereUniqueInput
-  }
-
-  /**
-   * User findUnique
-   */
-  export interface UserFindUniqueArgs extends UserFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * User findUniqueOrThrow
-   */
-  export type UserFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where: UserWhereUniqueInput
-  }
-
-
-  /**
-   * User base type for findFirst actions
-   */
-  export type UserFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: Enumerable<UserOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Users.
-     */
-    distinct?: Enumerable<UserScalarFieldEnum>
-  }
-
-  /**
-   * User findFirst
-   */
-  export interface UserFindFirstArgs extends UserFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * User findFirstOrThrow
-   */
-  export type UserFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: Enumerable<UserOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Users.
-     */
-    distinct?: Enumerable<UserScalarFieldEnum>
-  }
-
-
-  /**
-   * User findMany
-   */
-  export type UserFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter, which Users to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: Enumerable<UserOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    distinct?: Enumerable<UserScalarFieldEnum>
-  }
-
-
-  /**
-   * User create
-   */
-  export type UserCreateArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * The data needed to create a User.
-     */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
-  }
-
-
-  /**
-   * User createMany
-   */
-  export type UserCreateManyArgs = {
-    /**
-     * The data used to create many Users.
-     */
-    data: Enumerable<UserCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * User update
-   */
-  export type UserUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * The data needed to update a User.
-     */
-    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
-    /**
-     * Choose, which User to update.
-     */
-    where: UserWhereUniqueInput
-  }
-
-
-  /**
-   * User updateMany
-   */
-  export type UserUpdateManyArgs = {
-    /**
-     * The data used to update Users.
-     */
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
-    /**
-     * Filter which Users to update
-     */
-    where?: UserWhereInput
-  }
-
-
-  /**
-   * User upsert
-   */
-  export type UserUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * The filter to search for the User to update in case it exists.
-     */
-    where: UserWhereUniqueInput
-    /**
-     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
-     */
-    create: XOR<UserCreateInput, UserUncheckedCreateInput>
-    /**
-     * In case the User was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
-  }
-
-
-  /**
-   * User delete
-   */
-  export type UserDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-    /**
-     * Filter which User to delete.
-     */
-    where: UserWhereUniqueInput
-  }
-
-
-  /**
-   * User deleteMany
-   */
-  export type UserDeleteManyArgs = {
-    /**
-     * Filter which Users to delete
-     */
-    where?: UserWhereInput
-  }
-
-
-  /**
-   * User.posts
-   */
-  export type User$postsArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    where?: PostWhereInput
-    orderBy?: Enumerable<PostOrderByWithRelationInput>
-    cursor?: PostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PostScalarFieldEnum>
-  }
-
-
-  /**
-   * User.fromDirectMessages
-   */
-  export type User$fromDirectMessagesArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    where?: DirectMessageWhereInput
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    cursor?: DirectMessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<DirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * User.toDirectMessages
-   */
-  export type User$toDirectMessagesArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    where?: DirectMessageWhereInput
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    cursor?: DirectMessageWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<DirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * User.postReplies
-   */
-  export type User$postRepliesArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    where?: PostReplyWhereInput
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    cursor?: PostReplyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PostReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * User.fromFollowings
-   */
-  export type User$fromFollowingsArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    where?: FollowingWhereInput
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    cursor?: FollowingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<FollowingScalarFieldEnum>
-  }
-
-
-  /**
-   * User.toFollowings
-   */
-  export type User$toFollowingsArgs = {
-    /**
-     * Select specific fields to fetch from the Following
-     */
-    select?: FollowingSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FollowingInclude | null
-    where?: FollowingWhereInput
-    orderBy?: Enumerable<FollowingOrderByWithRelationInput>
-    cursor?: FollowingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<FollowingScalarFieldEnum>
-  }
-
-
-  /**
-   * User without action
-   */
-  export type UserArgs = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude | null
-  }
-
-
-
-  /**
-   * Model Post
-   */
-
-
-  export type AggregatePost = {
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
-  }
-
-  export type PostAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-  }
-
-  export type PostSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-  }
-
-  export type PostMinAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: number | null
-  }
-
-  export type PostMaxAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: number | null
-  }
-
-  export type PostCountAggregateOutputType = {
-    id: number
-    message: number
-    createdAt: number
-    updatedAt: number
-    userId: number
-    _all: number
-  }
-
-
-  export type PostAvgAggregateInputType = {
-    id?: true
-    userId?: true
-  }
-
-  export type PostSumAggregateInputType = {
-    id?: true
-    userId?: true
-  }
-
-  export type PostMinAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-  }
-
-  export type PostMaxAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-  }
-
-  export type PostCountAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    _all?: true
-  }
-
-  export type PostAggregateArgs = {
-    /**
-     * Filter which Post to aggregate.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: Enumerable<PostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Posts
-    **/
-    _count?: true | PostCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostMaxAggregateInputType
-  }
-
-  export type GetPostAggregateType<T extends PostAggregateArgs> = {
-        [P in keyof T & keyof AggregatePost]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePost[P]>
-      : GetScalarType<T[P], AggregatePost[P]>
-  }
-
-
-
-
-  export type PostGroupByArgs = {
-    where?: PostWhereInput
-    orderBy?: Enumerable<PostOrderByWithAggregationInput>
-    by: PostScalarFieldEnum[]
-    having?: PostScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostCountAggregateInputType | true
-    _avg?: PostAvgAggregateInputType
-    _sum?: PostSumAggregateInputType
-    _min?: PostMinAggregateInputType
-    _max?: PostMaxAggregateInputType
-  }
-
-
-  export type PostGroupByOutputType = {
-    id: number
-    message: string
-    createdAt: Date
-    updatedAt: Date
-    userId: number
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
-  }
-
-  type GetPostGroupByPayload<T extends PostGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<PostGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostGroupByOutputType[P]>
-            : GetScalarType<T[P], PostGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostSelect = {
-    id?: boolean
-    message?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    user?: boolean | UserArgs
-    messageToHashTags?: boolean | Post$messageToHashTagsArgs
-    postReplies?: boolean | Post$postRepliesArgs
-    _count?: boolean | PostCountOutputTypeArgs
-  }
-
-
-  export type PostInclude = {
-    user?: boolean | UserArgs
-    messageToHashTags?: boolean | Post$messageToHashTagsArgs
-    postReplies?: boolean | Post$postRepliesArgs
-    _count?: boolean | PostCountOutputTypeArgs
-  }
-
-  export type PostGetPayload<S extends boolean | null | undefined | PostArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Post :
-    S extends undefined ? never :
-    S extends { include: any } & (PostArgs | PostFindManyArgs)
-    ? Post  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? UserGetPayload<S['include'][P]> :
-        P extends 'messageToHashTags' ? Array < MessageToHashTagGetPayload<S['include'][P]>>  :
-        P extends 'postReplies' ? Array < PostReplyGetPayload<S['include'][P]>>  :
-        P extends '_count' ? PostCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (PostArgs | PostFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? UserGetPayload<S['select'][P]> :
-        P extends 'messageToHashTags' ? Array < MessageToHashTagGetPayload<S['select'][P]>>  :
-        P extends 'postReplies' ? Array < PostReplyGetPayload<S['select'][P]>>  :
-        P extends '_count' ? PostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Post ? Post[P] : never
-  } 
-      : Post
-
-
-  type PostCountArgs = 
-    Omit<PostFindManyArgs, 'select' | 'include'> & {
-      select?: PostCountAggregateInputType | true
-    }
-
-  export interface PostDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one Post that matches the filter.
-     * @param {PostFindUniqueArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends PostFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, PostFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Post'> extends True ? Prisma__PostClient<PostGetPayload<T>> : Prisma__PostClient<PostGetPayload<T> | null, null>
-
-    /**
-     * Find one Post that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {PostFindUniqueOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends PostFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, PostFindUniqueOrThrowArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Find the first Post that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends PostFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, PostFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Post'> extends True ? Prisma__PostClient<PostGetPayload<T>> : Prisma__PostClient<PostGetPayload<T> | null, null>
-
-    /**
-     * Find the first Post that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends PostFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, PostFindFirstOrThrowArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Find zero or more Posts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Posts
-     * const posts = await prisma.post.findMany()
-     * 
-     * // Get first 10 Posts
-     * const posts = await prisma.post.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postWithIdOnly = await prisma.post.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends PostFindManyArgs>(
-      args?: SelectSubset<T, PostFindManyArgs>
-    ): Prisma.PrismaPromise<Array<PostGetPayload<T>>>
-
-    /**
-     * Create a Post.
-     * @param {PostCreateArgs} args - Arguments to create a Post.
-     * @example
-     * // Create one Post
-     * const Post = await prisma.post.create({
-     *   data: {
-     *     // ... data to create a Post
-     *   }
-     * })
-     * 
-    **/
-    create<T extends PostCreateArgs>(
-      args: SelectSubset<T, PostCreateArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Create many Posts.
-     *     @param {PostCreateManyArgs} args - Arguments to create many Posts.
-     *     @example
-     *     // Create many Posts
-     *     const post = await prisma.post.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends PostCreateManyArgs>(
-      args?: SelectSubset<T, PostCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Post.
-     * @param {PostDeleteArgs} args - Arguments to delete one Post.
-     * @example
-     * // Delete one Post
-     * const Post = await prisma.post.delete({
-     *   where: {
-     *     // ... filter to delete one Post
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends PostDeleteArgs>(
-      args: SelectSubset<T, PostDeleteArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Update one Post.
-     * @param {PostUpdateArgs} args - Arguments to update one Post.
-     * @example
-     * // Update one Post
-     * const post = await prisma.post.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends PostUpdateArgs>(
-      args: SelectSubset<T, PostUpdateArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Delete zero or more Posts.
-     * @param {PostDeleteManyArgs} args - Arguments to filter Posts to delete.
-     * @example
-     * // Delete a few Posts
-     * const { count } = await prisma.post.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends PostDeleteManyArgs>(
-      args?: SelectSubset<T, PostDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Posts
-     * const post = await prisma.post.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends PostUpdateManyArgs>(
-      args: SelectSubset<T, PostUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Post.
-     * @param {PostUpsertArgs} args - Arguments to update or create a Post.
-     * @example
-     * // Update or create a Post
-     * const post = await prisma.post.upsert({
-     *   create: {
-     *     // ... data to create a Post
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Post we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends PostUpsertArgs>(
-      args: SelectSubset<T, PostUpsertArgs>
-    ): Prisma__PostClient<PostGetPayload<T>>
-
-    /**
-     * Count the number of Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostCountArgs} args - Arguments to filter Posts to count.
-     * @example
-     * // Count the number of Posts
-     * const count = await prisma.post.count({
-     *   where: {
-     *     // ... the filter for the Posts we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostCountArgs>(
-      args?: Subset<T, PostCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostAggregateArgs>(args: Subset<T, PostAggregateArgs>): Prisma.PrismaPromise<GetPostAggregateType<T>>
-
-    /**
-     * Group by Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostGroupByArgs['orderBy'] }
-        : { orderBy?: PostGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Post.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__PostClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    messageToHashTags<T extends Post$messageToHashTagsArgs= {}>(args?: Subset<T, Post$messageToHashTagsArgs>): Prisma.PrismaPromise<Array<MessageToHashTagGetPayload<T>>| Null>;
-
-    postReplies<T extends Post$postRepliesArgs= {}>(args?: Subset<T, Post$postRepliesArgs>): Prisma.PrismaPromise<Array<PostReplyGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * Post base type for findUnique actions
-   */
-  export type PostFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post findUnique
-   */
-  export interface PostFindUniqueArgs extends PostFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Post findUniqueOrThrow
-   */
-  export type PostFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-
-  /**
-   * Post base type for findFirst actions
-   */
-  export type PostFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: Enumerable<PostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: Enumerable<PostScalarFieldEnum>
-  }
-
-  /**
-   * Post findFirst
-   */
-  export interface PostFindFirstArgs extends PostFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Post findFirstOrThrow
-   */
-  export type PostFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: Enumerable<PostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: Enumerable<PostScalarFieldEnum>
-  }
-
-
-  /**
-   * Post findMany
-   */
-  export type PostFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter, which Posts to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: Enumerable<PostOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    distinct?: Enumerable<PostScalarFieldEnum>
-  }
-
-
-  /**
-   * Post create
-   */
-  export type PostCreateArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * The data needed to create a Post.
-     */
-    data: XOR<PostCreateInput, PostUncheckedCreateInput>
-  }
-
-
-  /**
-   * Post createMany
-   */
-  export type PostCreateManyArgs = {
-    /**
-     * The data used to create many Posts.
-     */
-    data: Enumerable<PostCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * Post update
-   */
-  export type PostUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * The data needed to update a Post.
-     */
-    data: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-    /**
-     * Choose, which Post to update.
-     */
-    where: PostWhereUniqueInput
-  }
-
-
-  /**
-   * Post updateMany
-   */
-  export type PostUpdateManyArgs = {
-    /**
-     * The data used to update Posts.
-     */
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
-    /**
-     * Filter which Posts to update
-     */
-    where?: PostWhereInput
-  }
-
-
-  /**
-   * Post upsert
-   */
-  export type PostUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * The filter to search for the Post to update in case it exists.
-     */
-    where: PostWhereUniqueInput
-    /**
-     * In case the Post found by the `where` argument doesn't exist, create a new Post with this data.
-     */
-    create: XOR<PostCreateInput, PostUncheckedCreateInput>
-    /**
-     * In case the Post was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-  }
-
-
-  /**
-   * Post delete
-   */
-  export type PostDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-    /**
-     * Filter which Post to delete.
-     */
-    where: PostWhereUniqueInput
-  }
-
-
-  /**
-   * Post deleteMany
-   */
-  export type PostDeleteManyArgs = {
-    /**
-     * Filter which Posts to delete
-     */
-    where?: PostWhereInput
-  }
-
-
-  /**
-   * Post.messageToHashTags
-   */
-  export type Post$messageToHashTagsArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    where?: MessageToHashTagWhereInput
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    cursor?: MessageToHashTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<MessageToHashTagScalarFieldEnum>
-  }
-
-
-  /**
-   * Post.postReplies
-   */
-  export type Post$postRepliesArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    where?: PostReplyWhereInput
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    cursor?: PostReplyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PostReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * Post without action
-   */
-  export type PostArgs = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostInclude | null
-  }
-
-
-
-  /**
-   * Model DirectMessage
-   */
-
-
-  export type AggregateDirectMessage = {
-    _count: DirectMessageCountAggregateOutputType | null
-    _avg: DirectMessageAvgAggregateOutputType | null
-    _sum: DirectMessageSumAggregateOutputType | null
-    _min: DirectMessageMinAggregateOutputType | null
-    _max: DirectMessageMaxAggregateOutputType | null
-  }
-
-  export type DirectMessageAvgAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type DirectMessageSumAggregateOutputType = {
-    id: number | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type DirectMessageMinAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type DirectMessageMaxAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
-  }
-
-  export type DirectMessageCountAggregateOutputType = {
-    id: number
-    message: number
-    createdAt: number
-    updatedAt: number
-    fromUserId: number
-    toUserId: number
-    _all: number
-  }
-
-
-  export type DirectMessageAvgAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type DirectMessageSumAggregateInputType = {
-    id?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type DirectMessageMinAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type DirectMessageMaxAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-  }
-
-  export type DirectMessageCountAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
-    _all?: true
-  }
-
-  export type DirectMessageAggregateArgs = {
-    /**
-     * Filter which DirectMessage to aggregate.
-     */
-    where?: DirectMessageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DirectMessages to fetch.
-     */
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: DirectMessageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DirectMessages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DirectMessages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned DirectMessages
-    **/
-    _count?: true | DirectMessageCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: DirectMessageAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: DirectMessageSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: DirectMessageMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: DirectMessageMaxAggregateInputType
-  }
-
-  export type GetDirectMessageAggregateType<T extends DirectMessageAggregateArgs> = {
-        [P in keyof T & keyof AggregateDirectMessage]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateDirectMessage[P]>
-      : GetScalarType<T[P], AggregateDirectMessage[P]>
-  }
-
-
-
-
-  export type DirectMessageGroupByArgs = {
-    where?: DirectMessageWhereInput
-    orderBy?: Enumerable<DirectMessageOrderByWithAggregationInput>
-    by: DirectMessageScalarFieldEnum[]
-    having?: DirectMessageScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: DirectMessageCountAggregateInputType | true
-    _avg?: DirectMessageAvgAggregateInputType
-    _sum?: DirectMessageSumAggregateInputType
-    _min?: DirectMessageMinAggregateInputType
-    _max?: DirectMessageMaxAggregateInputType
-  }
-
-
-  export type DirectMessageGroupByOutputType = {
-    id: number
-    message: string
-    createdAt: Date
-    updatedAt: Date
-    fromUserId: number
-    toUserId: number
-    _count: DirectMessageCountAggregateOutputType | null
-    _avg: DirectMessageAvgAggregateOutputType | null
-    _sum: DirectMessageSumAggregateOutputType | null
-    _min: DirectMessageMinAggregateOutputType | null
-    _max: DirectMessageMaxAggregateOutputType | null
-  }
-
-  type GetDirectMessageGroupByPayload<T extends DirectMessageGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<DirectMessageGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof DirectMessageGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], DirectMessageGroupByOutputType[P]>
-            : GetScalarType<T[P], DirectMessageGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type DirectMessageSelect = {
-    id?: boolean
-    message?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    fromUserId?: boolean
-    toUserId?: boolean
-    from?: boolean | UserArgs
-    to?: boolean | UserArgs
-  }
-
-
-  export type DirectMessageInclude = {
-    from?: boolean | UserArgs
-    to?: boolean | UserArgs
-  }
-
-  export type DirectMessageGetPayload<S extends boolean | null | undefined | DirectMessageArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? DirectMessage :
-    S extends undefined ? never :
-    S extends { include: any } & (DirectMessageArgs | DirectMessageFindManyArgs)
-    ? DirectMessage  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'from' ? UserGetPayload<S['include'][P]> :
-        P extends 'to' ? UserGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (DirectMessageArgs | DirectMessageFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'from' ? UserGetPayload<S['select'][P]> :
-        P extends 'to' ? UserGetPayload<S['select'][P]> :  P extends keyof DirectMessage ? DirectMessage[P] : never
-  } 
-      : DirectMessage
-
-
-  type DirectMessageCountArgs = 
-    Omit<DirectMessageFindManyArgs, 'select' | 'include'> & {
-      select?: DirectMessageCountAggregateInputType | true
-    }
-
-  export interface DirectMessageDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one DirectMessage that matches the filter.
-     * @param {DirectMessageFindUniqueArgs} args - Arguments to find a DirectMessage
-     * @example
-     * // Get one DirectMessage
-     * const directMessage = await prisma.directMessage.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends DirectMessageFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, DirectMessageFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'DirectMessage'> extends True ? Prisma__DirectMessageClient<DirectMessageGetPayload<T>> : Prisma__DirectMessageClient<DirectMessageGetPayload<T> | null, null>
-
-    /**
-     * Find one DirectMessage that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {DirectMessageFindUniqueOrThrowArgs} args - Arguments to find a DirectMessage
-     * @example
-     * // Get one DirectMessage
-     * const directMessage = await prisma.directMessage.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends DirectMessageFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, DirectMessageFindUniqueOrThrowArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Find the first DirectMessage that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageFindFirstArgs} args - Arguments to find a DirectMessage
-     * @example
-     * // Get one DirectMessage
-     * const directMessage = await prisma.directMessage.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends DirectMessageFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, DirectMessageFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'DirectMessage'> extends True ? Prisma__DirectMessageClient<DirectMessageGetPayload<T>> : Prisma__DirectMessageClient<DirectMessageGetPayload<T> | null, null>
-
-    /**
-     * Find the first DirectMessage that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageFindFirstOrThrowArgs} args - Arguments to find a DirectMessage
-     * @example
-     * // Get one DirectMessage
-     * const directMessage = await prisma.directMessage.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends DirectMessageFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, DirectMessageFindFirstOrThrowArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Find zero or more DirectMessages that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all DirectMessages
-     * const directMessages = await prisma.directMessage.findMany()
-     * 
-     * // Get first 10 DirectMessages
-     * const directMessages = await prisma.directMessage.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const directMessageWithIdOnly = await prisma.directMessage.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends DirectMessageFindManyArgs>(
-      args?: SelectSubset<T, DirectMessageFindManyArgs>
-    ): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>>
-
-    /**
-     * Create a DirectMessage.
-     * @param {DirectMessageCreateArgs} args - Arguments to create a DirectMessage.
-     * @example
-     * // Create one DirectMessage
-     * const DirectMessage = await prisma.directMessage.create({
-     *   data: {
-     *     // ... data to create a DirectMessage
-     *   }
-     * })
-     * 
-    **/
-    create<T extends DirectMessageCreateArgs>(
-      args: SelectSubset<T, DirectMessageCreateArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Create many DirectMessages.
-     *     @param {DirectMessageCreateManyArgs} args - Arguments to create many DirectMessages.
-     *     @example
-     *     // Create many DirectMessages
-     *     const directMessage = await prisma.directMessage.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends DirectMessageCreateManyArgs>(
-      args?: SelectSubset<T, DirectMessageCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a DirectMessage.
-     * @param {DirectMessageDeleteArgs} args - Arguments to delete one DirectMessage.
-     * @example
-     * // Delete one DirectMessage
-     * const DirectMessage = await prisma.directMessage.delete({
-     *   where: {
-     *     // ... filter to delete one DirectMessage
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends DirectMessageDeleteArgs>(
-      args: SelectSubset<T, DirectMessageDeleteArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Update one DirectMessage.
-     * @param {DirectMessageUpdateArgs} args - Arguments to update one DirectMessage.
-     * @example
-     * // Update one DirectMessage
-     * const directMessage = await prisma.directMessage.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends DirectMessageUpdateArgs>(
-      args: SelectSubset<T, DirectMessageUpdateArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Delete zero or more DirectMessages.
-     * @param {DirectMessageDeleteManyArgs} args - Arguments to filter DirectMessages to delete.
-     * @example
-     * // Delete a few DirectMessages
-     * const { count } = await prisma.directMessage.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends DirectMessageDeleteManyArgs>(
-      args?: SelectSubset<T, DirectMessageDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more DirectMessages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many DirectMessages
-     * const directMessage = await prisma.directMessage.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends DirectMessageUpdateManyArgs>(
-      args: SelectSubset<T, DirectMessageUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one DirectMessage.
-     * @param {DirectMessageUpsertArgs} args - Arguments to update or create a DirectMessage.
-     * @example
-     * // Update or create a DirectMessage
-     * const directMessage = await prisma.directMessage.upsert({
-     *   create: {
-     *     // ... data to create a DirectMessage
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the DirectMessage we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends DirectMessageUpsertArgs>(
-      args: SelectSubset<T, DirectMessageUpsertArgs>
-    ): Prisma__DirectMessageClient<DirectMessageGetPayload<T>>
-
-    /**
-     * Count the number of DirectMessages.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageCountArgs} args - Arguments to filter DirectMessages to count.
-     * @example
-     * // Count the number of DirectMessages
-     * const count = await prisma.directMessage.count({
-     *   where: {
-     *     // ... the filter for the DirectMessages we want to count
-     *   }
-     * })
-    **/
-    count<T extends DirectMessageCountArgs>(
-      args?: Subset<T, DirectMessageCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], DirectMessageCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a DirectMessage.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends DirectMessageAggregateArgs>(args: Subset<T, DirectMessageAggregateArgs>): Prisma.PrismaPromise<GetDirectMessageAggregateType<T>>
-
-    /**
-     * Group by DirectMessage.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {DirectMessageGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends DirectMessageGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: DirectMessageGroupByArgs['orderBy'] }
-        : { orderBy?: DirectMessageGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, DirectMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDirectMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for DirectMessage.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__DirectMessageClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    from<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    to<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * DirectMessage base type for findUnique actions
-   */
-  export type DirectMessageFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter, which DirectMessage to fetch.
-     */
-    where: DirectMessageWhereUniqueInput
-  }
-
-  /**
-   * DirectMessage findUnique
-   */
-  export interface DirectMessageFindUniqueArgs extends DirectMessageFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * DirectMessage findUniqueOrThrow
-   */
-  export type DirectMessageFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter, which DirectMessage to fetch.
-     */
-    where: DirectMessageWhereUniqueInput
-  }
-
-
-  /**
-   * DirectMessage base type for findFirst actions
-   */
-  export type DirectMessageFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter, which DirectMessage to fetch.
-     */
-    where?: DirectMessageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DirectMessages to fetch.
-     */
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for DirectMessages.
-     */
-    cursor?: DirectMessageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DirectMessages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DirectMessages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of DirectMessages.
-     */
-    distinct?: Enumerable<DirectMessageScalarFieldEnum>
-  }
-
-  /**
-   * DirectMessage findFirst
-   */
-  export interface DirectMessageFindFirstArgs extends DirectMessageFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * DirectMessage findFirstOrThrow
-   */
-  export type DirectMessageFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter, which DirectMessage to fetch.
-     */
-    where?: DirectMessageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DirectMessages to fetch.
-     */
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for DirectMessages.
-     */
-    cursor?: DirectMessageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DirectMessages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DirectMessages.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of DirectMessages.
-     */
-    distinct?: Enumerable<DirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * DirectMessage findMany
-   */
-  export type DirectMessageFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter, which DirectMessages to fetch.
-     */
-    where?: DirectMessageWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of DirectMessages to fetch.
-     */
-    orderBy?: Enumerable<DirectMessageOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing DirectMessages.
-     */
-    cursor?: DirectMessageWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` DirectMessages from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` DirectMessages.
-     */
-    skip?: number
-    distinct?: Enumerable<DirectMessageScalarFieldEnum>
-  }
-
-
-  /**
-   * DirectMessage create
-   */
-  export type DirectMessageCreateArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * The data needed to create a DirectMessage.
-     */
-    data: XOR<DirectMessageCreateInput, DirectMessageUncheckedCreateInput>
-  }
-
-
-  /**
-   * DirectMessage createMany
-   */
-  export type DirectMessageCreateManyArgs = {
-    /**
-     * The data used to create many DirectMessages.
-     */
-    data: Enumerable<DirectMessageCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * DirectMessage update
-   */
-  export type DirectMessageUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * The data needed to update a DirectMessage.
-     */
-    data: XOR<DirectMessageUpdateInput, DirectMessageUncheckedUpdateInput>
-    /**
-     * Choose, which DirectMessage to update.
-     */
-    where: DirectMessageWhereUniqueInput
-  }
-
-
-  /**
-   * DirectMessage updateMany
-   */
-  export type DirectMessageUpdateManyArgs = {
-    /**
-     * The data used to update DirectMessages.
-     */
-    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyInput>
-    /**
-     * Filter which DirectMessages to update
-     */
-    where?: DirectMessageWhereInput
-  }
-
-
-  /**
-   * DirectMessage upsert
-   */
-  export type DirectMessageUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * The filter to search for the DirectMessage to update in case it exists.
-     */
-    where: DirectMessageWhereUniqueInput
-    /**
-     * In case the DirectMessage found by the `where` argument doesn't exist, create a new DirectMessage with this data.
-     */
-    create: XOR<DirectMessageCreateInput, DirectMessageUncheckedCreateInput>
-    /**
-     * In case the DirectMessage was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<DirectMessageUpdateInput, DirectMessageUncheckedUpdateInput>
-  }
-
-
-  /**
-   * DirectMessage delete
-   */
-  export type DirectMessageDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-    /**
-     * Filter which DirectMessage to delete.
-     */
-    where: DirectMessageWhereUniqueInput
-  }
-
-
-  /**
-   * DirectMessage deleteMany
-   */
-  export type DirectMessageDeleteManyArgs = {
-    /**
-     * Filter which DirectMessages to delete
-     */
-    where?: DirectMessageWhereInput
-  }
-
-
-  /**
-   * DirectMessage without action
-   */
-  export type DirectMessageArgs = {
-    /**
-     * Select specific fields to fetch from the DirectMessage
-     */
-    select?: DirectMessageSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: DirectMessageInclude | null
-  }
-
-
-
-  /**
-   * Model MessageToHashTag
-   */
-
-
-  export type AggregateMessageToHashTag = {
-    _count: MessageToHashTagCountAggregateOutputType | null
-    _avg: MessageToHashTagAvgAggregateOutputType | null
-    _sum: MessageToHashTagSumAggregateOutputType | null
-    _min: MessageToHashTagMinAggregateOutputType | null
-    _max: MessageToHashTagMaxAggregateOutputType | null
-  }
-
-  export type MessageToHashTagAvgAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type MessageToHashTagSumAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type MessageToHashTagMinAggregateOutputType = {
-    id: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type MessageToHashTagMaxAggregateOutputType = {
-    id: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    postId: number | null
-    hashtagId: number | null
-  }
-
-  export type MessageToHashTagCountAggregateOutputType = {
-    id: number
-    createdAt: number
-    updatedAt: number
-    postId: number
-    hashtagId: number
-    _all: number
-  }
-
-
-  export type MessageToHashTagAvgAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type MessageToHashTagSumAggregateInputType = {
-    id?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type MessageToHashTagMinAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type MessageToHashTagMaxAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    postId?: true
-    hashtagId?: true
-  }
-
-  export type MessageToHashTagCountAggregateInputType = {
-    id?: true
-    createdAt?: true
-    updatedAt?: true
-    postId?: true
-    hashtagId?: true
-    _all?: true
-  }
-
-  export type MessageToHashTagAggregateArgs = {
-    /**
-     * Filter which MessageToHashTag to aggregate.
-     */
-    where?: MessageToHashTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of MessageToHashTags to fetch.
-     */
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: MessageToHashTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` MessageToHashTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` MessageToHashTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned MessageToHashTags
-    **/
-    _count?: true | MessageToHashTagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: MessageToHashTagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MessageToHashTagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MessageToHashTagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MessageToHashTagMaxAggregateInputType
-  }
-
-  export type GetMessageToHashTagAggregateType<T extends MessageToHashTagAggregateArgs> = {
-        [P in keyof T & keyof AggregateMessageToHashTag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMessageToHashTag[P]>
-      : GetScalarType<T[P], AggregateMessageToHashTag[P]>
-  }
-
-
-
-
-  export type MessageToHashTagGroupByArgs = {
-    where?: MessageToHashTagWhereInput
-    orderBy?: Enumerable<MessageToHashTagOrderByWithAggregationInput>
-    by: MessageToHashTagScalarFieldEnum[]
-    having?: MessageToHashTagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MessageToHashTagCountAggregateInputType | true
-    _avg?: MessageToHashTagAvgAggregateInputType
-    _sum?: MessageToHashTagSumAggregateInputType
-    _min?: MessageToHashTagMinAggregateInputType
-    _max?: MessageToHashTagMaxAggregateInputType
-  }
-
-
-  export type MessageToHashTagGroupByOutputType = {
-    id: number
-    createdAt: Date
-    updatedAt: Date
-    postId: number
-    hashtagId: number
-    _count: MessageToHashTagCountAggregateOutputType | null
-    _avg: MessageToHashTagAvgAggregateOutputType | null
-    _sum: MessageToHashTagSumAggregateOutputType | null
-    _min: MessageToHashTagMinAggregateOutputType | null
-    _max: MessageToHashTagMaxAggregateOutputType | null
-  }
-
-  type GetMessageToHashTagGroupByPayload<T extends MessageToHashTagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<MessageToHashTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MessageToHashTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MessageToHashTagGroupByOutputType[P]>
-            : GetScalarType<T[P], MessageToHashTagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type MessageToHashTagSelect = {
-    id?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    postId?: boolean
-    hashtagId?: boolean
-    post?: boolean | PostArgs
-    hashtag?: boolean | HashtagArgs
-  }
-
-
-  export type MessageToHashTagInclude = {
-    post?: boolean | PostArgs
-    hashtag?: boolean | HashtagArgs
-  }
-
-  export type MessageToHashTagGetPayload<S extends boolean | null | undefined | MessageToHashTagArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? MessageToHashTag :
-    S extends undefined ? never :
-    S extends { include: any } & (MessageToHashTagArgs | MessageToHashTagFindManyArgs)
-    ? MessageToHashTag  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'post' ? PostGetPayload<S['include'][P]> :
-        P extends 'hashtag' ? HashtagGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (MessageToHashTagArgs | MessageToHashTagFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'post' ? PostGetPayload<S['select'][P]> :
-        P extends 'hashtag' ? HashtagGetPayload<S['select'][P]> :  P extends keyof MessageToHashTag ? MessageToHashTag[P] : never
-  } 
-      : MessageToHashTag
-
-
-  type MessageToHashTagCountArgs = 
-    Omit<MessageToHashTagFindManyArgs, 'select' | 'include'> & {
-      select?: MessageToHashTagCountAggregateInputType | true
-    }
-
-  export interface MessageToHashTagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one MessageToHashTag that matches the filter.
-     * @param {MessageToHashTagFindUniqueArgs} args - Arguments to find a MessageToHashTag
-     * @example
-     * // Get one MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends MessageToHashTagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, MessageToHashTagFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MessageToHashTag'> extends True ? Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>> : Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T> | null, null>
-
-    /**
-     * Find one MessageToHashTag that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {MessageToHashTagFindUniqueOrThrowArgs} args - Arguments to find a MessageToHashTag
-     * @example
-     * // Get one MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends MessageToHashTagFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, MessageToHashTagFindUniqueOrThrowArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Find the first MessageToHashTag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagFindFirstArgs} args - Arguments to find a MessageToHashTag
-     * @example
-     * // Get one MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends MessageToHashTagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, MessageToHashTagFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MessageToHashTag'> extends True ? Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>> : Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T> | null, null>
-
-    /**
-     * Find the first MessageToHashTag that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagFindFirstOrThrowArgs} args - Arguments to find a MessageToHashTag
-     * @example
-     * // Get one MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends MessageToHashTagFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, MessageToHashTagFindFirstOrThrowArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Find zero or more MessageToHashTags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all MessageToHashTags
-     * const messageToHashTags = await prisma.messageToHashTag.findMany()
-     * 
-     * // Get first 10 MessageToHashTags
-     * const messageToHashTags = await prisma.messageToHashTag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const messageToHashTagWithIdOnly = await prisma.messageToHashTag.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends MessageToHashTagFindManyArgs>(
-      args?: SelectSubset<T, MessageToHashTagFindManyArgs>
-    ): Prisma.PrismaPromise<Array<MessageToHashTagGetPayload<T>>>
-
-    /**
-     * Create a MessageToHashTag.
-     * @param {MessageToHashTagCreateArgs} args - Arguments to create a MessageToHashTag.
-     * @example
-     * // Create one MessageToHashTag
-     * const MessageToHashTag = await prisma.messageToHashTag.create({
-     *   data: {
-     *     // ... data to create a MessageToHashTag
-     *   }
-     * })
-     * 
-    **/
-    create<T extends MessageToHashTagCreateArgs>(
-      args: SelectSubset<T, MessageToHashTagCreateArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Create many MessageToHashTags.
-     *     @param {MessageToHashTagCreateManyArgs} args - Arguments to create many MessageToHashTags.
-     *     @example
-     *     // Create many MessageToHashTags
-     *     const messageToHashTag = await prisma.messageToHashTag.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends MessageToHashTagCreateManyArgs>(
-      args?: SelectSubset<T, MessageToHashTagCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a MessageToHashTag.
-     * @param {MessageToHashTagDeleteArgs} args - Arguments to delete one MessageToHashTag.
-     * @example
-     * // Delete one MessageToHashTag
-     * const MessageToHashTag = await prisma.messageToHashTag.delete({
-     *   where: {
-     *     // ... filter to delete one MessageToHashTag
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends MessageToHashTagDeleteArgs>(
-      args: SelectSubset<T, MessageToHashTagDeleteArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Update one MessageToHashTag.
-     * @param {MessageToHashTagUpdateArgs} args - Arguments to update one MessageToHashTag.
-     * @example
-     * // Update one MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends MessageToHashTagUpdateArgs>(
-      args: SelectSubset<T, MessageToHashTagUpdateArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Delete zero or more MessageToHashTags.
-     * @param {MessageToHashTagDeleteManyArgs} args - Arguments to filter MessageToHashTags to delete.
-     * @example
-     * // Delete a few MessageToHashTags
-     * const { count } = await prisma.messageToHashTag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends MessageToHashTagDeleteManyArgs>(
-      args?: SelectSubset<T, MessageToHashTagDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more MessageToHashTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many MessageToHashTags
-     * const messageToHashTag = await prisma.messageToHashTag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends MessageToHashTagUpdateManyArgs>(
-      args: SelectSubset<T, MessageToHashTagUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one MessageToHashTag.
-     * @param {MessageToHashTagUpsertArgs} args - Arguments to update or create a MessageToHashTag.
-     * @example
-     * // Update or create a MessageToHashTag
-     * const messageToHashTag = await prisma.messageToHashTag.upsert({
-     *   create: {
-     *     // ... data to create a MessageToHashTag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the MessageToHashTag we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends MessageToHashTagUpsertArgs>(
-      args: SelectSubset<T, MessageToHashTagUpsertArgs>
-    ): Prisma__MessageToHashTagClient<MessageToHashTagGetPayload<T>>
-
-    /**
-     * Count the number of MessageToHashTags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagCountArgs} args - Arguments to filter MessageToHashTags to count.
-     * @example
-     * // Count the number of MessageToHashTags
-     * const count = await prisma.messageToHashTag.count({
-     *   where: {
-     *     // ... the filter for the MessageToHashTags we want to count
-     *   }
-     * })
-    **/
-    count<T extends MessageToHashTagCountArgs>(
-      args?: Subset<T, MessageToHashTagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MessageToHashTagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a MessageToHashTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MessageToHashTagAggregateArgs>(args: Subset<T, MessageToHashTagAggregateArgs>): Prisma.PrismaPromise<GetMessageToHashTagAggregateType<T>>
-
-    /**
-     * Group by MessageToHashTag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MessageToHashTagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends MessageToHashTagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MessageToHashTagGroupByArgs['orderBy'] }
-        : { orderBy?: MessageToHashTagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, MessageToHashTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessageToHashTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for MessageToHashTag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__MessageToHashTagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    post<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
-
-    hashtag<T extends HashtagArgs= {}>(args?: Subset<T, HashtagArgs>): Prisma__HashtagClient<HashtagGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * MessageToHashTag base type for findUnique actions
-   */
-  export type MessageToHashTagFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter, which MessageToHashTag to fetch.
-     */
-    where: MessageToHashTagWhereUniqueInput
-  }
-
-  /**
-   * MessageToHashTag findUnique
-   */
-  export interface MessageToHashTagFindUniqueArgs extends MessageToHashTagFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * MessageToHashTag findUniqueOrThrow
-   */
-  export type MessageToHashTagFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter, which MessageToHashTag to fetch.
-     */
-    where: MessageToHashTagWhereUniqueInput
-  }
-
-
-  /**
-   * MessageToHashTag base type for findFirst actions
-   */
-  export type MessageToHashTagFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter, which MessageToHashTag to fetch.
-     */
-    where?: MessageToHashTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of MessageToHashTags to fetch.
-     */
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for MessageToHashTags.
-     */
-    cursor?: MessageToHashTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` MessageToHashTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` MessageToHashTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of MessageToHashTags.
-     */
-    distinct?: Enumerable<MessageToHashTagScalarFieldEnum>
-  }
-
-  /**
-   * MessageToHashTag findFirst
-   */
-  export interface MessageToHashTagFindFirstArgs extends MessageToHashTagFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * MessageToHashTag findFirstOrThrow
-   */
-  export type MessageToHashTagFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter, which MessageToHashTag to fetch.
-     */
-    where?: MessageToHashTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of MessageToHashTags to fetch.
-     */
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for MessageToHashTags.
-     */
-    cursor?: MessageToHashTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` MessageToHashTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` MessageToHashTags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of MessageToHashTags.
-     */
-    distinct?: Enumerable<MessageToHashTagScalarFieldEnum>
-  }
-
-
-  /**
-   * MessageToHashTag findMany
-   */
-  export type MessageToHashTagFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter, which MessageToHashTags to fetch.
-     */
-    where?: MessageToHashTagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of MessageToHashTags to fetch.
-     */
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing MessageToHashTags.
-     */
-    cursor?: MessageToHashTagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` MessageToHashTags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` MessageToHashTags.
-     */
-    skip?: number
-    distinct?: Enumerable<MessageToHashTagScalarFieldEnum>
-  }
-
-
-  /**
-   * MessageToHashTag create
-   */
-  export type MessageToHashTagCreateArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * The data needed to create a MessageToHashTag.
-     */
-    data: XOR<MessageToHashTagCreateInput, MessageToHashTagUncheckedCreateInput>
-  }
-
-
-  /**
-   * MessageToHashTag createMany
-   */
-  export type MessageToHashTagCreateManyArgs = {
-    /**
-     * The data used to create many MessageToHashTags.
-     */
-    data: Enumerable<MessageToHashTagCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * MessageToHashTag update
-   */
-  export type MessageToHashTagUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * The data needed to update a MessageToHashTag.
-     */
-    data: XOR<MessageToHashTagUpdateInput, MessageToHashTagUncheckedUpdateInput>
-    /**
-     * Choose, which MessageToHashTag to update.
-     */
-    where: MessageToHashTagWhereUniqueInput
-  }
-
-
-  /**
-   * MessageToHashTag updateMany
-   */
-  export type MessageToHashTagUpdateManyArgs = {
-    /**
-     * The data used to update MessageToHashTags.
-     */
-    data: XOR<MessageToHashTagUpdateManyMutationInput, MessageToHashTagUncheckedUpdateManyInput>
-    /**
-     * Filter which MessageToHashTags to update
-     */
-    where?: MessageToHashTagWhereInput
-  }
-
-
-  /**
-   * MessageToHashTag upsert
-   */
-  export type MessageToHashTagUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * The filter to search for the MessageToHashTag to update in case it exists.
-     */
-    where: MessageToHashTagWhereUniqueInput
-    /**
-     * In case the MessageToHashTag found by the `where` argument doesn't exist, create a new MessageToHashTag with this data.
-     */
-    create: XOR<MessageToHashTagCreateInput, MessageToHashTagUncheckedCreateInput>
-    /**
-     * In case the MessageToHashTag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<MessageToHashTagUpdateInput, MessageToHashTagUncheckedUpdateInput>
-  }
-
-
-  /**
-   * MessageToHashTag delete
-   */
-  export type MessageToHashTagDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    /**
-     * Filter which MessageToHashTag to delete.
-     */
-    where: MessageToHashTagWhereUniqueInput
-  }
-
-
-  /**
-   * MessageToHashTag deleteMany
-   */
-  export type MessageToHashTagDeleteManyArgs = {
-    /**
-     * Filter which MessageToHashTags to delete
-     */
-    where?: MessageToHashTagWhereInput
-  }
-
-
-  /**
-   * MessageToHashTag without action
-   */
-  export type MessageToHashTagArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-  }
-
-
-
-  /**
-   * Model Hashtag
-   */
-
-
-  export type AggregateHashtag = {
-    _count: HashtagCountAggregateOutputType | null
-    _avg: HashtagAvgAggregateOutputType | null
-    _sum: HashtagSumAggregateOutputType | null
-    _min: HashtagMinAggregateOutputType | null
-    _max: HashtagMaxAggregateOutputType | null
-  }
-
-  export type HashtagAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type HashtagSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type HashtagMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type HashtagMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type HashtagCountAggregateOutputType = {
-    id: number
-    name: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type HashtagAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type HashtagSumAggregateInputType = {
-    id?: true
-  }
-
-  export type HashtagMinAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type HashtagMaxAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type HashtagCountAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type HashtagAggregateArgs = {
-    /**
-     * Filter which Hashtag to aggregate.
-     */
-    where?: HashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Hashtags to fetch.
-     */
-    orderBy?: Enumerable<HashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: HashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Hashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Hashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Hashtags
-    **/
-    _count?: true | HashtagCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: HashtagAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: HashtagSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: HashtagMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: HashtagMaxAggregateInputType
-  }
-
-  export type GetHashtagAggregateType<T extends HashtagAggregateArgs> = {
-        [P in keyof T & keyof AggregateHashtag]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateHashtag[P]>
-      : GetScalarType<T[P], AggregateHashtag[P]>
-  }
-
-
-
-
-  export type HashtagGroupByArgs = {
-    where?: HashtagWhereInput
-    orderBy?: Enumerable<HashtagOrderByWithAggregationInput>
-    by: HashtagScalarFieldEnum[]
-    having?: HashtagScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: HashtagCountAggregateInputType | true
-    _avg?: HashtagAvgAggregateInputType
-    _sum?: HashtagSumAggregateInputType
-    _min?: HashtagMinAggregateInputType
-    _max?: HashtagMaxAggregateInputType
-  }
-
-
-  export type HashtagGroupByOutputType = {
-    id: number
-    name: string
-    createdAt: Date
-    updatedAt: Date
-    _count: HashtagCountAggregateOutputType | null
-    _avg: HashtagAvgAggregateOutputType | null
-    _sum: HashtagSumAggregateOutputType | null
-    _min: HashtagMinAggregateOutputType | null
-    _max: HashtagMaxAggregateOutputType | null
-  }
-
-  type GetHashtagGroupByPayload<T extends HashtagGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<HashtagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof HashtagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], HashtagGroupByOutputType[P]>
-            : GetScalarType<T[P], HashtagGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type HashtagSelect = {
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    MessageToHashTag?: boolean | Hashtag$MessageToHashTagArgs
-    _count?: boolean | HashtagCountOutputTypeArgs
-  }
-
-
-  export type HashtagInclude = {
-    MessageToHashTag?: boolean | Hashtag$MessageToHashTagArgs
-    _count?: boolean | HashtagCountOutputTypeArgs
-  }
-
-  export type HashtagGetPayload<S extends boolean | null | undefined | HashtagArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Hashtag :
-    S extends undefined ? never :
-    S extends { include: any } & (HashtagArgs | HashtagFindManyArgs)
-    ? Hashtag  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'MessageToHashTag' ? Array < MessageToHashTagGetPayload<S['include'][P]>>  :
-        P extends '_count' ? HashtagCountOutputTypeGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (HashtagArgs | HashtagFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'MessageToHashTag' ? Array < MessageToHashTagGetPayload<S['select'][P]>>  :
-        P extends '_count' ? HashtagCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Hashtag ? Hashtag[P] : never
-  } 
-      : Hashtag
-
-
-  type HashtagCountArgs = 
-    Omit<HashtagFindManyArgs, 'select' | 'include'> & {
-      select?: HashtagCountAggregateInputType | true
-    }
-
-  export interface HashtagDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one Hashtag that matches the filter.
-     * @param {HashtagFindUniqueArgs} args - Arguments to find a Hashtag
-     * @example
-     * // Get one Hashtag
-     * const hashtag = await prisma.hashtag.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends HashtagFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, HashtagFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Hashtag'> extends True ? Prisma__HashtagClient<HashtagGetPayload<T>> : Prisma__HashtagClient<HashtagGetPayload<T> | null, null>
-
-    /**
-     * Find one Hashtag that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {HashtagFindUniqueOrThrowArgs} args - Arguments to find a Hashtag
-     * @example
-     * // Get one Hashtag
-     * const hashtag = await prisma.hashtag.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends HashtagFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, HashtagFindUniqueOrThrowArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Find the first Hashtag that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagFindFirstArgs} args - Arguments to find a Hashtag
-     * @example
-     * // Get one Hashtag
-     * const hashtag = await prisma.hashtag.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends HashtagFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, HashtagFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Hashtag'> extends True ? Prisma__HashtagClient<HashtagGetPayload<T>> : Prisma__HashtagClient<HashtagGetPayload<T> | null, null>
-
-    /**
-     * Find the first Hashtag that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagFindFirstOrThrowArgs} args - Arguments to find a Hashtag
-     * @example
-     * // Get one Hashtag
-     * const hashtag = await prisma.hashtag.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends HashtagFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, HashtagFindFirstOrThrowArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Find zero or more Hashtags that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Hashtags
-     * const hashtags = await prisma.hashtag.findMany()
-     * 
-     * // Get first 10 Hashtags
-     * const hashtags = await prisma.hashtag.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const hashtagWithIdOnly = await prisma.hashtag.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends HashtagFindManyArgs>(
-      args?: SelectSubset<T, HashtagFindManyArgs>
-    ): Prisma.PrismaPromise<Array<HashtagGetPayload<T>>>
-
-    /**
-     * Create a Hashtag.
-     * @param {HashtagCreateArgs} args - Arguments to create a Hashtag.
-     * @example
-     * // Create one Hashtag
-     * const Hashtag = await prisma.hashtag.create({
-     *   data: {
-     *     // ... data to create a Hashtag
-     *   }
-     * })
-     * 
-    **/
-    create<T extends HashtagCreateArgs>(
-      args: SelectSubset<T, HashtagCreateArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Create many Hashtags.
-     *     @param {HashtagCreateManyArgs} args - Arguments to create many Hashtags.
-     *     @example
-     *     // Create many Hashtags
-     *     const hashtag = await prisma.hashtag.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends HashtagCreateManyArgs>(
-      args?: SelectSubset<T, HashtagCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Hashtag.
-     * @param {HashtagDeleteArgs} args - Arguments to delete one Hashtag.
-     * @example
-     * // Delete one Hashtag
-     * const Hashtag = await prisma.hashtag.delete({
-     *   where: {
-     *     // ... filter to delete one Hashtag
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends HashtagDeleteArgs>(
-      args: SelectSubset<T, HashtagDeleteArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Update one Hashtag.
-     * @param {HashtagUpdateArgs} args - Arguments to update one Hashtag.
-     * @example
-     * // Update one Hashtag
-     * const hashtag = await prisma.hashtag.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends HashtagUpdateArgs>(
-      args: SelectSubset<T, HashtagUpdateArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Delete zero or more Hashtags.
-     * @param {HashtagDeleteManyArgs} args - Arguments to filter Hashtags to delete.
-     * @example
-     * // Delete a few Hashtags
-     * const { count } = await prisma.hashtag.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends HashtagDeleteManyArgs>(
-      args?: SelectSubset<T, HashtagDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Hashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Hashtags
-     * const hashtag = await prisma.hashtag.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends HashtagUpdateManyArgs>(
-      args: SelectSubset<T, HashtagUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Hashtag.
-     * @param {HashtagUpsertArgs} args - Arguments to update or create a Hashtag.
-     * @example
-     * // Update or create a Hashtag
-     * const hashtag = await prisma.hashtag.upsert({
-     *   create: {
-     *     // ... data to create a Hashtag
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Hashtag we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends HashtagUpsertArgs>(
-      args: SelectSubset<T, HashtagUpsertArgs>
-    ): Prisma__HashtagClient<HashtagGetPayload<T>>
-
-    /**
-     * Count the number of Hashtags.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagCountArgs} args - Arguments to filter Hashtags to count.
-     * @example
-     * // Count the number of Hashtags
-     * const count = await prisma.hashtag.count({
-     *   where: {
-     *     // ... the filter for the Hashtags we want to count
-     *   }
-     * })
-    **/
-    count<T extends HashtagCountArgs>(
-      args?: Subset<T, HashtagCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], HashtagCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Hashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends HashtagAggregateArgs>(args: Subset<T, HashtagAggregateArgs>): Prisma.PrismaPromise<GetHashtagAggregateType<T>>
-
-    /**
-     * Group by Hashtag.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HashtagGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends HashtagGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: HashtagGroupByArgs['orderBy'] }
-        : { orderBy?: HashtagGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, HashtagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHashtagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Hashtag.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__HashtagClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    MessageToHashTag<T extends Hashtag$MessageToHashTagArgs= {}>(args?: Subset<T, Hashtag$MessageToHashTagArgs>): Prisma.PrismaPromise<Array<MessageToHashTagGetPayload<T>>| Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * Hashtag base type for findUnique actions
-   */
-  export type HashtagFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter, which Hashtag to fetch.
-     */
-    where: HashtagWhereUniqueInput
-  }
-
-  /**
-   * Hashtag findUnique
-   */
-  export interface HashtagFindUniqueArgs extends HashtagFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Hashtag findUniqueOrThrow
-   */
-  export type HashtagFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter, which Hashtag to fetch.
-     */
-    where: HashtagWhereUniqueInput
-  }
-
-
-  /**
-   * Hashtag base type for findFirst actions
-   */
-  export type HashtagFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter, which Hashtag to fetch.
-     */
-    where?: HashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Hashtags to fetch.
-     */
-    orderBy?: Enumerable<HashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Hashtags.
-     */
-    cursor?: HashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Hashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Hashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Hashtags.
-     */
-    distinct?: Enumerable<HashtagScalarFieldEnum>
-  }
-
-  /**
-   * Hashtag findFirst
-   */
-  export interface HashtagFindFirstArgs extends HashtagFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Hashtag findFirstOrThrow
-   */
-  export type HashtagFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter, which Hashtag to fetch.
-     */
-    where?: HashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Hashtags to fetch.
-     */
-    orderBy?: Enumerable<HashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Hashtags.
-     */
-    cursor?: HashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Hashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Hashtags.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Hashtags.
-     */
-    distinct?: Enumerable<HashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * Hashtag findMany
-   */
-  export type HashtagFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter, which Hashtags to fetch.
-     */
-    where?: HashtagWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Hashtags to fetch.
-     */
-    orderBy?: Enumerable<HashtagOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Hashtags.
-     */
-    cursor?: HashtagWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Hashtags from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Hashtags.
-     */
-    skip?: number
-    distinct?: Enumerable<HashtagScalarFieldEnum>
-  }
-
-
-  /**
-   * Hashtag create
-   */
-  export type HashtagCreateArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * The data needed to create a Hashtag.
-     */
-    data: XOR<HashtagCreateInput, HashtagUncheckedCreateInput>
-  }
-
-
-  /**
-   * Hashtag createMany
-   */
-  export type HashtagCreateManyArgs = {
-    /**
-     * The data used to create many Hashtags.
-     */
-    data: Enumerable<HashtagCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * Hashtag update
-   */
-  export type HashtagUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * The data needed to update a Hashtag.
-     */
-    data: XOR<HashtagUpdateInput, HashtagUncheckedUpdateInput>
-    /**
-     * Choose, which Hashtag to update.
-     */
-    where: HashtagWhereUniqueInput
-  }
-
-
-  /**
-   * Hashtag updateMany
-   */
-  export type HashtagUpdateManyArgs = {
-    /**
-     * The data used to update Hashtags.
-     */
-    data: XOR<HashtagUpdateManyMutationInput, HashtagUncheckedUpdateManyInput>
-    /**
-     * Filter which Hashtags to update
-     */
-    where?: HashtagWhereInput
-  }
-
-
-  /**
-   * Hashtag upsert
-   */
-  export type HashtagUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * The filter to search for the Hashtag to update in case it exists.
-     */
-    where: HashtagWhereUniqueInput
-    /**
-     * In case the Hashtag found by the `where` argument doesn't exist, create a new Hashtag with this data.
-     */
-    create: XOR<HashtagCreateInput, HashtagUncheckedCreateInput>
-    /**
-     * In case the Hashtag was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<HashtagUpdateInput, HashtagUncheckedUpdateInput>
-  }
-
-
-  /**
-   * Hashtag delete
-   */
-  export type HashtagDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-    /**
-     * Filter which Hashtag to delete.
-     */
-    where: HashtagWhereUniqueInput
-  }
-
-
-  /**
-   * Hashtag deleteMany
-   */
-  export type HashtagDeleteManyArgs = {
-    /**
-     * Filter which Hashtags to delete
-     */
-    where?: HashtagWhereInput
-  }
-
-
-  /**
-   * Hashtag.MessageToHashTag
-   */
-  export type Hashtag$MessageToHashTagArgs = {
-    /**
-     * Select specific fields to fetch from the MessageToHashTag
-     */
-    select?: MessageToHashTagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: MessageToHashTagInclude | null
-    where?: MessageToHashTagWhereInput
-    orderBy?: Enumerable<MessageToHashTagOrderByWithRelationInput>
-    cursor?: MessageToHashTagWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<MessageToHashTagScalarFieldEnum>
-  }
-
-
-  /**
-   * Hashtag without action
-   */
-  export type HashtagArgs = {
-    /**
-     * Select specific fields to fetch from the Hashtag
-     */
-    select?: HashtagSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: HashtagInclude | null
-  }
-
-
-
-  /**
-   * Model PostReply
-   */
-
-
-  export type AggregatePostReply = {
-    _count: PostReplyCountAggregateOutputType | null
-    _avg: PostReplyAvgAggregateOutputType | null
-    _sum: PostReplySumAggregateOutputType | null
-    _min: PostReplyMinAggregateOutputType | null
-    _max: PostReplyMaxAggregateOutputType | null
-  }
-
-  export type PostReplyAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type PostReplySumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type PostReplyMinAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type PostReplyMaxAggregateOutputType = {
-    id: number | null
-    message: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    userId: number | null
-    postId: number | null
-  }
-
-  export type PostReplyCountAggregateOutputType = {
-    id: number
-    message: number
-    createdAt: number
-    updatedAt: number
-    userId: number
-    postId: number
-    _all: number
-  }
-
-
-  export type PostReplyAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type PostReplySumAggregateInputType = {
-    id?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type PostReplyMinAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type PostReplyMaxAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    postId?: true
-  }
-
-  export type PostReplyCountAggregateInputType = {
-    id?: true
-    message?: true
-    createdAt?: true
-    updatedAt?: true
-    userId?: true
-    postId?: true
-    _all?: true
-  }
-
-  export type PostReplyAggregateArgs = {
-    /**
-     * Filter which PostReply to aggregate.
-     */
-    where?: PostReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostReplies to fetch.
-     */
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostReplies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostReplies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned PostReplies
-    **/
-    _count?: true | PostReplyCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostReplyAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostReplySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostReplyMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostReplyMaxAggregateInputType
-  }
-
-  export type GetPostReplyAggregateType<T extends PostReplyAggregateArgs> = {
-        [P in keyof T & keyof AggregatePostReply]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePostReply[P]>
-      : GetScalarType<T[P], AggregatePostReply[P]>
-  }
-
-
-
-
-  export type PostReplyGroupByArgs = {
-    where?: PostReplyWhereInput
-    orderBy?: Enumerable<PostReplyOrderByWithAggregationInput>
-    by: PostReplyScalarFieldEnum[]
-    having?: PostReplyScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostReplyCountAggregateInputType | true
-    _avg?: PostReplyAvgAggregateInputType
-    _sum?: PostReplySumAggregateInputType
-    _min?: PostReplyMinAggregateInputType
-    _max?: PostReplyMaxAggregateInputType
-  }
-
-
-  export type PostReplyGroupByOutputType = {
-    id: number
-    message: string
-    createdAt: Date
-    updatedAt: Date
-    userId: number
-    postId: number
-    _count: PostReplyCountAggregateOutputType | null
-    _avg: PostReplyAvgAggregateOutputType | null
-    _sum: PostReplySumAggregateOutputType | null
-    _min: PostReplyMinAggregateOutputType | null
-    _max: PostReplyMaxAggregateOutputType | null
-  }
-
-  type GetPostReplyGroupByPayload<T extends PostReplyGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<PostReplyGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostReplyGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostReplyGroupByOutputType[P]>
-            : GetScalarType<T[P], PostReplyGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostReplySelect = {
-    id?: boolean
-    message?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    userId?: boolean
-    postId?: boolean
-    user?: boolean | UserArgs
-    post?: boolean | PostArgs
-  }
-
-
-  export type PostReplyInclude = {
-    user?: boolean | UserArgs
-    post?: boolean | PostArgs
-  }
-
-  export type PostReplyGetPayload<S extends boolean | null | undefined | PostReplyArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? PostReply :
-    S extends undefined ? never :
-    S extends { include: any } & (PostReplyArgs | PostReplyFindManyArgs)
-    ? PostReply  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? UserGetPayload<S['include'][P]> :
-        P extends 'post' ? PostGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (PostReplyArgs | PostReplyFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? UserGetPayload<S['select'][P]> :
-        P extends 'post' ? PostGetPayload<S['select'][P]> :  P extends keyof PostReply ? PostReply[P] : never
-  } 
-      : PostReply
-
-
-  type PostReplyCountArgs = 
-    Omit<PostReplyFindManyArgs, 'select' | 'include'> & {
-      select?: PostReplyCountAggregateInputType | true
-    }
-
-  export interface PostReplyDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one PostReply that matches the filter.
-     * @param {PostReplyFindUniqueArgs} args - Arguments to find a PostReply
-     * @example
-     * // Get one PostReply
-     * const postReply = await prisma.postReply.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends PostReplyFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, PostReplyFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'PostReply'> extends True ? Prisma__PostReplyClient<PostReplyGetPayload<T>> : Prisma__PostReplyClient<PostReplyGetPayload<T> | null, null>
-
-    /**
-     * Find one PostReply that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {PostReplyFindUniqueOrThrowArgs} args - Arguments to find a PostReply
-     * @example
-     * // Get one PostReply
-     * const postReply = await prisma.postReply.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends PostReplyFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, PostReplyFindUniqueOrThrowArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Find the first PostReply that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyFindFirstArgs} args - Arguments to find a PostReply
-     * @example
-     * // Get one PostReply
-     * const postReply = await prisma.postReply.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends PostReplyFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, PostReplyFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'PostReply'> extends True ? Prisma__PostReplyClient<PostReplyGetPayload<T>> : Prisma__PostReplyClient<PostReplyGetPayload<T> | null, null>
-
-    /**
-     * Find the first PostReply that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyFindFirstOrThrowArgs} args - Arguments to find a PostReply
-     * @example
-     * // Get one PostReply
-     * const postReply = await prisma.postReply.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends PostReplyFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, PostReplyFindFirstOrThrowArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Find zero or more PostReplies that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all PostReplies
-     * const postReplies = await prisma.postReply.findMany()
-     * 
-     * // Get first 10 PostReplies
-     * const postReplies = await prisma.postReply.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postReplyWithIdOnly = await prisma.postReply.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends PostReplyFindManyArgs>(
-      args?: SelectSubset<T, PostReplyFindManyArgs>
-    ): Prisma.PrismaPromise<Array<PostReplyGetPayload<T>>>
-
-    /**
-     * Create a PostReply.
-     * @param {PostReplyCreateArgs} args - Arguments to create a PostReply.
-     * @example
-     * // Create one PostReply
-     * const PostReply = await prisma.postReply.create({
-     *   data: {
-     *     // ... data to create a PostReply
-     *   }
-     * })
-     * 
-    **/
-    create<T extends PostReplyCreateArgs>(
-      args: SelectSubset<T, PostReplyCreateArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Create many PostReplies.
-     *     @param {PostReplyCreateManyArgs} args - Arguments to create many PostReplies.
-     *     @example
-     *     // Create many PostReplies
-     *     const postReply = await prisma.postReply.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends PostReplyCreateManyArgs>(
-      args?: SelectSubset<T, PostReplyCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a PostReply.
-     * @param {PostReplyDeleteArgs} args - Arguments to delete one PostReply.
-     * @example
-     * // Delete one PostReply
-     * const PostReply = await prisma.postReply.delete({
-     *   where: {
-     *     // ... filter to delete one PostReply
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends PostReplyDeleteArgs>(
-      args: SelectSubset<T, PostReplyDeleteArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Update one PostReply.
-     * @param {PostReplyUpdateArgs} args - Arguments to update one PostReply.
-     * @example
-     * // Update one PostReply
-     * const postReply = await prisma.postReply.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends PostReplyUpdateArgs>(
-      args: SelectSubset<T, PostReplyUpdateArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Delete zero or more PostReplies.
-     * @param {PostReplyDeleteManyArgs} args - Arguments to filter PostReplies to delete.
-     * @example
-     * // Delete a few PostReplies
-     * const { count } = await prisma.postReply.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends PostReplyDeleteManyArgs>(
-      args?: SelectSubset<T, PostReplyDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PostReplies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many PostReplies
-     * const postReply = await prisma.postReply.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends PostReplyUpdateManyArgs>(
-      args: SelectSubset<T, PostReplyUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one PostReply.
-     * @param {PostReplyUpsertArgs} args - Arguments to update or create a PostReply.
-     * @example
-     * // Update or create a PostReply
-     * const postReply = await prisma.postReply.upsert({
-     *   create: {
-     *     // ... data to create a PostReply
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the PostReply we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends PostReplyUpsertArgs>(
-      args: SelectSubset<T, PostReplyUpsertArgs>
-    ): Prisma__PostReplyClient<PostReplyGetPayload<T>>
-
-    /**
-     * Count the number of PostReplies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyCountArgs} args - Arguments to filter PostReplies to count.
-     * @example
-     * // Count the number of PostReplies
-     * const count = await prisma.postReply.count({
-     *   where: {
-     *     // ... the filter for the PostReplies we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostReplyCountArgs>(
-      args?: Subset<T, PostReplyCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostReplyCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a PostReply.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostReplyAggregateArgs>(args: Subset<T, PostReplyAggregateArgs>): Prisma.PrismaPromise<GetPostReplyAggregateType<T>>
-
-    /**
-     * Group by PostReply.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostReplyGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostReplyGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostReplyGroupByArgs['orderBy'] }
-        : { orderBy?: PostReplyGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostReplyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostReplyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for PostReply.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__PostReplyClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    post<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * PostReply base type for findUnique actions
-   */
-  export type PostReplyFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * Filter, which PostReply to fetch.
-     */
-    where: PostReplyWhereUniqueInput
-  }
-
-  /**
-   * PostReply findUnique
-   */
-  export interface PostReplyFindUniqueArgs extends PostReplyFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostReply findUniqueOrThrow
-   */
-  export type PostReplyFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * Filter, which PostReply to fetch.
-     */
-    where: PostReplyWhereUniqueInput
-  }
-
-
-  /**
-   * PostReply base type for findFirst actions
-   */
-  export type PostReplyFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * Filter, which PostReply to fetch.
-     */
-    where?: PostReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostReplies to fetch.
-     */
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostReplies.
-     */
-    cursor?: PostReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostReplies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostReplies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostReplies.
-     */
-    distinct?: Enumerable<PostReplyScalarFieldEnum>
-  }
-
-  /**
-   * PostReply findFirst
-   */
-  export interface PostReplyFindFirstArgs extends PostReplyFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostReply findFirstOrThrow
-   */
-  export type PostReplyFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * Filter, which PostReply to fetch.
-     */
-    where?: PostReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostReplies to fetch.
-     */
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostReplies.
-     */
-    cursor?: PostReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostReplies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostReplies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostReplies.
-     */
-    distinct?: Enumerable<PostReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * PostReply findMany
-   */
-  export type PostReplyFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * Filter, which PostReplies to fetch.
-     */
-    where?: PostReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostReplies to fetch.
-     */
-    orderBy?: Enumerable<PostReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing PostReplies.
-     */
-    cursor?: PostReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostReplies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostReplies.
-     */
-    skip?: number
-    distinct?: Enumerable<PostReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * PostReply create
-   */
-  export type PostReplyCreateArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostReplyInclude | null
-    /**
-     * The data needed to create a PostReply.
-     */
-    data: XOR<PostReplyCreateInput, PostReplyUncheckedCreateInput>
-  }
-
-
-  /**
-   * PostReply createMany
-   */
-  export type PostReplyCreateManyArgs = {
-    /**
-     * The data used to create many PostReplies.
-     */
-    data: Enumerable<PostReplyCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * PostReply update
-   */
-  export type PostReplyUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the PostReply
-     */
-    select?: PostReplySelect | null
-    /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: PostReplyInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * The data needed to update a PostReply.
+     * The data needed to update a RoundQuiz.
      */
-    data: XOR<PostReplyUpdateInput, PostReplyUncheckedUpdateInput>
+    data: XOR<RoundQuizUpdateInput, RoundQuizUncheckedUpdateInput>
     /**
-     * Choose, which PostReply to update.
+     * Choose, which RoundQuiz to update.
      */
-    where: PostReplyWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * PostReply updateMany
+   * RoundQuiz updateMany
    */
-  export type PostReplyUpdateManyArgs = {
+  export type RoundQuizUpdateManyArgs = {
     /**
-     * The data used to update PostReplies.
+     * The data used to update RoundQuizs.
      */
-    data: XOR<PostReplyUpdateManyMutationInput, PostReplyUncheckedUpdateManyInput>
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyInput>
     /**
-     * Filter which PostReplies to update
+     * Filter which RoundQuizs to update
      */
-    where?: PostReplyWhereInput
+    where?: RoundQuizWhereInput
   }
 
 
   /**
-   * PostReply upsert
+   * RoundQuiz upsert
    */
-  export type PostReplyUpsertArgs = {
+  export type RoundQuizUpsertArgs = {
     /**
-     * Select specific fields to fetch from the PostReply
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: PostReplySelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: PostReplyInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * The filter to search for the PostReply to update in case it exists.
+     * The filter to search for the RoundQuiz to update in case it exists.
      */
-    where: PostReplyWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
     /**
-     * In case the PostReply found by the `where` argument doesn't exist, create a new PostReply with this data.
+     * In case the RoundQuiz found by the `where` argument doesn't exist, create a new RoundQuiz with this data.
      */
-    create: XOR<PostReplyCreateInput, PostReplyUncheckedCreateInput>
+    create: XOR<RoundQuizCreateInput, RoundQuizUncheckedCreateInput>
     /**
-     * In case the PostReply was found with the provided `where` argument, update it with this data.
+     * In case the RoundQuiz was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<PostReplyUpdateInput, PostReplyUncheckedUpdateInput>
+    update: XOR<RoundQuizUpdateInput, RoundQuizUncheckedUpdateInput>
   }
 
 
   /**
-   * PostReply delete
+   * RoundQuiz delete
    */
-  export type PostReplyDeleteArgs = {
+  export type RoundQuizDeleteArgs = {
     /**
-     * Select specific fields to fetch from the PostReply
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: PostReplySelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: PostReplyInclude | null
+    include?: RoundQuizInclude | null
     /**
-     * Filter which PostReply to delete.
+     * Filter which RoundQuiz to delete.
      */
-    where: PostReplyWhereUniqueInput
+    where: RoundQuizWhereUniqueInput
   }
 
 
   /**
-   * PostReply deleteMany
+   * RoundQuiz deleteMany
    */
-  export type PostReplyDeleteManyArgs = {
+  export type RoundQuizDeleteManyArgs = {
     /**
-     * Filter which PostReplies to delete
+     * Filter which RoundQuizs to delete
      */
-    where?: PostReplyWhereInput
+    where?: RoundQuizWhereInput
   }
 
 
   /**
-   * PostReply without action
+   * RoundQuiz without action
    */
-  export type PostReplyArgs = {
+  export type RoundQuizArgs = {
     /**
-     * Select specific fields to fetch from the PostReply
+     * Select specific fields to fetch from the RoundQuiz
      */
-    select?: PostReplySelect | null
+    select?: RoundQuizSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: PostReplyInclude | null
+    include?: RoundQuizInclude | null
   }
 
 
@@ -18657,130 +7052,25 @@ export namespace Prisma {
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 
-  export const BinKitchenCategoryScalarFieldEnum: {
+  export const CategoryScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    category: 'category',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type BinKitchenCategoryScalarFieldEnum = (typeof BinKitchenCategoryScalarFieldEnum)[keyof typeof BinKitchenCategoryScalarFieldEnum]
-
-
-  export const BinKitchenMenuScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    image: 'image',
-    price: 'price',
-    categoryName: 'categoryName',
-    createdAt: 'createdAt',
-    updateAt: 'updateAt'
-  };
-
-  export type BinKitchenMenuScalarFieldEnum = (typeof BinKitchenMenuScalarFieldEnum)[keyof typeof BinKitchenMenuScalarFieldEnum]
-
-
-  export const BinKitchenOrderItemScalarFieldEnum: {
-    id: 'id',
-    menuId: 'menuId',
-    orderId: 'orderId',
-    quantity: 'quantity',
-    totalPrice: 'totalPrice',
-    createdAt: 'createdAt',
-    updateAt: 'updateAt'
-  };
-
-  export type BinKitchenOrderItemScalarFieldEnum = (typeof BinKitchenOrderItemScalarFieldEnum)[keyof typeof BinKitchenOrderItemScalarFieldEnum]
-
-
-  export const BinKitchenOrderScalarFieldEnum: {
-    id: 'id',
-    status: 'status',
-    tableId: 'tableId',
-    createdAt: 'createdAt',
-    updateAt: 'updateAt'
-  };
-
-  export type BinKitchenOrderScalarFieldEnum = (typeof BinKitchenOrderScalarFieldEnum)[keyof typeof BinKitchenOrderScalarFieldEnum]
+  export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
   export const ChoiceScalarFieldEnum: {
     id: 'id',
-    questionId: 'questionId',
     choice: 'choice',
     createdAt: 'createdAt',
-    updateAt: 'updateAt',
-    questionsId: 'questionsId'
+    updatedAt: 'updatedAt',
+    quizId: 'quizId'
   };
 
   export type ChoiceScalarFieldEnum = (typeof ChoiceScalarFieldEnum)[keyof typeof ChoiceScalarFieldEnum]
-
-
-  export const DirectMessageScalarFieldEnum: {
-    id: 'id',
-    message: 'message',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId'
-  };
-
-  export type DirectMessageScalarFieldEnum = (typeof DirectMessageScalarFieldEnum)[keyof typeof DirectMessageScalarFieldEnum]
-
-
-  export const FollowingScalarFieldEnum: {
-    id: 'id',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId'
-  };
-
-  export type FollowingScalarFieldEnum = (typeof FollowingScalarFieldEnum)[keyof typeof FollowingScalarFieldEnum]
-
-
-  export const HashtagScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type HashtagScalarFieldEnum = (typeof HashtagScalarFieldEnum)[keyof typeof HashtagScalarFieldEnum]
-
-
-  export const MessageToHashTagScalarFieldEnum: {
-    id: 'id',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    postId: 'postId',
-    hashtagId: 'hashtagId'
-  };
-
-  export type MessageToHashTagScalarFieldEnum = (typeof MessageToHashTagScalarFieldEnum)[keyof typeof MessageToHashTagScalarFieldEnum]
-
-
-  export const PostReplyScalarFieldEnum: {
-    id: 'id',
-    message: 'message',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId',
-    postId: 'postId'
-  };
-
-  export type PostReplyScalarFieldEnum = (typeof PostReplyScalarFieldEnum)[keyof typeof PostReplyScalarFieldEnum]
-
-
-  export const PostScalarFieldEnum: {
-    id: 'id',
-    message: 'message',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId'
-  };
-
-  export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
   export const QueryMode: {
@@ -18791,46 +7081,36 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const QuestionScalarFieldEnum: {
+  export const QuizScalarFieldEnum: {
     id: 'id',
-    question: 'question',
+    quiz: 'quiz',
+    categoryNameId: 'categoryNameId',
+    quizAnswerId: 'quizAnswerId',
     createdAt: 'createdAt',
-    updateAt: 'updateAt',
-    quizCatId: 'quizCatId',
-    answerId: 'answerId'
+    updatedAt: 'updatedAt',
+    categoryId: 'categoryId'
   };
 
-  export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+  export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
-  export const QuizCatScalarFieldEnum: {
+  export const RoundQuizScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    category: 'category',
     createdAt: 'createdAt',
-    updateAt: 'updateAt'
-  };
-
-  export type QuizCatScalarFieldEnum = (typeof QuizCatScalarFieldEnum)[keyof typeof QuizCatScalarFieldEnum]
-
-
-  export const RoundQuestionScalarFieldEnum: {
-    id: 'id',
     roundId: 'roundId',
-    questionId: 'questionId',
     choiceId: 'choiceId',
-    createdAt: 'createdAt',
-    updateAt: 'updateAt'
+    quizId: 'quizId'
   };
 
-  export type RoundQuestionScalarFieldEnum = (typeof RoundQuestionScalarFieldEnum)[keyof typeof RoundQuestionScalarFieldEnum]
+  export type RoundQuizScalarFieldEnum = (typeof RoundQuizScalarFieldEnum)[keyof typeof RoundQuizScalarFieldEnum]
 
 
   export const RoundScalarFieldEnum: {
     id: 'id',
-    score: 'score',
     createdAt: 'createdAt',
     updateAt: 'updateAt',
-    quizCatId: 'quizCatId'
+    categoryId: 'categoryId'
   };
 
   export type RoundScalarFieldEnum = (typeof RoundScalarFieldEnum)[keyof typeof RoundScalarFieldEnum]
@@ -18842,18 +7122,6 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-  export const TodoListScalarFieldEnum: {
-    id: 'id',
-    task: 'task',
-    status: 'status',
-    notes: 'notes',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type TodoListScalarFieldEnum = (typeof TodoListScalarFieldEnum)[keyof typeof TodoListScalarFieldEnum]
 
 
   export const TransactionIsolationLevel: {
@@ -18868,10 +7136,9 @@ export namespace Prisma {
 
   export const UserScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    profileImage: 'profileImage',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    nameUser: 'nameUser',
+    category: 'category',
+    createdAt: 'createdAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -18882,322 +7149,160 @@ export namespace Prisma {
    */
 
 
-  export type BinKitchenCategoryWhereInput = {
-    AND?: Enumerable<BinKitchenCategoryWhereInput>
-    OR?: Enumerable<BinKitchenCategoryWhereInput>
-    NOT?: Enumerable<BinKitchenCategoryWhereInput>
+  export type userWhereInput = {
+    AND?: Enumerable<userWhereInput>
+    OR?: Enumerable<userWhereInput>
+    NOT?: Enumerable<userWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
+    nameUser?: StringFilter | string
+    category?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+  }
+
+  export type userOrderByWithRelationInput = {
+    id?: SortOrder
+    nameUser?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type userWhereUniqueInput = {
+    id?: number
+    category?: string
+  }
+
+  export type userOrderByWithAggregationInput = {
+    id?: SortOrder
+    nameUser?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    _count?: userCountOrderByAggregateInput
+    _avg?: userAvgOrderByAggregateInput
+    _max?: userMaxOrderByAggregateInput
+    _min?: userMinOrderByAggregateInput
+    _sum?: userSumOrderByAggregateInput
+  }
+
+  export type userScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<userScalarWhereWithAggregatesInput>
+    OR?: Enumerable<userScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<userScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    nameUser?: StringWithAggregatesFilter | string
+    category?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type CategoryWhereInput = {
+    AND?: Enumerable<CategoryWhereInput>
+    OR?: Enumerable<CategoryWhereInput>
+    NOT?: Enumerable<CategoryWhereInput>
+    id?: IntFilter | number
+    category?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    menus?: BinKitchenMenuListRelationFilter
+    quiz?: QuizListRelationFilter
+    rounds?: RoundListRelationFilter
   }
 
-  export type BinKitchenCategoryOrderByWithRelationInput = {
+  export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    menus?: BinKitchenMenuOrderByRelationAggregateInput
+    quiz?: QuizOrderByRelationAggregateInput
+    rounds?: RoundOrderByRelationAggregateInput
   }
 
-  export type BinKitchenCategoryWhereUniqueInput = {
+  export type CategoryWhereUniqueInput = {
     id?: number
-    name?: string
+    category?: string
   }
 
-  export type BinKitchenCategoryOrderByWithAggregationInput = {
+  export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: BinKitchenCategoryCountOrderByAggregateInput
-    _avg?: BinKitchenCategoryAvgOrderByAggregateInput
-    _max?: BinKitchenCategoryMaxOrderByAggregateInput
-    _min?: BinKitchenCategoryMinOrderByAggregateInput
-    _sum?: BinKitchenCategorySumOrderByAggregateInput
+    _count?: CategoryCountOrderByAggregateInput
+    _avg?: CategoryAvgOrderByAggregateInput
+    _max?: CategoryMaxOrderByAggregateInput
+    _min?: CategoryMinOrderByAggregateInput
+    _sum?: CategorySumOrderByAggregateInput
   }
 
-  export type BinKitchenCategoryScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<BinKitchenCategoryScalarWhereWithAggregatesInput>
-    OR?: Enumerable<BinKitchenCategoryScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<BinKitchenCategoryScalarWhereWithAggregatesInput>
+  export type CategoryScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<CategoryScalarWhereWithAggregatesInput>
+    OR?: Enumerable<CategoryScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<CategoryScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
+    category?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type BinKitchenMenuWhereInput = {
-    AND?: Enumerable<BinKitchenMenuWhereInput>
-    OR?: Enumerable<BinKitchenMenuWhereInput>
-    NOT?: Enumerable<BinKitchenMenuWhereInput>
+  export type QuizWhereInput = {
+    AND?: Enumerable<QuizWhereInput>
+    OR?: Enumerable<QuizWhereInput>
+    NOT?: Enumerable<QuizWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    image?: StringFilter | string
-    price?: FloatFilter | number
-    categoryName?: StringNullableFilter | string | null
+    quiz?: StringFilter | string
+    categoryNameId?: IntNullableFilter | number | null
+    quizAnswerId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    category?: XOR<BinKitchenCategoryRelationFilter, BinKitchenCategoryWhereInput> | null
-    binKitchenOrderItem?: BinKitchenOrderItemListRelationFilter
-  }
-
-  export type BinKitchenMenuOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryName?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    category?: BinKitchenCategoryOrderByWithRelationInput
-    binKitchenOrderItem?: BinKitchenOrderItemOrderByRelationAggregateInput
-  }
-
-  export type BinKitchenMenuWhereUniqueInput = {
-    id?: number
-  }
-
-  export type BinKitchenMenuOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryName?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: BinKitchenMenuCountOrderByAggregateInput
-    _avg?: BinKitchenMenuAvgOrderByAggregateInput
-    _max?: BinKitchenMenuMaxOrderByAggregateInput
-    _min?: BinKitchenMenuMinOrderByAggregateInput
-    _sum?: BinKitchenMenuSumOrderByAggregateInput
-  }
-
-  export type BinKitchenMenuScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<BinKitchenMenuScalarWhereWithAggregatesInput>
-    OR?: Enumerable<BinKitchenMenuScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<BinKitchenMenuScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    image?: StringWithAggregatesFilter | string
-    price?: FloatWithAggregatesFilter | number
-    categoryName?: StringNullableWithAggregatesFilter | string | null
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type BinKitchenOrderWhereInput = {
-    AND?: Enumerable<BinKitchenOrderWhereInput>
-    OR?: Enumerable<BinKitchenOrderWhereInput>
-    NOT?: Enumerable<BinKitchenOrderWhereInput>
-    id?: IntFilter | number
-    status?: StringFilter | string
-    tableId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    items?: BinKitchenOrderItemListRelationFilter
-  }
-
-  export type BinKitchenOrderOrderByWithRelationInput = {
-    id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    items?: BinKitchenOrderItemOrderByRelationAggregateInput
-  }
-
-  export type BinKitchenOrderWhereUniqueInput = {
-    id?: number
-  }
-
-  export type BinKitchenOrderOrderByWithAggregationInput = {
-    id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: BinKitchenOrderCountOrderByAggregateInput
-    _avg?: BinKitchenOrderAvgOrderByAggregateInput
-    _max?: BinKitchenOrderMaxOrderByAggregateInput
-    _min?: BinKitchenOrderMinOrderByAggregateInput
-    _sum?: BinKitchenOrderSumOrderByAggregateInput
-  }
-
-  export type BinKitchenOrderScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<BinKitchenOrderScalarWhereWithAggregatesInput>
-    OR?: Enumerable<BinKitchenOrderScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<BinKitchenOrderScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    status?: StringWithAggregatesFilter | string
-    tableId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type BinKitchenOrderItemWhereInput = {
-    AND?: Enumerable<BinKitchenOrderItemWhereInput>
-    OR?: Enumerable<BinKitchenOrderItemWhereInput>
-    NOT?: Enumerable<BinKitchenOrderItemWhereInput>
-    id?: IntFilter | number
-    menuId?: IntFilter | number
-    orderId?: IntNullableFilter | number | null
-    quantity?: IntFilter | number
-    totalPrice?: FloatFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    menu?: XOR<BinKitchenMenuRelationFilter, BinKitchenMenuWhereInput>
-    order?: XOR<BinKitchenOrderRelationFilter, BinKitchenOrderWhereInput> | null
-  }
-
-  export type BinKitchenOrderItemOrderByWithRelationInput = {
-    id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    menu?: BinKitchenMenuOrderByWithRelationInput
-    order?: BinKitchenOrderOrderByWithRelationInput
-  }
-
-  export type BinKitchenOrderItemWhereUniqueInput = {
-    id?: number
-  }
-
-  export type BinKitchenOrderItemOrderByWithAggregationInput = {
-    id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: BinKitchenOrderItemCountOrderByAggregateInput
-    _avg?: BinKitchenOrderItemAvgOrderByAggregateInput
-    _max?: BinKitchenOrderItemMaxOrderByAggregateInput
-    _min?: BinKitchenOrderItemMinOrderByAggregateInput
-    _sum?: BinKitchenOrderItemSumOrderByAggregateInput
-  }
-
-  export type BinKitchenOrderItemScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<BinKitchenOrderItemScalarWhereWithAggregatesInput>
-    OR?: Enumerable<BinKitchenOrderItemScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<BinKitchenOrderItemScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    menuId?: IntWithAggregatesFilter | number
-    orderId?: IntNullableWithAggregatesFilter | number | null
-    quantity?: IntWithAggregatesFilter | number
-    totalPrice?: FloatWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type QuizCatWhereInput = {
-    AND?: Enumerable<QuizCatWhereInput>
-    OR?: Enumerable<QuizCatWhereInput>
-    NOT?: Enumerable<QuizCatWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    questions?: QuestionListRelationFilter
-    rounds?: RoundListRelationFilter
-  }
-
-  export type QuizCatOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    questions?: QuestionOrderByRelationAggregateInput
-    rounds?: RoundOrderByRelationAggregateInput
-  }
-
-  export type QuizCatWhereUniqueInput = {
-    id?: number
-    name?: string
-  }
-
-  export type QuizCatOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: QuizCatCountOrderByAggregateInput
-    _avg?: QuizCatAvgOrderByAggregateInput
-    _max?: QuizCatMaxOrderByAggregateInput
-    _min?: QuizCatMinOrderByAggregateInput
-    _sum?: QuizCatSumOrderByAggregateInput
-  }
-
-  export type QuizCatScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<QuizCatScalarWhereWithAggregatesInput>
-    OR?: Enumerable<QuizCatScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<QuizCatScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type QuestionWhereInput = {
-    AND?: Enumerable<QuestionWhereInput>
-    OR?: Enumerable<QuestionWhereInput>
-    NOT?: Enumerable<QuestionWhereInput>
-    id?: IntFilter | number
-    question?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    quizCatId?: IntFilter | number
-    answerId?: IntFilter | number
-    catName?: XOR<QuizCatRelationFilter, QuizCatWhereInput>
+    updatedAt?: DateTimeFilter | Date | string
+    categoryId?: IntFilter | number
+    answer?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
     choices?: ChoiceListRelationFilter
-    roundQuestions?: RoundQuestionListRelationFilter
+    roundQuiz?: RoundQuizListRelationFilter
+    category?: XOR<CategoryRelationFilter, CategoryWhereInput>
   }
 
-  export type QuestionOrderByWithRelationInput = {
+  export type QuizOrderByWithRelationInput = {
     id?: SortOrder
-    question?: SortOrder
+    quiz?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-    catName?: QuizCatOrderByWithRelationInput
+    updatedAt?: SortOrder
+    categoryId?: SortOrder
+    answer?: ChoiceOrderByWithRelationInput
     choices?: ChoiceOrderByRelationAggregateInput
-    roundQuestions?: RoundQuestionOrderByRelationAggregateInput
+    roundQuiz?: RoundQuizOrderByRelationAggregateInput
+    category?: CategoryOrderByWithRelationInput
   }
 
-  export type QuestionWhereUniqueInput = {
+  export type QuizWhereUniqueInput = {
     id?: number
+    quizAnswerId?: number
   }
 
-  export type QuestionOrderByWithAggregationInput = {
+  export type QuizOrderByWithAggregationInput = {
     id?: SortOrder
-    question?: SortOrder
+    quiz?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-    _count?: QuestionCountOrderByAggregateInput
-    _avg?: QuestionAvgOrderByAggregateInput
-    _max?: QuestionMaxOrderByAggregateInput
-    _min?: QuestionMinOrderByAggregateInput
-    _sum?: QuestionSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    categoryId?: SortOrder
+    _count?: QuizCountOrderByAggregateInput
+    _avg?: QuizAvgOrderByAggregateInput
+    _max?: QuizMaxOrderByAggregateInput
+    _min?: QuizMinOrderByAggregateInput
+    _sum?: QuizSumOrderByAggregateInput
   }
 
-  export type QuestionScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<QuestionScalarWhereWithAggregatesInput>
-    OR?: Enumerable<QuestionScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<QuestionScalarWhereWithAggregatesInput>
+  export type QuizScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<QuizScalarWhereWithAggregatesInput>
+    OR?: Enumerable<QuizScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<QuizScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    question?: StringWithAggregatesFilter | string
+    quiz?: StringWithAggregatesFilter | string
+    categoryNameId?: IntNullableWithAggregatesFilter | number | null
+    quizAnswerId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-    quizCatId?: IntWithAggregatesFilter | number
-    answerId?: IntWithAggregatesFilter | number
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    categoryId?: IntWithAggregatesFilter | number
   }
 
   export type ChoiceWhereInput = {
@@ -19205,24 +7310,24 @@ export namespace Prisma {
     OR?: Enumerable<ChoiceWhereInput>
     NOT?: Enumerable<ChoiceWhereInput>
     id?: IntFilter | number
-    questionId?: IntFilter | number
     choice?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    questionsId?: IntNullableFilter | number | null
-    question?: XOR<QuestionRelationFilter, QuestionWhereInput> | null
-    roundQuestions?: RoundQuestionListRelationFilter
+    updatedAt?: DateTimeFilter | Date | string
+    quizId?: IntNullableFilter | number | null
+    quiz?: XOR<QuizRelationFilter, QuizWhereInput> | null
+    quizAnswer?: XOR<QuizRelationFilter, QuizWhereInput> | null
+    roundQuiz?: RoundQuizListRelationFilter
   }
 
   export type ChoiceOrderByWithRelationInput = {
     id?: SortOrder
-    questionId?: SortOrder
     choice?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    questionsId?: SortOrder
-    question?: QuestionOrderByWithRelationInput
-    roundQuestions?: RoundQuestionOrderByRelationAggregateInput
+    updatedAt?: SortOrder
+    quizId?: SortOrder
+    quiz?: QuizOrderByWithRelationInput
+    quizAnswer?: QuizOrderByWithRelationInput
+    roundQuiz?: RoundQuizOrderByRelationAggregateInput
   }
 
   export type ChoiceWhereUniqueInput = {
@@ -19231,11 +7336,10 @@ export namespace Prisma {
 
   export type ChoiceOrderByWithAggregationInput = {
     id?: SortOrder
-    questionId?: SortOrder
     choice?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    questionsId?: SortOrder
+    updatedAt?: SortOrder
+    quizId?: SortOrder
     _count?: ChoiceCountOrderByAggregateInput
     _avg?: ChoiceAvgOrderByAggregateInput
     _max?: ChoiceMaxOrderByAggregateInput
@@ -19248,11 +7352,10 @@ export namespace Prisma {
     OR?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
     NOT?: Enumerable<ChoiceScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    questionId?: IntWithAggregatesFilter | number
     choice?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
-    questionsId?: IntNullableWithAggregatesFilter | number | null
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+    quizId?: IntNullableWithAggregatesFilter | number | null
   }
 
   export type RoundWhereInput = {
@@ -19260,22 +7363,20 @@ export namespace Prisma {
     OR?: Enumerable<RoundWhereInput>
     NOT?: Enumerable<RoundWhereInput>
     id?: IntFilter | number
-    score?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    quizCatId?: IntFilter | number
-    cat?: XOR<QuizCatRelationFilter, QuizCatWhereInput>
-    questions?: RoundQuestionListRelationFilter
+    categoryId?: IntNullableFilter | number | null
+    roundQiuz?: RoundQuizListRelationFilter
+    Category?: XOR<CategoryRelationFilter, CategoryWhereInput> | null
   }
 
   export type RoundOrderByWithRelationInput = {
     id?: SortOrder
-    score?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    quizCatId?: SortOrder
-    cat?: QuizCatOrderByWithRelationInput
-    questions?: RoundQuestionOrderByRelationAggregateInput
+    categoryId?: SortOrder
+    roundQiuz?: RoundQuizOrderByRelationAggregateInput
+    Category?: CategoryOrderByWithRelationInput
   }
 
   export type RoundWhereUniqueInput = {
@@ -19284,10 +7385,9 @@ export namespace Prisma {
 
   export type RoundOrderByWithAggregationInput = {
     id?: SortOrder
-    score?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    quizCatId?: SortOrder
+    categoryId?: SortOrder
     _count?: RoundCountOrderByAggregateInput
     _avg?: RoundAvgOrderByAggregateInput
     _max?: RoundMaxOrderByAggregateInput
@@ -19300,1491 +7400,406 @@ export namespace Prisma {
     OR?: Enumerable<RoundScalarWhereWithAggregatesInput>
     NOT?: Enumerable<RoundScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    score?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
-    quizCatId?: IntWithAggregatesFilter | number
+    categoryId?: IntNullableWithAggregatesFilter | number | null
   }
 
-  export type RoundQuestionWhereInput = {
-    AND?: Enumerable<RoundQuestionWhereInput>
-    OR?: Enumerable<RoundQuestionWhereInput>
-    NOT?: Enumerable<RoundQuestionWhereInput>
+  export type RoundQuizWhereInput = {
+    AND?: Enumerable<RoundQuizWhereInput>
+    OR?: Enumerable<RoundQuizWhereInput>
+    NOT?: Enumerable<RoundQuizWhereInput>
     id?: IntFilter | number
+    category?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
     roundId?: IntNullableFilter | number | null
-    questionId?: IntFilter | number
-    choiceId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    question?: XOR<QuestionRelationFilter, QuestionWhereInput>
-    userChoice?: XOR<ChoiceRelationFilter, ChoiceWhereInput>
+    choiceId?: IntNullableFilter | number | null
+    quizId?: IntNullableFilter | number | null
     round?: XOR<RoundRelationFilter, RoundWhereInput> | null
+    choice?: XOR<ChoiceRelationFilter, ChoiceWhereInput> | null
+    quiz?: XOR<QuizRelationFilter, QuizWhereInput> | null
   }
 
-  export type RoundQuestionOrderByWithRelationInput = {
+  export type RoundQuizOrderByWithRelationInput = {
     id?: SortOrder
-    roundId?: SortOrder
-    questionId?: SortOrder
-    choiceId?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    question?: QuestionOrderByWithRelationInput
-    userChoice?: ChoiceOrderByWithRelationInput
+    roundId?: SortOrder
+    choiceId?: SortOrder
+    quizId?: SortOrder
     round?: RoundOrderByWithRelationInput
+    choice?: ChoiceOrderByWithRelationInput
+    quiz?: QuizOrderByWithRelationInput
   }
 
-  export type RoundQuestionWhereUniqueInput = {
+  export type RoundQuizWhereUniqueInput = {
     id?: number
+    category?: string
   }
 
-  export type RoundQuestionOrderByWithAggregationInput = {
+  export type RoundQuizOrderByWithAggregationInput = {
     id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
     roundId?: SortOrder
-    questionId?: SortOrder
     choiceId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    _count?: RoundQuestionCountOrderByAggregateInput
-    _avg?: RoundQuestionAvgOrderByAggregateInput
-    _max?: RoundQuestionMaxOrderByAggregateInput
-    _min?: RoundQuestionMinOrderByAggregateInput
-    _sum?: RoundQuestionSumOrderByAggregateInput
+    quizId?: SortOrder
+    _count?: RoundQuizCountOrderByAggregateInput
+    _avg?: RoundQuizAvgOrderByAggregateInput
+    _max?: RoundQuizMaxOrderByAggregateInput
+    _min?: RoundQuizMinOrderByAggregateInput
+    _sum?: RoundQuizSumOrderByAggregateInput
   }
 
-  export type RoundQuestionScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
-    OR?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<RoundQuestionScalarWhereWithAggregatesInput>
+  export type RoundQuizScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RoundQuizScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    category?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
     roundId?: IntNullableWithAggregatesFilter | number | null
-    questionId?: IntWithAggregatesFilter | number
-    choiceId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updateAt?: DateTimeWithAggregatesFilter | Date | string
+    choiceId?: IntNullableWithAggregatesFilter | number | null
+    quizId?: IntNullableWithAggregatesFilter | number | null
   }
 
-  export type TodoListWhereInput = {
-    AND?: Enumerable<TodoListWhereInput>
-    OR?: Enumerable<TodoListWhereInput>
-    NOT?: Enumerable<TodoListWhereInput>
-    id?: IntFilter | number
-    task?: StringFilter | string
-    status?: StringFilter | string
-    notes?: StringNullableFilter | string | null
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type TodoListOrderByWithRelationInput = {
-    id?: SortOrder
-    task?: SortOrder
-    status?: SortOrder
-    notes?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TodoListWhereUniqueInput = {
-    id?: number
-  }
-
-  export type TodoListOrderByWithAggregationInput = {
-    id?: SortOrder
-    task?: SortOrder
-    status?: SortOrder
-    notes?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TodoListCountOrderByAggregateInput
-    _avg?: TodoListAvgOrderByAggregateInput
-    _max?: TodoListMaxOrderByAggregateInput
-    _min?: TodoListMinOrderByAggregateInput
-    _sum?: TodoListSumOrderByAggregateInput
-  }
-
-  export type TodoListScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TodoListScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TodoListScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TodoListScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    task?: StringWithAggregatesFilter | string
-    status?: StringWithAggregatesFilter | string
-    notes?: StringNullableWithAggregatesFilter | string | null
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type FollowingWhereInput = {
-    AND?: Enumerable<FollowingWhereInput>
-    OR?: Enumerable<FollowingWhereInput>
-    NOT?: Enumerable<FollowingWhereInput>
-    id?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    from?: XOR<UserRelationFilter, UserWhereInput>
-    to?: XOR<UserRelationFilter, UserWhereInput>
-  }
-
-  export type FollowingOrderByWithRelationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    from?: UserOrderByWithRelationInput
-    to?: UserOrderByWithRelationInput
-  }
-
-  export type FollowingWhereUniqueInput = {
-    id?: number
-  }
-
-  export type FollowingOrderByWithAggregationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    _count?: FollowingCountOrderByAggregateInput
-    _avg?: FollowingAvgOrderByAggregateInput
-    _max?: FollowingMaxOrderByAggregateInput
-    _min?: FollowingMinOrderByAggregateInput
-    _sum?: FollowingSumOrderByAggregateInput
-  }
-
-  export type FollowingScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<FollowingScalarWhereWithAggregatesInput>
-    OR?: Enumerable<FollowingScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<FollowingScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
-  }
-
-  export type UserWhereInput = {
-    AND?: Enumerable<UserWhereInput>
-    OR?: Enumerable<UserWhereInput>
-    NOT?: Enumerable<UserWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    profileImage?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    posts?: PostListRelationFilter
-    fromDirectMessages?: DirectMessageListRelationFilter
-    toDirectMessages?: DirectMessageListRelationFilter
-    postReplies?: PostReplyListRelationFilter
-    fromFollowings?: FollowingListRelationFilter
-    toFollowings?: FollowingListRelationFilter
-  }
-
-  export type UserOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    profileImage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    posts?: PostOrderByRelationAggregateInput
-    fromDirectMessages?: DirectMessageOrderByRelationAggregateInput
-    toDirectMessages?: DirectMessageOrderByRelationAggregateInput
-    postReplies?: PostReplyOrderByRelationAggregateInput
-    fromFollowings?: FollowingOrderByRelationAggregateInput
-    toFollowings?: FollowingOrderByRelationAggregateInput
-  }
-
-  export type UserWhereUniqueInput = {
-    id?: number
-  }
-
-  export type UserOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    profileImage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
-    _max?: UserMaxOrderByAggregateInput
-    _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
-  }
-
-  export type UserScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<UserScalarWhereWithAggregatesInput>
-    OR?: Enumerable<UserScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<UserScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    profileImage?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type PostWhereInput = {
-    AND?: Enumerable<PostWhereInput>
-    OR?: Enumerable<PostWhereInput>
-    NOT?: Enumerable<PostWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    userId?: IntFilter | number
-    user?: XOR<UserRelationFilter, UserWhereInput>
-    messageToHashTags?: MessageToHashTagListRelationFilter
-    postReplies?: PostReplyListRelationFilter
-  }
-
-  export type PostOrderByWithRelationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    user?: UserOrderByWithRelationInput
-    messageToHashTags?: MessageToHashTagOrderByRelationAggregateInput
-    postReplies?: PostReplyOrderByRelationAggregateInput
-  }
-
-  export type PostWhereUniqueInput = {
-    id?: number
-  }
-
-  export type PostOrderByWithAggregationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    _count?: PostCountOrderByAggregateInput
-    _avg?: PostAvgOrderByAggregateInput
-    _max?: PostMaxOrderByAggregateInput
-    _min?: PostMinOrderByAggregateInput
-    _sum?: PostSumOrderByAggregateInput
-  }
-
-  export type PostScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<PostScalarWhereWithAggregatesInput>
-    OR?: Enumerable<PostScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<PostScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    message?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    userId?: IntWithAggregatesFilter | number
-  }
-
-  export type DirectMessageWhereInput = {
-    AND?: Enumerable<DirectMessageWhereInput>
-    OR?: Enumerable<DirectMessageWhereInput>
-    NOT?: Enumerable<DirectMessageWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-    from?: XOR<UserRelationFilter, UserWhereInput>
-    to?: XOR<UserRelationFilter, UserWhereInput>
-  }
-
-  export type DirectMessageOrderByWithRelationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    from?: UserOrderByWithRelationInput
-    to?: UserOrderByWithRelationInput
-  }
-
-  export type DirectMessageWhereUniqueInput = {
-    id?: number
-  }
-
-  export type DirectMessageOrderByWithAggregationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-    _count?: DirectMessageCountOrderByAggregateInput
-    _avg?: DirectMessageAvgOrderByAggregateInput
-    _max?: DirectMessageMaxOrderByAggregateInput
-    _min?: DirectMessageMinOrderByAggregateInput
-    _sum?: DirectMessageSumOrderByAggregateInput
-  }
-
-  export type DirectMessageScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
-    OR?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<DirectMessageScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    message?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
-  }
-
-  export type MessageToHashTagWhereInput = {
-    AND?: Enumerable<MessageToHashTagWhereInput>
-    OR?: Enumerable<MessageToHashTagWhereInput>
-    NOT?: Enumerable<MessageToHashTagWhereInput>
-    id?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    postId?: IntFilter | number
-    hashtagId?: IntFilter | number
-    post?: XOR<PostRelationFilter, PostWhereInput>
-    hashtag?: XOR<HashtagRelationFilter, HashtagWhereInput>
-  }
-
-  export type MessageToHashTagOrderByWithRelationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    post?: PostOrderByWithRelationInput
-    hashtag?: HashtagOrderByWithRelationInput
-  }
-
-  export type MessageToHashTagWhereUniqueInput = {
-    id?: number
-  }
-
-  export type MessageToHashTagOrderByWithAggregationInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-    _count?: MessageToHashTagCountOrderByAggregateInput
-    _avg?: MessageToHashTagAvgOrderByAggregateInput
-    _max?: MessageToHashTagMaxOrderByAggregateInput
-    _min?: MessageToHashTagMinOrderByAggregateInput
-    _sum?: MessageToHashTagSumOrderByAggregateInput
-  }
-
-  export type MessageToHashTagScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<MessageToHashTagScalarWhereWithAggregatesInput>
-    OR?: Enumerable<MessageToHashTagScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<MessageToHashTagScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    postId?: IntWithAggregatesFilter | number
-    hashtagId?: IntWithAggregatesFilter | number
-  }
-
-  export type HashtagWhereInput = {
-    AND?: Enumerable<HashtagWhereInput>
-    OR?: Enumerable<HashtagWhereInput>
-    NOT?: Enumerable<HashtagWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    MessageToHashTag?: MessageToHashTagListRelationFilter
-  }
-
-  export type HashtagOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    MessageToHashTag?: MessageToHashTagOrderByRelationAggregateInput
-  }
-
-  export type HashtagWhereUniqueInput = {
-    id?: number
-  }
-
-  export type HashtagOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: HashtagCountOrderByAggregateInput
-    _avg?: HashtagAvgOrderByAggregateInput
-    _max?: HashtagMaxOrderByAggregateInput
-    _min?: HashtagMinOrderByAggregateInput
-    _sum?: HashtagSumOrderByAggregateInput
-  }
-
-  export type HashtagScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<HashtagScalarWhereWithAggregatesInput>
-    OR?: Enumerable<HashtagScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<HashtagScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type PostReplyWhereInput = {
-    AND?: Enumerable<PostReplyWhereInput>
-    OR?: Enumerable<PostReplyWhereInput>
-    NOT?: Enumerable<PostReplyWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    userId?: IntFilter | number
-    postId?: IntFilter | number
-    user?: XOR<UserRelationFilter, UserWhereInput>
-    post?: XOR<PostRelationFilter, PostWhereInput>
-  }
-
-  export type PostReplyOrderByWithRelationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-    user?: UserOrderByWithRelationInput
-    post?: PostOrderByWithRelationInput
-  }
-
-  export type PostReplyWhereUniqueInput = {
-    id?: number
-  }
-
-  export type PostReplyOrderByWithAggregationInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-    _count?: PostReplyCountOrderByAggregateInput
-    _avg?: PostReplyAvgOrderByAggregateInput
-    _max?: PostReplyMaxOrderByAggregateInput
-    _min?: PostReplyMinOrderByAggregateInput
-    _sum?: PostReplySumOrderByAggregateInput
-  }
-
-  export type PostReplyScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<PostReplyScalarWhereWithAggregatesInput>
-    OR?: Enumerable<PostReplyScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<PostReplyScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    message?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    userId?: IntWithAggregatesFilter | number
-    postId?: IntWithAggregatesFilter | number
-  }
-
-  export type BinKitchenCategoryCreateInput = {
-    name: string
+  export type userCreateInput = {
+    nameUser: string
+    category: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    menus?: BinKitchenMenuCreateNestedManyWithoutCategoryInput
   }
 
-  export type BinKitchenCategoryUncheckedCreateInput = {
+  export type userUncheckedCreateInput = {
     id?: number
-    name: string
+    nameUser: string
+    category: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    menus?: BinKitchenMenuUncheckedCreateNestedManyWithoutCategoryInput
   }
 
-  export type BinKitchenCategoryUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type userUpdateInput = {
+    nameUser?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    menus?: BinKitchenMenuUpdateManyWithoutCategoryNestedInput
   }
 
-  export type BinKitchenCategoryUncheckedUpdateInput = {
+  export type userUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    nameUser?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    menus?: BinKitchenMenuUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type BinKitchenCategoryCreateManyInput = {
+  export type userCreateManyInput = {
     id?: number
-    name: string
+    nameUser: string
+    category: string
+    createdAt?: Date | string
+  }
+
+  export type userUpdateManyMutationInput = {
+    nameUser?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type userUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nameUser?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategoryCreateInput = {
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz?: QuizCreateNestedManyWithoutCategoryInput
+    rounds?: RoundCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz?: QuizUncheckedCreateNestedManyWithoutCategoryInput
+    rounds?: RoundUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUpdateInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateManyWithoutCategoryNestedInput
+    rounds?: RoundUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUncheckedUpdateManyWithoutCategoryNestedInput
+    rounds?: RoundUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryCreateManyInput = {
+    id?: number
+    category: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type BinKitchenCategoryUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type CategoryUpdateManyMutationInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BinKitchenCategoryUncheckedUpdateManyInput = {
+  export type CategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BinKitchenMenuCreateInput = {
-    name: string
-    image: string
-    price: number
+  export type QuizCreateInput = {
+    quiz: string
+    categoryNameId?: number | null
     createdAt?: Date | string
-    updateAt?: Date | string
-    category?: BinKitchenCategoryCreateNestedOneWithoutMenusInput
-    binKitchenOrderItem?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
+    updatedAt?: Date | string
+    answer: ChoiceCreateNestedOneWithoutQuizAnswerInput
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutQuizInput
+    category: CategoryCreateNestedOneWithoutQuizInput
   }
 
-  export type BinKitchenMenuUncheckedCreateInput = {
+  export type QuizUncheckedCreateInput = {
     id?: number
-    name: string
-    image: string
-    price: number
-    categoryName?: string | null
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
     createdAt?: Date | string
-    updateAt?: Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
+    updatedAt?: Date | string
+    categoryId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type BinKitchenMenuUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+  export type QuizUpdateInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: BinKitchenCategoryUpdateOneWithoutMenusNestedInput
-    binKitchenOrderItem?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutQuizNestedInput
+    category?: CategoryUpdateOneRequiredWithoutQuizNestedInput
   }
 
-  export type BinKitchenMenuUncheckedUpdateInput = {
+  export type QuizUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type BinKitchenMenuCreateManyInput = {
+  export type QuizCreateManyInput = {
     id?: number
-    name: string
-    image: string
-    price: number
-    categoryName?: string | null
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
     createdAt?: Date | string
-    updateAt?: Date | string
+    updatedAt?: Date | string
+    categoryId: number
   }
 
-  export type BinKitchenMenuUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+  export type QuizUpdateManyMutationInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BinKitchenMenuUncheckedUpdateManyInput = {
+  export type QuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    categoryName?: NullableStringFieldUpdateOperationsInput | string | null
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderCreateInput = {
-    status?: string
-    tableId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    items?: BinKitchenOrderItemCreateNestedManyWithoutOrderInput
-  }
-
-  export type BinKitchenOrderUncheckedCreateInput = {
-    id?: number
-    status?: string
-    tableId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    items?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutOrderInput
-  }
-
-  export type BinKitchenOrderUpdateInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    items?: BinKitchenOrderItemUpdateManyWithoutOrderNestedInput
-  }
-
-  export type BinKitchenOrderUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    items?: BinKitchenOrderItemUncheckedUpdateManyWithoutOrderNestedInput
-  }
-
-  export type BinKitchenOrderCreateManyInput = {
-    id?: number
-    status?: string
-    tableId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderUpdateManyMutationInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemCreateInput = {
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    menu: BinKitchenMenuCreateNestedOneWithoutBinKitchenOrderItemInput
-    order?: BinKitchenOrderCreateNestedOneWithoutItemsInput
-  }
-
-  export type BinKitchenOrderItemUncheckedCreateInput = {
-    id?: number
-    menuId: number
-    orderId?: number | null
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemUpdateInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    menu?: BinKitchenMenuUpdateOneRequiredWithoutBinKitchenOrderItemNestedInput
-    order?: BinKitchenOrderUpdateOneWithoutItemsNestedInput
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    orderId?: NullableIntFieldUpdateOperationsInput | number | null
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemCreateManyInput = {
-    id?: number
-    menuId: number
-    orderId?: number | null
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemUpdateManyMutationInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    orderId?: NullableIntFieldUpdateOperationsInput | number | null
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizCatCreateInput = {
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: QuestionCreateNestedManyWithoutCatNameInput
-    rounds?: RoundCreateNestedManyWithoutCatInput
-  }
-
-  export type QuizCatUncheckedCreateInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: QuestionUncheckedCreateNestedManyWithoutCatNameInput
-    rounds?: RoundUncheckedCreateNestedManyWithoutCatInput
-  }
-
-  export type QuizCatUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: QuestionUpdateManyWithoutCatNameNestedInput
-    rounds?: RoundUpdateManyWithoutCatNestedInput
-  }
-
-  export type QuizCatUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: QuestionUncheckedUpdateManyWithoutCatNameNestedInput
-    rounds?: RoundUncheckedUpdateManyWithoutCatNestedInput
-  }
-
-  export type QuizCatCreateManyInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type QuizCatUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuizCatUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuestionCreateInput = {
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    answerId: number
-    catName: QuizCatCreateNestedOneWithoutQuestionsInput
-    choices?: ChoiceCreateNestedManyWithoutQuestionInput
-    roundQuestions?: RoundQuestionCreateNestedManyWithoutQuestionInput
-  }
-
-  export type QuestionUncheckedCreateInput = {
-    id?: number
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    quizCatId: number
-    answerId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
-  }
-
-  export type QuestionUpdateInput = {
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-    catName?: QuizCatUpdateOneRequiredWithoutQuestionsNestedInput
-    choices?: ChoiceUpdateManyWithoutQuestionNestedInput
-    roundQuestions?: RoundQuestionUpdateManyWithoutQuestionNestedInput
-  }
-
-  export type QuestionUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
-  }
-
-  export type QuestionCreateManyInput = {
-    id?: number
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    quizCatId: number
-    answerId: number
-  }
-
-  export type QuestionUpdateManyMutationInput = {
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type QuestionUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: IntFieldUpdateOperationsInput | number
   }
 
   export type ChoiceCreateInput = {
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-    question?: QuestionCreateNestedOneWithoutChoicesInput
-    roundQuestions?: RoundQuestionCreateNestedManyWithoutUserChoiceInput
+    updatedAt?: Date | string
+    quiz?: QuizCreateNestedOneWithoutChoicesInput
+    quizAnswer?: QuizCreateNestedOneWithoutAnswerInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUncheckedCreateInput = {
     id?: number
-    questionId: number
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput
+    updatedAt?: Date | string
+    quizId?: number | null
+    quizAnswer?: QuizUncheckedCreateNestedOneWithoutAnswerInput
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutChoiceInput
   }
 
   export type ChoiceUpdateInput = {
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
-    question?: QuestionUpdateOneWithoutChoicesNestedInput
-    roundQuestions?: RoundQuestionUpdateManyWithoutUserChoiceNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneWithoutChoicesNestedInput
+    quizAnswer?: QuizUpdateOneWithoutAnswerNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionId?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
-    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswer?: QuizUncheckedUpdateOneWithoutAnswerNestedInput
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceCreateManyInput = {
     id?: number
-    questionId: number
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
+    updatedAt?: Date | string
+    quizId?: number | null
   }
 
   export type ChoiceUpdateManyMutationInput = {
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChoiceUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionId?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type RoundCreateInput = {
-    score: number
     createdAt?: Date | string
     updateAt?: Date | string
-    cat: QuizCatCreateNestedOneWithoutRoundsInput
-    questions?: RoundQuestionCreateNestedManyWithoutRoundInput
+    roundQiuz?: RoundQuizCreateNestedManyWithoutRoundInput
+    Category?: CategoryCreateNestedOneWithoutRoundsInput
   }
 
   export type RoundUncheckedCreateInput = {
     id?: number
-    score: number
     createdAt?: Date | string
     updateAt?: Date | string
-    quizCatId: number
-    questions?: RoundQuestionUncheckedCreateNestedManyWithoutRoundInput
+    categoryId?: number | null
+    roundQiuz?: RoundQuizUncheckedCreateNestedManyWithoutRoundInput
   }
 
   export type RoundUpdateInput = {
-    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cat?: QuizCatUpdateOneRequiredWithoutRoundsNestedInput
-    questions?: RoundQuestionUpdateManyWithoutRoundNestedInput
+    roundQiuz?: RoundQuizUpdateManyWithoutRoundNestedInput
+    Category?: CategoryUpdateOneWithoutRoundsNestedInput
   }
 
   export type RoundUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-    questions?: RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    roundQiuz?: RoundQuizUncheckedUpdateManyWithoutRoundNestedInput
   }
 
   export type RoundCreateManyInput = {
     id?: number
-    score: number
     createdAt?: Date | string
     updateAt?: Date | string
-    quizCatId: number
+    categoryId?: number | null
   }
 
   export type RoundUpdateManyMutationInput = {
-    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RoundUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionCreateInput = {
+  export type RoundQuizCreateInput = {
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    question: QuestionCreateNestedOneWithoutRoundQuestionsInput
-    userChoice: ChoiceCreateNestedOneWithoutRoundQuestionsInput
-    round?: RoundCreateNestedOneWithoutQuestionsInput
+    round?: RoundCreateNestedOneWithoutRoundQiuzInput
+    choice?: ChoiceCreateNestedOneWithoutRoundQuizInput
+    quiz?: QuizCreateNestedOneWithoutRoundQuizInput
   }
 
-  export type RoundQuestionUncheckedCreateInput = {
+  export type RoundQuizUncheckedCreateInput = {
     id?: number
+    category: string
+    createdAt?: Date | string
     roundId?: number | null
-    questionId: number
-    choiceId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
+    choiceId?: number | null
+    quizId?: number | null
   }
 
-  export type RoundQuestionUpdateInput = {
+  export type RoundQuizUpdateInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    question?: QuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
-    userChoice?: ChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
-    round?: RoundUpdateOneWithoutQuestionsNestedInput
+    round?: RoundUpdateOneWithoutRoundQiuzNestedInput
+    choice?: ChoiceUpdateOneWithoutRoundQuizNestedInput
+    quiz?: QuizUpdateOneWithoutRoundQuizNestedInput
   }
 
-  export type RoundQuestionUncheckedUpdateInput = {
+  export type RoundQuizUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roundId?: NullableIntFieldUpdateOperationsInput | number | null
-    questionId?: IntFieldUpdateOperationsInput | number
-    choiceId?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: NullableIntFieldUpdateOperationsInput | number | null
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionCreateManyInput = {
+  export type RoundQuizCreateManyInput = {
     id?: number
+    category: string
+    createdAt?: Date | string
     roundId?: number | null
-    questionId: number
-    choiceId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
+    choiceId?: number | null
+    quizId?: number | null
   }
 
-  export type RoundQuestionUpdateManyMutationInput = {
+  export type RoundQuizUpdateManyMutationInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundQuestionUncheckedUpdateManyInput = {
+  export type RoundQuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundId?: NullableIntFieldUpdateOperationsInput | number | null
-    questionId?: IntFieldUpdateOperationsInput | number
-    choiceId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TodoListCreateInput = {
-    task: string
-    status?: string
-    notes?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TodoListUncheckedCreateInput = {
-    id?: number
-    task: string
-    status?: string
-    notes?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TodoListUpdateInput = {
-    task?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TodoListUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    task?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TodoListCreateManyInput = {
-    id?: number
-    task: string
-    status?: string
-    notes?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TodoListUpdateManyMutationInput = {
-    task?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TodoListUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    task?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FollowingCreateInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: UserCreateNestedOneWithoutFromFollowingsInput
-    to: UserCreateNestedOneWithoutToFollowingsInput
-  }
-
-  export type FollowingUncheckedCreateInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
-  }
-
-  export type FollowingUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: UserUpdateOneRequiredWithoutFromFollowingsNestedInput
-    to?: UserUpdateOneRequiredWithoutToFollowingsNestedInput
-  }
-
-  export type FollowingUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type FollowingCreateManyInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
-  }
-
-  export type FollowingUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FollowingUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type UserCreateInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type UserCreateManyInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostCreateInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPostsInput
-    messageToHashTags?: MessageToHashTagCreateNestedManyWithoutPostInput
-    postReplies?: PostReplyCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUncheckedCreateInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-    messageToHashTags?: MessageToHashTagUncheckedCreateNestedManyWithoutPostInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUpdateInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPostsNestedInput
-    messageToHashTags?: MessageToHashTagUpdateManyWithoutPostNestedInput
-    postReplies?: PostReplyUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    messageToHashTags?: MessageToHashTagUncheckedUpdateManyWithoutPostNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostCreateManyInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-  }
-
-  export type PostUpdateManyMutationInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DirectMessageCreateInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: UserCreateNestedOneWithoutFromDirectMessagesInput
-    to: UserCreateNestedOneWithoutToDirectMessagesInput
-  }
-
-  export type DirectMessageUncheckedCreateInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
-  }
-
-  export type DirectMessageUpdateInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: UserUpdateOneRequiredWithoutFromDirectMessagesNestedInput
-    to?: UserUpdateOneRequiredWithoutToDirectMessagesNestedInput
-  }
-
-  export type DirectMessageUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DirectMessageCreateManyInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
-  }
-
-  export type DirectMessageUpdateManyMutationInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DirectMessageUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagCreateInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    post: PostCreateNestedOneWithoutMessageToHashTagsInput
-    hashtag: HashtagCreateNestedOneWithoutMessageToHashTagInput
-  }
-
-  export type MessageToHashTagUncheckedCreateInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-    hashtagId: number
-  }
-
-  export type MessageToHashTagUpdateInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: PostUpdateOneRequiredWithoutMessageToHashTagsNestedInput
-    hashtag?: HashtagUpdateOneRequiredWithoutMessageToHashTagNestedInput
-  }
-
-  export type MessageToHashTagUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagCreateManyInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-    hashtagId: number
-  }
-
-  export type MessageToHashTagUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MessageToHashTagUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
-    hashtagId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type HashtagCreateInput = {
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    MessageToHashTag?: MessageToHashTagCreateNestedManyWithoutHashtagInput
-  }
-
-  export type HashtagUncheckedCreateInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    MessageToHashTag?: MessageToHashTagUncheckedCreateNestedManyWithoutHashtagInput
-  }
-
-  export type HashtagUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    MessageToHashTag?: MessageToHashTagUpdateManyWithoutHashtagNestedInput
-  }
-
-  export type HashtagUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    MessageToHashTag?: MessageToHashTagUncheckedUpdateManyWithoutHashtagNestedInput
-  }
-
-  export type HashtagCreateManyInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HashtagUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type HashtagUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostReplyCreateInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPostRepliesInput
-    post: PostCreateNestedOneWithoutPostRepliesInput
-  }
-
-  export type PostReplyUncheckedCreateInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-    postId: number
-  }
-
-  export type PostReplyUpdateInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPostRepliesNestedInput
-    post?: PostUpdateOneRequiredWithoutPostRepliesNestedInput
-  }
-
-  export type PostReplyUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PostReplyCreateManyInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-    postId: number
-  }
-
-  export type PostReplyUpdateManyMutationInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostReplyUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type IntFilter = {
@@ -20824,42 +7839,32 @@ export namespace Prisma {
     not?: NestedDateTimeFilter | Date | string
   }
 
-  export type BinKitchenMenuListRelationFilter = {
-    every?: BinKitchenMenuWhereInput
-    some?: BinKitchenMenuWhereInput
-    none?: BinKitchenMenuWhereInput
-  }
-
-  export type BinKitchenMenuOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type BinKitchenCategoryCountOrderByAggregateInput = {
+  export type userCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    nameUser?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type BinKitchenCategoryAvgOrderByAggregateInput = {
+  export type userAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type BinKitchenCategoryMaxOrderByAggregateInput = {
+  export type userMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    nameUser?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type BinKitchenCategoryMinOrderByAggregateInput = {
+  export type userMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    nameUser?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type BinKitchenCategorySumOrderByAggregateInput = {
+  export type userSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
@@ -20911,153 +7916,53 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type FloatFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatFilter | number
+  export type QuizListRelationFilter = {
+    every?: QuizWhereInput
+    some?: QuizWhereInput
+    none?: QuizWhereInput
   }
 
-  export type StringNullableFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableFilter | string | null
+  export type RoundListRelationFilter = {
+    every?: RoundWhereInput
+    some?: RoundWhereInput
+    none?: RoundWhereInput
   }
 
-  export type BinKitchenCategoryRelationFilter = {
-    is?: BinKitchenCategoryWhereInput | null
-    isNot?: BinKitchenCategoryWhereInput | null
-  }
-
-  export type BinKitchenOrderItemListRelationFilter = {
-    every?: BinKitchenOrderItemWhereInput
-    some?: BinKitchenOrderItemWhereInput
-    none?: BinKitchenOrderItemWhereInput
-  }
-
-  export type BinKitchenOrderItemOrderByRelationAggregateInput = {
+  export type QuizOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type BinKitchenMenuCountOrderByAggregateInput = {
+  export type RoundOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryName?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type BinKitchenMenuAvgOrderByAggregateInput = {
+  export type CategoryAvgOrderByAggregateInput = {
     id?: SortOrder
-    price?: SortOrder
   }
 
-  export type BinKitchenMenuMaxOrderByAggregateInput = {
+  export type CategoryMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryName?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type BinKitchenMenuMinOrderByAggregateInput = {
+  export type CategoryMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    image?: SortOrder
-    price?: SortOrder
-    categoryName?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type BinKitchenMenuSumOrderByAggregateInput = {
+  export type CategorySumOrderByAggregateInput = {
     id?: SortOrder
-    price?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedFloatFilter
-    _min?: NestedFloatFilter
-    _max?: NestedFloatFilter
-  }
-
-  export type StringNullableWithAggregatesFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter | string | null
-    _count?: NestedIntNullableFilter
-    _min?: NestedStringNullableFilter
-    _max?: NestedStringNullableFilter
-  }
-
-  export type BinKitchenOrderCountOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type BinKitchenOrderAvgOrderByAggregateInput = {
-    id?: SortOrder
-    tableId?: SortOrder
-  }
-
-  export type BinKitchenOrderMaxOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type BinKitchenOrderMinOrderByAggregateInput = {
-    id?: SortOrder
-    status?: SortOrder
-    tableId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type BinKitchenOrderSumOrderByAggregateInput = {
-    id?: SortOrder
-    tableId?: SortOrder
   }
 
   export type IntNullableFilter = {
@@ -21071,60 +7976,78 @@ export namespace Prisma {
     not?: NestedIntNullableFilter | number | null
   }
 
-  export type BinKitchenMenuRelationFilter = {
-    is?: BinKitchenMenuWhereInput
-    isNot?: BinKitchenMenuWhereInput
+  export type ChoiceRelationFilter = {
+    is?: ChoiceWhereInput | null
+    isNot?: ChoiceWhereInput | null
   }
 
-  export type BinKitchenOrderRelationFilter = {
-    is?: BinKitchenOrderWhereInput | null
-    isNot?: BinKitchenOrderWhereInput | null
+  export type ChoiceListRelationFilter = {
+    every?: ChoiceWhereInput
+    some?: ChoiceWhereInput
+    none?: ChoiceWhereInput
   }
 
-  export type BinKitchenOrderItemCountOrderByAggregateInput = {
+  export type RoundQuizListRelationFilter = {
+    every?: RoundQuizWhereInput
+    some?: RoundQuizWhereInput
+    none?: RoundQuizWhereInput
+  }
+
+  export type CategoryRelationFilter = {
+    is?: CategoryWhereInput | null
+    isNot?: CategoryWhereInput | null
+  }
+
+  export type ChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RoundQuizOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuizCountOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    quiz?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
+    categoryId?: SortOrder
   }
 
-  export type BinKitchenOrderItemAvgOrderByAggregateInput = {
+  export type QuizAvgOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
+    categoryId?: SortOrder
   }
 
-  export type BinKitchenOrderItemMaxOrderByAggregateInput = {
+  export type QuizMaxOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    quiz?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
+    categoryId?: SortOrder
   }
 
-  export type BinKitchenOrderItemMinOrderByAggregateInput = {
+  export type QuizMinOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    quiz?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
+    updatedAt?: SortOrder
+    categoryId?: SortOrder
   }
 
-  export type BinKitchenOrderItemSumOrderByAggregateInput = {
+  export type QuizSumOrderByAggregateInput = {
     id?: SortOrder
-    menuId?: SortOrder
-    orderId?: SortOrder
-    quantity?: SortOrder
-    totalPrice?: SortOrder
+    categoryNameId?: SortOrder
+    quizAnswerId?: SortOrder
+    categoryId?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter = {
@@ -21143,202 +8066,74 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter
   }
 
-  export type QuestionListRelationFilter = {
-    every?: QuestionWhereInput
-    some?: QuestionWhereInput
-    none?: QuestionWhereInput
-  }
-
-  export type RoundListRelationFilter = {
-    every?: RoundWhereInput
-    some?: RoundWhereInput
-    none?: RoundWhereInput
-  }
-
-  export type QuestionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RoundOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type QuizCatCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type QuizCatAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type QuizCatMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type QuizCatMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type QuizCatSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type QuizCatRelationFilter = {
-    is?: QuizCatWhereInput
-    isNot?: QuizCatWhereInput
-  }
-
-  export type ChoiceListRelationFilter = {
-    every?: ChoiceWhereInput
-    some?: ChoiceWhereInput
-    none?: ChoiceWhereInput
-  }
-
-  export type RoundQuestionListRelationFilter = {
-    every?: RoundQuestionWhereInput
-    some?: RoundQuestionWhereInput
-    none?: RoundQuestionWhereInput
-  }
-
-  export type ChoiceOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type RoundQuestionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type QuestionCountOrderByAggregateInput = {
-    id?: SortOrder
-    question?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-  }
-
-  export type QuestionAvgOrderByAggregateInput = {
-    id?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-  }
-
-  export type QuestionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    question?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-  }
-
-  export type QuestionMinOrderByAggregateInput = {
-    id?: SortOrder
-    question?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-  }
-
-  export type QuestionSumOrderByAggregateInput = {
-    id?: SortOrder
-    quizCatId?: SortOrder
-    answerId?: SortOrder
-  }
-
-  export type QuestionRelationFilter = {
-    is?: QuestionWhereInput
-    isNot?: QuestionWhereInput
+  export type QuizRelationFilter = {
+    is?: QuizWhereInput | null
+    isNot?: QuizWhereInput | null
   }
 
   export type ChoiceCountOrderByAggregateInput = {
     id?: SortOrder
-    questionId?: SortOrder
     choice?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    questionsId?: SortOrder
+    updatedAt?: SortOrder
+    quizId?: SortOrder
   }
 
   export type ChoiceAvgOrderByAggregateInput = {
     id?: SortOrder
-    questionId?: SortOrder
-    questionsId?: SortOrder
+    quizId?: SortOrder
   }
 
   export type ChoiceMaxOrderByAggregateInput = {
     id?: SortOrder
-    questionId?: SortOrder
     choice?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    questionsId?: SortOrder
+    updatedAt?: SortOrder
+    quizId?: SortOrder
   }
 
   export type ChoiceMinOrderByAggregateInput = {
     id?: SortOrder
-    questionId?: SortOrder
     choice?: SortOrder
     createdAt?: SortOrder
-    updateAt?: SortOrder
-    questionsId?: SortOrder
+    updatedAt?: SortOrder
+    quizId?: SortOrder
   }
 
   export type ChoiceSumOrderByAggregateInput = {
     id?: SortOrder
-    questionId?: SortOrder
-    questionsId?: SortOrder
+    quizId?: SortOrder
   }
 
   export type RoundCountOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    quizCatId?: SortOrder
+    categoryId?: SortOrder
   }
 
   export type RoundAvgOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
-    quizCatId?: SortOrder
+    categoryId?: SortOrder
   }
 
   export type RoundMaxOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    quizCatId?: SortOrder
+    categoryId?: SortOrder
   }
 
   export type RoundMinOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
     createdAt?: SortOrder
     updateAt?: SortOrder
-    quizCatId?: SortOrder
+    categoryId?: SortOrder
   }
 
   export type RoundSumOrderByAggregateInput = {
     id?: SortOrder
-    score?: SortOrder
-    quizCatId?: SortOrder
-  }
-
-  export type ChoiceRelationFilter = {
-    is?: ChoiceWhereInput
-    isNot?: ChoiceWhereInput
+    categoryId?: SortOrder
   }
 
   export type RoundRelationFilter = {
@@ -21346,404 +8141,45 @@ export namespace Prisma {
     isNot?: RoundWhereInput | null
   }
 
-  export type RoundQuestionCountOrderByAggregateInput = {
+  export type RoundQuizCountOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    choiceId?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type RoundQuizAvgOrderByAggregateInput = {
     id?: SortOrder
     roundId?: SortOrder
-    questionId?: SortOrder
     choiceId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
+    quizId?: SortOrder
   }
 
-  export type RoundQuestionAvgOrderByAggregateInput = {
+  export type RoundQuizMaxOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    choiceId?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type RoundQuizMinOrderByAggregateInput = {
+    id?: SortOrder
+    category?: SortOrder
+    createdAt?: SortOrder
+    roundId?: SortOrder
+    choiceId?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type RoundQuizSumOrderByAggregateInput = {
     id?: SortOrder
     roundId?: SortOrder
-    questionId?: SortOrder
     choiceId?: SortOrder
-  }
-
-  export type RoundQuestionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    roundId?: SortOrder
-    questionId?: SortOrder
-    choiceId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type RoundQuestionMinOrderByAggregateInput = {
-    id?: SortOrder
-    roundId?: SortOrder
-    questionId?: SortOrder
-    choiceId?: SortOrder
-    createdAt?: SortOrder
-    updateAt?: SortOrder
-  }
-
-  export type RoundQuestionSumOrderByAggregateInput = {
-    id?: SortOrder
-    roundId?: SortOrder
-    questionId?: SortOrder
-    choiceId?: SortOrder
-  }
-
-  export type TodoListCountOrderByAggregateInput = {
-    id?: SortOrder
-    task?: SortOrder
-    status?: SortOrder
-    notes?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TodoListAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type TodoListMaxOrderByAggregateInput = {
-    id?: SortOrder
-    task?: SortOrder
-    status?: SortOrder
-    notes?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TodoListMinOrderByAggregateInput = {
-    id?: SortOrder
-    task?: SortOrder
-    status?: SortOrder
-    notes?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TodoListSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type UserRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type FollowingCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type FollowingAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type FollowingMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type FollowingMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type FollowingSumOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type PostListRelationFilter = {
-    every?: PostWhereInput
-    some?: PostWhereInput
-    none?: PostWhereInput
-  }
-
-  export type DirectMessageListRelationFilter = {
-    every?: DirectMessageWhereInput
-    some?: DirectMessageWhereInput
-    none?: DirectMessageWhereInput
-  }
-
-  export type PostReplyListRelationFilter = {
-    every?: PostReplyWhereInput
-    some?: PostReplyWhereInput
-    none?: PostReplyWhereInput
-  }
-
-  export type FollowingListRelationFilter = {
-    every?: FollowingWhereInput
-    some?: FollowingWhereInput
-    none?: FollowingWhereInput
-  }
-
-  export type PostOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type DirectMessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PostReplyOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type FollowingOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    profileImage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type UserMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    profileImage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type UserMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    profileImage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type MessageToHashTagListRelationFilter = {
-    every?: MessageToHashTagWhereInput
-    some?: MessageToHashTagWhereInput
-    none?: MessageToHashTagWhereInput
-  }
-
-  export type MessageToHashTagOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PostCountOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type PostAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type PostMaxOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type PostMinOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type PostSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type DirectMessageCountOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type DirectMessageAvgOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type DirectMessageMaxOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type DirectMessageMinOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type DirectMessageSumOrderByAggregateInput = {
-    id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
-  }
-
-  export type PostRelationFilter = {
-    is?: PostWhereInput
-    isNot?: PostWhereInput
-  }
-
-  export type HashtagRelationFilter = {
-    is?: HashtagWhereInput
-    isNot?: HashtagWhereInput
-  }
-
-  export type MessageToHashTagCountOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type MessageToHashTagAvgOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type MessageToHashTagMaxOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type MessageToHashTagMinOrderByAggregateInput = {
-    id?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type MessageToHashTagSumOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    hashtagId?: SortOrder
-  }
-
-  export type HashtagCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type HashtagAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type HashtagMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type HashtagMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type HashtagSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type PostReplyCountOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostReplyAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostReplyMaxOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostReplyMinOrderByAggregateInput = {
-    id?: SortOrder
-    message?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostReplySumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type BinKitchenMenuCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
-    createMany?: BinKitchenMenuCreateManyCategoryInputEnvelope
-    connect?: Enumerable<BinKitchenMenuWhereUniqueInput>
-  }
-
-  export type BinKitchenMenuUncheckedCreateNestedManyWithoutCategoryInput = {
-    create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
-    createMany?: BinKitchenMenuCreateManyCategoryInputEnvelope
-    connect?: Enumerable<BinKitchenMenuWhereUniqueInput>
+    quizId?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -21754,20 +8190,6 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type BinKitchenMenuUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
-    upsert?: Enumerable<BinKitchenMenuUpsertWithWhereUniqueWithoutCategoryInput>
-    createMany?: BinKitchenMenuCreateManyCategoryInputEnvelope
-    set?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    delete?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    connect?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    update?: Enumerable<BinKitchenMenuUpdateWithWhereUniqueWithoutCategoryInput>
-    updateMany?: Enumerable<BinKitchenMenuUpdateManyWithWhereWithoutCategoryInput>
-    deleteMany?: Enumerable<BinKitchenMenuScalarWhereInput>
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -21776,160 +8198,128 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type BinKitchenMenuUncheckedUpdateManyWithoutCategoryNestedInput = {
-    create?: XOR<Enumerable<BinKitchenMenuCreateWithoutCategoryInput>, Enumerable<BinKitchenMenuUncheckedCreateWithoutCategoryInput>>
-    connectOrCreate?: Enumerable<BinKitchenMenuCreateOrConnectWithoutCategoryInput>
-    upsert?: Enumerable<BinKitchenMenuUpsertWithWhereUniqueWithoutCategoryInput>
-    createMany?: BinKitchenMenuCreateManyCategoryInputEnvelope
-    set?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    delete?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    connect?: Enumerable<BinKitchenMenuWhereUniqueInput>
-    update?: Enumerable<BinKitchenMenuUpdateWithWhereUniqueWithoutCategoryInput>
-    updateMany?: Enumerable<BinKitchenMenuUpdateManyWithWhereWithoutCategoryInput>
-    deleteMany?: Enumerable<BinKitchenMenuScalarWhereInput>
+  export type QuizCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
   }
 
-  export type BinKitchenCategoryCreateNestedOneWithoutMenusInput = {
-    create?: XOR<BinKitchenCategoryCreateWithoutMenusInput, BinKitchenCategoryUncheckedCreateWithoutMenusInput>
-    connectOrCreate?: BinKitchenCategoryCreateOrConnectWithoutMenusInput
-    connect?: BinKitchenCategoryWhereUniqueInput
+  export type RoundCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutCategoryInput>, Enumerable<RoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCategoryInput>
+    createMany?: RoundCreateManyCategoryInputEnvelope
+    connect?: Enumerable<RoundWhereUniqueInput>
   }
 
-  export type BinKitchenOrderItemCreateNestedManyWithoutMenuInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutMenuInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutMenuInput>
-    createMany?: BinKitchenOrderItemCreateManyMenuInputEnvelope
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
+  export type QuizUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    connect?: Enumerable<QuizWhereUniqueInput>
   }
 
-  export type BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutMenuInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutMenuInput>
-    createMany?: BinKitchenOrderItemCreateManyMenuInputEnvelope
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
+  export type RoundUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutCategoryInput>, Enumerable<RoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCategoryInput>
+    createMany?: RoundCreateManyCategoryInputEnvelope
+    connect?: Enumerable<RoundWhereUniqueInput>
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type QuizUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
   }
 
-  export type BinKitchenCategoryUpdateOneWithoutMenusNestedInput = {
-    create?: XOR<BinKitchenCategoryCreateWithoutMenusInput, BinKitchenCategoryUncheckedCreateWithoutMenusInput>
-    connectOrCreate?: BinKitchenCategoryCreateOrConnectWithoutMenusInput
-    upsert?: BinKitchenCategoryUpsertWithoutMenusInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: BinKitchenCategoryWhereUniqueInput
-    update?: XOR<BinKitchenCategoryUpdateWithoutMenusInput, BinKitchenCategoryUncheckedUpdateWithoutMenusInput>
+  export type RoundUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutCategoryInput>, Enumerable<RoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: RoundCreateManyCategoryInputEnvelope
+    set?: Enumerable<RoundWhereUniqueInput>
+    disconnect?: Enumerable<RoundWhereUniqueInput>
+    delete?: Enumerable<RoundWhereUniqueInput>
+    connect?: Enumerable<RoundWhereUniqueInput>
+    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<RoundScalarWhereInput>
   }
 
-  export type BinKitchenOrderItemUpdateManyWithoutMenuNestedInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutMenuInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutMenuInput>
-    upsert?: Enumerable<BinKitchenOrderItemUpsertWithWhereUniqueWithoutMenuInput>
-    createMany?: BinKitchenOrderItemCreateManyMenuInputEnvelope
-    set?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    delete?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    update?: Enumerable<BinKitchenOrderItemUpdateWithWhereUniqueWithoutMenuInput>
-    updateMany?: Enumerable<BinKitchenOrderItemUpdateManyWithWhereWithoutMenuInput>
-    deleteMany?: Enumerable<BinKitchenOrderItemScalarWhereInput>
+  export type QuizUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<QuizCreateWithoutCategoryInput>, Enumerable<QuizUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<QuizCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<QuizUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: QuizCreateManyCategoryInputEnvelope
+    set?: Enumerable<QuizWhereUniqueInput>
+    disconnect?: Enumerable<QuizWhereUniqueInput>
+    delete?: Enumerable<QuizWhereUniqueInput>
+    connect?: Enumerable<QuizWhereUniqueInput>
+    update?: Enumerable<QuizUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<QuizUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<QuizScalarWhereInput>
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type RoundUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<Enumerable<RoundCreateWithoutCategoryInput>, Enumerable<RoundUncheckedCreateWithoutCategoryInput>>
+    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCategoryInput>
+    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutCategoryInput>
+    createMany?: RoundCreateManyCategoryInputEnvelope
+    set?: Enumerable<RoundWhereUniqueInput>
+    disconnect?: Enumerable<RoundWhereUniqueInput>
+    delete?: Enumerable<RoundWhereUniqueInput>
+    connect?: Enumerable<RoundWhereUniqueInput>
+    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutCategoryInput>
+    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutCategoryInput>
+    deleteMany?: Enumerable<RoundScalarWhereInput>
   }
 
-  export type BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutMenuInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutMenuInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutMenuInput>
-    upsert?: Enumerable<BinKitchenOrderItemUpsertWithWhereUniqueWithoutMenuInput>
-    createMany?: BinKitchenOrderItemCreateManyMenuInputEnvelope
-    set?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    delete?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    update?: Enumerable<BinKitchenOrderItemUpdateWithWhereUniqueWithoutMenuInput>
-    updateMany?: Enumerable<BinKitchenOrderItemUpdateManyWithWhereWithoutMenuInput>
-    deleteMany?: Enumerable<BinKitchenOrderItemScalarWhereInput>
+  export type ChoiceCreateNestedOneWithoutQuizAnswerInput = {
+    create?: XOR<ChoiceCreateWithoutQuizAnswerInput, ChoiceUncheckedCreateWithoutQuizAnswerInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutQuizAnswerInput
+    connect?: ChoiceWhereUniqueInput
   }
 
-  export type BinKitchenOrderItemCreateNestedManyWithoutOrderInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutOrderInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutOrderInput>
-    createMany?: BinKitchenOrderItemCreateManyOrderInputEnvelope
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
+  export type ChoiceCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type BinKitchenOrderItemUncheckedCreateNestedManyWithoutOrderInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutOrderInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutOrderInput>
-    createMany?: BinKitchenOrderItemCreateManyOrderInputEnvelope
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
+  export type RoundQuizCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuizInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuizInput>
+    createMany?: RoundQuizCreateManyQuizInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type BinKitchenOrderItemUpdateManyWithoutOrderNestedInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutOrderInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutOrderInput>
-    upsert?: Enumerable<BinKitchenOrderItemUpsertWithWhereUniqueWithoutOrderInput>
-    createMany?: BinKitchenOrderItemCreateManyOrderInputEnvelope
-    set?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    delete?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    update?: Enumerable<BinKitchenOrderItemUpdateWithWhereUniqueWithoutOrderInput>
-    updateMany?: Enumerable<BinKitchenOrderItemUpdateManyWithWhereWithoutOrderInput>
-    deleteMany?: Enumerable<BinKitchenOrderItemScalarWhereInput>
+  export type CategoryCreateNestedOneWithoutQuizInput = {
+    create?: XOR<CategoryCreateWithoutQuizInput, CategoryUncheckedCreateWithoutQuizInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutQuizInput
+    connect?: CategoryWhereUniqueInput
   }
 
-  export type BinKitchenOrderItemUncheckedUpdateManyWithoutOrderNestedInput = {
-    create?: XOR<Enumerable<BinKitchenOrderItemCreateWithoutOrderInput>, Enumerable<BinKitchenOrderItemUncheckedCreateWithoutOrderInput>>
-    connectOrCreate?: Enumerable<BinKitchenOrderItemCreateOrConnectWithoutOrderInput>
-    upsert?: Enumerable<BinKitchenOrderItemUpsertWithWhereUniqueWithoutOrderInput>
-    createMany?: BinKitchenOrderItemCreateManyOrderInputEnvelope
-    set?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    disconnect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    delete?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    connect?: Enumerable<BinKitchenOrderItemWhereUniqueInput>
-    update?: Enumerable<BinKitchenOrderItemUpdateWithWhereUniqueWithoutOrderInput>
-    updateMany?: Enumerable<BinKitchenOrderItemUpdateManyWithWhereWithoutOrderInput>
-    deleteMany?: Enumerable<BinKitchenOrderItemScalarWhereInput>
+  export type ChoiceUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<ChoiceWhereUniqueInput>
   }
 
-  export type BinKitchenMenuCreateNestedOneWithoutBinKitchenOrderItemInput = {
-    create?: XOR<BinKitchenMenuCreateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedCreateWithoutBinKitchenOrderItemInput>
-    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutBinKitchenOrderItemInput
-    connect?: BinKitchenMenuWhereUniqueInput
-  }
-
-  export type BinKitchenOrderCreateNestedOneWithoutItemsInput = {
-    create?: XOR<BinKitchenOrderCreateWithoutItemsInput, BinKitchenOrderUncheckedCreateWithoutItemsInput>
-    connectOrCreate?: BinKitchenOrderCreateOrConnectWithoutItemsInput
-    connect?: BinKitchenOrderWhereUniqueInput
-  }
-
-  export type BinKitchenMenuUpdateOneRequiredWithoutBinKitchenOrderItemNestedInput = {
-    create?: XOR<BinKitchenMenuCreateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedCreateWithoutBinKitchenOrderItemInput>
-    connectOrCreate?: BinKitchenMenuCreateOrConnectWithoutBinKitchenOrderItemInput
-    upsert?: BinKitchenMenuUpsertWithoutBinKitchenOrderItemInput
-    connect?: BinKitchenMenuWhereUniqueInput
-    update?: XOR<BinKitchenMenuUpdateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedUpdateWithoutBinKitchenOrderItemInput>
-  }
-
-  export type BinKitchenOrderUpdateOneWithoutItemsNestedInput = {
-    create?: XOR<BinKitchenOrderCreateWithoutItemsInput, BinKitchenOrderUncheckedCreateWithoutItemsInput>
-    connectOrCreate?: BinKitchenOrderCreateOrConnectWithoutItemsInput
-    upsert?: BinKitchenOrderUpsertWithoutItemsInput
-    disconnect?: boolean
-    delete?: boolean
-    connect?: BinKitchenOrderWhereUniqueInput
-    update?: XOR<BinKitchenOrderUpdateWithoutItemsInput, BinKitchenOrderUncheckedUpdateWithoutItemsInput>
+  export type RoundQuizUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuizInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuizInput>
+    createMany?: RoundQuizCreateManyQuizInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -21940,848 +8330,272 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type QuestionCreateNestedManyWithoutCatNameInput = {
-    create?: XOR<Enumerable<QuestionCreateWithoutCatNameInput>, Enumerable<QuestionUncheckedCreateWithoutCatNameInput>>
-    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCatNameInput>
-    createMany?: QuestionCreateManyCatNameInputEnvelope
-    connect?: Enumerable<QuestionWhereUniqueInput>
+  export type ChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput = {
+    create?: XOR<ChoiceCreateWithoutQuizAnswerInput, ChoiceUncheckedCreateWithoutQuizAnswerInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutQuizAnswerInput
+    upsert?: ChoiceUpsertWithoutQuizAnswerInput
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutQuizAnswerInput, ChoiceUncheckedUpdateWithoutQuizAnswerInput>
   }
 
-  export type RoundCreateNestedManyWithoutCatInput = {
-    create?: XOR<Enumerable<RoundCreateWithoutCatInput>, Enumerable<RoundUncheckedCreateWithoutCatInput>>
-    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCatInput>
-    createMany?: RoundCreateManyCatInputEnvelope
-    connect?: Enumerable<RoundWhereUniqueInput>
-  }
-
-  export type QuestionUncheckedCreateNestedManyWithoutCatNameInput = {
-    create?: XOR<Enumerable<QuestionCreateWithoutCatNameInput>, Enumerable<QuestionUncheckedCreateWithoutCatNameInput>>
-    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCatNameInput>
-    createMany?: QuestionCreateManyCatNameInputEnvelope
-    connect?: Enumerable<QuestionWhereUniqueInput>
-  }
-
-  export type RoundUncheckedCreateNestedManyWithoutCatInput = {
-    create?: XOR<Enumerable<RoundCreateWithoutCatInput>, Enumerable<RoundUncheckedCreateWithoutCatInput>>
-    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCatInput>
-    createMany?: RoundCreateManyCatInputEnvelope
-    connect?: Enumerable<RoundWhereUniqueInput>
-  }
-
-  export type QuestionUpdateManyWithoutCatNameNestedInput = {
-    create?: XOR<Enumerable<QuestionCreateWithoutCatNameInput>, Enumerable<QuestionUncheckedCreateWithoutCatNameInput>>
-    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCatNameInput>
-    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutCatNameInput>
-    createMany?: QuestionCreateManyCatNameInputEnvelope
-    set?: Enumerable<QuestionWhereUniqueInput>
-    disconnect?: Enumerable<QuestionWhereUniqueInput>
-    delete?: Enumerable<QuestionWhereUniqueInput>
-    connect?: Enumerable<QuestionWhereUniqueInput>
-    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutCatNameInput>
-    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutCatNameInput>
-    deleteMany?: Enumerable<QuestionScalarWhereInput>
-  }
-
-  export type RoundUpdateManyWithoutCatNestedInput = {
-    create?: XOR<Enumerable<RoundCreateWithoutCatInput>, Enumerable<RoundUncheckedCreateWithoutCatInput>>
-    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCatInput>
-    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutCatInput>
-    createMany?: RoundCreateManyCatInputEnvelope
-    set?: Enumerable<RoundWhereUniqueInput>
-    disconnect?: Enumerable<RoundWhereUniqueInput>
-    delete?: Enumerable<RoundWhereUniqueInput>
-    connect?: Enumerable<RoundWhereUniqueInput>
-    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutCatInput>
-    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutCatInput>
-    deleteMany?: Enumerable<RoundScalarWhereInput>
-  }
-
-  export type QuestionUncheckedUpdateManyWithoutCatNameNestedInput = {
-    create?: XOR<Enumerable<QuestionCreateWithoutCatNameInput>, Enumerable<QuestionUncheckedCreateWithoutCatNameInput>>
-    connectOrCreate?: Enumerable<QuestionCreateOrConnectWithoutCatNameInput>
-    upsert?: Enumerable<QuestionUpsertWithWhereUniqueWithoutCatNameInput>
-    createMany?: QuestionCreateManyCatNameInputEnvelope
-    set?: Enumerable<QuestionWhereUniqueInput>
-    disconnect?: Enumerable<QuestionWhereUniqueInput>
-    delete?: Enumerable<QuestionWhereUniqueInput>
-    connect?: Enumerable<QuestionWhereUniqueInput>
-    update?: Enumerable<QuestionUpdateWithWhereUniqueWithoutCatNameInput>
-    updateMany?: Enumerable<QuestionUpdateManyWithWhereWithoutCatNameInput>
-    deleteMany?: Enumerable<QuestionScalarWhereInput>
-  }
-
-  export type RoundUncheckedUpdateManyWithoutCatNestedInput = {
-    create?: XOR<Enumerable<RoundCreateWithoutCatInput>, Enumerable<RoundUncheckedCreateWithoutCatInput>>
-    connectOrCreate?: Enumerable<RoundCreateOrConnectWithoutCatInput>
-    upsert?: Enumerable<RoundUpsertWithWhereUniqueWithoutCatInput>
-    createMany?: RoundCreateManyCatInputEnvelope
-    set?: Enumerable<RoundWhereUniqueInput>
-    disconnect?: Enumerable<RoundWhereUniqueInput>
-    delete?: Enumerable<RoundWhereUniqueInput>
-    connect?: Enumerable<RoundWhereUniqueInput>
-    update?: Enumerable<RoundUpdateWithWhereUniqueWithoutCatInput>
-    updateMany?: Enumerable<RoundUpdateManyWithWhereWithoutCatInput>
-    deleteMany?: Enumerable<RoundScalarWhereInput>
-  }
-
-  export type QuizCatCreateNestedOneWithoutQuestionsInput = {
-    create?: XOR<QuizCatCreateWithoutQuestionsInput, QuizCatUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: QuizCatCreateOrConnectWithoutQuestionsInput
-    connect?: QuizCatWhereUniqueInput
-  }
-
-  export type ChoiceCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
-    createMany?: ChoiceCreateManyQuestionInputEnvelope
-    connect?: Enumerable<ChoiceWhereUniqueInput>
-  }
-
-  export type RoundQuestionCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
-    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-  }
-
-  export type ChoiceUncheckedCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
-    createMany?: ChoiceCreateManyQuestionInputEnvelope
-    connect?: Enumerable<ChoiceWhereUniqueInput>
-  }
-
-  export type RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
-    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-  }
-
-  export type QuizCatUpdateOneRequiredWithoutQuestionsNestedInput = {
-    create?: XOR<QuizCatCreateWithoutQuestionsInput, QuizCatUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: QuizCatCreateOrConnectWithoutQuestionsInput
-    upsert?: QuizCatUpsertWithoutQuestionsInput
-    connect?: QuizCatWhereUniqueInput
-    update?: XOR<QuizCatUpdateWithoutQuestionsInput, QuizCatUncheckedUpdateWithoutQuestionsInput>
-  }
-
-  export type ChoiceUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: ChoiceCreateManyQuestionInputEnvelope
+  export type ChoiceUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
     set?: Enumerable<ChoiceWhereUniqueInput>
     disconnect?: Enumerable<ChoiceWhereUniqueInput>
     delete?: Enumerable<ChoiceWhereUniqueInput>
     connect?: Enumerable<ChoiceWhereUniqueInput>
-    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuizInput>
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type RoundQuestionUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutQuestionInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuizInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: RoundQuizCreateManyQuizInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type ChoiceUncheckedUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<ChoiceCreateWithoutQuestionInput>, Enumerable<ChoiceUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: ChoiceCreateManyQuestionInputEnvelope
+  export type CategoryUpdateOneRequiredWithoutQuizNestedInput = {
+    create?: XOR<CategoryCreateWithoutQuizInput, CategoryUncheckedCreateWithoutQuizInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutQuizInput
+    upsert?: CategoryUpsertWithoutQuizInput
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<CategoryUpdateWithoutQuizInput, CategoryUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type ChoiceUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<ChoiceCreateWithoutQuizInput>, Enumerable<ChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<ChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<ChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: ChoiceCreateManyQuizInputEnvelope
     set?: Enumerable<ChoiceWhereUniqueInput>
     disconnect?: Enumerable<ChoiceWhereUniqueInput>
     delete?: Enumerable<ChoiceWhereUniqueInput>
     connect?: Enumerable<ChoiceWhereUniqueInput>
-    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuestionInput>
+    update?: Enumerable<ChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<ChoiceUpdateManyWithWhereWithoutQuizInput>
     deleteMany?: Enumerable<ChoiceScalarWhereInput>
   }
 
-  export type RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutQuestionInput>, Enumerable<RoundQuestionUncheckedCreateWithoutQuestionInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutQuestionInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput>
-    createMany?: RoundQuestionCreateManyQuestionInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutQuestionInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutQuizInput>, Enumerable<RoundQuizUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: RoundQuizCreateManyQuizInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type QuestionCreateNestedOneWithoutChoicesInput = {
-    create?: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutChoicesInput
-    connect?: QuestionWhereUniqueInput
+  export type QuizCreateNestedOneWithoutChoicesInput = {
+    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
+    connect?: QuizWhereUniqueInput
   }
 
-  export type RoundQuestionCreateNestedManyWithoutUserChoiceInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutUserChoiceInput>, Enumerable<RoundQuestionUncheckedCreateWithoutUserChoiceInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutUserChoiceInput>
-    createMany?: RoundQuestionCreateManyUserChoiceInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  export type QuizCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutAnswerInput
+    connect?: QuizWhereUniqueInput
   }
 
-  export type RoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutUserChoiceInput>, Enumerable<RoundQuestionUncheckedCreateWithoutUserChoiceInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutUserChoiceInput>
-    createMany?: RoundQuestionCreateManyUserChoiceInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  export type RoundQuizCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutChoiceInput>, Enumerable<RoundQuizUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundQuizCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type QuestionUpdateOneWithoutChoicesNestedInput = {
-    create?: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutChoicesInput
-    upsert?: QuestionUpsertWithoutChoicesInput
+  export type QuizUncheckedCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutAnswerInput
+    connect?: QuizWhereUniqueInput
+  }
+
+  export type RoundQuizUncheckedCreateNestedManyWithoutChoiceInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutChoiceInput>, Enumerable<RoundQuizUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutChoiceInput>
+    createMany?: RoundQuizCreateManyChoiceInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+  }
+
+  export type QuizUpdateOneWithoutChoicesNestedInput = {
+    create?: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutChoicesInput
+    upsert?: QuizUpsertWithoutChoicesInput
     disconnect?: boolean
     delete?: boolean
-    connect?: QuestionWhereUniqueInput
-    update?: XOR<QuestionUpdateWithoutChoicesInput, QuestionUncheckedUpdateWithoutChoicesInput>
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
   }
 
-  export type RoundQuestionUpdateManyWithoutUserChoiceNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutUserChoiceInput>, Enumerable<RoundQuestionUncheckedCreateWithoutUserChoiceInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutUserChoiceInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput>
-    createMany?: RoundQuestionCreateManyUserChoiceInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutUserChoiceInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type QuizUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutAnswerInput
+    upsert?: QuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutAnswerInput, QuizUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type RoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutUserChoiceInput>, Enumerable<RoundQuestionUncheckedCreateWithoutUserChoiceInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutUserChoiceInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput>
-    createMany?: RoundQuestionCreateManyUserChoiceInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutUserChoiceInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutChoiceInput>, Enumerable<RoundQuizUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundQuizCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type QuizCatCreateNestedOneWithoutRoundsInput = {
-    create?: XOR<QuizCatCreateWithoutRoundsInput, QuizCatUncheckedCreateWithoutRoundsInput>
-    connectOrCreate?: QuizCatCreateOrConnectWithoutRoundsInput
-    connect?: QuizCatWhereUniqueInput
+  export type QuizUncheckedUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutAnswerInput
+    upsert?: QuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutAnswerInput, QuizUncheckedUpdateWithoutAnswerInput>
   }
 
-  export type RoundQuestionCreateNestedManyWithoutRoundInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
-    createMany?: RoundQuestionCreateManyRoundInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  export type RoundQuizUncheckedUpdateManyWithoutChoiceNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutChoiceInput>, Enumerable<RoundQuizUncheckedCreateWithoutChoiceInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutChoiceInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutChoiceInput>
+    createMany?: RoundQuizCreateManyChoiceInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutChoiceInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutChoiceInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type RoundQuestionUncheckedCreateNestedManyWithoutRoundInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
-    createMany?: RoundQuestionCreateManyRoundInputEnvelope
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
+  export type RoundQuizCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutRoundInput>, Enumerable<RoundQuizUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutRoundInput>
+    createMany?: RoundQuizCreateManyRoundInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type QuizCatUpdateOneRequiredWithoutRoundsNestedInput = {
-    create?: XOR<QuizCatCreateWithoutRoundsInput, QuizCatUncheckedCreateWithoutRoundsInput>
-    connectOrCreate?: QuizCatCreateOrConnectWithoutRoundsInput
-    upsert?: QuizCatUpsertWithoutRoundsInput
-    connect?: QuizCatWhereUniqueInput
-    update?: XOR<QuizCatUpdateWithoutRoundsInput, QuizCatUncheckedUpdateWithoutRoundsInput>
+  export type CategoryCreateNestedOneWithoutRoundsInput = {
+    create?: XOR<CategoryCreateWithoutRoundsInput, CategoryUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutRoundsInput
+    connect?: CategoryWhereUniqueInput
   }
 
-  export type RoundQuestionUpdateManyWithoutRoundNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
-    createMany?: RoundQuestionCreateManyRoundInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutRoundInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizUncheckedCreateNestedManyWithoutRoundInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutRoundInput>, Enumerable<RoundQuizUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutRoundInput>
+    createMany?: RoundQuizCreateManyRoundInputEnvelope
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
   }
 
-  export type RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput = {
-    create?: XOR<Enumerable<RoundQuestionCreateWithoutRoundInput>, Enumerable<RoundQuestionUncheckedCreateWithoutRoundInput>>
-    connectOrCreate?: Enumerable<RoundQuestionCreateOrConnectWithoutRoundInput>
-    upsert?: Enumerable<RoundQuestionUpsertWithWhereUniqueWithoutRoundInput>
-    createMany?: RoundQuestionCreateManyRoundInputEnvelope
-    set?: Enumerable<RoundQuestionWhereUniqueInput>
-    disconnect?: Enumerable<RoundQuestionWhereUniqueInput>
-    delete?: Enumerable<RoundQuestionWhereUniqueInput>
-    connect?: Enumerable<RoundQuestionWhereUniqueInput>
-    update?: Enumerable<RoundQuestionUpdateWithWhereUniqueWithoutRoundInput>
-    updateMany?: Enumerable<RoundQuestionUpdateManyWithWhereWithoutRoundInput>
-    deleteMany?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutRoundInput>, Enumerable<RoundQuizUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: RoundQuizCreateManyRoundInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type QuestionCreateNestedOneWithoutRoundQuestionsInput = {
-    create?: XOR<QuestionCreateWithoutRoundQuestionsInput, QuestionUncheckedCreateWithoutRoundQuestionsInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionsInput
-    connect?: QuestionWhereUniqueInput
+  export type CategoryUpdateOneWithoutRoundsNestedInput = {
+    create?: XOR<CategoryCreateWithoutRoundsInput, CategoryUncheckedCreateWithoutRoundsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutRoundsInput
+    upsert?: CategoryUpsertWithoutRoundsInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<CategoryUpdateWithoutRoundsInput, CategoryUncheckedUpdateWithoutRoundsInput>
   }
 
-  export type ChoiceCreateNestedOneWithoutRoundQuestionsInput = {
-    create?: XOR<ChoiceCreateWithoutRoundQuestionsInput, ChoiceUncheckedCreateWithoutRoundQuestionsInput>
-    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuestionsInput
-    connect?: ChoiceWhereUniqueInput
+  export type RoundQuizUncheckedUpdateManyWithoutRoundNestedInput = {
+    create?: XOR<Enumerable<RoundQuizCreateWithoutRoundInput>, Enumerable<RoundQuizUncheckedCreateWithoutRoundInput>>
+    connectOrCreate?: Enumerable<RoundQuizCreateOrConnectWithoutRoundInput>
+    upsert?: Enumerable<RoundQuizUpsertWithWhereUniqueWithoutRoundInput>
+    createMany?: RoundQuizCreateManyRoundInputEnvelope
+    set?: Enumerable<RoundQuizWhereUniqueInput>
+    disconnect?: Enumerable<RoundQuizWhereUniqueInput>
+    delete?: Enumerable<RoundQuizWhereUniqueInput>
+    connect?: Enumerable<RoundQuizWhereUniqueInput>
+    update?: Enumerable<RoundQuizUpdateWithWhereUniqueWithoutRoundInput>
+    updateMany?: Enumerable<RoundQuizUpdateManyWithWhereWithoutRoundInput>
+    deleteMany?: Enumerable<RoundQuizScalarWhereInput>
   }
 
-  export type RoundCreateNestedOneWithoutQuestionsInput = {
-    create?: XOR<RoundCreateWithoutQuestionsInput, RoundUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: RoundCreateOrConnectWithoutQuestionsInput
+  export type RoundCreateNestedOneWithoutRoundQiuzInput = {
+    create?: XOR<RoundCreateWithoutRoundQiuzInput, RoundUncheckedCreateWithoutRoundQiuzInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutRoundQiuzInput
     connect?: RoundWhereUniqueInput
   }
 
-  export type QuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
-    create?: XOR<QuestionCreateWithoutRoundQuestionsInput, QuestionUncheckedCreateWithoutRoundQuestionsInput>
-    connectOrCreate?: QuestionCreateOrConnectWithoutRoundQuestionsInput
-    upsert?: QuestionUpsertWithoutRoundQuestionsInput
-    connect?: QuestionWhereUniqueInput
-    update?: XOR<QuestionUpdateWithoutRoundQuestionsInput, QuestionUncheckedUpdateWithoutRoundQuestionsInput>
-  }
-
-  export type ChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput = {
-    create?: XOR<ChoiceCreateWithoutRoundQuestionsInput, ChoiceUncheckedCreateWithoutRoundQuestionsInput>
-    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuestionsInput
-    upsert?: ChoiceUpsertWithoutRoundQuestionsInput
+  export type ChoiceCreateNestedOneWithoutRoundQuizInput = {
+    create?: XOR<ChoiceCreateWithoutRoundQuizInput, ChoiceUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuizInput
     connect?: ChoiceWhereUniqueInput
-    update?: XOR<ChoiceUpdateWithoutRoundQuestionsInput, ChoiceUncheckedUpdateWithoutRoundQuestionsInput>
   }
 
-  export type RoundUpdateOneWithoutQuestionsNestedInput = {
-    create?: XOR<RoundCreateWithoutQuestionsInput, RoundUncheckedCreateWithoutQuestionsInput>
-    connectOrCreate?: RoundCreateOrConnectWithoutQuestionsInput
-    upsert?: RoundUpsertWithoutQuestionsInput
+  export type QuizCreateNestedOneWithoutRoundQuizInput = {
+    create?: XOR<QuizCreateWithoutRoundQuizInput, QuizUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutRoundQuizInput
+    connect?: QuizWhereUniqueInput
+  }
+
+  export type RoundUpdateOneWithoutRoundQiuzNestedInput = {
+    create?: XOR<RoundCreateWithoutRoundQiuzInput, RoundUncheckedCreateWithoutRoundQiuzInput>
+    connectOrCreate?: RoundCreateOrConnectWithoutRoundQiuzInput
+    upsert?: RoundUpsertWithoutRoundQiuzInput
     disconnect?: boolean
     delete?: boolean
     connect?: RoundWhereUniqueInput
-    update?: XOR<RoundUpdateWithoutQuestionsInput, RoundUncheckedUpdateWithoutQuestionsInput>
+    update?: XOR<RoundUpdateWithoutRoundQiuzInput, RoundUncheckedUpdateWithoutRoundQiuzInput>
   }
 
-  export type UserCreateNestedOneWithoutFromFollowingsInput = {
-    create?: XOR<UserCreateWithoutFromFollowingsInput, UserUncheckedCreateWithoutFromFollowingsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFromFollowingsInput
-    connect?: UserWhereUniqueInput
+  export type ChoiceUpdateOneWithoutRoundQuizNestedInput = {
+    create?: XOR<ChoiceCreateWithoutRoundQuizInput, ChoiceUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: ChoiceCreateOrConnectWithoutRoundQuizInput
+    upsert?: ChoiceUpsertWithoutRoundQuizInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: ChoiceWhereUniqueInput
+    update?: XOR<ChoiceUpdateWithoutRoundQuizInput, ChoiceUncheckedUpdateWithoutRoundQuizInput>
   }
 
-  export type UserCreateNestedOneWithoutToFollowingsInput = {
-    create?: XOR<UserCreateWithoutToFollowingsInput, UserUncheckedCreateWithoutToFollowingsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutToFollowingsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutFromFollowingsNestedInput = {
-    create?: XOR<UserCreateWithoutFromFollowingsInput, UserUncheckedCreateWithoutFromFollowingsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFromFollowingsInput
-    upsert?: UserUpsertWithoutFromFollowingsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutFromFollowingsInput, UserUncheckedUpdateWithoutFromFollowingsInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutToFollowingsNestedInput = {
-    create?: XOR<UserCreateWithoutToFollowingsInput, UserUncheckedCreateWithoutToFollowingsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutToFollowingsInput
-    upsert?: UserUpsertWithoutToFollowingsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutToFollowingsInput, UserUncheckedUpdateWithoutToFollowingsInput>
-  }
-
-  export type PostCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PostCreateWithoutUserInput>, Enumerable<PostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutUserInput>
-    createMany?: PostCreateManyUserInputEnvelope
-    connect?: Enumerable<PostWhereUniqueInput>
-  }
-
-  export type DirectMessageCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutFromInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromInput>
-    createMany?: DirectMessageCreateManyFromInputEnvelope
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-  }
-
-  export type DirectMessageCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutToInput>, Enumerable<DirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToInput>
-    createMany?: DirectMessageCreateManyToInputEnvelope
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-  }
-
-  export type PostReplyCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutUserInput>, Enumerable<PostReplyUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutUserInput>
-    createMany?: PostReplyCreateManyUserInputEnvelope
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-  }
-
-  export type FollowingCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutFromInput>, Enumerable<FollowingUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutFromInput>
-    createMany?: FollowingCreateManyFromInputEnvelope
-    connect?: Enumerable<FollowingWhereUniqueInput>
-  }
-
-  export type FollowingCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutToInput>, Enumerable<FollowingUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutToInput>
-    createMany?: FollowingCreateManyToInputEnvelope
-    connect?: Enumerable<FollowingWhereUniqueInput>
-  }
-
-  export type PostUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PostCreateWithoutUserInput>, Enumerable<PostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutUserInput>
-    createMany?: PostCreateManyUserInputEnvelope
-    connect?: Enumerable<PostWhereUniqueInput>
-  }
-
-  export type DirectMessageUncheckedCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutFromInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromInput>
-    createMany?: DirectMessageCreateManyFromInputEnvelope
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-  }
-
-  export type DirectMessageUncheckedCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutToInput>, Enumerable<DirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToInput>
-    createMany?: DirectMessageCreateManyToInputEnvelope
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-  }
-
-  export type PostReplyUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutUserInput>, Enumerable<PostReplyUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutUserInput>
-    createMany?: PostReplyCreateManyUserInputEnvelope
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-  }
-
-  export type FollowingUncheckedCreateNestedManyWithoutFromInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutFromInput>, Enumerable<FollowingUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutFromInput>
-    createMany?: FollowingCreateManyFromInputEnvelope
-    connect?: Enumerable<FollowingWhereUniqueInput>
-  }
-
-  export type FollowingUncheckedCreateNestedManyWithoutToInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutToInput>, Enumerable<FollowingUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutToInput>
-    createMany?: FollowingCreateManyToInputEnvelope
-    connect?: Enumerable<FollowingWhereUniqueInput>
-  }
-
-  export type PostUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PostCreateWithoutUserInput>, Enumerable<PostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PostCreateManyUserInputEnvelope
-    set?: Enumerable<PostWhereUniqueInput>
-    disconnect?: Enumerable<PostWhereUniqueInput>
-    delete?: Enumerable<PostWhereUniqueInput>
-    connect?: Enumerable<PostWhereUniqueInput>
-    update?: Enumerable<PostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PostScalarWhereInput>
-  }
-
-  export type DirectMessageUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutFromInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: DirectMessageCreateManyFromInputEnvelope
-    set?: Enumerable<DirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
-    delete?: Enumerable<DirectMessageWhereUniqueInput>
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
-  }
-
-  export type DirectMessageUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutToInput>, Enumerable<DirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutToInput>
-    createMany?: DirectMessageCreateManyToInputEnvelope
-    set?: Enumerable<DirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
-    delete?: Enumerable<DirectMessageWhereUniqueInput>
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
-  }
-
-  export type PostReplyUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutUserInput>, Enumerable<PostReplyUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PostReplyUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PostReplyCreateManyUserInputEnvelope
-    set?: Enumerable<PostReplyWhereUniqueInput>
-    disconnect?: Enumerable<PostReplyWhereUniqueInput>
-    delete?: Enumerable<PostReplyWhereUniqueInput>
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-    update?: Enumerable<PostReplyUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PostReplyUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PostReplyScalarWhereInput>
-  }
-
-  export type FollowingUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutFromInput>, Enumerable<FollowingUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<FollowingUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: FollowingCreateManyFromInputEnvelope
-    set?: Enumerable<FollowingWhereUniqueInput>
-    disconnect?: Enumerable<FollowingWhereUniqueInput>
-    delete?: Enumerable<FollowingWhereUniqueInput>
-    connect?: Enumerable<FollowingWhereUniqueInput>
-    update?: Enumerable<FollowingUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<FollowingUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<FollowingScalarWhereInput>
-  }
-
-  export type FollowingUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutToInput>, Enumerable<FollowingUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<FollowingUpsertWithWhereUniqueWithoutToInput>
-    createMany?: FollowingCreateManyToInputEnvelope
-    set?: Enumerable<FollowingWhereUniqueInput>
-    disconnect?: Enumerable<FollowingWhereUniqueInput>
-    delete?: Enumerable<FollowingWhereUniqueInput>
-    connect?: Enumerable<FollowingWhereUniqueInput>
-    update?: Enumerable<FollowingUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<FollowingUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<FollowingScalarWhereInput>
-  }
-
-  export type PostUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PostCreateWithoutUserInput>, Enumerable<PostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PostCreateManyUserInputEnvelope
-    set?: Enumerable<PostWhereUniqueInput>
-    disconnect?: Enumerable<PostWhereUniqueInput>
-    delete?: Enumerable<PostWhereUniqueInput>
-    connect?: Enumerable<PostWhereUniqueInput>
-    update?: Enumerable<PostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PostScalarWhereInput>
-  }
-
-  export type DirectMessageUncheckedUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutFromInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: DirectMessageCreateManyFromInputEnvelope
-    set?: Enumerable<DirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
-    delete?: Enumerable<DirectMessageWhereUniqueInput>
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
-  }
-
-  export type DirectMessageUncheckedUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<DirectMessageCreateWithoutToInput>, Enumerable<DirectMessageUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<DirectMessageUpsertWithWhereUniqueWithoutToInput>
-    createMany?: DirectMessageCreateManyToInputEnvelope
-    set?: Enumerable<DirectMessageWhereUniqueInput>
-    disconnect?: Enumerable<DirectMessageWhereUniqueInput>
-    delete?: Enumerable<DirectMessageWhereUniqueInput>
-    connect?: Enumerable<DirectMessageWhereUniqueInput>
-    update?: Enumerable<DirectMessageUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<DirectMessageUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<DirectMessageScalarWhereInput>
-  }
-
-  export type PostReplyUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutUserInput>, Enumerable<PostReplyUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<PostReplyUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: PostReplyCreateManyUserInputEnvelope
-    set?: Enumerable<PostReplyWhereUniqueInput>
-    disconnect?: Enumerable<PostReplyWhereUniqueInput>
-    delete?: Enumerable<PostReplyWhereUniqueInput>
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-    update?: Enumerable<PostReplyUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<PostReplyUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<PostReplyScalarWhereInput>
-  }
-
-  export type FollowingUncheckedUpdateManyWithoutFromNestedInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutFromInput>, Enumerable<FollowingUncheckedCreateWithoutFromInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutFromInput>
-    upsert?: Enumerable<FollowingUpsertWithWhereUniqueWithoutFromInput>
-    createMany?: FollowingCreateManyFromInputEnvelope
-    set?: Enumerable<FollowingWhereUniqueInput>
-    disconnect?: Enumerable<FollowingWhereUniqueInput>
-    delete?: Enumerable<FollowingWhereUniqueInput>
-    connect?: Enumerable<FollowingWhereUniqueInput>
-    update?: Enumerable<FollowingUpdateWithWhereUniqueWithoutFromInput>
-    updateMany?: Enumerable<FollowingUpdateManyWithWhereWithoutFromInput>
-    deleteMany?: Enumerable<FollowingScalarWhereInput>
-  }
-
-  export type FollowingUncheckedUpdateManyWithoutToNestedInput = {
-    create?: XOR<Enumerable<FollowingCreateWithoutToInput>, Enumerable<FollowingUncheckedCreateWithoutToInput>>
-    connectOrCreate?: Enumerable<FollowingCreateOrConnectWithoutToInput>
-    upsert?: Enumerable<FollowingUpsertWithWhereUniqueWithoutToInput>
-    createMany?: FollowingCreateManyToInputEnvelope
-    set?: Enumerable<FollowingWhereUniqueInput>
-    disconnect?: Enumerable<FollowingWhereUniqueInput>
-    delete?: Enumerable<FollowingWhereUniqueInput>
-    connect?: Enumerable<FollowingWhereUniqueInput>
-    update?: Enumerable<FollowingUpdateWithWhereUniqueWithoutToInput>
-    updateMany?: Enumerable<FollowingUpdateManyWithWhereWithoutToInput>
-    deleteMany?: Enumerable<FollowingScalarWhereInput>
-  }
-
-  export type UserCreateNestedOneWithoutPostsInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type MessageToHashTagCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutPostInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutPostInput>
-    createMany?: MessageToHashTagCreateManyPostInputEnvelope
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-  }
-
-  export type PostReplyCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutPostInput>, Enumerable<PostReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutPostInput>
-    createMany?: PostReplyCreateManyPostInputEnvelope
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-  }
-
-  export type MessageToHashTagUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutPostInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutPostInput>
-    createMany?: MessageToHashTagCreateManyPostInputEnvelope
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-  }
-
-  export type PostReplyUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutPostInput>, Enumerable<PostReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutPostInput>
-    createMany?: PostReplyCreateManyPostInputEnvelope
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
-    upsert?: UserUpsertWithoutPostsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type MessageToHashTagUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutPostInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<MessageToHashTagUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: MessageToHashTagCreateManyPostInputEnvelope
-    set?: Enumerable<MessageToHashTagWhereUniqueInput>
-    disconnect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    delete?: Enumerable<MessageToHashTagWhereUniqueInput>
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    update?: Enumerable<MessageToHashTagUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<MessageToHashTagUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<MessageToHashTagScalarWhereInput>
-  }
-
-  export type PostReplyUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutPostInput>, Enumerable<PostReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostReplyUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostReplyCreateManyPostInputEnvelope
-    set?: Enumerable<PostReplyWhereUniqueInput>
-    disconnect?: Enumerable<PostReplyWhereUniqueInput>
-    delete?: Enumerable<PostReplyWhereUniqueInput>
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-    update?: Enumerable<PostReplyUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostReplyUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostReplyScalarWhereInput>
-  }
-
-  export type MessageToHashTagUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutPostInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<MessageToHashTagUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: MessageToHashTagCreateManyPostInputEnvelope
-    set?: Enumerable<MessageToHashTagWhereUniqueInput>
-    disconnect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    delete?: Enumerable<MessageToHashTagWhereUniqueInput>
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    update?: Enumerable<MessageToHashTagUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<MessageToHashTagUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<MessageToHashTagScalarWhereInput>
-  }
-
-  export type PostReplyUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostReplyCreateWithoutPostInput>, Enumerable<PostReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostReplyCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostReplyUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostReplyCreateManyPostInputEnvelope
-    set?: Enumerable<PostReplyWhereUniqueInput>
-    disconnect?: Enumerable<PostReplyWhereUniqueInput>
-    delete?: Enumerable<PostReplyWhereUniqueInput>
-    connect?: Enumerable<PostReplyWhereUniqueInput>
-    update?: Enumerable<PostReplyUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostReplyUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostReplyScalarWhereInput>
-  }
-
-  export type UserCreateNestedOneWithoutFromDirectMessagesInput = {
-    create?: XOR<UserCreateWithoutFromDirectMessagesInput, UserUncheckedCreateWithoutFromDirectMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFromDirectMessagesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutToDirectMessagesInput = {
-    create?: XOR<UserCreateWithoutToDirectMessagesInput, UserUncheckedCreateWithoutToDirectMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutToDirectMessagesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutFromDirectMessagesNestedInput = {
-    create?: XOR<UserCreateWithoutFromDirectMessagesInput, UserUncheckedCreateWithoutFromDirectMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFromDirectMessagesInput
-    upsert?: UserUpsertWithoutFromDirectMessagesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutFromDirectMessagesInput, UserUncheckedUpdateWithoutFromDirectMessagesInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutToDirectMessagesNestedInput = {
-    create?: XOR<UserCreateWithoutToDirectMessagesInput, UserUncheckedCreateWithoutToDirectMessagesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutToDirectMessagesInput
-    upsert?: UserUpsertWithoutToDirectMessagesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutToDirectMessagesInput, UserUncheckedUpdateWithoutToDirectMessagesInput>
-  }
-
-  export type PostCreateNestedOneWithoutMessageToHashTagsInput = {
-    create?: XOR<PostCreateWithoutMessageToHashTagsInput, PostUncheckedCreateWithoutMessageToHashTagsInput>
-    connectOrCreate?: PostCreateOrConnectWithoutMessageToHashTagsInput
-    connect?: PostWhereUniqueInput
-  }
-
-  export type HashtagCreateNestedOneWithoutMessageToHashTagInput = {
-    create?: XOR<HashtagCreateWithoutMessageToHashTagInput, HashtagUncheckedCreateWithoutMessageToHashTagInput>
-    connectOrCreate?: HashtagCreateOrConnectWithoutMessageToHashTagInput
-    connect?: HashtagWhereUniqueInput
-  }
-
-  export type PostUpdateOneRequiredWithoutMessageToHashTagsNestedInput = {
-    create?: XOR<PostCreateWithoutMessageToHashTagsInput, PostUncheckedCreateWithoutMessageToHashTagsInput>
-    connectOrCreate?: PostCreateOrConnectWithoutMessageToHashTagsInput
-    upsert?: PostUpsertWithoutMessageToHashTagsInput
-    connect?: PostWhereUniqueInput
-    update?: XOR<PostUpdateWithoutMessageToHashTagsInput, PostUncheckedUpdateWithoutMessageToHashTagsInput>
-  }
-
-  export type HashtagUpdateOneRequiredWithoutMessageToHashTagNestedInput = {
-    create?: XOR<HashtagCreateWithoutMessageToHashTagInput, HashtagUncheckedCreateWithoutMessageToHashTagInput>
-    connectOrCreate?: HashtagCreateOrConnectWithoutMessageToHashTagInput
-    upsert?: HashtagUpsertWithoutMessageToHashTagInput
-    connect?: HashtagWhereUniqueInput
-    update?: XOR<HashtagUpdateWithoutMessageToHashTagInput, HashtagUncheckedUpdateWithoutMessageToHashTagInput>
-  }
-
-  export type MessageToHashTagCreateNestedManyWithoutHashtagInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutHashtagInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutHashtagInput>
-    createMany?: MessageToHashTagCreateManyHashtagInputEnvelope
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-  }
-
-  export type MessageToHashTagUncheckedCreateNestedManyWithoutHashtagInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutHashtagInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutHashtagInput>
-    createMany?: MessageToHashTagCreateManyHashtagInputEnvelope
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-  }
-
-  export type MessageToHashTagUpdateManyWithoutHashtagNestedInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutHashtagInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutHashtagInput>
-    upsert?: Enumerable<MessageToHashTagUpsertWithWhereUniqueWithoutHashtagInput>
-    createMany?: MessageToHashTagCreateManyHashtagInputEnvelope
-    set?: Enumerable<MessageToHashTagWhereUniqueInput>
-    disconnect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    delete?: Enumerable<MessageToHashTagWhereUniqueInput>
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    update?: Enumerable<MessageToHashTagUpdateWithWhereUniqueWithoutHashtagInput>
-    updateMany?: Enumerable<MessageToHashTagUpdateManyWithWhereWithoutHashtagInput>
-    deleteMany?: Enumerable<MessageToHashTagScalarWhereInput>
-  }
-
-  export type MessageToHashTagUncheckedUpdateManyWithoutHashtagNestedInput = {
-    create?: XOR<Enumerable<MessageToHashTagCreateWithoutHashtagInput>, Enumerable<MessageToHashTagUncheckedCreateWithoutHashtagInput>>
-    connectOrCreate?: Enumerable<MessageToHashTagCreateOrConnectWithoutHashtagInput>
-    upsert?: Enumerable<MessageToHashTagUpsertWithWhereUniqueWithoutHashtagInput>
-    createMany?: MessageToHashTagCreateManyHashtagInputEnvelope
-    set?: Enumerable<MessageToHashTagWhereUniqueInput>
-    disconnect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    delete?: Enumerable<MessageToHashTagWhereUniqueInput>
-    connect?: Enumerable<MessageToHashTagWhereUniqueInput>
-    update?: Enumerable<MessageToHashTagUpdateWithWhereUniqueWithoutHashtagInput>
-    updateMany?: Enumerable<MessageToHashTagUpdateManyWithWhereWithoutHashtagInput>
-    deleteMany?: Enumerable<MessageToHashTagScalarWhereInput>
-  }
-
-  export type UserCreateNestedOneWithoutPostRepliesInput = {
-    create?: XOR<UserCreateWithoutPostRepliesInput, UserUncheckedCreateWithoutPostRepliesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostRepliesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type PostCreateNestedOneWithoutPostRepliesInput = {
-    create?: XOR<PostCreateWithoutPostRepliesInput, PostUncheckedCreateWithoutPostRepliesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutPostRepliesInput
-    connect?: PostWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutPostRepliesNestedInput = {
-    create?: XOR<UserCreateWithoutPostRepliesInput, UserUncheckedCreateWithoutPostRepliesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostRepliesInput
-    upsert?: UserUpsertWithoutPostRepliesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutPostRepliesInput, UserUncheckedUpdateWithoutPostRepliesInput>
-  }
-
-  export type PostUpdateOneRequiredWithoutPostRepliesNestedInput = {
-    create?: XOR<PostCreateWithoutPostRepliesInput, PostUncheckedCreateWithoutPostRepliesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutPostRepliesInput
-    upsert?: PostUpsertWithoutPostRepliesInput
-    connect?: PostWhereUniqueInput
-    update?: XOR<PostUpdateWithoutPostRepliesInput, PostUncheckedUpdateWithoutPostRepliesInput>
+  export type QuizUpdateOneWithoutRoundQuizNestedInput = {
+    create?: XOR<QuizCreateWithoutRoundQuizInput, QuizUncheckedCreateWithoutRoundQuizInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutRoundQuizInput
+    upsert?: QuizUpsertWithoutRoundQuizInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: QuizWhereUniqueInput
+    update?: XOR<QuizUpdateWithoutRoundQuizInput, QuizUncheckedUpdateWithoutRoundQuizInput>
   }
 
   export type NestedIntFilter = {
@@ -22878,53 +8692,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
-  export type NestedStringNullableFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    not?: NestedStringNullableFilter | string | null
-  }
-
-  export type NestedFloatWithAggregatesFilter = {
-    equals?: number
-    in?: Enumerable<number>
-    notIn?: Enumerable<number>
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatWithAggregatesFilter | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedFloatFilter
-    _min?: NestedFloatFilter
-    _max?: NestedFloatFilter
-  }
-
-  export type NestedStringNullableWithAggregatesFilter = {
-    equals?: string | null
-    in?: Enumerable<string> | null
-    notIn?: Enumerable<string> | null
-    lt?: string
-    lte?: string
-    gt?: string
-    gte?: string
-    contains?: string
-    startsWith?: string
-    endsWith?: string
-    not?: NestedStringNullableWithAggregatesFilter | string | null
-    _count?: NestedIntNullableFilter
-    _min?: NestedStringNullableFilter
-    _max?: NestedStringNullableFilter
-  }
-
   export type NestedIntNullableFilter = {
     equals?: number | null
     in?: Enumerable<number> | null
@@ -22963,381 +8730,101 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter | number | null
   }
 
-  export type BinKitchenMenuCreateWithoutCategoryInput = {
-    name: string
-    image: string
-    price: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemCreateNestedManyWithoutMenuInput
-  }
-
-  export type BinKitchenMenuUncheckedCreateWithoutCategoryInput = {
-    id?: number
-    name: string
-    image: string
-    price: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemUncheckedCreateNestedManyWithoutMenuInput
-  }
-
-  export type BinKitchenMenuCreateOrConnectWithoutCategoryInput = {
-    where: BinKitchenMenuWhereUniqueInput
-    create: XOR<BinKitchenMenuCreateWithoutCategoryInput, BinKitchenMenuUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type BinKitchenMenuCreateManyCategoryInputEnvelope = {
-    data: Enumerable<BinKitchenMenuCreateManyCategoryInput>
-    skipDuplicates?: boolean
-  }
-
-  export type BinKitchenMenuUpsertWithWhereUniqueWithoutCategoryInput = {
-    where: BinKitchenMenuWhereUniqueInput
-    update: XOR<BinKitchenMenuUpdateWithoutCategoryInput, BinKitchenMenuUncheckedUpdateWithoutCategoryInput>
-    create: XOR<BinKitchenMenuCreateWithoutCategoryInput, BinKitchenMenuUncheckedCreateWithoutCategoryInput>
-  }
-
-  export type BinKitchenMenuUpdateWithWhereUniqueWithoutCategoryInput = {
-    where: BinKitchenMenuWhereUniqueInput
-    data: XOR<BinKitchenMenuUpdateWithoutCategoryInput, BinKitchenMenuUncheckedUpdateWithoutCategoryInput>
-  }
-
-  export type BinKitchenMenuUpdateManyWithWhereWithoutCategoryInput = {
-    where: BinKitchenMenuScalarWhereInput
-    data: XOR<BinKitchenMenuUpdateManyMutationInput, BinKitchenMenuUncheckedUpdateManyWithoutMenusInput>
-  }
-
-  export type BinKitchenMenuScalarWhereInput = {
-    AND?: Enumerable<BinKitchenMenuScalarWhereInput>
-    OR?: Enumerable<BinKitchenMenuScalarWhereInput>
-    NOT?: Enumerable<BinKitchenMenuScalarWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    image?: StringFilter | string
-    price?: FloatFilter | number
-    categoryName?: StringNullableFilter | string | null
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-  }
-
-  export type BinKitchenCategoryCreateWithoutMenusInput = {
-    name: string
+  export type QuizCreateWithoutCategoryInput = {
+    quiz: string
+    categoryNameId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    answer: ChoiceCreateNestedOneWithoutQuizAnswerInput
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutQuizInput
   }
 
-  export type BinKitchenCategoryUncheckedCreateWithoutMenusInput = {
+  export type QuizUncheckedCreateWithoutCategoryInput = {
     id?: number
-    name: string
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type BinKitchenCategoryCreateOrConnectWithoutMenusInput = {
-    where: BinKitchenCategoryWhereUniqueInput
-    create: XOR<BinKitchenCategoryCreateWithoutMenusInput, BinKitchenCategoryUncheckedCreateWithoutMenusInput>
+  export type QuizCreateOrConnectWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutCategoryInput, QuizUncheckedCreateWithoutCategoryInput>
   }
 
-  export type BinKitchenOrderItemCreateWithoutMenuInput = {
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    order?: BinKitchenOrderCreateNestedOneWithoutItemsInput
-  }
-
-  export type BinKitchenOrderItemUncheckedCreateWithoutMenuInput = {
-    id?: number
-    orderId?: number | null
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemCreateOrConnectWithoutMenuInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    create: XOR<BinKitchenOrderItemCreateWithoutMenuInput, BinKitchenOrderItemUncheckedCreateWithoutMenuInput>
-  }
-
-  export type BinKitchenOrderItemCreateManyMenuInputEnvelope = {
-    data: Enumerable<BinKitchenOrderItemCreateManyMenuInput>
+  export type QuizCreateManyCategoryInputEnvelope = {
+    data: Enumerable<QuizCreateManyCategoryInput>
     skipDuplicates?: boolean
   }
 
-  export type BinKitchenCategoryUpsertWithoutMenusInput = {
-    update: XOR<BinKitchenCategoryUpdateWithoutMenusInput, BinKitchenCategoryUncheckedUpdateWithoutMenusInput>
-    create: XOR<BinKitchenCategoryCreateWithoutMenusInput, BinKitchenCategoryUncheckedCreateWithoutMenusInput>
+  export type RoundCreateWithoutCategoryInput = {
+    createdAt?: Date | string
+    updateAt?: Date | string
+    roundQiuz?: RoundQuizCreateNestedManyWithoutRoundInput
   }
 
-  export type BinKitchenCategoryUpdateWithoutMenusInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    createdAt?: Date | string
+    updateAt?: Date | string
+    roundQiuz?: RoundQuizUncheckedCreateNestedManyWithoutRoundInput
   }
 
-  export type BinKitchenCategoryUncheckedUpdateWithoutMenusInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type RoundCreateOrConnectWithoutCategoryInput = {
+    where: RoundWhereUniqueInput
+    create: XOR<RoundCreateWithoutCategoryInput, RoundUncheckedCreateWithoutCategoryInput>
   }
 
-  export type BinKitchenOrderItemUpsertWithWhereUniqueWithoutMenuInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    update: XOR<BinKitchenOrderItemUpdateWithoutMenuInput, BinKitchenOrderItemUncheckedUpdateWithoutMenuInput>
-    create: XOR<BinKitchenOrderItemCreateWithoutMenuInput, BinKitchenOrderItemUncheckedCreateWithoutMenuInput>
+  export type RoundCreateManyCategoryInputEnvelope = {
+    data: Enumerable<RoundCreateManyCategoryInput>
+    skipDuplicates?: boolean
   }
 
-  export type BinKitchenOrderItemUpdateWithWhereUniqueWithoutMenuInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    data: XOR<BinKitchenOrderItemUpdateWithoutMenuInput, BinKitchenOrderItemUncheckedUpdateWithoutMenuInput>
+  export type QuizUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    update: XOR<QuizUpdateWithoutCategoryInput, QuizUncheckedUpdateWithoutCategoryInput>
+    create: XOR<QuizCreateWithoutCategoryInput, QuizUncheckedCreateWithoutCategoryInput>
   }
 
-  export type BinKitchenOrderItemUpdateManyWithWhereWithoutMenuInput = {
-    where: BinKitchenOrderItemScalarWhereInput
-    data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyWithoutBinKitchenOrderItemInput>
+  export type QuizUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: QuizWhereUniqueInput
+    data: XOR<QuizUpdateWithoutCategoryInput, QuizUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type BinKitchenOrderItemScalarWhereInput = {
-    AND?: Enumerable<BinKitchenOrderItemScalarWhereInput>
-    OR?: Enumerable<BinKitchenOrderItemScalarWhereInput>
-    NOT?: Enumerable<BinKitchenOrderItemScalarWhereInput>
+  export type QuizUpdateManyWithWhereWithoutCategoryInput = {
+    where: QuizScalarWhereInput
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutQuizInput>
+  }
+
+  export type QuizScalarWhereInput = {
+    AND?: Enumerable<QuizScalarWhereInput>
+    OR?: Enumerable<QuizScalarWhereInput>
+    NOT?: Enumerable<QuizScalarWhereInput>
     id?: IntFilter | number
-    menuId?: IntFilter | number
-    orderId?: IntNullableFilter | number | null
-    quantity?: IntFilter | number
-    totalPrice?: FloatFilter | number
+    quiz?: StringFilter | string
+    categoryNameId?: IntNullableFilter | number | null
+    quizAnswerId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    categoryId?: IntFilter | number
   }
 
-  export type BinKitchenOrderItemCreateWithoutOrderInput = {
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    menu: BinKitchenMenuCreateNestedOneWithoutBinKitchenOrderItemInput
-  }
-
-  export type BinKitchenOrderItemUncheckedCreateWithoutOrderInput = {
-    id?: number
-    menuId: number
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemCreateOrConnectWithoutOrderInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    create: XOR<BinKitchenOrderItemCreateWithoutOrderInput, BinKitchenOrderItemUncheckedCreateWithoutOrderInput>
-  }
-
-  export type BinKitchenOrderItemCreateManyOrderInputEnvelope = {
-    data: Enumerable<BinKitchenOrderItemCreateManyOrderInput>
-    skipDuplicates?: boolean
-  }
-
-  export type BinKitchenOrderItemUpsertWithWhereUniqueWithoutOrderInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    update: XOR<BinKitchenOrderItemUpdateWithoutOrderInput, BinKitchenOrderItemUncheckedUpdateWithoutOrderInput>
-    create: XOR<BinKitchenOrderItemCreateWithoutOrderInput, BinKitchenOrderItemUncheckedCreateWithoutOrderInput>
-  }
-
-  export type BinKitchenOrderItemUpdateWithWhereUniqueWithoutOrderInput = {
-    where: BinKitchenOrderItemWhereUniqueInput
-    data: XOR<BinKitchenOrderItemUpdateWithoutOrderInput, BinKitchenOrderItemUncheckedUpdateWithoutOrderInput>
-  }
-
-  export type BinKitchenOrderItemUpdateManyWithWhereWithoutOrderInput = {
-    where: BinKitchenOrderItemScalarWhereInput
-    data: XOR<BinKitchenOrderItemUpdateManyMutationInput, BinKitchenOrderItemUncheckedUpdateManyWithoutItemsInput>
-  }
-
-  export type BinKitchenMenuCreateWithoutBinKitchenOrderItemInput = {
-    name: string
-    image: string
-    price: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    category?: BinKitchenCategoryCreateNestedOneWithoutMenusInput
-  }
-
-  export type BinKitchenMenuUncheckedCreateWithoutBinKitchenOrderItemInput = {
-    id?: number
-    name: string
-    image: string
-    price: number
-    categoryName?: string | null
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenMenuCreateOrConnectWithoutBinKitchenOrderItemInput = {
-    where: BinKitchenMenuWhereUniqueInput
-    create: XOR<BinKitchenMenuCreateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedCreateWithoutBinKitchenOrderItemInput>
-  }
-
-  export type BinKitchenOrderCreateWithoutItemsInput = {
-    status?: string
-    tableId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderUncheckedCreateWithoutItemsInput = {
-    id?: number
-    status?: string
-    tableId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderCreateOrConnectWithoutItemsInput = {
-    where: BinKitchenOrderWhereUniqueInput
-    create: XOR<BinKitchenOrderCreateWithoutItemsInput, BinKitchenOrderUncheckedCreateWithoutItemsInput>
-  }
-
-  export type BinKitchenMenuUpsertWithoutBinKitchenOrderItemInput = {
-    update: XOR<BinKitchenMenuUpdateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedUpdateWithoutBinKitchenOrderItemInput>
-    create: XOR<BinKitchenMenuCreateWithoutBinKitchenOrderItemInput, BinKitchenMenuUncheckedCreateWithoutBinKitchenOrderItemInput>
-  }
-
-  export type BinKitchenMenuUpdateWithoutBinKitchenOrderItemInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: BinKitchenCategoryUpdateOneWithoutMenusNestedInput
-  }
-
-  export type BinKitchenMenuUncheckedUpdateWithoutBinKitchenOrderItemInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    categoryName?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderUpsertWithoutItemsInput = {
-    update: XOR<BinKitchenOrderUpdateWithoutItemsInput, BinKitchenOrderUncheckedUpdateWithoutItemsInput>
-    create: XOR<BinKitchenOrderCreateWithoutItemsInput, BinKitchenOrderUncheckedCreateWithoutItemsInput>
-  }
-
-  export type BinKitchenOrderUpdateWithoutItemsInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderUncheckedUpdateWithoutItemsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    tableId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuestionCreateWithoutCatNameInput = {
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    answerId: number
-    choices?: ChoiceCreateNestedManyWithoutQuestionInput
-    roundQuestions?: RoundQuestionCreateNestedManyWithoutQuestionInput
-  }
-
-  export type QuestionUncheckedCreateWithoutCatNameInput = {
-    id?: number
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    answerId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
-    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
-  }
-
-  export type QuestionCreateOrConnectWithoutCatNameInput = {
-    where: QuestionWhereUniqueInput
-    create: XOR<QuestionCreateWithoutCatNameInput, QuestionUncheckedCreateWithoutCatNameInput>
-  }
-
-  export type QuestionCreateManyCatNameInputEnvelope = {
-    data: Enumerable<QuestionCreateManyCatNameInput>
-    skipDuplicates?: boolean
-  }
-
-  export type RoundCreateWithoutCatInput = {
-    score: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: RoundQuestionCreateNestedManyWithoutRoundInput
-  }
-
-  export type RoundUncheckedCreateWithoutCatInput = {
-    id?: number
-    score: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: RoundQuestionUncheckedCreateNestedManyWithoutRoundInput
-  }
-
-  export type RoundCreateOrConnectWithoutCatInput = {
+  export type RoundUpsertWithWhereUniqueWithoutCategoryInput = {
     where: RoundWhereUniqueInput
-    create: XOR<RoundCreateWithoutCatInput, RoundUncheckedCreateWithoutCatInput>
+    update: XOR<RoundUpdateWithoutCategoryInput, RoundUncheckedUpdateWithoutCategoryInput>
+    create: XOR<RoundCreateWithoutCategoryInput, RoundUncheckedCreateWithoutCategoryInput>
   }
 
-  export type RoundCreateManyCatInputEnvelope = {
-    data: Enumerable<RoundCreateManyCatInput>
-    skipDuplicates?: boolean
-  }
-
-  export type QuestionUpsertWithWhereUniqueWithoutCatNameInput = {
-    where: QuestionWhereUniqueInput
-    update: XOR<QuestionUpdateWithoutCatNameInput, QuestionUncheckedUpdateWithoutCatNameInput>
-    create: XOR<QuestionCreateWithoutCatNameInput, QuestionUncheckedCreateWithoutCatNameInput>
-  }
-
-  export type QuestionUpdateWithWhereUniqueWithoutCatNameInput = {
-    where: QuestionWhereUniqueInput
-    data: XOR<QuestionUpdateWithoutCatNameInput, QuestionUncheckedUpdateWithoutCatNameInput>
-  }
-
-  export type QuestionUpdateManyWithWhereWithoutCatNameInput = {
-    where: QuestionScalarWhereInput
-    data: XOR<QuestionUpdateManyMutationInput, QuestionUncheckedUpdateManyWithoutQuestionsInput>
-  }
-
-  export type QuestionScalarWhereInput = {
-    AND?: Enumerable<QuestionScalarWhereInput>
-    OR?: Enumerable<QuestionScalarWhereInput>
-    NOT?: Enumerable<QuestionScalarWhereInput>
-    id?: IntFilter | number
-    question?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    quizCatId?: IntFilter | number
-    answerId?: IntFilter | number
-  }
-
-  export type RoundUpsertWithWhereUniqueWithoutCatInput = {
+  export type RoundUpdateWithWhereUniqueWithoutCategoryInput = {
     where: RoundWhereUniqueInput
-    update: XOR<RoundUpdateWithoutCatInput, RoundUncheckedUpdateWithoutCatInput>
-    create: XOR<RoundCreateWithoutCatInput, RoundUncheckedCreateWithoutCatInput>
+    data: XOR<RoundUpdateWithoutCategoryInput, RoundUncheckedUpdateWithoutCategoryInput>
   }
 
-  export type RoundUpdateWithWhereUniqueWithoutCatInput = {
-    where: RoundWhereUniqueInput
-    data: XOR<RoundUpdateWithoutCatInput, RoundUncheckedUpdateWithoutCatInput>
-  }
-
-  export type RoundUpdateManyWithWhereWithoutCatInput = {
+  export type RoundUpdateManyWithWhereWithoutCategoryInput = {
     where: RoundScalarWhereInput
     data: XOR<RoundUpdateManyMutationInput, RoundUncheckedUpdateManyWithoutRoundsInput>
   }
@@ -23347,116 +8834,139 @@ export namespace Prisma {
     OR?: Enumerable<RoundScalarWhereInput>
     NOT?: Enumerable<RoundScalarWhereInput>
     id?: IntFilter | number
-    score?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
-    quizCatId?: IntFilter | number
+    categoryId?: IntNullableFilter | number | null
   }
 
-  export type QuizCatCreateWithoutQuestionsInput = {
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    rounds?: RoundCreateNestedManyWithoutCatInput
-  }
-
-  export type QuizCatUncheckedCreateWithoutQuestionsInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    rounds?: RoundUncheckedCreateNestedManyWithoutCatInput
-  }
-
-  export type QuizCatCreateOrConnectWithoutQuestionsInput = {
-    where: QuizCatWhereUniqueInput
-    create: XOR<QuizCatCreateWithoutQuestionsInput, QuizCatUncheckedCreateWithoutQuestionsInput>
-  }
-
-  export type ChoiceCreateWithoutQuestionInput = {
+  export type ChoiceCreateWithoutQuizAnswerInput = {
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-    roundQuestions?: RoundQuestionCreateNestedManyWithoutUserChoiceInput
+    updatedAt?: Date | string
+    quiz?: QuizCreateNestedOneWithoutChoicesInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutChoiceInput
   }
 
-  export type ChoiceUncheckedCreateWithoutQuestionInput = {
+  export type ChoiceUncheckedCreateWithoutQuizAnswerInput = {
     id?: number
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutUserChoiceInput
+    updatedAt?: Date | string
+    quizId?: number | null
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutChoiceInput
   }
 
-  export type ChoiceCreateOrConnectWithoutQuestionInput = {
+  export type ChoiceCreateOrConnectWithoutQuizAnswerInput = {
     where: ChoiceWhereUniqueInput
-    create: XOR<ChoiceCreateWithoutQuestionInput, ChoiceUncheckedCreateWithoutQuestionInput>
+    create: XOR<ChoiceCreateWithoutQuizAnswerInput, ChoiceUncheckedCreateWithoutQuizAnswerInput>
   }
 
-  export type ChoiceCreateManyQuestionInputEnvelope = {
-    data: Enumerable<ChoiceCreateManyQuestionInput>
+  export type ChoiceCreateWithoutQuizInput = {
+    choice: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quizAnswer?: QuizCreateNestedOneWithoutAnswerInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceUncheckedCreateWithoutQuizInput = {
+    id?: number
+    choice: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quizAnswer?: QuizUncheckedCreateNestedOneWithoutAnswerInput
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutChoiceInput
+  }
+
+  export type ChoiceCreateOrConnectWithoutQuizInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutQuizInput, ChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type ChoiceCreateManyQuizInputEnvelope = {
+    data: Enumerable<ChoiceCreateManyQuizInput>
     skipDuplicates?: boolean
   }
 
-  export type RoundQuestionCreateWithoutQuestionInput = {
+  export type RoundQuizCreateWithoutQuizInput = {
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    userChoice: ChoiceCreateNestedOneWithoutRoundQuestionsInput
-    round?: RoundCreateNestedOneWithoutQuestionsInput
+    round?: RoundCreateNestedOneWithoutRoundQiuzInput
+    choice?: ChoiceCreateNestedOneWithoutRoundQuizInput
   }
 
-  export type RoundQuestionUncheckedCreateWithoutQuestionInput = {
+  export type RoundQuizUncheckedCreateWithoutQuizInput = {
     id?: number
+    category: string
+    createdAt?: Date | string
     roundId?: number | null
-    choiceId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
+    choiceId?: number | null
   }
 
-  export type RoundQuestionCreateOrConnectWithoutQuestionInput = {
-    where: RoundQuestionWhereUniqueInput
-    create: XOR<RoundQuestionCreateWithoutQuestionInput, RoundQuestionUncheckedCreateWithoutQuestionInput>
+  export type RoundQuizCreateOrConnectWithoutQuizInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutQuizInput, RoundQuizUncheckedCreateWithoutQuizInput>
   }
 
-  export type RoundQuestionCreateManyQuestionInputEnvelope = {
-    data: Enumerable<RoundQuestionCreateManyQuestionInput>
+  export type RoundQuizCreateManyQuizInputEnvelope = {
+    data: Enumerable<RoundQuizCreateManyQuizInput>
     skipDuplicates?: boolean
   }
 
-  export type QuizCatUpsertWithoutQuestionsInput = {
-    update: XOR<QuizCatUpdateWithoutQuestionsInput, QuizCatUncheckedUpdateWithoutQuestionsInput>
-    create: XOR<QuizCatCreateWithoutQuestionsInput, QuizCatUncheckedCreateWithoutQuestionsInput>
+  export type CategoryCreateWithoutQuizInput = {
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rounds?: RoundCreateNestedManyWithoutCategoryInput
   }
 
-  export type QuizCatUpdateWithoutQuestionsInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type CategoryUncheckedCreateWithoutQuizInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    rounds?: RoundUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutQuizInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutQuizInput, CategoryUncheckedCreateWithoutQuizInput>
+  }
+
+  export type ChoiceUpsertWithoutQuizAnswerInput = {
+    update: XOR<ChoiceUpdateWithoutQuizAnswerInput, ChoiceUncheckedUpdateWithoutQuizAnswerInput>
+    create: XOR<ChoiceCreateWithoutQuizAnswerInput, ChoiceUncheckedCreateWithoutQuizAnswerInput>
+  }
+
+  export type ChoiceUpdateWithoutQuizAnswerInput = {
+    choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rounds?: RoundUpdateManyWithoutCatNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneWithoutChoicesNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutChoiceNestedInput
   }
 
-  export type QuizCatUncheckedUpdateWithoutQuestionsInput = {
+  export type ChoiceUncheckedUpdateWithoutQuizAnswerInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rounds?: RoundUncheckedUpdateManyWithoutCatNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
-  export type ChoiceUpsertWithWhereUniqueWithoutQuestionInput = {
+  export type ChoiceUpsertWithWhereUniqueWithoutQuizInput = {
     where: ChoiceWhereUniqueInput
-    update: XOR<ChoiceUpdateWithoutQuestionInput, ChoiceUncheckedUpdateWithoutQuestionInput>
-    create: XOR<ChoiceCreateWithoutQuestionInput, ChoiceUncheckedCreateWithoutQuestionInput>
+    update: XOR<ChoiceUpdateWithoutQuizInput, ChoiceUncheckedUpdateWithoutQuizInput>
+    create: XOR<ChoiceCreateWithoutQuizInput, ChoiceUncheckedCreateWithoutQuizInput>
   }
 
-  export type ChoiceUpdateWithWhereUniqueWithoutQuestionInput = {
+  export type ChoiceUpdateWithWhereUniqueWithoutQuizInput = {
     where: ChoiceWhereUniqueInput
-    data: XOR<ChoiceUpdateWithoutQuestionInput, ChoiceUncheckedUpdateWithoutQuestionInput>
+    data: XOR<ChoiceUpdateWithoutQuizInput, ChoiceUncheckedUpdateWithoutQuizInput>
   }
 
-  export type ChoiceUpdateManyWithWhereWithoutQuestionInput = {
+  export type ChoiceUpdateManyWithWhereWithoutQuizInput = {
     where: ChoiceScalarWhereInput
     data: XOR<ChoiceUpdateManyMutationInput, ChoiceUncheckedUpdateManyWithoutChoicesInput>
   }
@@ -23466,1789 +8976,596 @@ export namespace Prisma {
     OR?: Enumerable<ChoiceScalarWhereInput>
     NOT?: Enumerable<ChoiceScalarWhereInput>
     id?: IntFilter | number
-    questionId?: IntFilter | number
     choice?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
-    questionsId?: IntNullableFilter | number | null
+    updatedAt?: DateTimeFilter | Date | string
+    quizId?: IntNullableFilter | number | null
   }
 
-  export type RoundQuestionUpsertWithWhereUniqueWithoutQuestionInput = {
-    where: RoundQuestionWhereUniqueInput
-    update: XOR<RoundQuestionUpdateWithoutQuestionInput, RoundQuestionUncheckedUpdateWithoutQuestionInput>
-    create: XOR<RoundQuestionCreateWithoutQuestionInput, RoundQuestionUncheckedCreateWithoutQuestionInput>
+  export type RoundQuizUpsertWithWhereUniqueWithoutQuizInput = {
+    where: RoundQuizWhereUniqueInput
+    update: XOR<RoundQuizUpdateWithoutQuizInput, RoundQuizUncheckedUpdateWithoutQuizInput>
+    create: XOR<RoundQuizCreateWithoutQuizInput, RoundQuizUncheckedCreateWithoutQuizInput>
   }
 
-  export type RoundQuestionUpdateWithWhereUniqueWithoutQuestionInput = {
-    where: RoundQuestionWhereUniqueInput
-    data: XOR<RoundQuestionUpdateWithoutQuestionInput, RoundQuestionUncheckedUpdateWithoutQuestionInput>
+  export type RoundQuizUpdateWithWhereUniqueWithoutQuizInput = {
+    where: RoundQuizWhereUniqueInput
+    data: XOR<RoundQuizUpdateWithoutQuizInput, RoundQuizUncheckedUpdateWithoutQuizInput>
   }
 
-  export type RoundQuestionUpdateManyWithWhereWithoutQuestionInput = {
-    where: RoundQuestionScalarWhereInput
-    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  export type RoundQuizUpdateManyWithWhereWithoutQuizInput = {
+    where: RoundQuizScalarWhereInput
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyWithoutRoundQuizInput>
   }
 
-  export type RoundQuestionScalarWhereInput = {
-    AND?: Enumerable<RoundQuestionScalarWhereInput>
-    OR?: Enumerable<RoundQuestionScalarWhereInput>
-    NOT?: Enumerable<RoundQuestionScalarWhereInput>
+  export type RoundQuizScalarWhereInput = {
+    AND?: Enumerable<RoundQuizScalarWhereInput>
+    OR?: Enumerable<RoundQuizScalarWhereInput>
+    NOT?: Enumerable<RoundQuizScalarWhereInput>
     id?: IntFilter | number
+    category?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
     roundId?: IntNullableFilter | number | null
-    questionId?: IntFilter | number
-    choiceId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updateAt?: DateTimeFilter | Date | string
+    choiceId?: IntNullableFilter | number | null
+    quizId?: IntNullableFilter | number | null
   }
 
-  export type QuestionCreateWithoutChoicesInput = {
-    question: string
+  export type CategoryUpsertWithoutQuizInput = {
+    update: XOR<CategoryUpdateWithoutQuizInput, CategoryUncheckedUpdateWithoutQuizInput>
+    create: XOR<CategoryCreateWithoutQuizInput, CategoryUncheckedCreateWithoutQuizInput>
+  }
+
+  export type CategoryUpdateWithoutQuizInput = {
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rounds?: RoundUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rounds?: RoundUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type QuizCreateWithoutChoicesInput = {
+    quiz: string
+    categoryNameId?: number | null
     createdAt?: Date | string
-    updateAt?: Date | string
-    answerId: number
-    catName: QuizCatCreateNestedOneWithoutQuestionsInput
-    roundQuestions?: RoundQuestionCreateNestedManyWithoutQuestionInput
+    updatedAt?: Date | string
+    answer: ChoiceCreateNestedOneWithoutQuizAnswerInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutQuizInput
+    category: CategoryCreateNestedOneWithoutQuizInput
   }
 
-  export type QuestionUncheckedCreateWithoutChoicesInput = {
+  export type QuizUncheckedCreateWithoutChoicesInput = {
     id?: number
-    question: string
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
     createdAt?: Date | string
-    updateAt?: Date | string
-    quizCatId: number
-    answerId: number
-    roundQuestions?: RoundQuestionUncheckedCreateNestedManyWithoutQuestionInput
+    updatedAt?: Date | string
+    categoryId: number
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type QuestionCreateOrConnectWithoutChoicesInput = {
-    where: QuestionWhereUniqueInput
-    create: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
+  export type QuizCreateOrConnectWithoutChoicesInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
   }
 
-  export type RoundQuestionCreateWithoutUserChoiceInput = {
+  export type QuizCreateWithoutAnswerInput = {
+    quiz: string
+    categoryNameId?: number | null
     createdAt?: Date | string
-    updateAt?: Date | string
-    question: QuestionCreateNestedOneWithoutRoundQuestionsInput
-    round?: RoundCreateNestedOneWithoutQuestionsInput
+    updatedAt?: Date | string
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizCreateNestedManyWithoutQuizInput
+    category: CategoryCreateNestedOneWithoutQuizInput
   }
 
-  export type RoundQuestionUncheckedCreateWithoutUserChoiceInput = {
+  export type QuizUncheckedCreateWithoutAnswerInput = {
     id?: number
+    quiz: string
+    categoryNameId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    categoryId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+    roundQuiz?: RoundQuizUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type QuizCreateOrConnectWithoutAnswerInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type RoundQuizCreateWithoutChoiceInput = {
+    category: string
+    createdAt?: Date | string
+    round?: RoundCreateNestedOneWithoutRoundQiuzInput
+    quiz?: QuizCreateNestedOneWithoutRoundQuizInput
+  }
+
+  export type RoundQuizUncheckedCreateWithoutChoiceInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
     roundId?: number | null
-    questionId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
+    quizId?: number | null
   }
 
-  export type RoundQuestionCreateOrConnectWithoutUserChoiceInput = {
-    where: RoundQuestionWhereUniqueInput
-    create: XOR<RoundQuestionCreateWithoutUserChoiceInput, RoundQuestionUncheckedCreateWithoutUserChoiceInput>
+  export type RoundQuizCreateOrConnectWithoutChoiceInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutChoiceInput, RoundQuizUncheckedCreateWithoutChoiceInput>
   }
 
-  export type RoundQuestionCreateManyUserChoiceInputEnvelope = {
-    data: Enumerable<RoundQuestionCreateManyUserChoiceInput>
+  export type RoundQuizCreateManyChoiceInputEnvelope = {
+    data: Enumerable<RoundQuizCreateManyChoiceInput>
     skipDuplicates?: boolean
   }
 
-  export type QuestionUpsertWithoutChoicesInput = {
-    update: XOR<QuestionUpdateWithoutChoicesInput, QuestionUncheckedUpdateWithoutChoicesInput>
-    create: XOR<QuestionCreateWithoutChoicesInput, QuestionUncheckedCreateWithoutChoicesInput>
+  export type QuizUpsertWithoutChoicesInput = {
+    update: XOR<QuizUpdateWithoutChoicesInput, QuizUncheckedUpdateWithoutChoicesInput>
+    create: XOR<QuizCreateWithoutChoicesInput, QuizUncheckedCreateWithoutChoicesInput>
   }
 
-  export type QuestionUpdateWithoutChoicesInput = {
-    question?: StringFieldUpdateOperationsInput | string
+  export type QuizUpdateWithoutChoicesInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-    catName?: QuizCatUpdateOneRequiredWithoutQuestionsNestedInput
-    roundQuestions?: RoundQuestionUpdateManyWithoutQuestionNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutQuizNestedInput
+    category?: CategoryUpdateOneRequiredWithoutQuizNestedInput
   }
 
-  export type QuestionUncheckedUpdateWithoutChoicesInput = {
+  export type QuizUncheckedUpdateWithoutChoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
-    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type RoundQuestionUpsertWithWhereUniqueWithoutUserChoiceInput = {
-    where: RoundQuestionWhereUniqueInput
-    update: XOR<RoundQuestionUpdateWithoutUserChoiceInput, RoundQuestionUncheckedUpdateWithoutUserChoiceInput>
-    create: XOR<RoundQuestionCreateWithoutUserChoiceInput, RoundQuestionUncheckedCreateWithoutUserChoiceInput>
+  export type QuizUpsertWithoutAnswerInput = {
+    update: XOR<QuizUpdateWithoutAnswerInput, QuizUncheckedUpdateWithoutAnswerInput>
+    create: XOR<QuizCreateWithoutAnswerInput, QuizUncheckedCreateWithoutAnswerInput>
   }
 
-  export type RoundQuestionUpdateWithWhereUniqueWithoutUserChoiceInput = {
-    where: RoundQuestionWhereUniqueInput
-    data: XOR<RoundQuestionUpdateWithoutUserChoiceInput, RoundQuestionUncheckedUpdateWithoutUserChoiceInput>
+  export type QuizUpdateWithoutAnswerInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutQuizNestedInput
+    category?: CategoryUpdateOneRequiredWithoutQuizNestedInput
   }
 
-  export type RoundQuestionUpdateManyWithWhereWithoutUserChoiceInput = {
-    where: RoundQuestionScalarWhereInput
-    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput>
+  export type QuizUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type QuizCatCreateWithoutRoundsInput = {
-    name: string
+  export type RoundQuizUpsertWithWhereUniqueWithoutChoiceInput = {
+    where: RoundQuizWhereUniqueInput
+    update: XOR<RoundQuizUpdateWithoutChoiceInput, RoundQuizUncheckedUpdateWithoutChoiceInput>
+    create: XOR<RoundQuizCreateWithoutChoiceInput, RoundQuizUncheckedCreateWithoutChoiceInput>
+  }
+
+  export type RoundQuizUpdateWithWhereUniqueWithoutChoiceInput = {
+    where: RoundQuizWhereUniqueInput
+    data: XOR<RoundQuizUpdateWithoutChoiceInput, RoundQuizUncheckedUpdateWithoutChoiceInput>
+  }
+
+  export type RoundQuizUpdateManyWithWhereWithoutChoiceInput = {
+    where: RoundQuizScalarWhereInput
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyWithoutRoundQuizInput>
+  }
+
+  export type RoundQuizCreateWithoutRoundInput = {
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: QuestionCreateNestedManyWithoutCatNameInput
+    choice?: ChoiceCreateNestedOneWithoutRoundQuizInput
+    quiz?: QuizCreateNestedOneWithoutRoundQuizInput
   }
 
-  export type QuizCatUncheckedCreateWithoutRoundsInput = {
+  export type RoundQuizUncheckedCreateWithoutRoundInput = {
     id?: number
-    name: string
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questions?: QuestionUncheckedCreateNestedManyWithoutCatNameInput
+    choiceId?: number | null
+    quizId?: number | null
   }
 
-  export type QuizCatCreateOrConnectWithoutRoundsInput = {
-    where: QuizCatWhereUniqueInput
-    create: XOR<QuizCatCreateWithoutRoundsInput, QuizCatUncheckedCreateWithoutRoundsInput>
+  export type RoundQuizCreateOrConnectWithoutRoundInput = {
+    where: RoundQuizWhereUniqueInput
+    create: XOR<RoundQuizCreateWithoutRoundInput, RoundQuizUncheckedCreateWithoutRoundInput>
   }
 
-  export type RoundQuestionCreateWithoutRoundInput = {
-    createdAt?: Date | string
-    updateAt?: Date | string
-    question: QuestionCreateNestedOneWithoutRoundQuestionsInput
-    userChoice: ChoiceCreateNestedOneWithoutRoundQuestionsInput
-  }
-
-  export type RoundQuestionUncheckedCreateWithoutRoundInput = {
-    id?: number
-    questionId: number
-    choiceId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type RoundQuestionCreateOrConnectWithoutRoundInput = {
-    where: RoundQuestionWhereUniqueInput
-    create: XOR<RoundQuestionCreateWithoutRoundInput, RoundQuestionUncheckedCreateWithoutRoundInput>
-  }
-
-  export type RoundQuestionCreateManyRoundInputEnvelope = {
-    data: Enumerable<RoundQuestionCreateManyRoundInput>
+  export type RoundQuizCreateManyRoundInputEnvelope = {
+    data: Enumerable<RoundQuizCreateManyRoundInput>
     skipDuplicates?: boolean
   }
 
-  export type QuizCatUpsertWithoutRoundsInput = {
-    update: XOR<QuizCatUpdateWithoutRoundsInput, QuizCatUncheckedUpdateWithoutRoundsInput>
-    create: XOR<QuizCatCreateWithoutRoundsInput, QuizCatUncheckedCreateWithoutRoundsInput>
+  export type CategoryCreateWithoutRoundsInput = {
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz?: QuizCreateNestedManyWithoutCategoryInput
   }
 
-  export type QuizCatUpdateWithoutRoundsInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type CategoryUncheckedCreateWithoutRoundsInput = {
+    id?: number
+    category: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz?: QuizUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutRoundsInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutRoundsInput, CategoryUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type RoundQuizUpsertWithWhereUniqueWithoutRoundInput = {
+    where: RoundQuizWhereUniqueInput
+    update: XOR<RoundQuizUpdateWithoutRoundInput, RoundQuizUncheckedUpdateWithoutRoundInput>
+    create: XOR<RoundQuizCreateWithoutRoundInput, RoundQuizUncheckedCreateWithoutRoundInput>
+  }
+
+  export type RoundQuizUpdateWithWhereUniqueWithoutRoundInput = {
+    where: RoundQuizWhereUniqueInput
+    data: XOR<RoundQuizUpdateWithoutRoundInput, RoundQuizUncheckedUpdateWithoutRoundInput>
+  }
+
+  export type RoundQuizUpdateManyWithWhereWithoutRoundInput = {
+    where: RoundQuizScalarWhereInput
+    data: XOR<RoundQuizUpdateManyMutationInput, RoundQuizUncheckedUpdateManyWithoutRoundQiuzInput>
+  }
+
+  export type CategoryUpsertWithoutRoundsInput = {
+    update: XOR<CategoryUpdateWithoutRoundsInput, CategoryUncheckedUpdateWithoutRoundsInput>
+    create: XOR<CategoryCreateWithoutRoundsInput, CategoryUncheckedCreateWithoutRoundsInput>
+  }
+
+  export type CategoryUpdateWithoutRoundsInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: QuestionUpdateManyWithoutCatNameNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateManyWithoutCategoryNestedInput
   }
 
-  export type QuizCatUncheckedUpdateWithoutRoundsInput = {
+  export type CategoryUncheckedUpdateWithoutRoundsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: QuestionUncheckedUpdateManyWithoutCatNameNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type RoundQuestionUpsertWithWhereUniqueWithoutRoundInput = {
-    where: RoundQuestionWhereUniqueInput
-    update: XOR<RoundQuestionUpdateWithoutRoundInput, RoundQuestionUncheckedUpdateWithoutRoundInput>
-    create: XOR<RoundQuestionCreateWithoutRoundInput, RoundQuestionUncheckedCreateWithoutRoundInput>
-  }
-
-  export type RoundQuestionUpdateWithWhereUniqueWithoutRoundInput = {
-    where: RoundQuestionWhereUniqueInput
-    data: XOR<RoundQuestionUpdateWithoutRoundInput, RoundQuestionUncheckedUpdateWithoutRoundInput>
-  }
-
-  export type RoundQuestionUpdateManyWithWhereWithoutRoundInput = {
-    where: RoundQuestionScalarWhereInput
-    data: XOR<RoundQuestionUpdateManyMutationInput, RoundQuestionUncheckedUpdateManyWithoutQuestionsInput>
-  }
-
-  export type QuestionCreateWithoutRoundQuestionsInput = {
-    question: string
+  export type RoundCreateWithoutRoundQiuzInput = {
     createdAt?: Date | string
     updateAt?: Date | string
-    answerId: number
-    catName: QuizCatCreateNestedOneWithoutQuestionsInput
-    choices?: ChoiceCreateNestedManyWithoutQuestionInput
+    Category?: CategoryCreateNestedOneWithoutRoundsInput
   }
 
-  export type QuestionUncheckedCreateWithoutRoundQuestionsInput = {
+  export type RoundUncheckedCreateWithoutRoundQiuzInput = {
     id?: number
-    question: string
     createdAt?: Date | string
     updateAt?: Date | string
-    quizCatId: number
-    answerId: number
-    choices?: ChoiceUncheckedCreateNestedManyWithoutQuestionInput
+    categoryId?: number | null
   }
 
-  export type QuestionCreateOrConnectWithoutRoundQuestionsInput = {
-    where: QuestionWhereUniqueInput
-    create: XOR<QuestionCreateWithoutRoundQuestionsInput, QuestionUncheckedCreateWithoutRoundQuestionsInput>
-  }
-
-  export type ChoiceCreateWithoutRoundQuestionsInput = {
-    choice: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-    question?: QuestionCreateNestedOneWithoutChoicesInput
-  }
-
-  export type ChoiceUncheckedCreateWithoutRoundQuestionsInput = {
-    id?: number
-    questionId: number
-    choice: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
-  }
-
-  export type ChoiceCreateOrConnectWithoutRoundQuestionsInput = {
-    where: ChoiceWhereUniqueInput
-    create: XOR<ChoiceCreateWithoutRoundQuestionsInput, ChoiceUncheckedCreateWithoutRoundQuestionsInput>
-  }
-
-  export type RoundCreateWithoutQuestionsInput = {
-    score: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    cat: QuizCatCreateNestedOneWithoutRoundsInput
-  }
-
-  export type RoundUncheckedCreateWithoutQuestionsInput = {
-    id?: number
-    score: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-    quizCatId: number
-  }
-
-  export type RoundCreateOrConnectWithoutQuestionsInput = {
+  export type RoundCreateOrConnectWithoutRoundQiuzInput = {
     where: RoundWhereUniqueInput
-    create: XOR<RoundCreateWithoutQuestionsInput, RoundUncheckedCreateWithoutQuestionsInput>
+    create: XOR<RoundCreateWithoutRoundQiuzInput, RoundUncheckedCreateWithoutRoundQiuzInput>
   }
 
-  export type QuestionUpsertWithoutRoundQuestionsInput = {
-    update: XOR<QuestionUpdateWithoutRoundQuestionsInput, QuestionUncheckedUpdateWithoutRoundQuestionsInput>
-    create: XOR<QuestionCreateWithoutRoundQuestionsInput, QuestionUncheckedCreateWithoutRoundQuestionsInput>
+  export type ChoiceCreateWithoutRoundQuizInput = {
+    choice: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz?: QuizCreateNestedOneWithoutChoicesInput
+    quizAnswer?: QuizCreateNestedOneWithoutAnswerInput
   }
 
-  export type QuestionUpdateWithoutRoundQuestionsInput = {
-    question?: StringFieldUpdateOperationsInput | string
+  export type ChoiceUncheckedCreateWithoutRoundQuizInput = {
+    id?: number
+    choice: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quizId?: number | null
+    quizAnswer?: QuizUncheckedCreateNestedOneWithoutAnswerInput
+  }
+
+  export type ChoiceCreateOrConnectWithoutRoundQuizInput = {
+    where: ChoiceWhereUniqueInput
+    create: XOR<ChoiceCreateWithoutRoundQuizInput, ChoiceUncheckedCreateWithoutRoundQuizInput>
+  }
+
+  export type QuizCreateWithoutRoundQuizInput = {
+    quiz: string
+    categoryNameId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    answer: ChoiceCreateNestedOneWithoutQuizAnswerInput
+    choices?: ChoiceCreateNestedManyWithoutQuizInput
+    category: CategoryCreateNestedOneWithoutQuizInput
+  }
+
+  export type QuizUncheckedCreateWithoutRoundQuizInput = {
+    id?: number
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    categoryId: number
+    choices?: ChoiceUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type QuizCreateOrConnectWithoutRoundQuizInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutRoundQuizInput, QuizUncheckedCreateWithoutRoundQuizInput>
+  }
+
+  export type RoundUpsertWithoutRoundQiuzInput = {
+    update: XOR<RoundUpdateWithoutRoundQiuzInput, RoundUncheckedUpdateWithoutRoundQiuzInput>
+    create: XOR<RoundCreateWithoutRoundQiuzInput, RoundUncheckedCreateWithoutRoundQiuzInput>
+  }
+
+  export type RoundUpdateWithoutRoundQiuzInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-    catName?: QuizCatUpdateOneRequiredWithoutQuestionsNestedInput
-    choices?: ChoiceUpdateManyWithoutQuestionNestedInput
+    Category?: CategoryUpdateOneWithoutRoundsNestedInput
   }
 
-  export type QuestionUncheckedUpdateWithoutRoundQuestionsInput = {
+  export type RoundUncheckedUpdateWithoutRoundQiuzInput = {
     id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ChoiceUpsertWithoutRoundQuestionsInput = {
-    update: XOR<ChoiceUpdateWithoutRoundQuestionsInput, ChoiceUncheckedUpdateWithoutRoundQuestionsInput>
-    create: XOR<ChoiceCreateWithoutRoundQuestionsInput, ChoiceUncheckedCreateWithoutRoundQuestionsInput>
+  export type ChoiceUpsertWithoutRoundQuizInput = {
+    update: XOR<ChoiceUpdateWithoutRoundQuizInput, ChoiceUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<ChoiceCreateWithoutRoundQuizInput, ChoiceUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type ChoiceUpdateWithoutRoundQuestionsInput = {
+  export type ChoiceUpdateWithoutRoundQuizInput = {
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
-    question?: QuestionUpdateOneWithoutChoicesNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneWithoutChoicesNestedInput
+    quizAnswer?: QuizUpdateOneWithoutAnswerNestedInput
   }
 
-  export type ChoiceUncheckedUpdateWithoutRoundQuestionsInput = {
+  export type ChoiceUncheckedUpdateWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionId?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswer?: QuizUncheckedUpdateOneWithoutAnswerNestedInput
   }
 
-  export type RoundUpsertWithoutQuestionsInput = {
-    update: XOR<RoundUpdateWithoutQuestionsInput, RoundUncheckedUpdateWithoutQuestionsInput>
-    create: XOR<RoundCreateWithoutQuestionsInput, RoundUncheckedCreateWithoutQuestionsInput>
+  export type QuizUpsertWithoutRoundQuizInput = {
+    update: XOR<QuizUpdateWithoutRoundQuizInput, QuizUncheckedUpdateWithoutRoundQuizInput>
+    create: XOR<QuizCreateWithoutRoundQuizInput, QuizUncheckedCreateWithoutRoundQuizInput>
   }
 
-  export type RoundUpdateWithoutQuestionsInput = {
-    score?: IntFieldUpdateOperationsInput | number
+  export type QuizUpdateWithoutRoundQuizInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    cat?: QuizCatUpdateOneRequiredWithoutRoundsNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    category?: CategoryUpdateOneRequiredWithoutQuizNestedInput
   }
 
-  export type RoundUncheckedUpdateWithoutQuestionsInput = {
+  export type QuizUncheckedUpdateWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    quizCatId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type UserCreateWithoutFromFollowingsInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutFromFollowingsInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutFromFollowingsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutFromFollowingsInput, UserUncheckedCreateWithoutFromFollowingsInput>
-  }
-
-  export type UserCreateWithoutToFollowingsInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-  }
-
-  export type UserUncheckedCreateWithoutToFollowingsInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-  }
-
-  export type UserCreateOrConnectWithoutToFollowingsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutToFollowingsInput, UserUncheckedCreateWithoutToFollowingsInput>
-  }
-
-  export type UserUpsertWithoutFromFollowingsInput = {
-    update: XOR<UserUpdateWithoutFromFollowingsInput, UserUncheckedUpdateWithoutFromFollowingsInput>
-    create: XOR<UserCreateWithoutFromFollowingsInput, UserUncheckedCreateWithoutFromFollowingsInput>
-  }
-
-  export type UserUpdateWithoutFromFollowingsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
+    categoryId?: IntFieldUpdateOperationsInput | number
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutFromFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUpsertWithoutToFollowingsInput = {
-    update: XOR<UserUpdateWithoutToFollowingsInput, UserUncheckedUpdateWithoutToFollowingsInput>
-    create: XOR<UserCreateWithoutToFollowingsInput, UserUncheckedCreateWithoutToFollowingsInput>
-  }
-
-  export type UserUpdateWithoutToFollowingsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutToFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-  }
-
-  export type PostCreateWithoutUserInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messageToHashTags?: MessageToHashTagCreateNestedManyWithoutPostInput
-    postReplies?: PostReplyCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUncheckedCreateWithoutUserInput = {
+  export type QuizCreateManyCategoryInput = {
     id?: number
-    message: string
+    quiz: string
+    categoryNameId?: number | null
+    quizAnswerId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    messageToHashTags?: MessageToHashTagUncheckedCreateNestedManyWithoutPostInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type PostCreateOrConnectWithoutUserInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutUserInput, PostUncheckedCreateWithoutUserInput>
-  }
-
-  export type PostCreateManyUserInputEnvelope = {
-    data: Enumerable<PostCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type DirectMessageCreateWithoutFromInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    to: UserCreateNestedOneWithoutToDirectMessagesInput
-  }
-
-  export type DirectMessageUncheckedCreateWithoutFromInput = {
+  export type RoundCreateManyCategoryInput = {
     id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toUserId: number
-  }
-
-  export type DirectMessageCreateOrConnectWithoutFromInput = {
-    where: DirectMessageWhereUniqueInput
-    create: XOR<DirectMessageCreateWithoutFromInput, DirectMessageUncheckedCreateWithoutFromInput>
-  }
-
-  export type DirectMessageCreateManyFromInputEnvelope = {
-    data: Enumerable<DirectMessageCreateManyFromInput>
-    skipDuplicates?: boolean
-  }
-
-  export type DirectMessageCreateWithoutToInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: UserCreateNestedOneWithoutFromDirectMessagesInput
-  }
-
-  export type DirectMessageUncheckedCreateWithoutToInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-  }
-
-  export type DirectMessageCreateOrConnectWithoutToInput = {
-    where: DirectMessageWhereUniqueInput
-    create: XOR<DirectMessageCreateWithoutToInput, DirectMessageUncheckedCreateWithoutToInput>
-  }
-
-  export type DirectMessageCreateManyToInputEnvelope = {
-    data: Enumerable<DirectMessageCreateManyToInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PostReplyCreateWithoutUserInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    post: PostCreateNestedOneWithoutPostRepliesInput
-  }
-
-  export type PostReplyUncheckedCreateWithoutUserInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-  }
-
-  export type PostReplyCreateOrConnectWithoutUserInput = {
-    where: PostReplyWhereUniqueInput
-    create: XOR<PostReplyCreateWithoutUserInput, PostReplyUncheckedCreateWithoutUserInput>
-  }
-
-  export type PostReplyCreateManyUserInputEnvelope = {
-    data: Enumerable<PostReplyCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type FollowingCreateWithoutFromInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    to: UserCreateNestedOneWithoutToFollowingsInput
-  }
-
-  export type FollowingUncheckedCreateWithoutFromInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toUserId: number
-  }
-
-  export type FollowingCreateOrConnectWithoutFromInput = {
-    where: FollowingWhereUniqueInput
-    create: XOR<FollowingCreateWithoutFromInput, FollowingUncheckedCreateWithoutFromInput>
-  }
-
-  export type FollowingCreateManyFromInputEnvelope = {
-    data: Enumerable<FollowingCreateManyFromInput>
-    skipDuplicates?: boolean
-  }
-
-  export type FollowingCreateWithoutToInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    from: UserCreateNestedOneWithoutFromFollowingsInput
-  }
-
-  export type FollowingUncheckedCreateWithoutToInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-  }
-
-  export type FollowingCreateOrConnectWithoutToInput = {
-    where: FollowingWhereUniqueInput
-    create: XOR<FollowingCreateWithoutToInput, FollowingUncheckedCreateWithoutToInput>
-  }
-
-  export type FollowingCreateManyToInputEnvelope = {
-    data: Enumerable<FollowingCreateManyToInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PostUpsertWithWhereUniqueWithoutUserInput = {
-    where: PostWhereUniqueInput
-    update: XOR<PostUpdateWithoutUserInput, PostUncheckedUpdateWithoutUserInput>
-    create: XOR<PostCreateWithoutUserInput, PostUncheckedCreateWithoutUserInput>
-  }
-
-  export type PostUpdateWithWhereUniqueWithoutUserInput = {
-    where: PostWhereUniqueInput
-    data: XOR<PostUpdateWithoutUserInput, PostUncheckedUpdateWithoutUserInput>
-  }
-
-  export type PostUpdateManyWithWhereWithoutUserInput = {
-    where: PostScalarWhereInput
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutPostsInput>
-  }
-
-  export type PostScalarWhereInput = {
-    AND?: Enumerable<PostScalarWhereInput>
-    OR?: Enumerable<PostScalarWhereInput>
-    NOT?: Enumerable<PostScalarWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    userId?: IntFilter | number
-  }
-
-  export type DirectMessageUpsertWithWhereUniqueWithoutFromInput = {
-    where: DirectMessageWhereUniqueInput
-    update: XOR<DirectMessageUpdateWithoutFromInput, DirectMessageUncheckedUpdateWithoutFromInput>
-    create: XOR<DirectMessageCreateWithoutFromInput, DirectMessageUncheckedCreateWithoutFromInput>
-  }
-
-  export type DirectMessageUpdateWithWhereUniqueWithoutFromInput = {
-    where: DirectMessageWhereUniqueInput
-    data: XOR<DirectMessageUpdateWithoutFromInput, DirectMessageUncheckedUpdateWithoutFromInput>
-  }
-
-  export type DirectMessageUpdateManyWithWhereWithoutFromInput = {
-    where: DirectMessageScalarWhereInput
-    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyWithoutFromDirectMessagesInput>
-  }
-
-  export type DirectMessageScalarWhereInput = {
-    AND?: Enumerable<DirectMessageScalarWhereInput>
-    OR?: Enumerable<DirectMessageScalarWhereInput>
-    NOT?: Enumerable<DirectMessageScalarWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-  }
-
-  export type DirectMessageUpsertWithWhereUniqueWithoutToInput = {
-    where: DirectMessageWhereUniqueInput
-    update: XOR<DirectMessageUpdateWithoutToInput, DirectMessageUncheckedUpdateWithoutToInput>
-    create: XOR<DirectMessageCreateWithoutToInput, DirectMessageUncheckedCreateWithoutToInput>
-  }
-
-  export type DirectMessageUpdateWithWhereUniqueWithoutToInput = {
-    where: DirectMessageWhereUniqueInput
-    data: XOR<DirectMessageUpdateWithoutToInput, DirectMessageUncheckedUpdateWithoutToInput>
-  }
-
-  export type DirectMessageUpdateManyWithWhereWithoutToInput = {
-    where: DirectMessageScalarWhereInput
-    data: XOR<DirectMessageUpdateManyMutationInput, DirectMessageUncheckedUpdateManyWithoutToDirectMessagesInput>
-  }
-
-  export type PostReplyUpsertWithWhereUniqueWithoutUserInput = {
-    where: PostReplyWhereUniqueInput
-    update: XOR<PostReplyUpdateWithoutUserInput, PostReplyUncheckedUpdateWithoutUserInput>
-    create: XOR<PostReplyCreateWithoutUserInput, PostReplyUncheckedCreateWithoutUserInput>
-  }
-
-  export type PostReplyUpdateWithWhereUniqueWithoutUserInput = {
-    where: PostReplyWhereUniqueInput
-    data: XOR<PostReplyUpdateWithoutUserInput, PostReplyUncheckedUpdateWithoutUserInput>
-  }
-
-  export type PostReplyUpdateManyWithWhereWithoutUserInput = {
-    where: PostReplyScalarWhereInput
-    data: XOR<PostReplyUpdateManyMutationInput, PostReplyUncheckedUpdateManyWithoutPostRepliesInput>
-  }
-
-  export type PostReplyScalarWhereInput = {
-    AND?: Enumerable<PostReplyScalarWhereInput>
-    OR?: Enumerable<PostReplyScalarWhereInput>
-    NOT?: Enumerable<PostReplyScalarWhereInput>
-    id?: IntFilter | number
-    message?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    userId?: IntFilter | number
-    postId?: IntFilter | number
-  }
-
-  export type FollowingUpsertWithWhereUniqueWithoutFromInput = {
-    where: FollowingWhereUniqueInput
-    update: XOR<FollowingUpdateWithoutFromInput, FollowingUncheckedUpdateWithoutFromInput>
-    create: XOR<FollowingCreateWithoutFromInput, FollowingUncheckedCreateWithoutFromInput>
-  }
-
-  export type FollowingUpdateWithWhereUniqueWithoutFromInput = {
-    where: FollowingWhereUniqueInput
-    data: XOR<FollowingUpdateWithoutFromInput, FollowingUncheckedUpdateWithoutFromInput>
-  }
-
-  export type FollowingUpdateManyWithWhereWithoutFromInput = {
-    where: FollowingScalarWhereInput
-    data: XOR<FollowingUpdateManyMutationInput, FollowingUncheckedUpdateManyWithoutFromFollowingsInput>
-  }
-
-  export type FollowingScalarWhereInput = {
-    AND?: Enumerable<FollowingScalarWhereInput>
-    OR?: Enumerable<FollowingScalarWhereInput>
-    NOT?: Enumerable<FollowingScalarWhereInput>
-    id?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
-  }
-
-  export type FollowingUpsertWithWhereUniqueWithoutToInput = {
-    where: FollowingWhereUniqueInput
-    update: XOR<FollowingUpdateWithoutToInput, FollowingUncheckedUpdateWithoutToInput>
-    create: XOR<FollowingCreateWithoutToInput, FollowingUncheckedCreateWithoutToInput>
-  }
-
-  export type FollowingUpdateWithWhereUniqueWithoutToInput = {
-    where: FollowingWhereUniqueInput
-    data: XOR<FollowingUpdateWithoutToInput, FollowingUncheckedUpdateWithoutToInput>
-  }
-
-  export type FollowingUpdateManyWithWhereWithoutToInput = {
-    where: FollowingScalarWhereInput
-    data: XOR<FollowingUpdateManyMutationInput, FollowingUncheckedUpdateManyWithoutToFollowingsInput>
-  }
-
-  export type UserCreateWithoutPostsInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutPostsInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutPostsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type MessageToHashTagCreateWithoutPostInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtag: HashtagCreateNestedOneWithoutMessageToHashTagInput
-  }
-
-  export type MessageToHashTagUncheckedCreateWithoutPostInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtagId: number
-  }
-
-  export type MessageToHashTagCreateOrConnectWithoutPostInput = {
-    where: MessageToHashTagWhereUniqueInput
-    create: XOR<MessageToHashTagCreateWithoutPostInput, MessageToHashTagUncheckedCreateWithoutPostInput>
-  }
-
-  export type MessageToHashTagCreateManyPostInputEnvelope = {
-    data: Enumerable<MessageToHashTagCreateManyPostInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PostReplyCreateWithoutPostInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPostRepliesInput
-  }
-
-  export type PostReplyUncheckedCreateWithoutPostInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-  }
-
-  export type PostReplyCreateOrConnectWithoutPostInput = {
-    where: PostReplyWhereUniqueInput
-    create: XOR<PostReplyCreateWithoutPostInput, PostReplyUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostReplyCreateManyPostInputEnvelope = {
-    data: Enumerable<PostReplyCreateManyPostInput>
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutPostsInput = {
-    update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type UserUpdateWithoutPostsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type MessageToHashTagUpsertWithWhereUniqueWithoutPostInput = {
-    where: MessageToHashTagWhereUniqueInput
-    update: XOR<MessageToHashTagUpdateWithoutPostInput, MessageToHashTagUncheckedUpdateWithoutPostInput>
-    create: XOR<MessageToHashTagCreateWithoutPostInput, MessageToHashTagUncheckedCreateWithoutPostInput>
-  }
-
-  export type MessageToHashTagUpdateWithWhereUniqueWithoutPostInput = {
-    where: MessageToHashTagWhereUniqueInput
-    data: XOR<MessageToHashTagUpdateWithoutPostInput, MessageToHashTagUncheckedUpdateWithoutPostInput>
-  }
-
-  export type MessageToHashTagUpdateManyWithWhereWithoutPostInput = {
-    where: MessageToHashTagScalarWhereInput
-    data: XOR<MessageToHashTagUpdateManyMutationInput, MessageToHashTagUncheckedUpdateManyWithoutMessageToHashTagsInput>
-  }
-
-  export type MessageToHashTagScalarWhereInput = {
-    AND?: Enumerable<MessageToHashTagScalarWhereInput>
-    OR?: Enumerable<MessageToHashTagScalarWhereInput>
-    NOT?: Enumerable<MessageToHashTagScalarWhereInput>
-    id?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-    postId?: IntFilter | number
-    hashtagId?: IntFilter | number
-  }
-
-  export type PostReplyUpsertWithWhereUniqueWithoutPostInput = {
-    where: PostReplyWhereUniqueInput
-    update: XOR<PostReplyUpdateWithoutPostInput, PostReplyUncheckedUpdateWithoutPostInput>
-    create: XOR<PostReplyCreateWithoutPostInput, PostReplyUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostReplyUpdateWithWhereUniqueWithoutPostInput = {
-    where: PostReplyWhereUniqueInput
-    data: XOR<PostReplyUpdateWithoutPostInput, PostReplyUncheckedUpdateWithoutPostInput>
-  }
-
-  export type PostReplyUpdateManyWithWhereWithoutPostInput = {
-    where: PostReplyScalarWhereInput
-    data: XOR<PostReplyUpdateManyMutationInput, PostReplyUncheckedUpdateManyWithoutPostRepliesInput>
-  }
-
-  export type UserCreateWithoutFromDirectMessagesInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutFromDirectMessagesInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutFromDirectMessagesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutFromDirectMessagesInput, UserUncheckedCreateWithoutFromDirectMessagesInput>
-  }
-
-  export type UserCreateWithoutToDirectMessagesInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    postReplies?: PostReplyCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutToDirectMessagesInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutUserInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutToDirectMessagesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutToDirectMessagesInput, UserUncheckedCreateWithoutToDirectMessagesInput>
-  }
-
-  export type UserUpsertWithoutFromDirectMessagesInput = {
-    update: XOR<UserUpdateWithoutFromDirectMessagesInput, UserUncheckedUpdateWithoutFromDirectMessagesInput>
-    create: XOR<UserCreateWithoutFromDirectMessagesInput, UserUncheckedCreateWithoutFromDirectMessagesInput>
-  }
-
-  export type UserUpdateWithoutFromDirectMessagesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutFromDirectMessagesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUpsertWithoutToDirectMessagesInput = {
-    update: XOR<UserUpdateWithoutToDirectMessagesInput, UserUncheckedUpdateWithoutToDirectMessagesInput>
-    create: XOR<UserCreateWithoutToDirectMessagesInput, UserUncheckedCreateWithoutToDirectMessagesInput>
-  }
-
-  export type UserUpdateWithoutToDirectMessagesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    postReplies?: PostReplyUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutToDirectMessagesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutUserNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type PostCreateWithoutMessageToHashTagsInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPostsInput
-    postReplies?: PostReplyCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUncheckedCreateWithoutMessageToHashTagsInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-    postReplies?: PostReplyUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type PostCreateOrConnectWithoutMessageToHashTagsInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutMessageToHashTagsInput, PostUncheckedCreateWithoutMessageToHashTagsInput>
-  }
-
-  export type HashtagCreateWithoutMessageToHashTagInput = {
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HashtagUncheckedCreateWithoutMessageToHashTagInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type HashtagCreateOrConnectWithoutMessageToHashTagInput = {
-    where: HashtagWhereUniqueInput
-    create: XOR<HashtagCreateWithoutMessageToHashTagInput, HashtagUncheckedCreateWithoutMessageToHashTagInput>
-  }
-
-  export type PostUpsertWithoutMessageToHashTagsInput = {
-    update: XOR<PostUpdateWithoutMessageToHashTagsInput, PostUncheckedUpdateWithoutMessageToHashTagsInput>
-    create: XOR<PostCreateWithoutMessageToHashTagsInput, PostUncheckedCreateWithoutMessageToHashTagsInput>
-  }
-
-  export type PostUpdateWithoutMessageToHashTagsInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPostsNestedInput
-    postReplies?: PostReplyUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutMessageToHashTagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    postReplies?: PostReplyUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type HashtagUpsertWithoutMessageToHashTagInput = {
-    update: XOR<HashtagUpdateWithoutMessageToHashTagInput, HashtagUncheckedUpdateWithoutMessageToHashTagInput>
-    create: XOR<HashtagCreateWithoutMessageToHashTagInput, HashtagUncheckedCreateWithoutMessageToHashTagInput>
-  }
-
-  export type HashtagUpdateWithoutMessageToHashTagInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type HashtagUncheckedUpdateWithoutMessageToHashTagInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type MessageToHashTagCreateWithoutHashtagInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    post: PostCreateNestedOneWithoutMessageToHashTagsInput
-  }
-
-  export type MessageToHashTagUncheckedCreateWithoutHashtagInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-  }
-
-  export type MessageToHashTagCreateOrConnectWithoutHashtagInput = {
-    where: MessageToHashTagWhereUniqueInput
-    create: XOR<MessageToHashTagCreateWithoutHashtagInput, MessageToHashTagUncheckedCreateWithoutHashtagInput>
-  }
-
-  export type MessageToHashTagCreateManyHashtagInputEnvelope = {
-    data: Enumerable<MessageToHashTagCreateManyHashtagInput>
-    skipDuplicates?: boolean
-  }
-
-  export type MessageToHashTagUpsertWithWhereUniqueWithoutHashtagInput = {
-    where: MessageToHashTagWhereUniqueInput
-    update: XOR<MessageToHashTagUpdateWithoutHashtagInput, MessageToHashTagUncheckedUpdateWithoutHashtagInput>
-    create: XOR<MessageToHashTagCreateWithoutHashtagInput, MessageToHashTagUncheckedCreateWithoutHashtagInput>
-  }
-
-  export type MessageToHashTagUpdateWithWhereUniqueWithoutHashtagInput = {
-    where: MessageToHashTagWhereUniqueInput
-    data: XOR<MessageToHashTagUpdateWithoutHashtagInput, MessageToHashTagUncheckedUpdateWithoutHashtagInput>
-  }
-
-  export type MessageToHashTagUpdateManyWithWhereWithoutHashtagInput = {
-    where: MessageToHashTagScalarWhereInput
-    data: XOR<MessageToHashTagUpdateManyMutationInput, MessageToHashTagUncheckedUpdateManyWithoutMessageToHashTagInput>
-  }
-
-  export type UserCreateWithoutPostRepliesInput = {
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageCreateNestedManyWithoutToInput
-    fromFollowings?: FollowingCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutPostRepliesInput = {
-    id?: number
-    name: string
-    profileImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    fromDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    toDirectMessages?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    fromFollowings?: FollowingUncheckedCreateNestedManyWithoutFromInput
-    toFollowings?: FollowingUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutPostRepliesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPostRepliesInput, UserUncheckedCreateWithoutPostRepliesInput>
-  }
-
-  export type PostCreateWithoutPostRepliesInput = {
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutPostsInput
-    messageToHashTags?: MessageToHashTagCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUncheckedCreateWithoutPostRepliesInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-    messageToHashTags?: MessageToHashTagUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type PostCreateOrConnectWithoutPostRepliesInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutPostRepliesInput, PostUncheckedCreateWithoutPostRepliesInput>
-  }
-
-  export type UserUpsertWithoutPostRepliesInput = {
-    update: XOR<UserUpdateWithoutPostRepliesInput, UserUncheckedUpdateWithoutPostRepliesInput>
-    create: XOR<UserCreateWithoutPostRepliesInput, UserUncheckedCreateWithoutPostRepliesInput>
-  }
-
-  export type UserUpdateWithoutPostRepliesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUpdateManyWithoutToNestedInput
-    fromFollowings?: FollowingUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutPostRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    profileImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    fromDirectMessages?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    toDirectMessages?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    fromFollowings?: FollowingUncheckedUpdateManyWithoutFromNestedInput
-    toFollowings?: FollowingUncheckedUpdateManyWithoutToNestedInput
-  }
-
-  export type PostUpsertWithoutPostRepliesInput = {
-    update: XOR<PostUpdateWithoutPostRepliesInput, PostUncheckedUpdateWithoutPostRepliesInput>
-    create: XOR<PostCreateWithoutPostRepliesInput, PostUncheckedCreateWithoutPostRepliesInput>
-  }
-
-  export type PostUpdateWithoutPostRepliesInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPostsNestedInput
-    messageToHashTags?: MessageToHashTagUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutPostRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-    messageToHashTags?: MessageToHashTagUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type BinKitchenMenuCreateManyCategoryInput = {
-    id?: number
-    name: string
-    image: string
-    price: number
     createdAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type BinKitchenMenuUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+  export type QuizUpdateWithoutCategoryInput = {
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemUpdateManyWithoutMenuNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    answer?: ChoiceUpdateOneRequiredWithoutQuizAnswerNestedInput
+    choices?: ChoiceUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutQuizNestedInput
   }
 
-  export type BinKitchenMenuUncheckedUpdateWithoutCategoryInput = {
+  export type QuizUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    binKitchenOrderItem?: BinKitchenOrderItemUncheckedUpdateManyWithoutMenuNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choices?: ChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutQuizNestedInput
   }
 
-  export type BinKitchenMenuUncheckedUpdateManyWithoutMenusInput = {
+  export type QuizUncheckedUpdateManyWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
+    quiz?: StringFieldUpdateOperationsInput | string
+    categoryNameId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizAnswerId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RoundUpdateWithoutCategoryInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundQiuz?: RoundQuizUpdateManyWithoutRoundNestedInput
   }
 
-  export type BinKitchenOrderItemCreateManyMenuInput = {
-    id?: number
-    orderId?: number | null
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemUpdateWithoutMenuInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    order?: BinKitchenOrderUpdateOneWithoutItemsNestedInput
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateWithoutMenuInput = {
+  export type RoundUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    orderId?: NullableIntFieldUpdateOperationsInput | number | null
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateManyWithoutBinKitchenOrderItemInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    orderId?: NullableIntFieldUpdateOperationsInput | number | null
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemCreateManyOrderInput = {
-    id?: number
-    menuId: number
-    quantity: number
-    totalPrice: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type BinKitchenOrderItemUpdateWithoutOrderInput = {
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    menu?: BinKitchenMenuUpdateOneRequiredWithoutBinKitchenOrderItemNestedInput
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateWithoutOrderInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type BinKitchenOrderItemUncheckedUpdateManyWithoutItemsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    menuId?: IntFieldUpdateOperationsInput | number
-    quantity?: IntFieldUpdateOperationsInput | number
-    totalPrice?: FloatFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QuestionCreateManyCatNameInput = {
-    id?: number
-    question: string
-    createdAt?: Date | string
-    updateAt?: Date | string
-    answerId: number
-  }
-
-  export type RoundCreateManyCatInput = {
-    id?: number
-    score: number
-    createdAt?: Date | string
-    updateAt?: Date | string
-  }
-
-  export type QuestionUpdateWithoutCatNameInput = {
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUpdateManyWithoutQuestionNestedInput
-    roundQuestions?: RoundQuestionUpdateManyWithoutQuestionNestedInput
-  }
-
-  export type QuestionUncheckedUpdateWithoutCatNameInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-    choices?: ChoiceUncheckedUpdateManyWithoutQuestionNestedInput
-    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutQuestionNestedInput
-  }
-
-  export type QuestionUncheckedUpdateManyWithoutQuestionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    answerId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RoundUpdateWithoutCatInput = {
-    score?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: RoundQuestionUpdateManyWithoutRoundNestedInput
-  }
-
-  export type RoundUncheckedUpdateWithoutCatInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: RoundQuestionUncheckedUpdateManyWithoutRoundNestedInput
+    roundQiuz?: RoundQuizUncheckedUpdateManyWithoutRoundNestedInput
   }
 
   export type RoundUncheckedUpdateManyWithoutRoundsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ChoiceCreateManyQuestionInput = {
+  export type ChoiceCreateManyQuizInput = {
     id?: number
     choice: string
     createdAt?: Date | string
-    updateAt?: Date | string
-    questionsId?: number | null
+    updatedAt?: Date | string
   }
 
-  export type RoundQuestionCreateManyQuestionInput = {
+  export type RoundQuizCreateManyQuizInput = {
     id?: number
-    roundId?: number | null
-    choiceId: number
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
+    roundId?: number | null
+    choiceId?: number | null
   }
 
-  export type ChoiceUpdateWithoutQuestionInput = {
+  export type ChoiceUpdateWithoutQuizInput = {
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
-    roundQuestions?: RoundQuestionUpdateManyWithoutUserChoiceNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizAnswer?: QuizUpdateOneWithoutAnswerNestedInput
+    roundQuiz?: RoundQuizUpdateManyWithoutChoiceNestedInput
   }
 
-  export type ChoiceUncheckedUpdateWithoutQuestionInput = {
+  export type ChoiceUncheckedUpdateWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
-    roundQuestions?: RoundQuestionUncheckedUpdateManyWithoutUserChoiceNestedInput
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizAnswer?: QuizUncheckedUpdateOneWithoutAnswerNestedInput
+    roundQuiz?: RoundQuizUncheckedUpdateManyWithoutChoiceNestedInput
   }
 
   export type ChoiceUncheckedUpdateManyWithoutChoicesInput = {
     id?: IntFieldUpdateOperationsInput | number
     choice?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questionsId?: NullableIntFieldUpdateOperationsInput | number | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RoundQuestionUpdateWithoutQuestionInput = {
+  export type RoundQuizUpdateWithoutQuizInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userChoice?: ChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
-    round?: RoundUpdateOneWithoutQuestionsNestedInput
+    round?: RoundUpdateOneWithoutRoundQiuzNestedInput
+    choice?: ChoiceUpdateOneWithoutRoundQuizNestedInput
   }
 
-  export type RoundQuestionUncheckedUpdateWithoutQuestionInput = {
+  export type RoundQuizUncheckedUpdateWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roundId?: NullableIntFieldUpdateOperationsInput | number | null
-    choiceId?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: NullableIntFieldUpdateOperationsInput | number | null
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionUncheckedUpdateManyWithoutRoundQuestionsInput = {
+  export type RoundQuizUncheckedUpdateManyWithoutRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    roundId?: NullableIntFieldUpdateOperationsInput | number | null
-    choiceId?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roundId?: NullableIntFieldUpdateOperationsInput | number | null
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionCreateManyUserChoiceInput = {
+  export type RoundQuizCreateManyChoiceInput = {
     id?: number
+    category: string
+    createdAt?: Date | string
     roundId?: number | null
-    questionId: number
-    createdAt?: Date | string
-    updateAt?: Date | string
+    quizId?: number | null
   }
 
-  export type RoundQuestionUpdateWithoutUserChoiceInput = {
+  export type RoundQuizUpdateWithoutChoiceInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    question?: QuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
-    round?: RoundUpdateOneWithoutQuestionsNestedInput
+    round?: RoundUpdateOneWithoutRoundQiuzNestedInput
+    quiz?: QuizUpdateOneWithoutRoundQuizNestedInput
   }
 
-  export type RoundQuestionUncheckedUpdateWithoutUserChoiceInput = {
+  export type RoundQuizUncheckedUpdateWithoutChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     roundId?: NullableIntFieldUpdateOperationsInput | number | null
-    questionId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionCreateManyRoundInput = {
+  export type RoundQuizCreateManyRoundInput = {
     id?: number
-    questionId: number
-    choiceId: number
+    category: string
     createdAt?: Date | string
-    updateAt?: Date | string
+    choiceId?: number | null
+    quizId?: number | null
   }
 
-  export type RoundQuestionUpdateWithoutRoundInput = {
+  export type RoundQuizUpdateWithoutRoundInput = {
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    question?: QuestionUpdateOneRequiredWithoutRoundQuestionsNestedInput
-    userChoice?: ChoiceUpdateOneRequiredWithoutRoundQuestionsNestedInput
+    choice?: ChoiceUpdateOneWithoutRoundQuizNestedInput
+    quiz?: QuizUpdateOneWithoutRoundQuizNestedInput
   }
 
-  export type RoundQuestionUncheckedUpdateWithoutRoundInput = {
+  export type RoundQuizUncheckedUpdateWithoutRoundInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionId?: IntFieldUpdateOperationsInput | number
-    choiceId?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RoundQuestionUncheckedUpdateManyWithoutQuestionsInput = {
+  export type RoundQuizUncheckedUpdateManyWithoutRoundQiuzInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionId?: IntFieldUpdateOperationsInput | number
-    choiceId?: IntFieldUpdateOperationsInput | number
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostCreateManyUserInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type DirectMessageCreateManyFromInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toUserId: number
-  }
-
-  export type DirectMessageCreateManyToInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-  }
-
-  export type PostReplyCreateManyUserInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-  }
-
-  export type FollowingCreateManyFromInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    toUserId: number
-  }
-
-  export type FollowingCreateManyToInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    fromUserId: number
-  }
-
-  export type PostUpdateWithoutUserInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messageToHashTags?: MessageToHashTagUpdateManyWithoutPostNestedInput
-    postReplies?: PostReplyUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messageToHashTags?: MessageToHashTagUncheckedUpdateManyWithoutPostNestedInput
-    postReplies?: PostReplyUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateManyWithoutPostsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type DirectMessageUpdateWithoutFromInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    to?: UserUpdateOneRequiredWithoutToDirectMessagesNestedInput
-  }
-
-  export type DirectMessageUncheckedUpdateWithoutFromInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DirectMessageUncheckedUpdateManyWithoutFromDirectMessagesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DirectMessageUpdateWithoutToInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: UserUpdateOneRequiredWithoutFromDirectMessagesNestedInput
-  }
-
-  export type DirectMessageUncheckedUpdateWithoutToInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type DirectMessageUncheckedUpdateManyWithoutToDirectMessagesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PostReplyUpdateWithoutUserInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: PostUpdateOneRequiredWithoutPostRepliesNestedInput
-  }
-
-  export type PostReplyUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PostReplyUncheckedUpdateManyWithoutPostRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type FollowingUpdateWithoutFromInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    to?: UserUpdateOneRequiredWithoutToFollowingsNestedInput
-  }
-
-  export type FollowingUncheckedUpdateWithoutFromInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type FollowingUncheckedUpdateManyWithoutFromFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type FollowingUpdateWithoutToInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    from?: UserUpdateOneRequiredWithoutFromFollowingsNestedInput
-  }
-
-  export type FollowingUncheckedUpdateWithoutToInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type FollowingUncheckedUpdateManyWithoutToFollowingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagCreateManyPostInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtagId: number
-  }
-
-  export type PostReplyCreateManyPostInput = {
-    id?: number
-    message: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: number
-  }
-
-  export type MessageToHashTagUpdateWithoutPostInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtag?: HashtagUpdateOneRequiredWithoutMessageToHashTagNestedInput
-  }
-
-  export type MessageToHashTagUncheckedUpdateWithoutPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtagId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagUncheckedUpdateManyWithoutMessageToHashTagsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtagId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type PostReplyUpdateWithoutPostInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPostRepliesNestedInput
-  }
-
-  export type PostReplyUncheckedUpdateWithoutPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    message?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagCreateManyHashtagInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    postId: number
-  }
-
-  export type MessageToHashTagUpdateWithoutHashtagInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: PostUpdateOneRequiredWithoutMessageToHashTagsNestedInput
-  }
-
-  export type MessageToHashTagUncheckedUpdateWithoutHashtagInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type MessageToHashTagUncheckedUpdateManyWithoutMessageToHashTagInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    postId?: IntFieldUpdateOperationsInput | number
+    choiceId?: NullableIntFieldUpdateOperationsInput | number | null
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 
