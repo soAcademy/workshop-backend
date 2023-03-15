@@ -11,16 +11,29 @@
 //   updateMenuHandler,
 //   updateOrderHandler,
 // } from "./BinKitchen";
+// import {
+//   createCategoryHandler,
+//   createQuizHandle,
+//   createUserHandler,
+//   getAllCategoryHandle,
+//   getQuizbyCategoryHandle,
+//   getResultHandler,
+//   getStatisticHandler,
+//   submitQuizHandler,
+// } from "./QuestionQuiz";
 import {
-  createCategoryHandler,
-  createQuizHandle,
-  createUserHandler,
-  getAllCategoryHandle,
-  getQuizbyCategoryHandle,
-  getResultHandler,
-  getStatisticHandler,
-  submitQuizHandler,
-} from "./QuestionQuiz";
+  createReplyTwitterHandler,
+  createTweetHandler,
+  createTweetWithHashTagHandler,
+  createUserTwitterHandler,
+  deletePostTweetHandler,
+  deleteReplyTweetHandler,
+  deleteUserTweetHandler,
+  getHashtagsTwitterHandler,
+  getPostByHashtagTwitterHandler,
+  getPostByUserTwitterHandler,
+  getUserProfileTwitterHandler,
+} from "./Twitter/Twitter.handler";
 import {
   functionHelloAtHandler,
   functionHelloSumHandler,
@@ -235,45 +248,97 @@ export const AppRoutes = [
   // },
 
   //------------- questionquiz ----------------
+  // {
+  //   path: "/questionquiz/createCategory",
+  //   method: "post",
+  //   action: createCategoryHandler,
+  // },
+  // {
+  //   path: "/questionquiz/getAllCategory",
+  //   method: "post",
+  //   action: getAllCategoryHandle,
+  // },
+  // {
+  //   path: "/questionquiz/createQuiz",
+  //   method: "post",
+  //   action: createQuizHandle,
+  // },
+  // {
+  //   path: "/questionquiz/getQuizbyCategory",
+  //   method: "post",
+  //   action: getQuizbyCategoryHandle,
+  // },
+  // {
+  //   path: "/questionquiz/submitQuiz",
+  //   method: "post",
+  //   action: submitQuizHandler,
+  // },
+  // {
+  //   path: "/questionquiz/getResult",
+  //   method: "post",
+  //   action: getResultHandler,
+  // },
+  // {
+  //   path: "/questionquiz/createUser",
+  //   method: "post",
+  //   action: createUserHandler,
+  // },
+  // {
+  //   path: "/questionquiz/getStatistic",
+  //   method: "post",
+  //   action: getStatisticHandler,
+  // },
+  //------------- twitter ----------------
   {
-    path: "/questionquiz/createCategory",
+    path: "/twitter/createUserTwitter",
     method: "post",
-    action: createCategoryHandler,
+    action: createUserTwitterHandler,
   },
   {
-    path: "/questionquiz/getAllCategory",
+    path: "/twitter/getUserProfileTwitter",
     method: "post",
-    action: getAllCategoryHandle,
+    action: getUserProfileTwitterHandler,
   },
   {
-    path: "/questionquiz/createQuiz",
+    path: "/twitter/createTweet",
     method: "post",
-    action: createQuizHandle,
+    action: createTweetHandler,
   },
   {
-    path: "/questionquiz/getQuizbyCategory",
+    path: "/twitter/getHashtagsTwitter",
     method: "post",
-    action: getQuizbyCategoryHandle,
+    action: getHashtagsTwitterHandler,
   },
   {
-    path: "/questionquiz/submitQuiz",
+    path: "/twitter/getPostByHashtagTwitter",
     method: "post",
-    action: submitQuizHandler,
+    action: getPostByHashtagTwitterHandler,
   },
   {
-    path: "/questionquiz/getResult",
+    path: "/twitter/getPostByUserTwitter",
     method: "post",
-    action: getResultHandler,
+    action: getPostByUserTwitterHandler,
   },
   {
-    path: "/questionquiz/createUser",
+    path: "/twitter/createReplyTwitter",
     method: "post",
-    action: createUserHandler,
+    action: createReplyTwitterHandler,
   },
   {
-    path: "/questionquiz/getStatistic",
+    path: "/twitter/deletePostTweet",
     method: "post",
-    action: getStatisticHandler,
+    action: deletePostTweetHandler,
   },
-  //------------- questionquiz end ----------------
+  {
+    path: "/twitter/deleteReplyTweet",
+    method: "post",
+    action: deleteReplyTweetHandler,
+  },
+  {
+    path: "/twitter/createTweetWithHashTag",
+    method: "post",
+    action: createTweetWithHashTagHandler,
+  },
+
+  //------------- twitter ----------------
 ];

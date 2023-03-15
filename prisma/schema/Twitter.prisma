@@ -1,6 +1,6 @@
 model User {
   id                Int            @id @default(autoincrement())
-  name              String         @unique
+  name              String
   profileImage      String
   createAt          DateTime       @default(now())
   updateAt          DateTime       @updatedAt
@@ -32,20 +32,22 @@ model DirecMessage {
 
 model HashTag {
   id            Int             @id @default(autoincrement())
-  name          String
+  name          String          @unique
   createAt      DateTime        @default(now())
   updateAt      DateTime        @updatedAt
   HashTagOnPost HashTagOnPost[]
 }
 
 model HashTagOnPost {
-  id        Int      @id @default(autoincrement())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    Int
-  hashTags  HashTag  @relation(fields: [hashTagId], references: [id])
-  hashTagId Int
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  post        Post     @relation(fields: [postId], references: [id])
+  postId      Int
+  hashTag     HashTag  @relation(fields: [hashTagName], references: [name])
+  hashTagName String
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+
+  @@unique([postId, hashTagName])
 }
 
 model Reply {

@@ -101,7 +101,7 @@ exports.Prisma.DirecMessageScalarFieldEnum = makeEnum({
 exports.Prisma.HashTagOnPostScalarFieldEnum = makeEnum({
   id: 'id',
   postId: 'postId',
-  hashTagId: 'hashTagId',
+  hashTagName: 'hashTagName',
   createAt: 'createAt',
   updateAt: 'updateAt'
 });

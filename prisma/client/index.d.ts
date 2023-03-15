@@ -65,7 +65,7 @@ export type HashTag = {
 export type HashTagOnPost = {
   id: number
   postId: number
-  hashTagId: number
+  hashTagName: string
   createAt: Date
   updateAt: Date
 }
@@ -5079,19 +5079,17 @@ export namespace Prisma {
   export type HashTagOnPostAvgAggregateOutputType = {
     id: number | null
     postId: number | null
-    hashTagId: number | null
   }
 
   export type HashTagOnPostSumAggregateOutputType = {
     id: number | null
     postId: number | null
-    hashTagId: number | null
   }
 
   export type HashTagOnPostMinAggregateOutputType = {
     id: number | null
     postId: number | null
-    hashTagId: number | null
+    hashTagName: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -5099,7 +5097,7 @@ export namespace Prisma {
   export type HashTagOnPostMaxAggregateOutputType = {
     id: number | null
     postId: number | null
-    hashTagId: number | null
+    hashTagName: string | null
     createAt: Date | null
     updateAt: Date | null
   }
@@ -5107,7 +5105,7 @@ export namespace Prisma {
   export type HashTagOnPostCountAggregateOutputType = {
     id: number
     postId: number
-    hashTagId: number
+    hashTagName: number
     createAt: number
     updateAt: number
     _all: number
@@ -5117,19 +5115,17 @@ export namespace Prisma {
   export type HashTagOnPostAvgAggregateInputType = {
     id?: true
     postId?: true
-    hashTagId?: true
   }
 
   export type HashTagOnPostSumAggregateInputType = {
     id?: true
     postId?: true
-    hashTagId?: true
   }
 
   export type HashTagOnPostMinAggregateInputType = {
     id?: true
     postId?: true
-    hashTagId?: true
+    hashTagName?: true
     createAt?: true
     updateAt?: true
   }
@@ -5137,7 +5133,7 @@ export namespace Prisma {
   export type HashTagOnPostMaxAggregateInputType = {
     id?: true
     postId?: true
-    hashTagId?: true
+    hashTagName?: true
     createAt?: true
     updateAt?: true
   }
@@ -5145,7 +5141,7 @@ export namespace Prisma {
   export type HashTagOnPostCountAggregateInputType = {
     id?: true
     postId?: true
-    hashTagId?: true
+    hashTagName?: true
     createAt?: true
     updateAt?: true
     _all?: true
@@ -5241,7 +5237,7 @@ export namespace Prisma {
   export type HashTagOnPostGroupByOutputType = {
     id: number
     postId: number
-    hashTagId: number
+    hashTagName: string
     createAt: Date
     updateAt: Date
     _count: HashTagOnPostCountAggregateOutputType | null
@@ -5269,8 +5265,8 @@ export namespace Prisma {
     id?: boolean
     post?: boolean | PostArgs
     postId?: boolean
-    hashTags?: boolean | HashTagArgs
-    hashTagId?: boolean
+    hashTag?: boolean | HashTagArgs
+    hashTagName?: boolean
     createAt?: boolean
     updateAt?: boolean
   }
@@ -5278,7 +5274,7 @@ export namespace Prisma {
 
   export type HashTagOnPostInclude = {
     post?: boolean | PostArgs
-    hashTags?: boolean | HashTagArgs
+    hashTag?: boolean | HashTagArgs
   }
 
   export type HashTagOnPostGetPayload<S extends boolean | null | undefined | HashTagOnPostArgs> =
@@ -5289,13 +5285,13 @@ export namespace Prisma {
     ? HashTagOnPost  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'post' ? PostGetPayload<S['include'][P]> :
-        P extends 'hashTags' ? HashTagGetPayload<S['include'][P]> :  never
+        P extends 'hashTag' ? HashTagGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (HashTagOnPostArgs | HashTagOnPostFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'post' ? PostGetPayload<S['select'][P]> :
-        P extends 'hashTags' ? HashTagGetPayload<S['select'][P]> :  P extends keyof HashTagOnPost ? HashTagOnPost[P] : never
+        P extends 'hashTag' ? HashTagGetPayload<S['select'][P]> :  P extends keyof HashTagOnPost ? HashTagOnPost[P] : never
   } 
       : HashTagOnPost
 
@@ -5669,7 +5665,7 @@ export namespace Prisma {
 
     post<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
 
-    hashTags<T extends HashTagArgs= {}>(args?: Subset<T, HashTagArgs>): Prisma__HashTagClient<HashTagGetPayload<T> | Null>;
+    hashTag<T extends HashTagArgs= {}>(args?: Subset<T, HashTagArgs>): Prisma__HashTagClient<HashTagGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -8030,7 +8026,7 @@ export namespace Prisma {
   export const HashTagOnPostScalarFieldEnum: {
     id: 'id',
     postId: 'postId',
-    hashTagId: 'hashTagId',
+    hashTagName: 'hashTagName',
     createAt: 'createAt',
     updateAt: 'updateAt'
   };
@@ -8153,7 +8149,6 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = {
     id?: number
-    name?: string
   }
 
   export type UserOrderByWithAggregationInput = {
@@ -8305,6 +8300,7 @@ export namespace Prisma {
 
   export type HashTagWhereUniqueInput = {
     id?: number
+    name?: string
   }
 
   export type HashTagOrderByWithAggregationInput = {
@@ -8336,8 +8332,8 @@ export namespace Prisma {
     id?: IntFilter | number
     post?: XOR<PostRelationFilter, PostWhereInput>
     postId?: IntFilter | number
-    hashTags?: XOR<HashTagRelationFilter, HashTagWhereInput>
-    hashTagId?: IntFilter | number
+    hashTag?: XOR<HashTagRelationFilter, HashTagWhereInput>
+    hashTagName?: StringFilter | string
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
   }
@@ -8346,20 +8342,21 @@ export namespace Prisma {
     id?: SortOrder
     post?: PostOrderByWithRelationInput
     postId?: SortOrder
-    hashTags?: HashTagOrderByWithRelationInput
-    hashTagId?: SortOrder
+    hashTag?: HashTagOrderByWithRelationInput
+    hashTagName?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
 
   export type HashTagOnPostWhereUniqueInput = {
     id?: number
+    postId_hashTagName?: HashTagOnPostPostIdHashTagNameCompoundUniqueInput
   }
 
   export type HashTagOnPostOrderByWithAggregationInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
+    hashTagName?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
     _count?: HashTagOnPostCountOrderByAggregateInput
@@ -8375,7 +8372,7 @@ export namespace Prisma {
     NOT?: Enumerable<HashTagOnPostScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     postId?: IntWithAggregatesFilter | number
-    hashTagId?: IntWithAggregatesFilter | number
+    hashTagName?: StringWithAggregatesFilter | string
     createAt?: DateTimeWithAggregatesFilter | Date | string
     updateAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8679,7 +8676,7 @@ export namespace Prisma {
     name: string
     createAt?: Date | string
     updateAt?: Date | string
-    HashTagOnPost?: HashTagOnPostCreateNestedManyWithoutHashTagsInput
+    HashTagOnPost?: HashTagOnPostCreateNestedManyWithoutHashTagInput
   }
 
   export type HashTagUncheckedCreateInput = {
@@ -8687,14 +8684,14 @@ export namespace Prisma {
     name: string
     createAt?: Date | string
     updateAt?: Date | string
-    HashTagOnPost?: HashTagOnPostUncheckedCreateNestedManyWithoutHashTagsInput
+    HashTagOnPost?: HashTagOnPostUncheckedCreateNestedManyWithoutHashTagInput
   }
 
   export type HashTagUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    HashTagOnPost?: HashTagOnPostUpdateManyWithoutHashTagsNestedInput
+    HashTagOnPost?: HashTagOnPostUpdateManyWithoutHashTagNestedInput
   }
 
   export type HashTagUncheckedUpdateInput = {
@@ -8702,7 +8699,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    HashTagOnPost?: HashTagOnPostUncheckedUpdateManyWithoutHashTagsNestedInput
+    HashTagOnPost?: HashTagOnPostUncheckedUpdateManyWithoutHashTagNestedInput
   }
 
   export type HashTagCreateManyInput = {
@@ -8727,7 +8724,7 @@ export namespace Prisma {
 
   export type HashTagOnPostCreateInput = {
     post: PostCreateNestedOneWithoutHashTagOnPostInput
-    hashTags: HashTagCreateNestedOneWithoutHashTagOnPostInput
+    hashTag: HashTagCreateNestedOneWithoutHashTagOnPostInput
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -8735,14 +8732,14 @@ export namespace Prisma {
   export type HashTagOnPostUncheckedCreateInput = {
     id?: number
     postId: number
-    hashTagId: number
+    hashTagName: string
     createAt?: Date | string
     updateAt?: Date | string
   }
 
   export type HashTagOnPostUpdateInput = {
     post?: PostUpdateOneRequiredWithoutHashTagOnPostNestedInput
-    hashTags?: HashTagUpdateOneRequiredWithoutHashTagOnPostNestedInput
+    hashTag?: HashTagUpdateOneRequiredWithoutHashTagOnPostNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8750,7 +8747,7 @@ export namespace Prisma {
   export type HashTagOnPostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
-    hashTagId?: IntFieldUpdateOperationsInput | number
+    hashTagName?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8758,7 +8755,7 @@ export namespace Prisma {
   export type HashTagOnPostCreateManyInput = {
     id?: number
     postId: number
-    hashTagId: number
+    hashTagName: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -8771,7 +8768,7 @@ export namespace Prisma {
   export type HashTagOnPostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
-    hashTagId?: IntFieldUpdateOperationsInput | number
+    hashTagName?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9155,10 +9152,15 @@ export namespace Prisma {
     isNot?: HashTagWhereInput
   }
 
+  export type HashTagOnPostPostIdHashTagNameCompoundUniqueInput = {
+    postId: number
+    hashTagName: string
+  }
+
   export type HashTagOnPostCountOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
+    hashTagName?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -9166,13 +9168,12 @@ export namespace Prisma {
   export type HashTagOnPostAvgOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
   }
 
   export type HashTagOnPostMaxOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
+    hashTagName?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -9180,7 +9181,7 @@ export namespace Prisma {
   export type HashTagOnPostMinOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
+    hashTagName?: SortOrder
     createAt?: SortOrder
     updateAt?: SortOrder
   }
@@ -9188,7 +9189,6 @@ export namespace Prisma {
   export type HashTagOnPostSumOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
-    hashTagId?: SortOrder
   }
 
   export type ReplyCountOrderByAggregateInput = {
@@ -9548,45 +9548,45 @@ export namespace Prisma {
     deleteMany?: Enumerable<ReplyScalarWhereInput>
   }
 
-  export type HashTagOnPostCreateNestedManyWithoutHashTagsInput = {
-    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagsInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagsInput>>
-    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagsInput>
-    createMany?: HashTagOnPostCreateManyHashTagsInputEnvelope
+  export type HashTagOnPostCreateNestedManyWithoutHashTagInput = {
+    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagInput>>
+    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagInput>
+    createMany?: HashTagOnPostCreateManyHashTagInputEnvelope
     connect?: Enumerable<HashTagOnPostWhereUniqueInput>
   }
 
-  export type HashTagOnPostUncheckedCreateNestedManyWithoutHashTagsInput = {
-    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagsInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagsInput>>
-    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagsInput>
-    createMany?: HashTagOnPostCreateManyHashTagsInputEnvelope
+  export type HashTagOnPostUncheckedCreateNestedManyWithoutHashTagInput = {
+    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagInput>>
+    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagInput>
+    createMany?: HashTagOnPostCreateManyHashTagInputEnvelope
     connect?: Enumerable<HashTagOnPostWhereUniqueInput>
   }
 
-  export type HashTagOnPostUpdateManyWithoutHashTagsNestedInput = {
-    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagsInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagsInput>>
-    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagsInput>
-    upsert?: Enumerable<HashTagOnPostUpsertWithWhereUniqueWithoutHashTagsInput>
-    createMany?: HashTagOnPostCreateManyHashTagsInputEnvelope
+  export type HashTagOnPostUpdateManyWithoutHashTagNestedInput = {
+    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagInput>>
+    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagInput>
+    upsert?: Enumerable<HashTagOnPostUpsertWithWhereUniqueWithoutHashTagInput>
+    createMany?: HashTagOnPostCreateManyHashTagInputEnvelope
     set?: Enumerable<HashTagOnPostWhereUniqueInput>
     disconnect?: Enumerable<HashTagOnPostWhereUniqueInput>
     delete?: Enumerable<HashTagOnPostWhereUniqueInput>
     connect?: Enumerable<HashTagOnPostWhereUniqueInput>
-    update?: Enumerable<HashTagOnPostUpdateWithWhereUniqueWithoutHashTagsInput>
-    updateMany?: Enumerable<HashTagOnPostUpdateManyWithWhereWithoutHashTagsInput>
+    update?: Enumerable<HashTagOnPostUpdateWithWhereUniqueWithoutHashTagInput>
+    updateMany?: Enumerable<HashTagOnPostUpdateManyWithWhereWithoutHashTagInput>
     deleteMany?: Enumerable<HashTagOnPostScalarWhereInput>
   }
 
-  export type HashTagOnPostUncheckedUpdateManyWithoutHashTagsNestedInput = {
-    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagsInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagsInput>>
-    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagsInput>
-    upsert?: Enumerable<HashTagOnPostUpsertWithWhereUniqueWithoutHashTagsInput>
-    createMany?: HashTagOnPostCreateManyHashTagsInputEnvelope
+  export type HashTagOnPostUncheckedUpdateManyWithoutHashTagNestedInput = {
+    create?: XOR<Enumerable<HashTagOnPostCreateWithoutHashTagInput>, Enumerable<HashTagOnPostUncheckedCreateWithoutHashTagInput>>
+    connectOrCreate?: Enumerable<HashTagOnPostCreateOrConnectWithoutHashTagInput>
+    upsert?: Enumerable<HashTagOnPostUpsertWithWhereUniqueWithoutHashTagInput>
+    createMany?: HashTagOnPostCreateManyHashTagInputEnvelope
     set?: Enumerable<HashTagOnPostWhereUniqueInput>
     disconnect?: Enumerable<HashTagOnPostWhereUniqueInput>
     delete?: Enumerable<HashTagOnPostWhereUniqueInput>
     connect?: Enumerable<HashTagOnPostWhereUniqueInput>
-    update?: Enumerable<HashTagOnPostUpdateWithWhereUniqueWithoutHashTagsInput>
-    updateMany?: Enumerable<HashTagOnPostUpdateManyWithWhereWithoutHashTagsInput>
+    update?: Enumerable<HashTagOnPostUpdateWithWhereUniqueWithoutHashTagInput>
+    updateMany?: Enumerable<HashTagOnPostUpdateManyWithWhereWithoutHashTagInput>
     deleteMany?: Enumerable<HashTagOnPostScalarWhereInput>
   }
 
@@ -9965,14 +9965,14 @@ export namespace Prisma {
   }
 
   export type HashTagOnPostCreateWithoutPostInput = {
-    hashTags: HashTagCreateNestedOneWithoutHashTagOnPostInput
+    hashTag: HashTagCreateNestedOneWithoutHashTagOnPostInput
     createAt?: Date | string
     updateAt?: Date | string
   }
 
   export type HashTagOnPostUncheckedCreateWithoutPostInput = {
     id?: number
-    hashTagId: number
+    hashTagName: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -10060,7 +10060,7 @@ export namespace Prisma {
     NOT?: Enumerable<HashTagOnPostScalarWhereInput>
     id?: IntFilter | number
     postId?: IntFilter | number
-    hashTagId?: IntFilter | number
+    hashTagName?: StringFilter | string
     createAt?: DateTimeFilter | Date | string
     updateAt?: DateTimeFilter | Date | string
   }
@@ -10107,41 +10107,41 @@ export namespace Prisma {
     toUserRelations?: UserRelationUncheckedUpdateManyWithoutToNestedInput
   }
 
-  export type HashTagOnPostCreateWithoutHashTagsInput = {
+  export type HashTagOnPostCreateWithoutHashTagInput = {
     post: PostCreateNestedOneWithoutHashTagOnPostInput
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type HashTagOnPostUncheckedCreateWithoutHashTagsInput = {
+  export type HashTagOnPostUncheckedCreateWithoutHashTagInput = {
     id?: number
     postId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type HashTagOnPostCreateOrConnectWithoutHashTagsInput = {
+  export type HashTagOnPostCreateOrConnectWithoutHashTagInput = {
     where: HashTagOnPostWhereUniqueInput
-    create: XOR<HashTagOnPostCreateWithoutHashTagsInput, HashTagOnPostUncheckedCreateWithoutHashTagsInput>
+    create: XOR<HashTagOnPostCreateWithoutHashTagInput, HashTagOnPostUncheckedCreateWithoutHashTagInput>
   }
 
-  export type HashTagOnPostCreateManyHashTagsInputEnvelope = {
-    data: Enumerable<HashTagOnPostCreateManyHashTagsInput>
+  export type HashTagOnPostCreateManyHashTagInputEnvelope = {
+    data: Enumerable<HashTagOnPostCreateManyHashTagInput>
     skipDuplicates?: boolean
   }
 
-  export type HashTagOnPostUpsertWithWhereUniqueWithoutHashTagsInput = {
+  export type HashTagOnPostUpsertWithWhereUniqueWithoutHashTagInput = {
     where: HashTagOnPostWhereUniqueInput
-    update: XOR<HashTagOnPostUpdateWithoutHashTagsInput, HashTagOnPostUncheckedUpdateWithoutHashTagsInput>
-    create: XOR<HashTagOnPostCreateWithoutHashTagsInput, HashTagOnPostUncheckedCreateWithoutHashTagsInput>
+    update: XOR<HashTagOnPostUpdateWithoutHashTagInput, HashTagOnPostUncheckedUpdateWithoutHashTagInput>
+    create: XOR<HashTagOnPostCreateWithoutHashTagInput, HashTagOnPostUncheckedCreateWithoutHashTagInput>
   }
 
-  export type HashTagOnPostUpdateWithWhereUniqueWithoutHashTagsInput = {
+  export type HashTagOnPostUpdateWithWhereUniqueWithoutHashTagInput = {
     where: HashTagOnPostWhereUniqueInput
-    data: XOR<HashTagOnPostUpdateWithoutHashTagsInput, HashTagOnPostUncheckedUpdateWithoutHashTagsInput>
+    data: XOR<HashTagOnPostUpdateWithoutHashTagInput, HashTagOnPostUncheckedUpdateWithoutHashTagInput>
   }
 
-  export type HashTagOnPostUpdateManyWithWhereWithoutHashTagsInput = {
+  export type HashTagOnPostUpdateManyWithWhereWithoutHashTagInput = {
     where: HashTagOnPostScalarWhereInput
     data: XOR<HashTagOnPostUpdateManyMutationInput, HashTagOnPostUncheckedUpdateManyWithoutHashTagOnPostInput>
   }
@@ -10544,7 +10544,7 @@ export namespace Prisma {
 
   export type HashTagOnPostCreateManyPostInput = {
     id?: number
-    hashTagId: number
+    hashTagName: string
     createAt?: Date | string
     updateAt?: Date | string
   }
@@ -10558,21 +10558,21 @@ export namespace Prisma {
   }
 
   export type HashTagOnPostUpdateWithoutPostInput = {
-    hashTags?: HashTagUpdateOneRequiredWithoutHashTagOnPostNestedInput
+    hashTag?: HashTagUpdateOneRequiredWithoutHashTagOnPostNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HashTagOnPostUncheckedUpdateWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
-    hashTagId?: IntFieldUpdateOperationsInput | number
+    hashTagName?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HashTagOnPostUncheckedUpdateManyWithoutHashTagOnPostInput = {
     id?: IntFieldUpdateOperationsInput | number
-    hashTagId?: IntFieldUpdateOperationsInput | number
+    hashTagName?: StringFieldUpdateOperationsInput | string
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10592,20 +10592,20 @@ export namespace Prisma {
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type HashTagOnPostCreateManyHashTagsInput = {
+  export type HashTagOnPostCreateManyHashTagInput = {
     id?: number
     postId: number
     createAt?: Date | string
     updateAt?: Date | string
   }
 
-  export type HashTagOnPostUpdateWithoutHashTagsInput = {
+  export type HashTagOnPostUpdateWithoutHashTagInput = {
     post?: PostUpdateOneRequiredWithoutHashTagOnPostNestedInput
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updateAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type HashTagOnPostUncheckedUpdateWithoutHashTagsInput = {
+  export type HashTagOnPostUncheckedUpdateWithoutHashTagInput = {
     id?: IntFieldUpdateOperationsInput | number
     postId?: IntFieldUpdateOperationsInput | number
     createAt?: DateTimeFieldUpdateOperationsInput | Date | string
