@@ -39,8 +39,16 @@ export const getTweetWithReplies = (args: { id: number }) => {
       tweetText: true,
       tweetingUser: { select: { id: true, name: true } },
       parentTweet: { select: { id: true } },
-      childTweets: { select: { id: true, tweetText: true } },
+      childTweets: {
+        select: {
+          id: true,
+          tweetText: true,
+          tweetingUser: { select: { id: true, name: true } },
+          createdAt: true,
+        },
+      },
       hashTags: { select: { id: true, hashTagText: true } },
+      createdAt: true,
     },
     where: { id: args.id },
   });
