@@ -1,0 +1,135 @@
+model User {
+  id             Int                 @id @default(autoincrement())
+  username       String              @unique
+  email          String              @unique
+  accountName    String              @unique
+  profilePicture String?
+  subscribings   ChannelSubscriber[]
+  subscribeLevel ChannelLevel[]
+  ownedChannels  ChannelAdmin[]
+  comments       Comment[]
+  reactions      Reaction[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+}
+
+model Channel {
+  id                Int                @id @default(autoincrement())
+  name              String             @unique
+  profilePicture    String?
+  about             String?
+  channelSubscriber ChannelSubscriber?
+  channelLevels     ChannelLevel[]
+  ownedBy           ChannelAdmin[]
+  videos            Video[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model ChannelAdmin {
+  id          Int           @id @default(autoincrement())
+  user        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  roleName    AdminRoleEnum @default(ADMIN)
+  permissions Permission[]
+  channel     Channel       @relation(fields: [channelId], references: [id])
+  channelId   Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ChannelSubscriber {
+  id        Int      @id @default(autoincrement())
+  users     User[]
+  channel   Channel  @relation(fields: [channelId], references: [id])
+  channelId Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChannelLevel {
+  id        Int       @id @default(autoincrement())
+  level     String
+  benefits  Benefit[]
+  users     User[]
+  channel   Channel   @relation(fields: [channelId], references: [id])
+  channelId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([level, channelId])
+}
+
+model Benefit {
+  id            Int            @id @default(autoincrement())
+  benefit       BenefitEnum    @unique
+  channelLevels ChannelLevel[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+enum BenefitEnum {
+  EMOTICON
+  EARLY_ACCESS
+  COMMUNITY_VIDEO
+}
+
+enum AdminRoleEnum {
+  ADMIN
+  EDITOR
+  CREATOR
+}
+
+model Permission {
+  id           Int            @id @default(autoincrement())
+  ChannelAdmin ChannelAdmin[]
+  permission   PermissionEnum @unique
+}
+
+enum PermissionEnum {
+  CREATE
+  EDIT
+  POST
+  DELETE
+}
+
+model Video {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  channel     Channel    @relation(fields: [channelId], references: [id])
+  channelId   Int
+  comments    Comment[]
+  reactions   Reaction[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Reaction {
+  id      Int          @id @default(autoincrement())
+  type    ReactionEnum
+  video   Video        @relation(fields: [videoId], references: [id])
+  videoId Int
+  user    User[]
+
+  @@unique([videoId, type])
+}
+
+enum ReactionEnum {
+  LIKE
+  DISLIKE
+}
+
+model Comment {
+  id          Int       @id @default(autoincrement())
+  comment     String?
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      Int?
+  video       Video     @relation(fields: [videoId], references: [id])
+  videoId     Int
+  commentBy   Comment[] @relation("CommentRelation")
+  commentTo   Comment?  @relation("CommentRelation", fields: [commentToId], references: [id])
+  commentToId Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

@@ -25,6 +25,10 @@
     "prisma:format:laundry": "yarn prisma format --schema prisma/laundryschema.prisma",
     "prisma:migrate:laundry": "yarn prisma migrate dev --name init --schema prisma/laundryschema.prisma",
     "prisma:generate:laundry": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
+    "prisma:merge:youtube": "cat prisma/youtube-schema/**.prisma > prisma/youtubeschema.prisma",
+    "prisma:format:youtube": "yarn prisma format --schema prisma/youtubeschema.prisma",
+    "prisma:migrate:youtube": "yarn prisma migrate dev --name init --schema prisma/youtubeschema.prisma",
+    "prisma:generate:youtube": "yarn pnpify prisma generate --schema=prisma/triviaschema.prisma",
     "test": "jest --verbose",
     "test:trivia": "jest -- src/TriviaAPI",
     "test:twitter": "jest -- src/TwitterAPI"
