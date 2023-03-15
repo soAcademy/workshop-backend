@@ -11,16 +11,7 @@
 //   updateMenuHandler,
 //   updateOrderHandler,
 // } from "./BinKitchen";
-// import {
-//   createCategoryHandler,
-//   createQuizHandle,
-//   createUserHandler,
-//   getAllCategoryHandle,
-//   getQuizbyCategoryHandle,
-//   getResultHandler,
-//   getStatisticHandler,
-//   submitQuizHandler,
-// } from "./QuestionQuiz";
+
 import {
   createHashTagHandler,
   createReplyTwitterHandler,
@@ -35,6 +26,16 @@ import {
   getPostByUserTwitterHandler,
   getUserProfileTwitterHandler,
 } from "./Twitter/Twitter.handler";
+// import {
+//   createCategoryHandler,
+//   createQuizHandle,
+//   createUserHandler,
+//   getAllCategoryHandle,
+//   getQuizbyCategoryHandle,
+//   getResultHandler,
+//   getStatisticHandler,
+//   submitQuizHandler,
+// } from "./QuestionQuiz/QuestionQuiz.handler";
 import {
   functionHelloAtHandler,
   functionHelloSumHandler,
@@ -289,6 +290,7 @@ export const AppRoutes = [
   //   method: "post",
   //   action: getStatisticHandler,
   // },
+
   //------------- twitter ----------------
   {
     path: "/twitter/createUserTwitter",

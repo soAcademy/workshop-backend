@@ -66,18 +66,32 @@ export const createTweet = async (args: ICreateTweetCodec) => {
 
 export const createTweetWithHashTag = async (args: ICreateTweetWithHash) => {
   console.log(args);
+  const createTweet = await prisma.post.create({
+    data: {
+      message: args.message,
+      userId: args.userId,
+    },
+  });
+  const createHashTag = await prisma.hashTag.upsert({
+    where: {
+      name: args.hashTagName,
+    },
+    update: {
+      name: args.hashTagName,
+    },
+    create: {
+      name: args.hashTagName,
+    },
+  });
 
-  const createTweetWithHashTag = await Promise.all(
-    args.hashTagName.map((r) =>
-      prisma.hashTagOnPost.create({
-        data: {
-          postId: args.postId,
-          hashTagName: r,
-        },
-      })
-    )
-  );
-  return createTweetWithHashTag;
+  const createRelationOfTweetAndHashTag = await prisma.hashTagOnPost.create({
+    data: {
+      postId: createTweet.id,
+      hashTagName: createHashTag.name,
+    },
+  });
+
+  return createRelationOfTweetAndHashTag;
 };
 
 export const createHashTag = async (args: ICreateHashTag) => {
@@ -95,13 +109,7 @@ export const createHashTag = async (args: ICreateHashTag) => {
   });
   // console.log(hashtagResult);
 
-  const result = await prisma.hashTagOnPost.create({
-    data: {
-      postId: args.postId,
-      hashTagName: hashtagResult.name,
-    },
-  });
-  return result;
+  return hashtagResult;
 };
 
 //-------------------------------------------------------------------

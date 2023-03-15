@@ -98,6 +98,7 @@
 //     .slice(0, 3)
 //     .map((r) => ({
 //       roundQuizId: roundQuizId.id,
+//       questionName: r.textQuestion,
 //       questionId: r.id,
 //       categoryId: r.questionCategoryId,
 //       choices: [
@@ -237,7 +238,9 @@
 //   });
 //   const sendtoShow = {
 //     score: roundQuizData?.score,
-//     userAnswer: dataToShowResult,
+//     userAnswer: dataToShowResult.sort(
+//       (a, b) => a.questionOrder - b.questionOrder
+//     ),
 //   };
 //   return sendtoShow;
 // };

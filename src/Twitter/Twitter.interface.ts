@@ -58,8 +58,9 @@ export interface ICreateReplyTwitter
 //------------------------------------------------------
 
 export const createTweetWithHashTagCodec = t.type({
-  hashTagName: t.array(t.string),
-  postId: t.number,
+  message: t.string,
+  hashTagName: t.string,
+  userId: t.number,
 });
 
 export interface ICreateTweetWithHash
@@ -68,7 +69,6 @@ export interface ICreateTweetWithHash
 //------------------------------------------------------
 
 export const createHashTagCodec = t.type({
-  postId: t.number,
   hashTagName: t.string,
 });
 
