@@ -9,11 +9,13 @@ import {
   getUserProfile,
   getUsers,
   getHashtags,
+  getPostById,
 } from "./twitter.resolver";
 import {
   CreateUserCodec,
   CreateUserPostCodec,
   GetPostByHashtagCodec,
+  GetPostByIdCodec,
   GetPostByUserCodec,
   GetUserProfileCodec,
 } from "./twitter.interface";
@@ -85,6 +87,18 @@ export const GetPostByUserHandler = async (req: Request, res: Response) => {
 export const GetPostsHandler = async (req: Request, res: Response) => {
   try {
     res.status(200).json(await getPosts());
+  } catch (e) {
+    res.status(500).json({ error: String(e) });
+  }
+};
+
+export const GetPostByIdHandler = async (req: Request, res: Response) => {
+  const body = req?.body;
+  console.log(body);
+  try {
+    GetPostByIdCodec.decode(body)._tag === "Right"
+      ? res.status(200).json(await getPostById(body))
+      : res.status(500).json({ error: "Invalid type Input" });
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }

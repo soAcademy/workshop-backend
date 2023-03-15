@@ -116,6 +116,7 @@ exports.Prisma.HashtagScalarFieldEnum = makeEnum({
 exports.Prisma.PostScalarFieldEnum = makeEnum({
   id: 'id',
   userId: 'userId',
+  postId: 'postId',
   detail: 'detail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -124,15 +125,6 @@ exports.Prisma.PostScalarFieldEnum = makeEnum({
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
-});
-
-exports.Prisma.ReplyScalarFieldEnum = makeEnum({
-  id: 'id',
-  postId: 'postId',
-  userId: 'userId',
-  replyMessage: 'replyMessage',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.SortOrder = makeEnum({
@@ -168,7 +160,6 @@ exports.Prisma.ModelName = makeEnum({
   User: 'User',
   UserRelation: 'UserRelation',
   Post: 'Post',
-  Reply: 'Reply',
   Hashtag: 'Hashtag',
   HashtagOnPost: 'HashtagOnPost',
   DirectMessage: 'DirectMessage'

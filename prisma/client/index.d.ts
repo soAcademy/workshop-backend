@@ -41,20 +41,8 @@ export type UserRelation = {
 export type Post = {
   id: number
   userId: number
+  postId: number | null
   detail: string
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model Reply
- * 
- */
-export type Reply = {
-  id: number
-  postId: number
-  userId: number
-  replyMessage: string
   createdAt: Date
   updatedAt: Date
 }
@@ -242,16 +230,6 @@ export class PrismaClient<
     * ```
     */
   get post(): Prisma.PostDelegate<GlobalReject>;
-
-  /**
-   * `prisma.reply`: Exposes CRUD operations for the **Reply** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Replies
-    * const replies = await prisma.reply.findMany()
-    * ```
-    */
-  get reply(): Prisma.ReplyDelegate<GlobalReject>;
 
   /**
    * `prisma.hashtag`: Exposes CRUD operations for the **Hashtag** model.
@@ -754,7 +732,6 @@ export namespace Prisma {
     User: 'User',
     UserRelation: 'UserRelation',
     Post: 'Post',
-    Reply: 'Reply',
     Hashtag: 'Hashtag',
     HashtagOnPost: 'HashtagOnPost',
     DirectMessage: 'DirectMessage'
@@ -925,7 +902,6 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     posts: number
-    replies: number
     directMsgFrom: number
     directMsgTo: number
     followings: number
@@ -934,7 +910,6 @@ export namespace Prisma {
 
   export type UserCountOutputTypeSelect = {
     posts?: boolean
-    replies?: boolean
     directMsgFrom?: boolean
     directMsgTo?: boolean
     followings?: boolean
@@ -977,12 +952,12 @@ export namespace Prisma {
 
 
   export type PostCountOutputType = {
-    replies: number
+    replyToPost: number
     hashtagOnPosts: number
   }
 
   export type PostCountOutputTypeSelect = {
-    replies?: boolean
+    replyToPost?: boolean
     hashtagOnPosts?: boolean
   }
 
@@ -1264,7 +1239,6 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     posts?: boolean | User$postsArgs
-    replies?: boolean | User$repliesArgs
     directMsgFrom?: boolean | User$directMsgFromArgs
     directMsgTo?: boolean | User$directMsgToArgs
     followings?: boolean | User$followingsArgs
@@ -1275,7 +1249,6 @@ export namespace Prisma {
 
   export type UserInclude = {
     posts?: boolean | User$postsArgs
-    replies?: boolean | User$repliesArgs
     directMsgFrom?: boolean | User$directMsgFromArgs
     directMsgTo?: boolean | User$directMsgToArgs
     followings?: boolean | User$followingsArgs
@@ -1291,7 +1264,6 @@ export namespace Prisma {
     ? User  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'posts' ? Array < PostGetPayload<S['include'][P]>>  :
-        P extends 'replies' ? Array < ReplyGetPayload<S['include'][P]>>  :
         P extends 'directMsgFrom' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
         P extends 'directMsgTo' ? Array < DirectMessageGetPayload<S['include'][P]>>  :
         P extends 'followings' ? Array < UserRelationGetPayload<S['include'][P]>>  :
@@ -1302,7 +1274,6 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'posts' ? Array < PostGetPayload<S['select'][P]>>  :
-        P extends 'replies' ? Array < ReplyGetPayload<S['select'][P]>>  :
         P extends 'directMsgFrom' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
         P extends 'directMsgTo' ? Array < DirectMessageGetPayload<S['select'][P]>>  :
         P extends 'followings' ? Array < UserRelationGetPayload<S['select'][P]>>  :
@@ -1680,8 +1651,6 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
     posts<T extends User$postsArgs= {}>(args?: Subset<T, User$postsArgs>): Prisma.PrismaPromise<Array<PostGetPayload<T>>| Null>;
-
-    replies<T extends User$repliesArgs= {}>(args?: Subset<T, User$repliesArgs>): Prisma.PrismaPromise<Array<ReplyGetPayload<T>>| Null>;
 
     directMsgFrom<T extends User$directMsgFromArgs= {}>(args?: Subset<T, User$directMsgFromArgs>): Prisma.PrismaPromise<Array<DirectMessageGetPayload<T>>| Null>;
 
@@ -2064,27 +2033,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Enumerable<PostScalarFieldEnum>
-  }
-
-
-  /**
-   * User.replies
-   */
-  export type User$repliesArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    where?: ReplyWhereInput
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    cursor?: ReplyWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<ReplyScalarFieldEnum>
   }
 
 
@@ -3183,16 +3131,19 @@ export namespace Prisma {
   export type PostAvgAggregateOutputType = {
     id: number | null
     userId: number | null
+    postId: number | null
   }
 
   export type PostSumAggregateOutputType = {
     id: number | null
     userId: number | null
+    postId: number | null
   }
 
   export type PostMinAggregateOutputType = {
     id: number | null
     userId: number | null
+    postId: number | null
     detail: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3201,6 +3152,7 @@ export namespace Prisma {
   export type PostMaxAggregateOutputType = {
     id: number | null
     userId: number | null
+    postId: number | null
     detail: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3209,6 +3161,7 @@ export namespace Prisma {
   export type PostCountAggregateOutputType = {
     id: number
     userId: number
+    postId: number
     detail: number
     createdAt: number
     updatedAt: number
@@ -3219,16 +3172,19 @@ export namespace Prisma {
   export type PostAvgAggregateInputType = {
     id?: true
     userId?: true
+    postId?: true
   }
 
   export type PostSumAggregateInputType = {
     id?: true
     userId?: true
+    postId?: true
   }
 
   export type PostMinAggregateInputType = {
     id?: true
     userId?: true
+    postId?: true
     detail?: true
     createdAt?: true
     updatedAt?: true
@@ -3237,6 +3193,7 @@ export namespace Prisma {
   export type PostMaxAggregateInputType = {
     id?: true
     userId?: true
+    postId?: true
     detail?: true
     createdAt?: true
     updatedAt?: true
@@ -3245,6 +3202,7 @@ export namespace Prisma {
   export type PostCountAggregateInputType = {
     id?: true
     userId?: true
+    postId?: true
     detail?: true
     createdAt?: true
     updatedAt?: true
@@ -3341,6 +3299,7 @@ export namespace Prisma {
   export type PostGroupByOutputType = {
     id: number
     userId: number
+    postId: number | null
     detail: string
     createdAt: Date
     updatedAt: Date
@@ -3369,10 +3328,12 @@ export namespace Prisma {
     id?: boolean
     user?: boolean | UserArgs
     userId?: boolean
+    replyToPost?: boolean | Post$replyToPostArgs
+    Post?: boolean | PostArgs
+    postId?: boolean
     detail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    replies?: boolean | Post$repliesArgs
     hashtagOnPosts?: boolean | Post$hashtagOnPostsArgs
     _count?: boolean | PostCountOutputTypeArgs
   }
@@ -3380,7 +3341,8 @@ export namespace Prisma {
 
   export type PostInclude = {
     user?: boolean | UserArgs
-    replies?: boolean | Post$repliesArgs
+    replyToPost?: boolean | Post$replyToPostArgs
+    Post?: boolean | PostArgs
     hashtagOnPosts?: boolean | Post$hashtagOnPostsArgs
     _count?: boolean | PostCountOutputTypeArgs
   }
@@ -3393,7 +3355,8 @@ export namespace Prisma {
     ? Post  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'user' ? UserGetPayload<S['include'][P]> :
-        P extends 'replies' ? Array < ReplyGetPayload<S['include'][P]>>  :
+        P extends 'replyToPost' ? Array < PostGetPayload<S['include'][P]>>  :
+        P extends 'Post' ? PostGetPayload<S['include'][P]> | null :
         P extends 'hashtagOnPosts' ? Array < HashtagOnPostGetPayload<S['include'][P]>>  :
         P extends '_count' ? PostCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
@@ -3401,7 +3364,8 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'user' ? UserGetPayload<S['select'][P]> :
-        P extends 'replies' ? Array < ReplyGetPayload<S['select'][P]>>  :
+        P extends 'replyToPost' ? Array < PostGetPayload<S['select'][P]>>  :
+        P extends 'Post' ? PostGetPayload<S['select'][P]> | null :
         P extends 'hashtagOnPosts' ? Array < HashtagOnPostGetPayload<S['select'][P]>>  :
         P extends '_count' ? PostCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Post ? Post[P] : never
   } 
@@ -3777,7 +3741,9 @@ export namespace Prisma {
 
     user<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
 
-    replies<T extends Post$repliesArgs= {}>(args?: Subset<T, Post$repliesArgs>): Prisma.PrismaPromise<Array<ReplyGetPayload<T>>| Null>;
+    replyToPost<T extends Post$replyToPostArgs= {}>(args?: Subset<T, Post$replyToPostArgs>): Prisma.PrismaPromise<Array<PostGetPayload<T>>| Null>;
+
+    Post<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
 
     hashtagOnPosts<T extends Post$hashtagOnPostsArgs= {}>(args?: Subset<T, Post$hashtagOnPostsArgs>): Prisma.PrismaPromise<Array<HashtagOnPostGetPayload<T>>| Null>;
 
@@ -4137,23 +4103,23 @@ export namespace Prisma {
 
 
   /**
-   * Post.replies
+   * Post.replyToPost
    */
-  export type Post$repliesArgs = {
+  export type Post$replyToPostArgs = {
     /**
-     * Select specific fields to fetch from the Reply
+     * Select specific fields to fetch from the Post
      */
-    select?: ReplySelect | null
+    select?: PostSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: ReplyInclude | null
-    where?: ReplyWhereInput
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    cursor?: ReplyWhereUniqueInput
+    include?: PostInclude | null
+    where?: PostWhereInput
+    orderBy?: Enumerable<PostOrderByWithRelationInput>
+    cursor?: PostWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<ReplyScalarFieldEnum>
+    distinct?: Enumerable<PostScalarFieldEnum>
   }
 
 
@@ -4190,993 +4156,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: PostInclude | null
-  }
-
-
-
-  /**
-   * Model Reply
-   */
-
-
-  export type AggregateReply = {
-    _count: ReplyCountAggregateOutputType | null
-    _avg: ReplyAvgAggregateOutputType | null
-    _sum: ReplySumAggregateOutputType | null
-    _min: ReplyMinAggregateOutputType | null
-    _max: ReplyMaxAggregateOutputType | null
-  }
-
-  export type ReplyAvgAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    userId: number | null
-  }
-
-  export type ReplySumAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    userId: number | null
-  }
-
-  export type ReplyMinAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    userId: number | null
-    replyMessage: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ReplyMaxAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    userId: number | null
-    replyMessage: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type ReplyCountAggregateOutputType = {
-    id: number
-    postId: number
-    userId: number
-    replyMessage: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type ReplyAvgAggregateInputType = {
-    id?: true
-    postId?: true
-    userId?: true
-  }
-
-  export type ReplySumAggregateInputType = {
-    id?: true
-    postId?: true
-    userId?: true
-  }
-
-  export type ReplyMinAggregateInputType = {
-    id?: true
-    postId?: true
-    userId?: true
-    replyMessage?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ReplyMaxAggregateInputType = {
-    id?: true
-    postId?: true
-    userId?: true
-    replyMessage?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type ReplyCountAggregateInputType = {
-    id?: true
-    postId?: true
-    userId?: true
-    replyMessage?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type ReplyAggregateArgs = {
-    /**
-     * Filter which Reply to aggregate.
-     */
-    where?: ReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Replies to fetch.
-     */
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: ReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Replies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Replies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Replies
-    **/
-    _count?: true | ReplyCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: ReplyAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ReplySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: ReplyMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: ReplyMaxAggregateInputType
-  }
-
-  export type GetReplyAggregateType<T extends ReplyAggregateArgs> = {
-        [P in keyof T & keyof AggregateReply]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateReply[P]>
-      : GetScalarType<T[P], AggregateReply[P]>
-  }
-
-
-
-
-  export type ReplyGroupByArgs = {
-    where?: ReplyWhereInput
-    orderBy?: Enumerable<ReplyOrderByWithAggregationInput>
-    by: ReplyScalarFieldEnum[]
-    having?: ReplyScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: ReplyCountAggregateInputType | true
-    _avg?: ReplyAvgAggregateInputType
-    _sum?: ReplySumAggregateInputType
-    _min?: ReplyMinAggregateInputType
-    _max?: ReplyMaxAggregateInputType
-  }
-
-
-  export type ReplyGroupByOutputType = {
-    id: number
-    postId: number
-    userId: number
-    replyMessage: string
-    createdAt: Date
-    updatedAt: Date
-    _count: ReplyCountAggregateOutputType | null
-    _avg: ReplyAvgAggregateOutputType | null
-    _sum: ReplySumAggregateOutputType | null
-    _min: ReplyMinAggregateOutputType | null
-    _max: ReplyMaxAggregateOutputType | null
-  }
-
-  type GetReplyGroupByPayload<T extends ReplyGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<ReplyGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof ReplyGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], ReplyGroupByOutputType[P]>
-            : GetScalarType<T[P], ReplyGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type ReplySelect = {
-    id?: boolean
-    post?: boolean | PostArgs
-    postId?: boolean
-    userReply?: boolean | UserArgs
-    userId?: boolean
-    replyMessage?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type ReplyInclude = {
-    post?: boolean | PostArgs
-    userReply?: boolean | UserArgs
-  }
-
-  export type ReplyGetPayload<S extends boolean | null | undefined | ReplyArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? Reply :
-    S extends undefined ? never :
-    S extends { include: any } & (ReplyArgs | ReplyFindManyArgs)
-    ? Reply  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'post' ? PostGetPayload<S['include'][P]> :
-        P extends 'userReply' ? UserGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (ReplyArgs | ReplyFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'post' ? PostGetPayload<S['select'][P]> :
-        P extends 'userReply' ? UserGetPayload<S['select'][P]> :  P extends keyof Reply ? Reply[P] : never
-  } 
-      : Reply
-
-
-  type ReplyCountArgs = 
-    Omit<ReplyFindManyArgs, 'select' | 'include'> & {
-      select?: ReplyCountAggregateInputType | true
-    }
-
-  export interface ReplyDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one Reply that matches the filter.
-     * @param {ReplyFindUniqueArgs} args - Arguments to find a Reply
-     * @example
-     * // Get one Reply
-     * const reply = await prisma.reply.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends ReplyFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, ReplyFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'Reply'> extends True ? Prisma__ReplyClient<ReplyGetPayload<T>> : Prisma__ReplyClient<ReplyGetPayload<T> | null, null>
-
-    /**
-     * Find one Reply that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {ReplyFindUniqueOrThrowArgs} args - Arguments to find a Reply
-     * @example
-     * // Get one Reply
-     * const reply = await prisma.reply.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends ReplyFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, ReplyFindUniqueOrThrowArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Find the first Reply that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyFindFirstArgs} args - Arguments to find a Reply
-     * @example
-     * // Get one Reply
-     * const reply = await prisma.reply.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends ReplyFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, ReplyFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'Reply'> extends True ? Prisma__ReplyClient<ReplyGetPayload<T>> : Prisma__ReplyClient<ReplyGetPayload<T> | null, null>
-
-    /**
-     * Find the first Reply that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyFindFirstOrThrowArgs} args - Arguments to find a Reply
-     * @example
-     * // Get one Reply
-     * const reply = await prisma.reply.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends ReplyFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, ReplyFindFirstOrThrowArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Find zero or more Replies that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Replies
-     * const replies = await prisma.reply.findMany()
-     * 
-     * // Get first 10 Replies
-     * const replies = await prisma.reply.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const replyWithIdOnly = await prisma.reply.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends ReplyFindManyArgs>(
-      args?: SelectSubset<T, ReplyFindManyArgs>
-    ): Prisma.PrismaPromise<Array<ReplyGetPayload<T>>>
-
-    /**
-     * Create a Reply.
-     * @param {ReplyCreateArgs} args - Arguments to create a Reply.
-     * @example
-     * // Create one Reply
-     * const Reply = await prisma.reply.create({
-     *   data: {
-     *     // ... data to create a Reply
-     *   }
-     * })
-     * 
-    **/
-    create<T extends ReplyCreateArgs>(
-      args: SelectSubset<T, ReplyCreateArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Create many Replies.
-     *     @param {ReplyCreateManyArgs} args - Arguments to create many Replies.
-     *     @example
-     *     // Create many Replies
-     *     const reply = await prisma.reply.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends ReplyCreateManyArgs>(
-      args?: SelectSubset<T, ReplyCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a Reply.
-     * @param {ReplyDeleteArgs} args - Arguments to delete one Reply.
-     * @example
-     * // Delete one Reply
-     * const Reply = await prisma.reply.delete({
-     *   where: {
-     *     // ... filter to delete one Reply
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends ReplyDeleteArgs>(
-      args: SelectSubset<T, ReplyDeleteArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Update one Reply.
-     * @param {ReplyUpdateArgs} args - Arguments to update one Reply.
-     * @example
-     * // Update one Reply
-     * const reply = await prisma.reply.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends ReplyUpdateArgs>(
-      args: SelectSubset<T, ReplyUpdateArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Delete zero or more Replies.
-     * @param {ReplyDeleteManyArgs} args - Arguments to filter Replies to delete.
-     * @example
-     * // Delete a few Replies
-     * const { count } = await prisma.reply.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends ReplyDeleteManyArgs>(
-      args?: SelectSubset<T, ReplyDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Replies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Replies
-     * const reply = await prisma.reply.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends ReplyUpdateManyArgs>(
-      args: SelectSubset<T, ReplyUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one Reply.
-     * @param {ReplyUpsertArgs} args - Arguments to update or create a Reply.
-     * @example
-     * // Update or create a Reply
-     * const reply = await prisma.reply.upsert({
-     *   create: {
-     *     // ... data to create a Reply
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Reply we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends ReplyUpsertArgs>(
-      args: SelectSubset<T, ReplyUpsertArgs>
-    ): Prisma__ReplyClient<ReplyGetPayload<T>>
-
-    /**
-     * Count the number of Replies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyCountArgs} args - Arguments to filter Replies to count.
-     * @example
-     * // Count the number of Replies
-     * const count = await prisma.reply.count({
-     *   where: {
-     *     // ... the filter for the Replies we want to count
-     *   }
-     * })
-    **/
-    count<T extends ReplyCountArgs>(
-      args?: Subset<T, ReplyCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], ReplyCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Reply.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends ReplyAggregateArgs>(args: Subset<T, ReplyAggregateArgs>): Prisma.PrismaPromise<GetReplyAggregateType<T>>
-
-    /**
-     * Group by Reply.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {ReplyGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends ReplyGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ReplyGroupByArgs['orderBy'] }
-        : { orderBy?: ReplyGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, ReplyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReplyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Reply.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__ReplyClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    post<T extends PostArgs= {}>(args?: Subset<T, PostArgs>): Prisma__PostClient<PostGetPayload<T> | Null>;
-
-    userReply<T extends UserArgs= {}>(args?: Subset<T, UserArgs>): Prisma__UserClient<UserGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * Reply base type for findUnique actions
-   */
-  export type ReplyFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter, which Reply to fetch.
-     */
-    where: ReplyWhereUniqueInput
-  }
-
-  /**
-   * Reply findUnique
-   */
-  export interface ReplyFindUniqueArgs extends ReplyFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Reply findUniqueOrThrow
-   */
-  export type ReplyFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter, which Reply to fetch.
-     */
-    where: ReplyWhereUniqueInput
-  }
-
-
-  /**
-   * Reply base type for findFirst actions
-   */
-  export type ReplyFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter, which Reply to fetch.
-     */
-    where?: ReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Replies to fetch.
-     */
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Replies.
-     */
-    cursor?: ReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Replies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Replies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Replies.
-     */
-    distinct?: Enumerable<ReplyScalarFieldEnum>
-  }
-
-  /**
-   * Reply findFirst
-   */
-  export interface ReplyFindFirstArgs extends ReplyFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * Reply findFirstOrThrow
-   */
-  export type ReplyFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter, which Reply to fetch.
-     */
-    where?: ReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Replies to fetch.
-     */
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Replies.
-     */
-    cursor?: ReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Replies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Replies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Replies.
-     */
-    distinct?: Enumerable<ReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * Reply findMany
-   */
-  export type ReplyFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter, which Replies to fetch.
-     */
-    where?: ReplyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Replies to fetch.
-     */
-    orderBy?: Enumerable<ReplyOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Replies.
-     */
-    cursor?: ReplyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Replies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Replies.
-     */
-    skip?: number
-    distinct?: Enumerable<ReplyScalarFieldEnum>
-  }
-
-
-  /**
-   * Reply create
-   */
-  export type ReplyCreateArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * The data needed to create a Reply.
-     */
-    data: XOR<ReplyCreateInput, ReplyUncheckedCreateInput>
-  }
-
-
-  /**
-   * Reply createMany
-   */
-  export type ReplyCreateManyArgs = {
-    /**
-     * The data used to create many Replies.
-     */
-    data: Enumerable<ReplyCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * Reply update
-   */
-  export type ReplyUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * The data needed to update a Reply.
-     */
-    data: XOR<ReplyUpdateInput, ReplyUncheckedUpdateInput>
-    /**
-     * Choose, which Reply to update.
-     */
-    where: ReplyWhereUniqueInput
-  }
-
-
-  /**
-   * Reply updateMany
-   */
-  export type ReplyUpdateManyArgs = {
-    /**
-     * The data used to update Replies.
-     */
-    data: XOR<ReplyUpdateManyMutationInput, ReplyUncheckedUpdateManyInput>
-    /**
-     * Filter which Replies to update
-     */
-    where?: ReplyWhereInput
-  }
-
-
-  /**
-   * Reply upsert
-   */
-  export type ReplyUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * The filter to search for the Reply to update in case it exists.
-     */
-    where: ReplyWhereUniqueInput
-    /**
-     * In case the Reply found by the `where` argument doesn't exist, create a new Reply with this data.
-     */
-    create: XOR<ReplyCreateInput, ReplyUncheckedCreateInput>
-    /**
-     * In case the Reply was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<ReplyUpdateInput, ReplyUncheckedUpdateInput>
-  }
-
-
-  /**
-   * Reply delete
-   */
-  export type ReplyDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
-    /**
-     * Filter which Reply to delete.
-     */
-    where: ReplyWhereUniqueInput
-  }
-
-
-  /**
-   * Reply deleteMany
-   */
-  export type ReplyDeleteManyArgs = {
-    /**
-     * Filter which Replies to delete
-     */
-    where?: ReplyWhereInput
-  }
-
-
-  /**
-   * Reply without action
-   */
-  export type ReplyArgs = {
-    /**
-     * Select specific fields to fetch from the Reply
-     */
-    select?: ReplySelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: ReplyInclude | null
   }
 
 
@@ -8172,6 +7151,7 @@ export namespace Prisma {
   export const PostScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    postId: 'postId',
     detail: 'detail',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -8186,18 +7166,6 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-  export const ReplyScalarFieldEnum: {
-    id: 'id',
-    postId: 'postId',
-    userId: 'userId',
-    replyMessage: 'replyMessage',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type ReplyScalarFieldEnum = (typeof ReplyScalarFieldEnum)[keyof typeof ReplyScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8255,7 +7223,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     posts?: PostListRelationFilter
-    replies?: ReplyListRelationFilter
     directMsgFrom?: DirectMessageListRelationFilter
     directMsgTo?: DirectMessageListRelationFilter
     followings?: UserRelationListRelationFilter
@@ -8269,7 +7236,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     posts?: PostOrderByRelationAggregateInput
-    replies?: ReplyOrderByRelationAggregateInput
     directMsgFrom?: DirectMessageOrderByRelationAggregateInput
     directMsgTo?: DirectMessageOrderByRelationAggregateInput
     followings?: UserRelationOrderByRelationAggregateInput
@@ -8362,10 +7328,12 @@ export namespace Prisma {
     id?: IntFilter | number
     user?: XOR<UserRelationFilter, UserWhereInput>
     userId?: IntFilter | number
+    replyToPost?: PostListRelationFilter
+    Post?: XOR<PostRelationFilter, PostWhereInput> | null
+    postId?: IntNullableFilter | number | null
     detail?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    replies?: ReplyListRelationFilter
     hashtagOnPosts?: HashtagOnPostListRelationFilter
   }
 
@@ -8373,10 +7341,12 @@ export namespace Prisma {
     id?: SortOrder
     user?: UserOrderByWithRelationInput
     userId?: SortOrder
+    replyToPost?: PostOrderByRelationAggregateInput
+    Post?: PostOrderByWithRelationInput
+    postId?: SortOrder
     detail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    replies?: ReplyOrderByRelationAggregateInput
     hashtagOnPosts?: HashtagOnPostOrderByRelationAggregateInput
   }
 
@@ -8387,6 +7357,7 @@ export namespace Prisma {
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
+    postId?: SortOrder
     detail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8403,62 +7374,8 @@ export namespace Prisma {
     NOT?: Enumerable<PostScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
     userId?: IntWithAggregatesFilter | number
+    postId?: IntNullableWithAggregatesFilter | number | null
     detail?: StringWithAggregatesFilter | string
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type ReplyWhereInput = {
-    AND?: Enumerable<ReplyWhereInput>
-    OR?: Enumerable<ReplyWhereInput>
-    NOT?: Enumerable<ReplyWhereInput>
-    id?: IntFilter | number
-    post?: XOR<PostRelationFilter, PostWhereInput>
-    postId?: IntFilter | number
-    userReply?: XOR<UserRelationFilter, UserWhereInput>
-    userId?: IntFilter | number
-    replyMessage?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type ReplyOrderByWithRelationInput = {
-    id?: SortOrder
-    post?: PostOrderByWithRelationInput
-    postId?: SortOrder
-    userReply?: UserOrderByWithRelationInput
-    userId?: SortOrder
-    replyMessage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ReplyWhereUniqueInput = {
-    id?: number
-  }
-
-  export type ReplyOrderByWithAggregationInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    userId?: SortOrder
-    replyMessage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: ReplyCountOrderByAggregateInput
-    _avg?: ReplyAvgOrderByAggregateInput
-    _max?: ReplyMaxOrderByAggregateInput
-    _min?: ReplyMinOrderByAggregateInput
-    _sum?: ReplySumOrderByAggregateInput
-  }
-
-  export type ReplyScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<ReplyScalarWhereWithAggregatesInput>
-    OR?: Enumerable<ReplyScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<ReplyScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    postId?: IntWithAggregatesFilter | number
-    userId?: IntWithAggregatesFilter | number
-    replyMessage?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -8621,7 +7538,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
     followings?: UserRelationCreateNestedManyWithoutFromInput
@@ -8635,7 +7551,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
     followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
@@ -8648,7 +7563,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
     followings?: UserRelationUpdateManyWithoutFromNestedInput
@@ -8662,7 +7576,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
     followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
@@ -8745,45 +7658,50 @@ export namespace Prisma {
 
   export type PostCreateInput = {
     user: UserCreateNestedOneWithoutPostsInput
+    replyToPost?: PostCreateNestedManyWithoutPostInput
+    Post?: PostCreateNestedOneWithoutReplyToPostInput
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyCreateNestedManyWithoutPostInput
     hashtagOnPosts?: HashtagOnPostCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateInput = {
     id?: number
     userId: number
+    replyToPost?: PostUncheckedCreateNestedManyWithoutPostInput
+    postId?: number | null
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyUncheckedCreateNestedManyWithoutPostInput
     hashtagOnPosts?: HashtagOnPostUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostUpdateInput = {
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    replyToPost?: PostUpdateManyWithoutPostNestedInput
+    Post?: PostUpdateOneWithoutReplyToPostNestedInput
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUpdateManyWithoutPostNestedInput
     hashtagOnPosts?: HashtagOnPostUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    replyToPost?: PostUncheckedUpdateManyWithoutPostNestedInput
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUncheckedUpdateManyWithoutPostNestedInput
     hashtagOnPosts?: HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostCreateManyInput = {
     id?: number
     userId: number
+    postId?: number | null
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8798,65 +7716,8 @@ export namespace Prisma {
   export type PostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
     detail?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyCreateInput = {
-    post: PostCreateNestedOneWithoutRepliesInput
-    userReply: UserCreateNestedOneWithoutRepliesInput
-    replyMessage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyUncheckedCreateInput = {
-    id?: number
-    postId: number
-    userId: number
-    replyMessage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyUpdateInput = {
-    post?: PostUpdateOneRequiredWithoutRepliesNestedInput
-    userReply?: UserUpdateOneRequiredWithoutRepliesNestedInput
-    replyMessage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    replyMessage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyCreateManyInput = {
-    id?: number
-    postId: number
-    userId: number
-    replyMessage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyUpdateManyMutationInput = {
-    replyMessage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    replyMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9063,12 +7924,6 @@ export namespace Prisma {
     none?: PostWhereInput
   }
 
-  export type ReplyListRelationFilter = {
-    every?: ReplyWhereInput
-    some?: ReplyWhereInput
-    none?: ReplyWhereInput
-  }
-
   export type DirectMessageListRelationFilter = {
     every?: DirectMessageWhereInput
     some?: DirectMessageWhereInput
@@ -9082,10 +7937,6 @@ export namespace Prisma {
   }
 
   export type PostOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ReplyOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9218,6 +8069,22 @@ export namespace Prisma {
     toId?: SortOrder
   }
 
+  export type PostRelationFilter = {
+    is?: PostWhereInput | null
+    isNot?: PostWhereInput | null
+  }
+
+  export type IntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
   export type HashtagOnPostListRelationFilter = {
     every?: HashtagOnPostWhereInput
     some?: HashtagOnPostWhereInput
@@ -9231,6 +8098,7 @@ export namespace Prisma {
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    postId?: SortOrder
     detail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9239,11 +8107,13 @@ export namespace Prisma {
   export type PostAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    postId?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    postId?: SortOrder
     detail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9252,6 +8122,7 @@ export namespace Prisma {
   export type PostMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    postId?: SortOrder
     detail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9260,50 +8131,23 @@ export namespace Prisma {
   export type PostSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-  }
-
-  export type PostRelationFilter = {
-    is?: PostWhereInput
-    isNot?: PostWhereInput
-  }
-
-  export type ReplyCountOrderByAggregateInput = {
-    id?: SortOrder
     postId?: SortOrder
-    userId?: SortOrder
-    replyMessage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ReplyAvgOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type ReplyMaxOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    userId?: SortOrder
-    replyMessage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ReplyMinOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    userId?: SortOrder
-    replyMessage?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type ReplySumOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    userId?: SortOrder
+  export type IntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
   }
 
   export type HashtagCountOrderByAggregateInput = {
@@ -9422,13 +8266,6 @@ export namespace Prisma {
     connect?: Enumerable<PostWhereUniqueInput>
   }
 
-  export type ReplyCreateNestedManyWithoutUserReplyInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutUserReplyInput>, Enumerable<ReplyUncheckedCreateWithoutUserReplyInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutUserReplyInput>
-    createMany?: ReplyCreateManyUserReplyInputEnvelope
-    connect?: Enumerable<ReplyWhereUniqueInput>
-  }
-
   export type DirectMessageCreateNestedManyWithoutFromInput = {
     create?: XOR<Enumerable<DirectMessageCreateWithoutFromInput>, Enumerable<DirectMessageUncheckedCreateWithoutFromInput>>
     connectOrCreate?: Enumerable<DirectMessageCreateOrConnectWithoutFromInput>
@@ -9462,13 +8299,6 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<PostCreateOrConnectWithoutUserInput>
     createMany?: PostCreateManyUserInputEnvelope
     connect?: Enumerable<PostWhereUniqueInput>
-  }
-
-  export type ReplyUncheckedCreateNestedManyWithoutUserReplyInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutUserReplyInput>, Enumerable<ReplyUncheckedCreateWithoutUserReplyInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutUserReplyInput>
-    createMany?: ReplyCreateManyUserReplyInputEnvelope
-    connect?: Enumerable<ReplyWhereUniqueInput>
   }
 
   export type DirectMessageUncheckedCreateNestedManyWithoutFromInput = {
@@ -9519,20 +8349,6 @@ export namespace Prisma {
     update?: Enumerable<PostUpdateWithWhereUniqueWithoutUserInput>
     updateMany?: Enumerable<PostUpdateManyWithWhereWithoutUserInput>
     deleteMany?: Enumerable<PostScalarWhereInput>
-  }
-
-  export type ReplyUpdateManyWithoutUserReplyNestedInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutUserReplyInput>, Enumerable<ReplyUncheckedCreateWithoutUserReplyInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutUserReplyInput>
-    upsert?: Enumerable<ReplyUpsertWithWhereUniqueWithoutUserReplyInput>
-    createMany?: ReplyCreateManyUserReplyInputEnvelope
-    set?: Enumerable<ReplyWhereUniqueInput>
-    disconnect?: Enumerable<ReplyWhereUniqueInput>
-    delete?: Enumerable<ReplyWhereUniqueInput>
-    connect?: Enumerable<ReplyWhereUniqueInput>
-    update?: Enumerable<ReplyUpdateWithWhereUniqueWithoutUserReplyInput>
-    updateMany?: Enumerable<ReplyUpdateManyWithWhereWithoutUserReplyInput>
-    deleteMany?: Enumerable<ReplyScalarWhereInput>
   }
 
   export type DirectMessageUpdateManyWithoutFromNestedInput = {
@@ -9611,20 +8427,6 @@ export namespace Prisma {
     update?: Enumerable<PostUpdateWithWhereUniqueWithoutUserInput>
     updateMany?: Enumerable<PostUpdateManyWithWhereWithoutUserInput>
     deleteMany?: Enumerable<PostScalarWhereInput>
-  }
-
-  export type ReplyUncheckedUpdateManyWithoutUserReplyNestedInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutUserReplyInput>, Enumerable<ReplyUncheckedCreateWithoutUserReplyInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutUserReplyInput>
-    upsert?: Enumerable<ReplyUpsertWithWhereUniqueWithoutUserReplyInput>
-    createMany?: ReplyCreateManyUserReplyInputEnvelope
-    set?: Enumerable<ReplyWhereUniqueInput>
-    disconnect?: Enumerable<ReplyWhereUniqueInput>
-    delete?: Enumerable<ReplyWhereUniqueInput>
-    connect?: Enumerable<ReplyWhereUniqueInput>
-    update?: Enumerable<ReplyUpdateWithWhereUniqueWithoutUserReplyInput>
-    updateMany?: Enumerable<ReplyUpdateManyWithWhereWithoutUserReplyInput>
-    deleteMany?: Enumerable<ReplyScalarWhereInput>
   }
 
   export type DirectMessageUncheckedUpdateManyWithoutFromNestedInput = {
@@ -9717,11 +8519,17 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type ReplyCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutPostInput>, Enumerable<ReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutPostInput>
-    createMany?: ReplyCreateManyPostInputEnvelope
-    connect?: Enumerable<ReplyWhereUniqueInput>
+  export type PostCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostCreateWithoutPostInput>, Enumerable<PostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutPostInput>
+    createMany?: PostCreateManyPostInputEnvelope
+    connect?: Enumerable<PostWhereUniqueInput>
+  }
+
+  export type PostCreateNestedOneWithoutReplyToPostInput = {
+    create?: XOR<PostCreateWithoutReplyToPostInput, PostUncheckedCreateWithoutReplyToPostInput>
+    connectOrCreate?: PostCreateOrConnectWithoutReplyToPostInput
+    connect?: PostWhereUniqueInput
   }
 
   export type HashtagOnPostCreateNestedManyWithoutPostInput = {
@@ -9731,11 +8539,11 @@ export namespace Prisma {
     connect?: Enumerable<HashtagOnPostWhereUniqueInput>
   }
 
-  export type ReplyUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutPostInput>, Enumerable<ReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutPostInput>
-    createMany?: ReplyCreateManyPostInputEnvelope
-    connect?: Enumerable<ReplyWhereUniqueInput>
+  export type PostUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<Enumerable<PostCreateWithoutPostInput>, Enumerable<PostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutPostInput>
+    createMany?: PostCreateManyPostInputEnvelope
+    connect?: Enumerable<PostWhereUniqueInput>
   }
 
   export type HashtagOnPostUncheckedCreateNestedManyWithoutPostInput = {
@@ -9753,18 +8561,28 @@ export namespace Prisma {
     update?: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
   }
 
-  export type ReplyUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutPostInput>, Enumerable<ReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<ReplyUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: ReplyCreateManyPostInputEnvelope
-    set?: Enumerable<ReplyWhereUniqueInput>
-    disconnect?: Enumerable<ReplyWhereUniqueInput>
-    delete?: Enumerable<ReplyWhereUniqueInput>
-    connect?: Enumerable<ReplyWhereUniqueInput>
-    update?: Enumerable<ReplyUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<ReplyUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<ReplyScalarWhereInput>
+  export type PostUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostCreateWithoutPostInput>, Enumerable<PostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostCreateManyPostInputEnvelope
+    set?: Enumerable<PostWhereUniqueInput>
+    disconnect?: Enumerable<PostWhereUniqueInput>
+    delete?: Enumerable<PostWhereUniqueInput>
+    connect?: Enumerable<PostWhereUniqueInput>
+    update?: Enumerable<PostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostScalarWhereInput>
+  }
+
+  export type PostUpdateOneWithoutReplyToPostNestedInput = {
+    create?: XOR<PostCreateWithoutReplyToPostInput, PostUncheckedCreateWithoutReplyToPostInput>
+    connectOrCreate?: PostCreateOrConnectWithoutReplyToPostInput
+    upsert?: PostUpsertWithoutReplyToPostInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: PostWhereUniqueInput
+    update?: XOR<PostUpdateWithoutReplyToPostInput, PostUncheckedUpdateWithoutReplyToPostInput>
   }
 
   export type HashtagOnPostUpdateManyWithoutPostNestedInput = {
@@ -9781,18 +8599,26 @@ export namespace Prisma {
     deleteMany?: Enumerable<HashtagOnPostScalarWhereInput>
   }
 
-  export type ReplyUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<ReplyCreateWithoutPostInput>, Enumerable<ReplyUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<ReplyCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<ReplyUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: ReplyCreateManyPostInputEnvelope
-    set?: Enumerable<ReplyWhereUniqueInput>
-    disconnect?: Enumerable<ReplyWhereUniqueInput>
-    delete?: Enumerable<ReplyWhereUniqueInput>
-    connect?: Enumerable<ReplyWhereUniqueInput>
-    update?: Enumerable<ReplyUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<ReplyUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<ReplyScalarWhereInput>
+  export type PostUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<Enumerable<PostCreateWithoutPostInput>, Enumerable<PostUncheckedCreateWithoutPostInput>>
+    connectOrCreate?: Enumerable<PostCreateOrConnectWithoutPostInput>
+    upsert?: Enumerable<PostUpsertWithWhereUniqueWithoutPostInput>
+    createMany?: PostCreateManyPostInputEnvelope
+    set?: Enumerable<PostWhereUniqueInput>
+    disconnect?: Enumerable<PostWhereUniqueInput>
+    delete?: Enumerable<PostWhereUniqueInput>
+    connect?: Enumerable<PostWhereUniqueInput>
+    update?: Enumerable<PostUpdateWithWhereUniqueWithoutPostInput>
+    updateMany?: Enumerable<PostUpdateManyWithWhereWithoutPostInput>
+    deleteMany?: Enumerable<PostScalarWhereInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput = {
@@ -9807,34 +8633,6 @@ export namespace Prisma {
     update?: Enumerable<HashtagOnPostUpdateWithWhereUniqueWithoutPostInput>
     updateMany?: Enumerable<HashtagOnPostUpdateManyWithWhereWithoutPostInput>
     deleteMany?: Enumerable<HashtagOnPostScalarWhereInput>
-  }
-
-  export type PostCreateNestedOneWithoutRepliesInput = {
-    create?: XOR<PostCreateWithoutRepliesInput, PostUncheckedCreateWithoutRepliesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutRepliesInput
-    connect?: PostWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutRepliesInput = {
-    create?: XOR<UserCreateWithoutRepliesInput, UserUncheckedCreateWithoutRepliesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRepliesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type PostUpdateOneRequiredWithoutRepliesNestedInput = {
-    create?: XOR<PostCreateWithoutRepliesInput, PostUncheckedCreateWithoutRepliesInput>
-    connectOrCreate?: PostCreateOrConnectWithoutRepliesInput
-    upsert?: PostUpsertWithoutRepliesInput
-    connect?: PostWhereUniqueInput
-    update?: XOR<PostUpdateWithoutRepliesInput, PostUncheckedUpdateWithoutRepliesInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutRepliesNestedInput = {
-    create?: XOR<UserCreateWithoutRepliesInput, UserUncheckedCreateWithoutRepliesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRepliesInput
-    upsert?: UserUpsertWithoutRepliesInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<UserUpdateWithoutRepliesInput, UserUncheckedUpdateWithoutRepliesInput>
   }
 
   export type HashtagOnPostCreateNestedManyWithoutHashtagInput = {
@@ -10029,20 +8827,60 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter
   }
 
+  export type NestedIntNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableFilter | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedIntNullableWithAggregatesFilter | number | null
+    _count?: NestedIntNullableFilter
+    _avg?: NestedFloatNullableFilter
+    _sum?: NestedIntNullableFilter
+    _min?: NestedIntNullableFilter
+    _max?: NestedIntNullableFilter
+  }
+
+  export type NestedFloatNullableFilter = {
+    equals?: number | null
+    in?: Enumerable<number> | null
+    notIn?: Enumerable<number> | null
+    lt?: number
+    lte?: number
+    gt?: number
+    gte?: number
+    not?: NestedFloatNullableFilter | number | null
+  }
+
   export type PostCreateWithoutUserInput = {
+    replyToPost?: PostCreateNestedManyWithoutPostInput
+    Post?: PostCreateNestedOneWithoutReplyToPostInput
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyCreateNestedManyWithoutPostInput
     hashtagOnPosts?: HashtagOnPostCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutUserInput = {
     id?: number
+    replyToPost?: PostUncheckedCreateNestedManyWithoutPostInput
+    postId?: number | null
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyUncheckedCreateNestedManyWithoutPostInput
     hashtagOnPosts?: HashtagOnPostUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -10053,31 +8891,6 @@ export namespace Prisma {
 
   export type PostCreateManyUserInputEnvelope = {
     data: Enumerable<PostCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
-  export type ReplyCreateWithoutUserReplyInput = {
-    post: PostCreateNestedOneWithoutRepliesInput
-    replyMessage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyUncheckedCreateWithoutUserReplyInput = {
-    id?: number
-    postId: number
-    replyMessage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyCreateOrConnectWithoutUserReplyInput = {
-    where: ReplyWhereUniqueInput
-    create: XOR<ReplyCreateWithoutUserReplyInput, ReplyUncheckedCreateWithoutUserReplyInput>
-  }
-
-  export type ReplyCreateManyUserReplyInputEnvelope = {
-    data: Enumerable<ReplyCreateManyUserReplyInput>
     skipDuplicates?: boolean
   }
 
@@ -10199,35 +9012,8 @@ export namespace Prisma {
     NOT?: Enumerable<PostScalarWhereInput>
     id?: IntFilter | number
     userId?: IntFilter | number
+    postId?: IntNullableFilter | number | null
     detail?: StringFilter | string
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type ReplyUpsertWithWhereUniqueWithoutUserReplyInput = {
-    where: ReplyWhereUniqueInput
-    update: XOR<ReplyUpdateWithoutUserReplyInput, ReplyUncheckedUpdateWithoutUserReplyInput>
-    create: XOR<ReplyCreateWithoutUserReplyInput, ReplyUncheckedCreateWithoutUserReplyInput>
-  }
-
-  export type ReplyUpdateWithWhereUniqueWithoutUserReplyInput = {
-    where: ReplyWhereUniqueInput
-    data: XOR<ReplyUpdateWithoutUserReplyInput, ReplyUncheckedUpdateWithoutUserReplyInput>
-  }
-
-  export type ReplyUpdateManyWithWhereWithoutUserReplyInput = {
-    where: ReplyScalarWhereInput
-    data: XOR<ReplyUpdateManyMutationInput, ReplyUncheckedUpdateManyWithoutRepliesInput>
-  }
-
-  export type ReplyScalarWhereInput = {
-    AND?: Enumerable<ReplyScalarWhereInput>
-    OR?: Enumerable<ReplyScalarWhereInput>
-    NOT?: Enumerable<ReplyScalarWhereInput>
-    id?: IntFilter | number
-    postId?: IntFilter | number
-    userId?: IntFilter | number
-    replyMessage?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -10325,7 +9111,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
     followers?: UserRelationCreateNestedManyWithoutToInput
@@ -10338,7 +9123,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
     followers?: UserRelationUncheckedCreateNestedManyWithoutToInput
@@ -10355,7 +9139,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
     followings?: UserRelationCreateNestedManyWithoutFromInput
@@ -10368,7 +9151,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
     followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
@@ -10390,7 +9172,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
     followers?: UserRelationUpdateManyWithoutToNestedInput
@@ -10403,7 +9184,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
     followers?: UserRelationUncheckedUpdateManyWithoutToNestedInput
@@ -10420,7 +9200,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
     followings?: UserRelationUpdateManyWithoutFromNestedInput
@@ -10433,7 +9212,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
     followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
@@ -10444,7 +9222,6 @@ export namespace Prisma {
     image: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
     followings?: UserRelationCreateNestedManyWithoutFromInput
@@ -10457,7 +9234,6 @@ export namespace Prisma {
     image: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
     directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
     followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
@@ -10469,29 +9245,57 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
   }
 
-  export type ReplyCreateWithoutPostInput = {
-    userReply: UserCreateNestedOneWithoutRepliesInput
-    replyMessage: string
+  export type PostCreateWithoutPostInput = {
+    user: UserCreateNestedOneWithoutPostsInput
+    replyToPost?: PostCreateNestedManyWithoutPostInput
+    detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    hashtagOnPosts?: HashtagOnPostCreateNestedManyWithoutPostInput
   }
 
-  export type ReplyUncheckedCreateWithoutPostInput = {
+  export type PostUncheckedCreateWithoutPostInput = {
     id?: number
     userId: number
-    replyMessage: string
+    replyToPost?: PostUncheckedCreateNestedManyWithoutPostInput
+    detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    hashtagOnPosts?: HashtagOnPostUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type ReplyCreateOrConnectWithoutPostInput = {
-    where: ReplyWhereUniqueInput
-    create: XOR<ReplyCreateWithoutPostInput, ReplyUncheckedCreateWithoutPostInput>
+  export type PostCreateOrConnectWithoutPostInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutPostInput, PostUncheckedCreateWithoutPostInput>
   }
 
-  export type ReplyCreateManyPostInputEnvelope = {
-    data: Enumerable<ReplyCreateManyPostInput>
+  export type PostCreateManyPostInputEnvelope = {
+    data: Enumerable<PostCreateManyPostInput>
     skipDuplicates?: boolean
+  }
+
+  export type PostCreateWithoutReplyToPostInput = {
+    user: UserCreateNestedOneWithoutPostsInput
+    Post?: PostCreateNestedOneWithoutReplyToPostInput
+    detail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtagOnPosts?: HashtagOnPostCreateNestedManyWithoutPostInput
+  }
+
+  export type PostUncheckedCreateWithoutReplyToPostInput = {
+    id?: number
+    userId: number
+    postId?: number | null
+    detail: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    hashtagOnPosts?: HashtagOnPostUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type PostCreateOrConnectWithoutReplyToPostInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutReplyToPostInput, PostUncheckedCreateWithoutReplyToPostInput>
   }
 
   export type HashtagOnPostCreateWithoutPostInput = {
@@ -10527,7 +9331,6 @@ export namespace Prisma {
     image?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
     followings?: UserRelationUpdateManyWithoutFromNestedInput
@@ -10540,27 +9343,50 @@ export namespace Prisma {
     image?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
     directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
     followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
     followers?: UserRelationUncheckedUpdateManyWithoutToNestedInput
   }
 
-  export type ReplyUpsertWithWhereUniqueWithoutPostInput = {
-    where: ReplyWhereUniqueInput
-    update: XOR<ReplyUpdateWithoutPostInput, ReplyUncheckedUpdateWithoutPostInput>
-    create: XOR<ReplyCreateWithoutPostInput, ReplyUncheckedCreateWithoutPostInput>
+  export type PostUpsertWithWhereUniqueWithoutPostInput = {
+    where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutPostInput, PostUncheckedUpdateWithoutPostInput>
+    create: XOR<PostCreateWithoutPostInput, PostUncheckedCreateWithoutPostInput>
   }
 
-  export type ReplyUpdateWithWhereUniqueWithoutPostInput = {
-    where: ReplyWhereUniqueInput
-    data: XOR<ReplyUpdateWithoutPostInput, ReplyUncheckedUpdateWithoutPostInput>
+  export type PostUpdateWithWhereUniqueWithoutPostInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutPostInput, PostUncheckedUpdateWithoutPostInput>
   }
 
-  export type ReplyUpdateManyWithWhereWithoutPostInput = {
-    where: ReplyScalarWhereInput
-    data: XOR<ReplyUpdateManyMutationInput, ReplyUncheckedUpdateManyWithoutRepliesInput>
+  export type PostUpdateManyWithWhereWithoutPostInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutReplyToPostInput>
+  }
+
+  export type PostUpsertWithoutReplyToPostInput = {
+    update: XOR<PostUpdateWithoutReplyToPostInput, PostUncheckedUpdateWithoutReplyToPostInput>
+    create: XOR<PostCreateWithoutReplyToPostInput, PostUncheckedCreateWithoutReplyToPostInput>
+  }
+
+  export type PostUpdateWithoutReplyToPostInput = {
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    Post?: PostUpdateOneWithoutReplyToPostNestedInput
+    detail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtagOnPosts?: HashtagOnPostUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutReplyToPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
+    detail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtagOnPosts?: HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type HashtagOnPostUpsertWithWhereUniqueWithoutPostInput = {
@@ -10588,110 +9414,6 @@ export namespace Prisma {
     hashtagId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type PostCreateWithoutRepliesInput = {
-    user: UserCreateNestedOneWithoutPostsInput
-    detail: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtagOnPosts?: HashtagOnPostCreateNestedManyWithoutPostInput
-  }
-
-  export type PostUncheckedCreateWithoutRepliesInput = {
-    id?: number
-    userId: number
-    detail: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    hashtagOnPosts?: HashtagOnPostUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type PostCreateOrConnectWithoutRepliesInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutRepliesInput, PostUncheckedCreateWithoutRepliesInput>
-  }
-
-  export type UserCreateWithoutRepliesInput = {
-    username: string
-    image: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostCreateNestedManyWithoutUserInput
-    directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
-    directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
-    followings?: UserRelationCreateNestedManyWithoutFromInput
-    followers?: UserRelationCreateNestedManyWithoutToInput
-  }
-
-  export type UserUncheckedCreateWithoutRepliesInput = {
-    id?: number
-    username: string
-    image: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
-    directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
-    followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
-    followers?: UserRelationUncheckedCreateNestedManyWithoutToInput
-  }
-
-  export type UserCreateOrConnectWithoutRepliesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutRepliesInput, UserUncheckedCreateWithoutRepliesInput>
-  }
-
-  export type PostUpsertWithoutRepliesInput = {
-    update: XOR<PostUpdateWithoutRepliesInput, PostUncheckedUpdateWithoutRepliesInput>
-    create: XOR<PostCreateWithoutRepliesInput, PostUncheckedCreateWithoutRepliesInput>
-  }
-
-  export type PostUpdateWithoutRepliesInput = {
-    user?: UserUpdateOneRequiredWithoutPostsNestedInput
-    detail?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtagOnPosts?: HashtagOnPostUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    detail?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    hashtagOnPosts?: HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type UserUpsertWithoutRepliesInput = {
-    update: XOR<UserUpdateWithoutRepliesInput, UserUncheckedUpdateWithoutRepliesInput>
-    create: XOR<UserCreateWithoutRepliesInput, UserUncheckedCreateWithoutRepliesInput>
-  }
-
-  export type UserUpdateWithoutRepliesInput = {
-    username?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUpdateManyWithoutUserNestedInput
-    directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
-    directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
-    followings?: UserRelationUpdateManyWithoutFromNestedInput
-    followers?: UserRelationUpdateManyWithoutToNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    username?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
-    directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
-    followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
-    followers?: UserRelationUncheckedUpdateManyWithoutToNestedInput
   }
 
   export type HashtagOnPostCreateWithoutHashtagInput = {
@@ -10735,19 +9457,21 @@ export namespace Prisma {
 
   export type PostCreateWithoutHashtagOnPostsInput = {
     user: UserCreateNestedOneWithoutPostsInput
+    replyToPost?: PostCreateNestedManyWithoutPostInput
+    Post?: PostCreateNestedOneWithoutReplyToPostInput
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutHashtagOnPostsInput = {
     id?: number
     userId: number
+    replyToPost?: PostUncheckedCreateNestedManyWithoutPostInput
+    postId?: number | null
     detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    replies?: ReplyUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostCreateOrConnectWithoutHashtagOnPostsInput = {
@@ -10780,19 +9504,21 @@ export namespace Prisma {
 
   export type PostUpdateWithoutHashtagOnPostsInput = {
     user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    replyToPost?: PostUpdateManyWithoutPostNestedInput
+    Post?: PostUpdateOneWithoutReplyToPostNestedInput
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutHashtagOnPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    replyToPost?: PostUncheckedUpdateManyWithoutPostNestedInput
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type HashtagUpsertWithoutHashtagOnPostsInput = {
@@ -10819,7 +9545,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgTo?: DirectMessageCreateNestedManyWithoutToInput
     followings?: UserRelationCreateNestedManyWithoutFromInput
     followers?: UserRelationCreateNestedManyWithoutToInput
@@ -10832,7 +9557,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgTo?: DirectMessageUncheckedCreateNestedManyWithoutToInput
     followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
     followers?: UserRelationUncheckedCreateNestedManyWithoutToInput
@@ -10849,7 +9573,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostCreateNestedManyWithoutUserInput
-    replies?: ReplyCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageCreateNestedManyWithoutFromInput
     followings?: UserRelationCreateNestedManyWithoutFromInput
     followers?: UserRelationCreateNestedManyWithoutToInput
@@ -10862,7 +9585,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     posts?: PostUncheckedCreateNestedManyWithoutUserInput
-    replies?: ReplyUncheckedCreateNestedManyWithoutUserReplyInput
     directMsgFrom?: DirectMessageUncheckedCreateNestedManyWithoutFromInput
     followings?: UserRelationUncheckedCreateNestedManyWithoutFromInput
     followers?: UserRelationUncheckedCreateNestedManyWithoutToInput
@@ -10884,7 +9606,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgTo?: DirectMessageUpdateManyWithoutToNestedInput
     followings?: UserRelationUpdateManyWithoutFromNestedInput
     followers?: UserRelationUpdateManyWithoutToNestedInput
@@ -10897,7 +9618,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgTo?: DirectMessageUncheckedUpdateManyWithoutToNestedInput
     followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
     followers?: UserRelationUncheckedUpdateManyWithoutToNestedInput
@@ -10914,7 +9634,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUpdateManyWithoutUserNestedInput
-    replies?: ReplyUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUpdateManyWithoutFromNestedInput
     followings?: UserRelationUpdateManyWithoutFromNestedInput
     followers?: UserRelationUpdateManyWithoutToNestedInput
@@ -10927,7 +9646,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     posts?: PostUncheckedUpdateManyWithoutUserNestedInput
-    replies?: ReplyUncheckedUpdateManyWithoutUserReplyNestedInput
     directMsgFrom?: DirectMessageUncheckedUpdateManyWithoutFromNestedInput
     followings?: UserRelationUncheckedUpdateManyWithoutFromNestedInput
     followers?: UserRelationUncheckedUpdateManyWithoutToNestedInput
@@ -10935,15 +9653,8 @@ export namespace Prisma {
 
   export type PostCreateManyUserInput = {
     id?: number
+    postId?: number | null
     detail: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ReplyCreateManyUserReplyInput = {
-    id?: number
-    postId: number
-    replyMessage: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10979,48 +9690,28 @@ export namespace Prisma {
   }
 
   export type PostUpdateWithoutUserInput = {
+    replyToPost?: PostUpdateManyWithoutPostNestedInput
+    Post?: PostUpdateOneWithoutReplyToPostNestedInput
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUpdateManyWithoutPostNestedInput
     hashtagOnPosts?: HashtagOnPostUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    replyToPost?: PostUncheckedUpdateManyWithoutPostNestedInput
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
     detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    replies?: ReplyUncheckedUpdateManyWithoutPostNestedInput
     hashtagOnPosts?: HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateManyWithoutPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    postId?: NullableIntFieldUpdateOperationsInput | number | null
     detail?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyUpdateWithoutUserReplyInput = {
-    post?: PostUpdateOneRequiredWithoutRepliesNestedInput
-    replyMessage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyUncheckedUpdateWithoutUserReplyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    replyMessage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReplyUncheckedUpdateManyWithoutRepliesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    replyMessage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11111,10 +9802,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ReplyCreateManyPostInput = {
+  export type PostCreateManyPostInput = {
     id?: number
     userId: number
-    replyMessage: string
+    detail: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11126,17 +9817,29 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ReplyUpdateWithoutPostInput = {
-    userReply?: UserUpdateOneRequiredWithoutRepliesNestedInput
-    replyMessage?: StringFieldUpdateOperationsInput | string
+  export type PostUpdateWithoutPostInput = {
+    user?: UserUpdateOneRequiredWithoutPostsNestedInput
+    replyToPost?: PostUpdateManyWithoutPostNestedInput
+    detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtagOnPosts?: HashtagOnPostUpdateManyWithoutPostNestedInput
   }
 
-  export type ReplyUncheckedUpdateWithoutPostInput = {
+  export type PostUncheckedUpdateWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    replyMessage?: StringFieldUpdateOperationsInput | string
+    replyToPost?: PostUncheckedUpdateManyWithoutPostNestedInput
+    detail?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    hashtagOnPosts?: HashtagOnPostUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateManyWithoutReplyToPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    detail?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

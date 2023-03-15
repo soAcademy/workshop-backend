@@ -3,6 +3,7 @@ import {
   ICreateUser,
   ICreateUserPost,
   IGetPostByHashtag,
+  IGetPostById,
   IGetPostByUser,
   IGetUserProfile,
 } from "./twitter.interface";
@@ -26,6 +27,7 @@ export const createUserPost = async (args: ICreateUserPost) =>
     data: {
       userId: args.userId,
       detail: args.detail,
+      postId: args.postId ?? undefined,
       hashtagOnPosts: {
         create: args.hashtags.map((hashtag) => ({
           hashtag: {
@@ -69,10 +71,20 @@ export const getPostByHashtag = async (args: IGetPostByHashtag) =>
     },
     include: {
       user: true,
-      replies: true,
       hashtagOnPosts: {
         include: {
           hashtag: true,
+        },
+      },
+      replyToPost: {
+        include: {
+          user: true,
+          hashtagOnPosts: {
+            include: {
+              hashtag: true,
+            },
+          },
+          replyToPost: true,
         },
       },
     },
@@ -85,14 +97,20 @@ export const getPostByUser = async (args: IGetPostByUser) =>
     },
     include: {
       user: true,
-      replies: {
-        where: {
-          userId: args.userId,
-        },
-      },
       hashtagOnPosts: {
         include: {
           hashtag: true,
+        },
+      },
+      replyToPost: {
+        include: {
+          user: true,
+          hashtagOnPosts: {
+            include: {
+              hashtag: true,
+            },
+          },
+          replyToPost: true,
         },
       },
     },
@@ -101,14 +119,50 @@ export const getPostByUser = async (args: IGetPostByUser) =>
     },
   });
 
-export const getPosts = async () =>
-  prisma.post.findMany({
+const mergeDataFunc = (allPosts: any[]) => {
+  const mainPosts = allPosts.filter((post) => post.postId === null);
+  console.log("mainPosts", mainPosts.length);
+
+  const firstReply = allPosts.filter((post) => post.postId !== null);
+  console.log("firstReply", firstReply.length);
+
+  const mergeOnMainPost = mainPosts.map((post) => {
+    //find reply on step 1
+    const findReplyOnMain = firstReply.filter(
+      (reply) => reply.postId === post.id
+    );
+    //find reply in reply (step 2)
+    const findReplyInReply = findReplyOnMain.map((reply) => {
+      const rInR = firstReply.filter((fR) => fR.postId === reply.id);
+      console.log(rInR.length);
+
+      return { ...reply, replies: rInR };
+    });
+
+    return { ...post, replies: findReplyInReply };
+  });
+  // console.log("mergeOnMainPost", mergeOnMainPost);
+  return mergeOnMainPost;
+};
+
+export const getPosts = async () => {
+  const allPosts = await prisma.post.findMany({
     include: {
       user: true,
-      replies: true,
       hashtagOnPosts: {
         include: {
           hashtag: true,
+        },
+      },
+      replyToPost: {
+        include: {
+          user: true,
+          hashtagOnPosts: {
+            include: {
+              hashtag: true,
+            },
+          },
+          replyToPost: true,
         },
       },
     },
@@ -116,6 +170,38 @@ export const getPosts = async () =>
       createdAt: "desc",
     },
   });
+  // console.log(allPosts);
+  // return allPosts;
+  return mergeDataFunc(allPosts);
+};
+
+export const getPostById = async (args: IGetPostById) => {
+  const postById = await prisma.post.findMany({
+    where: { id: args.postId },
+    include: {
+      user: true,
+      hashtagOnPosts: {
+        include: {
+          hashtag: true,
+        },
+      },
+      replyToPost: {
+        include: {
+          user: true,
+          hashtagOnPosts: {
+            include: {
+              hashtag: true,
+            },
+          },
+          replyToPost: true,
+        },
+      },
+    },
+  });
+  // console.log(postById);
+  return postById;
+  // return mergeDataFunc(postById, "postById", args.postId);
+};
 
 export const getUsers = async () =>
   prisma.user.findMany({

@@ -8,6 +8,7 @@ import {
   GetUserProfileHandler,
   GetUsersHandler,
   GetHashtagsHandler,
+  GetPostByIdHandler,
 } from "./twitter.handler";
 
 export const AppRoutes = [
@@ -45,6 +46,11 @@ export const AppRoutes = [
     path: "/twitter/getPosts",
     method: "post",
     action: GetPostsHandler,
+  },
+  {
+    path: "/twitter/getPostById",
+    method: "post",
+    action: GetPostByIdHandler,
   },
   {
     path: "/twitter/getUsers",
