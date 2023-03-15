@@ -33,6 +33,19 @@ export const createTweet = (args: ICreateTweet) => {
   });
 };
 
+export const getTweetWithReplies = (args: { id: number }) => {
+  return prisma.tweet.findUnique({
+    select: {
+      tweetText: true,
+      tweetingUser: { select: { id: true, name: true } },
+      parentTweet: { select: { id: true } },
+      childTweets: { select: { id: true, tweetText: true } },
+      hashTags: { select: { id: true, hashTagText: true } },
+    },
+    where: { id: args.id },
+  });
+};
+
 export const getUserProfile = (args: { id: number }) => {
   return prisma.user.findUnique({
     select: {
@@ -40,6 +53,7 @@ export const getUserProfile = (args: { id: number }) => {
       bio: true,
       tweets: {
         select: {
+          id: true,
           tweetText: true,
           createdAt: true,
         },

@@ -3,6 +3,7 @@ import {
   createTweet,
   createUser,
   createUserRelation,
+  getTweetWithReplies,
 } from "./twitter.resolvers";
 
 describe("Twitter", () => {
@@ -11,14 +12,14 @@ describe("Twitter", () => {
   let tweetId: number;
 
   it("should create a new user", async () => {
-    const userName = "Ingrid";
+    const userName = "Kevin";
     const result = await createUser({ name: userName });
     user1Id = result.id;
     expect(result.name === userName).toBe(true);
   });
 
   it("should create another new user with bio", async () => {
-    const userName = "Jules";
+    const userName = "Linda";
     const bio = "Who am I?";
     const result = await createUser({ name: userName, bio: bio });
     user2Id = result.id;
@@ -67,6 +68,12 @@ describe("Twitter", () => {
     });
     expect(result.tweetText === tweetText).toBe(true);
     expect(result.parentTweetId === tweetId).toBe(true);
+  });
+
+  it("should get a specific tweet with its replies", async () => {
+    const result = await getTweetWithReplies({ id: tweetId });
+    console.log("getTweetWithReplies:", result);
+    expect(result?.tweetText).toEqual("Hello!");
   });
 
   it("should create a following/followed relation between two users", async () => {
