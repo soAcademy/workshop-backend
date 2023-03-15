@@ -39,6 +39,26 @@ import {
   updateManyTasksHandler,
   updateTaskStatusHandler,
 } from "./todoList";
+import {
+  createCategoryTriviaHandler,
+  createQuizTriviaHandler,
+  getCategoryTriviaHandler,
+  getQuizTriviaHandler,
+  getResultsTriviaHandler,
+  submitQuizTriviaHandler,
+  updateQuizTriviaHandler,
+} from "./triviaQuizApi";
+import {
+  clickFollowTwitterHandler,
+  createPostTwitterHandler,
+  createReplyTwitterHandler,
+  createUserTwitterHandler,
+  getHashtagTwitterHandler,
+  getPostByHashtagTwitterHandler,
+  getPostByUserTwitterHandler,
+  getUserTwitterHandler,
+  sendDirectMsgTwitterHandler,
+} from "./twitterApi";
 
 export const AppRoutes = [
   {
@@ -200,5 +220,85 @@ export const AppRoutes = [
     path: "/function/updateOrder",
     method: "post",
     action: updateOrderHandler,
+  },
+  {
+    path: "/function/createCategoryTrivia",
+    method: "post",
+    action: createCategoryTriviaHandler,
+  },
+  {
+    path: "/function/getCategoryTrivia",
+    method: "post",
+    action: getCategoryTriviaHandler,
+  },
+  {
+    path: "/function/createQuizTrivia",
+    method: "post",
+    action: createQuizTriviaHandler,
+  },
+  {
+    path: "/function/getQuizTrivia",
+    method: "post",
+    action: getQuizTriviaHandler,
+  },
+  {
+    path: "/function/submitQuizTrivia",
+    method: "post",
+    action: submitQuizTriviaHandler,
+  },
+  {
+    path: "/function/getResultsTrivia",
+    method: "post",
+    action: getResultsTriviaHandler,
+  },
+  {
+    path: "/function/updateQuizTrivia",
+    method: "post",
+    action: updateQuizTriviaHandler,
+  },
+  {
+    path: "/function/getUserTwitter",
+    method: "post",
+    action: getUserTwitterHandler,
+  },
+  {
+    path: "/function/createUserTwitter",
+    method: "post",
+    action: createUserTwitterHandler,
+  },
+  {
+    path: "/function/clickFollowTwitter",
+    method: "post",
+    action: clickFollowTwitterHandler,
+  },
+  {
+    path: "/function/createPostTwitter",
+    method: "post",
+    action: createPostTwitterHandler,
+  },
+  {
+    path: "/function/sendDirectMsgTwitter",
+    method: "post",
+    action: sendDirectMsgTwitterHandler,
+  },
+  {
+    path: "/function/getHashtagTwitter",
+    method: "post",
+    action: getHashtagTwitterHandler,
+  },
+  {
+    path: "/function/getPostByHashtagTwitter",
+    method: "post",
+    action: getPostByHashtagTwitterHandler,
+  },
+  {
+    path: "/function/getPostByUserTwitter",
+    method: "post",
+    action: getPostByUserTwitterHandler,
+  },
+  {
+    path: "/function/createReplyTwitter",
+    method: "post",
+    action: createReplyTwitterHandler,
   },
 ];

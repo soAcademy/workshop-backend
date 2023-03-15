@@ -93,9 +93,11 @@ export type Friends = {
  */
 export type FBPost = {
   id: number
-  userId: number
+  postByUserId: number | null
+  postInUserId: number | null
   postDetail: string | null
   image: string | null
+  groupId: number | null
   createdAt: Date
   updatedAt: Date
 }
@@ -172,29 +174,6 @@ export type GroupOnUser = {
   id: number
   userId: number
   groupId: number
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model PostinGroup
- * 
- */
-export type PostinGroup = {
-  id: number
-  groupId: number
-  postId: number
-  createdAt: Date
-  updatedAt: Date
-}
-
-/**
- * Model PostinProfile
- * 
- */
-export type PostinProfile = {
-  id: number
-  postId: number
   createdAt: Date
   updatedAt: Date
 }
@@ -415,7 +394,7 @@ export type TodoList = {
  */
 export type TriviaCategory = {
   id: number
-  name: string
+  categoryName: string
   createdAt: Date
   updatedAt: Date
 }
@@ -426,21 +405,21 @@ export type TriviaCategory = {
  */
 export type TriviaQuiz = {
   id: number
-  name: string
+  quizName: string
   categoryId: number
-  answerId: number
+  triviaAnswerChoiceId: number
   createdAt: Date
   updatedAt: Date
 }
 
 /**
- * Model TriviaQuizChoice
+ * Model TriviaChoice
  * 
  */
-export type TriviaQuizChoice = {
+export type TriviaChoice = {
   id: number
-  name: string
-  quizId: number
+  choiceName: string
+  quizId: number | null
   createdAt: Date
   updatedAt: Date
 }
@@ -451,6 +430,7 @@ export type TriviaQuizChoice = {
  */
 export type TriviaRound = {
   id: number
+  name: string | null
   score: number
   categoryId: number
   createdAt: Date
@@ -1055,26 +1035,6 @@ export class PrismaClient<
   get groupOnUser(): Prisma.GroupOnUserDelegate<GlobalReject>;
 
   /**
-   * `prisma.postinGroup`: Exposes CRUD operations for the **PostinGroup** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more PostinGroups
-    * const postinGroups = await prisma.postinGroup.findMany()
-    * ```
-    */
-  get postinGroup(): Prisma.PostinGroupDelegate<GlobalReject>;
-
-  /**
-   * `prisma.postinProfile`: Exposes CRUD operations for the **PostinProfile** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more PostinProfiles
-    * const postinProfiles = await prisma.postinProfile.findMany()
-    * ```
-    */
-  get postinProfile(): Prisma.PostinProfileDelegate<GlobalReject>;
-
-  /**
    * `prisma.likeType`: Exposes CRUD operations for the **LikeType** model.
     * Example usage:
     * ```ts
@@ -1265,14 +1225,14 @@ export class PrismaClient<
   get triviaQuiz(): Prisma.TriviaQuizDelegate<GlobalReject>;
 
   /**
-   * `prisma.triviaQuizChoice`: Exposes CRUD operations for the **TriviaQuizChoice** model.
+   * `prisma.triviaChoice`: Exposes CRUD operations for the **TriviaChoice** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TriviaQuizChoices
-    * const triviaQuizChoices = await prisma.triviaQuizChoice.findMany()
+    * // Fetch zero or more TriviaChoices
+    * const triviaChoices = await prisma.triviaChoice.findMany()
     * ```
     */
-  get triviaQuizChoice(): Prisma.TriviaQuizChoiceDelegate<GlobalReject>;
+  get triviaChoice(): Prisma.TriviaChoiceDelegate<GlobalReject>;
 
   /**
    * `prisma.triviaRound`: Exposes CRUD operations for the **TriviaRound** model.
@@ -2035,8 +1995,6 @@ export namespace Prisma {
     Share: 'Share',
     Group: 'Group',
     GroupOnUser: 'GroupOnUser',
-    PostinGroup: 'PostinGroup',
-    PostinProfile: 'PostinProfile',
     LikeType: 'LikeType',
     ShareStatus: 'ShareStatus',
     FBDirectMsg: 'FBDirectMsg',
@@ -2056,7 +2014,7 @@ export namespace Prisma {
     TodoList: 'TodoList',
     TriviaCategory: 'TriviaCategory',
     TriviaQuiz: 'TriviaQuiz',
-    TriviaQuizChoice: 'TriviaQuizChoice',
+    TriviaChoice: 'TriviaChoice',
     TriviaRound: 'TriviaRound',
     TriviaRoundQuiz: 'TriviaRoundQuiz',
     TriviaRoundQuizChoice: 'TriviaRoundQuizChoice',
@@ -2382,7 +2340,6 @@ export namespace Prisma {
   export type FBUserCountOutputType = {
     fromFriends: number
     toFriends: number
-    Post: number
     Comment: number
     SubComment: number
     GroupOnUser: number
@@ -2390,12 +2347,13 @@ export namespace Prisma {
     Share: number
     fromDirectMsg: number
     toDirectMsg: number
+    postByUser: number
+    postInUser: number
   }
 
   export type FBUserCountOutputTypeSelect = {
     fromFriends?: boolean
     toFriends?: boolean
-    Post?: boolean
     Comment?: boolean
     SubComment?: boolean
     GroupOnUser?: boolean
@@ -2403,6 +2361,8 @@ export namespace Prisma {
     Share?: boolean
     fromDirectMsg?: boolean
     toDirectMsg?: boolean
+    postByUser?: boolean
+    postInUser?: boolean
   }
 
   export type FBUserCountOutputTypeGetPayload<S extends boolean | null | undefined | FBUserCountOutputTypeArgs> =
@@ -2442,8 +2402,6 @@ export namespace Prisma {
 
   export type FBPostCountOutputType = {
     Comment: number
-    PostinGroup: number
-    PostinProfile: number
     Like: number
     Share: number
     PostOnHashtag: number
@@ -2451,8 +2409,6 @@ export namespace Prisma {
 
   export type FBPostCountOutputTypeSelect = {
     Comment?: boolean
-    PostinGroup?: boolean
-    PostinProfile?: boolean
     Like?: boolean
     Share?: boolean
     PostOnHashtag?: boolean
@@ -2538,12 +2494,12 @@ export namespace Prisma {
 
   export type GroupCountOutputType = {
     GroupOnUser: number
-    PostinGroup: number
+    FBPost: number
   }
 
   export type GroupCountOutputTypeSelect = {
     GroupOnUser?: boolean
-    PostinGroup?: boolean
+    FBPost?: boolean
   }
 
   export type GroupCountOutputTypeGetPayload<S extends boolean | null | undefined | GroupCountOutputTypeArgs> =
@@ -3036,13 +2992,13 @@ export namespace Prisma {
 
 
   export type TriviaQuizCountOutputType = {
-    triviaQuizChoice: number
     triviaRoundQuiz: number
+    TriviaChoice: number
   }
 
   export type TriviaQuizCountOutputTypeSelect = {
-    triviaQuizChoice?: boolean
     triviaRoundQuiz?: boolean
+    TriviaChoice?: boolean
   }
 
   export type TriviaQuizCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaQuizCountOutputTypeArgs> =
@@ -3076,30 +3032,30 @@ export namespace Prisma {
 
 
   /**
-   * Count Type TriviaQuizChoiceCountOutputType
+   * Count Type TriviaChoiceCountOutputType
    */
 
 
-  export type TriviaQuizChoiceCountOutputType = {
+  export type TriviaChoiceCountOutputType = {
     triviaRoundQuizChoice: number
   }
 
-  export type TriviaQuizChoiceCountOutputTypeSelect = {
+  export type TriviaChoiceCountOutputTypeSelect = {
     triviaRoundQuizChoice?: boolean
   }
 
-  export type TriviaQuizChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaQuizChoiceCountOutputTypeArgs> =
+  export type TriviaChoiceCountOutputTypeGetPayload<S extends boolean | null | undefined | TriviaChoiceCountOutputTypeArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TriviaQuizChoiceCountOutputType :
+    S extends true ? TriviaChoiceCountOutputType :
     S extends undefined ? never :
-    S extends { include: any } & (TriviaQuizChoiceCountOutputTypeArgs)
-    ? TriviaQuizChoiceCountOutputType 
-    : S extends { select: any } & (TriviaQuizChoiceCountOutputTypeArgs)
+    S extends { include: any } & (TriviaChoiceCountOutputTypeArgs)
+    ? TriviaChoiceCountOutputType 
+    : S extends { select: any } & (TriviaChoiceCountOutputTypeArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof TriviaQuizChoiceCountOutputType ? TriviaQuizChoiceCountOutputType[P] : never
+    P extends keyof TriviaChoiceCountOutputType ? TriviaChoiceCountOutputType[P] : never
   } 
-      : TriviaQuizChoiceCountOutputType
+      : TriviaChoiceCountOutputType
 
 
 
@@ -3107,13 +3063,13 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TriviaQuizChoiceCountOutputType without action
+   * TriviaChoiceCountOutputType without action
    */
-  export type TriviaQuizChoiceCountOutputTypeArgs = {
+  export type TriviaChoiceCountOutputTypeArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoiceCountOutputType
+     * Select specific fields to fetch from the TriviaChoiceCountOutputType
      */
-    select?: TriviaQuizChoiceCountOutputTypeSelect | null
+    select?: TriviaChoiceCountOutputTypeSelect | null
   }
 
 
@@ -7975,7 +7931,6 @@ export namespace Prisma {
     updatedAt?: boolean
     fromFriends?: boolean | FBUser$fromFriendsArgs
     toFriends?: boolean | FBUser$toFriendsArgs
-    Post?: boolean | FBUser$PostArgs
     Comment?: boolean | FBUser$CommentArgs
     SubComment?: boolean | FBUser$SubCommentArgs
     GroupOnUser?: boolean | FBUser$GroupOnUserArgs
@@ -7983,6 +7938,8 @@ export namespace Prisma {
     Share?: boolean | FBUser$ShareArgs
     fromDirectMsg?: boolean | FBUser$fromDirectMsgArgs
     toDirectMsg?: boolean | FBUser$toDirectMsgArgs
+    postByUser?: boolean | FBUser$postByUserArgs
+    postInUser?: boolean | FBUser$postInUserArgs
     _count?: boolean | FBUserCountOutputTypeArgs
   }
 
@@ -7990,7 +7947,6 @@ export namespace Prisma {
   export type FBUserInclude = {
     fromFriends?: boolean | FBUser$fromFriendsArgs
     toFriends?: boolean | FBUser$toFriendsArgs
-    Post?: boolean | FBUser$PostArgs
     Comment?: boolean | FBUser$CommentArgs
     SubComment?: boolean | FBUser$SubCommentArgs
     GroupOnUser?: boolean | FBUser$GroupOnUserArgs
@@ -7998,6 +7954,8 @@ export namespace Prisma {
     Share?: boolean | FBUser$ShareArgs
     fromDirectMsg?: boolean | FBUser$fromDirectMsgArgs
     toDirectMsg?: boolean | FBUser$toDirectMsgArgs
+    postByUser?: boolean | FBUser$postByUserArgs
+    postInUser?: boolean | FBUser$postInUserArgs
     _count?: boolean | FBUserCountOutputTypeArgs
   }
 
@@ -8010,7 +7968,6 @@ export namespace Prisma {
     [P in TruthyKeys<S['include']>]:
         P extends 'fromFriends' ? Array < FriendsGetPayload<S['include'][P]>>  :
         P extends 'toFriends' ? Array < FriendsGetPayload<S['include'][P]>>  :
-        P extends 'Post' ? Array < FBPostGetPayload<S['include'][P]>>  :
         P extends 'Comment' ? Array < CommentGetPayload<S['include'][P]>>  :
         P extends 'SubComment' ? Array < SubCommentGetPayload<S['include'][P]>>  :
         P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['include'][P]>>  :
@@ -8018,6 +7975,8 @@ export namespace Prisma {
         P extends 'Share' ? Array < ShareGetPayload<S['include'][P]>>  :
         P extends 'fromDirectMsg' ? Array < FBDirectMsgGetPayload<S['include'][P]>>  :
         P extends 'toDirectMsg' ? Array < FBDirectMsgGetPayload<S['include'][P]>>  :
+        P extends 'postByUser' ? Array < FBPostGetPayload<S['include'][P]>>  :
+        P extends 'postInUser' ? Array < FBPostGetPayload<S['include'][P]>>  :
         P extends '_count' ? FBUserCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (FBUserArgs | FBUserFindManyArgs)
@@ -8025,7 +7984,6 @@ export namespace Prisma {
     [P in TruthyKeys<S['select']>]:
         P extends 'fromFriends' ? Array < FriendsGetPayload<S['select'][P]>>  :
         P extends 'toFriends' ? Array < FriendsGetPayload<S['select'][P]>>  :
-        P extends 'Post' ? Array < FBPostGetPayload<S['select'][P]>>  :
         P extends 'Comment' ? Array < CommentGetPayload<S['select'][P]>>  :
         P extends 'SubComment' ? Array < SubCommentGetPayload<S['select'][P]>>  :
         P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['select'][P]>>  :
@@ -8033,6 +7991,8 @@ export namespace Prisma {
         P extends 'Share' ? Array < ShareGetPayload<S['select'][P]>>  :
         P extends 'fromDirectMsg' ? Array < FBDirectMsgGetPayload<S['select'][P]>>  :
         P extends 'toDirectMsg' ? Array < FBDirectMsgGetPayload<S['select'][P]>>  :
+        P extends 'postByUser' ? Array < FBPostGetPayload<S['select'][P]>>  :
+        P extends 'postInUser' ? Array < FBPostGetPayload<S['select'][P]>>  :
         P extends '_count' ? FBUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof FBUser ? FBUser[P] : never
   } 
       : FBUser
@@ -8409,8 +8369,6 @@ export namespace Prisma {
 
     toFriends<T extends FBUser$toFriendsArgs= {}>(args?: Subset<T, FBUser$toFriendsArgs>): Prisma.PrismaPromise<Array<FriendsGetPayload<T>>| Null>;
 
-    Post<T extends FBUser$PostArgs= {}>(args?: Subset<T, FBUser$PostArgs>): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>| Null>;
-
     Comment<T extends FBUser$CommentArgs= {}>(args?: Subset<T, FBUser$CommentArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
 
     SubComment<T extends FBUser$SubCommentArgs= {}>(args?: Subset<T, FBUser$SubCommentArgs>): Prisma.PrismaPromise<Array<SubCommentGetPayload<T>>| Null>;
@@ -8424,6 +8382,10 @@ export namespace Prisma {
     fromDirectMsg<T extends FBUser$fromDirectMsgArgs= {}>(args?: Subset<T, FBUser$fromDirectMsgArgs>): Prisma.PrismaPromise<Array<FBDirectMsgGetPayload<T>>| Null>;
 
     toDirectMsg<T extends FBUser$toDirectMsgArgs= {}>(args?: Subset<T, FBUser$toDirectMsgArgs>): Prisma.PrismaPromise<Array<FBDirectMsgGetPayload<T>>| Null>;
+
+    postByUser<T extends FBUser$postByUserArgs= {}>(args?: Subset<T, FBUser$postByUserArgs>): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>| Null>;
+
+    postInUser<T extends FBUser$postInUserArgs= {}>(args?: Subset<T, FBUser$postInUserArgs>): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -8823,27 +8785,6 @@ export namespace Prisma {
 
 
   /**
-   * FBUser.Post
-   */
-  export type FBUser$PostArgs = {
-    /**
-     * Select specific fields to fetch from the FBPost
-     */
-    select?: FBPostSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: FBPostInclude | null
-    where?: FBPostWhereInput
-    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
-    cursor?: FBPostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<FBPostScalarFieldEnum>
-  }
-
-
-  /**
    * FBUser.Comment
    */
   export type FBUser$CommentArgs = {
@@ -8987,6 +8928,48 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Enumerable<FBDirectMsgScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.postByUser
+   */
+  export type FBUser$postByUserArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    where?: FBPostWhereInput
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    cursor?: FBPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FBPostScalarFieldEnum>
+  }
+
+
+  /**
+   * FBUser.postInUser
+   */
+  export type FBUser$postInUserArgs = {
+    /**
+     * Select specific fields to fetch from the FBPost
+     */
+    select?: FBPostSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FBPostInclude | null
+    where?: FBPostWhereInput
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    cursor?: FBPostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<FBPostScalarFieldEnum>
   }
 
 
@@ -10000,37 +9983,47 @@ export namespace Prisma {
 
   export type FBPostAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
+    postByUserId: number | null
+    postInUserId: number | null
+    groupId: number | null
   }
 
   export type FBPostSumAggregateOutputType = {
     id: number | null
-    userId: number | null
+    postByUserId: number | null
+    postInUserId: number | null
+    groupId: number | null
   }
 
   export type FBPostMinAggregateOutputType = {
     id: number | null
-    userId: number | null
+    postByUserId: number | null
+    postInUserId: number | null
     postDetail: string | null
     image: string | null
+    groupId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FBPostMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
+    postByUserId: number | null
+    postInUserId: number | null
     postDetail: string | null
     image: string | null
+    groupId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type FBPostCountAggregateOutputType = {
     id: number
-    userId: number
+    postByUserId: number
+    postInUserId: number
     postDetail: number
     image: number
+    groupId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10039,37 +10032,47 @@ export namespace Prisma {
 
   export type FBPostAvgAggregateInputType = {
     id?: true
-    userId?: true
+    postByUserId?: true
+    postInUserId?: true
+    groupId?: true
   }
 
   export type FBPostSumAggregateInputType = {
     id?: true
-    userId?: true
+    postByUserId?: true
+    postInUserId?: true
+    groupId?: true
   }
 
   export type FBPostMinAggregateInputType = {
     id?: true
-    userId?: true
+    postByUserId?: true
+    postInUserId?: true
     postDetail?: true
     image?: true
+    groupId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FBPostMaxAggregateInputType = {
     id?: true
-    userId?: true
+    postByUserId?: true
+    postInUserId?: true
     postDetail?: true
     image?: true
+    groupId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type FBPostCountAggregateInputType = {
     id?: true
-    userId?: true
+    postByUserId?: true
+    postInUserId?: true
     postDetail?: true
     image?: true
+    groupId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10164,9 +10167,11 @@ export namespace Prisma {
 
   export type FBPostGroupByOutputType = {
     id: number
-    userId: number
+    postByUserId: number | null
+    postInUserId: number | null
     postDetail: string | null
     image: string | null
+    groupId: number | null
     createdAt: Date
     updatedAt: Date
     _count: FBPostCountAggregateOutputType | null
@@ -10192,15 +10197,17 @@ export namespace Prisma {
 
   export type FBPostSelect = {
     id?: boolean
-    user?: boolean | FBUserArgs
-    userId?: boolean
+    postByUser?: boolean | FBUserArgs
+    postByUserId?: boolean
+    postInUser?: boolean | FBUserArgs
+    postInUserId?: boolean
     postDetail?: boolean
     image?: boolean
+    group?: boolean | GroupArgs
+    groupId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     Comment?: boolean | FBPost$CommentArgs
-    PostinGroup?: boolean | FBPost$PostinGroupArgs
-    PostinProfile?: boolean | FBPost$PostinProfileArgs
     Like?: boolean | FBPost$LikeArgs
     Share?: boolean | FBPost$ShareArgs
     PostOnHashtag?: boolean | FBPost$PostOnHashtagArgs
@@ -10209,10 +10216,10 @@ export namespace Prisma {
 
 
   export type FBPostInclude = {
-    user?: boolean | FBUserArgs
+    postByUser?: boolean | FBUserArgs
+    postInUser?: boolean | FBUserArgs
+    group?: boolean | GroupArgs
     Comment?: boolean | FBPost$CommentArgs
-    PostinGroup?: boolean | FBPost$PostinGroupArgs
-    PostinProfile?: boolean | FBPost$PostinProfileArgs
     Like?: boolean | FBPost$LikeArgs
     Share?: boolean | FBPost$ShareArgs
     PostOnHashtag?: boolean | FBPost$PostOnHashtagArgs
@@ -10226,10 +10233,10 @@ export namespace Prisma {
     S extends { include: any } & (FBPostArgs | FBPostFindManyArgs)
     ? FBPost  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'user' ? FBUserGetPayload<S['include'][P]> :
+        P extends 'postByUser' ? FBUserGetPayload<S['include'][P]> | null :
+        P extends 'postInUser' ? FBUserGetPayload<S['include'][P]> | null :
+        P extends 'group' ? GroupGetPayload<S['include'][P]> | null :
         P extends 'Comment' ? Array < CommentGetPayload<S['include'][P]>>  :
-        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['include'][P]>>  :
-        P extends 'PostinProfile' ? Array < PostinProfileGetPayload<S['include'][P]>>  :
         P extends 'Like' ? Array < LikeGetPayload<S['include'][P]>>  :
         P extends 'Share' ? Array < ShareGetPayload<S['include'][P]>>  :
         P extends 'PostOnHashtag' ? Array < FBPostOnHashtagGetPayload<S['include'][P]>>  :
@@ -10238,10 +10245,10 @@ export namespace Prisma {
     : S extends { select: any } & (FBPostArgs | FBPostFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'user' ? FBUserGetPayload<S['select'][P]> :
+        P extends 'postByUser' ? FBUserGetPayload<S['select'][P]> | null :
+        P extends 'postInUser' ? FBUserGetPayload<S['select'][P]> | null :
+        P extends 'group' ? GroupGetPayload<S['select'][P]> | null :
         P extends 'Comment' ? Array < CommentGetPayload<S['select'][P]>>  :
-        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['select'][P]>>  :
-        P extends 'PostinProfile' ? Array < PostinProfileGetPayload<S['select'][P]>>  :
         P extends 'Like' ? Array < LikeGetPayload<S['select'][P]>>  :
         P extends 'Share' ? Array < ShareGetPayload<S['select'][P]>>  :
         P extends 'PostOnHashtag' ? Array < FBPostOnHashtagGetPayload<S['select'][P]>>  :
@@ -10617,13 +10624,13 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
-    user<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+    postByUser<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    postInUser<T extends FBUserArgs= {}>(args?: Subset<T, FBUserArgs>): Prisma__FBUserClient<FBUserGetPayload<T> | Null>;
+
+    group<T extends GroupArgs= {}>(args?: Subset<T, GroupArgs>): Prisma__GroupClient<GroupGetPayload<T> | Null>;
 
     Comment<T extends FBPost$CommentArgs= {}>(args?: Subset<T, FBPost$CommentArgs>): Prisma.PrismaPromise<Array<CommentGetPayload<T>>| Null>;
-
-    PostinGroup<T extends FBPost$PostinGroupArgs= {}>(args?: Subset<T, FBPost$PostinGroupArgs>): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>| Null>;
-
-    PostinProfile<T extends FBPost$PostinProfileArgs= {}>(args?: Subset<T, FBPost$PostinProfileArgs>): Prisma.PrismaPromise<Array<PostinProfileGetPayload<T>>| Null>;
 
     Like<T extends FBPost$LikeArgs= {}>(args?: Subset<T, FBPost$LikeArgs>): Prisma.PrismaPromise<Array<LikeGetPayload<T>>| Null>;
 
@@ -11004,48 +11011,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Enumerable<CommentScalarFieldEnum>
-  }
-
-
-  /**
-   * FBPost.PostinGroup
-   */
-  export type FBPost$PostinGroupArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    where?: PostinGroupWhereInput
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    cursor?: PostinGroupWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PostinGroupScalarFieldEnum>
-  }
-
-
-  /**
-   * FBPost.PostinProfile
-   */
-  export type FBPost$PostinProfileArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    where?: PostinProfileWhereInput
-    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
-    cursor?: PostinProfileWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<PostinProfileScalarFieldEnum>
   }
 
 
@@ -15328,14 +15293,14 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     GroupOnUser?: boolean | Group$GroupOnUserArgs
-    PostinGroup?: boolean | Group$PostinGroupArgs
+    FBPost?: boolean | Group$FBPostArgs
     _count?: boolean | GroupCountOutputTypeArgs
   }
 
 
   export type GroupInclude = {
     GroupOnUser?: boolean | Group$GroupOnUserArgs
-    PostinGroup?: boolean | Group$PostinGroupArgs
+    FBPost?: boolean | Group$FBPostArgs
     _count?: boolean | GroupCountOutputTypeArgs
   }
 
@@ -15347,14 +15312,14 @@ export namespace Prisma {
     ? Group  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['include'][P]>>  :
-        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['include'][P]>>  :
+        P extends 'FBPost' ? Array < FBPostGetPayload<S['include'][P]>>  :
         P extends '_count' ? GroupCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (GroupArgs | GroupFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'GroupOnUser' ? Array < GroupOnUserGetPayload<S['select'][P]>>  :
-        P extends 'PostinGroup' ? Array < PostinGroupGetPayload<S['select'][P]>>  :
+        P extends 'FBPost' ? Array < FBPostGetPayload<S['select'][P]>>  :
         P extends '_count' ? GroupCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Group ? Group[P] : never
   } 
       : Group
@@ -15729,7 +15694,7 @@ export namespace Prisma {
 
     GroupOnUser<T extends Group$GroupOnUserArgs= {}>(args?: Subset<T, Group$GroupOnUserArgs>): Prisma.PrismaPromise<Array<GroupOnUserGetPayload<T>>| Null>;
 
-    PostinGroup<T extends Group$PostinGroupArgs= {}>(args?: Subset<T, Group$PostinGroupArgs>): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>| Null>;
+    FBPost<T extends Group$FBPostArgs= {}>(args?: Subset<T, Group$FBPostArgs>): Prisma.PrismaPromise<Array<FBPostGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -16108,23 +16073,23 @@ export namespace Prisma {
 
 
   /**
-   * Group.PostinGroup
+   * Group.FBPost
    */
-  export type Group$PostinGroupArgs = {
+  export type Group$FBPostArgs = {
     /**
-     * Select specific fields to fetch from the PostinGroup
+     * Select specific fields to fetch from the FBPost
      */
-    select?: PostinGroupSelect | null
+    select?: FBPostSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: PostinGroupInclude | null
-    where?: PostinGroupWhereInput
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    cursor?: PostinGroupWhereUniqueInput
+    include?: FBPostInclude | null
+    where?: FBPostWhereInput
+    orderBy?: Enumerable<FBPostOrderByWithRelationInput>
+    cursor?: FBPostWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: Enumerable<PostinGroupScalarFieldEnum>
+    distinct?: Enumerable<FBPostScalarFieldEnum>
   }
 
 
@@ -17119,1946 +17084,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: GroupOnUserInclude | null
-  }
-
-
-
-  /**
-   * Model PostinGroup
-   */
-
-
-  export type AggregatePostinGroup = {
-    _count: PostinGroupCountAggregateOutputType | null
-    _avg: PostinGroupAvgAggregateOutputType | null
-    _sum: PostinGroupSumAggregateOutputType | null
-    _min: PostinGroupMinAggregateOutputType | null
-    _max: PostinGroupMaxAggregateOutputType | null
-  }
-
-  export type PostinGroupAvgAggregateOutputType = {
-    id: number | null
-    groupId: number | null
-    postId: number | null
-  }
-
-  export type PostinGroupSumAggregateOutputType = {
-    id: number | null
-    groupId: number | null
-    postId: number | null
-  }
-
-  export type PostinGroupMinAggregateOutputType = {
-    id: number | null
-    groupId: number | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PostinGroupMaxAggregateOutputType = {
-    id: number | null
-    groupId: number | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PostinGroupCountAggregateOutputType = {
-    id: number
-    groupId: number
-    postId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type PostinGroupAvgAggregateInputType = {
-    id?: true
-    groupId?: true
-    postId?: true
-  }
-
-  export type PostinGroupSumAggregateInputType = {
-    id?: true
-    groupId?: true
-    postId?: true
-  }
-
-  export type PostinGroupMinAggregateInputType = {
-    id?: true
-    groupId?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PostinGroupMaxAggregateInputType = {
-    id?: true
-    groupId?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PostinGroupCountAggregateInputType = {
-    id?: true
-    groupId?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type PostinGroupAggregateArgs = {
-    /**
-     * Filter which PostinGroup to aggregate.
-     */
-    where?: PostinGroupWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinGroups to fetch.
-     */
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostinGroupWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinGroups from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinGroups.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned PostinGroups
-    **/
-    _count?: true | PostinGroupCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostinGroupAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostinGroupSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostinGroupMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostinGroupMaxAggregateInputType
-  }
-
-  export type GetPostinGroupAggregateType<T extends PostinGroupAggregateArgs> = {
-        [P in keyof T & keyof AggregatePostinGroup]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePostinGroup[P]>
-      : GetScalarType<T[P], AggregatePostinGroup[P]>
-  }
-
-
-
-
-  export type PostinGroupGroupByArgs = {
-    where?: PostinGroupWhereInput
-    orderBy?: Enumerable<PostinGroupOrderByWithAggregationInput>
-    by: PostinGroupScalarFieldEnum[]
-    having?: PostinGroupScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostinGroupCountAggregateInputType | true
-    _avg?: PostinGroupAvgAggregateInputType
-    _sum?: PostinGroupSumAggregateInputType
-    _min?: PostinGroupMinAggregateInputType
-    _max?: PostinGroupMaxAggregateInputType
-  }
-
-
-  export type PostinGroupGroupByOutputType = {
-    id: number
-    groupId: number
-    postId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: PostinGroupCountAggregateOutputType | null
-    _avg: PostinGroupAvgAggregateOutputType | null
-    _sum: PostinGroupSumAggregateOutputType | null
-    _min: PostinGroupMinAggregateOutputType | null
-    _max: PostinGroupMaxAggregateOutputType | null
-  }
-
-  type GetPostinGroupGroupByPayload<T extends PostinGroupGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<PostinGroupGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostinGroupGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostinGroupGroupByOutputType[P]>
-            : GetScalarType<T[P], PostinGroupGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostinGroupSelect = {
-    id?: boolean
-    group?: boolean | GroupArgs
-    groupId?: boolean
-    post?: boolean | FBPostArgs
-    postId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type PostinGroupInclude = {
-    group?: boolean | GroupArgs
-    post?: boolean | FBPostArgs
-  }
-
-  export type PostinGroupGetPayload<S extends boolean | null | undefined | PostinGroupArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? PostinGroup :
-    S extends undefined ? never :
-    S extends { include: any } & (PostinGroupArgs | PostinGroupFindManyArgs)
-    ? PostinGroup  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'group' ? GroupGetPayload<S['include'][P]> :
-        P extends 'post' ? FBPostGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (PostinGroupArgs | PostinGroupFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'group' ? GroupGetPayload<S['select'][P]> :
-        P extends 'post' ? FBPostGetPayload<S['select'][P]> :  P extends keyof PostinGroup ? PostinGroup[P] : never
-  } 
-      : PostinGroup
-
-
-  type PostinGroupCountArgs = 
-    Omit<PostinGroupFindManyArgs, 'select' | 'include'> & {
-      select?: PostinGroupCountAggregateInputType | true
-    }
-
-  export interface PostinGroupDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one PostinGroup that matches the filter.
-     * @param {PostinGroupFindUniqueArgs} args - Arguments to find a PostinGroup
-     * @example
-     * // Get one PostinGroup
-     * const postinGroup = await prisma.postinGroup.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends PostinGroupFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, PostinGroupFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'PostinGroup'> extends True ? Prisma__PostinGroupClient<PostinGroupGetPayload<T>> : Prisma__PostinGroupClient<PostinGroupGetPayload<T> | null, null>
-
-    /**
-     * Find one PostinGroup that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {PostinGroupFindUniqueOrThrowArgs} args - Arguments to find a PostinGroup
-     * @example
-     * // Get one PostinGroup
-     * const postinGroup = await prisma.postinGroup.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends PostinGroupFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, PostinGroupFindUniqueOrThrowArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Find the first PostinGroup that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupFindFirstArgs} args - Arguments to find a PostinGroup
-     * @example
-     * // Get one PostinGroup
-     * const postinGroup = await prisma.postinGroup.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends PostinGroupFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, PostinGroupFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'PostinGroup'> extends True ? Prisma__PostinGroupClient<PostinGroupGetPayload<T>> : Prisma__PostinGroupClient<PostinGroupGetPayload<T> | null, null>
-
-    /**
-     * Find the first PostinGroup that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupFindFirstOrThrowArgs} args - Arguments to find a PostinGroup
-     * @example
-     * // Get one PostinGroup
-     * const postinGroup = await prisma.postinGroup.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends PostinGroupFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, PostinGroupFindFirstOrThrowArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Find zero or more PostinGroups that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all PostinGroups
-     * const postinGroups = await prisma.postinGroup.findMany()
-     * 
-     * // Get first 10 PostinGroups
-     * const postinGroups = await prisma.postinGroup.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postinGroupWithIdOnly = await prisma.postinGroup.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends PostinGroupFindManyArgs>(
-      args?: SelectSubset<T, PostinGroupFindManyArgs>
-    ): Prisma.PrismaPromise<Array<PostinGroupGetPayload<T>>>
-
-    /**
-     * Create a PostinGroup.
-     * @param {PostinGroupCreateArgs} args - Arguments to create a PostinGroup.
-     * @example
-     * // Create one PostinGroup
-     * const PostinGroup = await prisma.postinGroup.create({
-     *   data: {
-     *     // ... data to create a PostinGroup
-     *   }
-     * })
-     * 
-    **/
-    create<T extends PostinGroupCreateArgs>(
-      args: SelectSubset<T, PostinGroupCreateArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Create many PostinGroups.
-     *     @param {PostinGroupCreateManyArgs} args - Arguments to create many PostinGroups.
-     *     @example
-     *     // Create many PostinGroups
-     *     const postinGroup = await prisma.postinGroup.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends PostinGroupCreateManyArgs>(
-      args?: SelectSubset<T, PostinGroupCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a PostinGroup.
-     * @param {PostinGroupDeleteArgs} args - Arguments to delete one PostinGroup.
-     * @example
-     * // Delete one PostinGroup
-     * const PostinGroup = await prisma.postinGroup.delete({
-     *   where: {
-     *     // ... filter to delete one PostinGroup
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends PostinGroupDeleteArgs>(
-      args: SelectSubset<T, PostinGroupDeleteArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Update one PostinGroup.
-     * @param {PostinGroupUpdateArgs} args - Arguments to update one PostinGroup.
-     * @example
-     * // Update one PostinGroup
-     * const postinGroup = await prisma.postinGroup.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends PostinGroupUpdateArgs>(
-      args: SelectSubset<T, PostinGroupUpdateArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Delete zero or more PostinGroups.
-     * @param {PostinGroupDeleteManyArgs} args - Arguments to filter PostinGroups to delete.
-     * @example
-     * // Delete a few PostinGroups
-     * const { count } = await prisma.postinGroup.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends PostinGroupDeleteManyArgs>(
-      args?: SelectSubset<T, PostinGroupDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PostinGroups.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many PostinGroups
-     * const postinGroup = await prisma.postinGroup.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends PostinGroupUpdateManyArgs>(
-      args: SelectSubset<T, PostinGroupUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one PostinGroup.
-     * @param {PostinGroupUpsertArgs} args - Arguments to update or create a PostinGroup.
-     * @example
-     * // Update or create a PostinGroup
-     * const postinGroup = await prisma.postinGroup.upsert({
-     *   create: {
-     *     // ... data to create a PostinGroup
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the PostinGroup we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends PostinGroupUpsertArgs>(
-      args: SelectSubset<T, PostinGroupUpsertArgs>
-    ): Prisma__PostinGroupClient<PostinGroupGetPayload<T>>
-
-    /**
-     * Count the number of PostinGroups.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupCountArgs} args - Arguments to filter PostinGroups to count.
-     * @example
-     * // Count the number of PostinGroups
-     * const count = await prisma.postinGroup.count({
-     *   where: {
-     *     // ... the filter for the PostinGroups we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostinGroupCountArgs>(
-      args?: Subset<T, PostinGroupCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostinGroupCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a PostinGroup.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostinGroupAggregateArgs>(args: Subset<T, PostinGroupAggregateArgs>): Prisma.PrismaPromise<GetPostinGroupAggregateType<T>>
-
-    /**
-     * Group by PostinGroup.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinGroupGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostinGroupGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostinGroupGroupByArgs['orderBy'] }
-        : { orderBy?: PostinGroupGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostinGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostinGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for PostinGroup.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__PostinGroupClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    group<T extends GroupArgs= {}>(args?: Subset<T, GroupArgs>): Prisma__GroupClient<GroupGetPayload<T> | Null>;
-
-    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * PostinGroup base type for findUnique actions
-   */
-  export type PostinGroupFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter, which PostinGroup to fetch.
-     */
-    where: PostinGroupWhereUniqueInput
-  }
-
-  /**
-   * PostinGroup findUnique
-   */
-  export interface PostinGroupFindUniqueArgs extends PostinGroupFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostinGroup findUniqueOrThrow
-   */
-  export type PostinGroupFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter, which PostinGroup to fetch.
-     */
-    where: PostinGroupWhereUniqueInput
-  }
-
-
-  /**
-   * PostinGroup base type for findFirst actions
-   */
-  export type PostinGroupFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter, which PostinGroup to fetch.
-     */
-    where?: PostinGroupWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinGroups to fetch.
-     */
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostinGroups.
-     */
-    cursor?: PostinGroupWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinGroups from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinGroups.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostinGroups.
-     */
-    distinct?: Enumerable<PostinGroupScalarFieldEnum>
-  }
-
-  /**
-   * PostinGroup findFirst
-   */
-  export interface PostinGroupFindFirstArgs extends PostinGroupFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostinGroup findFirstOrThrow
-   */
-  export type PostinGroupFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter, which PostinGroup to fetch.
-     */
-    where?: PostinGroupWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinGroups to fetch.
-     */
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostinGroups.
-     */
-    cursor?: PostinGroupWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinGroups from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinGroups.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostinGroups.
-     */
-    distinct?: Enumerable<PostinGroupScalarFieldEnum>
-  }
-
-
-  /**
-   * PostinGroup findMany
-   */
-  export type PostinGroupFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter, which PostinGroups to fetch.
-     */
-    where?: PostinGroupWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinGroups to fetch.
-     */
-    orderBy?: Enumerable<PostinGroupOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing PostinGroups.
-     */
-    cursor?: PostinGroupWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinGroups from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinGroups.
-     */
-    skip?: number
-    distinct?: Enumerable<PostinGroupScalarFieldEnum>
-  }
-
-
-  /**
-   * PostinGroup create
-   */
-  export type PostinGroupCreateArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * The data needed to create a PostinGroup.
-     */
-    data: XOR<PostinGroupCreateInput, PostinGroupUncheckedCreateInput>
-  }
-
-
-  /**
-   * PostinGroup createMany
-   */
-  export type PostinGroupCreateManyArgs = {
-    /**
-     * The data used to create many PostinGroups.
-     */
-    data: Enumerable<PostinGroupCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * PostinGroup update
-   */
-  export type PostinGroupUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * The data needed to update a PostinGroup.
-     */
-    data: XOR<PostinGroupUpdateInput, PostinGroupUncheckedUpdateInput>
-    /**
-     * Choose, which PostinGroup to update.
-     */
-    where: PostinGroupWhereUniqueInput
-  }
-
-
-  /**
-   * PostinGroup updateMany
-   */
-  export type PostinGroupUpdateManyArgs = {
-    /**
-     * The data used to update PostinGroups.
-     */
-    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyInput>
-    /**
-     * Filter which PostinGroups to update
-     */
-    where?: PostinGroupWhereInput
-  }
-
-
-  /**
-   * PostinGroup upsert
-   */
-  export type PostinGroupUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * The filter to search for the PostinGroup to update in case it exists.
-     */
-    where: PostinGroupWhereUniqueInput
-    /**
-     * In case the PostinGroup found by the `where` argument doesn't exist, create a new PostinGroup with this data.
-     */
-    create: XOR<PostinGroupCreateInput, PostinGroupUncheckedCreateInput>
-    /**
-     * In case the PostinGroup was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PostinGroupUpdateInput, PostinGroupUncheckedUpdateInput>
-  }
-
-
-  /**
-   * PostinGroup delete
-   */
-  export type PostinGroupDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-    /**
-     * Filter which PostinGroup to delete.
-     */
-    where: PostinGroupWhereUniqueInput
-  }
-
-
-  /**
-   * PostinGroup deleteMany
-   */
-  export type PostinGroupDeleteManyArgs = {
-    /**
-     * Filter which PostinGroups to delete
-     */
-    where?: PostinGroupWhereInput
-  }
-
-
-  /**
-   * PostinGroup without action
-   */
-  export type PostinGroupArgs = {
-    /**
-     * Select specific fields to fetch from the PostinGroup
-     */
-    select?: PostinGroupSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinGroupInclude | null
-  }
-
-
-
-  /**
-   * Model PostinProfile
-   */
-
-
-  export type AggregatePostinProfile = {
-    _count: PostinProfileCountAggregateOutputType | null
-    _avg: PostinProfileAvgAggregateOutputType | null
-    _sum: PostinProfileSumAggregateOutputType | null
-    _min: PostinProfileMinAggregateOutputType | null
-    _max: PostinProfileMaxAggregateOutputType | null
-  }
-
-  export type PostinProfileAvgAggregateOutputType = {
-    id: number | null
-    postId: number | null
-  }
-
-  export type PostinProfileSumAggregateOutputType = {
-    id: number | null
-    postId: number | null
-  }
-
-  export type PostinProfileMinAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PostinProfileMaxAggregateOutputType = {
-    id: number | null
-    postId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PostinProfileCountAggregateOutputType = {
-    id: number
-    postId: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type PostinProfileAvgAggregateInputType = {
-    id?: true
-    postId?: true
-  }
-
-  export type PostinProfileSumAggregateInputType = {
-    id?: true
-    postId?: true
-  }
-
-  export type PostinProfileMinAggregateInputType = {
-    id?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PostinProfileMaxAggregateInputType = {
-    id?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PostinProfileCountAggregateInputType = {
-    id?: true
-    postId?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type PostinProfileAggregateArgs = {
-    /**
-     * Filter which PostinProfile to aggregate.
-     */
-    where?: PostinProfileWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinProfiles to fetch.
-     */
-    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostinProfileWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinProfiles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinProfiles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned PostinProfiles
-    **/
-    _count?: true | PostinProfileCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostinProfileAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostinProfileSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostinProfileMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostinProfileMaxAggregateInputType
-  }
-
-  export type GetPostinProfileAggregateType<T extends PostinProfileAggregateArgs> = {
-        [P in keyof T & keyof AggregatePostinProfile]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePostinProfile[P]>
-      : GetScalarType<T[P], AggregatePostinProfile[P]>
-  }
-
-
-
-
-  export type PostinProfileGroupByArgs = {
-    where?: PostinProfileWhereInput
-    orderBy?: Enumerable<PostinProfileOrderByWithAggregationInput>
-    by: PostinProfileScalarFieldEnum[]
-    having?: PostinProfileScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostinProfileCountAggregateInputType | true
-    _avg?: PostinProfileAvgAggregateInputType
-    _sum?: PostinProfileSumAggregateInputType
-    _min?: PostinProfileMinAggregateInputType
-    _max?: PostinProfileMaxAggregateInputType
-  }
-
-
-  export type PostinProfileGroupByOutputType = {
-    id: number
-    postId: number
-    createdAt: Date
-    updatedAt: Date
-    _count: PostinProfileCountAggregateOutputType | null
-    _avg: PostinProfileAvgAggregateOutputType | null
-    _sum: PostinProfileSumAggregateOutputType | null
-    _min: PostinProfileMinAggregateOutputType | null
-    _max: PostinProfileMaxAggregateOutputType | null
-  }
-
-  type GetPostinProfileGroupByPayload<T extends PostinProfileGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickArray<PostinProfileGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostinProfileGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostinProfileGroupByOutputType[P]>
-            : GetScalarType<T[P], PostinProfileGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostinProfileSelect = {
-    id?: boolean
-    post?: boolean | FBPostArgs
-    postId?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-
-  export type PostinProfileInclude = {
-    post?: boolean | FBPostArgs
-  }
-
-  export type PostinProfileGetPayload<S extends boolean | null | undefined | PostinProfileArgs> =
-    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? PostinProfile :
-    S extends undefined ? never :
-    S extends { include: any } & (PostinProfileArgs | PostinProfileFindManyArgs)
-    ? PostinProfile  & {
-    [P in TruthyKeys<S['include']>]:
-        P extends 'post' ? FBPostGetPayload<S['include'][P]> :  never
-  } 
-    : S extends { select: any } & (PostinProfileArgs | PostinProfileFindManyArgs)
-      ? {
-    [P in TruthyKeys<S['select']>]:
-        P extends 'post' ? FBPostGetPayload<S['select'][P]> :  P extends keyof PostinProfile ? PostinProfile[P] : never
-  } 
-      : PostinProfile
-
-
-  type PostinProfileCountArgs = 
-    Omit<PostinProfileFindManyArgs, 'select' | 'include'> & {
-      select?: PostinProfileCountAggregateInputType | true
-    }
-
-  export interface PostinProfileDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
-
-    /**
-     * Find zero or one PostinProfile that matches the filter.
-     * @param {PostinProfileFindUniqueArgs} args - Arguments to find a PostinProfile
-     * @example
-     * // Get one PostinProfile
-     * const postinProfile = await prisma.postinProfile.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUnique<T extends PostinProfileFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, PostinProfileFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'PostinProfile'> extends True ? Prisma__PostinProfileClient<PostinProfileGetPayload<T>> : Prisma__PostinProfileClient<PostinProfileGetPayload<T> | null, null>
-
-    /**
-     * Find one PostinProfile that matches the filter or throw an error  with `error.code='P2025'` 
-     *     if no matches were found.
-     * @param {PostinProfileFindUniqueOrThrowArgs} args - Arguments to find a PostinProfile
-     * @example
-     * // Get one PostinProfile
-     * const postinProfile = await prisma.postinProfile.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findUniqueOrThrow<T extends PostinProfileFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, PostinProfileFindUniqueOrThrowArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Find the first PostinProfile that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileFindFirstArgs} args - Arguments to find a PostinProfile
-     * @example
-     * // Get one PostinProfile
-     * const postinProfile = await prisma.postinProfile.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirst<T extends PostinProfileFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, PostinProfileFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'PostinProfile'> extends True ? Prisma__PostinProfileClient<PostinProfileGetPayload<T>> : Prisma__PostinProfileClient<PostinProfileGetPayload<T> | null, null>
-
-    /**
-     * Find the first PostinProfile that matches the filter or
-     * throw `NotFoundError` if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileFindFirstOrThrowArgs} args - Arguments to find a PostinProfile
-     * @example
-     * // Get one PostinProfile
-     * const postinProfile = await prisma.postinProfile.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-    **/
-    findFirstOrThrow<T extends PostinProfileFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, PostinProfileFindFirstOrThrowArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Find zero or more PostinProfiles that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileFindManyArgs=} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all PostinProfiles
-     * const postinProfiles = await prisma.postinProfile.findMany()
-     * 
-     * // Get first 10 PostinProfiles
-     * const postinProfiles = await prisma.postinProfile.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postinProfileWithIdOnly = await prisma.postinProfile.findMany({ select: { id: true } })
-     * 
-    **/
-    findMany<T extends PostinProfileFindManyArgs>(
-      args?: SelectSubset<T, PostinProfileFindManyArgs>
-    ): Prisma.PrismaPromise<Array<PostinProfileGetPayload<T>>>
-
-    /**
-     * Create a PostinProfile.
-     * @param {PostinProfileCreateArgs} args - Arguments to create a PostinProfile.
-     * @example
-     * // Create one PostinProfile
-     * const PostinProfile = await prisma.postinProfile.create({
-     *   data: {
-     *     // ... data to create a PostinProfile
-     *   }
-     * })
-     * 
-    **/
-    create<T extends PostinProfileCreateArgs>(
-      args: SelectSubset<T, PostinProfileCreateArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Create many PostinProfiles.
-     *     @param {PostinProfileCreateManyArgs} args - Arguments to create many PostinProfiles.
-     *     @example
-     *     // Create many PostinProfiles
-     *     const postinProfile = await prisma.postinProfile.createMany({
-     *       data: {
-     *         // ... provide data here
-     *       }
-     *     })
-     *     
-    **/
-    createMany<T extends PostinProfileCreateManyArgs>(
-      args?: SelectSubset<T, PostinProfileCreateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Delete a PostinProfile.
-     * @param {PostinProfileDeleteArgs} args - Arguments to delete one PostinProfile.
-     * @example
-     * // Delete one PostinProfile
-     * const PostinProfile = await prisma.postinProfile.delete({
-     *   where: {
-     *     // ... filter to delete one PostinProfile
-     *   }
-     * })
-     * 
-    **/
-    delete<T extends PostinProfileDeleteArgs>(
-      args: SelectSubset<T, PostinProfileDeleteArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Update one PostinProfile.
-     * @param {PostinProfileUpdateArgs} args - Arguments to update one PostinProfile.
-     * @example
-     * // Update one PostinProfile
-     * const postinProfile = await prisma.postinProfile.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    update<T extends PostinProfileUpdateArgs>(
-      args: SelectSubset<T, PostinProfileUpdateArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Delete zero or more PostinProfiles.
-     * @param {PostinProfileDeleteManyArgs} args - Arguments to filter PostinProfiles to delete.
-     * @example
-     * // Delete a few PostinProfiles
-     * const { count } = await prisma.postinProfile.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-    **/
-    deleteMany<T extends PostinProfileDeleteManyArgs>(
-      args?: SelectSubset<T, PostinProfileDeleteManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PostinProfiles.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many PostinProfiles
-     * const postinProfile = await prisma.postinProfile.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-    **/
-    updateMany<T extends PostinProfileUpdateManyArgs>(
-      args: SelectSubset<T, PostinProfileUpdateManyArgs>
-    ): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create or update one PostinProfile.
-     * @param {PostinProfileUpsertArgs} args - Arguments to update or create a PostinProfile.
-     * @example
-     * // Update or create a PostinProfile
-     * const postinProfile = await prisma.postinProfile.upsert({
-     *   create: {
-     *     // ... data to create a PostinProfile
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the PostinProfile we want to update
-     *   }
-     * })
-    **/
-    upsert<T extends PostinProfileUpsertArgs>(
-      args: SelectSubset<T, PostinProfileUpsertArgs>
-    ): Prisma__PostinProfileClient<PostinProfileGetPayload<T>>
-
-    /**
-     * Count the number of PostinProfiles.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileCountArgs} args - Arguments to filter PostinProfiles to count.
-     * @example
-     * // Count the number of PostinProfiles
-     * const count = await prisma.postinProfile.count({
-     *   where: {
-     *     // ... the filter for the PostinProfiles we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostinProfileCountArgs>(
-      args?: Subset<T, PostinProfileCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends _Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostinProfileCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a PostinProfile.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostinProfileAggregateArgs>(args: Subset<T, PostinProfileAggregateArgs>): Prisma.PrismaPromise<GetPostinProfileAggregateType<T>>
-
-    /**
-     * Group by PostinProfile.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostinProfileGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostinProfileGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostinProfileGroupByArgs['orderBy'] }
-        : { orderBy?: PostinProfileGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends TupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostinProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostinProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for PostinProfile.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export class Prisma__PostinProfileClient<T, Null = never> implements Prisma.PrismaPromise<T> {
-    private readonly _dmmf;
-    private readonly _queryType;
-    private readonly _rootField;
-    private readonly _clientMethod;
-    private readonly _args;
-    private readonly _dataPath;
-    private readonly _errorFormat;
-    private readonly _measurePerformance?;
-    private _isList;
-    private _callsite;
-    private _requestPromise?;
-    readonly [Symbol.toStringTag]: 'PrismaPromise';
-    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
-
-    post<T extends FBPostArgs= {}>(args?: Subset<T, FBPostArgs>): Prisma__FBPostClient<FBPostGetPayload<T> | Null>;
-
-    private get _document();
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
-  }
-
-
-
-  // Custom InputTypes
-
-  /**
-   * PostinProfile base type for findUnique actions
-   */
-  export type PostinProfileFindUniqueArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter, which PostinProfile to fetch.
-     */
-    where: PostinProfileWhereUniqueInput
-  }
-
-  /**
-   * PostinProfile findUnique
-   */
-  export interface PostinProfileFindUniqueArgs extends PostinProfileFindUniqueArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostinProfile findUniqueOrThrow
-   */
-  export type PostinProfileFindUniqueOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter, which PostinProfile to fetch.
-     */
-    where: PostinProfileWhereUniqueInput
-  }
-
-
-  /**
-   * PostinProfile base type for findFirst actions
-   */
-  export type PostinProfileFindFirstArgsBase = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter, which PostinProfile to fetch.
-     */
-    where?: PostinProfileWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinProfiles to fetch.
-     */
-    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostinProfiles.
-     */
-    cursor?: PostinProfileWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinProfiles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinProfiles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostinProfiles.
-     */
-    distinct?: Enumerable<PostinProfileScalarFieldEnum>
-  }
-
-  /**
-   * PostinProfile findFirst
-   */
-  export interface PostinProfileFindFirstArgs extends PostinProfileFindFirstArgsBase {
-   /**
-    * Throw an Error if query returns no results
-    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
-    */
-    rejectOnNotFound?: RejectOnNotFound
-  }
-      
-
-  /**
-   * PostinProfile findFirstOrThrow
-   */
-  export type PostinProfileFindFirstOrThrowArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter, which PostinProfile to fetch.
-     */
-    where?: PostinProfileWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinProfiles to fetch.
-     */
-    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PostinProfiles.
-     */
-    cursor?: PostinProfileWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinProfiles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinProfiles.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PostinProfiles.
-     */
-    distinct?: Enumerable<PostinProfileScalarFieldEnum>
-  }
-
-
-  /**
-   * PostinProfile findMany
-   */
-  export type PostinProfileFindManyArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter, which PostinProfiles to fetch.
-     */
-    where?: PostinProfileWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PostinProfiles to fetch.
-     */
-    orderBy?: Enumerable<PostinProfileOrderByWithRelationInput>
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing PostinProfiles.
-     */
-    cursor?: PostinProfileWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PostinProfiles from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PostinProfiles.
-     */
-    skip?: number
-    distinct?: Enumerable<PostinProfileScalarFieldEnum>
-  }
-
-
-  /**
-   * PostinProfile create
-   */
-  export type PostinProfileCreateArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * The data needed to create a PostinProfile.
-     */
-    data: XOR<PostinProfileCreateInput, PostinProfileUncheckedCreateInput>
-  }
-
-
-  /**
-   * PostinProfile createMany
-   */
-  export type PostinProfileCreateManyArgs = {
-    /**
-     * The data used to create many PostinProfiles.
-     */
-    data: Enumerable<PostinProfileCreateManyInput>
-    skipDuplicates?: boolean
-  }
-
-
-  /**
-   * PostinProfile update
-   */
-  export type PostinProfileUpdateArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * The data needed to update a PostinProfile.
-     */
-    data: XOR<PostinProfileUpdateInput, PostinProfileUncheckedUpdateInput>
-    /**
-     * Choose, which PostinProfile to update.
-     */
-    where: PostinProfileWhereUniqueInput
-  }
-
-
-  /**
-   * PostinProfile updateMany
-   */
-  export type PostinProfileUpdateManyArgs = {
-    /**
-     * The data used to update PostinProfiles.
-     */
-    data: XOR<PostinProfileUpdateManyMutationInput, PostinProfileUncheckedUpdateManyInput>
-    /**
-     * Filter which PostinProfiles to update
-     */
-    where?: PostinProfileWhereInput
-  }
-
-
-  /**
-   * PostinProfile upsert
-   */
-  export type PostinProfileUpsertArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * The filter to search for the PostinProfile to update in case it exists.
-     */
-    where: PostinProfileWhereUniqueInput
-    /**
-     * In case the PostinProfile found by the `where` argument doesn't exist, create a new PostinProfile with this data.
-     */
-    create: XOR<PostinProfileCreateInput, PostinProfileUncheckedCreateInput>
-    /**
-     * In case the PostinProfile was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PostinProfileUpdateInput, PostinProfileUncheckedUpdateInput>
-  }
-
-
-  /**
-   * PostinProfile delete
-   */
-  export type PostinProfileDeleteArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
-    /**
-     * Filter which PostinProfile to delete.
-     */
-    where: PostinProfileWhereUniqueInput
-  }
-
-
-  /**
-   * PostinProfile deleteMany
-   */
-  export type PostinProfileDeleteManyArgs = {
-    /**
-     * Filter which PostinProfiles to delete
-     */
-    where?: PostinProfileWhereInput
-  }
-
-
-  /**
-   * PostinProfile without action
-   */
-  export type PostinProfileArgs = {
-    /**
-     * Select specific fields to fetch from the PostinProfile
-     */
-    select?: PostinProfileSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: PostinProfileInclude | null
   }
 
 
@@ -36180,21 +34205,21 @@ export namespace Prisma {
 
   export type TriviaCategoryMinAggregateOutputType = {
     id: number | null
-    name: string | null
+    categoryName: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TriviaCategoryMaxAggregateOutputType = {
     id: number | null
-    name: string | null
+    categoryName: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TriviaCategoryCountAggregateOutputType = {
     id: number
-    name: number
+    categoryName: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -36211,21 +34236,21 @@ export namespace Prisma {
 
   export type TriviaCategoryMinAggregateInputType = {
     id?: true
-    name?: true
+    categoryName?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TriviaCategoryMaxAggregateInputType = {
     id?: true
-    name?: true
+    categoryName?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TriviaCategoryCountAggregateInputType = {
     id?: true
-    name?: true
+    categoryName?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -36320,7 +34345,7 @@ export namespace Prisma {
 
   export type TriviaCategoryGroupByOutputType = {
     id: number
-    name: string
+    categoryName: string
     createdAt: Date
     updatedAt: Date
     _count: TriviaCategoryCountAggregateOutputType | null
@@ -36346,7 +34371,7 @@ export namespace Prisma {
 
   export type TriviaCategorySelect = {
     id?: boolean
-    name?: boolean
+    categoryName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     triviaQuiz?: boolean | TriviaCategory$triviaQuizArgs
@@ -37182,38 +35207,38 @@ export namespace Prisma {
   export type TriviaQuizAvgAggregateOutputType = {
     id: number | null
     categoryId: number | null
-    answerId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
   export type TriviaQuizSumAggregateOutputType = {
     id: number | null
     categoryId: number | null
-    answerId: number | null
+    triviaAnswerChoiceId: number | null
   }
 
   export type TriviaQuizMinAggregateOutputType = {
     id: number | null
-    name: string | null
+    quizName: string | null
     categoryId: number | null
-    answerId: number | null
+    triviaAnswerChoiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TriviaQuizMaxAggregateOutputType = {
     id: number | null
-    name: string | null
+    quizName: string | null
     categoryId: number | null
-    answerId: number | null
+    triviaAnswerChoiceId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
   export type TriviaQuizCountAggregateOutputType = {
     id: number
-    name: number
+    quizName: number
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -37223,38 +35248,38 @@ export namespace Prisma {
   export type TriviaQuizAvgAggregateInputType = {
     id?: true
     categoryId?: true
-    answerId?: true
+    triviaAnswerChoiceId?: true
   }
 
   export type TriviaQuizSumAggregateInputType = {
     id?: true
     categoryId?: true
-    answerId?: true
+    triviaAnswerChoiceId?: true
   }
 
   export type TriviaQuizMinAggregateInputType = {
     id?: true
-    name?: true
+    quizName?: true
     categoryId?: true
-    answerId?: true
+    triviaAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TriviaQuizMaxAggregateInputType = {
     id?: true
-    name?: true
+    quizName?: true
     categoryId?: true
-    answerId?: true
+    triviaAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
   }
 
   export type TriviaQuizCountAggregateInputType = {
     id?: true
-    name?: true
+    quizName?: true
     categoryId?: true
-    answerId?: true
+    triviaAnswerChoiceId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -37349,9 +35374,9 @@ export namespace Prisma {
 
   export type TriviaQuizGroupByOutputType = {
     id: number
-    name: string
+    quizName: string
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt: Date
     updatedAt: Date
     _count: TriviaQuizCountAggregateOutputType | null
@@ -37377,22 +35402,24 @@ export namespace Prisma {
 
   export type TriviaQuizSelect = {
     id?: boolean
-    name?: boolean
+    quizName?: boolean
     category?: boolean | TriviaCategoryArgs
     categoryId?: boolean
-    answerId?: boolean
+    answer?: boolean | TriviaChoiceArgs
+    triviaAnswerChoiceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    triviaQuizChoice?: boolean | TriviaQuiz$triviaQuizChoiceArgs
     triviaRoundQuiz?: boolean | TriviaQuiz$triviaRoundQuizArgs
+    TriviaChoice?: boolean | TriviaQuiz$TriviaChoiceArgs
     _count?: boolean | TriviaQuizCountOutputTypeArgs
   }
 
 
   export type TriviaQuizInclude = {
     category?: boolean | TriviaCategoryArgs
-    triviaQuizChoice?: boolean | TriviaQuiz$triviaQuizChoiceArgs
+    answer?: boolean | TriviaChoiceArgs
     triviaRoundQuiz?: boolean | TriviaQuiz$triviaRoundQuizArgs
+    TriviaChoice?: boolean | TriviaQuiz$TriviaChoiceArgs
     _count?: boolean | TriviaQuizCountOutputTypeArgs
   }
 
@@ -37404,16 +35431,18 @@ export namespace Prisma {
     ? TriviaQuiz  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'category' ? TriviaCategoryGetPayload<S['include'][P]> :
-        P extends 'triviaQuizChoice' ? Array < TriviaQuizChoiceGetPayload<S['include'][P]>>  :
+        P extends 'answer' ? TriviaChoiceGetPayload<S['include'][P]> :
         P extends 'triviaRoundQuiz' ? Array < TriviaRoundQuizGetPayload<S['include'][P]>>  :
+        P extends 'TriviaChoice' ? Array < TriviaChoiceGetPayload<S['include'][P]>>  :
         P extends '_count' ? TriviaQuizCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TriviaQuizArgs | TriviaQuizFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'category' ? TriviaCategoryGetPayload<S['select'][P]> :
-        P extends 'triviaQuizChoice' ? Array < TriviaQuizChoiceGetPayload<S['select'][P]>>  :
+        P extends 'answer' ? TriviaChoiceGetPayload<S['select'][P]> :
         P extends 'triviaRoundQuiz' ? Array < TriviaRoundQuizGetPayload<S['select'][P]>>  :
+        P extends 'TriviaChoice' ? Array < TriviaChoiceGetPayload<S['select'][P]>>  :
         P extends '_count' ? TriviaQuizCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaQuiz ? TriviaQuiz[P] : never
   } 
       : TriviaQuiz
@@ -37788,9 +35817,11 @@ export namespace Prisma {
 
     category<T extends TriviaCategoryArgs= {}>(args?: Subset<T, TriviaCategoryArgs>): Prisma__TriviaCategoryClient<TriviaCategoryGetPayload<T> | Null>;
 
-    triviaQuizChoice<T extends TriviaQuiz$triviaQuizChoiceArgs= {}>(args?: Subset<T, TriviaQuiz$triviaQuizChoiceArgs>): Prisma.PrismaPromise<Array<TriviaQuizChoiceGetPayload<T>>| Null>;
+    answer<T extends TriviaChoiceArgs= {}>(args?: Subset<T, TriviaChoiceArgs>): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | Null>;
 
     triviaRoundQuiz<T extends TriviaQuiz$triviaRoundQuizArgs= {}>(args?: Subset<T, TriviaQuiz$triviaRoundQuizArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuizGetPayload<T>>| Null>;
+
+    TriviaChoice<T extends TriviaQuiz$TriviaChoiceArgs= {}>(args?: Subset<T, TriviaQuiz$TriviaChoiceArgs>): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -38148,27 +36179,6 @@ export namespace Prisma {
 
 
   /**
-   * TriviaQuiz.triviaQuizChoice
-   */
-  export type TriviaQuiz$triviaQuizChoiceArgs = {
-    /**
-     * Select specific fields to fetch from the TriviaQuizChoice
-     */
-    select?: TriviaQuizChoiceSelect | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: TriviaQuizChoiceInclude | null
-    where?: TriviaQuizChoiceWhereInput
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithRelationInput>
-    cursor?: TriviaQuizChoiceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Enumerable<TriviaQuizChoiceScalarFieldEnum>
-  }
-
-
-  /**
    * TriviaQuiz.triviaRoundQuiz
    */
   export type TriviaQuiz$triviaRoundQuizArgs = {
@@ -38190,6 +36200,27 @@ export namespace Prisma {
 
 
   /**
+   * TriviaQuiz.TriviaChoice
+   */
+  export type TriviaQuiz$TriviaChoiceArgs = {
+    /**
+     * Select specific fields to fetch from the TriviaChoice
+     */
+    select?: TriviaChoiceSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TriviaChoiceInclude | null
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
+    cursor?: TriviaChoiceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
+  }
+
+
+  /**
    * TriviaQuiz without action
    */
   export type TriviaQuizArgs = {
@@ -38206,47 +36237,47 @@ export namespace Prisma {
 
 
   /**
-   * Model TriviaQuizChoice
+   * Model TriviaChoice
    */
 
 
-  export type AggregateTriviaQuizChoice = {
-    _count: TriviaQuizChoiceCountAggregateOutputType | null
-    _avg: TriviaQuizChoiceAvgAggregateOutputType | null
-    _sum: TriviaQuizChoiceSumAggregateOutputType | null
-    _min: TriviaQuizChoiceMinAggregateOutputType | null
-    _max: TriviaQuizChoiceMaxAggregateOutputType | null
+  export type AggregateTriviaChoice = {
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
   }
 
-  export type TriviaQuizChoiceAvgAggregateOutputType = {
+  export type TriviaChoiceAvgAggregateOutputType = {
     id: number | null
     quizId: number | null
   }
 
-  export type TriviaQuizChoiceSumAggregateOutputType = {
+  export type TriviaChoiceSumAggregateOutputType = {
     id: number | null
     quizId: number | null
   }
 
-  export type TriviaQuizChoiceMinAggregateOutputType = {
+  export type TriviaChoiceMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    quizId: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type TriviaQuizChoiceMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
+    choiceName: string | null
     quizId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type TriviaQuizChoiceCountAggregateOutputType = {
+  export type TriviaChoiceMaxAggregateOutputType = {
+    id: number | null
+    choiceName: string | null
+    quizId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TriviaChoiceCountAggregateOutputType = {
     id: number
-    name: number
+    choiceName: number
     quizId: number
     createdAt: number
     updatedAt: number
@@ -38254,341 +36285,345 @@ export namespace Prisma {
   }
 
 
-  export type TriviaQuizChoiceAvgAggregateInputType = {
+  export type TriviaChoiceAvgAggregateInputType = {
     id?: true
     quizId?: true
   }
 
-  export type TriviaQuizChoiceSumAggregateInputType = {
+  export type TriviaChoiceSumAggregateInputType = {
     id?: true
     quizId?: true
   }
 
-  export type TriviaQuizChoiceMinAggregateInputType = {
+  export type TriviaChoiceMinAggregateInputType = {
     id?: true
-    name?: true
-    quizId?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type TriviaQuizChoiceMaxAggregateInputType = {
-    id?: true
-    name?: true
+    choiceName?: true
     quizId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type TriviaQuizChoiceCountAggregateInputType = {
+  export type TriviaChoiceMaxAggregateInputType = {
     id?: true
-    name?: true
+    choiceName?: true
+    quizId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TriviaChoiceCountAggregateInputType = {
+    id?: true
+    choiceName?: true
     quizId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type TriviaQuizChoiceAggregateArgs = {
+  export type TriviaChoiceAggregateArgs = {
     /**
-     * Filter which TriviaQuizChoice to aggregate.
+     * Filter which TriviaChoice to aggregate.
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TriviaQuizChoices to fetch.
+     * Determine the order of TriviaChoices to fetch.
      */
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TriviaQuizChoiceWhereUniqueInput
+    cursor?: TriviaChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TriviaQuizChoices from the position of the cursor.
+     * Take `±n` TriviaChoices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TriviaQuizChoices.
+     * Skip the first `n` TriviaChoices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TriviaQuizChoices
+     * Count returned TriviaChoices
     **/
-    _count?: true | TriviaQuizChoiceCountAggregateInputType
+    _count?: true | TriviaChoiceCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TriviaQuizChoiceAvgAggregateInputType
+    _avg?: TriviaChoiceAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TriviaQuizChoiceSumAggregateInputType
+    _sum?: TriviaChoiceSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TriviaQuizChoiceMinAggregateInputType
+    _min?: TriviaChoiceMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TriviaQuizChoiceMaxAggregateInputType
+    _max?: TriviaChoiceMaxAggregateInputType
   }
 
-  export type GetTriviaQuizChoiceAggregateType<T extends TriviaQuizChoiceAggregateArgs> = {
-        [P in keyof T & keyof AggregateTriviaQuizChoice]: P extends '_count' | 'count'
+  export type GetTriviaChoiceAggregateType<T extends TriviaChoiceAggregateArgs> = {
+        [P in keyof T & keyof AggregateTriviaChoice]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTriviaQuizChoice[P]>
-      : GetScalarType<T[P], AggregateTriviaQuizChoice[P]>
+        : GetScalarType<T[P], AggregateTriviaChoice[P]>
+      : GetScalarType<T[P], AggregateTriviaChoice[P]>
   }
 
 
 
 
-  export type TriviaQuizChoiceGroupByArgs = {
-    where?: TriviaQuizChoiceWhereInput
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithAggregationInput>
-    by: TriviaQuizChoiceScalarFieldEnum[]
-    having?: TriviaQuizChoiceScalarWhereWithAggregatesInput
+  export type TriviaChoiceGroupByArgs = {
+    where?: TriviaChoiceWhereInput
+    orderBy?: Enumerable<TriviaChoiceOrderByWithAggregationInput>
+    by: TriviaChoiceScalarFieldEnum[]
+    having?: TriviaChoiceScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TriviaQuizChoiceCountAggregateInputType | true
-    _avg?: TriviaQuizChoiceAvgAggregateInputType
-    _sum?: TriviaQuizChoiceSumAggregateInputType
-    _min?: TriviaQuizChoiceMinAggregateInputType
-    _max?: TriviaQuizChoiceMaxAggregateInputType
+    _count?: TriviaChoiceCountAggregateInputType | true
+    _avg?: TriviaChoiceAvgAggregateInputType
+    _sum?: TriviaChoiceSumAggregateInputType
+    _min?: TriviaChoiceMinAggregateInputType
+    _max?: TriviaChoiceMaxAggregateInputType
   }
 
 
-  export type TriviaQuizChoiceGroupByOutputType = {
+  export type TriviaChoiceGroupByOutputType = {
     id: number
-    name: string
-    quizId: number
+    choiceName: string
+    quizId: number | null
     createdAt: Date
     updatedAt: Date
-    _count: TriviaQuizChoiceCountAggregateOutputType | null
-    _avg: TriviaQuizChoiceAvgAggregateOutputType | null
-    _sum: TriviaQuizChoiceSumAggregateOutputType | null
-    _min: TriviaQuizChoiceMinAggregateOutputType | null
-    _max: TriviaQuizChoiceMaxAggregateOutputType | null
+    _count: TriviaChoiceCountAggregateOutputType | null
+    _avg: TriviaChoiceAvgAggregateOutputType | null
+    _sum: TriviaChoiceSumAggregateOutputType | null
+    _min: TriviaChoiceMinAggregateOutputType | null
+    _max: TriviaChoiceMaxAggregateOutputType | null
   }
 
-  type GetTriviaQuizChoiceGroupByPayload<T extends TriviaQuizChoiceGroupByArgs> = Prisma.PrismaPromise<
+  type GetTriviaChoiceGroupByPayload<T extends TriviaChoiceGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<TriviaQuizChoiceGroupByOutputType, T['by']> &
+      PickArray<TriviaChoiceGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TriviaQuizChoiceGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof TriviaChoiceGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TriviaQuizChoiceGroupByOutputType[P]>
-            : GetScalarType<T[P], TriviaQuizChoiceGroupByOutputType[P]>
+              : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
+            : GetScalarType<T[P], TriviaChoiceGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TriviaQuizChoiceSelect = {
+  export type TriviaChoiceSelect = {
     id?: boolean
-    name?: boolean
+    choiceName?: boolean
     quiz?: boolean | TriviaQuizArgs
     quizId?: boolean
+    triviaQuizAnswer?: boolean | TriviaQuizArgs
     createdAt?: boolean
     updatedAt?: boolean
-    triviaRoundQuizChoice?: boolean | TriviaQuizChoice$triviaRoundQuizChoiceArgs
-    _count?: boolean | TriviaQuizChoiceCountOutputTypeArgs
+    triviaRoundQuizChoice?: boolean | TriviaChoice$triviaRoundQuizChoiceArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
   }
 
 
-  export type TriviaQuizChoiceInclude = {
+  export type TriviaChoiceInclude = {
     quiz?: boolean | TriviaQuizArgs
-    triviaRoundQuizChoice?: boolean | TriviaQuizChoice$triviaRoundQuizChoiceArgs
-    _count?: boolean | TriviaQuizChoiceCountOutputTypeArgs
+    triviaQuizAnswer?: boolean | TriviaQuizArgs
+    triviaRoundQuizChoice?: boolean | TriviaChoice$triviaRoundQuizChoiceArgs
+    _count?: boolean | TriviaChoiceCountOutputTypeArgs
   }
 
-  export type TriviaQuizChoiceGetPayload<S extends boolean | null | undefined | TriviaQuizChoiceArgs> =
+  export type TriviaChoiceGetPayload<S extends boolean | null | undefined | TriviaChoiceArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? TriviaQuizChoice :
+    S extends true ? TriviaChoice :
     S extends undefined ? never :
-    S extends { include: any } & (TriviaQuizChoiceArgs | TriviaQuizChoiceFindManyArgs)
-    ? TriviaQuizChoice  & {
+    S extends { include: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
+    ? TriviaChoice  & {
     [P in TruthyKeys<S['include']>]:
-        P extends 'quiz' ? TriviaQuizGetPayload<S['include'][P]> :
+        P extends 'quiz' ? TriviaQuizGetPayload<S['include'][P]> | null :
+        P extends 'triviaQuizAnswer' ? TriviaQuizGetPayload<S['include'][P]> | null :
         P extends 'triviaRoundQuizChoice' ? Array < TriviaRoundQuizChoiceGetPayload<S['include'][P]>>  :
-        P extends '_count' ? TriviaQuizChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['include'][P]> :  never
   } 
-    : S extends { select: any } & (TriviaQuizChoiceArgs | TriviaQuizChoiceFindManyArgs)
+    : S extends { select: any } & (TriviaChoiceArgs | TriviaChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-        P extends 'quiz' ? TriviaQuizGetPayload<S['select'][P]> :
+        P extends 'quiz' ? TriviaQuizGetPayload<S['select'][P]> | null :
+        P extends 'triviaQuizAnswer' ? TriviaQuizGetPayload<S['select'][P]> | null :
         P extends 'triviaRoundQuizChoice' ? Array < TriviaRoundQuizChoiceGetPayload<S['select'][P]>>  :
-        P extends '_count' ? TriviaQuizChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaQuizChoice ? TriviaQuizChoice[P] : never
+        P extends '_count' ? TriviaChoiceCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof TriviaChoice ? TriviaChoice[P] : never
   } 
-      : TriviaQuizChoice
+      : TriviaChoice
 
 
-  type TriviaQuizChoiceCountArgs = 
-    Omit<TriviaQuizChoiceFindManyArgs, 'select' | 'include'> & {
-      select?: TriviaQuizChoiceCountAggregateInputType | true
+  type TriviaChoiceCountArgs = 
+    Omit<TriviaChoiceFindManyArgs, 'select' | 'include'> & {
+      select?: TriviaChoiceCountAggregateInputType | true
     }
 
-  export interface TriviaQuizChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface TriviaChoiceDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one TriviaQuizChoice that matches the filter.
-     * @param {TriviaQuizChoiceFindUniqueArgs} args - Arguments to find a TriviaQuizChoice
+     * Find zero or one TriviaChoice that matches the filter.
+     * @param {TriviaChoiceFindUniqueArgs} args - Arguments to find a TriviaChoice
      * @example
-     * // Get one TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.findUnique({
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends TriviaQuizChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, TriviaQuizChoiceFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaQuizChoice'> extends True ? Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>> : Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T> | null, null>
+    findUnique<T extends TriviaChoiceFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, TriviaChoiceFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
 
     /**
-     * Find one TriviaQuizChoice that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one TriviaChoice that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {TriviaQuizChoiceFindUniqueOrThrowArgs} args - Arguments to find a TriviaQuizChoice
+     * @param {TriviaChoiceFindUniqueOrThrowArgs} args - Arguments to find a TriviaChoice
      * @example
-     * // Get one TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.findUniqueOrThrow({
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends TriviaQuizChoiceFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, TriviaQuizChoiceFindUniqueOrThrowArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    findUniqueOrThrow<T extends TriviaChoiceFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindUniqueOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Find the first TriviaQuizChoice that matches the filter.
+     * Find the first TriviaChoice that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceFindFirstArgs} args - Arguments to find a TriviaQuizChoice
+     * @param {TriviaChoiceFindFirstArgs} args - Arguments to find a TriviaChoice
      * @example
-     * // Get one TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.findFirst({
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends TriviaQuizChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, TriviaQuizChoiceFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaQuizChoice'> extends True ? Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>> : Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T> | null, null>
+    findFirst<T extends TriviaChoiceFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'TriviaChoice'> extends True ? Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>> : Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | null, null>
 
     /**
-     * Find the first TriviaQuizChoice that matches the filter or
+     * Find the first TriviaChoice that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceFindFirstOrThrowArgs} args - Arguments to find a TriviaQuizChoice
+     * @param {TriviaChoiceFindFirstOrThrowArgs} args - Arguments to find a TriviaChoice
      * @example
-     * // Get one TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.findFirstOrThrow({
+     * // Get one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends TriviaQuizChoiceFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, TriviaQuizChoiceFindFirstOrThrowArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    findFirstOrThrow<T extends TriviaChoiceFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindFirstOrThrowArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Find zero or more TriviaQuizChoices that matches the filter.
+     * Find zero or more TriviaChoices that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {TriviaChoiceFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TriviaQuizChoices
-     * const triviaQuizChoices = await prisma.triviaQuizChoice.findMany()
+     * // Get all TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany()
      * 
-     * // Get first 10 TriviaQuizChoices
-     * const triviaQuizChoices = await prisma.triviaQuizChoice.findMany({ take: 10 })
+     * // Get first 10 TriviaChoices
+     * const triviaChoices = await prisma.triviaChoice.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const triviaQuizChoiceWithIdOnly = await prisma.triviaQuizChoice.findMany({ select: { id: true } })
+     * const triviaChoiceWithIdOnly = await prisma.triviaChoice.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends TriviaQuizChoiceFindManyArgs>(
-      args?: SelectSubset<T, TriviaQuizChoiceFindManyArgs>
-    ): Prisma.PrismaPromise<Array<TriviaQuizChoiceGetPayload<T>>>
+    findMany<T extends TriviaChoiceFindManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceFindManyArgs>
+    ): Prisma.PrismaPromise<Array<TriviaChoiceGetPayload<T>>>
 
     /**
-     * Create a TriviaQuizChoice.
-     * @param {TriviaQuizChoiceCreateArgs} args - Arguments to create a TriviaQuizChoice.
+     * Create a TriviaChoice.
+     * @param {TriviaChoiceCreateArgs} args - Arguments to create a TriviaChoice.
      * @example
-     * // Create one TriviaQuizChoice
-     * const TriviaQuizChoice = await prisma.triviaQuizChoice.create({
+     * // Create one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.create({
      *   data: {
-     *     // ... data to create a TriviaQuizChoice
+     *     // ... data to create a TriviaChoice
      *   }
      * })
      * 
     **/
-    create<T extends TriviaQuizChoiceCreateArgs>(
-      args: SelectSubset<T, TriviaQuizChoiceCreateArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    create<T extends TriviaChoiceCreateArgs>(
+      args: SelectSubset<T, TriviaChoiceCreateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Create many TriviaQuizChoices.
-     *     @param {TriviaQuizChoiceCreateManyArgs} args - Arguments to create many TriviaQuizChoices.
+     * Create many TriviaChoices.
+     *     @param {TriviaChoiceCreateManyArgs} args - Arguments to create many TriviaChoices.
      *     @example
-     *     // Create many TriviaQuizChoices
-     *     const triviaQuizChoice = await prisma.triviaQuizChoice.createMany({
+     *     // Create many TriviaChoices
+     *     const triviaChoice = await prisma.triviaChoice.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends TriviaQuizChoiceCreateManyArgs>(
-      args?: SelectSubset<T, TriviaQuizChoiceCreateManyArgs>
+    createMany<T extends TriviaChoiceCreateManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a TriviaQuizChoice.
-     * @param {TriviaQuizChoiceDeleteArgs} args - Arguments to delete one TriviaQuizChoice.
+     * Delete a TriviaChoice.
+     * @param {TriviaChoiceDeleteArgs} args - Arguments to delete one TriviaChoice.
      * @example
-     * // Delete one TriviaQuizChoice
-     * const TriviaQuizChoice = await prisma.triviaQuizChoice.delete({
+     * // Delete one TriviaChoice
+     * const TriviaChoice = await prisma.triviaChoice.delete({
      *   where: {
-     *     // ... filter to delete one TriviaQuizChoice
+     *     // ... filter to delete one TriviaChoice
      *   }
      * })
      * 
     **/
-    delete<T extends TriviaQuizChoiceDeleteArgs>(
-      args: SelectSubset<T, TriviaQuizChoiceDeleteArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    delete<T extends TriviaChoiceDeleteArgs>(
+      args: SelectSubset<T, TriviaChoiceDeleteArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Update one TriviaQuizChoice.
-     * @param {TriviaQuizChoiceUpdateArgs} args - Arguments to update one TriviaQuizChoice.
+     * Update one TriviaChoice.
+     * @param {TriviaChoiceUpdateArgs} args - Arguments to update one TriviaChoice.
      * @example
-     * // Update one TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.update({
+     * // Update one TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -38598,34 +36633,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends TriviaQuizChoiceUpdateArgs>(
-      args: SelectSubset<T, TriviaQuizChoiceUpdateArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    update<T extends TriviaChoiceUpdateArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Delete zero or more TriviaQuizChoices.
-     * @param {TriviaQuizChoiceDeleteManyArgs} args - Arguments to filter TriviaQuizChoices to delete.
+     * Delete zero or more TriviaChoices.
+     * @param {TriviaChoiceDeleteManyArgs} args - Arguments to filter TriviaChoices to delete.
      * @example
-     * // Delete a few TriviaQuizChoices
-     * const { count } = await prisma.triviaQuizChoice.deleteMany({
+     * // Delete a few TriviaChoices
+     * const { count } = await prisma.triviaChoice.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends TriviaQuizChoiceDeleteManyArgs>(
-      args?: SelectSubset<T, TriviaQuizChoiceDeleteManyArgs>
+    deleteMany<T extends TriviaChoiceDeleteManyArgs>(
+      args?: SelectSubset<T, TriviaChoiceDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TriviaQuizChoices.
+     * Update zero or more TriviaChoices.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {TriviaChoiceUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TriviaQuizChoices
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.updateMany({
+     * // Update many TriviaChoices
+     * const triviaChoice = await prisma.triviaChoice.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -38635,59 +36670,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends TriviaQuizChoiceUpdateManyArgs>(
-      args: SelectSubset<T, TriviaQuizChoiceUpdateManyArgs>
+    updateMany<T extends TriviaChoiceUpdateManyArgs>(
+      args: SelectSubset<T, TriviaChoiceUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one TriviaQuizChoice.
-     * @param {TriviaQuizChoiceUpsertArgs} args - Arguments to update or create a TriviaQuizChoice.
+     * Create or update one TriviaChoice.
+     * @param {TriviaChoiceUpsertArgs} args - Arguments to update or create a TriviaChoice.
      * @example
-     * // Update or create a TriviaQuizChoice
-     * const triviaQuizChoice = await prisma.triviaQuizChoice.upsert({
+     * // Update or create a TriviaChoice
+     * const triviaChoice = await prisma.triviaChoice.upsert({
      *   create: {
-     *     // ... data to create a TriviaQuizChoice
+     *     // ... data to create a TriviaChoice
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TriviaQuizChoice we want to update
+     *     // ... the filter for the TriviaChoice we want to update
      *   }
      * })
     **/
-    upsert<T extends TriviaQuizChoiceUpsertArgs>(
-      args: SelectSubset<T, TriviaQuizChoiceUpsertArgs>
-    ): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T>>
+    upsert<T extends TriviaChoiceUpsertArgs>(
+      args: SelectSubset<T, TriviaChoiceUpsertArgs>
+    ): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T>>
 
     /**
-     * Count the number of TriviaQuizChoices.
+     * Count the number of TriviaChoices.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceCountArgs} args - Arguments to filter TriviaQuizChoices to count.
+     * @param {TriviaChoiceCountArgs} args - Arguments to filter TriviaChoices to count.
      * @example
-     * // Count the number of TriviaQuizChoices
-     * const count = await prisma.triviaQuizChoice.count({
+     * // Count the number of TriviaChoices
+     * const count = await prisma.triviaChoice.count({
      *   where: {
-     *     // ... the filter for the TriviaQuizChoices we want to count
+     *     // ... the filter for the TriviaChoices we want to count
      *   }
      * })
     **/
-    count<T extends TriviaQuizChoiceCountArgs>(
-      args?: Subset<T, TriviaQuizChoiceCountArgs>,
+    count<T extends TriviaChoiceCountArgs>(
+      args?: Subset<T, TriviaChoiceCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TriviaQuizChoiceCountAggregateOutputType>
+          : GetScalarType<T['select'], TriviaChoiceCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TriviaQuizChoice.
+     * Allows you to perform aggregations operations on a TriviaChoice.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {TriviaChoiceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -38707,13 +36742,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TriviaQuizChoiceAggregateArgs>(args: Subset<T, TriviaQuizChoiceAggregateArgs>): Prisma.PrismaPromise<GetTriviaQuizChoiceAggregateType<T>>
+    aggregate<T extends TriviaChoiceAggregateArgs>(args: Subset<T, TriviaChoiceAggregateArgs>): Prisma.PrismaPromise<GetTriviaChoiceAggregateType<T>>
 
     /**
-     * Group by TriviaQuizChoice.
+     * Group by TriviaChoice.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TriviaQuizChoiceGroupByArgs} args - Group by arguments.
+     * @param {TriviaChoiceGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -38728,14 +36763,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TriviaQuizChoiceGroupByArgs,
+      T extends TriviaChoiceGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TriviaQuizChoiceGroupByArgs['orderBy'] }
-        : { orderBy?: TriviaQuizChoiceGroupByArgs['orderBy'] },
+        ? { orderBy: TriviaChoiceGroupByArgs['orderBy'] }
+        : { orderBy?: TriviaChoiceGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -38784,17 +36819,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TriviaQuizChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaQuizChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, TriviaChoiceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTriviaChoiceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TriviaQuizChoice.
+   * The delegate class that acts as a "Promise-like" for TriviaChoice.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__TriviaQuizChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__TriviaChoiceClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -38811,7 +36846,9 @@ export namespace Prisma {
 
     quiz<T extends TriviaQuizArgs= {}>(args?: Subset<T, TriviaQuizArgs>): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | Null>;
 
-    triviaRoundQuizChoice<T extends TriviaQuizChoice$triviaRoundQuizChoiceArgs= {}>(args?: Subset<T, TriviaQuizChoice$triviaRoundQuizChoiceArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuizChoiceGetPayload<T>>| Null>;
+    triviaQuizAnswer<T extends TriviaQuizArgs= {}>(args?: Subset<T, TriviaQuizArgs>): Prisma__TriviaQuizClient<TriviaQuizGetPayload<T> | Null>;
+
+    triviaRoundQuizChoice<T extends TriviaChoice$triviaRoundQuizChoiceArgs= {}>(args?: Subset<T, TriviaChoice$triviaRoundQuizChoiceArgs>): Prisma.PrismaPromise<Array<TriviaRoundQuizChoiceGetPayload<T>>| Null>;
 
     private get _document();
     /**
@@ -38841,27 +36878,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * TriviaQuizChoice base type for findUnique actions
+   * TriviaChoice base type for findUnique actions
    */
-  export type TriviaQuizChoiceFindUniqueArgsBase = {
+  export type TriviaChoiceFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter, which TriviaQuizChoice to fetch.
+     * Filter, which TriviaChoice to fetch.
      */
-    where: TriviaQuizChoiceWhereUniqueInput
+    where: TriviaChoiceWhereUniqueInput
   }
 
   /**
-   * TriviaQuizChoice findUnique
+   * TriviaChoice findUnique
    */
-  export interface TriviaQuizChoiceFindUniqueArgs extends TriviaQuizChoiceFindUniqueArgsBase {
+  export interface TriviaChoiceFindUniqueArgs extends TriviaChoiceFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -38871,76 +36908,76 @@ export namespace Prisma {
       
 
   /**
-   * TriviaQuizChoice findUniqueOrThrow
+   * TriviaChoice findUniqueOrThrow
    */
-  export type TriviaQuizChoiceFindUniqueOrThrowArgs = {
+  export type TriviaChoiceFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter, which TriviaQuizChoice to fetch.
+     * Filter, which TriviaChoice to fetch.
      */
-    where: TriviaQuizChoiceWhereUniqueInput
+    where: TriviaChoiceWhereUniqueInput
   }
 
 
   /**
-   * TriviaQuizChoice base type for findFirst actions
+   * TriviaChoice base type for findFirst actions
    */
-  export type TriviaQuizChoiceFindFirstArgsBase = {
+  export type TriviaChoiceFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter, which TriviaQuizChoice to fetch.
+     * Filter, which TriviaChoice to fetch.
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TriviaQuizChoices to fetch.
+     * Determine the order of TriviaChoices to fetch.
      */
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TriviaQuizChoices.
+     * Sets the position for searching for TriviaChoices.
      */
-    cursor?: TriviaQuizChoiceWhereUniqueInput
+    cursor?: TriviaChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TriviaQuizChoices from the position of the cursor.
+     * Take `±n` TriviaChoices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TriviaQuizChoices.
+     * Skip the first `n` TriviaChoices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TriviaQuizChoices.
+     * Filter by unique combinations of TriviaChoices.
      */
-    distinct?: Enumerable<TriviaQuizChoiceScalarFieldEnum>
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
   }
 
   /**
-   * TriviaQuizChoice findFirst
+   * TriviaChoice findFirst
    */
-  export interface TriviaQuizChoiceFindFirstArgs extends TriviaQuizChoiceFindFirstArgsBase {
+  export interface TriviaChoiceFindFirstArgs extends TriviaChoiceFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -38950,228 +36987,228 @@ export namespace Prisma {
       
 
   /**
-   * TriviaQuizChoice findFirstOrThrow
+   * TriviaChoice findFirstOrThrow
    */
-  export type TriviaQuizChoiceFindFirstOrThrowArgs = {
+  export type TriviaChoiceFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter, which TriviaQuizChoice to fetch.
+     * Filter, which TriviaChoice to fetch.
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TriviaQuizChoices to fetch.
+     * Determine the order of TriviaChoices to fetch.
      */
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TriviaQuizChoices.
+     * Sets the position for searching for TriviaChoices.
      */
-    cursor?: TriviaQuizChoiceWhereUniqueInput
+    cursor?: TriviaChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TriviaQuizChoices from the position of the cursor.
+     * Take `±n` TriviaChoices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TriviaQuizChoices.
+     * Skip the first `n` TriviaChoices.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TriviaQuizChoices.
+     * Filter by unique combinations of TriviaChoices.
      */
-    distinct?: Enumerable<TriviaQuizChoiceScalarFieldEnum>
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
   }
 
 
   /**
-   * TriviaQuizChoice findMany
+   * TriviaChoice findMany
    */
-  export type TriviaQuizChoiceFindManyArgs = {
+  export type TriviaChoiceFindManyArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter, which TriviaQuizChoices to fetch.
+     * Filter, which TriviaChoices to fetch.
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TriviaQuizChoices to fetch.
+     * Determine the order of TriviaChoices to fetch.
      */
-    orderBy?: Enumerable<TriviaQuizChoiceOrderByWithRelationInput>
+    orderBy?: Enumerable<TriviaChoiceOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TriviaQuizChoices.
+     * Sets the position for listing TriviaChoices.
      */
-    cursor?: TriviaQuizChoiceWhereUniqueInput
+    cursor?: TriviaChoiceWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TriviaQuizChoices from the position of the cursor.
+     * Take `±n` TriviaChoices from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TriviaQuizChoices.
+     * Skip the first `n` TriviaChoices.
      */
     skip?: number
-    distinct?: Enumerable<TriviaQuizChoiceScalarFieldEnum>
+    distinct?: Enumerable<TriviaChoiceScalarFieldEnum>
   }
 
 
   /**
-   * TriviaQuizChoice create
+   * TriviaChoice create
    */
-  export type TriviaQuizChoiceCreateArgs = {
+  export type TriviaChoiceCreateArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * The data needed to create a TriviaQuizChoice.
+     * The data needed to create a TriviaChoice.
      */
-    data: XOR<TriviaQuizChoiceCreateInput, TriviaQuizChoiceUncheckedCreateInput>
+    data: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
   }
 
 
   /**
-   * TriviaQuizChoice createMany
+   * TriviaChoice createMany
    */
-  export type TriviaQuizChoiceCreateManyArgs = {
+  export type TriviaChoiceCreateManyArgs = {
     /**
-     * The data used to create many TriviaQuizChoices.
+     * The data used to create many TriviaChoices.
      */
-    data: Enumerable<TriviaQuizChoiceCreateManyInput>
+    data: Enumerable<TriviaChoiceCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * TriviaQuizChoice update
+   * TriviaChoice update
    */
-  export type TriviaQuizChoiceUpdateArgs = {
+  export type TriviaChoiceUpdateArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * The data needed to update a TriviaQuizChoice.
+     * The data needed to update a TriviaChoice.
      */
-    data: XOR<TriviaQuizChoiceUpdateInput, TriviaQuizChoiceUncheckedUpdateInput>
+    data: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
     /**
-     * Choose, which TriviaQuizChoice to update.
+     * Choose, which TriviaChoice to update.
      */
-    where: TriviaQuizChoiceWhereUniqueInput
+    where: TriviaChoiceWhereUniqueInput
   }
 
 
   /**
-   * TriviaQuizChoice updateMany
+   * TriviaChoice updateMany
    */
-  export type TriviaQuizChoiceUpdateManyArgs = {
+  export type TriviaChoiceUpdateManyArgs = {
     /**
-     * The data used to update TriviaQuizChoices.
+     * The data used to update TriviaChoices.
      */
-    data: XOR<TriviaQuizChoiceUpdateManyMutationInput, TriviaQuizChoiceUncheckedUpdateManyInput>
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyInput>
     /**
-     * Filter which TriviaQuizChoices to update
+     * Filter which TriviaChoices to update
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
   }
 
 
   /**
-   * TriviaQuizChoice upsert
+   * TriviaChoice upsert
    */
-  export type TriviaQuizChoiceUpsertArgs = {
+  export type TriviaChoiceUpsertArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * The filter to search for the TriviaQuizChoice to update in case it exists.
+     * The filter to search for the TriviaChoice to update in case it exists.
      */
-    where: TriviaQuizChoiceWhereUniqueInput
+    where: TriviaChoiceWhereUniqueInput
     /**
-     * In case the TriviaQuizChoice found by the `where` argument doesn't exist, create a new TriviaQuizChoice with this data.
+     * In case the TriviaChoice found by the `where` argument doesn't exist, create a new TriviaChoice with this data.
      */
-    create: XOR<TriviaQuizChoiceCreateInput, TriviaQuizChoiceUncheckedCreateInput>
+    create: XOR<TriviaChoiceCreateInput, TriviaChoiceUncheckedCreateInput>
     /**
-     * In case the TriviaQuizChoice was found with the provided `where` argument, update it with this data.
+     * In case the TriviaChoice was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TriviaQuizChoiceUpdateInput, TriviaQuizChoiceUncheckedUpdateInput>
+    update: XOR<TriviaChoiceUpdateInput, TriviaChoiceUncheckedUpdateInput>
   }
 
 
   /**
-   * TriviaQuizChoice delete
+   * TriviaChoice delete
    */
-  export type TriviaQuizChoiceDeleteArgs = {
+  export type TriviaChoiceDeleteArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
     /**
-     * Filter which TriviaQuizChoice to delete.
+     * Filter which TriviaChoice to delete.
      */
-    where: TriviaQuizChoiceWhereUniqueInput
+    where: TriviaChoiceWhereUniqueInput
   }
 
 
   /**
-   * TriviaQuizChoice deleteMany
+   * TriviaChoice deleteMany
    */
-  export type TriviaQuizChoiceDeleteManyArgs = {
+  export type TriviaChoiceDeleteManyArgs = {
     /**
-     * Filter which TriviaQuizChoices to delete
+     * Filter which TriviaChoices to delete
      */
-    where?: TriviaQuizChoiceWhereInput
+    where?: TriviaChoiceWhereInput
   }
 
 
   /**
-   * TriviaQuizChoice.triviaRoundQuizChoice
+   * TriviaChoice.triviaRoundQuizChoice
    */
-  export type TriviaQuizChoice$triviaRoundQuizChoiceArgs = {
+  export type TriviaChoice$triviaRoundQuizChoiceArgs = {
     /**
      * Select specific fields to fetch from the TriviaRoundQuizChoice
      */
@@ -39190,17 +37227,17 @@ export namespace Prisma {
 
 
   /**
-   * TriviaQuizChoice without action
+   * TriviaChoice without action
    */
-  export type TriviaQuizChoiceArgs = {
+  export type TriviaChoiceArgs = {
     /**
-     * Select specific fields to fetch from the TriviaQuizChoice
+     * Select specific fields to fetch from the TriviaChoice
      */
-    select?: TriviaQuizChoiceSelect | null
+    select?: TriviaChoiceSelect | null
     /**
      * Choose, which related nodes to fetch as well.
      */
-    include?: TriviaQuizChoiceInclude | null
+    include?: TriviaChoiceInclude | null
   }
 
 
@@ -39232,6 +37269,7 @@ export namespace Prisma {
 
   export type TriviaRoundMinAggregateOutputType = {
     id: number | null
+    name: string | null
     score: number | null
     categoryId: number | null
     createdAt: Date | null
@@ -39240,6 +37278,7 @@ export namespace Prisma {
 
   export type TriviaRoundMaxAggregateOutputType = {
     id: number | null
+    name: string | null
     score: number | null
     categoryId: number | null
     createdAt: Date | null
@@ -39248,6 +37287,7 @@ export namespace Prisma {
 
   export type TriviaRoundCountAggregateOutputType = {
     id: number
+    name: number
     score: number
     categoryId: number
     createdAt: number
@@ -39270,6 +37310,7 @@ export namespace Prisma {
 
   export type TriviaRoundMinAggregateInputType = {
     id?: true
+    name?: true
     score?: true
     categoryId?: true
     createdAt?: true
@@ -39278,6 +37319,7 @@ export namespace Prisma {
 
   export type TriviaRoundMaxAggregateInputType = {
     id?: true
+    name?: true
     score?: true
     categoryId?: true
     createdAt?: true
@@ -39286,6 +37328,7 @@ export namespace Prisma {
 
   export type TriviaRoundCountAggregateInputType = {
     id?: true
+    name?: true
     score?: true
     categoryId?: true
     createdAt?: true
@@ -39382,6 +37425,7 @@ export namespace Prisma {
 
   export type TriviaRoundGroupByOutputType = {
     id: number
+    name: string | null
     score: number
     categoryId: number
     createdAt: Date
@@ -39409,6 +37453,7 @@ export namespace Prisma {
 
   export type TriviaRoundSelect = {
     id?: boolean
+    name?: boolean
     score?: boolean
     category?: boolean | TriviaCategoryArgs
     categoryId?: boolean
@@ -41437,7 +39482,7 @@ export namespace Prisma {
     id?: boolean
     roundQuiz?: boolean | TriviaRoundQuizArgs
     roundQuizId?: boolean
-    roundQuizChoice?: boolean | TriviaQuizChoiceArgs
+    roundQuizChoice?: boolean | TriviaChoiceArgs
     quizChoiceId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -41446,7 +39491,7 @@ export namespace Prisma {
 
   export type TriviaRoundQuizChoiceInclude = {
     roundQuiz?: boolean | TriviaRoundQuizArgs
-    roundQuizChoice?: boolean | TriviaQuizChoiceArgs
+    roundQuizChoice?: boolean | TriviaChoiceArgs
   }
 
   export type TriviaRoundQuizChoiceGetPayload<S extends boolean | null | undefined | TriviaRoundQuizChoiceArgs> =
@@ -41457,13 +39502,13 @@ export namespace Prisma {
     ? TriviaRoundQuizChoice  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'roundQuiz' ? TriviaRoundQuizGetPayload<S['include'][P]> :
-        P extends 'roundQuizChoice' ? TriviaQuizChoiceGetPayload<S['include'][P]> :  never
+        P extends 'roundQuizChoice' ? TriviaChoiceGetPayload<S['include'][P]> :  never
   } 
     : S extends { select: any } & (TriviaRoundQuizChoiceArgs | TriviaRoundQuizChoiceFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'roundQuiz' ? TriviaRoundQuizGetPayload<S['select'][P]> :
-        P extends 'roundQuizChoice' ? TriviaQuizChoiceGetPayload<S['select'][P]> :  P extends keyof TriviaRoundQuizChoice ? TriviaRoundQuizChoice[P] : never
+        P extends 'roundQuizChoice' ? TriviaChoiceGetPayload<S['select'][P]> :  P extends keyof TriviaRoundQuizChoice ? TriviaRoundQuizChoice[P] : never
   } 
       : TriviaRoundQuizChoice
 
@@ -41837,7 +39882,7 @@ export namespace Prisma {
 
     roundQuiz<T extends TriviaRoundQuizArgs= {}>(args?: Subset<T, TriviaRoundQuizArgs>): Prisma__TriviaRoundQuizClient<TriviaRoundQuizGetPayload<T> | Null>;
 
-    roundQuizChoice<T extends TriviaQuizChoiceArgs= {}>(args?: Subset<T, TriviaQuizChoiceArgs>): Prisma__TriviaQuizChoiceClient<TriviaQuizChoiceGetPayload<T> | Null>;
+    roundQuizChoice<T extends TriviaChoiceArgs= {}>(args?: Subset<T, TriviaChoiceArgs>): Prisma__TriviaChoiceClient<TriviaChoiceGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -67754,9 +65799,11 @@ export namespace Prisma {
 
   export const FBPostScalarFieldEnum: {
     id: 'id',
-    userId: 'userId',
+    postByUserId: 'postByUserId',
+    postInUserId: 'postInUserId',
     postDetail: 'postDetail',
     image: 'image',
+    groupId: 'groupId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -67981,27 +66028,6 @@ export namespace Prisma {
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
-  export const PostinGroupScalarFieldEnum: {
-    id: 'id',
-    groupId: 'groupId',
-    postId: 'postId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type PostinGroupScalarFieldEnum = (typeof PostinGroupScalarFieldEnum)[keyof typeof PostinGroupScalarFieldEnum]
-
-
-  export const PostinProfileScalarFieldEnum: {
-    id: 'id',
-    postId: 'postId',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type PostinProfileScalarFieldEnum = (typeof PostinProfileScalarFieldEnum)[keyof typeof PostinProfileScalarFieldEnum]
-
-
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -68088,7 +66114,7 @@ export namespace Prisma {
 
   export const TriviaCategoryScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    categoryName: 'categoryName',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -68096,22 +66122,22 @@ export namespace Prisma {
   export type TriviaCategoryScalarFieldEnum = (typeof TriviaCategoryScalarFieldEnum)[keyof typeof TriviaCategoryScalarFieldEnum]
 
 
-  export const TriviaQuizChoiceScalarFieldEnum: {
+  export const TriviaChoiceScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    choiceName: 'choiceName',
     quizId: 'quizId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type TriviaQuizChoiceScalarFieldEnum = (typeof TriviaQuizChoiceScalarFieldEnum)[keyof typeof TriviaQuizChoiceScalarFieldEnum]
+  export type TriviaChoiceScalarFieldEnum = (typeof TriviaChoiceScalarFieldEnum)[keyof typeof TriviaChoiceScalarFieldEnum]
 
 
   export const TriviaQuizScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    quizName: 'quizName',
     categoryId: 'categoryId',
-    answerId: 'answerId',
+    triviaAnswerChoiceId: 'triviaAnswerChoiceId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -68144,6 +66170,7 @@ export namespace Prisma {
 
   export const TriviaRoundScalarFieldEnum: {
     id: 'id',
+    name: 'name',
     score: 'score',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
@@ -68605,7 +66632,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
     fromFriends?: FriendsListRelationFilter
     toFriends?: FriendsListRelationFilter
-    Post?: FBPostListRelationFilter
     Comment?: CommentListRelationFilter
     SubComment?: SubCommentListRelationFilter
     GroupOnUser?: GroupOnUserListRelationFilter
@@ -68613,6 +66639,8 @@ export namespace Prisma {
     Share?: ShareListRelationFilter
     fromDirectMsg?: FBDirectMsgListRelationFilter
     toDirectMsg?: FBDirectMsgListRelationFilter
+    postByUser?: FBPostListRelationFilter
+    postInUser?: FBPostListRelationFilter
   }
 
   export type FBUserOrderByWithRelationInput = {
@@ -68625,7 +66653,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
     fromFriends?: FriendsOrderByRelationAggregateInput
     toFriends?: FriendsOrderByRelationAggregateInput
-    Post?: FBPostOrderByRelationAggregateInput
     Comment?: CommentOrderByRelationAggregateInput
     SubComment?: SubCommentOrderByRelationAggregateInput
     GroupOnUser?: GroupOnUserOrderByRelationAggregateInput
@@ -68633,6 +66660,8 @@ export namespace Prisma {
     Share?: ShareOrderByRelationAggregateInput
     fromDirectMsg?: FBDirectMsgOrderByRelationAggregateInput
     toDirectMsg?: FBDirectMsgOrderByRelationAggregateInput
+    postByUser?: FBPostOrderByRelationAggregateInput
+    postInUser?: FBPostOrderByRelationAggregateInput
   }
 
   export type FBUserWhereUniqueInput = {
@@ -68692,6 +66721,7 @@ export namespace Prisma {
 
   export type FriendsWhereUniqueInput = {
     id?: number
+    fromUserId_toUserId?: FriendsFromUserIdToUserIdCompoundUniqueInput
   }
 
   export type FriendsOrderByWithAggregationInput = {
@@ -68723,15 +66753,17 @@ export namespace Prisma {
     OR?: Enumerable<FBPostWhereInput>
     NOT?: Enumerable<FBPostWhereInput>
     id?: IntFilter | number
-    user?: XOR<FBUserRelationFilter, FBUserWhereInput>
-    userId?: IntFilter | number
+    postByUser?: XOR<FBUserRelationFilter, FBUserWhereInput> | null
+    postByUserId?: IntNullableFilter | number | null
+    postInUser?: XOR<FBUserRelationFilter, FBUserWhereInput> | null
+    postInUserId?: IntNullableFilter | number | null
     postDetail?: StringNullableFilter | string | null
     image?: StringNullableFilter | string | null
+    group?: XOR<GroupRelationFilter, GroupWhereInput> | null
+    groupId?: IntNullableFilter | number | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     Comment?: CommentListRelationFilter
-    PostinGroup?: PostinGroupListRelationFilter
-    PostinProfile?: PostinProfileListRelationFilter
     Like?: LikeListRelationFilter
     Share?: ShareListRelationFilter
     PostOnHashtag?: FBPostOnHashtagListRelationFilter
@@ -68739,15 +66771,17 @@ export namespace Prisma {
 
   export type FBPostOrderByWithRelationInput = {
     id?: SortOrder
-    user?: FBUserOrderByWithRelationInput
-    userId?: SortOrder
+    postByUser?: FBUserOrderByWithRelationInput
+    postByUserId?: SortOrder
+    postInUser?: FBUserOrderByWithRelationInput
+    postInUserId?: SortOrder
     postDetail?: SortOrder
     image?: SortOrder
+    group?: GroupOrderByWithRelationInput
+    groupId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Comment?: CommentOrderByRelationAggregateInput
-    PostinGroup?: PostinGroupOrderByRelationAggregateInput
-    PostinProfile?: PostinProfileOrderByRelationAggregateInput
     Like?: LikeOrderByRelationAggregateInput
     Share?: ShareOrderByRelationAggregateInput
     PostOnHashtag?: FBPostOnHashtagOrderByRelationAggregateInput
@@ -68759,9 +66793,11 @@ export namespace Prisma {
 
   export type FBPostOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
     postDetail?: SortOrder
     image?: SortOrder
+    groupId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: FBPostCountOrderByAggregateInput
@@ -68776,9 +66812,11 @@ export namespace Prisma {
     OR?: Enumerable<FBPostScalarWhereWithAggregatesInput>
     NOT?: Enumerable<FBPostScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    userId?: IntWithAggregatesFilter | number
+    postByUserId?: IntNullableWithAggregatesFilter | number | null
+    postInUserId?: IntNullableWithAggregatesFilter | number | null
     postDetail?: StringNullableWithAggregatesFilter | string | null
     image?: StringNullableWithAggregatesFilter | string | null
+    groupId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -69019,7 +67057,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     GroupOnUser?: GroupOnUserListRelationFilter
-    PostinGroup?: PostinGroupListRelationFilter
+    FBPost?: FBPostListRelationFilter
   }
 
   export type GroupOrderByWithRelationInput = {
@@ -69029,7 +67067,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     GroupOnUser?: GroupOnUserOrderByRelationAggregateInput
-    PostinGroup?: PostinGroupOrderByRelationAggregateInput
+    FBPost?: FBPostOrderByRelationAggregateInput
   }
 
   export type GroupWhereUniqueInput = {
@@ -69107,102 +67145,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     userId?: IntWithAggregatesFilter | number
     groupId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type PostinGroupWhereInput = {
-    AND?: Enumerable<PostinGroupWhereInput>
-    OR?: Enumerable<PostinGroupWhereInput>
-    NOT?: Enumerable<PostinGroupWhereInput>
-    id?: IntFilter | number
-    group?: XOR<GroupRelationFilter, GroupWhereInput>
-    groupId?: IntFilter | number
-    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
-    postId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type PostinGroupOrderByWithRelationInput = {
-    id?: SortOrder
-    group?: GroupOrderByWithRelationInput
-    groupId?: SortOrder
-    post?: FBPostOrderByWithRelationInput
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinGroupWhereUniqueInput = {
-    id?: number
-  }
-
-  export type PostinGroupOrderByWithAggregationInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: PostinGroupCountOrderByAggregateInput
-    _avg?: PostinGroupAvgOrderByAggregateInput
-    _max?: PostinGroupMaxOrderByAggregateInput
-    _min?: PostinGroupMinOrderByAggregateInput
-    _sum?: PostinGroupSumOrderByAggregateInput
-  }
-
-  export type PostinGroupScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
-    OR?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<PostinGroupScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    groupId?: IntWithAggregatesFilter | number
-    postId?: IntWithAggregatesFilter | number
-    createdAt?: DateTimeWithAggregatesFilter | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter | Date | string
-  }
-
-  export type PostinProfileWhereInput = {
-    AND?: Enumerable<PostinProfileWhereInput>
-    OR?: Enumerable<PostinProfileWhereInput>
-    NOT?: Enumerable<PostinProfileWhereInput>
-    id?: IntFilter | number
-    post?: XOR<FBPostRelationFilter, FBPostWhereInput>
-    postId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type PostinProfileOrderByWithRelationInput = {
-    id?: SortOrder
-    post?: FBPostOrderByWithRelationInput
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinProfileWhereUniqueInput = {
-    id?: number
-  }
-
-  export type PostinProfileOrderByWithAggregationInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: PostinProfileCountOrderByAggregateInput
-    _avg?: PostinProfileAvgOrderByAggregateInput
-    _max?: PostinProfileMaxOrderByAggregateInput
-    _min?: PostinProfileMinOrderByAggregateInput
-    _sum?: PostinProfileSumOrderByAggregateInput
-  }
-
-  export type PostinProfileScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
-    OR?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<PostinProfileScalarWhereWithAggregatesInput>
-    id?: IntWithAggregatesFilter | number
-    postId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -69373,6 +67315,7 @@ export namespace Prisma {
 
   export type FBHashtagWhereUniqueInput = {
     id?: number
+    hashtag?: string
   }
 
   export type FBHashtagOrderByWithAggregationInput = {
@@ -70117,7 +68060,7 @@ export namespace Prisma {
     OR?: Enumerable<TriviaCategoryWhereInput>
     NOT?: Enumerable<TriviaCategoryWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
+    categoryName?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     triviaQuiz?: TriviaQuizListRelationFilter
@@ -70126,7 +68069,7 @@ export namespace Prisma {
 
   export type TriviaCategoryOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    categoryName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     triviaQuiz?: TriviaQuizOrderByRelationAggregateInput
@@ -70139,7 +68082,7 @@ export namespace Prisma {
 
   export type TriviaCategoryOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    categoryName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TriviaCategoryCountOrderByAggregateInput
@@ -70154,7 +68097,7 @@ export namespace Prisma {
     OR?: Enumerable<TriviaCategoryScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TriviaCategoryScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
+    categoryName?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -70164,37 +68107,40 @@ export namespace Prisma {
     OR?: Enumerable<TriviaQuizWhereInput>
     NOT?: Enumerable<TriviaQuizWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
+    quizName?: StringFilter | string
     category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput>
     categoryId?: IntFilter | number
-    answerId?: IntFilter | number
+    answer?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
+    triviaAnswerChoiceId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceListRelationFilter
     triviaRoundQuiz?: TriviaRoundQuizListRelationFilter
+    TriviaChoice?: TriviaChoiceListRelationFilter
   }
 
   export type TriviaQuizOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    quizName?: SortOrder
     category?: TriviaCategoryOrderByWithRelationInput
     categoryId?: SortOrder
-    answerId?: SortOrder
+    answer?: TriviaChoiceOrderByWithRelationInput
+    triviaAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    triviaQuizChoice?: TriviaQuizChoiceOrderByRelationAggregateInput
     triviaRoundQuiz?: TriviaRoundQuizOrderByRelationAggregateInput
+    TriviaChoice?: TriviaChoiceOrderByRelationAggregateInput
   }
 
   export type TriviaQuizWhereUniqueInput = {
     id?: number
+    triviaAnswerChoiceId?: number
   }
 
   export type TriviaQuizOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    quizName?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TriviaQuizCountOrderByAggregateInput
@@ -70209,60 +68155,62 @@ export namespace Prisma {
     OR?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TriviaQuizScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
+    quizName?: StringWithAggregatesFilter | string
     categoryId?: IntWithAggregatesFilter | number
-    answerId?: IntWithAggregatesFilter | number
+    triviaAnswerChoiceId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
 
-  export type TriviaQuizChoiceWhereInput = {
-    AND?: Enumerable<TriviaQuizChoiceWhereInput>
-    OR?: Enumerable<TriviaQuizChoiceWhereInput>
-    NOT?: Enumerable<TriviaQuizChoiceWhereInput>
+  export type TriviaChoiceWhereInput = {
+    AND?: Enumerable<TriviaChoiceWhereInput>
+    OR?: Enumerable<TriviaChoiceWhereInput>
+    NOT?: Enumerable<TriviaChoiceWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
-    quiz?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput>
-    quizId?: IntFilter | number
+    choiceName?: StringFilter | string
+    quiz?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput> | null
+    quizId?: IntNullableFilter | number | null
+    triviaQuizAnswer?: XOR<TriviaQuizRelationFilter, TriviaQuizWhereInput> | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceListRelationFilter
   }
 
-  export type TriviaQuizChoiceOrderByWithRelationInput = {
+  export type TriviaChoiceOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    choiceName?: SortOrder
     quiz?: TriviaQuizOrderByWithRelationInput
     quizId?: SortOrder
+    triviaQuizAnswer?: TriviaQuizOrderByWithRelationInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceOrderByRelationAggregateInput
   }
 
-  export type TriviaQuizChoiceWhereUniqueInput = {
+  export type TriviaChoiceWhereUniqueInput = {
     id?: number
   }
 
-  export type TriviaQuizChoiceOrderByWithAggregationInput = {
+  export type TriviaChoiceOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    choiceName?: SortOrder
     quizId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    _count?: TriviaQuizChoiceCountOrderByAggregateInput
-    _avg?: TriviaQuizChoiceAvgOrderByAggregateInput
-    _max?: TriviaQuizChoiceMaxOrderByAggregateInput
-    _min?: TriviaQuizChoiceMinOrderByAggregateInput
-    _sum?: TriviaQuizChoiceSumOrderByAggregateInput
+    _count?: TriviaChoiceCountOrderByAggregateInput
+    _avg?: TriviaChoiceAvgOrderByAggregateInput
+    _max?: TriviaChoiceMaxOrderByAggregateInput
+    _min?: TriviaChoiceMinOrderByAggregateInput
+    _sum?: TriviaChoiceSumOrderByAggregateInput
   }
 
-  export type TriviaQuizChoiceScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<TriviaQuizChoiceScalarWhereWithAggregatesInput>
-    OR?: Enumerable<TriviaQuizChoiceScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<TriviaQuizChoiceScalarWhereWithAggregatesInput>
+  export type TriviaChoiceScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
-    name?: StringWithAggregatesFilter | string
-    quizId?: IntWithAggregatesFilter | number
+    choiceName?: StringWithAggregatesFilter | string
+    quizId?: IntNullableWithAggregatesFilter | number | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -70272,6 +68220,7 @@ export namespace Prisma {
     OR?: Enumerable<TriviaRoundWhereInput>
     NOT?: Enumerable<TriviaRoundWhereInput>
     id?: IntFilter | number
+    name?: StringNullableFilter | string | null
     score?: IntFilter | number
     category?: XOR<TriviaCategoryRelationFilter, TriviaCategoryWhereInput>
     categoryId?: IntFilter | number
@@ -70282,6 +68231,7 @@ export namespace Prisma {
 
   export type TriviaRoundOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrder
     score?: SortOrder
     category?: TriviaCategoryOrderByWithRelationInput
     categoryId?: SortOrder
@@ -70296,6 +68246,7 @@ export namespace Prisma {
 
   export type TriviaRoundOrderByWithAggregationInput = {
     id?: SortOrder
+    name?: SortOrder
     score?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
@@ -70312,6 +68263,7 @@ export namespace Prisma {
     OR?: Enumerable<TriviaRoundScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TriviaRoundScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    name?: StringNullableWithAggregatesFilter | string | null
     score?: IntWithAggregatesFilter | number
     categoryId?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
@@ -70382,7 +68334,7 @@ export namespace Prisma {
     id?: IntFilter | number
     roundQuiz?: XOR<TriviaRoundQuizRelationFilter, TriviaRoundQuizWhereInput>
     roundQuizId?: IntFilter | number
-    roundQuizChoice?: XOR<TriviaQuizChoiceRelationFilter, TriviaQuizChoiceWhereInput>
+    roundQuizChoice?: XOR<TriviaChoiceRelationFilter, TriviaChoiceWhereInput>
     quizChoiceId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
@@ -70392,7 +68344,7 @@ export namespace Prisma {
     id?: SortOrder
     roundQuiz?: TriviaRoundQuizOrderByWithRelationInput
     roundQuizId?: SortOrder
-    roundQuizChoice?: TriviaQuizChoiceOrderByWithRelationInput
+    roundQuizChoice?: TriviaChoiceOrderByWithRelationInput
     quizChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -70510,6 +68462,7 @@ export namespace Prisma {
 
   export type FollowingWhereUniqueInput = {
     id?: number
+    fromUserId_toUserId?: FollowingFromUserIdToUserIdCompoundUniqueInput
   }
 
   export type FollowingOrderByWithAggregationInput = {
@@ -70665,6 +68618,7 @@ export namespace Prisma {
 
   export type HashtagWhereUniqueInput = {
     id?: number
+    hashtag?: string
   }
 
   export type HashtagOrderByWithAggregationInput = {
@@ -72072,7 +70026,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
@@ -72080,6 +70033,8 @@ export namespace Prisma {
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateInput = {
@@ -72092,7 +70047,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
@@ -72100,6 +70054,8 @@ export namespace Prisma {
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUpdateInput = {
@@ -72111,7 +70067,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
@@ -72119,6 +70074,8 @@ export namespace Prisma {
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateInput = {
@@ -72131,7 +70088,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
@@ -72139,6 +70095,8 @@ export namespace Prisma {
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserCreateManyInput = {
@@ -72222,14 +70180,14 @@ export namespace Prisma {
   }
 
   export type FBPostCreateInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
     postDetail?: string | null
     image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
     Like?: LikeCreateNestedManyWithoutPostInput
     Share?: ShareCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
@@ -72237,28 +70195,28 @@ export namespace Prisma {
 
   export type FBPostUncheckedCreateInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
     Like?: LikeUncheckedCreateNestedManyWithoutPostInput
     Share?: ShareUncheckedCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type FBPostUpdateInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
     Like?: LikeUpdateManyWithoutPostNestedInput
     Share?: ShareUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
@@ -72266,14 +70224,14 @@ export namespace Prisma {
 
   export type FBPostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
     Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
     Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
@@ -72281,9 +70239,11 @@ export namespace Prisma {
 
   export type FBPostCreateManyInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -72297,9 +70257,11 @@ export namespace Prisma {
 
   export type FBPostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -72544,7 +70506,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutGroupInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutGroupInput
+    FBPost?: FBPostCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUncheckedCreateInput = {
@@ -72554,7 +70516,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutGroupInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutGroupInput
+    FBPost?: FBPostUncheckedCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUpdateInput = {
@@ -72563,7 +70525,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     GroupOnUser?: GroupOnUserUpdateManyWithoutGroupNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutGroupNestedInput
+    FBPost?: FBPostUpdateManyWithoutGroupNestedInput
   }
 
   export type GroupUncheckedUpdateInput = {
@@ -72573,7 +70535,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutGroupNestedInput
+    FBPost?: FBPostUncheckedUpdateManyWithoutGroupNestedInput
   }
 
   export type GroupCreateManyInput = {
@@ -72646,102 +70608,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     groupId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupCreateInput = {
-    group: GroupCreateNestedOneWithoutPostinGroupInput
-    post: FBPostCreateNestedOneWithoutPostinGroupInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupUncheckedCreateInput = {
-    id?: number
-    groupId: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupUpdateInput = {
-    group?: GroupUpdateOneRequiredWithoutPostinGroupNestedInput
-    post?: FBPostUpdateOneRequiredWithoutPostinGroupNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    groupId?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupCreateManyInput = {
-    id?: number
-    groupId: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    groupId?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileCreateInput = {
-    post: FBPostCreateNestedOneWithoutPostinProfileInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileUncheckedCreateInput = {
-    id?: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileUpdateInput = {
-    post?: FBPostUpdateOneRequiredWithoutPostinProfileNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileCreateManyInput = {
-    id?: number
-    postId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileUpdateManyMutationInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -73749,7 +71615,7 @@ export namespace Prisma {
   }
 
   export type TriviaCategoryCreateInput = {
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaQuiz?: TriviaQuizCreateNestedManyWithoutCategoryInput
@@ -73758,7 +71624,7 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedCreateInput = {
     id?: number
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaQuiz?: TriviaQuizUncheckedCreateNestedManyWithoutCategoryInput
@@ -73766,7 +71632,7 @@ export namespace Prisma {
   }
 
   export type TriviaCategoryUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaQuiz?: TriviaQuizUpdateManyWithoutCategoryNestedInput
@@ -73775,7 +71641,7 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaQuiz?: TriviaQuizUncheckedUpdateManyWithoutCategoryNestedInput
@@ -73784,148 +71650,152 @@ export namespace Prisma {
 
   export type TriviaCategoryCreateManyInput = {
     id?: number
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TriviaCategoryUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TriviaCategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TriviaQuizCreateInput = {
-    name: string
+    quizName: string
     category: TriviaCategoryCreateNestedOneWithoutTriviaQuizInput
-    answerId: number
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceCreateNestedManyWithoutQuizInput
     triviaRoundQuiz?: TriviaRoundQuizCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizUncheckedCreateInput = {
     id?: number
-    name: string
+    quizName: string
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedCreateNestedManyWithoutQuizInput
     triviaRoundQuiz?: TriviaRoundQuizUncheckedCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizNestedInput
-    answerId?: IntFieldUpdateOperationsInput | number
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUpdateManyWithoutQuizNestedInput
     triviaRoundQuiz?: TriviaRoundQuizUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaQuizUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedUpdateManyWithoutQuizNestedInput
     triviaRoundQuiz?: TriviaRoundQuizUncheckedUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaQuizCreateManyInput = {
     id?: number
-    name: string
+    quizName: string
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TriviaQuizUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    answerId?: IntFieldUpdateOperationsInput | number
+    quizName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TriviaQuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TriviaQuizChoiceCreateInput = {
-    name: string
-    quiz: TriviaQuizCreateNestedOneWithoutTriviaQuizChoiceInput
+  export type TriviaChoiceCreateInput = {
+    choiceName: string
+    quiz?: TriviaQuizCreateNestedOneWithoutTriviaChoiceInput
+    triviaQuizAnswer?: TriviaQuizCreateNestedOneWithoutAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceCreateNestedManyWithoutRoundQuizChoiceInput
   }
 
-  export type TriviaQuizChoiceUncheckedCreateInput = {
+  export type TriviaChoiceUncheckedCreateInput = {
     id?: number
-    name: string
-    quizId: number
+    choiceName: string
+    quizId?: number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedCreateNestedManyWithoutRoundQuizChoiceInput
   }
 
-  export type TriviaQuizChoiceUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    quiz?: TriviaQuizUpdateOneRequiredWithoutTriviaQuizChoiceNestedInput
+  export type TriviaChoiceUpdateInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quiz?: TriviaQuizUpdateOneWithoutTriviaChoiceNestedInput
+    triviaQuizAnswer?: TriviaQuizUpdateOneWithoutAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceUpdateManyWithoutRoundQuizChoiceNestedInput
   }
 
-  export type TriviaQuizChoiceUncheckedUpdateInput = {
+  export type TriviaChoiceUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    quizId?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedUpdateManyWithoutRoundQuizChoiceNestedInput
   }
 
-  export type TriviaQuizChoiceCreateManyInput = {
+  export type TriviaChoiceCreateManyInput = {
     id?: number
-    name: string
-    quizId: number
+    choiceName: string
+    quizId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TriviaQuizChoiceUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type TriviaChoiceUpdateManyMutationInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TriviaQuizChoiceUncheckedUpdateManyInput = {
+  export type TriviaChoiceUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    quizId?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TriviaRoundCreateInput = {
+    name?: string | null
     score: number
     category: TriviaCategoryCreateNestedOneWithoutTriviaRoundInput
     createdAt?: Date | string
@@ -73935,6 +71805,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedCreateInput = {
     id?: number
+    name?: string | null
     score: number
     categoryId: number
     createdAt?: Date | string
@@ -73943,6 +71814,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundUpdateInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaRoundNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73952,6 +71824,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     categoryId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73961,6 +71834,7 @@ export namespace Prisma {
 
   export type TriviaRoundCreateManyInput = {
     id?: number
+    name?: string | null
     score: number
     categoryId: number
     createdAt?: Date | string
@@ -73968,6 +71842,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73975,6 +71850,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     categoryId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74045,7 +71921,7 @@ export namespace Prisma {
 
   export type TriviaRoundQuizChoiceCreateInput = {
     roundQuiz: TriviaRoundQuizCreateNestedOneWithoutTriviaRoundQuizChoiceInput
-    roundQuizChoice: TriviaQuizChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput
+    roundQuizChoice: TriviaChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -74060,7 +71936,7 @@ export namespace Prisma {
 
   export type TriviaRoundQuizChoiceUpdateInput = {
     roundQuiz?: TriviaRoundQuizUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput
-    roundQuizChoice?: TriviaQuizChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput
+    roundQuizChoice?: TriviaChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -76042,12 +73918,6 @@ export namespace Prisma {
     none?: FriendsWhereInput
   }
 
-  export type FBPostListRelationFilter = {
-    every?: FBPostWhereInput
-    some?: FBPostWhereInput
-    none?: FBPostWhereInput
-  }
-
   export type CommentListRelationFilter = {
     every?: CommentWhereInput
     some?: CommentWhereInput
@@ -76084,11 +73954,13 @@ export namespace Prisma {
     none?: FBDirectMsgWhereInput
   }
 
-  export type FriendsOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type FBPostListRelationFilter = {
+    every?: FBPostWhereInput
+    some?: FBPostWhereInput
+    none?: FBPostWhereInput
   }
 
-  export type FBPostOrderByRelationAggregateInput = {
+  export type FriendsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -76113,6 +73985,10 @@ export namespace Prisma {
   }
 
   export type FBDirectMsgOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FBPostOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -76155,8 +74031,13 @@ export namespace Prisma {
   }
 
   export type FBUserRelationFilter = {
-    is?: FBUserWhereInput
-    isNot?: FBUserWhereInput
+    is?: FBUserWhereInput | null
+    isNot?: FBUserWhereInput | null
+  }
+
+  export type FriendsFromUserIdToUserIdCompoundUniqueInput = {
+    fromUserId: number
+    toUserId: number
   }
 
   export type FriendsCountOrderByAggregateInput = {
@@ -76195,16 +74076,9 @@ export namespace Prisma {
     toUserId?: SortOrder
   }
 
-  export type PostinGroupListRelationFilter = {
-    every?: PostinGroupWhereInput
-    some?: PostinGroupWhereInput
-    none?: PostinGroupWhereInput
-  }
-
-  export type PostinProfileListRelationFilter = {
-    every?: PostinProfileWhereInput
-    some?: PostinProfileWhereInput
-    none?: PostinProfileWhereInput
+  export type GroupRelationFilter = {
+    is?: GroupWhereInput
+    isNot?: GroupWhereInput
   }
 
   export type FBPostOnHashtagListRelationFilter = {
@@ -76213,53 +74087,55 @@ export namespace Prisma {
     none?: FBPostOnHashtagWhereInput
   }
 
-  export type PostinGroupOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PostinProfileOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type FBPostOnHashtagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type FBPostCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
     postDetail?: SortOrder
     image?: SortOrder
+    groupId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FBPostAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
+    groupId?: SortOrder
   }
 
   export type FBPostMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
     postDetail?: SortOrder
     image?: SortOrder
+    groupId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FBPostMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
     postDetail?: SortOrder
     image?: SortOrder
+    groupId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FBPostSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
+    postByUserId?: SortOrder
+    postInUserId?: SortOrder
+    groupId?: SortOrder
   }
 
   export type FBPostRelationFilter = {
@@ -76474,11 +74350,6 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type GroupRelationFilter = {
-    is?: GroupWhereInput
-    isNot?: GroupWhereInput
-  }
-
   export type GroupOnUserCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -76513,73 +74384,6 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     groupId?: SortOrder
-  }
-
-  export type PostinGroupCountOrderByAggregateInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinGroupAvgOrderByAggregateInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostinGroupMaxOrderByAggregateInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinGroupMinOrderByAggregateInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinGroupSumOrderByAggregateInput = {
-    id?: SortOrder
-    groupId?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostinProfileCountOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinProfileAvgOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-  }
-
-  export type PostinProfileMaxOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinProfileMinOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PostinProfileSumOrderByAggregateInput = {
-    id?: SortOrder
-    postId?: SortOrder
   }
 
   export type LikeTypeCountOrderByAggregateInput = {
@@ -77338,7 +75142,7 @@ export namespace Prisma {
 
   export type TriviaCategoryCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    categoryName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -77349,14 +75153,14 @@ export namespace Prisma {
 
   export type TriviaCategoryMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    categoryName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TriviaCategoryMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    categoryName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -77370,10 +75174,9 @@ export namespace Prisma {
     isNot?: TriviaCategoryWhereInput
   }
 
-  export type TriviaQuizChoiceListRelationFilter = {
-    every?: TriviaQuizChoiceWhereInput
-    some?: TriviaQuizChoiceWhereInput
-    none?: TriviaQuizChoiceWhereInput
+  export type TriviaChoiceRelationFilter = {
+    is?: TriviaChoiceWhereInput
+    isNot?: TriviaChoiceWhereInput
   }
 
   export type TriviaRoundQuizListRelationFilter = {
@@ -77382,19 +75185,25 @@ export namespace Prisma {
     none?: TriviaRoundQuizWhereInput
   }
 
-  export type TriviaQuizChoiceOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type TriviaChoiceListRelationFilter = {
+    every?: TriviaChoiceWhereInput
+    some?: TriviaChoiceWhereInput
+    none?: TriviaChoiceWhereInput
   }
 
   export type TriviaRoundQuizOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
+  export type TriviaChoiceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type TriviaQuizCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    quizName?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -77402,23 +75211,23 @@ export namespace Prisma {
   export type TriviaQuizAvgOrderByAggregateInput = {
     id?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
   }
 
   export type TriviaQuizMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    quizName?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TriviaQuizMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    quizName?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -77426,7 +75235,7 @@ export namespace Prisma {
   export type TriviaQuizSumOrderByAggregateInput = {
     id?: SortOrder
     categoryId?: SortOrder
-    answerId?: SortOrder
+    triviaAnswerChoiceId?: SortOrder
   }
 
   export type TriviaQuizRelationFilter = {
@@ -77444,42 +75253,43 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type TriviaQuizChoiceCountOrderByAggregateInput = {
+  export type TriviaChoiceCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    choiceName?: SortOrder
     quizId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TriviaQuizChoiceAvgOrderByAggregateInput = {
+  export type TriviaChoiceAvgOrderByAggregateInput = {
     id?: SortOrder
     quizId?: SortOrder
   }
 
-  export type TriviaQuizChoiceMaxOrderByAggregateInput = {
+  export type TriviaChoiceMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    quizId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TriviaQuizChoiceMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
+    choiceName?: SortOrder
     quizId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TriviaQuizChoiceSumOrderByAggregateInput = {
+  export type TriviaChoiceMinOrderByAggregateInput = {
+    id?: SortOrder
+    choiceName?: SortOrder
+    quizId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TriviaChoiceSumOrderByAggregateInput = {
     id?: SortOrder
     quizId?: SortOrder
   }
 
   export type TriviaRoundCountOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     score?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
@@ -77494,6 +75304,7 @@ export namespace Prisma {
 
   export type TriviaRoundMaxOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     score?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
@@ -77502,6 +75313,7 @@ export namespace Prisma {
 
   export type TriviaRoundMinOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     score?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
@@ -77563,11 +75375,6 @@ export namespace Prisma {
   export type TriviaRoundQuizRelationFilter = {
     is?: TriviaRoundQuizWhereInput
     isNot?: TriviaRoundQuizWhereInput
-  }
-
-  export type TriviaQuizChoiceRelationFilter = {
-    is?: TriviaQuizChoiceWhereInput
-    isNot?: TriviaQuizChoiceWhereInput
   }
 
   export type TriviaRoundQuizChoiceCountOrderByAggregateInput = {
@@ -77681,6 +75488,11 @@ export namespace Prisma {
   export type UserRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type FollowingFromUserIdToUserIdCompoundUniqueInput = {
+    fromUserId: number
+    toUserId: number
   }
 
   export type FollowingCountOrderByAggregateInput = {
@@ -79010,13 +76822,6 @@ export namespace Prisma {
     connect?: Enumerable<FriendsWhereUniqueInput>
   }
 
-  export type FBPostCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
-    createMany?: FBPostCreateManyUserInputEnvelope
-    connect?: Enumerable<FBPostWhereUniqueInput>
-  }
-
   export type CommentCreateNestedManyWithoutFromUserIdInput = {
     create?: XOR<Enumerable<CommentCreateWithoutFromUserIdInput>, Enumerable<CommentUncheckedCreateWithoutFromUserIdInput>>
     connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutFromUserIdInput>
@@ -79066,6 +76871,20 @@ export namespace Prisma {
     connect?: Enumerable<FBDirectMsgWhereUniqueInput>
   }
 
+  export type FBPostCreateNestedManyWithoutPostByUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostByUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostByUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostByUserInput>
+    createMany?: FBPostCreateManyPostByUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
+  export type FBPostCreateNestedManyWithoutPostInUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostInUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostInUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostInUserInput>
+    createMany?: FBPostCreateManyPostInUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
   export type FriendsUncheckedCreateNestedManyWithoutFromInput = {
     create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
     connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
@@ -79078,13 +76897,6 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutToInput>
     createMany?: FriendsCreateManyToInputEnvelope
     connect?: Enumerable<FriendsWhereUniqueInput>
-  }
-
-  export type FBPostUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
-    createMany?: FBPostCreateManyUserInputEnvelope
-    connect?: Enumerable<FBPostWhereUniqueInput>
   }
 
   export type CommentUncheckedCreateNestedManyWithoutFromUserIdInput = {
@@ -79136,6 +76948,20 @@ export namespace Prisma {
     connect?: Enumerable<FBDirectMsgWhereUniqueInput>
   }
 
+  export type FBPostUncheckedCreateNestedManyWithoutPostByUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostByUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostByUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostByUserInput>
+    createMany?: FBPostCreateManyPostByUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
+  export type FBPostUncheckedCreateNestedManyWithoutPostInUserInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostInUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostInUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostInUserInput>
+    createMany?: FBPostCreateManyPostInUserInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
+  }
+
   export type FriendsUpdateManyWithoutFromNestedInput = {
     create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
     connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
@@ -79162,20 +76988,6 @@ export namespace Prisma {
     update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutToInput>
     updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutToInput>
     deleteMany?: Enumerable<FriendsScalarWhereInput>
-  }
-
-  export type FBPostUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: FBPostCreateManyUserInputEnvelope
-    set?: Enumerable<FBPostWhereUniqueInput>
-    disconnect?: Enumerable<FBPostWhereUniqueInput>
-    delete?: Enumerable<FBPostWhereUniqueInput>
-    connect?: Enumerable<FBPostWhereUniqueInput>
-    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<FBPostScalarWhereInput>
   }
 
   export type CommentUpdateManyWithoutFromUserIdNestedInput = {
@@ -79276,6 +77088,34 @@ export namespace Prisma {
     deleteMany?: Enumerable<FBDirectMsgScalarWhereInput>
   }
 
+  export type FBPostUpdateManyWithoutPostByUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostByUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostByUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostByUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutPostByUserInput>
+    createMany?: FBPostCreateManyPostByUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutPostByUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutPostByUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
+  export type FBPostUpdateManyWithoutPostInUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostInUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostInUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostInUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutPostInUserInput>
+    createMany?: FBPostCreateManyPostInUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutPostInUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutPostInUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
   export type FriendsUncheckedUpdateManyWithoutFromNestedInput = {
     create?: XOR<Enumerable<FriendsCreateWithoutFromInput>, Enumerable<FriendsUncheckedCreateWithoutFromInput>>
     connectOrCreate?: Enumerable<FriendsCreateOrConnectWithoutFromInput>
@@ -79302,20 +77142,6 @@ export namespace Prisma {
     update?: Enumerable<FriendsUpdateWithWhereUniqueWithoutToInput>
     updateMany?: Enumerable<FriendsUpdateManyWithWhereWithoutToInput>
     deleteMany?: Enumerable<FriendsScalarWhereInput>
-  }
-
-  export type FBPostUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<Enumerable<FBPostCreateWithoutUserInput>, Enumerable<FBPostUncheckedCreateWithoutUserInput>>
-    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutUserInput>
-    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutUserInput>
-    createMany?: FBPostCreateManyUserInputEnvelope
-    set?: Enumerable<FBPostWhereUniqueInput>
-    disconnect?: Enumerable<FBPostWhereUniqueInput>
-    delete?: Enumerable<FBPostWhereUniqueInput>
-    connect?: Enumerable<FBPostWhereUniqueInput>
-    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutUserInput>
-    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutUserInput>
-    deleteMany?: Enumerable<FBPostScalarWhereInput>
   }
 
   export type CommentUncheckedUpdateManyWithoutFromUserIdNestedInput = {
@@ -79416,6 +77242,34 @@ export namespace Prisma {
     deleteMany?: Enumerable<FBDirectMsgScalarWhereInput>
   }
 
+  export type FBPostUncheckedUpdateManyWithoutPostByUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostByUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostByUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostByUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutPostByUserInput>
+    createMany?: FBPostCreateManyPostByUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutPostByUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutPostByUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutPostInUserNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutPostInUserInput>, Enumerable<FBPostUncheckedCreateWithoutPostInUserInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutPostInUserInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutPostInUserInput>
+    createMany?: FBPostCreateManyPostInUserInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutPostInUserInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutPostInUserInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
+  }
+
   export type FBUserCreateNestedOneWithoutFromFriendsInput = {
     create?: XOR<FBUserCreateWithoutFromFriendsInput, FBUserUncheckedCreateWithoutFromFriendsInput>
     connectOrCreate?: FBUserCreateOrConnectWithoutFromFriendsInput
@@ -79444,10 +77298,22 @@ export namespace Prisma {
     update?: XOR<FBUserUpdateWithoutToFriendsInput, FBUserUncheckedUpdateWithoutToFriendsInput>
   }
 
-  export type FBUserCreateNestedOneWithoutPostInput = {
-    create?: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
-    connectOrCreate?: FBUserCreateOrConnectWithoutPostInput
+  export type FBUserCreateNestedOneWithoutPostByUserInput = {
+    create?: XOR<FBUserCreateWithoutPostByUserInput, FBUserUncheckedCreateWithoutPostByUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostByUserInput
     connect?: FBUserWhereUniqueInput
+  }
+
+  export type FBUserCreateNestedOneWithoutPostInUserInput = {
+    create?: XOR<FBUserCreateWithoutPostInUserInput, FBUserUncheckedCreateWithoutPostInUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostInUserInput
+    connect?: FBUserWhereUniqueInput
+  }
+
+  export type GroupCreateNestedOneWithoutFBPostInput = {
+    create?: XOR<GroupCreateWithoutFBPostInput, GroupUncheckedCreateWithoutFBPostInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutFBPostInput
+    connect?: GroupWhereUniqueInput
   }
 
   export type CommentCreateNestedManyWithoutPostInput = {
@@ -79455,20 +77321,6 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<CommentCreateOrConnectWithoutPostInput>
     createMany?: CommentCreateManyPostInputEnvelope
     connect?: Enumerable<CommentWhereUniqueInput>
-  }
-
-  export type PostinGroupCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
-    createMany?: PostinGroupCreateManyPostInputEnvelope
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-  }
-
-  export type PostinProfileCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
-    createMany?: PostinProfileCreateManyPostInputEnvelope
-    connect?: Enumerable<PostinProfileWhereUniqueInput>
   }
 
   export type LikeCreateNestedManyWithoutPostInput = {
@@ -79499,20 +77351,6 @@ export namespace Prisma {
     connect?: Enumerable<CommentWhereUniqueInput>
   }
 
-  export type PostinGroupUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
-    createMany?: PostinGroupCreateManyPostInputEnvelope
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-  }
-
-  export type PostinProfileUncheckedCreateNestedManyWithoutPostInput = {
-    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
-    createMany?: PostinProfileCreateManyPostInputEnvelope
-    connect?: Enumerable<PostinProfileWhereUniqueInput>
-  }
-
   export type LikeUncheckedCreateNestedManyWithoutPostInput = {
     create?: XOR<Enumerable<LikeCreateWithoutPostInput>, Enumerable<LikeUncheckedCreateWithoutPostInput>>
     connectOrCreate?: Enumerable<LikeCreateOrConnectWithoutPostInput>
@@ -79534,12 +77372,34 @@ export namespace Prisma {
     connect?: Enumerable<FBPostOnHashtagWhereUniqueInput>
   }
 
-  export type FBUserUpdateOneRequiredWithoutPostNestedInput = {
-    create?: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
-    connectOrCreate?: FBUserCreateOrConnectWithoutPostInput
-    upsert?: FBUserUpsertWithoutPostInput
+  export type FBUserUpdateOneWithoutPostByUserNestedInput = {
+    create?: XOR<FBUserCreateWithoutPostByUserInput, FBUserUncheckedCreateWithoutPostByUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostByUserInput
+    upsert?: FBUserUpsertWithoutPostByUserInput
+    disconnect?: boolean
+    delete?: boolean
     connect?: FBUserWhereUniqueInput
-    update?: XOR<FBUserUpdateWithoutPostInput, FBUserUncheckedUpdateWithoutPostInput>
+    update?: XOR<FBUserUpdateWithoutPostByUserInput, FBUserUncheckedUpdateWithoutPostByUserInput>
+  }
+
+  export type FBUserUpdateOneWithoutPostInUserNestedInput = {
+    create?: XOR<FBUserCreateWithoutPostInUserInput, FBUserUncheckedCreateWithoutPostInUserInput>
+    connectOrCreate?: FBUserCreateOrConnectWithoutPostInUserInput
+    upsert?: FBUserUpsertWithoutPostInUserInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: FBUserWhereUniqueInput
+    update?: XOR<FBUserUpdateWithoutPostInUserInput, FBUserUncheckedUpdateWithoutPostInUserInput>
+  }
+
+  export type GroupUpdateOneWithoutFBPostNestedInput = {
+    create?: XOR<GroupCreateWithoutFBPostInput, GroupUncheckedCreateWithoutFBPostInput>
+    connectOrCreate?: GroupCreateOrConnectWithoutFBPostInput
+    upsert?: GroupUpsertWithoutFBPostInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: GroupWhereUniqueInput
+    update?: XOR<GroupUpdateWithoutFBPostInput, GroupUncheckedUpdateWithoutFBPostInput>
   }
 
   export type CommentUpdateManyWithoutPostNestedInput = {
@@ -79554,34 +77414,6 @@ export namespace Prisma {
     update?: Enumerable<CommentUpdateWithWhereUniqueWithoutPostInput>
     updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutPostInput>
     deleteMany?: Enumerable<CommentScalarWhereInput>
-  }
-
-  export type PostinGroupUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostinGroupCreateManyPostInputEnvelope
-    set?: Enumerable<PostinGroupWhereUniqueInput>
-    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
-    delete?: Enumerable<PostinGroupWhereUniqueInput>
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
-  }
-
-  export type PostinProfileUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostinProfileUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostinProfileCreateManyPostInputEnvelope
-    set?: Enumerable<PostinProfileWhereUniqueInput>
-    disconnect?: Enumerable<PostinProfileWhereUniqueInput>
-    delete?: Enumerable<PostinProfileWhereUniqueInput>
-    connect?: Enumerable<PostinProfileWhereUniqueInput>
-    update?: Enumerable<PostinProfileUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostinProfileUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostinProfileScalarWhereInput>
   }
 
   export type LikeUpdateManyWithoutPostNestedInput = {
@@ -79638,34 +77470,6 @@ export namespace Prisma {
     update?: Enumerable<CommentUpdateWithWhereUniqueWithoutPostInput>
     updateMany?: Enumerable<CommentUpdateManyWithWhereWithoutPostInput>
     deleteMany?: Enumerable<CommentScalarWhereInput>
-  }
-
-  export type PostinGroupUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutPostInput>, Enumerable<PostinGroupUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostinGroupCreateManyPostInputEnvelope
-    set?: Enumerable<PostinGroupWhereUniqueInput>
-    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
-    delete?: Enumerable<PostinGroupWhereUniqueInput>
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
-  }
-
-  export type PostinProfileUncheckedUpdateManyWithoutPostNestedInput = {
-    create?: XOR<Enumerable<PostinProfileCreateWithoutPostInput>, Enumerable<PostinProfileUncheckedCreateWithoutPostInput>>
-    connectOrCreate?: Enumerable<PostinProfileCreateOrConnectWithoutPostInput>
-    upsert?: Enumerable<PostinProfileUpsertWithWhereUniqueWithoutPostInput>
-    createMany?: PostinProfileCreateManyPostInputEnvelope
-    set?: Enumerable<PostinProfileWhereUniqueInput>
-    disconnect?: Enumerable<PostinProfileWhereUniqueInput>
-    delete?: Enumerable<PostinProfileWhereUniqueInput>
-    connect?: Enumerable<PostinProfileWhereUniqueInput>
-    update?: Enumerable<PostinProfileUpdateWithWhereUniqueWithoutPostInput>
-    updateMany?: Enumerable<PostinProfileUpdateManyWithWhereWithoutPostInput>
-    deleteMany?: Enumerable<PostinProfileScalarWhereInput>
   }
 
   export type LikeUncheckedUpdateManyWithoutPostNestedInput = {
@@ -79899,11 +77703,11 @@ export namespace Prisma {
     connect?: Enumerable<GroupOnUserWhereUniqueInput>
   }
 
-  export type PostinGroupCreateNestedManyWithoutGroupInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
-    createMany?: PostinGroupCreateManyGroupInputEnvelope
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  export type FBPostCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutGroupInput>, Enumerable<FBPostUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutGroupInput>
+    createMany?: FBPostCreateManyGroupInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
   }
 
   export type GroupOnUserUncheckedCreateNestedManyWithoutGroupInput = {
@@ -79913,11 +77717,11 @@ export namespace Prisma {
     connect?: Enumerable<GroupOnUserWhereUniqueInput>
   }
 
-  export type PostinGroupUncheckedCreateNestedManyWithoutGroupInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
-    createMany?: PostinGroupCreateManyGroupInputEnvelope
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
+  export type FBPostUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutGroupInput>, Enumerable<FBPostUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutGroupInput>
+    createMany?: FBPostCreateManyGroupInputEnvelope
+    connect?: Enumerable<FBPostWhereUniqueInput>
   }
 
   export type GroupOnUserUpdateManyWithoutGroupNestedInput = {
@@ -79934,18 +77738,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
   }
 
-  export type PostinGroupUpdateManyWithoutGroupNestedInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
-    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutGroupInput>
-    createMany?: PostinGroupCreateManyGroupInputEnvelope
-    set?: Enumerable<PostinGroupWhereUniqueInput>
-    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
-    delete?: Enumerable<PostinGroupWhereUniqueInput>
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutGroupInput>
-    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutGroupInput>
-    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  export type FBPostUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutGroupInput>, Enumerable<FBPostUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: FBPostCreateManyGroupInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
   }
 
   export type GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput = {
@@ -79962,18 +77766,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<GroupOnUserScalarWhereInput>
   }
 
-  export type PostinGroupUncheckedUpdateManyWithoutGroupNestedInput = {
-    create?: XOR<Enumerable<PostinGroupCreateWithoutGroupInput>, Enumerable<PostinGroupUncheckedCreateWithoutGroupInput>>
-    connectOrCreate?: Enumerable<PostinGroupCreateOrConnectWithoutGroupInput>
-    upsert?: Enumerable<PostinGroupUpsertWithWhereUniqueWithoutGroupInput>
-    createMany?: PostinGroupCreateManyGroupInputEnvelope
-    set?: Enumerable<PostinGroupWhereUniqueInput>
-    disconnect?: Enumerable<PostinGroupWhereUniqueInput>
-    delete?: Enumerable<PostinGroupWhereUniqueInput>
-    connect?: Enumerable<PostinGroupWhereUniqueInput>
-    update?: Enumerable<PostinGroupUpdateWithWhereUniqueWithoutGroupInput>
-    updateMany?: Enumerable<PostinGroupUpdateManyWithWhereWithoutGroupInput>
-    deleteMany?: Enumerable<PostinGroupScalarWhereInput>
+  export type FBPostUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<Enumerable<FBPostCreateWithoutGroupInput>, Enumerable<FBPostUncheckedCreateWithoutGroupInput>>
+    connectOrCreate?: Enumerable<FBPostCreateOrConnectWithoutGroupInput>
+    upsert?: Enumerable<FBPostUpsertWithWhereUniqueWithoutGroupInput>
+    createMany?: FBPostCreateManyGroupInputEnvelope
+    set?: Enumerable<FBPostWhereUniqueInput>
+    disconnect?: Enumerable<FBPostWhereUniqueInput>
+    delete?: Enumerable<FBPostWhereUniqueInput>
+    connect?: Enumerable<FBPostWhereUniqueInput>
+    update?: Enumerable<FBPostUpdateWithWhereUniqueWithoutGroupInput>
+    updateMany?: Enumerable<FBPostUpdateManyWithWhereWithoutGroupInput>
+    deleteMany?: Enumerable<FBPostScalarWhereInput>
   }
 
   export type FBUserCreateNestedOneWithoutGroupOnUserInput = {
@@ -80002,48 +77806,6 @@ export namespace Prisma {
     upsert?: GroupUpsertWithoutGroupOnUserInput
     connect?: GroupWhereUniqueInput
     update?: XOR<GroupUpdateWithoutGroupOnUserInput, GroupUncheckedUpdateWithoutGroupOnUserInput>
-  }
-
-  export type GroupCreateNestedOneWithoutPostinGroupInput = {
-    create?: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
-    connectOrCreate?: GroupCreateOrConnectWithoutPostinGroupInput
-    connect?: GroupWhereUniqueInput
-  }
-
-  export type FBPostCreateNestedOneWithoutPostinGroupInput = {
-    create?: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
-    connectOrCreate?: FBPostCreateOrConnectWithoutPostinGroupInput
-    connect?: FBPostWhereUniqueInput
-  }
-
-  export type GroupUpdateOneRequiredWithoutPostinGroupNestedInput = {
-    create?: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
-    connectOrCreate?: GroupCreateOrConnectWithoutPostinGroupInput
-    upsert?: GroupUpsertWithoutPostinGroupInput
-    connect?: GroupWhereUniqueInput
-    update?: XOR<GroupUpdateWithoutPostinGroupInput, GroupUncheckedUpdateWithoutPostinGroupInput>
-  }
-
-  export type FBPostUpdateOneRequiredWithoutPostinGroupNestedInput = {
-    create?: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
-    connectOrCreate?: FBPostCreateOrConnectWithoutPostinGroupInput
-    upsert?: FBPostUpsertWithoutPostinGroupInput
-    connect?: FBPostWhereUniqueInput
-    update?: XOR<FBPostUpdateWithoutPostinGroupInput, FBPostUncheckedUpdateWithoutPostinGroupInput>
-  }
-
-  export type FBPostCreateNestedOneWithoutPostinProfileInput = {
-    create?: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
-    connectOrCreate?: FBPostCreateOrConnectWithoutPostinProfileInput
-    connect?: FBPostWhereUniqueInput
-  }
-
-  export type FBPostUpdateOneRequiredWithoutPostinProfileNestedInput = {
-    create?: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
-    connectOrCreate?: FBPostCreateOrConnectWithoutPostinProfileInput
-    upsert?: FBPostUpsertWithoutPostinProfileInput
-    connect?: FBPostWhereUniqueInput
-    update?: XOR<FBPostUpdateWithoutPostinProfileInput, FBPostUncheckedUpdateWithoutPostinProfileInput>
   }
 
   export type LikeCreateNestedManyWithoutLikeTypeInput = {
@@ -81280,11 +79042,10 @@ export namespace Prisma {
     connect?: TriviaCategoryWhereUniqueInput
   }
 
-  export type TriviaQuizChoiceCreateNestedManyWithoutQuizInput = {
-    create?: XOR<Enumerable<TriviaQuizChoiceCreateWithoutQuizInput>, Enumerable<TriviaQuizChoiceUncheckedCreateWithoutQuizInput>>
-    connectOrCreate?: Enumerable<TriviaQuizChoiceCreateOrConnectWithoutQuizInput>
-    createMany?: TriviaQuizChoiceCreateManyQuizInputEnvelope
-    connect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
+  export type TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
   }
 
   export type TriviaRoundQuizCreateNestedManyWithoutQuizInput = {
@@ -81294,11 +79055,11 @@ export namespace Prisma {
     connect?: Enumerable<TriviaRoundQuizWhereUniqueInput>
   }
 
-  export type TriviaQuizChoiceUncheckedCreateNestedManyWithoutQuizInput = {
-    create?: XOR<Enumerable<TriviaQuizChoiceCreateWithoutQuizInput>, Enumerable<TriviaQuizChoiceUncheckedCreateWithoutQuizInput>>
-    connectOrCreate?: Enumerable<TriviaQuizChoiceCreateOrConnectWithoutQuizInput>
-    createMany?: TriviaQuizChoiceCreateManyQuizInputEnvelope
-    connect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
+  export type TriviaChoiceCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
   }
 
   export type TriviaRoundQuizUncheckedCreateNestedManyWithoutQuizInput = {
@@ -81306,6 +79067,13 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<TriviaRoundQuizCreateOrConnectWithoutQuizInput>
     createMany?: TriviaRoundQuizCreateManyQuizInputEnvelope
     connect?: Enumerable<TriviaRoundQuizWhereUniqueInput>
+  }
+
+  export type TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
   }
 
   export type TriviaCategoryUpdateOneRequiredWithoutTriviaQuizNestedInput = {
@@ -81316,18 +79084,12 @@ export namespace Prisma {
     update?: XOR<TriviaCategoryUpdateWithoutTriviaQuizInput, TriviaCategoryUncheckedUpdateWithoutTriviaQuizInput>
   }
 
-  export type TriviaQuizChoiceUpdateManyWithoutQuizNestedInput = {
-    create?: XOR<Enumerable<TriviaQuizChoiceCreateWithoutQuizInput>, Enumerable<TriviaQuizChoiceUncheckedCreateWithoutQuizInput>>
-    connectOrCreate?: Enumerable<TriviaQuizChoiceCreateOrConnectWithoutQuizInput>
-    upsert?: Enumerable<TriviaQuizChoiceUpsertWithWhereUniqueWithoutQuizInput>
-    createMany?: TriviaQuizChoiceCreateManyQuizInputEnvelope
-    set?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    disconnect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    delete?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    connect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    update?: Enumerable<TriviaQuizChoiceUpdateWithWhereUniqueWithoutQuizInput>
-    updateMany?: Enumerable<TriviaQuizChoiceUpdateManyWithWhereWithoutQuizInput>
-    deleteMany?: Enumerable<TriviaQuizChoiceScalarWhereInput>
+  export type TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput
+    upsert?: TriviaChoiceUpsertWithoutTriviaQuizAnswerInput
+    connect?: TriviaChoiceWhereUniqueInput
+    update?: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
   }
 
   export type TriviaRoundQuizUpdateManyWithoutQuizNestedInput = {
@@ -81344,18 +79106,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<TriviaRoundQuizScalarWhereInput>
   }
 
-  export type TriviaQuizChoiceUncheckedUpdateManyWithoutQuizNestedInput = {
-    create?: XOR<Enumerable<TriviaQuizChoiceCreateWithoutQuizInput>, Enumerable<TriviaQuizChoiceUncheckedCreateWithoutQuizInput>>
-    connectOrCreate?: Enumerable<TriviaQuizChoiceCreateOrConnectWithoutQuizInput>
-    upsert?: Enumerable<TriviaQuizChoiceUpsertWithWhereUniqueWithoutQuizInput>
-    createMany?: TriviaQuizChoiceCreateManyQuizInputEnvelope
-    set?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    disconnect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    delete?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    connect?: Enumerable<TriviaQuizChoiceWhereUniqueInput>
-    update?: Enumerable<TriviaQuizChoiceUpdateWithWhereUniqueWithoutQuizInput>
-    updateMany?: Enumerable<TriviaQuizChoiceUpdateManyWithWhereWithoutQuizInput>
-    deleteMany?: Enumerable<TriviaQuizChoiceScalarWhereInput>
+  export type TriviaChoiceUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
   }
 
   export type TriviaRoundQuizUncheckedUpdateManyWithoutQuizNestedInput = {
@@ -81372,9 +79134,29 @@ export namespace Prisma {
     deleteMany?: Enumerable<TriviaRoundQuizScalarWhereInput>
   }
 
-  export type TriviaQuizCreateNestedOneWithoutTriviaQuizChoiceInput = {
-    create?: XOR<TriviaQuizCreateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaQuizChoiceInput>
-    connectOrCreate?: TriviaQuizCreateOrConnectWithoutTriviaQuizChoiceInput
+  export type TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<Enumerable<TriviaChoiceCreateWithoutQuizInput>, Enumerable<TriviaChoiceUncheckedCreateWithoutQuizInput>>
+    connectOrCreate?: Enumerable<TriviaChoiceCreateOrConnectWithoutQuizInput>
+    upsert?: Enumerable<TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput>
+    createMany?: TriviaChoiceCreateManyQuizInputEnvelope
+    set?: Enumerable<TriviaChoiceWhereUniqueInput>
+    disconnect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    delete?: Enumerable<TriviaChoiceWhereUniqueInput>
+    connect?: Enumerable<TriviaChoiceWhereUniqueInput>
+    update?: Enumerable<TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput>
+    updateMany?: Enumerable<TriviaChoiceUpdateManyWithWhereWithoutQuizInput>
+    deleteMany?: Enumerable<TriviaChoiceScalarWhereInput>
+  }
+
+  export type TriviaQuizCreateNestedOneWithoutTriviaChoiceInput = {
+    create?: XOR<TriviaQuizCreateWithoutTriviaChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaChoiceInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutTriviaChoiceInput
+    connect?: TriviaQuizWhereUniqueInput
+  }
+
+  export type TriviaQuizCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
     connect?: TriviaQuizWhereUniqueInput
   }
 
@@ -81385,6 +79167,12 @@ export namespace Prisma {
     connect?: Enumerable<TriviaRoundQuizChoiceWhereUniqueInput>
   }
 
+  export type TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    connect?: TriviaQuizWhereUniqueInput
+  }
+
   export type TriviaRoundQuizChoiceUncheckedCreateNestedManyWithoutRoundQuizChoiceInput = {
     create?: XOR<Enumerable<TriviaRoundQuizChoiceCreateWithoutRoundQuizChoiceInput>, Enumerable<TriviaRoundQuizChoiceUncheckedCreateWithoutRoundQuizChoiceInput>>
     connectOrCreate?: Enumerable<TriviaRoundQuizChoiceCreateOrConnectWithoutRoundQuizChoiceInput>
@@ -81392,12 +79180,24 @@ export namespace Prisma {
     connect?: Enumerable<TriviaRoundQuizChoiceWhereUniqueInput>
   }
 
-  export type TriviaQuizUpdateOneRequiredWithoutTriviaQuizChoiceNestedInput = {
-    create?: XOR<TriviaQuizCreateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaQuizChoiceInput>
-    connectOrCreate?: TriviaQuizCreateOrConnectWithoutTriviaQuizChoiceInput
-    upsert?: TriviaQuizUpsertWithoutTriviaQuizChoiceInput
+  export type TriviaQuizUpdateOneWithoutTriviaChoiceNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutTriviaChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaChoiceInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutTriviaChoiceInput
+    upsert?: TriviaQuizUpsertWithoutTriviaChoiceInput
+    disconnect?: boolean
+    delete?: boolean
     connect?: TriviaQuizWhereUniqueInput
-    update?: XOR<TriviaQuizUpdateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedUpdateWithoutTriviaQuizChoiceInput>
+    update?: XOR<TriviaQuizUpdateWithoutTriviaChoiceInput, TriviaQuizUncheckedUpdateWithoutTriviaChoiceInput>
+  }
+
+  export type TriviaQuizUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuizWhereUniqueInput
+    update?: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
   }
 
   export type TriviaRoundQuizChoiceUpdateManyWithoutRoundQuizChoiceNestedInput = {
@@ -81412,6 +79212,16 @@ export namespace Prisma {
     update?: Enumerable<TriviaRoundQuizChoiceUpdateWithWhereUniqueWithoutRoundQuizChoiceInput>
     updateMany?: Enumerable<TriviaRoundQuizChoiceUpdateManyWithWhereWithoutRoundQuizChoiceInput>
     deleteMany?: Enumerable<TriviaRoundQuizChoiceScalarWhereInput>
+  }
+
+  export type TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput = {
+    create?: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+    connectOrCreate?: TriviaQuizCreateOrConnectWithoutAnswerInput
+    upsert?: TriviaQuizUpsertWithoutAnswerInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: TriviaQuizWhereUniqueInput
+    update?: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
   }
 
   export type TriviaRoundQuizChoiceUncheckedUpdateManyWithoutRoundQuizChoiceNestedInput = {
@@ -81560,10 +79370,10 @@ export namespace Prisma {
     connect?: TriviaRoundQuizWhereUniqueInput
   }
 
-  export type TriviaQuizChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput = {
-    create?: XOR<TriviaQuizChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
-    connectOrCreate?: TriviaQuizChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput
-    connect?: TriviaQuizChoiceWhereUniqueInput
+  export type TriviaChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput
+    connect?: TriviaChoiceWhereUniqueInput
   }
 
   export type TriviaRoundQuizUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput = {
@@ -81574,12 +79384,12 @@ export namespace Prisma {
     update?: XOR<TriviaRoundQuizUpdateWithoutTriviaRoundQuizChoiceInput, TriviaRoundQuizUncheckedUpdateWithoutTriviaRoundQuizChoiceInput>
   }
 
-  export type TriviaQuizChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput = {
-    create?: XOR<TriviaQuizChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
-    connectOrCreate?: TriviaQuizChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput
-    upsert?: TriviaQuizChoiceUpsertWithoutTriviaRoundQuizChoiceInput
-    connect?: TriviaQuizChoiceWhereUniqueInput
-    update?: XOR<TriviaQuizChoiceUpdateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput>
+  export type TriviaChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput = {
+    create?: XOR<TriviaChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
+    connectOrCreate?: TriviaChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput
+    upsert?: TriviaChoiceUpsertWithoutTriviaRoundQuizChoiceInput
+    connect?: TriviaChoiceWhereUniqueInput
+    update?: XOR<TriviaChoiceUpdateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput>
   }
 
   export type FollowingCreateNestedManyWithoutFromInput = {
@@ -83849,43 +81659,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type FBPostCreateWithoutUserInput = {
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
-    Like?: LikeCreateNestedManyWithoutPostInput
-    Share?: ShareCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostUncheckedCreateWithoutUserInput = {
-    id?: number
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
-    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
-    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostCreateOrConnectWithoutUserInput = {
-    where: FBPostWhereUniqueInput
-    create: XOR<FBPostCreateWithoutUserInput, FBPostUncheckedCreateWithoutUserInput>
-  }
-
-  export type FBPostCreateManyUserInputEnvelope = {
-    data: Enumerable<FBPostCreateManyUserInput>
-    skipDuplicates?: boolean
-  }
-
   export type CommentCreateWithoutFromUserIdInput = {
     post: FBPostCreateNestedOneWithoutCommentInput
     commentDetail: string
@@ -84061,6 +81834,80 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FBPostCreateWithoutPostByUserInput = {
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
+    postDetail?: string | null
+    image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutPostByUserInput = {
+    id?: number
+    postInUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
+    groupId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutPostByUserInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutPostByUserInput, FBPostUncheckedCreateWithoutPostByUserInput>
+  }
+
+  export type FBPostCreateManyPostByUserInputEnvelope = {
+    data: Enumerable<FBPostCreateManyPostByUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type FBPostCreateWithoutPostInUserInput = {
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postDetail?: string | null
+    image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostUncheckedCreateWithoutPostInUserInput = {
+    id?: number
+    postByUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
+    groupId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type FBPostCreateOrConnectWithoutPostInUserInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutPostInUserInput, FBPostUncheckedCreateWithoutPostInUserInput>
+  }
+
+  export type FBPostCreateManyPostInUserInputEnvelope = {
+    data: Enumerable<FBPostCreateManyPostInUserInput>
+    skipDuplicates?: boolean
+  }
+
   export type FriendsUpsertWithWhereUniqueWithoutFromInput = {
     where: FriendsWhereUniqueInput
     update: XOR<FriendsUpdateWithoutFromInput, FriendsUncheckedUpdateWithoutFromInput>
@@ -84102,34 +81949,6 @@ export namespace Prisma {
   export type FriendsUpdateManyWithWhereWithoutToInput = {
     where: FriendsScalarWhereInput
     data: XOR<FriendsUpdateManyMutationInput, FriendsUncheckedUpdateManyWithoutToFriendsInput>
-  }
-
-  export type FBPostUpsertWithWhereUniqueWithoutUserInput = {
-    where: FBPostWhereUniqueInput
-    update: XOR<FBPostUpdateWithoutUserInput, FBPostUncheckedUpdateWithoutUserInput>
-    create: XOR<FBPostCreateWithoutUserInput, FBPostUncheckedCreateWithoutUserInput>
-  }
-
-  export type FBPostUpdateWithWhereUniqueWithoutUserInput = {
-    where: FBPostWhereUniqueInput
-    data: XOR<FBPostUpdateWithoutUserInput, FBPostUncheckedUpdateWithoutUserInput>
-  }
-
-  export type FBPostUpdateManyWithWhereWithoutUserInput = {
-    where: FBPostScalarWhereInput
-    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyWithoutPostInput>
-  }
-
-  export type FBPostScalarWhereInput = {
-    AND?: Enumerable<FBPostScalarWhereInput>
-    OR?: Enumerable<FBPostScalarWhereInput>
-    NOT?: Enumerable<FBPostScalarWhereInput>
-    id?: IntFilter | number
-    userId?: IntFilter | number
-    postDetail?: StringNullableFilter | string | null
-    image?: StringNullableFilter | string | null
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
   }
 
   export type CommentUpsertWithWhereUniqueWithoutFromUserIdInput = {
@@ -84315,6 +82134,52 @@ export namespace Prisma {
     data: XOR<FBDirectMsgUpdateManyMutationInput, FBDirectMsgUncheckedUpdateManyWithoutToDirectMsgInput>
   }
 
+  export type FBPostUpsertWithWhereUniqueWithoutPostByUserInput = {
+    where: FBPostWhereUniqueInput
+    update: XOR<FBPostUpdateWithoutPostByUserInput, FBPostUncheckedUpdateWithoutPostByUserInput>
+    create: XOR<FBPostCreateWithoutPostByUserInput, FBPostUncheckedCreateWithoutPostByUserInput>
+  }
+
+  export type FBPostUpdateWithWhereUniqueWithoutPostByUserInput = {
+    where: FBPostWhereUniqueInput
+    data: XOR<FBPostUpdateWithoutPostByUserInput, FBPostUncheckedUpdateWithoutPostByUserInput>
+  }
+
+  export type FBPostUpdateManyWithWhereWithoutPostByUserInput = {
+    where: FBPostScalarWhereInput
+    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyWithoutPostByUserInput>
+  }
+
+  export type FBPostScalarWhereInput = {
+    AND?: Enumerable<FBPostScalarWhereInput>
+    OR?: Enumerable<FBPostScalarWhereInput>
+    NOT?: Enumerable<FBPostScalarWhereInput>
+    id?: IntFilter | number
+    postByUserId?: IntNullableFilter | number | null
+    postInUserId?: IntNullableFilter | number | null
+    postDetail?: StringNullableFilter | string | null
+    image?: StringNullableFilter | string | null
+    groupId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type FBPostUpsertWithWhereUniqueWithoutPostInUserInput = {
+    where: FBPostWhereUniqueInput
+    update: XOR<FBPostUpdateWithoutPostInUserInput, FBPostUncheckedUpdateWithoutPostInUserInput>
+    create: XOR<FBPostCreateWithoutPostInUserInput, FBPostUncheckedCreateWithoutPostInUserInput>
+  }
+
+  export type FBPostUpdateWithWhereUniqueWithoutPostInUserInput = {
+    where: FBPostWhereUniqueInput
+    data: XOR<FBPostUpdateWithoutPostInUserInput, FBPostUncheckedUpdateWithoutPostInUserInput>
+  }
+
+  export type FBPostUpdateManyWithWhereWithoutPostInUserInput = {
+    where: FBPostScalarWhereInput
+    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyWithoutPostInUserInput>
+  }
+
   export type FBUserCreateWithoutFromFriendsInput = {
     name: string
     profileImage: string
@@ -84323,7 +82188,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
@@ -84331,6 +82195,8 @@ export namespace Prisma {
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutFromFriendsInput = {
@@ -84342,7 +82208,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
@@ -84350,6 +82215,8 @@ export namespace Prisma {
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutFromFriendsInput = {
@@ -84365,7 +82232,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
@@ -84373,6 +82239,8 @@ export namespace Prisma {
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutToFriendsInput = {
@@ -84384,7 +82252,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
@@ -84392,6 +82259,8 @@ export namespace Prisma {
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutToFriendsInput = {
@@ -84412,7 +82281,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
@@ -84420,6 +82288,8 @@ export namespace Prisma {
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutFromFriendsInput = {
@@ -84431,7 +82301,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
@@ -84439,6 +82308,8 @@ export namespace Prisma {
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUpsertWithoutToFriendsInput = {
@@ -84454,7 +82325,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
@@ -84462,6 +82332,8 @@ export namespace Prisma {
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutToFriendsInput = {
@@ -84473,7 +82345,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
@@ -84481,9 +82352,11 @@ export namespace Prisma {
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
-  export type FBUserCreateWithoutPostInput = {
+  export type FBUserCreateWithoutPostByUserInput = {
     name: string
     profileImage: string
     coverImage: string
@@ -84499,9 +82372,10 @@ export namespace Prisma {
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
-  export type FBUserUncheckedCreateWithoutPostInput = {
+  export type FBUserUncheckedCreateWithoutPostByUserInput = {
     id?: number
     name: string
     profileImage: string
@@ -84518,11 +82392,78 @@ export namespace Prisma {
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
-  export type FBUserCreateOrConnectWithoutPostInput = {
+  export type FBUserCreateOrConnectWithoutPostByUserInput = {
     where: FBUserWhereUniqueInput
-    create: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+    create: XOR<FBUserCreateWithoutPostByUserInput, FBUserUncheckedCreateWithoutPostByUserInput>
+  }
+
+  export type FBUserCreateWithoutPostInUserInput = {
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsCreateNestedManyWithoutFromInput
+    toFriends?: FriendsCreateNestedManyWithoutToInput
+    Comment?: CommentCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
+    Like?: LikeCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareCreateNestedManyWithoutFromUserIdInput
+    fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
+    toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+  }
+
+  export type FBUserUncheckedCreateWithoutPostInUserInput = {
+    id?: number
+    name: string
+    profileImage: string
+    coverImage: string
+    bio: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
+    toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
+    Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
+    Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
+    Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
+    fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
+    toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+  }
+
+  export type FBUserCreateOrConnectWithoutPostInUserInput = {
+    where: FBUserWhereUniqueInput
+    create: XOR<FBUserCreateWithoutPostInUserInput, FBUserUncheckedCreateWithoutPostInUserInput>
+  }
+
+  export type GroupCreateWithoutFBPostInput = {
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupUncheckedCreateWithoutFBPostInput = {
+    id?: number
+    groupName: string
+    groupImage: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type GroupCreateOrConnectWithoutFBPostInput = {
+    where: GroupWhereUniqueInput
+    create: XOR<GroupCreateWithoutFBPostInput, GroupUncheckedCreateWithoutFBPostInput>
   }
 
   export type CommentCreateWithoutPostInput = {
@@ -84549,50 +82490,6 @@ export namespace Prisma {
 
   export type CommentCreateManyPostInputEnvelope = {
     data: Enumerable<CommentCreateManyPostInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PostinGroupCreateWithoutPostInput = {
-    group: GroupCreateNestedOneWithoutPostinGroupInput
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupUncheckedCreateWithoutPostInput = {
-    id?: number
-    groupId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupCreateOrConnectWithoutPostInput = {
-    where: PostinGroupWhereUniqueInput
-    create: XOR<PostinGroupCreateWithoutPostInput, PostinGroupUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostinGroupCreateManyPostInputEnvelope = {
-    data: Enumerable<PostinGroupCreateManyPostInput>
-    skipDuplicates?: boolean
-  }
-
-  export type PostinProfileCreateWithoutPostInput = {
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileUncheckedCreateWithoutPostInput = {
-    id?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileCreateOrConnectWithoutPostInput = {
-    where: PostinProfileWhereUniqueInput
-    create: XOR<PostinProfileCreateWithoutPostInput, PostinProfileUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostinProfileCreateManyPostInputEnvelope = {
-    data: Enumerable<PostinProfileCreateManyPostInput>
     skipDuplicates?: boolean
   }
 
@@ -84669,12 +82566,12 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type FBUserUpsertWithoutPostInput = {
-    update: XOR<FBUserUpdateWithoutPostInput, FBUserUncheckedUpdateWithoutPostInput>
-    create: XOR<FBUserCreateWithoutPostInput, FBUserUncheckedCreateWithoutPostInput>
+  export type FBUserUpsertWithoutPostByUserInput = {
+    update: XOR<FBUserUpdateWithoutPostByUserInput, FBUserUncheckedUpdateWithoutPostByUserInput>
+    create: XOR<FBUserCreateWithoutPostByUserInput, FBUserUncheckedCreateWithoutPostByUserInput>
   }
 
-  export type FBUserUpdateWithoutPostInput = {
+  export type FBUserUpdateWithoutPostByUserInput = {
     name?: StringFieldUpdateOperationsInput | string
     profileImage?: StringFieldUpdateOperationsInput | string
     coverImage?: StringFieldUpdateOperationsInput | string
@@ -84690,9 +82587,10 @@ export namespace Prisma {
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
-  export type FBUserUncheckedUpdateWithoutPostInput = {
+  export type FBUserUncheckedUpdateWithoutPostByUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     profileImage?: StringFieldUpdateOperationsInput | string
@@ -84709,6 +82607,73 @@ export namespace Prisma {
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
+  }
+
+  export type FBUserUpsertWithoutPostInUserInput = {
+    update: XOR<FBUserUpdateWithoutPostInUserInput, FBUserUncheckedUpdateWithoutPostInUserInput>
+    create: XOR<FBUserCreateWithoutPostInUserInput, FBUserUncheckedCreateWithoutPostInUserInput>
+  }
+
+  export type FBUserUpdateWithoutPostInUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUpdateManyWithoutToNestedInput
+    Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
+    Like?: LikeUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUpdateManyWithoutFromUserIdNestedInput
+    fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
+    toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+  }
+
+  export type FBUserUncheckedUpdateWithoutPostInUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: StringFieldUpdateOperationsInput | string
+    coverImage?: StringFieldUpdateOperationsInput | string
+    bio?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
+    toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
+    Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
+    fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
+    toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+  }
+
+  export type GroupUpsertWithoutFBPostInput = {
+    update: XOR<GroupUpdateWithoutFBPostInput, GroupUncheckedUpdateWithoutFBPostInput>
+    create: XOR<GroupCreateWithoutFBPostInput, GroupUncheckedCreateWithoutFBPostInput>
+  }
+
+  export type GroupUpdateWithoutFBPostInput = {
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutFBPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    groupName?: StringFieldUpdateOperationsInput | string
+    groupImage?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput
   }
 
   export type CommentUpsertWithWhereUniqueWithoutPostInput = {
@@ -84725,59 +82690,6 @@ export namespace Prisma {
   export type CommentUpdateManyWithWhereWithoutPostInput = {
     where: CommentScalarWhereInput
     data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutCommentInput>
-  }
-
-  export type PostinGroupUpsertWithWhereUniqueWithoutPostInput = {
-    where: PostinGroupWhereUniqueInput
-    update: XOR<PostinGroupUpdateWithoutPostInput, PostinGroupUncheckedUpdateWithoutPostInput>
-    create: XOR<PostinGroupCreateWithoutPostInput, PostinGroupUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostinGroupUpdateWithWhereUniqueWithoutPostInput = {
-    where: PostinGroupWhereUniqueInput
-    data: XOR<PostinGroupUpdateWithoutPostInput, PostinGroupUncheckedUpdateWithoutPostInput>
-  }
-
-  export type PostinGroupUpdateManyWithWhereWithoutPostInput = {
-    where: PostinGroupScalarWhereInput
-    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyWithoutPostinGroupInput>
-  }
-
-  export type PostinGroupScalarWhereInput = {
-    AND?: Enumerable<PostinGroupScalarWhereInput>
-    OR?: Enumerable<PostinGroupScalarWhereInput>
-    NOT?: Enumerable<PostinGroupScalarWhereInput>
-    id?: IntFilter | number
-    groupId?: IntFilter | number
-    postId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
-  }
-
-  export type PostinProfileUpsertWithWhereUniqueWithoutPostInput = {
-    where: PostinProfileWhereUniqueInput
-    update: XOR<PostinProfileUpdateWithoutPostInput, PostinProfileUncheckedUpdateWithoutPostInput>
-    create: XOR<PostinProfileCreateWithoutPostInput, PostinProfileUncheckedCreateWithoutPostInput>
-  }
-
-  export type PostinProfileUpdateWithWhereUniqueWithoutPostInput = {
-    where: PostinProfileWhereUniqueInput
-    data: XOR<PostinProfileUpdateWithoutPostInput, PostinProfileUncheckedUpdateWithoutPostInput>
-  }
-
-  export type PostinProfileUpdateManyWithWhereWithoutPostInput = {
-    where: PostinProfileScalarWhereInput
-    data: XOR<PostinProfileUpdateManyMutationInput, PostinProfileUncheckedUpdateManyWithoutPostinProfileInput>
-  }
-
-  export type PostinProfileScalarWhereInput = {
-    AND?: Enumerable<PostinProfileScalarWhereInput>
-    OR?: Enumerable<PostinProfileScalarWhereInput>
-    NOT?: Enumerable<PostinProfileScalarWhereInput>
-    id?: IntFilter | number
-    postId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
   }
 
   export type LikeUpsertWithWhereUniqueWithoutPostInput = {
@@ -84840,13 +82752,13 @@ export namespace Prisma {
   }
 
   export type FBPostCreateWithoutCommentInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
     postDetail?: string | null
     image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
     Like?: LikeCreateNestedManyWithoutPostInput
     Share?: ShareCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
@@ -84854,13 +82766,13 @@ export namespace Prisma {
 
   export type FBPostUncheckedCreateWithoutCommentInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
     Like?: LikeUncheckedCreateNestedManyWithoutPostInput
     Share?: ShareUncheckedCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
@@ -84880,13 +82792,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutCommentInput = {
@@ -84899,13 +82812,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutCommentInput = {
@@ -84944,13 +82858,13 @@ export namespace Prisma {
   }
 
   export type FBPostUpdateWithoutCommentInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
     Like?: LikeUpdateManyWithoutPostNestedInput
     Share?: ShareUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
@@ -84958,13 +82872,13 @@ export namespace Prisma {
 
   export type FBPostUncheckedUpdateWithoutCommentInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
     Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
     Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
@@ -84984,13 +82898,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutCommentInput = {
@@ -85003,13 +82918,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type SubCommentUpsertWithWhereUniqueWithoutCommentInput = {
@@ -85059,13 +82975,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutSubCommentInput = {
@@ -85078,13 +82995,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutSubCommentInput = {
@@ -85128,13 +83046,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutSubCommentInput = {
@@ -85147,38 +83066,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBPostCreateWithoutLikeInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
     postDetail?: string | null
     image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
     Share?: ShareCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
   }
 
   export type FBPostUncheckedCreateWithoutLikeInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
     Share?: ShareUncheckedCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
   }
@@ -85197,13 +83117,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutLikeInput = {
@@ -85216,13 +83137,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutLikeInput = {
@@ -85254,28 +83176,28 @@ export namespace Prisma {
   }
 
   export type FBPostUpdateWithoutLikeInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
     Share?: ShareUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
   }
 
   export type FBPostUncheckedUpdateWithoutLikeInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
     Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -85294,13 +83216,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutLikeInput = {
@@ -85313,13 +83236,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type LikeTypeUpsertWithoutLikeInput = {
@@ -85341,28 +83265,28 @@ export namespace Prisma {
   }
 
   export type FBPostCreateWithoutShareInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
     postDetail?: string | null
     image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
     Like?: LikeCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
   }
 
   export type FBPostUncheckedCreateWithoutShareInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
     Like?: LikeUncheckedCreateNestedManyWithoutPostInput
     PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
   }
@@ -85381,13 +83305,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutShareInput = {
@@ -85400,13 +83325,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutShareInput = {
@@ -85438,28 +83364,28 @@ export namespace Prisma {
   }
 
   export type FBPostUpdateWithoutShareInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
     Like?: LikeUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
   }
 
   export type FBPostUncheckedUpdateWithoutShareInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
     Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
     PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -85478,13 +83404,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutShareInput = {
@@ -85497,13 +83424,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type ShareStatusUpsertWithoutShareInput = {
@@ -85547,26 +83475,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PostinGroupCreateWithoutGroupInput = {
-    post: FBPostCreateNestedOneWithoutPostinGroupInput
+  export type FBPostCreateWithoutGroupInput = {
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
+    postDetail?: string | null
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Comment?: CommentCreateNestedManyWithoutPostInput
+    Like?: LikeCreateNestedManyWithoutPostInput
+    Share?: ShareCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
   }
 
-  export type PostinGroupUncheckedCreateWithoutGroupInput = {
+  export type FBPostUncheckedCreateWithoutGroupInput = {
     id?: number
-    postId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
+    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
+    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type PostinGroupCreateOrConnectWithoutGroupInput = {
-    where: PostinGroupWhereUniqueInput
-    create: XOR<PostinGroupCreateWithoutGroupInput, PostinGroupUncheckedCreateWithoutGroupInput>
+  export type FBPostCreateOrConnectWithoutGroupInput = {
+    where: FBPostWhereUniqueInput
+    create: XOR<FBPostCreateWithoutGroupInput, FBPostUncheckedCreateWithoutGroupInput>
   }
 
-  export type PostinGroupCreateManyGroupInputEnvelope = {
-    data: Enumerable<PostinGroupCreateManyGroupInput>
+  export type FBPostCreateManyGroupInputEnvelope = {
+    data: Enumerable<FBPostCreateManyGroupInput>
     skipDuplicates?: boolean
   }
 
@@ -85586,20 +83528,20 @@ export namespace Prisma {
     data: XOR<GroupOnUserUpdateManyMutationInput, GroupOnUserUncheckedUpdateManyWithoutGroupOnUserInput>
   }
 
-  export type PostinGroupUpsertWithWhereUniqueWithoutGroupInput = {
-    where: PostinGroupWhereUniqueInput
-    update: XOR<PostinGroupUpdateWithoutGroupInput, PostinGroupUncheckedUpdateWithoutGroupInput>
-    create: XOR<PostinGroupCreateWithoutGroupInput, PostinGroupUncheckedCreateWithoutGroupInput>
+  export type FBPostUpsertWithWhereUniqueWithoutGroupInput = {
+    where: FBPostWhereUniqueInput
+    update: XOR<FBPostUpdateWithoutGroupInput, FBPostUncheckedUpdateWithoutGroupInput>
+    create: XOR<FBPostCreateWithoutGroupInput, FBPostUncheckedCreateWithoutGroupInput>
   }
 
-  export type PostinGroupUpdateWithWhereUniqueWithoutGroupInput = {
-    where: PostinGroupWhereUniqueInput
-    data: XOR<PostinGroupUpdateWithoutGroupInput, PostinGroupUncheckedUpdateWithoutGroupInput>
+  export type FBPostUpdateWithWhereUniqueWithoutGroupInput = {
+    where: FBPostWhereUniqueInput
+    data: XOR<FBPostUpdateWithoutGroupInput, FBPostUncheckedUpdateWithoutGroupInput>
   }
 
-  export type PostinGroupUpdateManyWithWhereWithoutGroupInput = {
-    where: PostinGroupScalarWhereInput
-    data: XOR<PostinGroupUpdateManyMutationInput, PostinGroupUncheckedUpdateManyWithoutPostinGroupInput>
+  export type FBPostUpdateManyWithWhereWithoutGroupInput = {
+    where: FBPostScalarWhereInput
+    data: XOR<FBPostUpdateManyMutationInput, FBPostUncheckedUpdateManyWithoutFBPostInput>
   }
 
   export type FBUserCreateWithoutGroupOnUserInput = {
@@ -85611,13 +83553,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutGroupOnUserInput = {
@@ -85630,13 +83573,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutGroupOnUserInput = {
@@ -85649,7 +83593,7 @@ export namespace Prisma {
     groupImage: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    PostinGroup?: PostinGroupCreateNestedManyWithoutGroupInput
+    FBPost?: FBPostCreateNestedManyWithoutGroupInput
   }
 
   export type GroupUncheckedCreateWithoutGroupOnUserInput = {
@@ -85658,7 +83602,7 @@ export namespace Prisma {
     groupImage: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutGroupInput
+    FBPost?: FBPostUncheckedCreateNestedManyWithoutGroupInput
   }
 
   export type GroupCreateOrConnectWithoutGroupOnUserInput = {
@@ -85680,13 +83624,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutGroupOnUserInput = {
@@ -85699,13 +83644,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type GroupUpsertWithoutGroupOnUserInput = {
@@ -85718,7 +83664,7 @@ export namespace Prisma {
     groupImage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PostinGroup?: PostinGroupUpdateManyWithoutGroupNestedInput
+    FBPost?: FBPostUpdateManyWithoutGroupNestedInput
   }
 
   export type GroupUncheckedUpdateWithoutGroupOnUserInput = {
@@ -85727,179 +83673,7 @@ export namespace Prisma {
     groupImage?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutGroupNestedInput
-  }
-
-  export type GroupCreateWithoutPostinGroupInput = {
-    groupName: string
-    groupImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    GroupOnUser?: GroupOnUserCreateNestedManyWithoutGroupInput
-  }
-
-  export type GroupUncheckedCreateWithoutPostinGroupInput = {
-    id?: number
-    groupName: string
-    groupImage: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutGroupInput
-  }
-
-  export type GroupCreateOrConnectWithoutPostinGroupInput = {
-    where: GroupWhereUniqueInput
-    create: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
-  }
-
-  export type FBPostCreateWithoutPostinGroupInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
-    Like?: LikeCreateNestedManyWithoutPostInput
-    Share?: ShareCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostUncheckedCreateWithoutPostinGroupInput = {
-    id?: number
-    userId: number
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
-    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
-    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostCreateOrConnectWithoutPostinGroupInput = {
-    where: FBPostWhereUniqueInput
-    create: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
-  }
-
-  export type GroupUpsertWithoutPostinGroupInput = {
-    update: XOR<GroupUpdateWithoutPostinGroupInput, GroupUncheckedUpdateWithoutPostinGroupInput>
-    create: XOR<GroupCreateWithoutPostinGroupInput, GroupUncheckedCreateWithoutPostinGroupInput>
-  }
-
-  export type GroupUpdateWithoutPostinGroupInput = {
-    groupName?: StringFieldUpdateOperationsInput | string
-    groupImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    GroupOnUser?: GroupOnUserUpdateManyWithoutGroupNestedInput
-  }
-
-  export type GroupUncheckedUpdateWithoutPostinGroupInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    groupName?: StringFieldUpdateOperationsInput | string
-    groupImage?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutGroupNestedInput
-  }
-
-  export type FBPostUpsertWithoutPostinGroupInput = {
-    update: XOR<FBPostUpdateWithoutPostinGroupInput, FBPostUncheckedUpdateWithoutPostinGroupInput>
-    create: XOR<FBPostCreateWithoutPostinGroupInput, FBPostUncheckedCreateWithoutPostinGroupInput>
-  }
-
-  export type FBPostUpdateWithoutPostinGroupInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
-    Like?: LikeUpdateManyWithoutPostNestedInput
-    Share?: ShareUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
-  }
-
-  export type FBPostUncheckedUpdateWithoutPostinGroupInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
-    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
-    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type FBPostCreateWithoutPostinProfileInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    Like?: LikeCreateNestedManyWithoutPostInput
-    Share?: ShareCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostUncheckedCreateWithoutPostinProfileInput = {
-    id?: number
-    userId: number
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    Like?: LikeUncheckedCreateNestedManyWithoutPostInput
-    Share?: ShareUncheckedCreateNestedManyWithoutPostInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedCreateNestedManyWithoutPostInput
-  }
-
-  export type FBPostCreateOrConnectWithoutPostinProfileInput = {
-    where: FBPostWhereUniqueInput
-    create: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
-  }
-
-  export type FBPostUpsertWithoutPostinProfileInput = {
-    update: XOR<FBPostUpdateWithoutPostinProfileInput, FBPostUncheckedUpdateWithoutPostinProfileInput>
-    create: XOR<FBPostCreateWithoutPostinProfileInput, FBPostUncheckedCreateWithoutPostinProfileInput>
-  }
-
-  export type FBPostUpdateWithoutPostinProfileInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    Like?: LikeUpdateManyWithoutPostNestedInput
-    Share?: ShareUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
-  }
-
-  export type FBPostUncheckedUpdateWithoutPostinProfileInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
-    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
+    FBPost?: FBPostUncheckedUpdateManyWithoutGroupNestedInput
   }
 
   export type LikeCreateWithoutLikeTypeInput = {
@@ -85993,13 +83767,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     toDirectMsg?: FBDirectMsgCreateNestedManyWithoutToInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutFromDirectMsgInput = {
@@ -86012,13 +83787,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     toDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutToInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutFromDirectMsgInput = {
@@ -86035,13 +83811,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsCreateNestedManyWithoutFromInput
     toFriends?: FriendsCreateNestedManyWithoutToInput
-    Post?: FBPostCreateNestedManyWithoutUserInput
     Comment?: CommentCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserCreateNestedManyWithoutUserInput
     Like?: LikeCreateNestedManyWithoutFromUserIdInput
     Share?: ShareCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgCreateNestedManyWithoutFromInput
+    postByUser?: FBPostCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserUncheckedCreateWithoutToDirectMsgInput = {
@@ -86054,13 +83831,14 @@ export namespace Prisma {
     updatedAt?: Date | string
     fromFriends?: FriendsUncheckedCreateNestedManyWithoutFromInput
     toFriends?: FriendsUncheckedCreateNestedManyWithoutToInput
-    Post?: FBPostUncheckedCreateNestedManyWithoutUserInput
     Comment?: CommentUncheckedCreateNestedManyWithoutFromUserIdInput
     SubComment?: SubCommentUncheckedCreateNestedManyWithoutFromUserIdInput
     GroupOnUser?: GroupOnUserUncheckedCreateNestedManyWithoutUserInput
     Like?: LikeUncheckedCreateNestedManyWithoutFromUserIdInput
     Share?: ShareUncheckedCreateNestedManyWithoutFromUserIdInput
     fromDirectMsg?: FBDirectMsgUncheckedCreateNestedManyWithoutFromInput
+    postByUser?: FBPostUncheckedCreateNestedManyWithoutPostByUserInput
+    postInUser?: FBPostUncheckedCreateNestedManyWithoutPostInUserInput
   }
 
   export type FBUserCreateOrConnectWithoutToDirectMsgInput = {
@@ -86082,13 +83860,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     toDirectMsg?: FBDirectMsgUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutFromDirectMsgInput = {
@@ -86101,13 +83880,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     toDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutToNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUpsertWithoutToDirectMsgInput = {
@@ -86124,13 +83904,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUpdateManyWithoutToNestedInput
-    Post?: FBPostUpdateManyWithoutUserNestedInput
     Comment?: CommentUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUpdateManyWithoutUserNestedInput
     Like?: LikeUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUpdateManyWithoutFromNestedInput
+    postByUser?: FBPostUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBUserUncheckedUpdateWithoutToDirectMsgInput = {
@@ -86143,13 +83924,14 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fromFriends?: FriendsUncheckedUpdateManyWithoutFromNestedInput
     toFriends?: FriendsUncheckedUpdateManyWithoutToNestedInput
-    Post?: FBPostUncheckedUpdateManyWithoutUserNestedInput
     Comment?: CommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     SubComment?: SubCommentUncheckedUpdateManyWithoutFromUserIdNestedInput
     GroupOnUser?: GroupOnUserUncheckedUpdateManyWithoutUserNestedInput
     Like?: LikeUncheckedUpdateManyWithoutFromUserIdNestedInput
     Share?: ShareUncheckedUpdateManyWithoutFromUserIdNestedInput
     fromDirectMsg?: FBDirectMsgUncheckedUpdateManyWithoutFromNestedInput
+    postByUser?: FBPostUncheckedUpdateManyWithoutPostByUserNestedInput
+    postInUser?: FBPostUncheckedUpdateManyWithoutPostInUserNestedInput
   }
 
   export type FBPostOnHashtagCreateWithoutHashtagInput = {
@@ -86192,28 +83974,28 @@ export namespace Prisma {
   }
 
   export type FBPostCreateWithoutPostOnHashtagInput = {
-    user: FBUserCreateNestedOneWithoutPostInput
+    postByUser?: FBUserCreateNestedOneWithoutPostByUserInput
+    postInUser?: FBUserCreateNestedOneWithoutPostInUserInput
     postDetail?: string | null
     image?: string | null
+    group?: GroupCreateNestedOneWithoutFBPostInput
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileCreateNestedManyWithoutPostInput
     Like?: LikeCreateNestedManyWithoutPostInput
     Share?: ShareCreateNestedManyWithoutPostInput
   }
 
   export type FBPostUncheckedCreateWithoutPostOnHashtagInput = {
     id?: number
-    userId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
     postDetail?: string | null
     image?: string | null
+    groupId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     Comment?: CommentUncheckedCreateNestedManyWithoutPostInput
-    PostinGroup?: PostinGroupUncheckedCreateNestedManyWithoutPostInput
-    PostinProfile?: PostinProfileUncheckedCreateNestedManyWithoutPostInput
     Like?: LikeUncheckedCreateNestedManyWithoutPostInput
     Share?: ShareUncheckedCreateNestedManyWithoutPostInput
   }
@@ -86247,28 +84029,28 @@ export namespace Prisma {
   }
 
   export type FBPostUpdateWithoutPostOnHashtagInput = {
-    user?: FBUserUpdateOneRequiredWithoutPostNestedInput
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
     Like?: LikeUpdateManyWithoutPostNestedInput
     Share?: ShareUpdateManyWithoutPostNestedInput
   }
 
   export type FBPostUncheckedUpdateWithoutPostOnHashtagInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
     postDetail?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
     Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
     Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -87995,22 +85777,22 @@ export namespace Prisma {
   }
 
   export type TriviaQuizCreateWithoutCategoryInput = {
-    name: string
-    answerId: number
+    quizName: string
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceCreateNestedManyWithoutQuizInput
     triviaRoundQuiz?: TriviaRoundQuizCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizUncheckedCreateWithoutCategoryInput = {
     id?: number
-    name: string
-    answerId: number
+    quizName: string
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedCreateNestedManyWithoutQuizInput
     triviaRoundQuiz?: TriviaRoundQuizUncheckedCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizCreateOrConnectWithoutCategoryInput = {
@@ -88024,6 +85806,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundCreateWithoutCategoryInput = {
+    name?: string | null
     score: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -88032,6 +85815,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedCreateWithoutCategoryInput = {
     id?: number
+    name?: string | null
     score: number
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -88069,9 +85853,9 @@ export namespace Prisma {
     OR?: Enumerable<TriviaQuizScalarWhereInput>
     NOT?: Enumerable<TriviaQuizScalarWhereInput>
     id?: IntFilter | number
-    name?: StringFilter | string
+    quizName?: StringFilter | string
     categoryId?: IntFilter | number
-    answerId?: IntFilter | number
+    triviaAnswerChoiceId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -88097,6 +85881,7 @@ export namespace Prisma {
     OR?: Enumerable<TriviaRoundScalarWhereInput>
     NOT?: Enumerable<TriviaRoundScalarWhereInput>
     id?: IntFilter | number
+    name?: StringNullableFilter | string | null
     score?: IntFilter | number
     categoryId?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
@@ -88104,7 +85889,7 @@ export namespace Prisma {
   }
 
   export type TriviaCategoryCreateWithoutTriviaQuizInput = {
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRound?: TriviaRoundCreateNestedManyWithoutCategoryInput
@@ -88112,7 +85897,7 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedCreateWithoutTriviaQuizInput = {
     id?: number
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRound?: TriviaRoundUncheckedCreateNestedManyWithoutCategoryInput
@@ -88123,29 +85908,26 @@ export namespace Prisma {
     create: XOR<TriviaCategoryCreateWithoutTriviaQuizInput, TriviaCategoryUncheckedCreateWithoutTriviaQuizInput>
   }
 
-  export type TriviaQuizChoiceCreateWithoutQuizInput = {
-    name: string
+  export type TriviaChoiceCreateWithoutTriviaQuizAnswerInput = {
+    choiceName: string
+    quiz?: TriviaQuizCreateNestedOneWithoutTriviaChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceCreateNestedManyWithoutRoundQuizChoiceInput
   }
 
-  export type TriviaQuizChoiceUncheckedCreateWithoutQuizInput = {
+  export type TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput = {
     id?: number
-    name: string
+    choiceName: string
+    quizId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedCreateNestedManyWithoutRoundQuizChoiceInput
   }
 
-  export type TriviaQuizChoiceCreateOrConnectWithoutQuizInput = {
-    where: TriviaQuizChoiceWhereUniqueInput
-    create: XOR<TriviaQuizChoiceCreateWithoutQuizInput, TriviaQuizChoiceUncheckedCreateWithoutQuizInput>
-  }
-
-  export type TriviaQuizChoiceCreateManyQuizInputEnvelope = {
-    data: Enumerable<TriviaQuizChoiceCreateManyQuizInput>
-    skipDuplicates?: boolean
+  export type TriviaChoiceCreateOrConnectWithoutTriviaQuizAnswerInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
   }
 
   export type TriviaRoundQuizCreateWithoutQuizInput = {
@@ -88175,13 +85957,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TriviaChoiceCreateWithoutQuizInput = {
+    choiceName: string
+    triviaQuizAnswer?: TriviaQuizCreateNestedOneWithoutAnswerInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceCreateNestedManyWithoutRoundQuizChoiceInput
+  }
+
+  export type TriviaChoiceUncheckedCreateWithoutQuizInput = {
+    id?: number
+    choiceName: string
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedCreateNestedManyWithoutRoundQuizChoiceInput
+  }
+
+  export type TriviaChoiceCreateOrConnectWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutQuizInput, TriviaChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type TriviaChoiceCreateManyQuizInputEnvelope = {
+    data: Enumerable<TriviaChoiceCreateManyQuizInput>
+    skipDuplicates?: boolean
+  }
+
   export type TriviaCategoryUpsertWithoutTriviaQuizInput = {
     update: XOR<TriviaCategoryUpdateWithoutTriviaQuizInput, TriviaCategoryUncheckedUpdateWithoutTriviaQuizInput>
     create: XOR<TriviaCategoryCreateWithoutTriviaQuizInput, TriviaCategoryUncheckedCreateWithoutTriviaQuizInput>
   }
 
   export type TriviaCategoryUpdateWithoutTriviaQuizInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRound?: TriviaRoundUpdateManyWithoutCategoryNestedInput
@@ -88189,37 +85998,32 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedUpdateWithoutTriviaQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRound?: TriviaRoundUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type TriviaQuizChoiceUpsertWithWhereUniqueWithoutQuizInput = {
-    where: TriviaQuizChoiceWhereUniqueInput
-    update: XOR<TriviaQuizChoiceUpdateWithoutQuizInput, TriviaQuizChoiceUncheckedUpdateWithoutQuizInput>
-    create: XOR<TriviaQuizChoiceCreateWithoutQuizInput, TriviaQuizChoiceUncheckedCreateWithoutQuizInput>
+  export type TriviaChoiceUpsertWithoutTriviaQuizAnswerInput = {
+    update: XOR<TriviaChoiceUpdateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaQuizAnswerInput, TriviaChoiceUncheckedCreateWithoutTriviaQuizAnswerInput>
   }
 
-  export type TriviaQuizChoiceUpdateWithWhereUniqueWithoutQuizInput = {
-    where: TriviaQuizChoiceWhereUniqueInput
-    data: XOR<TriviaQuizChoiceUpdateWithoutQuizInput, TriviaQuizChoiceUncheckedUpdateWithoutQuizInput>
+  export type TriviaChoiceUpdateWithoutTriviaQuizAnswerInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quiz?: TriviaQuizUpdateOneWithoutTriviaChoiceNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUpdateManyWithoutRoundQuizChoiceNestedInput
   }
 
-  export type TriviaQuizChoiceUpdateManyWithWhereWithoutQuizInput = {
-    where: TriviaQuizChoiceScalarWhereInput
-    data: XOR<TriviaQuizChoiceUpdateManyMutationInput, TriviaQuizChoiceUncheckedUpdateManyWithoutTriviaQuizChoiceInput>
-  }
-
-  export type TriviaQuizChoiceScalarWhereInput = {
-    AND?: Enumerable<TriviaQuizChoiceScalarWhereInput>
-    OR?: Enumerable<TriviaQuizChoiceScalarWhereInput>
-    NOT?: Enumerable<TriviaQuizChoiceScalarWhereInput>
-    id?: IntFilter | number
-    name?: StringFilter | string
-    quizId?: IntFilter | number
-    createdAt?: DateTimeFilter | Date | string
-    updatedAt?: DateTimeFilter | Date | string
+  export type TriviaChoiceUncheckedUpdateWithoutTriviaQuizAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedUpdateManyWithoutRoundQuizChoiceNestedInput
   }
 
   export type TriviaRoundQuizUpsertWithWhereUniqueWithoutQuizInput = {
@@ -88250,28 +86054,79 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter | Date | string
   }
 
-  export type TriviaQuizCreateWithoutTriviaQuizChoiceInput = {
-    name: string
+  export type TriviaChoiceUpsertWithWhereUniqueWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    update: XOR<TriviaChoiceUpdateWithoutQuizInput, TriviaChoiceUncheckedUpdateWithoutQuizInput>
+    create: XOR<TriviaChoiceCreateWithoutQuizInput, TriviaChoiceUncheckedCreateWithoutQuizInput>
+  }
+
+  export type TriviaChoiceUpdateWithWhereUniqueWithoutQuizInput = {
+    where: TriviaChoiceWhereUniqueInput
+    data: XOR<TriviaChoiceUpdateWithoutQuizInput, TriviaChoiceUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type TriviaChoiceUpdateManyWithWhereWithoutQuizInput = {
+    where: TriviaChoiceScalarWhereInput
+    data: XOR<TriviaChoiceUpdateManyMutationInput, TriviaChoiceUncheckedUpdateManyWithoutTriviaChoiceInput>
+  }
+
+  export type TriviaChoiceScalarWhereInput = {
+    AND?: Enumerable<TriviaChoiceScalarWhereInput>
+    OR?: Enumerable<TriviaChoiceScalarWhereInput>
+    NOT?: Enumerable<TriviaChoiceScalarWhereInput>
+    id?: IntFilter | number
+    choiceName?: StringFilter | string
+    quizId?: IntNullableFilter | number | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type TriviaQuizCreateWithoutTriviaChoiceInput = {
+    quizName: string
     category: TriviaCategoryCreateNestedOneWithoutTriviaQuizInput
-    answerId: number
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuiz?: TriviaRoundQuizCreateNestedManyWithoutQuizInput
   }
 
-  export type TriviaQuizUncheckedCreateWithoutTriviaQuizChoiceInput = {
+  export type TriviaQuizUncheckedCreateWithoutTriviaChoiceInput = {
     id?: number
-    name: string
+    quizName: string
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaRoundQuiz?: TriviaRoundQuizUncheckedCreateNestedManyWithoutQuizInput
   }
 
-  export type TriviaQuizCreateOrConnectWithoutTriviaQuizChoiceInput = {
+  export type TriviaQuizCreateOrConnectWithoutTriviaChoiceInput = {
     where: TriviaQuizWhereUniqueInput
-    create: XOR<TriviaQuizCreateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaQuizChoiceInput>
+    create: XOR<TriviaQuizCreateWithoutTriviaChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaChoiceInput>
+  }
+
+  export type TriviaQuizCreateWithoutAnswerInput = {
+    quizName: string
+    category: TriviaCategoryCreateNestedOneWithoutTriviaQuizInput
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    triviaRoundQuiz?: TriviaRoundQuizCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceCreateNestedManyWithoutQuizInput
+  }
+
+  export type TriviaQuizUncheckedCreateWithoutAnswerInput = {
+    id?: number
+    quizName: string
+    categoryId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    triviaRoundQuiz?: TriviaRoundQuizUncheckedCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type TriviaQuizCreateOrConnectWithoutAnswerInput = {
+    where: TriviaQuizWhereUniqueInput
+    create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
   }
 
   export type TriviaRoundQuizChoiceCreateWithoutRoundQuizChoiceInput = {
@@ -88297,28 +86152,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TriviaQuizUpsertWithoutTriviaQuizChoiceInput = {
-    update: XOR<TriviaQuizUpdateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedUpdateWithoutTriviaQuizChoiceInput>
-    create: XOR<TriviaQuizCreateWithoutTriviaQuizChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaQuizChoiceInput>
+  export type TriviaQuizUpsertWithoutTriviaChoiceInput = {
+    update: XOR<TriviaQuizUpdateWithoutTriviaChoiceInput, TriviaQuizUncheckedUpdateWithoutTriviaChoiceInput>
+    create: XOR<TriviaQuizCreateWithoutTriviaChoiceInput, TriviaQuizUncheckedCreateWithoutTriviaChoiceInput>
   }
 
-  export type TriviaQuizUpdateWithoutTriviaQuizChoiceInput = {
-    name?: StringFieldUpdateOperationsInput | string
+  export type TriviaQuizUpdateWithoutTriviaChoiceInput = {
+    quizName?: StringFieldUpdateOperationsInput | string
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizNestedInput
-    answerId?: IntFieldUpdateOperationsInput | number
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRoundQuiz?: TriviaRoundQuizUpdateManyWithoutQuizNestedInput
   }
 
-  export type TriviaQuizUncheckedUpdateWithoutTriviaQuizChoiceInput = {
+  export type TriviaQuizUncheckedUpdateWithoutTriviaChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaRoundQuiz?: TriviaRoundQuizUncheckedUpdateManyWithoutQuizNestedInput
+  }
+
+  export type TriviaQuizUpsertWithoutAnswerInput = {
+    update: XOR<TriviaQuizUpdateWithoutAnswerInput, TriviaQuizUncheckedUpdateWithoutAnswerInput>
+    create: XOR<TriviaQuizCreateWithoutAnswerInput, TriviaQuizUncheckedCreateWithoutAnswerInput>
+  }
+
+  export type TriviaQuizUpdateWithoutAnswerInput = {
+    quizName?: StringFieldUpdateOperationsInput | string
+    category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuiz?: TriviaRoundQuizUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUpdateManyWithoutQuizNestedInput
+  }
+
+  export type TriviaQuizUncheckedUpdateWithoutAnswerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizName?: StringFieldUpdateOperationsInput | string
+    categoryId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuiz?: TriviaRoundQuizUncheckedUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaRoundQuizChoiceUpsertWithWhereUniqueWithoutRoundQuizChoiceInput = {
@@ -88349,7 +86228,7 @@ export namespace Prisma {
   }
 
   export type TriviaCategoryCreateWithoutTriviaRoundInput = {
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaQuiz?: TriviaQuizCreateNestedManyWithoutCategoryInput
@@ -88357,7 +86236,7 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedCreateWithoutTriviaRoundInput = {
     id?: number
-    name: string
+    categoryName: string
     createdAt?: Date | string
     updatedAt?: Date | string
     triviaQuiz?: TriviaQuizUncheckedCreateNestedManyWithoutCategoryInput
@@ -88401,7 +86280,7 @@ export namespace Prisma {
   }
 
   export type TriviaCategoryUpdateWithoutTriviaRoundInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaQuiz?: TriviaQuizUpdateManyWithoutCategoryNestedInput
@@ -88409,7 +86288,7 @@ export namespace Prisma {
 
   export type TriviaCategoryUncheckedUpdateWithoutTriviaRoundInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     triviaQuiz?: TriviaQuizUncheckedUpdateManyWithoutCategoryNestedInput
@@ -88432,6 +86311,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundCreateWithoutTriviaRoundQuizInput = {
+    name?: string | null
     score: number
     category: TriviaCategoryCreateNestedOneWithoutTriviaRoundInput
     createdAt?: Date | string
@@ -88440,6 +86320,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedCreateWithoutTriviaRoundQuizInput = {
     id?: number
+    name?: string | null
     score: number
     categoryId: number
     createdAt?: Date | string
@@ -88452,22 +86333,22 @@ export namespace Prisma {
   }
 
   export type TriviaQuizCreateWithoutTriviaRoundQuizInput = {
-    name: string
+    quizName: string
     category: TriviaCategoryCreateNestedOneWithoutTriviaQuizInput
-    answerId: number
+    answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizUncheckedCreateWithoutTriviaRoundQuizInput = {
     id?: number
-    name: string
+    quizName: string
     categoryId: number
-    answerId: number
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedCreateNestedManyWithoutQuizInput
+    TriviaChoice?: TriviaChoiceUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type TriviaQuizCreateOrConnectWithoutTriviaRoundQuizInput = {
@@ -88476,7 +86357,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundQuizChoiceCreateWithoutRoundQuizInput = {
-    roundQuizChoice: TriviaQuizChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput
+    roundQuizChoice: TriviaChoiceCreateNestedOneWithoutTriviaRoundQuizChoiceInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -88504,6 +86385,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundUpdateWithoutTriviaRoundQuizInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaRoundNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88512,6 +86394,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedUpdateWithoutTriviaRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     categoryId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88524,22 +86407,22 @@ export namespace Prisma {
   }
 
   export type TriviaQuizUpdateWithoutTriviaRoundQuizInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     category?: TriviaCategoryUpdateOneRequiredWithoutTriviaQuizNestedInput
-    answerId?: IntFieldUpdateOperationsInput | number
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaQuizUncheckedUpdateWithoutTriviaRoundQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    quizName?: StringFieldUpdateOperationsInput | string
     categoryId?: IntFieldUpdateOperationsInput | number
-    answerId?: IntFieldUpdateOperationsInput | number
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaRoundQuizChoiceUpsertWithWhereUniqueWithoutRoundQuizInput = {
@@ -88580,24 +86463,26 @@ export namespace Prisma {
     create: XOR<TriviaRoundQuizCreateWithoutTriviaRoundQuizChoiceInput, TriviaRoundQuizUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
   }
 
-  export type TriviaQuizChoiceCreateWithoutTriviaRoundQuizChoiceInput = {
-    name: string
-    quiz: TriviaQuizCreateNestedOneWithoutTriviaQuizChoiceInput
+  export type TriviaChoiceCreateWithoutTriviaRoundQuizChoiceInput = {
+    choiceName: string
+    quiz?: TriviaQuizCreateNestedOneWithoutTriviaChoiceInput
+    triviaQuizAnswer?: TriviaQuizCreateNestedOneWithoutAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TriviaQuizChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput = {
+  export type TriviaChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput = {
     id?: number
-    name: string
-    quizId: number
+    choiceName: string
+    quizId?: number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedCreateNestedOneWithoutAnswerInput
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TriviaQuizChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput = {
-    where: TriviaQuizChoiceWhereUniqueInput
-    create: XOR<TriviaQuizChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
+  export type TriviaChoiceCreateOrConnectWithoutTriviaRoundQuizChoiceInput = {
+    where: TriviaChoiceWhereUniqueInput
+    create: XOR<TriviaChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
   }
 
   export type TriviaRoundQuizUpsertWithoutTriviaRoundQuizChoiceInput = {
@@ -88622,22 +86507,24 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TriviaQuizChoiceUpsertWithoutTriviaRoundQuizChoiceInput = {
-    update: XOR<TriviaQuizChoiceUpdateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput>
-    create: XOR<TriviaQuizChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaQuizChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
+  export type TriviaChoiceUpsertWithoutTriviaRoundQuizChoiceInput = {
+    update: XOR<TriviaChoiceUpdateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput>
+    create: XOR<TriviaChoiceCreateWithoutTriviaRoundQuizChoiceInput, TriviaChoiceUncheckedCreateWithoutTriviaRoundQuizChoiceInput>
   }
 
-  export type TriviaQuizChoiceUpdateWithoutTriviaRoundQuizChoiceInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    quiz?: TriviaQuizUpdateOneRequiredWithoutTriviaQuizChoiceNestedInput
+  export type TriviaChoiceUpdateWithoutTriviaRoundQuizChoiceInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quiz?: TriviaQuizUpdateOneWithoutTriviaChoiceNestedInput
+    triviaQuizAnswer?: TriviaQuizUpdateOneWithoutAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TriviaQuizChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput = {
+  export type TriviaChoiceUncheckedUpdateWithoutTriviaRoundQuizChoiceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    quizId?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    quizId?: NullableIntFieldUpdateOperationsInput | number | null
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -91959,14 +89846,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type FBPostCreateManyUserInput = {
-    id?: number
-    postDetail?: string | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type CommentCreateManyFromUserIdInput = {
     id?: number
     postId: number
@@ -92022,6 +89901,26 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type FBPostCreateManyPostByUserInput = {
+    id?: number
+    postInUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
+    groupId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FBPostCreateManyPostInUserInput = {
+    id?: number
+    postByUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
+    groupId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type FriendsUpdateWithoutFromInput = {
     to?: FBUserUpdateOneRequiredWithoutToFriendsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -92058,41 +89957,6 @@ export namespace Prisma {
   export type FriendsUncheckedUpdateManyWithoutToFriendsInput = {
     id?: IntFieldUpdateOperationsInput | number
     fromUserId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type FBPostUpdateWithoutUserInput = {
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUpdateManyWithoutPostNestedInput
-    Like?: LikeUpdateManyWithoutPostNestedInput
-    Share?: ShareUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
-  }
-
-  export type FBPostUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    PostinGroup?: PostinGroupUncheckedUpdateManyWithoutPostNestedInput
-    PostinProfile?: PostinProfileUncheckedUpdateManyWithoutPostNestedInput
-    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
-    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
-    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type FBPostUncheckedUpdateManyWithoutPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -92257,23 +90121,84 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FBPostUpdateWithoutPostByUserInput = {
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutPostByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutPostByUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FBPostUpdateWithoutPostInUserInput = {
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: GroupUpdateOneWithoutFBPostNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateWithoutPostInUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutPostInUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    groupId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyPostInput = {
     id?: number
     commentDetail: string
     userId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinGroupCreateManyPostInput = {
-    id?: number
-    groupId: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PostinProfileCreateManyPostInput = {
-    id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -92316,43 +90241,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     SubComment?: SubCommentUncheckedUpdateManyWithoutCommentNestedInput
-  }
-
-  export type PostinGroupUpdateWithoutPostInput = {
-    group?: GroupUpdateOneRequiredWithoutPostinGroupNestedInput
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupUncheckedUpdateWithoutPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    groupId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinGroupUncheckedUpdateManyWithoutPostinGroupInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    groupId?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileUpdateWithoutPostInput = {
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileUncheckedUpdateWithoutPostInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostinProfileUncheckedUpdateManyWithoutPostinProfileInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LikeUpdateWithoutPostInput = {
@@ -92435,9 +90323,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type PostinGroupCreateManyGroupInput = {
+  export type FBPostCreateManyGroupInput = {
     id?: number
-    postId: number
+    postByUserId?: number | null
+    postInUserId?: number | null
+    postDetail?: string | null
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -92455,15 +90346,39 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PostinGroupUpdateWithoutGroupInput = {
-    post?: FBPostUpdateOneRequiredWithoutPostinGroupNestedInput
+  export type FBPostUpdateWithoutGroupInput = {
+    postByUser?: FBUserUpdateOneWithoutPostByUserNestedInput
+    postInUser?: FBUserUpdateOneWithoutPostInUserNestedInput
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUpdateManyWithoutPostNestedInput
+    Like?: LikeUpdateManyWithoutPostNestedInput
+    Share?: ShareUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUpdateManyWithoutPostNestedInput
   }
 
-  export type PostinGroupUncheckedUpdateWithoutGroupInput = {
+  export type FBPostUncheckedUpdateWithoutGroupInput = {
     id?: IntFieldUpdateOperationsInput | number
-    postId?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Comment?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    Like?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    Share?: ShareUncheckedUpdateManyWithoutPostNestedInput
+    PostOnHashtag?: FBPostOnHashtagUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type FBPostUncheckedUpdateManyWithoutFBPostInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    postByUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postInUserId?: NullableIntFieldUpdateOperationsInput | number | null
+    postDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -93082,47 +90997,49 @@ export namespace Prisma {
 
   export type TriviaQuizCreateManyCategoryInput = {
     id?: number
-    name: string
-    answerId: number
+    quizName: string
+    triviaAnswerChoiceId: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TriviaRoundCreateManyCategoryInput = {
     id?: number
+    name?: string | null
     score: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type TriviaQuizUpdateWithoutCategoryInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    answerId?: IntFieldUpdateOperationsInput | number
+    quizName?: StringFieldUpdateOperationsInput | string
+    answer?: TriviaChoiceUpdateOneRequiredWithoutTriviaQuizAnswerNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUpdateManyWithoutQuizNestedInput
     triviaRoundQuiz?: TriviaRoundQuizUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaQuizUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    answerId?: IntFieldUpdateOperationsInput | number
+    quizName?: StringFieldUpdateOperationsInput | string
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaQuizChoice?: TriviaQuizChoiceUncheckedUpdateManyWithoutQuizNestedInput
     triviaRoundQuiz?: TriviaRoundQuizUncheckedUpdateManyWithoutQuizNestedInput
+    TriviaChoice?: TriviaChoiceUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type TriviaQuizUncheckedUpdateManyWithoutTriviaQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    answerId?: IntFieldUpdateOperationsInput | number
+    quizName?: StringFieldUpdateOperationsInput | string
+    triviaAnswerChoiceId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TriviaRoundUpdateWithoutCategoryInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93131,6 +91048,7 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -93139,16 +91057,10 @@ export namespace Prisma {
 
   export type TriviaRoundUncheckedUpdateManyWithoutTriviaRoundInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TriviaQuizChoiceCreateManyQuizInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type TriviaRoundQuizCreateManyQuizInput = {
@@ -93159,26 +91071,11 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type TriviaQuizChoiceUpdateWithoutQuizInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUpdateManyWithoutRoundQuizChoiceNestedInput
-  }
-
-  export type TriviaQuizChoiceUncheckedUpdateWithoutQuizInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedUpdateManyWithoutRoundQuizChoiceNestedInput
-  }
-
-  export type TriviaQuizChoiceUncheckedUpdateManyWithoutTriviaQuizChoiceInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type TriviaChoiceCreateManyQuizInput = {
+    id?: number
+    choiceName: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type TriviaRoundQuizUpdateWithoutQuizInput = {
@@ -93202,6 +91099,30 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     roundId?: IntFieldUpdateOperationsInput | number
     playerChooseChoice?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TriviaChoiceUpdateWithoutQuizInput = {
+    choiceName?: StringFieldUpdateOperationsInput | string
+    triviaQuizAnswer?: TriviaQuizUpdateOneWithoutAnswerNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUpdateManyWithoutRoundQuizChoiceNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
+    triviaQuizAnswer?: TriviaQuizUncheckedUpdateOneWithoutAnswerNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triviaRoundQuizChoice?: TriviaRoundQuizChoiceUncheckedUpdateManyWithoutRoundQuizChoiceNestedInput
+  }
+
+  export type TriviaChoiceUncheckedUpdateManyWithoutTriviaChoiceInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    choiceName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -93266,7 +91187,7 @@ export namespace Prisma {
   }
 
   export type TriviaRoundQuizChoiceUpdateWithoutRoundQuizInput = {
-    roundQuizChoice?: TriviaQuizChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput
+    roundQuizChoice?: TriviaChoiceUpdateOneRequiredWithoutTriviaRoundQuizChoiceNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

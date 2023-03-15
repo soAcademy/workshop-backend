@@ -49,7 +49,6 @@ model FBUser {
   updatedAt     DateTime      @updatedAt
   fromFriends   Friends[]     @relation("FromFriend")
   toFriends     Friends[]     @relation("ToFriend")
-  Post          FBPost[]
   Comment       Comment[]
   SubComment    SubComment[]
   GroupOnUser   GroupOnUser[]
@@ -57,6 +56,8 @@ model FBUser {
   Share         Share[]
   fromDirectMsg FBDirectMsg[] @relation("FromDirectMessage")
   toDirectMsg   FBDirectMsg[] @relation("ToDirectMessage")
+  postByUser    FBPost[]      @relation("postByUserId")
+  postInUser    FBPost[]      @relation("postInUserId")
 }
 
 model Friends {
@@ -67,19 +68,23 @@ model Friends {
   toUserId   Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@unique([fromUserId, toUserId])
 }
 
 model FBPost {
   id            Int               @id @default(autoincrement())
-  user          FBUser            @relation(fields: [userId], references: [id])
-  userId        Int
+  postByUser    FBUser?           @relation("postByUserId", fields: [postByUserId], references: [id])
+  postByUserId  Int?
+  postInUser    FBUser?           @relation("postInUserId", fields: [postInUserId], references: [id])
+  postInUserId  Int?
   postDetail    String?
   image         String?
+  group         Group?            @relation(fields: [groupId], references: [id])
+  groupId       Int?
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   Comment       Comment[]
-  PostinGroup   PostinGroup[]
-  PostinProfile PostinProfile[]
   Like          Like[]
   Share         Share[]
   PostOnHashtag FBPostOnHashtag[]
@@ -139,7 +144,7 @@ model Group {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   GroupOnUser GroupOnUser[]
-  PostinGroup PostinGroup[]
+  FBPost      FBPost[]
 }
 
 model GroupOnUser {
@@ -148,24 +153,6 @@ model GroupOnUser {
   userId    Int
   group     Group    @relation(fields: [groupId], references: [id])
   groupId   Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model PostinGroup {
-  id        Int      @id @default(autoincrement())
-  group     Group    @relation(fields: [groupId], references: [id])
-  groupId   Int
-  post      FBPost   @relation(fields: [postId], references: [id])
-  postId    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model PostinProfile {
-  id        Int      @id @default(autoincrement())
-  post      FBPost   @relation(fields: [postId], references: [id])
-  postId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -199,7 +186,7 @@ model FBDirectMsg {
 
 model FBHashtag {
   id            Int               @id @default(autoincrement())
-  hashtag       String
+  hashtag       String            @unique
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
   PostOnHashtag FBPostOnHashtag[]
@@ -354,31 +341,33 @@ model TodoList {
 }
 
 model TriviaCategory {
-  id          Int           @id @default(autoincrement())
-  name        String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  triviaQuiz  TriviaQuiz[]
-  triviaRound TriviaRound[]
+  id           Int           @id @default(autoincrement())
+  categoryName String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  triviaQuiz   TriviaQuiz[]
+  triviaRound  TriviaRound[]
 }
 
 model TriviaQuiz {
-  id               Int                @id @default(autoincrement())
-  name             String
-  category         TriviaCategory     @relation(fields: [categoryId], references: [id])
-  categoryId       Int
-  answerId         Int
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  triviaQuizChoice TriviaQuizChoice[]
-  triviaRoundQuiz  TriviaRoundQuiz[]
+  id                   Int               @id @default(autoincrement())
+  quizName             String
+  category             TriviaCategory    @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  answer               TriviaChoice      @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
+  triviaAnswerChoiceId Int               @unique
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  triviaRoundQuiz      TriviaRoundQuiz[]
+  TriviaChoice         TriviaChoice[]
 }
 
-model TriviaQuizChoice {
+model TriviaChoice {
   id                    Int                     @id @default(autoincrement())
-  name                  String
-  quiz                  TriviaQuiz              @relation(fields: [quizId], references: [id])
-  quizId                Int
+  choiceName            String
+  quiz                  TriviaQuiz?             @relation(fields: [quizId], references: [id])
+  quizId                Int?
+  triviaQuizAnswer      TriviaQuiz?             @relation("TriviaQuizAnswer")
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   triviaRoundQuizChoice TriviaRoundQuizChoice[]
@@ -386,6 +375,7 @@ model TriviaQuizChoice {
 
 model TriviaRound {
   id              Int               @id @default(autoincrement())
+  name            String?
   score           Int
   category        TriviaCategory    @relation(fields: [categoryId], references: [id])
   categoryId      Int
@@ -407,13 +397,13 @@ model TriviaRoundQuiz {
 }
 
 model TriviaRoundQuizChoice {
-  id              Int              @id @default(autoincrement())
-  roundQuiz       TriviaRoundQuiz  @relation(fields: [roundQuizId], references: [id])
+  id              Int             @id @default(autoincrement())
+  roundQuiz       TriviaRoundQuiz @relation(fields: [roundQuizId], references: [id])
   roundQuizId     Int
-  roundQuizChoice TriviaQuizChoice @relation(fields: [quizChoiceId], references: [id])
+  roundQuizChoice TriviaChoice    @relation(fields: [quizChoiceId], references: [id])
   quizChoiceId    Int
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model User {
@@ -438,6 +428,8 @@ model Following {
   toUserId   Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@unique([fromUserId, toUserId])
 }
 
 model Post {
@@ -464,7 +456,7 @@ model DirectMsg {
 
 model Hashtag {
   id            Int             @id @default(autoincrement())
-  hashtag       String
+  hashtag       String          @unique
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   postOnHashtag PostOnHashtag[]

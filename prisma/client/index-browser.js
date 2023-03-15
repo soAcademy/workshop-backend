@@ -192,9 +192,11 @@ exports.Prisma.FBPostOnHashtagScalarFieldEnum = makeEnum({
 
 exports.Prisma.FBPostScalarFieldEnum = makeEnum({
   id: 'id',
-  userId: 'userId',
+  postByUserId: 'postByUserId',
+  postInUserId: 'postInUserId',
   postDetail: 'postDetail',
   image: 'image',
+  groupId: 'groupId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -359,21 +361,6 @@ exports.Prisma.PostScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.PostinGroupScalarFieldEnum = makeEnum({
-  id: 'id',
-  groupId: 'groupId',
-  postId: 'postId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
-exports.Prisma.PostinProfileScalarFieldEnum = makeEnum({
-  id: 'id',
-  postId: 'postId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-});
-
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -436,14 +423,14 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.TriviaCategoryScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
+  categoryName: 'categoryName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
 
-exports.Prisma.TriviaQuizChoiceScalarFieldEnum = makeEnum({
+exports.Prisma.TriviaChoiceScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
+  choiceName: 'choiceName',
   quizId: 'quizId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -451,9 +438,9 @@ exports.Prisma.TriviaQuizChoiceScalarFieldEnum = makeEnum({
 
 exports.Prisma.TriviaQuizScalarFieldEnum = makeEnum({
   id: 'id',
-  name: 'name',
+  quizName: 'quizName',
   categoryId: 'categoryId',
-  answerId: 'answerId',
+  triviaAnswerChoiceId: 'triviaAnswerChoiceId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
@@ -477,6 +464,7 @@ exports.Prisma.TriviaRoundQuizScalarFieldEnum = makeEnum({
 
 exports.Prisma.TriviaRoundScalarFieldEnum = makeEnum({
   id: 'id',
+  name: 'name',
   score: 'score',
   categoryId: 'categoryId',
   createdAt: 'createdAt',
@@ -665,8 +653,6 @@ exports.Prisma.ModelName = makeEnum({
   Share: 'Share',
   Group: 'Group',
   GroupOnUser: 'GroupOnUser',
-  PostinGroup: 'PostinGroup',
-  PostinProfile: 'PostinProfile',
   LikeType: 'LikeType',
   ShareStatus: 'ShareStatus',
   FBDirectMsg: 'FBDirectMsg',
@@ -686,7 +672,7 @@ exports.Prisma.ModelName = makeEnum({
   TodoList: 'TodoList',
   TriviaCategory: 'TriviaCategory',
   TriviaQuiz: 'TriviaQuiz',
-  TriviaQuizChoice: 'TriviaQuizChoice',
+  TriviaChoice: 'TriviaChoice',
   TriviaRound: 'TriviaRound',
   TriviaRoundQuiz: 'TriviaRoundQuiz',
   TriviaRoundQuizChoice: 'TriviaRoundQuizChoice',

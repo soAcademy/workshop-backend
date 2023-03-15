@@ -1,29 +1,31 @@
 model TriviaCategory {
-  id          Int           @id @default(autoincrement())
-  name        String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  triviaQuiz  TriviaQuiz[]
-  triviaRound TriviaRound[]
+  id           Int           @id @default(autoincrement())
+  categoryName String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  triviaQuiz   TriviaQuiz[]
+  triviaRound  TriviaRound[]
 }
 
 model TriviaQuiz {
-  id               Int                @id @default(autoincrement())
-  name             String
-  category         TriviaCategory     @relation(fields: [categoryId], references: [id])
-  categoryId       Int
-  answerId         Int
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  triviaQuizChoice TriviaQuizChoice[]
-  triviaRoundQuiz  TriviaRoundQuiz[]
+  id                   Int               @id @default(autoincrement())
+  quizName             String
+  category             TriviaCategory    @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  answer               TriviaChoice      @relation("TriviaQuizAnswer", fields: [triviaAnswerChoiceId], references: [id])
+  triviaAnswerChoiceId Int               @unique
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  triviaRoundQuiz      TriviaRoundQuiz[]
+  TriviaChoice         TriviaChoice[]
 }
 
-model TriviaQuizChoice {
+model TriviaChoice {
   id                    Int                     @id @default(autoincrement())
-  name                  String
-  quiz                  TriviaQuiz              @relation(fields: [quizId], references: [id])
-  quizId                Int
+  choiceName            String
+  quiz                  TriviaQuiz?             @relation(fields: [quizId], references: [id])
+  quizId                Int?
+  triviaQuizAnswer      TriviaQuiz?             @relation("TriviaQuizAnswer")
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   triviaRoundQuizChoice TriviaRoundQuizChoice[]
@@ -31,6 +33,7 @@ model TriviaQuizChoice {
 
 model TriviaRound {
   id              Int               @id @default(autoincrement())
+  name            String?
   score           Int
   category        TriviaCategory    @relation(fields: [categoryId], references: [id])
   categoryId      Int
@@ -52,11 +55,11 @@ model TriviaRoundQuiz {
 }
 
 model TriviaRoundQuizChoice {
-  id              Int              @id @default(autoincrement())
-  roundQuiz       TriviaRoundQuiz  @relation(fields: [roundQuizId], references: [id])
+  id              Int             @id @default(autoincrement())
+  roundQuiz       TriviaRoundQuiz @relation(fields: [roundQuizId], references: [id])
   roundQuizId     Int
-  roundQuizChoice TriviaQuizChoice @relation(fields: [quizChoiceId], references: [id])
+  roundQuizChoice TriviaChoice    @relation(fields: [quizChoiceId], references: [id])
   quizChoiceId    Int
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }

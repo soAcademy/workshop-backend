@@ -1,4 +1,3 @@
-import { parseArgs } from "util";
 import { PrismaClient } from "../../prisma/client";
 import {
   ICreateCategory,
@@ -9,7 +8,6 @@ import {
   IUpdateMenu,
   IUpdateOrder,
 } from "./binKitchen.interface";
-import { isTemplateExpression } from "typescript";
 
 export const prisma = new PrismaClient();
 
