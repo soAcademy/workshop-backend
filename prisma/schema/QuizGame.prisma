@@ -33,7 +33,7 @@ model QuizChoice {
 
 model QuizRound {
   id             Int           @id @default(autoincrement())
-  name           String        @unique //playerName (unique)
+  name           String         //playerName (unique)
   totalScore     Int
   category       QuizCategory? @relation(fields: [quizCategoryId], references: [id])
   quizCategoryId Int

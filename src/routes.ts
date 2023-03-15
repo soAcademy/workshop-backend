@@ -16,7 +16,8 @@ import {
   deleteTeacherHandler,
 } from "./sql";
 import { createManyTasksHandler, createTaskHandler, deleteManyTasksHandler, deleteTaskHandler, findUniqueOrThrowTaskHandler, findUniqueTaskHandler, getTasksHandler, updateManyTasksHandler, updateTaskHandler } from "./todoList";
-import { createManyQuizzesHandler, createQuizCategoryHandler, createQuizHandler, getQuizHandler, getResultsHandler, submitQuizHandler } from "./trivia/trivia.handler";
+import { createQuizCategoryHandler, createQuizHandler, getQuizCategoriesHandler, getQuizHandler, getResultsHandler, submitQuizHandler, updateQuizHandler } from "./trivia/trivia.handler";
+import { createCommentHandler, createDirectMessageHandler, createUserHandler, createUserPostHandler, createUserRelationHandler, getPostsByHashtagHandler, getPostsByUserHandler } from "./twitter/twitter.handler";
 export const AppRoutes = [
   {
     path: "/function/add",
@@ -194,6 +195,11 @@ export const AppRoutes = [
     action: createQuizCategoryHandler,
   },
   {
+    path: "/trivia/getQuizCategories",
+    method: "post",
+    action: getQuizCategoriesHandler,
+  },
+  {
     path: "/trivia/createQuiz",
     method: "post",
     action: createQuizHandler,
@@ -209,13 +215,48 @@ export const AppRoutes = [
     action: submitQuizHandler,
   },
   {
+    path: "/trivia/updateQuiz",
+    method: "post",
+    action: updateQuizHandler,
+  },
+  {
     path: "/trivia/getResults",
     method: "post",
     action: getResultsHandler,
   },
   {
-    path: "/trivia/createManyQuizzes",
+    path: "/twitter/createUser",
     method: "post",
-    action: createManyQuizzesHandler,
+    action: createUserHandler,
   },
+  {
+    path: "/twitter/createUserPost",
+    method: "post",
+    action: createUserPostHandler,
+  },
+  {
+    path: "/twitter/getPostsbyHashtag",
+    method: "post",
+    action: getPostsByHashtagHandler,
+  },
+  {
+    path: "/twitter/createComment",
+    method: "post",
+    action: createCommentHandler,
+  },
+  {
+    path: "/twitter/getPostsbyUser",
+    method: "post",
+    action: getPostsByUserHandler,
+  },
+  {
+    path: "/twitter/createDirectMessage",
+    method: "post",
+    action: createDirectMessageHandler,
+  },
+  {
+    path: "/twitter/createUserRealtion",
+    method: "post",
+    action: createUserRelationHandler,
+  }
 ];

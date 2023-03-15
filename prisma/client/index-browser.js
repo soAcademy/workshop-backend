@@ -366,6 +366,8 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.TwitterCommentScalarFieldEnum = makeEnum({
   id: 'id',
+  message: 'message',
+  image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   twitterPostId: 'twitterPostId',
@@ -377,8 +379,8 @@ exports.Prisma.TwitterDirectMessageScalarFieldEnum = makeEnum({
   message: 'message',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  followingUserId: 'followingUserId',
-  followerUserId: 'followerUserId'
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId'
 });
 
 exports.Prisma.TwitterHashtagScalarFieldEnum = makeEnum({
@@ -408,8 +410,8 @@ exports.Prisma.TwitterUserRelationScalarFieldEnum = makeEnum({
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  fromUserId: 'fromUserId',
-  toUserId: 'toUserId'
+  followingUserId: 'followingUserId',
+  followerUserId: 'followerUserId'
 });
 
 exports.Prisma.TwitterUserScalarFieldEnum = makeEnum({

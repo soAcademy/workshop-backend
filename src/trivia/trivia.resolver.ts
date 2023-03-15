@@ -4,9 +4,12 @@ import {
   ICreateQuiz,
   IGetQuiz,
   ISubmitQuiz,
+  IupdateQuiz,
 } from "./trivia.interface";
 
 export const prisma = new PrismaClient();
+
+export const sumNumber = (args: {x: number, y: number}) => args.x + args.y
 
 export const createQuizCategory = (args: ICreateQuizCategory) =>
   prisma.quizCategory.create({
@@ -15,7 +18,7 @@ export const createQuizCategory = (args: ICreateQuizCategory) =>
     },
   });
 
-export const getCategories = () => prisma.quizCategory.findMany();
+export const getQuizCategories = () => prisma.quizCategory.findMany();
 
 export const createQuiz = (args: ICreateQuiz) =>
   prisma.quizQuestion.create({
@@ -86,6 +89,9 @@ export const submitQuiz = async (args: ISubmitQuiz) => {
     return acc + (isCorrect ? 1 : 0); //If the user's answer matches the correct answer, the accumulator is incremented by 1, otherwise, it remains unchanged.
   }, 0);
 
+  // return totalScore;
+
+
   const result = await prisma.quizRound.create({
     data: {
       name: args.name,
@@ -111,3 +117,25 @@ export const getResults = async () => {
   const result = await prisma.quizRound.findMany();
   return result;
 };
+
+export const updateQuiz = (args:IupdateQuiz) => 
+  prisma.quizQuestion.update({
+    where: {
+      id: args.quizQuestionId
+    },
+    data: {
+      name: args.name,
+      quizChoices: {
+        deleteMany: {},
+        create: args.quizChoices.map((r) => ({
+          choice: r.choice
+        }))
+      },
+      answer: {
+        update: {
+          choice: args.answer
+        }
+      }
+    }
+  })
+  

@@ -25,7 +25,7 @@ model TwitterPost {
 
 model TwitterHashtag {
   id              Int                    @id @default(autoincrement())
-  hashtag         String
+  hashtag         String                 @unique
   createdAt       DateTime               @default(now())
   updatedAt       DateTime               @updatedAt
   postsToHashtags TwitterPostToHashtag[]
@@ -42,28 +42,30 @@ model TwitterPostToHashtag {
 }
 
 model TwitterDirectMessage {
-  id              Int         @id @default(autoincrement())
-  message         String
-  from            TwitterUser @relation("fromDirectMessage", fields: [followingUserId], references: [id])
-  to              TwitterUser @relation("toDirectMessage", fields: [followerUserId], references: [id])
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  followingUserId Int
-  followerUserId  Int
-}
-
-model TwitterUserRelation {
   id         Int         @id @default(autoincrement())
-  from       TwitterUser @relation("followings", fields: [fromUserId], references: [id])
-  to         TwitterUser @relation("followers", fields: [toUserId], references: [id])
+  message    String
+  from       TwitterUser @relation("fromDirectMessage", fields: [fromUserId], references: [id])
+  to         TwitterUser @relation("toDirectMessage", fields: [toUserId], references: [id])
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   fromUserId Int
   toUserId   Int
 }
 
+model TwitterUserRelation {
+  id              Int         @id @default(autoincrement())
+  from            TwitterUser @relation("followings", fields: [followingUserId], references: [id])
+  to              TwitterUser @relation("followers", fields: [followerUserId], references: [id])
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  followingUserId Int
+  followerUserId  Int
+}
+
 model TwitterComment {
   id            Int         @id @default(autoincrement())
+  message       String
+  image         String?
   post          TwitterPost @relation(fields: [twitterPostId], references: [id])
   user          TwitterUser @relation(fields: [twitterUserId], references: [id])
   createdAt     DateTime    @default(now())

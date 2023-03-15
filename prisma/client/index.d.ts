@@ -436,8 +436,8 @@ export type TwitterDirectMessage = {
   message: string
   createdAt: Date
   updatedAt: Date
-  followingUserId: number
-  followerUserId: number
+  fromUserId: number
+  toUserId: number
 }
 
 /**
@@ -448,8 +448,8 @@ export type TwitterUserRelation = {
   id: number
   createdAt: Date
   updatedAt: Date
-  fromUserId: number
-  toUserId: number
+  followingUserId: number
+  followerUserId: number
 }
 
 /**
@@ -458,6 +458,8 @@ export type TwitterUserRelation = {
  */
 export type TwitterComment = {
   id: number
+  message: string
+  image: string | null
   createdAt: Date
   updatedAt: Date
   twitterPostId: number
@@ -35500,14 +35502,14 @@ export namespace Prisma {
 
   export type TwitterDirectMessageAvgAggregateOutputType = {
     id: number | null
-    followingUserId: number | null
-    followerUserId: number | null
+    fromUserId: number | null
+    toUserId: number | null
   }
 
   export type TwitterDirectMessageSumAggregateOutputType = {
     id: number | null
-    followingUserId: number | null
-    followerUserId: number | null
+    fromUserId: number | null
+    toUserId: number | null
   }
 
   export type TwitterDirectMessageMinAggregateOutputType = {
@@ -35515,8 +35517,8 @@ export namespace Prisma {
     message: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    followingUserId: number | null
-    followerUserId: number | null
+    fromUserId: number | null
+    toUserId: number | null
   }
 
   export type TwitterDirectMessageMaxAggregateOutputType = {
@@ -35524,8 +35526,8 @@ export namespace Prisma {
     message: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    followingUserId: number | null
-    followerUserId: number | null
+    fromUserId: number | null
+    toUserId: number | null
   }
 
   export type TwitterDirectMessageCountAggregateOutputType = {
@@ -35533,22 +35535,22 @@ export namespace Prisma {
     message: number
     createdAt: number
     updatedAt: number
-    followingUserId: number
-    followerUserId: number
+    fromUserId: number
+    toUserId: number
     _all: number
   }
 
 
   export type TwitterDirectMessageAvgAggregateInputType = {
     id?: true
-    followingUserId?: true
-    followerUserId?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type TwitterDirectMessageSumAggregateInputType = {
     id?: true
-    followingUserId?: true
-    followerUserId?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type TwitterDirectMessageMinAggregateInputType = {
@@ -35556,8 +35558,8 @@ export namespace Prisma {
     message?: true
     createdAt?: true
     updatedAt?: true
-    followingUserId?: true
-    followerUserId?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type TwitterDirectMessageMaxAggregateInputType = {
@@ -35565,8 +35567,8 @@ export namespace Prisma {
     message?: true
     createdAt?: true
     updatedAt?: true
-    followingUserId?: true
-    followerUserId?: true
+    fromUserId?: true
+    toUserId?: true
   }
 
   export type TwitterDirectMessageCountAggregateInputType = {
@@ -35574,8 +35576,8 @@ export namespace Prisma {
     message?: true
     createdAt?: true
     updatedAt?: true
-    followingUserId?: true
-    followerUserId?: true
+    fromUserId?: true
+    toUserId?: true
     _all?: true
   }
 
@@ -35671,8 +35673,8 @@ export namespace Prisma {
     message: string
     createdAt: Date
     updatedAt: Date
-    followingUserId: number
-    followerUserId: number
+    fromUserId: number
+    toUserId: number
     _count: TwitterDirectMessageCountAggregateOutputType | null
     _avg: TwitterDirectMessageAvgAggregateOutputType | null
     _sum: TwitterDirectMessageSumAggregateOutputType | null
@@ -35701,8 +35703,8 @@ export namespace Prisma {
     to?: boolean | TwitterUserArgs
     createdAt?: boolean
     updatedAt?: boolean
-    followingUserId?: boolean
-    followerUserId?: boolean
+    fromUserId?: boolean
+    toUserId?: boolean
   }
 
 
@@ -36487,76 +36489,76 @@ export namespace Prisma {
 
   export type TwitterUserRelationAvgAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
+    followingUserId: number | null
+    followerUserId: number | null
   }
 
   export type TwitterUserRelationSumAggregateOutputType = {
     id: number | null
-    fromUserId: number | null
-    toUserId: number | null
+    followingUserId: number | null
+    followerUserId: number | null
   }
 
   export type TwitterUserRelationMinAggregateOutputType = {
     id: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
+    followingUserId: number | null
+    followerUserId: number | null
   }
 
   export type TwitterUserRelationMaxAggregateOutputType = {
     id: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    fromUserId: number | null
-    toUserId: number | null
+    followingUserId: number | null
+    followerUserId: number | null
   }
 
   export type TwitterUserRelationCountAggregateOutputType = {
     id: number
     createdAt: number
     updatedAt: number
-    fromUserId: number
-    toUserId: number
+    followingUserId: number
+    followerUserId: number
     _all: number
   }
 
 
   export type TwitterUserRelationAvgAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
+    followingUserId?: true
+    followerUserId?: true
   }
 
   export type TwitterUserRelationSumAggregateInputType = {
     id?: true
-    fromUserId?: true
-    toUserId?: true
+    followingUserId?: true
+    followerUserId?: true
   }
 
   export type TwitterUserRelationMinAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
+    followingUserId?: true
+    followerUserId?: true
   }
 
   export type TwitterUserRelationMaxAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
+    followingUserId?: true
+    followerUserId?: true
   }
 
   export type TwitterUserRelationCountAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
-    fromUserId?: true
-    toUserId?: true
+    followingUserId?: true
+    followerUserId?: true
     _all?: true
   }
 
@@ -36651,8 +36653,8 @@ export namespace Prisma {
     id: number
     createdAt: Date
     updatedAt: Date
-    fromUserId: number
-    toUserId: number
+    followingUserId: number
+    followerUserId: number
     _count: TwitterUserRelationCountAggregateOutputType | null
     _avg: TwitterUserRelationAvgAggregateOutputType | null
     _sum: TwitterUserRelationSumAggregateOutputType | null
@@ -36680,8 +36682,8 @@ export namespace Prisma {
     to?: boolean | TwitterUserArgs
     createdAt?: boolean
     updatedAt?: boolean
-    fromUserId?: boolean
-    toUserId?: boolean
+    followingUserId?: boolean
+    followerUserId?: boolean
   }
 
 
@@ -37478,6 +37480,8 @@ export namespace Prisma {
 
   export type TwitterCommentMinAggregateOutputType = {
     id: number | null
+    message: string | null
+    image: string | null
     createdAt: Date | null
     updatedAt: Date | null
     twitterPostId: number | null
@@ -37486,6 +37490,8 @@ export namespace Prisma {
 
   export type TwitterCommentMaxAggregateOutputType = {
     id: number | null
+    message: string | null
+    image: string | null
     createdAt: Date | null
     updatedAt: Date | null
     twitterPostId: number | null
@@ -37494,6 +37500,8 @@ export namespace Prisma {
 
   export type TwitterCommentCountAggregateOutputType = {
     id: number
+    message: number
+    image: number
     createdAt: number
     updatedAt: number
     twitterPostId: number
@@ -37516,6 +37524,8 @@ export namespace Prisma {
 
   export type TwitterCommentMinAggregateInputType = {
     id?: true
+    message?: true
+    image?: true
     createdAt?: true
     updatedAt?: true
     twitterPostId?: true
@@ -37524,6 +37534,8 @@ export namespace Prisma {
 
   export type TwitterCommentMaxAggregateInputType = {
     id?: true
+    message?: true
+    image?: true
     createdAt?: true
     updatedAt?: true
     twitterPostId?: true
@@ -37532,6 +37544,8 @@ export namespace Prisma {
 
   export type TwitterCommentCountAggregateInputType = {
     id?: true
+    message?: true
+    image?: true
     createdAt?: true
     updatedAt?: true
     twitterPostId?: true
@@ -37628,6 +37642,8 @@ export namespace Prisma {
 
   export type TwitterCommentGroupByOutputType = {
     id: number
+    message: string
+    image: string | null
     createdAt: Date
     updatedAt: Date
     twitterPostId: number
@@ -37655,6 +37671,8 @@ export namespace Prisma {
 
   export type TwitterCommentSelect = {
     id?: boolean
+    message?: boolean
+    image?: boolean
     post?: boolean | TwitterPostArgs
     user?: boolean | TwitterUserArgs
     createdAt?: boolean
@@ -47014,6 +47032,8 @@ export namespace Prisma {
 
   export const TwitterCommentScalarFieldEnum: {
     id: 'id',
+    message: 'message',
+    image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     twitterPostId: 'twitterPostId',
@@ -47028,8 +47048,8 @@ export namespace Prisma {
     message: 'message',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    followingUserId: 'followingUserId',
-    followerUserId: 'followerUserId'
+    fromUserId: 'fromUserId',
+    toUserId: 'toUserId'
   };
 
   export type TwitterDirectMessageScalarFieldEnum = (typeof TwitterDirectMessageScalarFieldEnum)[keyof typeof TwitterDirectMessageScalarFieldEnum]
@@ -47071,8 +47091,8 @@ export namespace Prisma {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    fromUserId: 'fromUserId',
-    toUserId: 'toUserId'
+    followingUserId: 'followingUserId',
+    followerUserId: 'followerUserId'
   };
 
   export type TwitterUserRelationScalarFieldEnum = (typeof TwitterUserRelationScalarFieldEnum)[keyof typeof TwitterUserRelationScalarFieldEnum]
@@ -48653,7 +48673,6 @@ export namespace Prisma {
 
   export type QuizRoundWhereUniqueInput = {
     id?: number
-    name?: string
   }
 
   export type QuizRoundOrderByWithAggregationInput = {
@@ -48924,6 +48943,7 @@ export namespace Prisma {
 
   export type TwitterHashtagWhereUniqueInput = {
     id?: number
+    hashtag?: string
   }
 
   export type TwitterHashtagOrderByWithAggregationInput = {
@@ -49009,8 +49029,8 @@ export namespace Prisma {
     to?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    followingUserId?: IntFilter | number
-    followerUserId?: IntFilter | number
+    fromUserId?: IntFilter | number
+    toUserId?: IntFilter | number
   }
 
   export type TwitterDirectMessageOrderByWithRelationInput = {
@@ -49020,8 +49040,8 @@ export namespace Prisma {
     to?: TwitterUserOrderByWithRelationInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterDirectMessageWhereUniqueInput = {
@@ -49033,8 +49053,8 @@ export namespace Prisma {
     message?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
     _count?: TwitterDirectMessageCountOrderByAggregateInput
     _avg?: TwitterDirectMessageAvgOrderByAggregateInput
     _max?: TwitterDirectMessageMaxOrderByAggregateInput
@@ -49050,8 +49070,8 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    followingUserId?: IntWithAggregatesFilter | number
-    followerUserId?: IntWithAggregatesFilter | number
+    fromUserId?: IntWithAggregatesFilter | number
+    toUserId?: IntWithAggregatesFilter | number
   }
 
   export type TwitterUserRelationWhereInput = {
@@ -49063,8 +49083,8 @@ export namespace Prisma {
     to?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
+    followingUserId?: IntFilter | number
+    followerUserId?: IntFilter | number
   }
 
   export type TwitterUserRelationOrderByWithRelationInput = {
@@ -49073,8 +49093,8 @@ export namespace Prisma {
     to?: TwitterUserOrderByWithRelationInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterUserRelationWhereUniqueInput = {
@@ -49085,8 +49105,8 @@ export namespace Prisma {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
     _count?: TwitterUserRelationCountOrderByAggregateInput
     _avg?: TwitterUserRelationAvgOrderByAggregateInput
     _max?: TwitterUserRelationMaxOrderByAggregateInput
@@ -49101,8 +49121,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter | number
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    fromUserId?: IntWithAggregatesFilter | number
-    toUserId?: IntWithAggregatesFilter | number
+    followingUserId?: IntWithAggregatesFilter | number
+    followerUserId?: IntWithAggregatesFilter | number
   }
 
   export type TwitterCommentWhereInput = {
@@ -49110,6 +49130,8 @@ export namespace Prisma {
     OR?: Enumerable<TwitterCommentWhereInput>
     NOT?: Enumerable<TwitterCommentWhereInput>
     id?: IntFilter | number
+    message?: StringFilter | string
+    image?: StringNullableFilter | string | null
     post?: XOR<TwitterPostRelationFilter, TwitterPostWhereInput>
     user?: XOR<TwitterUserRelationFilter, TwitterUserWhereInput>
     createdAt?: DateTimeFilter | Date | string
@@ -49120,6 +49142,8 @@ export namespace Prisma {
 
   export type TwitterCommentOrderByWithRelationInput = {
     id?: SortOrder
+    message?: SortOrder
+    image?: SortOrder
     post?: TwitterPostOrderByWithRelationInput
     user?: TwitterUserOrderByWithRelationInput
     createdAt?: SortOrder
@@ -49134,6 +49158,8 @@ export namespace Prisma {
 
   export type TwitterCommentOrderByWithAggregationInput = {
     id?: SortOrder
+    message?: SortOrder
+    image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twitterPostId?: SortOrder
@@ -49150,6 +49176,8 @@ export namespace Prisma {
     OR?: Enumerable<TwitterCommentScalarWhereWithAggregatesInput>
     NOT?: Enumerable<TwitterCommentScalarWhereWithAggregatesInput>
     id?: IntWithAggregatesFilter | number
+    message?: StringWithAggregatesFilter | string
+    image?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
     twitterPostId?: IntWithAggregatesFilter | number
@@ -51698,8 +51726,8 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followingUserId: number
-    followerUserId: number
+    fromUserId: number
+    toUserId: number
   }
 
   export type TwitterDirectMessageUpdateInput = {
@@ -51715,8 +51743,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followingUserId?: IntFieldUpdateOperationsInput | number
-    followerUserId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterDirectMessageCreateManyInput = {
@@ -51724,8 +51752,8 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followingUserId: number
-    followerUserId: number
+    fromUserId: number
+    toUserId: number
   }
 
   export type TwitterDirectMessageUpdateManyMutationInput = {
@@ -51739,8 +51767,8 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followingUserId?: IntFieldUpdateOperationsInput | number
-    followerUserId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationCreateInput = {
@@ -51754,8 +51782,8 @@ export namespace Prisma {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
+    followingUserId: number
+    followerUserId: number
   }
 
   export type TwitterUserRelationUpdateInput = {
@@ -51769,16 +51797,16 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    followerUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationCreateManyInput = {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    fromUserId: number
-    toUserId: number
+    followingUserId: number
+    followerUserId: number
   }
 
   export type TwitterUserRelationUpdateManyMutationInput = {
@@ -51790,11 +51818,13 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
-    toUserId?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
+    followerUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterCommentCreateInput = {
+    message: string
+    image?: string | null
     post: TwitterPostCreateNestedOneWithoutCommentsInput
     user: TwitterUserCreateNestedOneWithoutCommentsInput
     createdAt?: Date | string
@@ -51803,6 +51833,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedCreateInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterPostId: number
@@ -51810,6 +51842,8 @@ export namespace Prisma {
   }
 
   export type TwitterCommentUpdateInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     post?: TwitterPostUpdateOneRequiredWithoutCommentsNestedInput
     user?: TwitterUserUpdateOneRequiredWithoutCommentsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51818,6 +51852,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twitterPostId?: IntFieldUpdateOperationsInput | number
@@ -51826,6 +51862,8 @@ export namespace Prisma {
 
   export type TwitterCommentCreateManyInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterPostId: number
@@ -51833,12 +51871,16 @@ export namespace Prisma {
   }
 
   export type TwitterCommentUpdateManyMutationInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TwitterCommentUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twitterPostId?: IntFieldUpdateOperationsInput | number
@@ -54136,14 +54178,14 @@ export namespace Prisma {
     message?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterDirectMessageAvgOrderByAggregateInput = {
     id?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterDirectMessageMaxOrderByAggregateInput = {
@@ -54151,8 +54193,8 @@ export namespace Prisma {
     message?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterDirectMessageMinOrderByAggregateInput = {
@@ -54160,54 +54202,56 @@ export namespace Prisma {
     message?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterDirectMessageSumOrderByAggregateInput = {
     id?: SortOrder
-    followingUserId?: SortOrder
-    followerUserId?: SortOrder
+    fromUserId?: SortOrder
+    toUserId?: SortOrder
   }
 
   export type TwitterUserRelationCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterUserRelationAvgOrderByAggregateInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterUserRelationMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterUserRelationMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterUserRelationSumOrderByAggregateInput = {
     id?: SortOrder
-    fromUserId?: SortOrder
-    toUserId?: SortOrder
+    followingUserId?: SortOrder
+    followerUserId?: SortOrder
   }
 
   export type TwitterCommentCountOrderByAggregateInput = {
     id?: SortOrder
+    message?: SortOrder
+    image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twitterPostId?: SortOrder
@@ -54222,6 +54266,8 @@ export namespace Prisma {
 
   export type TwitterCommentMaxOrderByAggregateInput = {
     id?: SortOrder
+    message?: SortOrder
+    image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twitterPostId?: SortOrder
@@ -54230,6 +54276,8 @@ export namespace Prisma {
 
   export type TwitterCommentMinOrderByAggregateInput = {
     id?: SortOrder
+    message?: SortOrder
+    image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     twitterPostId?: SortOrder
@@ -61280,7 +61328,7 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followerUserId: number
+    toUserId: number
   }
 
   export type TwitterDirectMessageCreateOrConnectWithoutFromInput = {
@@ -61294,6 +61342,8 @@ export namespace Prisma {
   }
 
   export type TwitterCommentCreateWithoutUserInput = {
+    message: string
+    image?: string | null
     post: TwitterPostCreateNestedOneWithoutCommentsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61301,6 +61351,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedCreateWithoutUserInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterPostId: number
@@ -61328,7 +61380,7 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followingUserId: number
+    fromUserId: number
   }
 
   export type TwitterDirectMessageCreateOrConnectWithoutToInput = {
@@ -61351,7 +61403,7 @@ export namespace Prisma {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    toUserId: number
+    followerUserId: number
   }
 
   export type TwitterUserRelationCreateOrConnectWithoutFromInput = {
@@ -61374,7 +61426,7 @@ export namespace Prisma {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    fromUserId: number
+    followingUserId: number
   }
 
   export type TwitterUserRelationCreateOrConnectWithoutToInput = {
@@ -61438,8 +61490,8 @@ export namespace Prisma {
     message?: StringFilter | string
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    followingUserId?: IntFilter | number
-    followerUserId?: IntFilter | number
+    fromUserId?: IntFilter | number
+    toUserId?: IntFilter | number
   }
 
   export type TwitterCommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -61463,6 +61515,8 @@ export namespace Prisma {
     OR?: Enumerable<TwitterCommentScalarWhereInput>
     NOT?: Enumerable<TwitterCommentScalarWhereInput>
     id?: IntFilter | number
+    message?: StringFilter | string
+    image?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     twitterPostId?: IntFilter | number
@@ -61508,8 +61562,8 @@ export namespace Prisma {
     id?: IntFilter | number
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    fromUserId?: IntFilter | number
-    toUserId?: IntFilter | number
+    followingUserId?: IntFilter | number
+    followerUserId?: IntFilter | number
   }
 
   export type TwitterUserRelationUpsertWithWhereUniqueWithoutToInput = {
@@ -61582,6 +61636,8 @@ export namespace Prisma {
   }
 
   export type TwitterCommentCreateWithoutPostInput = {
+    message: string
+    image?: string | null
     user: TwitterUserCreateNestedOneWithoutCommentsInput
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61589,6 +61645,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedCreateWithoutPostInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterUserId: number
@@ -64316,11 +64374,13 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followerUserId: number
+    toUserId: number
   }
 
   export type TwitterCommentCreateManyUserInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterPostId: number
@@ -64331,21 +64391,21 @@ export namespace Prisma {
     message: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    followingUserId: number
+    fromUserId: number
   }
 
   export type TwitterUserRelationCreateManyFromInput = {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    toUserId: number
+    followerUserId: number
   }
 
   export type TwitterUserRelationCreateManyToInput = {
     id?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    fromUserId: number
+    followingUserId: number
   }
 
   export type TwitterPostUpdateWithoutUserInput = {
@@ -64384,7 +64444,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followerUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterDirectMessageUncheckedUpdateManyWithoutFromDirectMessagesInput = {
@@ -64392,10 +64452,12 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followerUserId?: IntFieldUpdateOperationsInput | number
+    toUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterCommentUpdateWithoutUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     post?: TwitterPostUpdateOneRequiredWithoutCommentsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64403,6 +64465,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twitterPostId?: IntFieldUpdateOperationsInput | number
@@ -64410,6 +64474,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedUpdateManyWithoutCommentsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twitterPostId?: IntFieldUpdateOperationsInput | number
@@ -64427,7 +64493,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followingUserId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterDirectMessageUncheckedUpdateManyWithoutToDirectMessagesInput = {
@@ -64435,7 +64501,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    followingUserId?: IntFieldUpdateOperationsInput | number
+    fromUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationUpdateWithoutFromInput = {
@@ -64448,14 +64514,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
+    followerUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationUncheckedUpdateManyWithoutFollowingUserRelationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    toUserId?: IntFieldUpdateOperationsInput | number
+    followerUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationUpdateWithoutToInput = {
@@ -64468,14 +64534,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterUserRelationUncheckedUpdateManyWithoutFollowerUserRelationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fromUserId?: IntFieldUpdateOperationsInput | number
+    followingUserId?: IntFieldUpdateOperationsInput | number
   }
 
   export type TwitterPostToHashtagCreateManyPostInput = {
@@ -64487,6 +64553,8 @@ export namespace Prisma {
 
   export type TwitterCommentCreateManyPostInput = {
     id?: number
+    message: string
+    image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     twitterUserId: number
@@ -64513,6 +64581,8 @@ export namespace Prisma {
   }
 
   export type TwitterCommentUpdateWithoutPostInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     user?: TwitterUserUpdateOneRequiredWithoutCommentsNestedInput
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64520,6 +64590,8 @@ export namespace Prisma {
 
   export type TwitterCommentUncheckedUpdateWithoutPostInput = {
     id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     twitterUserId?: IntFieldUpdateOperationsInput | number

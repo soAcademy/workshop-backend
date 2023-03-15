@@ -34,3 +34,12 @@ export const submitQuizCodec = t.type({
 });
 
 export interface ISubmitQuiz extends t.TypeOf<typeof submitQuizCodec> {}
+
+export const updateQuizCodec = t.type({
+  quizQuestionId: t.number,
+  name: t.string,
+  quizChoices: t.array(t.type({choice: t.string})),
+  answer: t.string
+});
+
+export interface IupdateQuiz extends t.TypeOf<typeof updateQuizCodec> {}
