@@ -1,10 +1,18 @@
 import { PrismaClient } from "../../prisma/client";
+import {
+  ICreateTwitterDM,
+  ICreateTwitterPost,
+  ICreateTwitterReply,
+  ICreateTwitterUser,
+  ICreateTwitterUserRelation,
+  IUpdateTwitterUser,
+} from "./twiitter.interface";
 // import { interface } from "./twitter.interface";
 
 export const prisma = new PrismaClient();
 
 // TWITTER USER
-export const createTwitterUser = (args: { image: string; name: string }) =>
+export const createTwitterUser = (args: ICreateTwitterUser) =>
   prisma.twitterUser.create({
     data: {
       image: args.image,
@@ -14,11 +22,7 @@ export const createTwitterUser = (args: { image: string; name: string }) =>
 
 export const getTwitterUser = () => prisma.twitterUser.findMany();
 
-export const updateTwitterUser = (args: {
-  id: number;
-  name?: string;
-  image?: string;
-}) =>
+export const updateTwitterUser = (args: IUpdateTwitterUser) =>
   prisma.twitterUser.update({
     where: {
       id: args.id,
@@ -30,10 +34,7 @@ export const updateTwitterUser = (args: {
   });
 
 // TWITTER USER RELATIONSHIP
-export const createTwitterUserRelation = (args: {
-  followerId: number;
-  followingId: number;
-}) =>
+export const createTwitterUserRelation = (args: ICreateTwitterUserRelation) =>
   prisma.twitterUserRelation.create({
     data: {
       follower: {
@@ -55,11 +56,7 @@ export const deleteTwitterUserRelation = (args: { id: number }) =>
   });
 
 // TWITTER POST
-export const createTwitterPost = (args: {
-  userId: number;
-  message: string;
-  hashTags: { message: string }[];
-}) =>
+export const createTwitterPost = (args: ICreateTwitterPost) =>
   prisma.twitterPost.create({
     data: {
       user: {
@@ -85,7 +82,7 @@ export const createTwitterPost = (args: {
 export const getTwitterPostByUserId = (args: { userId: number }) =>
   prisma.twitterPost.findMany({ where: { postByUserId: args.userId } });
 
-  export const getTwitterPostByHashTagId = (args: { hashTagId: number }) =>
+export const getTwitterPostByHashTagId = (args: { hashTagId: number }) =>
   prisma.twitterPost.findMany({ where: { postByUserId: args.hashTagId } });
 
 export const getTwitterPost = () => prisma.twitterPost.findMany();
@@ -99,11 +96,7 @@ export const deleteTwitterPost = (args: { id: number }) =>
   });
 
 // TWITTER POST REPLY
-export const createTwitterReply = (args: {
-  postId: number;
-  userId: number;
-  message: string;
-}) =>
+export const createTwitterReply = (args: ICreateTwitterReply) =>
   prisma.twitterReply.create({
     data: {
       post: {
@@ -121,11 +114,7 @@ export const createTwitterReply = (args: {
   });
 
 // TWITTER DM
-export const createTwitterDM = (args: {
-  directFromId: number;
-  directToId: number;
-  message: string;
-}) =>
+export const createTwitterDM = (args: ICreateTwitterDM) =>
   prisma.twitterDM.create({
     data: {
       directFrom: {

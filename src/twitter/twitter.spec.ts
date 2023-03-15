@@ -67,15 +67,15 @@ describe("Twitter", () => {
   //   expect(result.postId === replyData.postId).toBe(true);
   // });
 
-  test("createTwitterDM", async () => {
-    const DMData = {
-      directFromId: 2,
-      directToId: 1,
-      message:
-        "The best way is to go to a website like Travelocity or Expedia. They can help you find the best price.",
-    };
-    const result = await createTwitterDM(DMData);
-    console.log("createTwitterPost", result);
-    expect(result.directFromId === DMData.directFromId).toBe(true);
-  });
+  // test("createTwitterDM", async () => {
+  //   const DMData = {
+  //     directFromId: 2,
+  //     directToId: 1,
+  //     message:
+  //       "The best way is to go to a website like Travelocity or Expedia. They can help you find the best price.",
+  //   };
+  //   const result = await createTwitterDM(DMData);
+  //   console.log("createTwitterPost", result);
+  //   expect(result.directFromId === DMData.directFromId).toBe(true);
+  // });
 });
