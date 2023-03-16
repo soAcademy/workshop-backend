@@ -345,6 +345,67 @@ exports.Prisma.LikeTypeScalarFieldEnum = makeEnum({
   updatedAt: 'updatedAt'
 });
 
+exports.Prisma.MeetingMembersScalarFieldEnum = makeEnum({
+  id: 'id',
+  bookedId: 'bookedId',
+  name: 'name',
+  email: 'email',
+  tel: 'tel',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MeetingRoomBookedScalarFieldEnum = makeEnum({
+  id: 'id',
+  meetingRoomId: 'meetingRoomId',
+  userId: 'userId',
+  bookingStart: 'bookingStart',
+  bookingEnd: 'bookingEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MeetingRoomScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  floor: 'floor',
+  building: 'building',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MeetingUserAvailableScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  availableStart: 'availableStart',
+  availableEnd: 'availableEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MeetingUserBookedScalarFieldEnum = makeEnum({
+  id: 'id',
+  userId: 'userId',
+  meetingRoomId: 'meetingRoomId',
+  meetingDetail: 'meetingDetail',
+  bookingStart: 'bookingStart',
+  bookingEnd: 'bookingEnd',
+  nameOfBooker: 'nameOfBooker',
+  tel: 'tel',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
+exports.Prisma.MeetingUserScalarFieldEnum = makeEnum({
+  id: 'id',
+  name: 'name',
+  profileImage: 'profileImage',
+  postion: 'postion',
+  bio: 'bio',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+});
+
 exports.Prisma.PostOnHashtagScalarFieldEnum = makeEnum({
   id: 'id',
   postId: 'postId',
@@ -669,6 +730,12 @@ exports.Prisma.ModelName = makeEnum({
   BookOnCategory: 'BookOnCategory',
   LibraryStudentRequest: 'LibraryStudentRequest',
   LibraryStudentBorrowing: 'LibraryStudentBorrowing',
+  MeetingUser: 'MeetingUser',
+  MeetingUserBooked: 'MeetingUserBooked',
+  MeetingMembers: 'MeetingMembers',
+  MeetingUserAvailable: 'MeetingUserAvailable',
+  MeetingRoom: 'MeetingRoom',
+  MeetingRoomBooked: 'MeetingRoomBooked',
   TodoList: 'TodoList',
   TriviaCategory: 'TriviaCategory',
   TriviaQuiz: 'TriviaQuiz',

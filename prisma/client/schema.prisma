@@ -331,6 +331,88 @@ model LibraryStudentBorrowing {
   updatedAt              DateTime          @updatedAt
 }
 
+model MeetingUser {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  profileImage         String?
+  postion              String?
+  bio                  String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  MeetingUserBooked    MeetingUserBooked[]
+  MeetingUserAvailable MeetingUserAvailable[]
+  MeetingRoomBooked    MeetingRoomBooked[]
+}
+
+model MeetingUserBooked {
+  id             Int              @id @default(autoincrement())
+  user           MeetingUser      @relation(fields: [userId], references: [id])
+  userId         Int
+  meetingRoom    MeetingRoom      @relation(fields: [meetingRoomId], references: [id])
+  meetingRoomId  Int
+  meetingDetail  String?
+  bookingStart   DateTime
+  bookingEnd     DateTime
+  nameOfBooker   String
+  tel            String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  MeetingMembers MeetingMembers[]
+}
+
+model MeetingMembers {
+  id        Int               @id @default(autoincrement())
+  booking   MeetingUserBooked @relation(fields: [bookedId], references: [id])
+  bookedId  Int
+  name      String?
+  email     String?
+  tel       String?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model MeetingUserAvailable {
+  id             Int         @id @default(autoincrement())
+  user           MeetingUser @relation(fields: [userId], references: [id])
+  userId         Int
+  availableStart DateTime
+  availableEnd   DateTime
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model MeetingRoom {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  floor             Int
+  building          String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  MeetingUserBooked MeetingUserBooked[]
+  MeetingRoomBooked MeetingRoomBooked[]
+}
+
+model MeetingRoomBooked {
+  id            Int         @id @default(autoincrement())
+  meetingRoom   MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+  meetingRoomId Int
+  byUserId      MeetingUser @relation(fields: [userId], references: [id])
+  userId        Int
+  bookingStart  DateTime
+  bookingEnd    DateTime
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+// model MeetingRoomAvailable {
+//   id             Int         @id @default(autoincrement())
+//   meetingRoom    MeetingRoom @relation(fields: [meetingRoomId], references: [id])
+//   meetingRoomId  Int
+//   availableStart DateTime
+//   availableEnd   DateTime
+//   createdAt      DateTime    @default(now())
+//   updatedAt      DateTime    @updatedAt
+// }
 model TodoList {
   id        Int      @id @default(autoincrement())
   task      String

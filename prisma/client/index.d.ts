@@ -376,6 +376,91 @@ export type LibraryStudentBorrowing = {
 }
 
 /**
+ * Model MeetingUser
+ * 
+ */
+export type MeetingUser = {
+  id: number
+  name: string
+  profileImage: string | null
+  postion: string | null
+  bio: string | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model MeetingUserBooked
+ * 
+ */
+export type MeetingUserBooked = {
+  id: number
+  userId: number
+  meetingRoomId: number
+  meetingDetail: string | null
+  bookingStart: Date
+  bookingEnd: Date
+  nameOfBooker: string
+  tel: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model MeetingMembers
+ * 
+ */
+export type MeetingMembers = {
+  id: number
+  bookedId: number
+  name: string | null
+  email: string | null
+  tel: string | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model MeetingUserAvailable
+ * 
+ */
+export type MeetingUserAvailable = {
+  id: number
+  userId: number
+  availableStart: Date
+  availableEnd: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model MeetingRoom
+ * 
+ */
+export type MeetingRoom = {
+  id: number
+  name: string
+  floor: number
+  building: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Model MeetingRoomBooked
+ * 
+ */
+export type MeetingRoomBooked = {
+  id: number
+  meetingRoomId: number
+  userId: number
+  bookingStart: Date
+  bookingEnd: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
  * Model TodoList
  * 
  */
@@ -1195,6 +1280,66 @@ export class PrismaClient<
   get libraryStudentBorrowing(): Prisma.LibraryStudentBorrowingDelegate<GlobalReject>;
 
   /**
+   * `prisma.meetingUser`: Exposes CRUD operations for the **MeetingUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingUsers
+    * const meetingUsers = await prisma.meetingUser.findMany()
+    * ```
+    */
+  get meetingUser(): Prisma.MeetingUserDelegate<GlobalReject>;
+
+  /**
+   * `prisma.meetingUserBooked`: Exposes CRUD operations for the **MeetingUserBooked** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingUserBookeds
+    * const meetingUserBookeds = await prisma.meetingUserBooked.findMany()
+    * ```
+    */
+  get meetingUserBooked(): Prisma.MeetingUserBookedDelegate<GlobalReject>;
+
+  /**
+   * `prisma.meetingMembers`: Exposes CRUD operations for the **MeetingMembers** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingMembers
+    * const meetingMembers = await prisma.meetingMembers.findMany()
+    * ```
+    */
+  get meetingMembers(): Prisma.MeetingMembersDelegate<GlobalReject>;
+
+  /**
+   * `prisma.meetingUserAvailable`: Exposes CRUD operations for the **MeetingUserAvailable** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingUserAvailables
+    * const meetingUserAvailables = await prisma.meetingUserAvailable.findMany()
+    * ```
+    */
+  get meetingUserAvailable(): Prisma.MeetingUserAvailableDelegate<GlobalReject>;
+
+  /**
+   * `prisma.meetingRoom`: Exposes CRUD operations for the **MeetingRoom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingRooms
+    * const meetingRooms = await prisma.meetingRoom.findMany()
+    * ```
+    */
+  get meetingRoom(): Prisma.MeetingRoomDelegate<GlobalReject>;
+
+  /**
+   * `prisma.meetingRoomBooked`: Exposes CRUD operations for the **MeetingRoomBooked** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingRoomBookeds
+    * const meetingRoomBookeds = await prisma.meetingRoomBooked.findMany()
+    * ```
+    */
+  get meetingRoomBooked(): Prisma.MeetingRoomBookedDelegate<GlobalReject>;
+
+  /**
    * `prisma.todoList`: Exposes CRUD operations for the **TodoList** model.
     * Example usage:
     * ```ts
@@ -2011,6 +2156,12 @@ export namespace Prisma {
     BookOnCategory: 'BookOnCategory',
     LibraryStudentRequest: 'LibraryStudentRequest',
     LibraryStudentBorrowing: 'LibraryStudentBorrowing',
+    MeetingUser: 'MeetingUser',
+    MeetingUserBooked: 'MeetingUserBooked',
+    MeetingMembers: 'MeetingMembers',
+    MeetingUserAvailable: 'MeetingUserAvailable',
+    MeetingRoom: 'MeetingRoom',
+    MeetingRoomBooked: 'MeetingRoomBooked',
     TodoList: 'TodoList',
     TriviaCategory: 'TriviaCategory',
     TriviaQuiz: 'TriviaQuiz',
@@ -2937,6 +3088,141 @@ export namespace Prisma {
      * Select specific fields to fetch from the LibraryAuthorCountOutputType
      */
     select?: LibraryAuthorCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type MeetingUserCountOutputType
+   */
+
+
+  export type MeetingUserCountOutputType = {
+    MeetingUserBooked: number
+    MeetingUserAvailable: number
+    MeetingRoomBooked: number
+  }
+
+  export type MeetingUserCountOutputTypeSelect = {
+    MeetingUserBooked?: boolean
+    MeetingUserAvailable?: boolean
+    MeetingRoomBooked?: boolean
+  }
+
+  export type MeetingUserCountOutputTypeGetPayload<S extends boolean | null | undefined | MeetingUserCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingUserCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingUserCountOutputTypeArgs)
+    ? MeetingUserCountOutputType 
+    : S extends { select: any } & (MeetingUserCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof MeetingUserCountOutputType ? MeetingUserCountOutputType[P] : never
+  } 
+      : MeetingUserCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingUserCountOutputType without action
+   */
+  export type MeetingUserCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserCountOutputType
+     */
+    select?: MeetingUserCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type MeetingUserBookedCountOutputType
+   */
+
+
+  export type MeetingUserBookedCountOutputType = {
+    MeetingMembers: number
+  }
+
+  export type MeetingUserBookedCountOutputTypeSelect = {
+    MeetingMembers?: boolean
+  }
+
+  export type MeetingUserBookedCountOutputTypeGetPayload<S extends boolean | null | undefined | MeetingUserBookedCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingUserBookedCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingUserBookedCountOutputTypeArgs)
+    ? MeetingUserBookedCountOutputType 
+    : S extends { select: any } & (MeetingUserBookedCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof MeetingUserBookedCountOutputType ? MeetingUserBookedCountOutputType[P] : never
+  } 
+      : MeetingUserBookedCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingUserBookedCountOutputType without action
+   */
+  export type MeetingUserBookedCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBookedCountOutputType
+     */
+    select?: MeetingUserBookedCountOutputTypeSelect | null
+  }
+
+
+
+  /**
+   * Count Type MeetingRoomCountOutputType
+   */
+
+
+  export type MeetingRoomCountOutputType = {
+    MeetingUserBooked: number
+    MeetingRoomBooked: number
+  }
+
+  export type MeetingRoomCountOutputTypeSelect = {
+    MeetingUserBooked?: boolean
+    MeetingRoomBooked?: boolean
+  }
+
+  export type MeetingRoomCountOutputTypeGetPayload<S extends boolean | null | undefined | MeetingRoomCountOutputTypeArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingRoomCountOutputType :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingRoomCountOutputTypeArgs)
+    ? MeetingRoomCountOutputType 
+    : S extends { select: any } & (MeetingRoomCountOutputTypeArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof MeetingRoomCountOutputType ? MeetingRoomCountOutputType[P] : never
+  } 
+      : MeetingRoomCountOutputType
+
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingRoomCountOutputType without action
+   */
+  export type MeetingRoomCountOutputTypeArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomCountOutputType
+     */
+    select?: MeetingRoomCountOutputTypeSelect | null
   }
 
 
@@ -33254,6 +33540,6102 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: LibraryStudentBorrowingInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingUser
+   */
+
+
+  export type AggregateMeetingUser = {
+    _count: MeetingUserCountAggregateOutputType | null
+    _avg: MeetingUserAvgAggregateOutputType | null
+    _sum: MeetingUserSumAggregateOutputType | null
+    _min: MeetingUserMinAggregateOutputType | null
+    _max: MeetingUserMaxAggregateOutputType | null
+  }
+
+  export type MeetingUserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MeetingUserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MeetingUserMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImage: string | null
+    postion: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    profileImage: string | null
+    postion: string | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserCountAggregateOutputType = {
+    id: number
+    name: number
+    profileImage: number
+    postion: number
+    bio: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingUserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MeetingUserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MeetingUserMinAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    postion?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserMaxAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    postion?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserCountAggregateInputType = {
+    id?: true
+    name?: true
+    profileImage?: true
+    postion?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingUserAggregateArgs = {
+    /**
+     * Filter which MeetingUser to aggregate.
+     */
+    where?: MeetingUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUsers to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingUsers
+    **/
+    _count?: true | MeetingUserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingUserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingUserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingUserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingUserMaxAggregateInputType
+  }
+
+  export type GetMeetingUserAggregateType<T extends MeetingUserAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingUser[P]>
+      : GetScalarType<T[P], AggregateMeetingUser[P]>
+  }
+
+
+
+
+  export type MeetingUserGroupByArgs = {
+    where?: MeetingUserWhereInput
+    orderBy?: Enumerable<MeetingUserOrderByWithAggregationInput>
+    by: MeetingUserScalarFieldEnum[]
+    having?: MeetingUserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingUserCountAggregateInputType | true
+    _avg?: MeetingUserAvgAggregateInputType
+    _sum?: MeetingUserSumAggregateInputType
+    _min?: MeetingUserMinAggregateInputType
+    _max?: MeetingUserMaxAggregateInputType
+  }
+
+
+  export type MeetingUserGroupByOutputType = {
+    id: number
+    name: string
+    profileImage: string | null
+    postion: string | null
+    bio: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingUserCountAggregateOutputType | null
+    _avg: MeetingUserAvgAggregateOutputType | null
+    _sum: MeetingUserSumAggregateOutputType | null
+    _min: MeetingUserMinAggregateOutputType | null
+    _max: MeetingUserMaxAggregateOutputType | null
+  }
+
+  type GetMeetingUserGroupByPayload<T extends MeetingUserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingUserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingUserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingUserGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingUserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingUserSelect = {
+    id?: boolean
+    name?: boolean
+    profileImage?: boolean
+    postion?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    MeetingUserBooked?: boolean | MeetingUser$MeetingUserBookedArgs
+    MeetingUserAvailable?: boolean | MeetingUser$MeetingUserAvailableArgs
+    MeetingRoomBooked?: boolean | MeetingUser$MeetingRoomBookedArgs
+    _count?: boolean | MeetingUserCountOutputTypeArgs
+  }
+
+
+  export type MeetingUserInclude = {
+    MeetingUserBooked?: boolean | MeetingUser$MeetingUserBookedArgs
+    MeetingUserAvailable?: boolean | MeetingUser$MeetingUserAvailableArgs
+    MeetingRoomBooked?: boolean | MeetingUser$MeetingRoomBookedArgs
+    _count?: boolean | MeetingUserCountOutputTypeArgs
+  }
+
+  export type MeetingUserGetPayload<S extends boolean | null | undefined | MeetingUserArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingUser :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingUserArgs | MeetingUserFindManyArgs)
+    ? MeetingUser  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'MeetingUserBooked' ? Array < MeetingUserBookedGetPayload<S['include'][P]>>  :
+        P extends 'MeetingUserAvailable' ? Array < MeetingUserAvailableGetPayload<S['include'][P]>>  :
+        P extends 'MeetingRoomBooked' ? Array < MeetingRoomBookedGetPayload<S['include'][P]>>  :
+        P extends '_count' ? MeetingUserCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingUserArgs | MeetingUserFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'MeetingUserBooked' ? Array < MeetingUserBookedGetPayload<S['select'][P]>>  :
+        P extends 'MeetingUserAvailable' ? Array < MeetingUserAvailableGetPayload<S['select'][P]>>  :
+        P extends 'MeetingRoomBooked' ? Array < MeetingRoomBookedGetPayload<S['select'][P]>>  :
+        P extends '_count' ? MeetingUserCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof MeetingUser ? MeetingUser[P] : never
+  } 
+      : MeetingUser
+
+
+  type MeetingUserCountArgs = 
+    Omit<MeetingUserFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingUserCountAggregateInputType | true
+    }
+
+  export interface MeetingUserDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingUser that matches the filter.
+     * @param {MeetingUserFindUniqueArgs} args - Arguments to find a MeetingUser
+     * @example
+     * // Get one MeetingUser
+     * const meetingUser = await prisma.meetingUser.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingUserFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingUserFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingUser'> extends True ? Prisma__MeetingUserClient<MeetingUserGetPayload<T>> : Prisma__MeetingUserClient<MeetingUserGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingUser that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingUserFindUniqueOrThrowArgs} args - Arguments to find a MeetingUser
+     * @example
+     * // Get one MeetingUser
+     * const meetingUser = await prisma.meetingUser.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingUserFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserFindUniqueOrThrowArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Find the first MeetingUser that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserFindFirstArgs} args - Arguments to find a MeetingUser
+     * @example
+     * // Get one MeetingUser
+     * const meetingUser = await prisma.meetingUser.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingUserFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingUserFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingUser'> extends True ? Prisma__MeetingUserClient<MeetingUserGetPayload<T>> : Prisma__MeetingUserClient<MeetingUserGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingUser that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserFindFirstOrThrowArgs} args - Arguments to find a MeetingUser
+     * @example
+     * // Get one MeetingUser
+     * const meetingUser = await prisma.meetingUser.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingUserFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserFindFirstOrThrowArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingUsers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingUsers
+     * const meetingUsers = await prisma.meetingUser.findMany()
+     * 
+     * // Get first 10 MeetingUsers
+     * const meetingUsers = await prisma.meetingUser.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingUserWithIdOnly = await prisma.meetingUser.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingUserFindManyArgs>(
+      args?: SelectSubset<T, MeetingUserFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingUserGetPayload<T>>>
+
+    /**
+     * Create a MeetingUser.
+     * @param {MeetingUserCreateArgs} args - Arguments to create a MeetingUser.
+     * @example
+     * // Create one MeetingUser
+     * const MeetingUser = await prisma.meetingUser.create({
+     *   data: {
+     *     // ... data to create a MeetingUser
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingUserCreateArgs>(
+      args: SelectSubset<T, MeetingUserCreateArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Create many MeetingUsers.
+     *     @param {MeetingUserCreateManyArgs} args - Arguments to create many MeetingUsers.
+     *     @example
+     *     // Create many MeetingUsers
+     *     const meetingUser = await prisma.meetingUser.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingUserCreateManyArgs>(
+      args?: SelectSubset<T, MeetingUserCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingUser.
+     * @param {MeetingUserDeleteArgs} args - Arguments to delete one MeetingUser.
+     * @example
+     * // Delete one MeetingUser
+     * const MeetingUser = await prisma.meetingUser.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingUser
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingUserDeleteArgs>(
+      args: SelectSubset<T, MeetingUserDeleteArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Update one MeetingUser.
+     * @param {MeetingUserUpdateArgs} args - Arguments to update one MeetingUser.
+     * @example
+     * // Update one MeetingUser
+     * const meetingUser = await prisma.meetingUser.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingUserUpdateArgs>(
+      args: SelectSubset<T, MeetingUserUpdateArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingUsers.
+     * @param {MeetingUserDeleteManyArgs} args - Arguments to filter MeetingUsers to delete.
+     * @example
+     * // Delete a few MeetingUsers
+     * const { count } = await prisma.meetingUser.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingUserDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingUserDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingUsers
+     * const meetingUser = await prisma.meetingUser.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingUserUpdateManyArgs>(
+      args: SelectSubset<T, MeetingUserUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingUser.
+     * @param {MeetingUserUpsertArgs} args - Arguments to update or create a MeetingUser.
+     * @example
+     * // Update or create a MeetingUser
+     * const meetingUser = await prisma.meetingUser.upsert({
+     *   create: {
+     *     // ... data to create a MeetingUser
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingUser we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingUserUpsertArgs>(
+      args: SelectSubset<T, MeetingUserUpsertArgs>
+    ): Prisma__MeetingUserClient<MeetingUserGetPayload<T>>
+
+    /**
+     * Count the number of MeetingUsers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserCountArgs} args - Arguments to filter MeetingUsers to count.
+     * @example
+     * // Count the number of MeetingUsers
+     * const count = await prisma.meetingUser.count({
+     *   where: {
+     *     // ... the filter for the MeetingUsers we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingUserCountArgs>(
+      args?: Subset<T, MeetingUserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingUserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingUserAggregateArgs>(args: Subset<T, MeetingUserAggregateArgs>): Prisma.PrismaPromise<GetMeetingUserAggregateType<T>>
+
+    /**
+     * Group by MeetingUser.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingUserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingUserGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingUserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingUserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingUser.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingUserClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    MeetingUserBooked<T extends MeetingUser$MeetingUserBookedArgs= {}>(args?: Subset<T, MeetingUser$MeetingUserBookedArgs>): Prisma.PrismaPromise<Array<MeetingUserBookedGetPayload<T>>| Null>;
+
+    MeetingUserAvailable<T extends MeetingUser$MeetingUserAvailableArgs= {}>(args?: Subset<T, MeetingUser$MeetingUserAvailableArgs>): Prisma.PrismaPromise<Array<MeetingUserAvailableGetPayload<T>>| Null>;
+
+    MeetingRoomBooked<T extends MeetingUser$MeetingRoomBookedArgs= {}>(args?: Subset<T, MeetingUser$MeetingRoomBookedArgs>): Prisma.PrismaPromise<Array<MeetingRoomBookedGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingUser base type for findUnique actions
+   */
+  export type MeetingUserFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter, which MeetingUser to fetch.
+     */
+    where: MeetingUserWhereUniqueInput
+  }
+
+  /**
+   * MeetingUser findUnique
+   */
+  export interface MeetingUserFindUniqueArgs extends MeetingUserFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUser findUniqueOrThrow
+   */
+  export type MeetingUserFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter, which MeetingUser to fetch.
+     */
+    where: MeetingUserWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUser base type for findFirst actions
+   */
+  export type MeetingUserFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter, which MeetingUser to fetch.
+     */
+    where?: MeetingUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUsers to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUsers.
+     */
+    cursor?: MeetingUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUsers.
+     */
+    distinct?: Enumerable<MeetingUserScalarFieldEnum>
+  }
+
+  /**
+   * MeetingUser findFirst
+   */
+  export interface MeetingUserFindFirstArgs extends MeetingUserFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUser findFirstOrThrow
+   */
+  export type MeetingUserFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter, which MeetingUser to fetch.
+     */
+    where?: MeetingUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUsers to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUsers.
+     */
+    cursor?: MeetingUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUsers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUsers.
+     */
+    distinct?: Enumerable<MeetingUserScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUser findMany
+   */
+  export type MeetingUserFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter, which MeetingUsers to fetch.
+     */
+    where?: MeetingUserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUsers to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingUsers.
+     */
+    cursor?: MeetingUserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUsers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUsers.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingUserScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUser create
+   */
+  export type MeetingUserCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * The data needed to create a MeetingUser.
+     */
+    data: XOR<MeetingUserCreateInput, MeetingUserUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingUser createMany
+   */
+  export type MeetingUserCreateManyArgs = {
+    /**
+     * The data used to create many MeetingUsers.
+     */
+    data: Enumerable<MeetingUserCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingUser update
+   */
+  export type MeetingUserUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * The data needed to update a MeetingUser.
+     */
+    data: XOR<MeetingUserUpdateInput, MeetingUserUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingUser to update.
+     */
+    where: MeetingUserWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUser updateMany
+   */
+  export type MeetingUserUpdateManyArgs = {
+    /**
+     * The data used to update MeetingUsers.
+     */
+    data: XOR<MeetingUserUpdateManyMutationInput, MeetingUserUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingUsers to update
+     */
+    where?: MeetingUserWhereInput
+  }
+
+
+  /**
+   * MeetingUser upsert
+   */
+  export type MeetingUserUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * The filter to search for the MeetingUser to update in case it exists.
+     */
+    where: MeetingUserWhereUniqueInput
+    /**
+     * In case the MeetingUser found by the `where` argument doesn't exist, create a new MeetingUser with this data.
+     */
+    create: XOR<MeetingUserCreateInput, MeetingUserUncheckedCreateInput>
+    /**
+     * In case the MeetingUser was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingUserUpdateInput, MeetingUserUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingUser delete
+   */
+  export type MeetingUserDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+    /**
+     * Filter which MeetingUser to delete.
+     */
+    where: MeetingUserWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUser deleteMany
+   */
+  export type MeetingUserDeleteManyArgs = {
+    /**
+     * Filter which MeetingUsers to delete
+     */
+    where?: MeetingUserWhereInput
+  }
+
+
+  /**
+   * MeetingUser.MeetingUserBooked
+   */
+  export type MeetingUser$MeetingUserBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    where?: MeetingUserBookedWhereInput
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    cursor?: MeetingUserBookedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingUserBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUser.MeetingUserAvailable
+   */
+  export type MeetingUser$MeetingUserAvailableArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    where?: MeetingUserAvailableWhereInput
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithRelationInput>
+    cursor?: MeetingUserAvailableWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingUserAvailableScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUser.MeetingRoomBooked
+   */
+  export type MeetingUser$MeetingRoomBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    where?: MeetingRoomBookedWhereInput
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingRoomBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUser without action
+   */
+  export type MeetingUserArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUser
+     */
+    select?: MeetingUserSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingUserBooked
+   */
+
+
+  export type AggregateMeetingUserBooked = {
+    _count: MeetingUserBookedCountAggregateOutputType | null
+    _avg: MeetingUserBookedAvgAggregateOutputType | null
+    _sum: MeetingUserBookedSumAggregateOutputType | null
+    _min: MeetingUserBookedMinAggregateOutputType | null
+    _max: MeetingUserBookedMaxAggregateOutputType | null
+  }
+
+  export type MeetingUserBookedAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    meetingRoomId: number | null
+  }
+
+  export type MeetingUserBookedSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    meetingRoomId: number | null
+  }
+
+  export type MeetingUserBookedMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    meetingRoomId: number | null
+    meetingDetail: string | null
+    bookingStart: Date | null
+    bookingEnd: Date | null
+    nameOfBooker: string | null
+    tel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserBookedMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    meetingRoomId: number | null
+    meetingDetail: string | null
+    bookingStart: Date | null
+    bookingEnd: Date | null
+    nameOfBooker: string | null
+    tel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserBookedCountAggregateOutputType = {
+    id: number
+    userId: number
+    meetingRoomId: number
+    meetingDetail: number
+    bookingStart: number
+    bookingEnd: number
+    nameOfBooker: number
+    tel: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingUserBookedAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    meetingRoomId?: true
+  }
+
+  export type MeetingUserBookedSumAggregateInputType = {
+    id?: true
+    userId?: true
+    meetingRoomId?: true
+  }
+
+  export type MeetingUserBookedMinAggregateInputType = {
+    id?: true
+    userId?: true
+    meetingRoomId?: true
+    meetingDetail?: true
+    bookingStart?: true
+    bookingEnd?: true
+    nameOfBooker?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserBookedMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    meetingRoomId?: true
+    meetingDetail?: true
+    bookingStart?: true
+    bookingEnd?: true
+    nameOfBooker?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserBookedCountAggregateInputType = {
+    id?: true
+    userId?: true
+    meetingRoomId?: true
+    meetingDetail?: true
+    bookingStart?: true
+    bookingEnd?: true
+    nameOfBooker?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingUserBookedAggregateArgs = {
+    /**
+     * Filter which MeetingUserBooked to aggregate.
+     */
+    where?: MeetingUserBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingUserBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingUserBookeds
+    **/
+    _count?: true | MeetingUserBookedCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingUserBookedAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingUserBookedSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingUserBookedMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingUserBookedMaxAggregateInputType
+  }
+
+  export type GetMeetingUserBookedAggregateType<T extends MeetingUserBookedAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingUserBooked]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingUserBooked[P]>
+      : GetScalarType<T[P], AggregateMeetingUserBooked[P]>
+  }
+
+
+
+
+  export type MeetingUserBookedGroupByArgs = {
+    where?: MeetingUserBookedWhereInput
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithAggregationInput>
+    by: MeetingUserBookedScalarFieldEnum[]
+    having?: MeetingUserBookedScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingUserBookedCountAggregateInputType | true
+    _avg?: MeetingUserBookedAvgAggregateInputType
+    _sum?: MeetingUserBookedSumAggregateInputType
+    _min?: MeetingUserBookedMinAggregateInputType
+    _max?: MeetingUserBookedMaxAggregateInputType
+  }
+
+
+  export type MeetingUserBookedGroupByOutputType = {
+    id: number
+    userId: number
+    meetingRoomId: number
+    meetingDetail: string | null
+    bookingStart: Date
+    bookingEnd: Date
+    nameOfBooker: string
+    tel: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingUserBookedCountAggregateOutputType | null
+    _avg: MeetingUserBookedAvgAggregateOutputType | null
+    _sum: MeetingUserBookedSumAggregateOutputType | null
+    _min: MeetingUserBookedMinAggregateOutputType | null
+    _max: MeetingUserBookedMaxAggregateOutputType | null
+  }
+
+  type GetMeetingUserBookedGroupByPayload<T extends MeetingUserBookedGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingUserBookedGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingUserBookedGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingUserBookedGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingUserBookedGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingUserBookedSelect = {
+    id?: boolean
+    user?: boolean | MeetingUserArgs
+    userId?: boolean
+    meetingRoom?: boolean | MeetingRoomArgs
+    meetingRoomId?: boolean
+    meetingDetail?: boolean
+    bookingStart?: boolean
+    bookingEnd?: boolean
+    nameOfBooker?: boolean
+    tel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    MeetingMembers?: boolean | MeetingUserBooked$MeetingMembersArgs
+    _count?: boolean | MeetingUserBookedCountOutputTypeArgs
+  }
+
+
+  export type MeetingUserBookedInclude = {
+    user?: boolean | MeetingUserArgs
+    meetingRoom?: boolean | MeetingRoomArgs
+    MeetingMembers?: boolean | MeetingUserBooked$MeetingMembersArgs
+    _count?: boolean | MeetingUserBookedCountOutputTypeArgs
+  }
+
+  export type MeetingUserBookedGetPayload<S extends boolean | null | undefined | MeetingUserBookedArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingUserBooked :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingUserBookedArgs | MeetingUserBookedFindManyArgs)
+    ? MeetingUserBooked  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? MeetingUserGetPayload<S['include'][P]> :
+        P extends 'meetingRoom' ? MeetingRoomGetPayload<S['include'][P]> :
+        P extends 'MeetingMembers' ? Array < MeetingMembersGetPayload<S['include'][P]>>  :
+        P extends '_count' ? MeetingUserBookedCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingUserBookedArgs | MeetingUserBookedFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? MeetingUserGetPayload<S['select'][P]> :
+        P extends 'meetingRoom' ? MeetingRoomGetPayload<S['select'][P]> :
+        P extends 'MeetingMembers' ? Array < MeetingMembersGetPayload<S['select'][P]>>  :
+        P extends '_count' ? MeetingUserBookedCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof MeetingUserBooked ? MeetingUserBooked[P] : never
+  } 
+      : MeetingUserBooked
+
+
+  type MeetingUserBookedCountArgs = 
+    Omit<MeetingUserBookedFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingUserBookedCountAggregateInputType | true
+    }
+
+  export interface MeetingUserBookedDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingUserBooked that matches the filter.
+     * @param {MeetingUserBookedFindUniqueArgs} args - Arguments to find a MeetingUserBooked
+     * @example
+     * // Get one MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingUserBookedFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingUserBookedFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingUserBooked'> extends True ? Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>> : Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingUserBooked that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingUserBookedFindUniqueOrThrowArgs} args - Arguments to find a MeetingUserBooked
+     * @example
+     * // Get one MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingUserBookedFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserBookedFindUniqueOrThrowArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Find the first MeetingUserBooked that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedFindFirstArgs} args - Arguments to find a MeetingUserBooked
+     * @example
+     * // Get one MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingUserBookedFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingUserBookedFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingUserBooked'> extends True ? Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>> : Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingUserBooked that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedFindFirstOrThrowArgs} args - Arguments to find a MeetingUserBooked
+     * @example
+     * // Get one MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingUserBookedFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserBookedFindFirstOrThrowArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingUserBookeds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingUserBookeds
+     * const meetingUserBookeds = await prisma.meetingUserBooked.findMany()
+     * 
+     * // Get first 10 MeetingUserBookeds
+     * const meetingUserBookeds = await prisma.meetingUserBooked.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingUserBookedWithIdOnly = await prisma.meetingUserBooked.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingUserBookedFindManyArgs>(
+      args?: SelectSubset<T, MeetingUserBookedFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingUserBookedGetPayload<T>>>
+
+    /**
+     * Create a MeetingUserBooked.
+     * @param {MeetingUserBookedCreateArgs} args - Arguments to create a MeetingUserBooked.
+     * @example
+     * // Create one MeetingUserBooked
+     * const MeetingUserBooked = await prisma.meetingUserBooked.create({
+     *   data: {
+     *     // ... data to create a MeetingUserBooked
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingUserBookedCreateArgs>(
+      args: SelectSubset<T, MeetingUserBookedCreateArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Create many MeetingUserBookeds.
+     *     @param {MeetingUserBookedCreateManyArgs} args - Arguments to create many MeetingUserBookeds.
+     *     @example
+     *     // Create many MeetingUserBookeds
+     *     const meetingUserBooked = await prisma.meetingUserBooked.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingUserBookedCreateManyArgs>(
+      args?: SelectSubset<T, MeetingUserBookedCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingUserBooked.
+     * @param {MeetingUserBookedDeleteArgs} args - Arguments to delete one MeetingUserBooked.
+     * @example
+     * // Delete one MeetingUserBooked
+     * const MeetingUserBooked = await prisma.meetingUserBooked.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingUserBooked
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingUserBookedDeleteArgs>(
+      args: SelectSubset<T, MeetingUserBookedDeleteArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Update one MeetingUserBooked.
+     * @param {MeetingUserBookedUpdateArgs} args - Arguments to update one MeetingUserBooked.
+     * @example
+     * // Update one MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingUserBookedUpdateArgs>(
+      args: SelectSubset<T, MeetingUserBookedUpdateArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingUserBookeds.
+     * @param {MeetingUserBookedDeleteManyArgs} args - Arguments to filter MeetingUserBookeds to delete.
+     * @example
+     * // Delete a few MeetingUserBookeds
+     * const { count } = await prisma.meetingUserBooked.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingUserBookedDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingUserBookedDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingUserBookeds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingUserBookeds
+     * const meetingUserBooked = await prisma.meetingUserBooked.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingUserBookedUpdateManyArgs>(
+      args: SelectSubset<T, MeetingUserBookedUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingUserBooked.
+     * @param {MeetingUserBookedUpsertArgs} args - Arguments to update or create a MeetingUserBooked.
+     * @example
+     * // Update or create a MeetingUserBooked
+     * const meetingUserBooked = await prisma.meetingUserBooked.upsert({
+     *   create: {
+     *     // ... data to create a MeetingUserBooked
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingUserBooked we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingUserBookedUpsertArgs>(
+      args: SelectSubset<T, MeetingUserBookedUpsertArgs>
+    ): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T>>
+
+    /**
+     * Count the number of MeetingUserBookeds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedCountArgs} args - Arguments to filter MeetingUserBookeds to count.
+     * @example
+     * // Count the number of MeetingUserBookeds
+     * const count = await prisma.meetingUserBooked.count({
+     *   where: {
+     *     // ... the filter for the MeetingUserBookeds we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingUserBookedCountArgs>(
+      args?: Subset<T, MeetingUserBookedCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingUserBookedCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingUserBooked.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingUserBookedAggregateArgs>(args: Subset<T, MeetingUserBookedAggregateArgs>): Prisma.PrismaPromise<GetMeetingUserBookedAggregateType<T>>
+
+    /**
+     * Group by MeetingUserBooked.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserBookedGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingUserBookedGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingUserBookedGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingUserBookedGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingUserBookedGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingUserBookedGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingUserBooked.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingUserBookedClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends MeetingUserArgs= {}>(args?: Subset<T, MeetingUserArgs>): Prisma__MeetingUserClient<MeetingUserGetPayload<T> | Null>;
+
+    meetingRoom<T extends MeetingRoomArgs= {}>(args?: Subset<T, MeetingRoomArgs>): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T> | Null>;
+
+    MeetingMembers<T extends MeetingUserBooked$MeetingMembersArgs= {}>(args?: Subset<T, MeetingUserBooked$MeetingMembersArgs>): Prisma.PrismaPromise<Array<MeetingMembersGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingUserBooked base type for findUnique actions
+   */
+  export type MeetingUserBookedFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter, which MeetingUserBooked to fetch.
+     */
+    where: MeetingUserBookedWhereUniqueInput
+  }
+
+  /**
+   * MeetingUserBooked findUnique
+   */
+  export interface MeetingUserBookedFindUniqueArgs extends MeetingUserBookedFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUserBooked findUniqueOrThrow
+   */
+  export type MeetingUserBookedFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter, which MeetingUserBooked to fetch.
+     */
+    where: MeetingUserBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserBooked base type for findFirst actions
+   */
+  export type MeetingUserBookedFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter, which MeetingUserBooked to fetch.
+     */
+    where?: MeetingUserBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUserBookeds.
+     */
+    cursor?: MeetingUserBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUserBookeds.
+     */
+    distinct?: Enumerable<MeetingUserBookedScalarFieldEnum>
+  }
+
+  /**
+   * MeetingUserBooked findFirst
+   */
+  export interface MeetingUserBookedFindFirstArgs extends MeetingUserBookedFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUserBooked findFirstOrThrow
+   */
+  export type MeetingUserBookedFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter, which MeetingUserBooked to fetch.
+     */
+    where?: MeetingUserBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUserBookeds.
+     */
+    cursor?: MeetingUserBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUserBookeds.
+     */
+    distinct?: Enumerable<MeetingUserBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUserBooked findMany
+   */
+  export type MeetingUserBookedFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter, which MeetingUserBookeds to fetch.
+     */
+    where?: MeetingUserBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingUserBookeds.
+     */
+    cursor?: MeetingUserBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserBookeds.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingUserBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUserBooked create
+   */
+  export type MeetingUserBookedCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * The data needed to create a MeetingUserBooked.
+     */
+    data: XOR<MeetingUserBookedCreateInput, MeetingUserBookedUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingUserBooked createMany
+   */
+  export type MeetingUserBookedCreateManyArgs = {
+    /**
+     * The data used to create many MeetingUserBookeds.
+     */
+    data: Enumerable<MeetingUserBookedCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingUserBooked update
+   */
+  export type MeetingUserBookedUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * The data needed to update a MeetingUserBooked.
+     */
+    data: XOR<MeetingUserBookedUpdateInput, MeetingUserBookedUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingUserBooked to update.
+     */
+    where: MeetingUserBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserBooked updateMany
+   */
+  export type MeetingUserBookedUpdateManyArgs = {
+    /**
+     * The data used to update MeetingUserBookeds.
+     */
+    data: XOR<MeetingUserBookedUpdateManyMutationInput, MeetingUserBookedUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingUserBookeds to update
+     */
+    where?: MeetingUserBookedWhereInput
+  }
+
+
+  /**
+   * MeetingUserBooked upsert
+   */
+  export type MeetingUserBookedUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * The filter to search for the MeetingUserBooked to update in case it exists.
+     */
+    where: MeetingUserBookedWhereUniqueInput
+    /**
+     * In case the MeetingUserBooked found by the `where` argument doesn't exist, create a new MeetingUserBooked with this data.
+     */
+    create: XOR<MeetingUserBookedCreateInput, MeetingUserBookedUncheckedCreateInput>
+    /**
+     * In case the MeetingUserBooked was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingUserBookedUpdateInput, MeetingUserBookedUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingUserBooked delete
+   */
+  export type MeetingUserBookedDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    /**
+     * Filter which MeetingUserBooked to delete.
+     */
+    where: MeetingUserBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserBooked deleteMany
+   */
+  export type MeetingUserBookedDeleteManyArgs = {
+    /**
+     * Filter which MeetingUserBookeds to delete
+     */
+    where?: MeetingUserBookedWhereInput
+  }
+
+
+  /**
+   * MeetingUserBooked.MeetingMembers
+   */
+  export type MeetingUserBooked$MeetingMembersArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    where?: MeetingMembersWhereInput
+    orderBy?: Enumerable<MeetingMembersOrderByWithRelationInput>
+    cursor?: MeetingMembersWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingMembersScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUserBooked without action
+   */
+  export type MeetingUserBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingMembers
+   */
+
+
+  export type AggregateMeetingMembers = {
+    _count: MeetingMembersCountAggregateOutputType | null
+    _avg: MeetingMembersAvgAggregateOutputType | null
+    _sum: MeetingMembersSumAggregateOutputType | null
+    _min: MeetingMembersMinAggregateOutputType | null
+    _max: MeetingMembersMaxAggregateOutputType | null
+  }
+
+  export type MeetingMembersAvgAggregateOutputType = {
+    id: number | null
+    bookedId: number | null
+  }
+
+  export type MeetingMembersSumAggregateOutputType = {
+    id: number | null
+    bookedId: number | null
+  }
+
+  export type MeetingMembersMinAggregateOutputType = {
+    id: number | null
+    bookedId: number | null
+    name: string | null
+    email: string | null
+    tel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingMembersMaxAggregateOutputType = {
+    id: number | null
+    bookedId: number | null
+    name: string | null
+    email: string | null
+    tel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingMembersCountAggregateOutputType = {
+    id: number
+    bookedId: number
+    name: number
+    email: number
+    tel: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingMembersAvgAggregateInputType = {
+    id?: true
+    bookedId?: true
+  }
+
+  export type MeetingMembersSumAggregateInputType = {
+    id?: true
+    bookedId?: true
+  }
+
+  export type MeetingMembersMinAggregateInputType = {
+    id?: true
+    bookedId?: true
+    name?: true
+    email?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingMembersMaxAggregateInputType = {
+    id?: true
+    bookedId?: true
+    name?: true
+    email?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingMembersCountAggregateInputType = {
+    id?: true
+    bookedId?: true
+    name?: true
+    email?: true
+    tel?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingMembersAggregateArgs = {
+    /**
+     * Filter which MeetingMembers to aggregate.
+     */
+    where?: MeetingMembersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingMembers to fetch.
+     */
+    orderBy?: Enumerable<MeetingMembersOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingMembersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingMembers
+    **/
+    _count?: true | MeetingMembersCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingMembersAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingMembersSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingMembersMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingMembersMaxAggregateInputType
+  }
+
+  export type GetMeetingMembersAggregateType<T extends MeetingMembersAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingMembers]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingMembers[P]>
+      : GetScalarType<T[P], AggregateMeetingMembers[P]>
+  }
+
+
+
+
+  export type MeetingMembersGroupByArgs = {
+    where?: MeetingMembersWhereInput
+    orderBy?: Enumerable<MeetingMembersOrderByWithAggregationInput>
+    by: MeetingMembersScalarFieldEnum[]
+    having?: MeetingMembersScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingMembersCountAggregateInputType | true
+    _avg?: MeetingMembersAvgAggregateInputType
+    _sum?: MeetingMembersSumAggregateInputType
+    _min?: MeetingMembersMinAggregateInputType
+    _max?: MeetingMembersMaxAggregateInputType
+  }
+
+
+  export type MeetingMembersGroupByOutputType = {
+    id: number
+    bookedId: number
+    name: string | null
+    email: string | null
+    tel: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingMembersCountAggregateOutputType | null
+    _avg: MeetingMembersAvgAggregateOutputType | null
+    _sum: MeetingMembersSumAggregateOutputType | null
+    _min: MeetingMembersMinAggregateOutputType | null
+    _max: MeetingMembersMaxAggregateOutputType | null
+  }
+
+  type GetMeetingMembersGroupByPayload<T extends MeetingMembersGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingMembersGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingMembersGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingMembersGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingMembersGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingMembersSelect = {
+    id?: boolean
+    booking?: boolean | MeetingUserBookedArgs
+    bookedId?: boolean
+    name?: boolean
+    email?: boolean
+    tel?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type MeetingMembersInclude = {
+    booking?: boolean | MeetingUserBookedArgs
+  }
+
+  export type MeetingMembersGetPayload<S extends boolean | null | undefined | MeetingMembersArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingMembers :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingMembersArgs | MeetingMembersFindManyArgs)
+    ? MeetingMembers  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'booking' ? MeetingUserBookedGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingMembersArgs | MeetingMembersFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'booking' ? MeetingUserBookedGetPayload<S['select'][P]> :  P extends keyof MeetingMembers ? MeetingMembers[P] : never
+  } 
+      : MeetingMembers
+
+
+  type MeetingMembersCountArgs = 
+    Omit<MeetingMembersFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingMembersCountAggregateInputType | true
+    }
+
+  export interface MeetingMembersDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingMembers that matches the filter.
+     * @param {MeetingMembersFindUniqueArgs} args - Arguments to find a MeetingMembers
+     * @example
+     * // Get one MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingMembersFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingMembersFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingMembers'> extends True ? Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>> : Prisma__MeetingMembersClient<MeetingMembersGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingMembers that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingMembersFindUniqueOrThrowArgs} args - Arguments to find a MeetingMembers
+     * @example
+     * // Get one MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingMembersFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingMembersFindUniqueOrThrowArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Find the first MeetingMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersFindFirstArgs} args - Arguments to find a MeetingMembers
+     * @example
+     * // Get one MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingMembersFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingMembersFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingMembers'> extends True ? Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>> : Prisma__MeetingMembersClient<MeetingMembersGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingMembers that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersFindFirstOrThrowArgs} args - Arguments to find a MeetingMembers
+     * @example
+     * // Get one MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingMembersFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingMembersFindFirstOrThrowArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findMany()
+     * 
+     * // Get first 10 MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingMembersWithIdOnly = await prisma.meetingMembers.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingMembersFindManyArgs>(
+      args?: SelectSubset<T, MeetingMembersFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingMembersGetPayload<T>>>
+
+    /**
+     * Create a MeetingMembers.
+     * @param {MeetingMembersCreateArgs} args - Arguments to create a MeetingMembers.
+     * @example
+     * // Create one MeetingMembers
+     * const MeetingMembers = await prisma.meetingMembers.create({
+     *   data: {
+     *     // ... data to create a MeetingMembers
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingMembersCreateArgs>(
+      args: SelectSubset<T, MeetingMembersCreateArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Create many MeetingMembers.
+     *     @param {MeetingMembersCreateManyArgs} args - Arguments to create many MeetingMembers.
+     *     @example
+     *     // Create many MeetingMembers
+     *     const meetingMembers = await prisma.meetingMembers.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingMembersCreateManyArgs>(
+      args?: SelectSubset<T, MeetingMembersCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingMembers.
+     * @param {MeetingMembersDeleteArgs} args - Arguments to delete one MeetingMembers.
+     * @example
+     * // Delete one MeetingMembers
+     * const MeetingMembers = await prisma.meetingMembers.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingMembers
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingMembersDeleteArgs>(
+      args: SelectSubset<T, MeetingMembersDeleteArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Update one MeetingMembers.
+     * @param {MeetingMembersUpdateArgs} args - Arguments to update one MeetingMembers.
+     * @example
+     * // Update one MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingMembersUpdateArgs>(
+      args: SelectSubset<T, MeetingMembersUpdateArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingMembers.
+     * @param {MeetingMembersDeleteManyArgs} args - Arguments to filter MeetingMembers to delete.
+     * @example
+     * // Delete a few MeetingMembers
+     * const { count } = await prisma.meetingMembers.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingMembersDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingMembersDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingMembersUpdateManyArgs>(
+      args: SelectSubset<T, MeetingMembersUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingMembers.
+     * @param {MeetingMembersUpsertArgs} args - Arguments to update or create a MeetingMembers.
+     * @example
+     * // Update or create a MeetingMembers
+     * const meetingMembers = await prisma.meetingMembers.upsert({
+     *   create: {
+     *     // ... data to create a MeetingMembers
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingMembers we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingMembersUpsertArgs>(
+      args: SelectSubset<T, MeetingMembersUpsertArgs>
+    ): Prisma__MeetingMembersClient<MeetingMembersGetPayload<T>>
+
+    /**
+     * Count the number of MeetingMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersCountArgs} args - Arguments to filter MeetingMembers to count.
+     * @example
+     * // Count the number of MeetingMembers
+     * const count = await prisma.meetingMembers.count({
+     *   where: {
+     *     // ... the filter for the MeetingMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingMembersCountArgs>(
+      args?: Subset<T, MeetingMembersCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingMembersCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingMembersAggregateArgs>(args: Subset<T, MeetingMembersAggregateArgs>): Prisma.PrismaPromise<GetMeetingMembersAggregateType<T>>
+
+    /**
+     * Group by MeetingMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingMembersGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingMembersGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingMembersGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingMembersGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingMembersGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingMembersGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingMembers.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingMembersClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    booking<T extends MeetingUserBookedArgs= {}>(args?: Subset<T, MeetingUserBookedArgs>): Prisma__MeetingUserBookedClient<MeetingUserBookedGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingMembers base type for findUnique actions
+   */
+  export type MeetingMembersFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter, which MeetingMembers to fetch.
+     */
+    where: MeetingMembersWhereUniqueInput
+  }
+
+  /**
+   * MeetingMembers findUnique
+   */
+  export interface MeetingMembersFindUniqueArgs extends MeetingMembersFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingMembers findUniqueOrThrow
+   */
+  export type MeetingMembersFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter, which MeetingMembers to fetch.
+     */
+    where: MeetingMembersWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingMembers base type for findFirst actions
+   */
+  export type MeetingMembersFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter, which MeetingMembers to fetch.
+     */
+    where?: MeetingMembersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingMembers to fetch.
+     */
+    orderBy?: Enumerable<MeetingMembersOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingMembers.
+     */
+    cursor?: MeetingMembersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingMembers.
+     */
+    distinct?: Enumerable<MeetingMembersScalarFieldEnum>
+  }
+
+  /**
+   * MeetingMembers findFirst
+   */
+  export interface MeetingMembersFindFirstArgs extends MeetingMembersFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingMembers findFirstOrThrow
+   */
+  export type MeetingMembersFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter, which MeetingMembers to fetch.
+     */
+    where?: MeetingMembersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingMembers to fetch.
+     */
+    orderBy?: Enumerable<MeetingMembersOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingMembers.
+     */
+    cursor?: MeetingMembersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingMembers.
+     */
+    distinct?: Enumerable<MeetingMembersScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingMembers findMany
+   */
+  export type MeetingMembersFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter, which MeetingMembers to fetch.
+     */
+    where?: MeetingMembersWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingMembers to fetch.
+     */
+    orderBy?: Enumerable<MeetingMembersOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingMembers.
+     */
+    cursor?: MeetingMembersWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingMembers.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingMembersScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingMembers create
+   */
+  export type MeetingMembersCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * The data needed to create a MeetingMembers.
+     */
+    data: XOR<MeetingMembersCreateInput, MeetingMembersUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingMembers createMany
+   */
+  export type MeetingMembersCreateManyArgs = {
+    /**
+     * The data used to create many MeetingMembers.
+     */
+    data: Enumerable<MeetingMembersCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingMembers update
+   */
+  export type MeetingMembersUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * The data needed to update a MeetingMembers.
+     */
+    data: XOR<MeetingMembersUpdateInput, MeetingMembersUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingMembers to update.
+     */
+    where: MeetingMembersWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingMembers updateMany
+   */
+  export type MeetingMembersUpdateManyArgs = {
+    /**
+     * The data used to update MeetingMembers.
+     */
+    data: XOR<MeetingMembersUpdateManyMutationInput, MeetingMembersUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingMembers to update
+     */
+    where?: MeetingMembersWhereInput
+  }
+
+
+  /**
+   * MeetingMembers upsert
+   */
+  export type MeetingMembersUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * The filter to search for the MeetingMembers to update in case it exists.
+     */
+    where: MeetingMembersWhereUniqueInput
+    /**
+     * In case the MeetingMembers found by the `where` argument doesn't exist, create a new MeetingMembers with this data.
+     */
+    create: XOR<MeetingMembersCreateInput, MeetingMembersUncheckedCreateInput>
+    /**
+     * In case the MeetingMembers was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingMembersUpdateInput, MeetingMembersUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingMembers delete
+   */
+  export type MeetingMembersDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+    /**
+     * Filter which MeetingMembers to delete.
+     */
+    where: MeetingMembersWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingMembers deleteMany
+   */
+  export type MeetingMembersDeleteManyArgs = {
+    /**
+     * Filter which MeetingMembers to delete
+     */
+    where?: MeetingMembersWhereInput
+  }
+
+
+  /**
+   * MeetingMembers without action
+   */
+  export type MeetingMembersArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingMembers
+     */
+    select?: MeetingMembersSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingMembersInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingUserAvailable
+   */
+
+
+  export type AggregateMeetingUserAvailable = {
+    _count: MeetingUserAvailableCountAggregateOutputType | null
+    _avg: MeetingUserAvailableAvgAggregateOutputType | null
+    _sum: MeetingUserAvailableSumAggregateOutputType | null
+    _min: MeetingUserAvailableMinAggregateOutputType | null
+    _max: MeetingUserAvailableMaxAggregateOutputType | null
+  }
+
+  export type MeetingUserAvailableAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type MeetingUserAvailableSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type MeetingUserAvailableMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    availableStart: Date | null
+    availableEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserAvailableMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    availableStart: Date | null
+    availableEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingUserAvailableCountAggregateOutputType = {
+    id: number
+    userId: number
+    availableStart: number
+    availableEnd: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingUserAvailableAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type MeetingUserAvailableSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type MeetingUserAvailableMinAggregateInputType = {
+    id?: true
+    userId?: true
+    availableStart?: true
+    availableEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserAvailableMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    availableStart?: true
+    availableEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingUserAvailableCountAggregateInputType = {
+    id?: true
+    userId?: true
+    availableStart?: true
+    availableEnd?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingUserAvailableAggregateArgs = {
+    /**
+     * Filter which MeetingUserAvailable to aggregate.
+     */
+    where?: MeetingUserAvailableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserAvailables to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingUserAvailableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserAvailables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserAvailables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingUserAvailables
+    **/
+    _count?: true | MeetingUserAvailableCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingUserAvailableAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingUserAvailableSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingUserAvailableMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingUserAvailableMaxAggregateInputType
+  }
+
+  export type GetMeetingUserAvailableAggregateType<T extends MeetingUserAvailableAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingUserAvailable]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingUserAvailable[P]>
+      : GetScalarType<T[P], AggregateMeetingUserAvailable[P]>
+  }
+
+
+
+
+  export type MeetingUserAvailableGroupByArgs = {
+    where?: MeetingUserAvailableWhereInput
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithAggregationInput>
+    by: MeetingUserAvailableScalarFieldEnum[]
+    having?: MeetingUserAvailableScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingUserAvailableCountAggregateInputType | true
+    _avg?: MeetingUserAvailableAvgAggregateInputType
+    _sum?: MeetingUserAvailableSumAggregateInputType
+    _min?: MeetingUserAvailableMinAggregateInputType
+    _max?: MeetingUserAvailableMaxAggregateInputType
+  }
+
+
+  export type MeetingUserAvailableGroupByOutputType = {
+    id: number
+    userId: number
+    availableStart: Date
+    availableEnd: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingUserAvailableCountAggregateOutputType | null
+    _avg: MeetingUserAvailableAvgAggregateOutputType | null
+    _sum: MeetingUserAvailableSumAggregateOutputType | null
+    _min: MeetingUserAvailableMinAggregateOutputType | null
+    _max: MeetingUserAvailableMaxAggregateOutputType | null
+  }
+
+  type GetMeetingUserAvailableGroupByPayload<T extends MeetingUserAvailableGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingUserAvailableGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingUserAvailableGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingUserAvailableGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingUserAvailableGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingUserAvailableSelect = {
+    id?: boolean
+    user?: boolean | MeetingUserArgs
+    userId?: boolean
+    availableStart?: boolean
+    availableEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type MeetingUserAvailableInclude = {
+    user?: boolean | MeetingUserArgs
+  }
+
+  export type MeetingUserAvailableGetPayload<S extends boolean | null | undefined | MeetingUserAvailableArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingUserAvailable :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingUserAvailableArgs | MeetingUserAvailableFindManyArgs)
+    ? MeetingUserAvailable  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'user' ? MeetingUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingUserAvailableArgs | MeetingUserAvailableFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'user' ? MeetingUserGetPayload<S['select'][P]> :  P extends keyof MeetingUserAvailable ? MeetingUserAvailable[P] : never
+  } 
+      : MeetingUserAvailable
+
+
+  type MeetingUserAvailableCountArgs = 
+    Omit<MeetingUserAvailableFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingUserAvailableCountAggregateInputType | true
+    }
+
+  export interface MeetingUserAvailableDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingUserAvailable that matches the filter.
+     * @param {MeetingUserAvailableFindUniqueArgs} args - Arguments to find a MeetingUserAvailable
+     * @example
+     * // Get one MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingUserAvailableFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingUserAvailableFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingUserAvailable'> extends True ? Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>> : Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingUserAvailable that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingUserAvailableFindUniqueOrThrowArgs} args - Arguments to find a MeetingUserAvailable
+     * @example
+     * // Get one MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingUserAvailableFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserAvailableFindUniqueOrThrowArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Find the first MeetingUserAvailable that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableFindFirstArgs} args - Arguments to find a MeetingUserAvailable
+     * @example
+     * // Get one MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingUserAvailableFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingUserAvailableFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingUserAvailable'> extends True ? Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>> : Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingUserAvailable that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableFindFirstOrThrowArgs} args - Arguments to find a MeetingUserAvailable
+     * @example
+     * // Get one MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingUserAvailableFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingUserAvailableFindFirstOrThrowArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingUserAvailables that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingUserAvailables
+     * const meetingUserAvailables = await prisma.meetingUserAvailable.findMany()
+     * 
+     * // Get first 10 MeetingUserAvailables
+     * const meetingUserAvailables = await prisma.meetingUserAvailable.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingUserAvailableWithIdOnly = await prisma.meetingUserAvailable.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingUserAvailableFindManyArgs>(
+      args?: SelectSubset<T, MeetingUserAvailableFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingUserAvailableGetPayload<T>>>
+
+    /**
+     * Create a MeetingUserAvailable.
+     * @param {MeetingUserAvailableCreateArgs} args - Arguments to create a MeetingUserAvailable.
+     * @example
+     * // Create one MeetingUserAvailable
+     * const MeetingUserAvailable = await prisma.meetingUserAvailable.create({
+     *   data: {
+     *     // ... data to create a MeetingUserAvailable
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingUserAvailableCreateArgs>(
+      args: SelectSubset<T, MeetingUserAvailableCreateArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Create many MeetingUserAvailables.
+     *     @param {MeetingUserAvailableCreateManyArgs} args - Arguments to create many MeetingUserAvailables.
+     *     @example
+     *     // Create many MeetingUserAvailables
+     *     const meetingUserAvailable = await prisma.meetingUserAvailable.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingUserAvailableCreateManyArgs>(
+      args?: SelectSubset<T, MeetingUserAvailableCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingUserAvailable.
+     * @param {MeetingUserAvailableDeleteArgs} args - Arguments to delete one MeetingUserAvailable.
+     * @example
+     * // Delete one MeetingUserAvailable
+     * const MeetingUserAvailable = await prisma.meetingUserAvailable.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingUserAvailable
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingUserAvailableDeleteArgs>(
+      args: SelectSubset<T, MeetingUserAvailableDeleteArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Update one MeetingUserAvailable.
+     * @param {MeetingUserAvailableUpdateArgs} args - Arguments to update one MeetingUserAvailable.
+     * @example
+     * // Update one MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingUserAvailableUpdateArgs>(
+      args: SelectSubset<T, MeetingUserAvailableUpdateArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingUserAvailables.
+     * @param {MeetingUserAvailableDeleteManyArgs} args - Arguments to filter MeetingUserAvailables to delete.
+     * @example
+     * // Delete a few MeetingUserAvailables
+     * const { count } = await prisma.meetingUserAvailable.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingUserAvailableDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingUserAvailableDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingUserAvailables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingUserAvailables
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingUserAvailableUpdateManyArgs>(
+      args: SelectSubset<T, MeetingUserAvailableUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingUserAvailable.
+     * @param {MeetingUserAvailableUpsertArgs} args - Arguments to update or create a MeetingUserAvailable.
+     * @example
+     * // Update or create a MeetingUserAvailable
+     * const meetingUserAvailable = await prisma.meetingUserAvailable.upsert({
+     *   create: {
+     *     // ... data to create a MeetingUserAvailable
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingUserAvailable we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingUserAvailableUpsertArgs>(
+      args: SelectSubset<T, MeetingUserAvailableUpsertArgs>
+    ): Prisma__MeetingUserAvailableClient<MeetingUserAvailableGetPayload<T>>
+
+    /**
+     * Count the number of MeetingUserAvailables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableCountArgs} args - Arguments to filter MeetingUserAvailables to count.
+     * @example
+     * // Count the number of MeetingUserAvailables
+     * const count = await prisma.meetingUserAvailable.count({
+     *   where: {
+     *     // ... the filter for the MeetingUserAvailables we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingUserAvailableCountArgs>(
+      args?: Subset<T, MeetingUserAvailableCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingUserAvailableCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingUserAvailable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingUserAvailableAggregateArgs>(args: Subset<T, MeetingUserAvailableAggregateArgs>): Prisma.PrismaPromise<GetMeetingUserAvailableAggregateType<T>>
+
+    /**
+     * Group by MeetingUserAvailable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingUserAvailableGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingUserAvailableGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingUserAvailableGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingUserAvailableGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingUserAvailableGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingUserAvailableGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingUserAvailable.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingUserAvailableClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    user<T extends MeetingUserArgs= {}>(args?: Subset<T, MeetingUserArgs>): Prisma__MeetingUserClient<MeetingUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingUserAvailable base type for findUnique actions
+   */
+  export type MeetingUserAvailableFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter, which MeetingUserAvailable to fetch.
+     */
+    where: MeetingUserAvailableWhereUniqueInput
+  }
+
+  /**
+   * MeetingUserAvailable findUnique
+   */
+  export interface MeetingUserAvailableFindUniqueArgs extends MeetingUserAvailableFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUserAvailable findUniqueOrThrow
+   */
+  export type MeetingUserAvailableFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter, which MeetingUserAvailable to fetch.
+     */
+    where: MeetingUserAvailableWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserAvailable base type for findFirst actions
+   */
+  export type MeetingUserAvailableFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter, which MeetingUserAvailable to fetch.
+     */
+    where?: MeetingUserAvailableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserAvailables to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUserAvailables.
+     */
+    cursor?: MeetingUserAvailableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserAvailables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserAvailables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUserAvailables.
+     */
+    distinct?: Enumerable<MeetingUserAvailableScalarFieldEnum>
+  }
+
+  /**
+   * MeetingUserAvailable findFirst
+   */
+  export interface MeetingUserAvailableFindFirstArgs extends MeetingUserAvailableFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingUserAvailable findFirstOrThrow
+   */
+  export type MeetingUserAvailableFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter, which MeetingUserAvailable to fetch.
+     */
+    where?: MeetingUserAvailableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserAvailables to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingUserAvailables.
+     */
+    cursor?: MeetingUserAvailableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserAvailables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserAvailables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingUserAvailables.
+     */
+    distinct?: Enumerable<MeetingUserAvailableScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUserAvailable findMany
+   */
+  export type MeetingUserAvailableFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter, which MeetingUserAvailables to fetch.
+     */
+    where?: MeetingUserAvailableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingUserAvailables to fetch.
+     */
+    orderBy?: Enumerable<MeetingUserAvailableOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingUserAvailables.
+     */
+    cursor?: MeetingUserAvailableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingUserAvailables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingUserAvailables.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingUserAvailableScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingUserAvailable create
+   */
+  export type MeetingUserAvailableCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * The data needed to create a MeetingUserAvailable.
+     */
+    data: XOR<MeetingUserAvailableCreateInput, MeetingUserAvailableUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingUserAvailable createMany
+   */
+  export type MeetingUserAvailableCreateManyArgs = {
+    /**
+     * The data used to create many MeetingUserAvailables.
+     */
+    data: Enumerable<MeetingUserAvailableCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingUserAvailable update
+   */
+  export type MeetingUserAvailableUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * The data needed to update a MeetingUserAvailable.
+     */
+    data: XOR<MeetingUserAvailableUpdateInput, MeetingUserAvailableUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingUserAvailable to update.
+     */
+    where: MeetingUserAvailableWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserAvailable updateMany
+   */
+  export type MeetingUserAvailableUpdateManyArgs = {
+    /**
+     * The data used to update MeetingUserAvailables.
+     */
+    data: XOR<MeetingUserAvailableUpdateManyMutationInput, MeetingUserAvailableUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingUserAvailables to update
+     */
+    where?: MeetingUserAvailableWhereInput
+  }
+
+
+  /**
+   * MeetingUserAvailable upsert
+   */
+  export type MeetingUserAvailableUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * The filter to search for the MeetingUserAvailable to update in case it exists.
+     */
+    where: MeetingUserAvailableWhereUniqueInput
+    /**
+     * In case the MeetingUserAvailable found by the `where` argument doesn't exist, create a new MeetingUserAvailable with this data.
+     */
+    create: XOR<MeetingUserAvailableCreateInput, MeetingUserAvailableUncheckedCreateInput>
+    /**
+     * In case the MeetingUserAvailable was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingUserAvailableUpdateInput, MeetingUserAvailableUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingUserAvailable delete
+   */
+  export type MeetingUserAvailableDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+    /**
+     * Filter which MeetingUserAvailable to delete.
+     */
+    where: MeetingUserAvailableWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingUserAvailable deleteMany
+   */
+  export type MeetingUserAvailableDeleteManyArgs = {
+    /**
+     * Filter which MeetingUserAvailables to delete
+     */
+    where?: MeetingUserAvailableWhereInput
+  }
+
+
+  /**
+   * MeetingUserAvailable without action
+   */
+  export type MeetingUserAvailableArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserAvailable
+     */
+    select?: MeetingUserAvailableSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserAvailableInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingRoom
+   */
+
+
+  export type AggregateMeetingRoom = {
+    _count: MeetingRoomCountAggregateOutputType | null
+    _avg: MeetingRoomAvgAggregateOutputType | null
+    _sum: MeetingRoomSumAggregateOutputType | null
+    _min: MeetingRoomMinAggregateOutputType | null
+    _max: MeetingRoomMaxAggregateOutputType | null
+  }
+
+  export type MeetingRoomAvgAggregateOutputType = {
+    id: number | null
+    floor: number | null
+  }
+
+  export type MeetingRoomSumAggregateOutputType = {
+    id: number | null
+    floor: number | null
+  }
+
+  export type MeetingRoomMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    floor: number | null
+    building: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingRoomMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    floor: number | null
+    building: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingRoomCountAggregateOutputType = {
+    id: number
+    name: number
+    floor: number
+    building: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingRoomAvgAggregateInputType = {
+    id?: true
+    floor?: true
+  }
+
+  export type MeetingRoomSumAggregateInputType = {
+    id?: true
+    floor?: true
+  }
+
+  export type MeetingRoomMinAggregateInputType = {
+    id?: true
+    name?: true
+    floor?: true
+    building?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingRoomMaxAggregateInputType = {
+    id?: true
+    name?: true
+    floor?: true
+    building?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingRoomCountAggregateInputType = {
+    id?: true
+    name?: true
+    floor?: true
+    building?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingRoomAggregateArgs = {
+    /**
+     * Filter which MeetingRoom to aggregate.
+     */
+    where?: MeetingRoomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRooms to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingRoomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRooms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRooms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingRooms
+    **/
+    _count?: true | MeetingRoomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingRoomAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingRoomSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingRoomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingRoomMaxAggregateInputType
+  }
+
+  export type GetMeetingRoomAggregateType<T extends MeetingRoomAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingRoom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingRoom[P]>
+      : GetScalarType<T[P], AggregateMeetingRoom[P]>
+  }
+
+
+
+
+  export type MeetingRoomGroupByArgs = {
+    where?: MeetingRoomWhereInput
+    orderBy?: Enumerable<MeetingRoomOrderByWithAggregationInput>
+    by: MeetingRoomScalarFieldEnum[]
+    having?: MeetingRoomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingRoomCountAggregateInputType | true
+    _avg?: MeetingRoomAvgAggregateInputType
+    _sum?: MeetingRoomSumAggregateInputType
+    _min?: MeetingRoomMinAggregateInputType
+    _max?: MeetingRoomMaxAggregateInputType
+  }
+
+
+  export type MeetingRoomGroupByOutputType = {
+    id: number
+    name: string
+    floor: number
+    building: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingRoomCountAggregateOutputType | null
+    _avg: MeetingRoomAvgAggregateOutputType | null
+    _sum: MeetingRoomSumAggregateOutputType | null
+    _min: MeetingRoomMinAggregateOutputType | null
+    _max: MeetingRoomMaxAggregateOutputType | null
+  }
+
+  type GetMeetingRoomGroupByPayload<T extends MeetingRoomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingRoomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingRoomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingRoomGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingRoomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingRoomSelect = {
+    id?: boolean
+    name?: boolean
+    floor?: boolean
+    building?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    MeetingUserBooked?: boolean | MeetingRoom$MeetingUserBookedArgs
+    MeetingRoomBooked?: boolean | MeetingRoom$MeetingRoomBookedArgs
+    _count?: boolean | MeetingRoomCountOutputTypeArgs
+  }
+
+
+  export type MeetingRoomInclude = {
+    MeetingUserBooked?: boolean | MeetingRoom$MeetingUserBookedArgs
+    MeetingRoomBooked?: boolean | MeetingRoom$MeetingRoomBookedArgs
+    _count?: boolean | MeetingRoomCountOutputTypeArgs
+  }
+
+  export type MeetingRoomGetPayload<S extends boolean | null | undefined | MeetingRoomArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingRoom :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingRoomArgs | MeetingRoomFindManyArgs)
+    ? MeetingRoom  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'MeetingUserBooked' ? Array < MeetingUserBookedGetPayload<S['include'][P]>>  :
+        P extends 'MeetingRoomBooked' ? Array < MeetingRoomBookedGetPayload<S['include'][P]>>  :
+        P extends '_count' ? MeetingRoomCountOutputTypeGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingRoomArgs | MeetingRoomFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'MeetingUserBooked' ? Array < MeetingUserBookedGetPayload<S['select'][P]>>  :
+        P extends 'MeetingRoomBooked' ? Array < MeetingRoomBookedGetPayload<S['select'][P]>>  :
+        P extends '_count' ? MeetingRoomCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof MeetingRoom ? MeetingRoom[P] : never
+  } 
+      : MeetingRoom
+
+
+  type MeetingRoomCountArgs = 
+    Omit<MeetingRoomFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingRoomCountAggregateInputType | true
+    }
+
+  export interface MeetingRoomDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingRoom that matches the filter.
+     * @param {MeetingRoomFindUniqueArgs} args - Arguments to find a MeetingRoom
+     * @example
+     * // Get one MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingRoomFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingRoomFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingRoom'> extends True ? Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>> : Prisma__MeetingRoomClient<MeetingRoomGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingRoom that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingRoomFindUniqueOrThrowArgs} args - Arguments to find a MeetingRoom
+     * @example
+     * // Get one MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingRoomFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingRoomFindUniqueOrThrowArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Find the first MeetingRoom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomFindFirstArgs} args - Arguments to find a MeetingRoom
+     * @example
+     * // Get one MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingRoomFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingRoomFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingRoom'> extends True ? Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>> : Prisma__MeetingRoomClient<MeetingRoomGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingRoom that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomFindFirstOrThrowArgs} args - Arguments to find a MeetingRoom
+     * @example
+     * // Get one MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingRoomFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingRoomFindFirstOrThrowArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingRooms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingRooms
+     * const meetingRooms = await prisma.meetingRoom.findMany()
+     * 
+     * // Get first 10 MeetingRooms
+     * const meetingRooms = await prisma.meetingRoom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingRoomWithIdOnly = await prisma.meetingRoom.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingRoomFindManyArgs>(
+      args?: SelectSubset<T, MeetingRoomFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingRoomGetPayload<T>>>
+
+    /**
+     * Create a MeetingRoom.
+     * @param {MeetingRoomCreateArgs} args - Arguments to create a MeetingRoom.
+     * @example
+     * // Create one MeetingRoom
+     * const MeetingRoom = await prisma.meetingRoom.create({
+     *   data: {
+     *     // ... data to create a MeetingRoom
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingRoomCreateArgs>(
+      args: SelectSubset<T, MeetingRoomCreateArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Create many MeetingRooms.
+     *     @param {MeetingRoomCreateManyArgs} args - Arguments to create many MeetingRooms.
+     *     @example
+     *     // Create many MeetingRooms
+     *     const meetingRoom = await prisma.meetingRoom.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingRoomCreateManyArgs>(
+      args?: SelectSubset<T, MeetingRoomCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingRoom.
+     * @param {MeetingRoomDeleteArgs} args - Arguments to delete one MeetingRoom.
+     * @example
+     * // Delete one MeetingRoom
+     * const MeetingRoom = await prisma.meetingRoom.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingRoom
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingRoomDeleteArgs>(
+      args: SelectSubset<T, MeetingRoomDeleteArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Update one MeetingRoom.
+     * @param {MeetingRoomUpdateArgs} args - Arguments to update one MeetingRoom.
+     * @example
+     * // Update one MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingRoomUpdateArgs>(
+      args: SelectSubset<T, MeetingRoomUpdateArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingRooms.
+     * @param {MeetingRoomDeleteManyArgs} args - Arguments to filter MeetingRooms to delete.
+     * @example
+     * // Delete a few MeetingRooms
+     * const { count } = await prisma.meetingRoom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingRoomDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingRoomDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingRooms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingRooms
+     * const meetingRoom = await prisma.meetingRoom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingRoomUpdateManyArgs>(
+      args: SelectSubset<T, MeetingRoomUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingRoom.
+     * @param {MeetingRoomUpsertArgs} args - Arguments to update or create a MeetingRoom.
+     * @example
+     * // Update or create a MeetingRoom
+     * const meetingRoom = await prisma.meetingRoom.upsert({
+     *   create: {
+     *     // ... data to create a MeetingRoom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingRoom we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingRoomUpsertArgs>(
+      args: SelectSubset<T, MeetingRoomUpsertArgs>
+    ): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T>>
+
+    /**
+     * Count the number of MeetingRooms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomCountArgs} args - Arguments to filter MeetingRooms to count.
+     * @example
+     * // Count the number of MeetingRooms
+     * const count = await prisma.meetingRoom.count({
+     *   where: {
+     *     // ... the filter for the MeetingRooms we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingRoomCountArgs>(
+      args?: Subset<T, MeetingRoomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingRoomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingRoom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingRoomAggregateArgs>(args: Subset<T, MeetingRoomAggregateArgs>): Prisma.PrismaPromise<GetMeetingRoomAggregateType<T>>
+
+    /**
+     * Group by MeetingRoom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingRoomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingRoomGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingRoomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingRoomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingRoomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingRoom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingRoomClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    MeetingUserBooked<T extends MeetingRoom$MeetingUserBookedArgs= {}>(args?: Subset<T, MeetingRoom$MeetingUserBookedArgs>): Prisma.PrismaPromise<Array<MeetingUserBookedGetPayload<T>>| Null>;
+
+    MeetingRoomBooked<T extends MeetingRoom$MeetingRoomBookedArgs= {}>(args?: Subset<T, MeetingRoom$MeetingRoomBookedArgs>): Prisma.PrismaPromise<Array<MeetingRoomBookedGetPayload<T>>| Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingRoom base type for findUnique actions
+   */
+  export type MeetingRoomFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter, which MeetingRoom to fetch.
+     */
+    where: MeetingRoomWhereUniqueInput
+  }
+
+  /**
+   * MeetingRoom findUnique
+   */
+  export interface MeetingRoomFindUniqueArgs extends MeetingRoomFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingRoom findUniqueOrThrow
+   */
+  export type MeetingRoomFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter, which MeetingRoom to fetch.
+     */
+    where: MeetingRoomWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoom base type for findFirst actions
+   */
+  export type MeetingRoomFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter, which MeetingRoom to fetch.
+     */
+    where?: MeetingRoomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRooms to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingRooms.
+     */
+    cursor?: MeetingRoomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRooms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRooms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingRooms.
+     */
+    distinct?: Enumerable<MeetingRoomScalarFieldEnum>
+  }
+
+  /**
+   * MeetingRoom findFirst
+   */
+  export interface MeetingRoomFindFirstArgs extends MeetingRoomFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingRoom findFirstOrThrow
+   */
+  export type MeetingRoomFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter, which MeetingRoom to fetch.
+     */
+    where?: MeetingRoomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRooms to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingRooms.
+     */
+    cursor?: MeetingRoomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRooms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRooms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingRooms.
+     */
+    distinct?: Enumerable<MeetingRoomScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoom findMany
+   */
+  export type MeetingRoomFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter, which MeetingRooms to fetch.
+     */
+    where?: MeetingRoomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRooms to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingRooms.
+     */
+    cursor?: MeetingRoomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRooms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRooms.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingRoomScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoom create
+   */
+  export type MeetingRoomCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * The data needed to create a MeetingRoom.
+     */
+    data: XOR<MeetingRoomCreateInput, MeetingRoomUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingRoom createMany
+   */
+  export type MeetingRoomCreateManyArgs = {
+    /**
+     * The data used to create many MeetingRooms.
+     */
+    data: Enumerable<MeetingRoomCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingRoom update
+   */
+  export type MeetingRoomUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * The data needed to update a MeetingRoom.
+     */
+    data: XOR<MeetingRoomUpdateInput, MeetingRoomUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingRoom to update.
+     */
+    where: MeetingRoomWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoom updateMany
+   */
+  export type MeetingRoomUpdateManyArgs = {
+    /**
+     * The data used to update MeetingRooms.
+     */
+    data: XOR<MeetingRoomUpdateManyMutationInput, MeetingRoomUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingRooms to update
+     */
+    where?: MeetingRoomWhereInput
+  }
+
+
+  /**
+   * MeetingRoom upsert
+   */
+  export type MeetingRoomUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * The filter to search for the MeetingRoom to update in case it exists.
+     */
+    where: MeetingRoomWhereUniqueInput
+    /**
+     * In case the MeetingRoom found by the `where` argument doesn't exist, create a new MeetingRoom with this data.
+     */
+    create: XOR<MeetingRoomCreateInput, MeetingRoomUncheckedCreateInput>
+    /**
+     * In case the MeetingRoom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingRoomUpdateInput, MeetingRoomUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingRoom delete
+   */
+  export type MeetingRoomDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+    /**
+     * Filter which MeetingRoom to delete.
+     */
+    where: MeetingRoomWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoom deleteMany
+   */
+  export type MeetingRoomDeleteManyArgs = {
+    /**
+     * Filter which MeetingRooms to delete
+     */
+    where?: MeetingRoomWhereInput
+  }
+
+
+  /**
+   * MeetingRoom.MeetingUserBooked
+   */
+  export type MeetingRoom$MeetingUserBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingUserBooked
+     */
+    select?: MeetingUserBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingUserBookedInclude | null
+    where?: MeetingUserBookedWhereInput
+    orderBy?: Enumerable<MeetingUserBookedOrderByWithRelationInput>
+    cursor?: MeetingUserBookedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingUserBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoom.MeetingRoomBooked
+   */
+  export type MeetingRoom$MeetingRoomBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    where?: MeetingRoomBookedWhereInput
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<MeetingRoomBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoom without action
+   */
+  export type MeetingRoomArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoom
+     */
+    select?: MeetingRoomSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomInclude | null
+  }
+
+
+
+  /**
+   * Model MeetingRoomBooked
+   */
+
+
+  export type AggregateMeetingRoomBooked = {
+    _count: MeetingRoomBookedCountAggregateOutputType | null
+    _avg: MeetingRoomBookedAvgAggregateOutputType | null
+    _sum: MeetingRoomBookedSumAggregateOutputType | null
+    _min: MeetingRoomBookedMinAggregateOutputType | null
+    _max: MeetingRoomBookedMaxAggregateOutputType | null
+  }
+
+  export type MeetingRoomBookedAvgAggregateOutputType = {
+    id: number | null
+    meetingRoomId: number | null
+    userId: number | null
+  }
+
+  export type MeetingRoomBookedSumAggregateOutputType = {
+    id: number | null
+    meetingRoomId: number | null
+    userId: number | null
+  }
+
+  export type MeetingRoomBookedMinAggregateOutputType = {
+    id: number | null
+    meetingRoomId: number | null
+    userId: number | null
+    bookingStart: Date | null
+    bookingEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingRoomBookedMaxAggregateOutputType = {
+    id: number | null
+    meetingRoomId: number | null
+    userId: number | null
+    bookingStart: Date | null
+    bookingEnd: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MeetingRoomBookedCountAggregateOutputType = {
+    id: number
+    meetingRoomId: number
+    userId: number
+    bookingStart: number
+    bookingEnd: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MeetingRoomBookedAvgAggregateInputType = {
+    id?: true
+    meetingRoomId?: true
+    userId?: true
+  }
+
+  export type MeetingRoomBookedSumAggregateInputType = {
+    id?: true
+    meetingRoomId?: true
+    userId?: true
+  }
+
+  export type MeetingRoomBookedMinAggregateInputType = {
+    id?: true
+    meetingRoomId?: true
+    userId?: true
+    bookingStart?: true
+    bookingEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingRoomBookedMaxAggregateInputType = {
+    id?: true
+    meetingRoomId?: true
+    userId?: true
+    bookingStart?: true
+    bookingEnd?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MeetingRoomBookedCountAggregateInputType = {
+    id?: true
+    meetingRoomId?: true
+    userId?: true
+    bookingStart?: true
+    bookingEnd?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MeetingRoomBookedAggregateArgs = {
+    /**
+     * Filter which MeetingRoomBooked to aggregate.
+     */
+    where?: MeetingRoomBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRoomBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRoomBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRoomBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingRoomBookeds
+    **/
+    _count?: true | MeetingRoomBookedCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MeetingRoomBookedAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MeetingRoomBookedSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingRoomBookedMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingRoomBookedMaxAggregateInputType
+  }
+
+  export type GetMeetingRoomBookedAggregateType<T extends MeetingRoomBookedAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingRoomBooked]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingRoomBooked[P]>
+      : GetScalarType<T[P], AggregateMeetingRoomBooked[P]>
+  }
+
+
+
+
+  export type MeetingRoomBookedGroupByArgs = {
+    where?: MeetingRoomBookedWhereInput
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithAggregationInput>
+    by: MeetingRoomBookedScalarFieldEnum[]
+    having?: MeetingRoomBookedScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingRoomBookedCountAggregateInputType | true
+    _avg?: MeetingRoomBookedAvgAggregateInputType
+    _sum?: MeetingRoomBookedSumAggregateInputType
+    _min?: MeetingRoomBookedMinAggregateInputType
+    _max?: MeetingRoomBookedMaxAggregateInputType
+  }
+
+
+  export type MeetingRoomBookedGroupByOutputType = {
+    id: number
+    meetingRoomId: number
+    userId: number
+    bookingStart: Date
+    bookingEnd: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: MeetingRoomBookedCountAggregateOutputType | null
+    _avg: MeetingRoomBookedAvgAggregateOutputType | null
+    _sum: MeetingRoomBookedSumAggregateOutputType | null
+    _min: MeetingRoomBookedMinAggregateOutputType | null
+    _max: MeetingRoomBookedMaxAggregateOutputType | null
+  }
+
+  type GetMeetingRoomBookedGroupByPayload<T extends MeetingRoomBookedGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<MeetingRoomBookedGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingRoomBookedGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingRoomBookedGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingRoomBookedGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingRoomBookedSelect = {
+    id?: boolean
+    meetingRoom?: boolean | MeetingRoomArgs
+    meetingRoomId?: boolean
+    byUserId?: boolean | MeetingUserArgs
+    userId?: boolean
+    bookingStart?: boolean
+    bookingEnd?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type MeetingRoomBookedInclude = {
+    meetingRoom?: boolean | MeetingRoomArgs
+    byUserId?: boolean | MeetingUserArgs
+  }
+
+  export type MeetingRoomBookedGetPayload<S extends boolean | null | undefined | MeetingRoomBookedArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? MeetingRoomBooked :
+    S extends undefined ? never :
+    S extends { include: any } & (MeetingRoomBookedArgs | MeetingRoomBookedFindManyArgs)
+    ? MeetingRoomBooked  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'meetingRoom' ? MeetingRoomGetPayload<S['include'][P]> :
+        P extends 'byUserId' ? MeetingUserGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (MeetingRoomBookedArgs | MeetingRoomBookedFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+        P extends 'meetingRoom' ? MeetingRoomGetPayload<S['select'][P]> :
+        P extends 'byUserId' ? MeetingUserGetPayload<S['select'][P]> :  P extends keyof MeetingRoomBooked ? MeetingRoomBooked[P] : never
+  } 
+      : MeetingRoomBooked
+
+
+  type MeetingRoomBookedCountArgs = 
+    Omit<MeetingRoomBookedFindManyArgs, 'select' | 'include'> & {
+      select?: MeetingRoomBookedCountAggregateInputType | true
+    }
+
+  export interface MeetingRoomBookedDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one MeetingRoomBooked that matches the filter.
+     * @param {MeetingRoomBookedFindUniqueArgs} args - Arguments to find a MeetingRoomBooked
+     * @example
+     * // Get one MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends MeetingRoomBookedFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, MeetingRoomBookedFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'MeetingRoomBooked'> extends True ? Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>> : Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T> | null, null>
+
+    /**
+     * Find one MeetingRoomBooked that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {MeetingRoomBookedFindUniqueOrThrowArgs} args - Arguments to find a MeetingRoomBooked
+     * @example
+     * // Get one MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends MeetingRoomBookedFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, MeetingRoomBookedFindUniqueOrThrowArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Find the first MeetingRoomBooked that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedFindFirstArgs} args - Arguments to find a MeetingRoomBooked
+     * @example
+     * // Get one MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends MeetingRoomBookedFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, MeetingRoomBookedFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'MeetingRoomBooked'> extends True ? Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>> : Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T> | null, null>
+
+    /**
+     * Find the first MeetingRoomBooked that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedFindFirstOrThrowArgs} args - Arguments to find a MeetingRoomBooked
+     * @example
+     * // Get one MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends MeetingRoomBookedFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, MeetingRoomBookedFindFirstOrThrowArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Find zero or more MeetingRoomBookeds that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingRoomBookeds
+     * const meetingRoomBookeds = await prisma.meetingRoomBooked.findMany()
+     * 
+     * // Get first 10 MeetingRoomBookeds
+     * const meetingRoomBookeds = await prisma.meetingRoomBooked.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingRoomBookedWithIdOnly = await prisma.meetingRoomBooked.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends MeetingRoomBookedFindManyArgs>(
+      args?: SelectSubset<T, MeetingRoomBookedFindManyArgs>
+    ): Prisma.PrismaPromise<Array<MeetingRoomBookedGetPayload<T>>>
+
+    /**
+     * Create a MeetingRoomBooked.
+     * @param {MeetingRoomBookedCreateArgs} args - Arguments to create a MeetingRoomBooked.
+     * @example
+     * // Create one MeetingRoomBooked
+     * const MeetingRoomBooked = await prisma.meetingRoomBooked.create({
+     *   data: {
+     *     // ... data to create a MeetingRoomBooked
+     *   }
+     * })
+     * 
+    **/
+    create<T extends MeetingRoomBookedCreateArgs>(
+      args: SelectSubset<T, MeetingRoomBookedCreateArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Create many MeetingRoomBookeds.
+     *     @param {MeetingRoomBookedCreateManyArgs} args - Arguments to create many MeetingRoomBookeds.
+     *     @example
+     *     // Create many MeetingRoomBookeds
+     *     const meetingRoomBooked = await prisma.meetingRoomBooked.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends MeetingRoomBookedCreateManyArgs>(
+      args?: SelectSubset<T, MeetingRoomBookedCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MeetingRoomBooked.
+     * @param {MeetingRoomBookedDeleteArgs} args - Arguments to delete one MeetingRoomBooked.
+     * @example
+     * // Delete one MeetingRoomBooked
+     * const MeetingRoomBooked = await prisma.meetingRoomBooked.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingRoomBooked
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends MeetingRoomBookedDeleteArgs>(
+      args: SelectSubset<T, MeetingRoomBookedDeleteArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Update one MeetingRoomBooked.
+     * @param {MeetingRoomBookedUpdateArgs} args - Arguments to update one MeetingRoomBooked.
+     * @example
+     * // Update one MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends MeetingRoomBookedUpdateArgs>(
+      args: SelectSubset<T, MeetingRoomBookedUpdateArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Delete zero or more MeetingRoomBookeds.
+     * @param {MeetingRoomBookedDeleteManyArgs} args - Arguments to filter MeetingRoomBookeds to delete.
+     * @example
+     * // Delete a few MeetingRoomBookeds
+     * const { count } = await prisma.meetingRoomBooked.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends MeetingRoomBookedDeleteManyArgs>(
+      args?: SelectSubset<T, MeetingRoomBookedDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingRoomBookeds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingRoomBookeds
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends MeetingRoomBookedUpdateManyArgs>(
+      args: SelectSubset<T, MeetingRoomBookedUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MeetingRoomBooked.
+     * @param {MeetingRoomBookedUpsertArgs} args - Arguments to update or create a MeetingRoomBooked.
+     * @example
+     * // Update or create a MeetingRoomBooked
+     * const meetingRoomBooked = await prisma.meetingRoomBooked.upsert({
+     *   create: {
+     *     // ... data to create a MeetingRoomBooked
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingRoomBooked we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends MeetingRoomBookedUpsertArgs>(
+      args: SelectSubset<T, MeetingRoomBookedUpsertArgs>
+    ): Prisma__MeetingRoomBookedClient<MeetingRoomBookedGetPayload<T>>
+
+    /**
+     * Count the number of MeetingRoomBookeds.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedCountArgs} args - Arguments to filter MeetingRoomBookeds to count.
+     * @example
+     * // Count the number of MeetingRoomBookeds
+     * const count = await prisma.meetingRoomBooked.count({
+     *   where: {
+     *     // ... the filter for the MeetingRoomBookeds we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingRoomBookedCountArgs>(
+      args?: Subset<T, MeetingRoomBookedCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingRoomBookedCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingRoomBooked.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingRoomBookedAggregateArgs>(args: Subset<T, MeetingRoomBookedAggregateArgs>): Prisma.PrismaPromise<GetMeetingRoomBookedAggregateType<T>>
+
+    /**
+     * Group by MeetingRoomBooked.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingRoomBookedGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingRoomBookedGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingRoomBookedGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingRoomBookedGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingRoomBookedGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingRoomBookedGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingRoomBooked.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__MeetingRoomBookedClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    meetingRoom<T extends MeetingRoomArgs= {}>(args?: Subset<T, MeetingRoomArgs>): Prisma__MeetingRoomClient<MeetingRoomGetPayload<T> | Null>;
+
+    byUserId<T extends MeetingUserArgs= {}>(args?: Subset<T, MeetingUserArgs>): Prisma__MeetingUserClient<MeetingUserGetPayload<T> | Null>;
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * MeetingRoomBooked base type for findUnique actions
+   */
+  export type MeetingRoomBookedFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter, which MeetingRoomBooked to fetch.
+     */
+    where: MeetingRoomBookedWhereUniqueInput
+  }
+
+  /**
+   * MeetingRoomBooked findUnique
+   */
+  export interface MeetingRoomBookedFindUniqueArgs extends MeetingRoomBookedFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingRoomBooked findUniqueOrThrow
+   */
+  export type MeetingRoomBookedFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter, which MeetingRoomBooked to fetch.
+     */
+    where: MeetingRoomBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoomBooked base type for findFirst actions
+   */
+  export type MeetingRoomBookedFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter, which MeetingRoomBooked to fetch.
+     */
+    where?: MeetingRoomBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRoomBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingRoomBookeds.
+     */
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRoomBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRoomBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingRoomBookeds.
+     */
+    distinct?: Enumerable<MeetingRoomBookedScalarFieldEnum>
+  }
+
+  /**
+   * MeetingRoomBooked findFirst
+   */
+  export interface MeetingRoomBookedFindFirstArgs extends MeetingRoomBookedFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * MeetingRoomBooked findFirstOrThrow
+   */
+  export type MeetingRoomBookedFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter, which MeetingRoomBooked to fetch.
+     */
+    where?: MeetingRoomBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRoomBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingRoomBookeds.
+     */
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRoomBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRoomBookeds.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingRoomBookeds.
+     */
+    distinct?: Enumerable<MeetingRoomBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoomBooked findMany
+   */
+  export type MeetingRoomBookedFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter, which MeetingRoomBookeds to fetch.
+     */
+    where?: MeetingRoomBookedWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingRoomBookeds to fetch.
+     */
+    orderBy?: Enumerable<MeetingRoomBookedOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingRoomBookeds.
+     */
+    cursor?: MeetingRoomBookedWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingRoomBookeds from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingRoomBookeds.
+     */
+    skip?: number
+    distinct?: Enumerable<MeetingRoomBookedScalarFieldEnum>
+  }
+
+
+  /**
+   * MeetingRoomBooked create
+   */
+  export type MeetingRoomBookedCreateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * The data needed to create a MeetingRoomBooked.
+     */
+    data: XOR<MeetingRoomBookedCreateInput, MeetingRoomBookedUncheckedCreateInput>
+  }
+
+
+  /**
+   * MeetingRoomBooked createMany
+   */
+  export type MeetingRoomBookedCreateManyArgs = {
+    /**
+     * The data used to create many MeetingRoomBookeds.
+     */
+    data: Enumerable<MeetingRoomBookedCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * MeetingRoomBooked update
+   */
+  export type MeetingRoomBookedUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * The data needed to update a MeetingRoomBooked.
+     */
+    data: XOR<MeetingRoomBookedUpdateInput, MeetingRoomBookedUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingRoomBooked to update.
+     */
+    where: MeetingRoomBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoomBooked updateMany
+   */
+  export type MeetingRoomBookedUpdateManyArgs = {
+    /**
+     * The data used to update MeetingRoomBookeds.
+     */
+    data: XOR<MeetingRoomBookedUpdateManyMutationInput, MeetingRoomBookedUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingRoomBookeds to update
+     */
+    where?: MeetingRoomBookedWhereInput
+  }
+
+
+  /**
+   * MeetingRoomBooked upsert
+   */
+  export type MeetingRoomBookedUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * The filter to search for the MeetingRoomBooked to update in case it exists.
+     */
+    where: MeetingRoomBookedWhereUniqueInput
+    /**
+     * In case the MeetingRoomBooked found by the `where` argument doesn't exist, create a new MeetingRoomBooked with this data.
+     */
+    create: XOR<MeetingRoomBookedCreateInput, MeetingRoomBookedUncheckedCreateInput>
+    /**
+     * In case the MeetingRoomBooked was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingRoomBookedUpdateInput, MeetingRoomBookedUncheckedUpdateInput>
+  }
+
+
+  /**
+   * MeetingRoomBooked delete
+   */
+  export type MeetingRoomBookedDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
+    /**
+     * Filter which MeetingRoomBooked to delete.
+     */
+    where: MeetingRoomBookedWhereUniqueInput
+  }
+
+
+  /**
+   * MeetingRoomBooked deleteMany
+   */
+  export type MeetingRoomBookedDeleteManyArgs = {
+    /**
+     * Filter which MeetingRoomBookeds to delete
+     */
+    where?: MeetingRoomBookedWhereInput
+  }
+
+
+  /**
+   * MeetingRoomBooked without action
+   */
+  export type MeetingRoomBookedArgs = {
+    /**
+     * Select specific fields to fetch from the MeetingRoomBooked
+     */
+    select?: MeetingRoomBookedSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: MeetingRoomBookedInclude | null
   }
 
 
@@ -66006,6 +72388,85 @@ export namespace Prisma {
   export type LikeTypeScalarFieldEnum = (typeof LikeTypeScalarFieldEnum)[keyof typeof LikeTypeScalarFieldEnum]
 
 
+  export const MeetingMembersScalarFieldEnum: {
+    id: 'id',
+    bookedId: 'bookedId',
+    name: 'name',
+    email: 'email',
+    tel: 'tel',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingMembersScalarFieldEnum = (typeof MeetingMembersScalarFieldEnum)[keyof typeof MeetingMembersScalarFieldEnum]
+
+
+  export const MeetingRoomBookedScalarFieldEnum: {
+    id: 'id',
+    meetingRoomId: 'meetingRoomId',
+    userId: 'userId',
+    bookingStart: 'bookingStart',
+    bookingEnd: 'bookingEnd',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingRoomBookedScalarFieldEnum = (typeof MeetingRoomBookedScalarFieldEnum)[keyof typeof MeetingRoomBookedScalarFieldEnum]
+
+
+  export const MeetingRoomScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    floor: 'floor',
+    building: 'building',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingRoomScalarFieldEnum = (typeof MeetingRoomScalarFieldEnum)[keyof typeof MeetingRoomScalarFieldEnum]
+
+
+  export const MeetingUserAvailableScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    availableStart: 'availableStart',
+    availableEnd: 'availableEnd',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingUserAvailableScalarFieldEnum = (typeof MeetingUserAvailableScalarFieldEnum)[keyof typeof MeetingUserAvailableScalarFieldEnum]
+
+
+  export const MeetingUserBookedScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    meetingRoomId: 'meetingRoomId',
+    meetingDetail: 'meetingDetail',
+    bookingStart: 'bookingStart',
+    bookingEnd: 'bookingEnd',
+    nameOfBooker: 'nameOfBooker',
+    tel: 'tel',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingUserBookedScalarFieldEnum = (typeof MeetingUserBookedScalarFieldEnum)[keyof typeof MeetingUserBookedScalarFieldEnum]
+
+
+  export const MeetingUserScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    profileImage: 'profileImage',
+    postion: 'postion',
+    bio: 'bio',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MeetingUserScalarFieldEnum = (typeof MeetingUserScalarFieldEnum)[keyof typeof MeetingUserScalarFieldEnum]
+
+
   export const PostOnHashtagScalarFieldEnum: {
     id: 'id',
     postId: 'postId',
@@ -68000,6 +74461,364 @@ export namespace Prisma {
     targetReturnDate?: DateTimeWithAggregatesFilter | Date | string
     actualReturnDate?: DateTimeNullableWithAggregatesFilter | Date | string | null
     borrowFromUniversityId?: IntWithAggregatesFilter | number
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingUserWhereInput = {
+    AND?: Enumerable<MeetingUserWhereInput>
+    OR?: Enumerable<MeetingUserWhereInput>
+    NOT?: Enumerable<MeetingUserWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    profileImage?: StringNullableFilter | string | null
+    postion?: StringNullableFilter | string | null
+    bio?: StringNullableFilter | string | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    MeetingUserBooked?: MeetingUserBookedListRelationFilter
+    MeetingUserAvailable?: MeetingUserAvailableListRelationFilter
+    MeetingRoomBooked?: MeetingRoomBookedListRelationFilter
+  }
+
+  export type MeetingUserOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    postion?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    MeetingUserBooked?: MeetingUserBookedOrderByRelationAggregateInput
+    MeetingUserAvailable?: MeetingUserAvailableOrderByRelationAggregateInput
+    MeetingRoomBooked?: MeetingRoomBookedOrderByRelationAggregateInput
+  }
+
+  export type MeetingUserWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingUserOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    postion?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingUserCountOrderByAggregateInput
+    _avg?: MeetingUserAvgOrderByAggregateInput
+    _max?: MeetingUserMaxOrderByAggregateInput
+    _min?: MeetingUserMinOrderByAggregateInput
+    _sum?: MeetingUserSumOrderByAggregateInput
+  }
+
+  export type MeetingUserScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingUserScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingUserScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingUserScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    profileImage?: StringNullableWithAggregatesFilter | string | null
+    postion?: StringNullableWithAggregatesFilter | string | null
+    bio?: StringNullableWithAggregatesFilter | string | null
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingUserBookedWhereInput = {
+    AND?: Enumerable<MeetingUserBookedWhereInput>
+    OR?: Enumerable<MeetingUserBookedWhereInput>
+    NOT?: Enumerable<MeetingUserBookedWhereInput>
+    id?: IntFilter | number
+    user?: XOR<MeetingUserRelationFilter, MeetingUserWhereInput>
+    userId?: IntFilter | number
+    meetingRoom?: XOR<MeetingRoomRelationFilter, MeetingRoomWhereInput>
+    meetingRoomId?: IntFilter | number
+    meetingDetail?: StringNullableFilter | string | null
+    bookingStart?: DateTimeFilter | Date | string
+    bookingEnd?: DateTimeFilter | Date | string
+    nameOfBooker?: StringFilter | string
+    tel?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    MeetingMembers?: MeetingMembersListRelationFilter
+  }
+
+  export type MeetingUserBookedOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: MeetingUserOrderByWithRelationInput
+    userId?: SortOrder
+    meetingRoom?: MeetingRoomOrderByWithRelationInput
+    meetingRoomId?: SortOrder
+    meetingDetail?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    nameOfBooker?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    MeetingMembers?: MeetingMembersOrderByRelationAggregateInput
+  }
+
+  export type MeetingUserBookedWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingUserBookedOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+    meetingDetail?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    nameOfBooker?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingUserBookedCountOrderByAggregateInput
+    _avg?: MeetingUserBookedAvgOrderByAggregateInput
+    _max?: MeetingUserBookedMaxOrderByAggregateInput
+    _min?: MeetingUserBookedMinOrderByAggregateInput
+    _sum?: MeetingUserBookedSumOrderByAggregateInput
+  }
+
+  export type MeetingUserBookedScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingUserBookedScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingUserBookedScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingUserBookedScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    meetingRoomId?: IntWithAggregatesFilter | number
+    meetingDetail?: StringNullableWithAggregatesFilter | string | null
+    bookingStart?: DateTimeWithAggregatesFilter | Date | string
+    bookingEnd?: DateTimeWithAggregatesFilter | Date | string
+    nameOfBooker?: StringWithAggregatesFilter | string
+    tel?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingMembersWhereInput = {
+    AND?: Enumerable<MeetingMembersWhereInput>
+    OR?: Enumerable<MeetingMembersWhereInput>
+    NOT?: Enumerable<MeetingMembersWhereInput>
+    id?: IntFilter | number
+    booking?: XOR<MeetingUserBookedRelationFilter, MeetingUserBookedWhereInput>
+    bookedId?: IntFilter | number
+    name?: StringNullableFilter | string | null
+    email?: StringNullableFilter | string | null
+    tel?: StringNullableFilter | string | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingMembersOrderByWithRelationInput = {
+    id?: SortOrder
+    booking?: MeetingUserBookedOrderByWithRelationInput
+    bookedId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingMembersWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingMembersOrderByWithAggregationInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingMembersCountOrderByAggregateInput
+    _avg?: MeetingMembersAvgOrderByAggregateInput
+    _max?: MeetingMembersMaxOrderByAggregateInput
+    _min?: MeetingMembersMinOrderByAggregateInput
+    _sum?: MeetingMembersSumOrderByAggregateInput
+  }
+
+  export type MeetingMembersScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingMembersScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingMembersScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingMembersScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    bookedId?: IntWithAggregatesFilter | number
+    name?: StringNullableWithAggregatesFilter | string | null
+    email?: StringNullableWithAggregatesFilter | string | null
+    tel?: StringNullableWithAggregatesFilter | string | null
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingUserAvailableWhereInput = {
+    AND?: Enumerable<MeetingUserAvailableWhereInput>
+    OR?: Enumerable<MeetingUserAvailableWhereInput>
+    NOT?: Enumerable<MeetingUserAvailableWhereInput>
+    id?: IntFilter | number
+    user?: XOR<MeetingUserRelationFilter, MeetingUserWhereInput>
+    userId?: IntFilter | number
+    availableStart?: DateTimeFilter | Date | string
+    availableEnd?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingUserAvailableOrderByWithRelationInput = {
+    id?: SortOrder
+    user?: MeetingUserOrderByWithRelationInput
+    userId?: SortOrder
+    availableStart?: SortOrder
+    availableEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserAvailableWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingUserAvailableOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    availableStart?: SortOrder
+    availableEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingUserAvailableCountOrderByAggregateInput
+    _avg?: MeetingUserAvailableAvgOrderByAggregateInput
+    _max?: MeetingUserAvailableMaxOrderByAggregateInput
+    _min?: MeetingUserAvailableMinOrderByAggregateInput
+    _sum?: MeetingUserAvailableSumOrderByAggregateInput
+  }
+
+  export type MeetingUserAvailableScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingUserAvailableScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingUserAvailableScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingUserAvailableScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    availableStart?: DateTimeWithAggregatesFilter | Date | string
+    availableEnd?: DateTimeWithAggregatesFilter | Date | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingRoomWhereInput = {
+    AND?: Enumerable<MeetingRoomWhereInput>
+    OR?: Enumerable<MeetingRoomWhereInput>
+    NOT?: Enumerable<MeetingRoomWhereInput>
+    id?: IntFilter | number
+    name?: StringFilter | string
+    floor?: IntFilter | number
+    building?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+    MeetingUserBooked?: MeetingUserBookedListRelationFilter
+    MeetingRoomBooked?: MeetingRoomBookedListRelationFilter
+  }
+
+  export type MeetingRoomOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    floor?: SortOrder
+    building?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    MeetingUserBooked?: MeetingUserBookedOrderByRelationAggregateInput
+    MeetingRoomBooked?: MeetingRoomBookedOrderByRelationAggregateInput
+  }
+
+  export type MeetingRoomWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingRoomOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    floor?: SortOrder
+    building?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingRoomCountOrderByAggregateInput
+    _avg?: MeetingRoomAvgOrderByAggregateInput
+    _max?: MeetingRoomMaxOrderByAggregateInput
+    _min?: MeetingRoomMinOrderByAggregateInput
+    _sum?: MeetingRoomSumOrderByAggregateInput
+  }
+
+  export type MeetingRoomScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingRoomScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingRoomScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingRoomScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    name?: StringWithAggregatesFilter | string
+    floor?: IntWithAggregatesFilter | number
+    building?: StringWithAggregatesFilter | string
+    createdAt?: DateTimeWithAggregatesFilter | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter | Date | string
+  }
+
+  export type MeetingRoomBookedWhereInput = {
+    AND?: Enumerable<MeetingRoomBookedWhereInput>
+    OR?: Enumerable<MeetingRoomBookedWhereInput>
+    NOT?: Enumerable<MeetingRoomBookedWhereInput>
+    id?: IntFilter | number
+    meetingRoom?: XOR<MeetingRoomRelationFilter, MeetingRoomWhereInput>
+    meetingRoomId?: IntFilter | number
+    byUserId?: XOR<MeetingUserRelationFilter, MeetingUserWhereInput>
+    userId?: IntFilter | number
+    bookingStart?: DateTimeFilter | Date | string
+    bookingEnd?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingRoomBookedOrderByWithRelationInput = {
+    id?: SortOrder
+    meetingRoom?: MeetingRoomOrderByWithRelationInput
+    meetingRoomId?: SortOrder
+    byUserId?: MeetingUserOrderByWithRelationInput
+    userId?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomBookedWhereUniqueInput = {
+    id?: number
+  }
+
+  export type MeetingRoomBookedOrderByWithAggregationInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MeetingRoomBookedCountOrderByAggregateInput
+    _avg?: MeetingRoomBookedAvgOrderByAggregateInput
+    _max?: MeetingRoomBookedMaxOrderByAggregateInput
+    _min?: MeetingRoomBookedMinOrderByAggregateInput
+    _sum?: MeetingRoomBookedSumOrderByAggregateInput
+  }
+
+  export type MeetingRoomBookedScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<MeetingRoomBookedScalarWhereWithAggregatesInput>
+    OR?: Enumerable<MeetingRoomBookedScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<MeetingRoomBookedScalarWhereWithAggregatesInput>
+    id?: IntWithAggregatesFilter | number
+    meetingRoomId?: IntWithAggregatesFilter | number
+    userId?: IntWithAggregatesFilter | number
+    bookingStart?: DateTimeWithAggregatesFilter | Date | string
+    bookingEnd?: DateTimeWithAggregatesFilter | Date | string
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -71554,6 +78373,433 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MeetingUserCreateInput = {
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedCreateNestedManyWithoutUserInput
+    MeetingUserAvailable?: MeetingUserAvailableCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserUncheckedCreateInput = {
+    id?: number
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedCreateNestedManyWithoutUserInput
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUpdateManyWithoutUserNestedInput
+    MeetingUserAvailable?: MeetingUserAvailableUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingUserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedUpdateManyWithoutUserNestedInput
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingUserCreateManyInput = {
+    id?: number
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserBookedCreateInput = {
+    user: MeetingUserCreateNestedOneWithoutMeetingUserBookedInput
+    meetingRoom: MeetingRoomCreateNestedOneWithoutMeetingUserBookedInput
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedUncheckedCreateInput = {
+    id?: number
+    userId: number
+    meetingRoomId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedUpdateInput = {
+    user?: MeetingUserUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingRoom?: MeetingRoomUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingUserBookedUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingUserBookedCreateManyInput = {
+    id?: number
+    userId: number
+    meetingRoomId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserBookedUpdateManyMutationInput = {
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserBookedUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersCreateInput = {
+    booking: MeetingUserBookedCreateNestedOneWithoutMeetingMembersInput
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersUncheckedCreateInput = {
+    id?: number
+    bookedId: number
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersUpdateInput = {
+    booking?: MeetingUserBookedUpdateOneRequiredWithoutMeetingMembersNestedInput
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookedId?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersCreateManyInput = {
+    id?: number
+    bookedId: number
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    bookedId?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableCreateInput = {
+    user: MeetingUserCreateNestedOneWithoutMeetingUserAvailableInput
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedCreateInput = {
+    id?: number
+    userId: number
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableUpdateInput = {
+    user?: MeetingUserUpdateOneRequiredWithoutMeetingUserAvailableNestedInput
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableCreateManyInput = {
+    id?: number
+    userId: number
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableUpdateManyMutationInput = {
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomCreateInput = {
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedCreateNestedManyWithoutMeetingRoomInput
+    MeetingRoomBooked?: MeetingRoomBookedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomUncheckedCreateInput = {
+    id?: number
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedCreateNestedManyWithoutMeetingRoomInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUpdateManyWithoutMeetingRoomNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingRoomUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingRoomCreateManyInput = {
+    id?: number
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedCreateInput = {
+    meetingRoom: MeetingRoomCreateNestedOneWithoutMeetingRoomBookedInput
+    byUserId: MeetingUserCreateNestedOneWithoutMeetingRoomBookedInput
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedCreateInput = {
+    id?: number
+    meetingRoomId: number
+    userId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedUpdateInput = {
+    meetingRoom?: MeetingRoomUpdateOneRequiredWithoutMeetingRoomBookedNestedInput
+    byUserId?: MeetingUserUpdateOneRequiredWithoutMeetingRoomBookedNestedInput
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedCreateManyInput = {
+    id?: number
+    meetingRoomId: number
+    userId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedUpdateManyMutationInput = {
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TodoListCreateInput = {
     task: string
     status?: string
@@ -75083,6 +82329,306 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter
     _min?: NestedDateTimeNullableFilter
     _max?: NestedDateTimeNullableFilter
+  }
+
+  export type MeetingUserBookedListRelationFilter = {
+    every?: MeetingUserBookedWhereInput
+    some?: MeetingUserBookedWhereInput
+    none?: MeetingUserBookedWhereInput
+  }
+
+  export type MeetingUserAvailableListRelationFilter = {
+    every?: MeetingUserAvailableWhereInput
+    some?: MeetingUserAvailableWhereInput
+    none?: MeetingUserAvailableWhereInput
+  }
+
+  export type MeetingRoomBookedListRelationFilter = {
+    every?: MeetingRoomBookedWhereInput
+    some?: MeetingRoomBookedWhereInput
+    none?: MeetingRoomBookedWhereInput
+  }
+
+  export type MeetingUserBookedOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MeetingUserAvailableOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MeetingRoomBookedOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MeetingUserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    postion?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MeetingUserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    postion?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    profileImage?: SortOrder
+    postion?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MeetingUserRelationFilter = {
+    is?: MeetingUserWhereInput
+    isNot?: MeetingUserWhereInput
+  }
+
+  export type MeetingRoomRelationFilter = {
+    is?: MeetingRoomWhereInput
+    isNot?: MeetingRoomWhereInput
+  }
+
+  export type MeetingMembersListRelationFilter = {
+    every?: MeetingMembersWhereInput
+    some?: MeetingMembersWhereInput
+    none?: MeetingMembersWhereInput
+  }
+
+  export type MeetingMembersOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MeetingUserBookedCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+    meetingDetail?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    nameOfBooker?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserBookedAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+  }
+
+  export type MeetingUserBookedMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+    meetingDetail?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    nameOfBooker?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserBookedMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+    meetingDetail?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    nameOfBooker?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserBookedSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    meetingRoomId?: SortOrder
+  }
+
+  export type MeetingUserBookedRelationFilter = {
+    is?: MeetingUserBookedWhereInput
+    isNot?: MeetingUserBookedWhereInput
+  }
+
+  export type MeetingMembersCountOrderByAggregateInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingMembersAvgOrderByAggregateInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+  }
+
+  export type MeetingMembersMaxOrderByAggregateInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingMembersMinOrderByAggregateInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    tel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingMembersSumOrderByAggregateInput = {
+    id?: SortOrder
+    bookedId?: SortOrder
+  }
+
+  export type MeetingUserAvailableCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    availableStart?: SortOrder
+    availableEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserAvailableAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MeetingUserAvailableMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    availableStart?: SortOrder
+    availableEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserAvailableMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    availableStart?: SortOrder
+    availableEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingUserAvailableSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MeetingRoomCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    floor?: SortOrder
+    building?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomAvgOrderByAggregateInput = {
+    id?: SortOrder
+    floor?: SortOrder
+  }
+
+  export type MeetingRoomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    floor?: SortOrder
+    building?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    floor?: SortOrder
+    building?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomSumOrderByAggregateInput = {
+    id?: SortOrder
+    floor?: SortOrder
+  }
+
+  export type MeetingRoomBookedCountOrderByAggregateInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomBookedAvgOrderByAggregateInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type MeetingRoomBookedMaxOrderByAggregateInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomBookedMinOrderByAggregateInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
+    bookingStart?: SortOrder
+    bookingEnd?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MeetingRoomBookedSumOrderByAggregateInput = {
+    id?: SortOrder
+    meetingRoomId?: SortOrder
+    userId?: SortOrder
   }
 
   export type TodoListCountOrderByAggregateInput = {
@@ -78950,6 +86496,342 @@ export namespace Prisma {
     upsert?: LibraryUniversityUpsertWithoutLibraryStudentBorrowingInput
     connect?: LibraryUniversityWhereUniqueInput
     update?: XOR<LibraryUniversityUpdateWithoutLibraryStudentBorrowingInput, LibraryUniversityUncheckedUpdateWithoutLibraryStudentBorrowingInput>
+  }
+
+  export type MeetingUserBookedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutUserInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutUserInput>
+    createMany?: MeetingUserBookedCreateManyUserInputEnvelope
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserAvailableCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<MeetingUserAvailableCreateWithoutUserInput>, Enumerable<MeetingUserAvailableUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserAvailableCreateOrConnectWithoutUserInput>
+    createMany?: MeetingUserAvailableCreateManyUserInputEnvelope
+    connect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+  }
+
+  export type MeetingRoomBookedCreateNestedManyWithoutByUserIdInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutByUserIdInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutByUserIdInput>
+    createMany?: MeetingRoomBookedCreateManyByUserIdInputEnvelope
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserBookedUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutUserInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutUserInput>
+    createMany?: MeetingUserBookedCreateManyUserInputEnvelope
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserAvailableUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<Enumerable<MeetingUserAvailableCreateWithoutUserInput>, Enumerable<MeetingUserAvailableUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserAvailableCreateOrConnectWithoutUserInput>
+    createMany?: MeetingUserAvailableCreateManyUserInputEnvelope
+    connect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+  }
+
+  export type MeetingRoomBookedUncheckedCreateNestedManyWithoutByUserIdInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutByUserIdInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutByUserIdInput>
+    createMany?: MeetingRoomBookedCreateManyByUserIdInputEnvelope
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserBookedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutUserInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<MeetingUserBookedUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: MeetingUserBookedCreateManyUserInputEnvelope
+    set?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    update?: Enumerable<MeetingUserBookedUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<MeetingUserBookedUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<MeetingUserBookedScalarWhereInput>
+  }
+
+  export type MeetingUserAvailableUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<MeetingUserAvailableCreateWithoutUserInput>, Enumerable<MeetingUserAvailableUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserAvailableCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<MeetingUserAvailableUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: MeetingUserAvailableCreateManyUserInputEnvelope
+    set?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    delete?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    connect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    update?: Enumerable<MeetingUserAvailableUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<MeetingUserAvailableUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<MeetingUserAvailableScalarWhereInput>
+  }
+
+  export type MeetingRoomBookedUpdateManyWithoutByUserIdNestedInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutByUserIdInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutByUserIdInput>
+    upsert?: Enumerable<MeetingRoomBookedUpsertWithWhereUniqueWithoutByUserIdInput>
+    createMany?: MeetingRoomBookedCreateManyByUserIdInputEnvelope
+    set?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    update?: Enumerable<MeetingRoomBookedUpdateWithWhereUniqueWithoutByUserIdInput>
+    updateMany?: Enumerable<MeetingRoomBookedUpdateManyWithWhereWithoutByUserIdInput>
+    deleteMany?: Enumerable<MeetingRoomBookedScalarWhereInput>
+  }
+
+  export type MeetingUserBookedUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutUserInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<MeetingUserBookedUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: MeetingUserBookedCreateManyUserInputEnvelope
+    set?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    update?: Enumerable<MeetingUserBookedUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<MeetingUserBookedUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<MeetingUserBookedScalarWhereInput>
+  }
+
+  export type MeetingUserAvailableUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<Enumerable<MeetingUserAvailableCreateWithoutUserInput>, Enumerable<MeetingUserAvailableUncheckedCreateWithoutUserInput>>
+    connectOrCreate?: Enumerable<MeetingUserAvailableCreateOrConnectWithoutUserInput>
+    upsert?: Enumerable<MeetingUserAvailableUpsertWithWhereUniqueWithoutUserInput>
+    createMany?: MeetingUserAvailableCreateManyUserInputEnvelope
+    set?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    delete?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    connect?: Enumerable<MeetingUserAvailableWhereUniqueInput>
+    update?: Enumerable<MeetingUserAvailableUpdateWithWhereUniqueWithoutUserInput>
+    updateMany?: Enumerable<MeetingUserAvailableUpdateManyWithWhereWithoutUserInput>
+    deleteMany?: Enumerable<MeetingUserAvailableScalarWhereInput>
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateManyWithoutByUserIdNestedInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutByUserIdInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutByUserIdInput>
+    upsert?: Enumerable<MeetingRoomBookedUpsertWithWhereUniqueWithoutByUserIdInput>
+    createMany?: MeetingRoomBookedCreateManyByUserIdInputEnvelope
+    set?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    update?: Enumerable<MeetingRoomBookedUpdateWithWhereUniqueWithoutByUserIdInput>
+    updateMany?: Enumerable<MeetingRoomBookedUpdateManyWithWhereWithoutByUserIdInput>
+    deleteMany?: Enumerable<MeetingRoomBookedScalarWhereInput>
+  }
+
+  export type MeetingUserCreateNestedOneWithoutMeetingUserBookedInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingUserBookedInput, MeetingUserUncheckedCreateWithoutMeetingUserBookedInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingUserBookedInput
+    connect?: MeetingUserWhereUniqueInput
+  }
+
+  export type MeetingRoomCreateNestedOneWithoutMeetingUserBookedInput = {
+    create?: XOR<MeetingRoomCreateWithoutMeetingUserBookedInput, MeetingRoomUncheckedCreateWithoutMeetingUserBookedInput>
+    connectOrCreate?: MeetingRoomCreateOrConnectWithoutMeetingUserBookedInput
+    connect?: MeetingRoomWhereUniqueInput
+  }
+
+  export type MeetingMembersCreateNestedManyWithoutBookingInput = {
+    create?: XOR<Enumerable<MeetingMembersCreateWithoutBookingInput>, Enumerable<MeetingMembersUncheckedCreateWithoutBookingInput>>
+    connectOrCreate?: Enumerable<MeetingMembersCreateOrConnectWithoutBookingInput>
+    createMany?: MeetingMembersCreateManyBookingInputEnvelope
+    connect?: Enumerable<MeetingMembersWhereUniqueInput>
+  }
+
+  export type MeetingMembersUncheckedCreateNestedManyWithoutBookingInput = {
+    create?: XOR<Enumerable<MeetingMembersCreateWithoutBookingInput>, Enumerable<MeetingMembersUncheckedCreateWithoutBookingInput>>
+    connectOrCreate?: Enumerable<MeetingMembersCreateOrConnectWithoutBookingInput>
+    createMany?: MeetingMembersCreateManyBookingInputEnvelope
+    connect?: Enumerable<MeetingMembersWhereUniqueInput>
+  }
+
+  export type MeetingUserUpdateOneRequiredWithoutMeetingUserBookedNestedInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingUserBookedInput, MeetingUserUncheckedCreateWithoutMeetingUserBookedInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingUserBookedInput
+    upsert?: MeetingUserUpsertWithoutMeetingUserBookedInput
+    connect?: MeetingUserWhereUniqueInput
+    update?: XOR<MeetingUserUpdateWithoutMeetingUserBookedInput, MeetingUserUncheckedUpdateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingRoomUpdateOneRequiredWithoutMeetingUserBookedNestedInput = {
+    create?: XOR<MeetingRoomCreateWithoutMeetingUserBookedInput, MeetingRoomUncheckedCreateWithoutMeetingUserBookedInput>
+    connectOrCreate?: MeetingRoomCreateOrConnectWithoutMeetingUserBookedInput
+    upsert?: MeetingRoomUpsertWithoutMeetingUserBookedInput
+    connect?: MeetingRoomWhereUniqueInput
+    update?: XOR<MeetingRoomUpdateWithoutMeetingUserBookedInput, MeetingRoomUncheckedUpdateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingMembersUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<Enumerable<MeetingMembersCreateWithoutBookingInput>, Enumerable<MeetingMembersUncheckedCreateWithoutBookingInput>>
+    connectOrCreate?: Enumerable<MeetingMembersCreateOrConnectWithoutBookingInput>
+    upsert?: Enumerable<MeetingMembersUpsertWithWhereUniqueWithoutBookingInput>
+    createMany?: MeetingMembersCreateManyBookingInputEnvelope
+    set?: Enumerable<MeetingMembersWhereUniqueInput>
+    disconnect?: Enumerable<MeetingMembersWhereUniqueInput>
+    delete?: Enumerable<MeetingMembersWhereUniqueInput>
+    connect?: Enumerable<MeetingMembersWhereUniqueInput>
+    update?: Enumerable<MeetingMembersUpdateWithWhereUniqueWithoutBookingInput>
+    updateMany?: Enumerable<MeetingMembersUpdateManyWithWhereWithoutBookingInput>
+    deleteMany?: Enumerable<MeetingMembersScalarWhereInput>
+  }
+
+  export type MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<Enumerable<MeetingMembersCreateWithoutBookingInput>, Enumerable<MeetingMembersUncheckedCreateWithoutBookingInput>>
+    connectOrCreate?: Enumerable<MeetingMembersCreateOrConnectWithoutBookingInput>
+    upsert?: Enumerable<MeetingMembersUpsertWithWhereUniqueWithoutBookingInput>
+    createMany?: MeetingMembersCreateManyBookingInputEnvelope
+    set?: Enumerable<MeetingMembersWhereUniqueInput>
+    disconnect?: Enumerable<MeetingMembersWhereUniqueInput>
+    delete?: Enumerable<MeetingMembersWhereUniqueInput>
+    connect?: Enumerable<MeetingMembersWhereUniqueInput>
+    update?: Enumerable<MeetingMembersUpdateWithWhereUniqueWithoutBookingInput>
+    updateMany?: Enumerable<MeetingMembersUpdateManyWithWhereWithoutBookingInput>
+    deleteMany?: Enumerable<MeetingMembersScalarWhereInput>
+  }
+
+  export type MeetingUserBookedCreateNestedOneWithoutMeetingMembersInput = {
+    create?: XOR<MeetingUserBookedCreateWithoutMeetingMembersInput, MeetingUserBookedUncheckedCreateWithoutMeetingMembersInput>
+    connectOrCreate?: MeetingUserBookedCreateOrConnectWithoutMeetingMembersInput
+    connect?: MeetingUserBookedWhereUniqueInput
+  }
+
+  export type MeetingUserBookedUpdateOneRequiredWithoutMeetingMembersNestedInput = {
+    create?: XOR<MeetingUserBookedCreateWithoutMeetingMembersInput, MeetingUserBookedUncheckedCreateWithoutMeetingMembersInput>
+    connectOrCreate?: MeetingUserBookedCreateOrConnectWithoutMeetingMembersInput
+    upsert?: MeetingUserBookedUpsertWithoutMeetingMembersInput
+    connect?: MeetingUserBookedWhereUniqueInput
+    update?: XOR<MeetingUserBookedUpdateWithoutMeetingMembersInput, MeetingUserBookedUncheckedUpdateWithoutMeetingMembersInput>
+  }
+
+  export type MeetingUserCreateNestedOneWithoutMeetingUserAvailableInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingUserAvailableInput, MeetingUserUncheckedCreateWithoutMeetingUserAvailableInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingUserAvailableInput
+    connect?: MeetingUserWhereUniqueInput
+  }
+
+  export type MeetingUserUpdateOneRequiredWithoutMeetingUserAvailableNestedInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingUserAvailableInput, MeetingUserUncheckedCreateWithoutMeetingUserAvailableInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingUserAvailableInput
+    upsert?: MeetingUserUpsertWithoutMeetingUserAvailableInput
+    connect?: MeetingUserWhereUniqueInput
+    update?: XOR<MeetingUserUpdateWithoutMeetingUserAvailableInput, MeetingUserUncheckedUpdateWithoutMeetingUserAvailableInput>
+  }
+
+  export type MeetingUserBookedCreateNestedManyWithoutMeetingRoomInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutMeetingRoomInput>
+    createMany?: MeetingUserBookedCreateManyMeetingRoomInputEnvelope
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+  }
+
+  export type MeetingRoomBookedCreateNestedManyWithoutMeetingRoomInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutMeetingRoomInput>
+    createMany?: MeetingRoomBookedCreateManyMeetingRoomInputEnvelope
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserBookedUncheckedCreateNestedManyWithoutMeetingRoomInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutMeetingRoomInput>
+    createMany?: MeetingUserBookedCreateManyMeetingRoomInputEnvelope
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+  }
+
+  export type MeetingRoomBookedUncheckedCreateNestedManyWithoutMeetingRoomInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutMeetingRoomInput>
+    createMany?: MeetingRoomBookedCreateManyMeetingRoomInputEnvelope
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+  }
+
+  export type MeetingUserBookedUpdateManyWithoutMeetingRoomNestedInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutMeetingRoomInput>
+    upsert?: Enumerable<MeetingUserBookedUpsertWithWhereUniqueWithoutMeetingRoomInput>
+    createMany?: MeetingUserBookedCreateManyMeetingRoomInputEnvelope
+    set?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    update?: Enumerable<MeetingUserBookedUpdateWithWhereUniqueWithoutMeetingRoomInput>
+    updateMany?: Enumerable<MeetingUserBookedUpdateManyWithWhereWithoutMeetingRoomInput>
+    deleteMany?: Enumerable<MeetingUserBookedScalarWhereInput>
+  }
+
+  export type MeetingRoomBookedUpdateManyWithoutMeetingRoomNestedInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutMeetingRoomInput>
+    upsert?: Enumerable<MeetingRoomBookedUpsertWithWhereUniqueWithoutMeetingRoomInput>
+    createMany?: MeetingRoomBookedCreateManyMeetingRoomInputEnvelope
+    set?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    update?: Enumerable<MeetingRoomBookedUpdateWithWhereUniqueWithoutMeetingRoomInput>
+    updateMany?: Enumerable<MeetingRoomBookedUpdateManyWithWhereWithoutMeetingRoomInput>
+    deleteMany?: Enumerable<MeetingRoomBookedScalarWhereInput>
+  }
+
+  export type MeetingUserBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput = {
+    create?: XOR<Enumerable<MeetingUserBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingUserBookedCreateOrConnectWithoutMeetingRoomInput>
+    upsert?: Enumerable<MeetingUserBookedUpsertWithWhereUniqueWithoutMeetingRoomInput>
+    createMany?: MeetingUserBookedCreateManyMeetingRoomInputEnvelope
+    set?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingUserBookedWhereUniqueInput>
+    update?: Enumerable<MeetingUserBookedUpdateWithWhereUniqueWithoutMeetingRoomInput>
+    updateMany?: Enumerable<MeetingUserBookedUpdateManyWithWhereWithoutMeetingRoomInput>
+    deleteMany?: Enumerable<MeetingUserBookedScalarWhereInput>
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput = {
+    create?: XOR<Enumerable<MeetingRoomBookedCreateWithoutMeetingRoomInput>, Enumerable<MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>>
+    connectOrCreate?: Enumerable<MeetingRoomBookedCreateOrConnectWithoutMeetingRoomInput>
+    upsert?: Enumerable<MeetingRoomBookedUpsertWithWhereUniqueWithoutMeetingRoomInput>
+    createMany?: MeetingRoomBookedCreateManyMeetingRoomInputEnvelope
+    set?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    disconnect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    delete?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    connect?: Enumerable<MeetingRoomBookedWhereUniqueInput>
+    update?: Enumerable<MeetingRoomBookedUpdateWithWhereUniqueWithoutMeetingRoomInput>
+    updateMany?: Enumerable<MeetingRoomBookedUpdateManyWithWhereWithoutMeetingRoomInput>
+    deleteMany?: Enumerable<MeetingRoomBookedScalarWhereInput>
+  }
+
+  export type MeetingRoomCreateNestedOneWithoutMeetingRoomBookedInput = {
+    create?: XOR<MeetingRoomCreateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedCreateWithoutMeetingRoomBookedInput>
+    connectOrCreate?: MeetingRoomCreateOrConnectWithoutMeetingRoomBookedInput
+    connect?: MeetingRoomWhereUniqueInput
+  }
+
+  export type MeetingUserCreateNestedOneWithoutMeetingRoomBookedInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingRoomBookedInput, MeetingUserUncheckedCreateWithoutMeetingRoomBookedInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingRoomBookedInput
+    connect?: MeetingUserWhereUniqueInput
+  }
+
+  export type MeetingRoomUpdateOneRequiredWithoutMeetingRoomBookedNestedInput = {
+    create?: XOR<MeetingRoomCreateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedCreateWithoutMeetingRoomBookedInput>
+    connectOrCreate?: MeetingRoomCreateOrConnectWithoutMeetingRoomBookedInput
+    upsert?: MeetingRoomUpsertWithoutMeetingRoomBookedInput
+    connect?: MeetingRoomWhereUniqueInput
+    update?: XOR<MeetingRoomUpdateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedUpdateWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingUserUpdateOneRequiredWithoutMeetingRoomBookedNestedInput = {
+    create?: XOR<MeetingUserCreateWithoutMeetingRoomBookedInput, MeetingUserUncheckedCreateWithoutMeetingRoomBookedInput>
+    connectOrCreate?: MeetingUserCreateOrConnectWithoutMeetingRoomBookedInput
+    upsert?: MeetingUserUpsertWithoutMeetingRoomBookedInput
+    connect?: MeetingUserWhereUniqueInput
+    update?: XOR<MeetingUserUpdateWithoutMeetingRoomBookedInput, MeetingUserUncheckedUpdateWithoutMeetingRoomBookedInput>
   }
 
   export type TriviaQuizCreateNestedManyWithoutCategoryInput = {
@@ -85776,6 +93658,656 @@ export namespace Prisma {
     toUniversity?: LibraryStudentRequestUncheckedUpdateManyWithoutToUniversityNestedInput
   }
 
+  export type MeetingUserBookedCreateWithoutUserInput = {
+    meetingRoom: MeetingRoomCreateNestedOneWithoutMeetingUserBookedInput
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedUncheckedCreateWithoutUserInput = {
+    id?: number
+    meetingRoomId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedCreateOrConnectWithoutUserInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    create: XOR<MeetingUserBookedCreateWithoutUserInput, MeetingUserBookedUncheckedCreateWithoutUserInput>
+  }
+
+  export type MeetingUserBookedCreateManyUserInputEnvelope = {
+    data: Enumerable<MeetingUserBookedCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingUserAvailableCreateWithoutUserInput = {
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedCreateWithoutUserInput = {
+    id?: number
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableCreateOrConnectWithoutUserInput = {
+    where: MeetingUserAvailableWhereUniqueInput
+    create: XOR<MeetingUserAvailableCreateWithoutUserInput, MeetingUserAvailableUncheckedCreateWithoutUserInput>
+  }
+
+  export type MeetingUserAvailableCreateManyUserInputEnvelope = {
+    data: Enumerable<MeetingUserAvailableCreateManyUserInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingRoomBookedCreateWithoutByUserIdInput = {
+    meetingRoom: MeetingRoomCreateNestedOneWithoutMeetingRoomBookedInput
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedCreateWithoutByUserIdInput = {
+    id?: number
+    meetingRoomId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedCreateOrConnectWithoutByUserIdInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    create: XOR<MeetingRoomBookedCreateWithoutByUserIdInput, MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>
+  }
+
+  export type MeetingRoomBookedCreateManyByUserIdInputEnvelope = {
+    data: Enumerable<MeetingRoomBookedCreateManyByUserIdInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingUserBookedUpsertWithWhereUniqueWithoutUserInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    update: XOR<MeetingUserBookedUpdateWithoutUserInput, MeetingUserBookedUncheckedUpdateWithoutUserInput>
+    create: XOR<MeetingUserBookedCreateWithoutUserInput, MeetingUserBookedUncheckedCreateWithoutUserInput>
+  }
+
+  export type MeetingUserBookedUpdateWithWhereUniqueWithoutUserInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    data: XOR<MeetingUserBookedUpdateWithoutUserInput, MeetingUserBookedUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MeetingUserBookedUpdateManyWithWhereWithoutUserInput = {
+    where: MeetingUserBookedScalarWhereInput
+    data: XOR<MeetingUserBookedUpdateManyMutationInput, MeetingUserBookedUncheckedUpdateManyWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingUserBookedScalarWhereInput = {
+    AND?: Enumerable<MeetingUserBookedScalarWhereInput>
+    OR?: Enumerable<MeetingUserBookedScalarWhereInput>
+    NOT?: Enumerable<MeetingUserBookedScalarWhereInput>
+    id?: IntFilter | number
+    userId?: IntFilter | number
+    meetingRoomId?: IntFilter | number
+    meetingDetail?: StringNullableFilter | string | null
+    bookingStart?: DateTimeFilter | Date | string
+    bookingEnd?: DateTimeFilter | Date | string
+    nameOfBooker?: StringFilter | string
+    tel?: StringFilter | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingUserAvailableUpsertWithWhereUniqueWithoutUserInput = {
+    where: MeetingUserAvailableWhereUniqueInput
+    update: XOR<MeetingUserAvailableUpdateWithoutUserInput, MeetingUserAvailableUncheckedUpdateWithoutUserInput>
+    create: XOR<MeetingUserAvailableCreateWithoutUserInput, MeetingUserAvailableUncheckedCreateWithoutUserInput>
+  }
+
+  export type MeetingUserAvailableUpdateWithWhereUniqueWithoutUserInput = {
+    where: MeetingUserAvailableWhereUniqueInput
+    data: XOR<MeetingUserAvailableUpdateWithoutUserInput, MeetingUserAvailableUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MeetingUserAvailableUpdateManyWithWhereWithoutUserInput = {
+    where: MeetingUserAvailableScalarWhereInput
+    data: XOR<MeetingUserAvailableUpdateManyMutationInput, MeetingUserAvailableUncheckedUpdateManyWithoutMeetingUserAvailableInput>
+  }
+
+  export type MeetingUserAvailableScalarWhereInput = {
+    AND?: Enumerable<MeetingUserAvailableScalarWhereInput>
+    OR?: Enumerable<MeetingUserAvailableScalarWhereInput>
+    NOT?: Enumerable<MeetingUserAvailableScalarWhereInput>
+    id?: IntFilter | number
+    userId?: IntFilter | number
+    availableStart?: DateTimeFilter | Date | string
+    availableEnd?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingRoomBookedUpsertWithWhereUniqueWithoutByUserIdInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    update: XOR<MeetingRoomBookedUpdateWithoutByUserIdInput, MeetingRoomBookedUncheckedUpdateWithoutByUserIdInput>
+    create: XOR<MeetingRoomBookedCreateWithoutByUserIdInput, MeetingRoomBookedUncheckedCreateWithoutByUserIdInput>
+  }
+
+  export type MeetingRoomBookedUpdateWithWhereUniqueWithoutByUserIdInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    data: XOR<MeetingRoomBookedUpdateWithoutByUserIdInput, MeetingRoomBookedUncheckedUpdateWithoutByUserIdInput>
+  }
+
+  export type MeetingRoomBookedUpdateManyWithWhereWithoutByUserIdInput = {
+    where: MeetingRoomBookedScalarWhereInput
+    data: XOR<MeetingRoomBookedUpdateManyMutationInput, MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingRoomBookedScalarWhereInput = {
+    AND?: Enumerable<MeetingRoomBookedScalarWhereInput>
+    OR?: Enumerable<MeetingRoomBookedScalarWhereInput>
+    NOT?: Enumerable<MeetingRoomBookedScalarWhereInput>
+    id?: IntFilter | number
+    meetingRoomId?: IntFilter | number
+    userId?: IntFilter | number
+    bookingStart?: DateTimeFilter | Date | string
+    bookingEnd?: DateTimeFilter | Date | string
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingUserCreateWithoutMeetingUserBookedInput = {
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserAvailable?: MeetingUserAvailableCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserUncheckedCreateWithoutMeetingUserBookedInput = {
+    id?: number
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserCreateOrConnectWithoutMeetingUserBookedInput = {
+    where: MeetingUserWhereUniqueInput
+    create: XOR<MeetingUserCreateWithoutMeetingUserBookedInput, MeetingUserUncheckedCreateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingRoomCreateWithoutMeetingUserBookedInput = {
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingRoomBooked?: MeetingRoomBookedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomUncheckedCreateWithoutMeetingUserBookedInput = {
+    id?: number
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomCreateOrConnectWithoutMeetingUserBookedInput = {
+    where: MeetingRoomWhereUniqueInput
+    create: XOR<MeetingRoomCreateWithoutMeetingUserBookedInput, MeetingRoomUncheckedCreateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingMembersCreateWithoutBookingInput = {
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersUncheckedCreateWithoutBookingInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersCreateOrConnectWithoutBookingInput = {
+    where: MeetingMembersWhereUniqueInput
+    create: XOR<MeetingMembersCreateWithoutBookingInput, MeetingMembersUncheckedCreateWithoutBookingInput>
+  }
+
+  export type MeetingMembersCreateManyBookingInputEnvelope = {
+    data: Enumerable<MeetingMembersCreateManyBookingInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingUserUpsertWithoutMeetingUserBookedInput = {
+    update: XOR<MeetingUserUpdateWithoutMeetingUserBookedInput, MeetingUserUncheckedUpdateWithoutMeetingUserBookedInput>
+    create: XOR<MeetingUserCreateWithoutMeetingUserBookedInput, MeetingUserUncheckedCreateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingUserUpdateWithoutMeetingUserBookedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserAvailable?: MeetingUserAvailableUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingUserUncheckedUpdateWithoutMeetingUserBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingRoomUpsertWithoutMeetingUserBookedInput = {
+    update: XOR<MeetingRoomUpdateWithoutMeetingUserBookedInput, MeetingRoomUncheckedUpdateWithoutMeetingUserBookedInput>
+    create: XOR<MeetingRoomCreateWithoutMeetingUserBookedInput, MeetingRoomUncheckedCreateWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingRoomUpdateWithoutMeetingUserBookedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingRoomBooked?: MeetingRoomBookedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingRoomUncheckedUpdateWithoutMeetingUserBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingMembersUpsertWithWhereUniqueWithoutBookingInput = {
+    where: MeetingMembersWhereUniqueInput
+    update: XOR<MeetingMembersUpdateWithoutBookingInput, MeetingMembersUncheckedUpdateWithoutBookingInput>
+    create: XOR<MeetingMembersCreateWithoutBookingInput, MeetingMembersUncheckedCreateWithoutBookingInput>
+  }
+
+  export type MeetingMembersUpdateWithWhereUniqueWithoutBookingInput = {
+    where: MeetingMembersWhereUniqueInput
+    data: XOR<MeetingMembersUpdateWithoutBookingInput, MeetingMembersUncheckedUpdateWithoutBookingInput>
+  }
+
+  export type MeetingMembersUpdateManyWithWhereWithoutBookingInput = {
+    where: MeetingMembersScalarWhereInput
+    data: XOR<MeetingMembersUpdateManyMutationInput, MeetingMembersUncheckedUpdateManyWithoutMeetingMembersInput>
+  }
+
+  export type MeetingMembersScalarWhereInput = {
+    AND?: Enumerable<MeetingMembersScalarWhereInput>
+    OR?: Enumerable<MeetingMembersScalarWhereInput>
+    NOT?: Enumerable<MeetingMembersScalarWhereInput>
+    id?: IntFilter | number
+    bookedId?: IntFilter | number
+    name?: StringNullableFilter | string | null
+    email?: StringNullableFilter | string | null
+    tel?: StringNullableFilter | string | null
+    createdAt?: DateTimeFilter | Date | string
+    updatedAt?: DateTimeFilter | Date | string
+  }
+
+  export type MeetingUserBookedCreateWithoutMeetingMembersInput = {
+    user: MeetingUserCreateNestedOneWithoutMeetingUserBookedInput
+    meetingRoom: MeetingRoomCreateNestedOneWithoutMeetingUserBookedInput
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserBookedUncheckedCreateWithoutMeetingMembersInput = {
+    id?: number
+    userId: number
+    meetingRoomId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserBookedCreateOrConnectWithoutMeetingMembersInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    create: XOR<MeetingUserBookedCreateWithoutMeetingMembersInput, MeetingUserBookedUncheckedCreateWithoutMeetingMembersInput>
+  }
+
+  export type MeetingUserBookedUpsertWithoutMeetingMembersInput = {
+    update: XOR<MeetingUserBookedUpdateWithoutMeetingMembersInput, MeetingUserBookedUncheckedUpdateWithoutMeetingMembersInput>
+    create: XOR<MeetingUserBookedCreateWithoutMeetingMembersInput, MeetingUserBookedUncheckedCreateWithoutMeetingMembersInput>
+  }
+
+  export type MeetingUserBookedUpdateWithoutMeetingMembersInput = {
+    user?: MeetingUserUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingRoom?: MeetingRoomUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserBookedUncheckedUpdateWithoutMeetingMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserCreateWithoutMeetingUserAvailableInput = {
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserUncheckedCreateWithoutMeetingUserAvailableInput = {
+    id?: number
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedCreateNestedManyWithoutUserInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedCreateNestedManyWithoutByUserIdInput
+  }
+
+  export type MeetingUserCreateOrConnectWithoutMeetingUserAvailableInput = {
+    where: MeetingUserWhereUniqueInput
+    create: XOR<MeetingUserCreateWithoutMeetingUserAvailableInput, MeetingUserUncheckedCreateWithoutMeetingUserAvailableInput>
+  }
+
+  export type MeetingUserUpsertWithoutMeetingUserAvailableInput = {
+    update: XOR<MeetingUserUpdateWithoutMeetingUserAvailableInput, MeetingUserUncheckedUpdateWithoutMeetingUserAvailableInput>
+    create: XOR<MeetingUserCreateWithoutMeetingUserAvailableInput, MeetingUserUncheckedCreateWithoutMeetingUserAvailableInput>
+  }
+
+  export type MeetingUserUpdateWithoutMeetingUserAvailableInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingUserUncheckedUpdateWithoutMeetingUserAvailableInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedUpdateManyWithoutUserNestedInput
+    MeetingRoomBooked?: MeetingRoomBookedUncheckedUpdateManyWithoutByUserIdNestedInput
+  }
+
+  export type MeetingUserBookedCreateWithoutMeetingRoomInput = {
+    user: MeetingUserCreateNestedOneWithoutMeetingUserBookedInput
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput = {
+    id?: number
+    userId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type MeetingUserBookedCreateOrConnectWithoutMeetingRoomInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    create: XOR<MeetingUserBookedCreateWithoutMeetingRoomInput, MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingUserBookedCreateManyMeetingRoomInputEnvelope = {
+    data: Enumerable<MeetingUserBookedCreateManyMeetingRoomInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingRoomBookedCreateWithoutMeetingRoomInput = {
+    byUserId: MeetingUserCreateNestedOneWithoutMeetingRoomBookedInput
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput = {
+    id?: number
+    userId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedCreateOrConnectWithoutMeetingRoomInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    create: XOR<MeetingRoomBookedCreateWithoutMeetingRoomInput, MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingRoomBookedCreateManyMeetingRoomInputEnvelope = {
+    data: Enumerable<MeetingRoomBookedCreateManyMeetingRoomInput>
+    skipDuplicates?: boolean
+  }
+
+  export type MeetingUserBookedUpsertWithWhereUniqueWithoutMeetingRoomInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    update: XOR<MeetingUserBookedUpdateWithoutMeetingRoomInput, MeetingUserBookedUncheckedUpdateWithoutMeetingRoomInput>
+    create: XOR<MeetingUserBookedCreateWithoutMeetingRoomInput, MeetingUserBookedUncheckedCreateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingUserBookedUpdateWithWhereUniqueWithoutMeetingRoomInput = {
+    where: MeetingUserBookedWhereUniqueInput
+    data: XOR<MeetingUserBookedUpdateWithoutMeetingRoomInput, MeetingUserBookedUncheckedUpdateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingUserBookedUpdateManyWithWhereWithoutMeetingRoomInput = {
+    where: MeetingUserBookedScalarWhereInput
+    data: XOR<MeetingUserBookedUpdateManyMutationInput, MeetingUserBookedUncheckedUpdateManyWithoutMeetingUserBookedInput>
+  }
+
+  export type MeetingRoomBookedUpsertWithWhereUniqueWithoutMeetingRoomInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    update: XOR<MeetingRoomBookedUpdateWithoutMeetingRoomInput, MeetingRoomBookedUncheckedUpdateWithoutMeetingRoomInput>
+    create: XOR<MeetingRoomBookedCreateWithoutMeetingRoomInput, MeetingRoomBookedUncheckedCreateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingRoomBookedUpdateWithWhereUniqueWithoutMeetingRoomInput = {
+    where: MeetingRoomBookedWhereUniqueInput
+    data: XOR<MeetingRoomBookedUpdateWithoutMeetingRoomInput, MeetingRoomBookedUncheckedUpdateWithoutMeetingRoomInput>
+  }
+
+  export type MeetingRoomBookedUpdateManyWithWhereWithoutMeetingRoomInput = {
+    where: MeetingRoomBookedScalarWhereInput
+    data: XOR<MeetingRoomBookedUpdateManyMutationInput, MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingRoomCreateWithoutMeetingRoomBookedInput = {
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomUncheckedCreateWithoutMeetingRoomBookedInput = {
+    id?: number
+    name: string
+    floor: number
+    building: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedCreateNestedManyWithoutMeetingRoomInput
+  }
+
+  export type MeetingRoomCreateOrConnectWithoutMeetingRoomBookedInput = {
+    where: MeetingRoomWhereUniqueInput
+    create: XOR<MeetingRoomCreateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedCreateWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingUserCreateWithoutMeetingRoomBookedInput = {
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedCreateNestedManyWithoutUserInput
+    MeetingUserAvailable?: MeetingUserAvailableCreateNestedManyWithoutUserInput
+  }
+
+  export type MeetingUserUncheckedCreateWithoutMeetingRoomBookedInput = {
+    id?: number
+    name: string
+    profileImage?: string | null
+    postion?: string | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedCreateNestedManyWithoutUserInput
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type MeetingUserCreateOrConnectWithoutMeetingRoomBookedInput = {
+    where: MeetingUserWhereUniqueInput
+    create: XOR<MeetingUserCreateWithoutMeetingRoomBookedInput, MeetingUserUncheckedCreateWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingRoomUpsertWithoutMeetingRoomBookedInput = {
+    update: XOR<MeetingRoomUpdateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedUpdateWithoutMeetingRoomBookedInput>
+    create: XOR<MeetingRoomCreateWithoutMeetingRoomBookedInput, MeetingRoomUncheckedCreateWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingRoomUpdateWithoutMeetingRoomBookedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingRoomUncheckedUpdateWithoutMeetingRoomBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    floor?: IntFieldUpdateOperationsInput | number
+    building?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedUpdateManyWithoutMeetingRoomNestedInput
+  }
+
+  export type MeetingUserUpsertWithoutMeetingRoomBookedInput = {
+    update: XOR<MeetingUserUpdateWithoutMeetingRoomBookedInput, MeetingUserUncheckedUpdateWithoutMeetingRoomBookedInput>
+    create: XOR<MeetingUserCreateWithoutMeetingRoomBookedInput, MeetingUserUncheckedCreateWithoutMeetingRoomBookedInput>
+  }
+
+  export type MeetingUserUpdateWithoutMeetingRoomBookedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUpdateManyWithoutUserNestedInput
+    MeetingUserAvailable?: MeetingUserAvailableUpdateManyWithoutUserNestedInput
+  }
+
+  export type MeetingUserUncheckedUpdateWithoutMeetingRoomBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    postion?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingUserBooked?: MeetingUserBookedUncheckedUpdateManyWithoutUserNestedInput
+    MeetingUserAvailable?: MeetingUserAvailableUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type TriviaQuizCreateWithoutCategoryInput = {
     quizName: string
     answer: TriviaChoiceCreateNestedOneWithoutTriviaQuizAnswerInput
@@ -90991,6 +99523,219 @@ export namespace Prisma {
   export type BookOnAuthorUncheckedUpdateWithoutAuthorInput = {
     id?: IntFieldUpdateOperationsInput | number
     bookId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserBookedCreateManyUserInput = {
+    id?: number
+    meetingRoomId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserAvailableCreateManyUserInput = {
+    id?: number
+    availableStart: Date | string
+    availableEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedCreateManyByUserIdInput = {
+    id?: number
+    meetingRoomId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserBookedUpdateWithoutUserInput = {
+    meetingRoom?: MeetingRoomUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingUserBookedUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingUserBookedUncheckedUpdateManyWithoutMeetingUserBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableUpdateWithoutUserInput = {
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserAvailableUncheckedUpdateManyWithoutMeetingUserAvailableInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    availableStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    availableEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUpdateWithoutByUserIdInput = {
+    meetingRoom?: MeetingRoomUpdateOneRequiredWithoutMeetingRoomBookedNestedInput
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateWithoutByUserIdInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateManyWithoutMeetingRoomBookedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    meetingRoomId?: IntFieldUpdateOperationsInput | number
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersCreateManyBookingInput = {
+    id?: number
+    name?: string | null
+    email?: string | null
+    tel?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingMembersUpdateWithoutBookingInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersUncheckedUpdateWithoutBookingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingMembersUncheckedUpdateManyWithoutMeetingMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tel?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingUserBookedCreateManyMeetingRoomInput = {
+    id?: number
+    userId: number
+    meetingDetail?: string | null
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    nameOfBooker: string
+    tel: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingRoomBookedCreateManyMeetingRoomInput = {
+    id?: number
+    userId: number
+    bookingStart: Date | string
+    bookingEnd: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MeetingUserBookedUpdateWithoutMeetingRoomInput = {
+    user?: MeetingUserUpdateOneRequiredWithoutMeetingUserBookedNestedInput
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingUserBookedUncheckedUpdateWithoutMeetingRoomInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    meetingDetail?: NullableStringFieldUpdateOperationsInput | string | null
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    nameOfBooker?: StringFieldUpdateOperationsInput | string
+    tel?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
+  export type MeetingRoomBookedUpdateWithoutMeetingRoomInput = {
+    byUserId?: MeetingUserUpdateOneRequiredWithoutMeetingRoomBookedNestedInput
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MeetingRoomBookedUncheckedUpdateWithoutMeetingRoomInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    bookingStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
