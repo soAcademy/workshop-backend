@@ -1,7 +1,9 @@
 // import axios from "axios";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import * as trpcExpress from "@trpc/server/adapters/express";
 import { AppRoutes } from "./routes";
+import { appRouter, createContext } from "./binKitchen/binKitchen.router";
 
 const app: Application = express();
 const corsOptions = {
@@ -23,3 +25,11 @@ AppRoutes.forEach((route) => {
     (request: Request, response: Response) => route.action(request, response)
   );
 });
+
+app.use(
+  "/trpc",
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  })
+);
