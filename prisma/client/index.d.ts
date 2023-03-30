@@ -402,6 +402,7 @@ export type MeetingUserBooked = {
   bookingEnd: Date
   nameOfBooker: string
   tel: string
+  imageAttached: string | null
   createdAt: Date
   updatedAt: Date
 }
@@ -34638,6 +34639,7 @@ export namespace Prisma {
     bookingEnd: Date | null
     nameOfBooker: string | null
     tel: string | null
+    imageAttached: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -34651,6 +34653,7 @@ export namespace Prisma {
     bookingEnd: Date | null
     nameOfBooker: string | null
     tel: string | null
+    imageAttached: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -34664,6 +34667,7 @@ export namespace Prisma {
     bookingEnd: number
     nameOfBooker: number
     tel: number
+    imageAttached: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -34691,6 +34695,7 @@ export namespace Prisma {
     bookingEnd?: true
     nameOfBooker?: true
     tel?: true
+    imageAttached?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -34704,6 +34709,7 @@ export namespace Prisma {
     bookingEnd?: true
     nameOfBooker?: true
     tel?: true
+    imageAttached?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -34717,6 +34723,7 @@ export namespace Prisma {
     bookingEnd?: true
     nameOfBooker?: true
     tel?: true
+    imageAttached?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -34818,6 +34825,7 @@ export namespace Prisma {
     bookingEnd: Date
     nameOfBooker: string
     tel: string
+    imageAttached: string | null
     createdAt: Date
     updatedAt: Date
     _count: MeetingUserBookedCountAggregateOutputType | null
@@ -34852,6 +34860,7 @@ export namespace Prisma {
     bookingEnd?: boolean
     nameOfBooker?: boolean
     tel?: boolean
+    imageAttached?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     MeetingMembers?: boolean | MeetingUserBooked$MeetingMembersArgs
@@ -72447,6 +72456,7 @@ export namespace Prisma {
     bookingEnd: 'bookingEnd',
     nameOfBooker: 'nameOfBooker',
     tel: 'tel',
+    imageAttached: 'imageAttached',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -74540,6 +74550,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFilter | Date | string
     nameOfBooker?: StringFilter | string
     tel?: StringFilter | string
+    imageAttached?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
     MeetingMembers?: MeetingMembersListRelationFilter
@@ -74556,6 +74567,7 @@ export namespace Prisma {
     bookingEnd?: SortOrder
     nameOfBooker?: SortOrder
     tel?: SortOrder
+    imageAttached?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     MeetingMembers?: MeetingMembersOrderByRelationAggregateInput
@@ -74574,6 +74586,7 @@ export namespace Prisma {
     bookingEnd?: SortOrder
     nameOfBooker?: SortOrder
     tel?: SortOrder
+    imageAttached?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MeetingUserBookedCountOrderByAggregateInput
@@ -74595,6 +74608,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeWithAggregatesFilter | Date | string
     nameOfBooker?: StringWithAggregatesFilter | string
     tel?: StringWithAggregatesFilter | string
+    imageAttached?: StringNullableWithAggregatesFilter | string | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
   }
@@ -78460,6 +78474,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
@@ -78474,6 +78489,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
@@ -78487,6 +78503,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
@@ -78501,6 +78518,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput
@@ -78515,6 +78533,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -78525,6 +78544,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -78538,6 +78558,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -82428,6 +82449,7 @@ export namespace Prisma {
     bookingEnd?: SortOrder
     nameOfBooker?: SortOrder
     tel?: SortOrder
+    imageAttached?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -82447,6 +82469,7 @@ export namespace Prisma {
     bookingEnd?: SortOrder
     nameOfBooker?: SortOrder
     tel?: SortOrder
+    imageAttached?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -82460,6 +82483,7 @@ export namespace Prisma {
     bookingEnd?: SortOrder
     nameOfBooker?: SortOrder
     tel?: SortOrder
+    imageAttached?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -93665,6 +93689,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
@@ -93678,6 +93703,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
@@ -93773,6 +93799,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFilter | Date | string
     nameOfBooker?: StringFilter | string
     tel?: StringFilter | string
+    imageAttached?: StringNullableFilter | string | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
   }
@@ -94002,6 +94029,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -94015,6 +94043,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -94037,6 +94066,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -94050,6 +94080,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -94117,6 +94148,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersCreateNestedManyWithoutBookingInput
@@ -94130,6 +94162,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     MeetingMembers?: MeetingMembersUncheckedCreateNestedManyWithoutBookingInput
@@ -99535,6 +99568,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -99563,6 +99597,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
@@ -99576,6 +99611,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput
@@ -99589,6 +99625,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -99685,6 +99722,7 @@ export namespace Prisma {
     bookingEnd: Date | string
     nameOfBooker: string
     tel: string
+    imageAttached?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -99705,6 +99743,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUpdateManyWithoutBookingNestedInput
@@ -99718,6 +99757,7 @@ export namespace Prisma {
     bookingEnd?: DateTimeFieldUpdateOperationsInput | Date | string
     nameOfBooker?: StringFieldUpdateOperationsInput | string
     tel?: StringFieldUpdateOperationsInput | string
+    imageAttached?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     MeetingMembers?: MeetingMembersUncheckedUpdateManyWithoutBookingNestedInput

@@ -392,6 +392,7 @@ exports.Prisma.MeetingUserBookedScalarFieldEnum = makeEnum({
   bookingEnd: 'bookingEnd',
   nameOfBooker: 'nameOfBooker',
   tel: 'tel',
+  imageAttached: 'imageAttached',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });

@@ -355,6 +355,7 @@ model MeetingUserBooked {
   bookingEnd     DateTime
   nameOfBooker   String
   tel            String
+  imageAttached  String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   MeetingMembers MeetingMembers[]
